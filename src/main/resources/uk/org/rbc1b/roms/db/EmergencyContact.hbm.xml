@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class catalog="RBC1B" name="uk.org.rbc1b.roms.db.EmergencyContact" table="EmergencyContact">
+        <id name="rbcid" type="java.lang.Long">
+            <column name="RBCID"/>
+            <generator class="foreign" >
+                <param name="property">volunteer</param>
+            </generator>
+        </id>
+        <property name="ename" type="string">
+            <column length="100" name="EName"/>
+        </property>
+        <property name="erelation" type="string">
+            <column length="50" name="ERelation"/>
+        </property>
+        <property name="etelephone" type="string">
+            <column length="50" name="ETelephone"/>
+        </property>
+        <property name="emobile" type="string">
+            <column length="50" name="EMobile"/>
+        </property>
+        <property name="estreet" type="string">
+            <column length="50" name="EStreet"/>
+        </property>
+        <property name="etown" type="string">
+            <column length="50" name="ETown"/>
+        </property>
+        <property name="ecounty" type="string">
+            <column length="50" name="ECounty"/>
+        </property>
+        <property name="epostcode" type="string">
+            <column length="15" name="EPostcode"/>
+        </property>
+        <one-to-one name="volunteer" class="uk.org.rbc1b.roms.db.Volunteer" constrained="true"/>
+    </class>
+</hibernate-mapping>

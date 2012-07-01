@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class catalog="RBC1B" name="uk.org.rbc1b.roms.db.Personal" table="Personal">
+    <id column="RBCID" name="id" type="long">
+      <generator class="native"/>
+    </id>
+    <property name="dob" type="date">
+      <column name="DOB"/>
+    </property>
+    <property name="gender" type="string">
+      <column name="Gender"/>
+    </property>
+    <property name="maritalstatus" type="string">
+      <column name="MaritalStatus"/>
+    </property>
+    <property name="baptism" type="date">
+      <column name="Baptism"/>
+    </property>
+    <property name="oversight" type="string">
+      <column name="Oversight"/>
+    </property>
+    <property name="reliefuk" type="string">
+      <column name="ReliefUK"/>
+    </property>
+    <property name="reliefabroad" type="string">
+      <column name="ReliefAbroad"/>
+    </property>
+    <property name="interviewdate" type="date">
+      <column name="InterviewDate"/>
+    </property>
+    <property name="interviewby" type="string">
+      <column name="InterviewBy"/>
+    </property>
+    <property name="interviewresult" type="string">
+      <column name="InterviewResult"/>
+    </property>
+    <property name="receiveddate" type="date">
+      <column name="ReceivedDate"/>
+    </property>
+    <property name="acknowledge" type="string">
+      <column name="Acknowledge"/>
+    </property>
+    <property name="assignletter" type="string">
+      <column name="AssignLetter"/>
+    </property>
+    <property name="pcomments" type="string">
+      <column name="PComments"/>
+    </property>
+    <property name="interviewstatus" type="string">
+      <column name="InterviewStatus"/>
+    </property>
+    <property name="reliefukanswer" type="string">
+      <column name="ReliefUKAnswer"/>
+    </property>
+    <property name="reliefabroadanswer" type="string">
+      <column name="ReliefAbroadAnswer"/>
+    </property>
+    <property name="khcformcode" type="string">
+      <column name="KHCFormCode"/>
+    </property>
+    <property name="badgeissue" type="date">
+      <column name="BadgeIssue"/>
+    </property>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 12, 2012 2:36:13 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class catalog="RBC1B" name="uk.org.rbc1b.roms.db.Circuit" table="Circuit">
+    <id name="circuitName" type="string">
+      <column length="50" name="CircuitName"/>
+      <generator class="assigned"/>
+    </id>
+    <property name="circuitOverseer" type="string">
+      <column length="50" name="CircuitOverseer"/>
+    </property>
+    <property name="telephone" type="string">
+      <column length="15" name="Telephone"/>
+    </property>
+    <property name="mobile" type="string">
+      <column length="15" name="Mobile"/>
+    </property>
+    <property name="email" type="string">
+      <column length="50" name="Email"/>
+    </property>
+    <property name="costreet" type="string">
+      <column length="50" name="COStreet"/>
+    </property>
+    <property name="cotown" type="string">
+      <column length="50" name="COTown"/>
+    </property>
+    <property name="cocounty" type="string">
+      <column length="50" name="COCounty"/>
+    </property>
+    <property name="copostcode" type="string">
+      <column length="10" name="COPostcode"/>
+    </property>
+    <property name="comments" type="string">
+      <column name="Comments"/>
+    </property>
+    <set inverse="true" name="congregations">
+      <key>
+        <column length="50" name="CircuitName"/>
+      </key>
+      <one-to-many class="uk.org.rbc1b.roms.db.Congregation"/>
+    </set>
+  </class>
+</hibernate-mapping>

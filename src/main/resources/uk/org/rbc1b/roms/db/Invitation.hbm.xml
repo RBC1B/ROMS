@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class catalog="RBC1B" name="uk.org.rbc1b.roms.db.Invitation" table="Invitation">
+        <composite-id name="invitationid" class="uk.org.rbc1b.roms.db.InvitationID">
+            <key-property name="rbcid" type="long">
+                <column name="RBCID" />
+            </key-property>
+            <key-property name="projectname" type="string">
+                <column name="ProjectName" />
+            </key-property>
+            <key-property name="invitedate" type="date">
+                <column name="InviteDate" />
+            </key-property>
+        </composite-id>
+        <property name="department" type="string">
+            <column name="Department" />
+        </property>
+        <property name="abletocome" type="string">
+            <column name="AbleToCome" />
+        </property>
+        <property name="reason" type="string">
+            <column name="Reason" />
+        </property>
+        <property name="comments" type="string">
+            <column name="Comments" />
+        </property>
+    </class>
+</hibernate-mapping>    

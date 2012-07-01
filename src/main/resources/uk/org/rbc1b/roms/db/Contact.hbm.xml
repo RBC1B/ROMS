@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class catalog="RBC1B" name="uk.org.rbc1b.roms.db.Contact" table="Contact">
+    <id column="RBCID" name="id" type="long">
+      <generator class="native"/>
+    </id>
+    <property name="street" type="string">
+      <column name="Street"/>
+    </property>
+    <property name="town" type="string">
+      <column name="Town"/>
+    </property>
+    <property name="county" type="string">
+      <column name="County"/>
+    </property>
+    <property name="postcode" type="string">
+      <column name="Postcode"/>
+    </property>
+    <property name="telephone" type="string">
+      <column name="Telephone"/>
+    </property>
+    <property name="mobile" type="string">
+      <column name="Mobile"/>
+    </property>
+    <property name="email" type="string">
+      <column name="Email"/>
+    </property>
+    <property name="comments" type="string">
+      <column name="Comments"/>
+    </property>
+    <property name="status" type="string">
+      <column name="Status"/>
+    </property>
+    <property name="congregation" type="string">
+      <column name="Congregation"/>
+    </property>
+    <property name="jobdescrip" type="string">
+      <column name="JobDescrip"/>
+    </property>
+    <property name="sblt" type="string">
+      <column name="Sblt"/>
+    </property>
+    <property name="induction" type="date">
+      <column name="Induction"/>
+    </property>
+    <property name="appointment" type="string">
+      <column name="Appointment"/>
+    </property>
+    <property name="fulltime" type="string">
+      <column name="FullTime"/>
+    </property>
+    <property name="availability" type="string">
+      <column name="Availability"/>
+    </property>
+    <property name="workphone" type="string">
+      <column name="WorkPhone"/>
+    </property>
+    <property name="assignmentpending" type="string">
+      <column name="AssignmentPending"/>
+    </property>
+  </class>
+</hibernate-mapping>
