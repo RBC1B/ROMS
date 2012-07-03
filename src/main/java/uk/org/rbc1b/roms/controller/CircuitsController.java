@@ -5,6 +5,7 @@
 package uk.org.rbc1b.roms.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +30,7 @@ public class CircuitsController {
      * @return model containing the list of circuits
      */
     @RequestMapping(method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('Circuit', 'READ')")
     @Transactional(readOnly=true)
     public ModelAndView handleList() {
         ModelAndView model = new ModelAndView("circuits");
@@ -38,6 +40,7 @@ public class CircuitsController {
     }
 
     @RequestMapping(value = "{name}/", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('Circuit', 'READ')")
     @Transactional(readOnly=true)
     public ModelAndView handleCircuit(@PathVariable String name) {
         ModelAndView model = new ModelAndView("circuit");
