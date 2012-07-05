@@ -9,10 +9,12 @@
 
     <http pattern="/css/**" security="none"/>
     <http pattern="/login" security="none"/>
+    <http pattern="/logout" security="none"/>
 
     <http auto-config="true" use-expressions="true">
         <intercept-url pattern="/**" access="isAuthenticated()" />
         <form-login login-page='/login' default-target-url="/" authentication-failure-url="/login?status=fail" />
+        <logout logout-success-url="/logout" />
         <session-management>
             <concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
         </session-management>

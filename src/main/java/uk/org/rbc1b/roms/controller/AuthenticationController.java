@@ -27,6 +27,6 @@ public class AuthenticationController {
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String handleLogoutGetRequest() {
-        return "login";
+        return "logout";
     }
 }
