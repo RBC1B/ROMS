@@ -7,7 +7,6 @@ package uk.org.rbc1b.roms.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
@@ -18,9 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class HomepageController {
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView handleGetRequest() {
-        ModelAndView model = new ModelAndView("homepage");
-
-        return model;
+    public String handleGetRequest() {
+        return "homepage";
     }
 }

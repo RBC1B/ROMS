@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 import uk.org.rbc1b.roms.dao.circuit.CircuitDao;
 import uk.org.rbc1b.roms.db.Circuit;
 
@@ -20,7 +20,7 @@ import uk.org.rbc1b.roms.db.Circuit;
  * @author oliver.elder.esq
  */
 @Controller
-@RequestMapping("/circuits/")
+@RequestMapping("/circuits")
 public class CircuitsController {
 
     @Autowired
@@ -32,24 +32,23 @@ public class CircuitsController {
     @RequestMapping(method = RequestMethod.GET)
     @PreAuthorize("hasPermission('Circuit', 'READ')")
     @Transactional(readOnly=true)
-    public ModelAndView handleList() {
-        ModelAndView model = new ModelAndView("circuits");
-        model.addObject("circuits", circuitDao.findCircuits());
+    public String handleList(ModelMap model) {
 
-        return model;
+        model.addAttribute("circuits", circuitDao.findCircuits());
+
+        return "circuits";
     }
 
-    @RequestMapping(value = "{name}/", method = RequestMethod.GET)
+    @RequestMapping(value = "{name}", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('Circuit', 'READ')")
     @Transactional(readOnly=true)
-    public ModelAndView handleCircuit(@PathVariable String name) {
-        ModelAndView model = new ModelAndView("circuit");
+    public String handleCircuit(@PathVariable String name, ModelMap model) {
 
         Circuit circuit = circuitDao.findCircuit(name);
 
-        model.addObject("circuit", circuit);
+        model.addAttribute("circuit", circuit);
 
-        return model;
+        return "circuit";
     }
 
     public void setCircuitDao(CircuitDao circuitDao) {
