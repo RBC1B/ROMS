@@ -11,7 +11,7 @@
     </appender>
 
     <category name="org.springframework" additivity="false">
-        <priority value="debug" />
+        <priority value="error" />
         <appender-ref ref="console" />
     </category>
 

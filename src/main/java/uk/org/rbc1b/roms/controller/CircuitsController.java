@@ -12,6 +12,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.dao.circuit.CircuitDao;
 import uk.org.rbc1b.roms.db.Circuit;
 
@@ -42,9 +43,13 @@ public class CircuitsController {
     @RequestMapping(value = "{name}", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('Circuit', 'READ')")
     @Transactional(readOnly=true)
-    public String handleCircuit(@PathVariable String name, ModelMap model) {
+    public String handleCircuit(@PathVariable String name, ModelMap model) throws NoSuchRequestHandlingMethodException {
 
         Circuit circuit = circuitDao.findCircuit(name);
+
+        if (circuit == null) {
+            throw new NoSuchRequestHandlingMethodException("No circuit with name [" + name + "]", this.getClass());
+        }
 
         model.addAttribute("circuit", circuit);
 
