@@ -1,7 +1,6 @@
 package uk.org.rbc1b.roms.db;
 // Generated Apr 12, 2012 2:36:09 PM by Hibernate Tools 3.2.1.GA
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -33,7 +32,7 @@ public class Circuit implements java.io.Serializable {
         this.circuitOverseer = co;
     }
 
-    public Circuit(String circuitName, String circuitOverseer, String telephone, String mobile, String email, String costreet, String cotown, String cocounty, String copostcode, String comments, Set congregations) {
+    public Circuit(String circuitName, String circuitOverseer, String telephone, String mobile, String email, String costreet, String cotown, String cocounty, String copostcode, String comments, Set<Congregation> congregations) {
         this.circuitName = circuitName;
         this.circuitOverseer = circuitOverseer;
         this.telephone = telephone;

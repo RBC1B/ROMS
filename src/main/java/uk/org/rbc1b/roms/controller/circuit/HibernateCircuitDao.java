@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package uk.org.rbc1b.roms.dao.circuit;
+package uk.org.rbc1b.roms.controller.circuit;
 
+import uk.org.rbc1b.roms.controller.circuit.CircuitDao;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
@@ -35,7 +36,15 @@ public class HibernateCircuitDao implements CircuitDao {
         return criteria.list();
     }
 
+    @Override
+    public void createCircuit(Circuit circuit) {
+        this.sessionFactory.getCurrentSession().save(circuit);
+    }
+
+
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
+
+
 }

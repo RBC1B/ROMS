@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package uk.org.rbc1b.roms.dao.circuit;
+package uk.org.rbc1b.roms.controller.circuit;
 
 import java.util.List;
 import uk.org.rbc1b.roms.db.Circuit;
@@ -25,4 +25,11 @@ public interface CircuitDao {
      * @return list of matching circuits
      */
     List<Circuit> findCircuits();
+
+    /**
+     * Create a new circuit
+     * @param circuit new circuit to create
+     */
+    void createCircuit(Circuit circuit);
+
 }
