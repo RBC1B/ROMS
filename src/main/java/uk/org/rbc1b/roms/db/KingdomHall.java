@@ -21,8 +21,8 @@ public class KingdomHall implements java.io.Serializable {
     private String parking;
     private String hallCondition;
     private String ownership;
-    private Set congregations = new HashSet(0);
-    private Set projects = new HashSet(0);
+    private Set<Congregation> congregations;
+    private Set<Project> projects;
 
     public KingdomHall() {
     }
@@ -31,7 +31,7 @@ public class KingdomHall implements java.io.Serializable {
         this.kingdomHall = kingdomHall;
     }
 
-    public KingdomHall(String kingdomHall, Congregation congregation, String street, String town, String county, String postcode, String maintenanceNotes, String updateInfo, String seating, String parking, String hallCondition, String ownership, Set congregations, Set projects) {
+    public KingdomHall(String kingdomHall, Congregation congregation, String street, String town, String county, String postcode, String maintenanceNotes, String updateInfo, String seating, String parking, String hallCondition, String ownership, Set<Congregation> congregations, Set<Project> projects) {
         this.kingdomHall = kingdomHall;
         this.congregation = congregation;
         this.street = street;
@@ -144,19 +144,19 @@ public class KingdomHall implements java.io.Serializable {
         this.ownership = ownership;
     }
 
-    public Set getCongregations() {
+    public Set<Congregation> getCongregations() {
         return this.congregations;
     }
 
-    public void setCongregations(Set congregations) {
+    public void setCongregations(Set<Congregation> congregations) {
         this.congregations = congregations;
     }
 
-    public Set getProjects() {
+    public Set<Project> getProjects() {
         return this.projects;
     }
 
-    public void setProjects(Set projects) {
+    public void setProjects(Set<Project> projects) {
         this.projects = projects;
     }
 }

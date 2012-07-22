@@ -21,7 +21,7 @@ public class Congregation implements java.io.Serializable {
     private String funds;
     private String stragegy;
     private String cpr;
-    private Set kingdomHalls = new HashSet(0);
+    private Set<KingdomHall> kingdomHalls;
 
     public Congregation() {
     }
@@ -142,11 +142,11 @@ public class Congregation implements java.io.Serializable {
         this.cpr = cpr;
     }
 
-    public Set getKingdomHalls() {
+    public Set<KingdomHall> getKingdomHalls() {
         return this.kingdomHalls;
     }
 
-    public void setKingdomHalls(Set kingdomHalls) {
+    public void setKingdomHalls(Set<KingdomHall> kingdomHalls) {
         this.kingdomHalls = kingdomHalls;
     }
 }
