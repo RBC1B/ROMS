@@ -18,6 +18,7 @@
         <session-management>
             <concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
         </session-management>
+        <expression-handler ref="webExpressionHandler" />
     </http>
 
     <authentication-manager>
@@ -30,8 +31,13 @@
     </authentication-manager>
 
     <beans:bean id="expressionHandler" class="org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler">
-        <beans:property name="permissionEvaluator">
-            <beans:bean class="uk.org.rbc1b.roms.security.RomsPermissionEvaluator" />
-        </beans:property>
+        <beans:property name="permissionEvaluator" ref="romsPermissionEvaluator" />
     </beans:bean>
+
+    <beans:bean id="webExpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler">
+        <beans:property name="permissionEvaluator" ref="romsPermissionEvaluator" />
+    </beans:bean>
+
+    <beans:bean id="romsPermissionEvaluator" class="uk.org.rbc1b.roms.security.RomsPermissionEvaluator" />
+
 </beans:beans>
