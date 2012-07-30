@@ -15,6 +15,7 @@
     <body>
         <sec:authorize access="hasPermission('Circuit', 'READ')"><a href="<c:url value="/circuits" />">Circuits</a></sec:authorize>
         <h1>Homepage: Hello World!</h1>
+        <img src="<c:url value="/images/oli-lion.jpg" />" height="140" width="104" alt="test image" />
         <a href="<c:url value="/j_spring_security_logout" />" > Logout</a>
     </body>
 </html>
