@@ -37,7 +37,7 @@ public class CircuitsController {
 
         model.addAttribute("circuits", circuitDao.findCircuits());
 
-        return "circuits";
+        return "circuits/list";
     }
 
     @RequestMapping(value = "{name}", method = RequestMethod.GET)
@@ -53,7 +53,7 @@ public class CircuitsController {
 
         model.addAttribute("circuit", circuit);
 
-        return "circuit";
+        return "circuits/show";
     }
 
     /**
@@ -66,7 +66,7 @@ public class CircuitsController {
         // initialise the form bean
         model.addAttribute("circuit", new CircuitForm());
 
-        return "circuitEdit";
+        return "circuits/update";
     }
 
     /**
