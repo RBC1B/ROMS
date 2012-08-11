@@ -10,14 +10,9 @@
 <html>
     <c:set var="pageTitle" value="RBC Online Management System for Construction" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>JSP Page</title>
-        <link rel="stylesheet" type="text/css" href="<c:url value="/css/roms.css" />" />
-    </head>
     <body>
-        <sec:authorize access="hasPermission('Circuit', 'READ')"><a href="<c:url value="/circuits" />">Circuits</a></sec:authorize>
-        <h1>Homepage: Hello World!</h1>
+        <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
+        <h1>RBC Online Management System for Construction</h1>
         <img src="<c:url value="/images/oli-lion.jpg" />" height="140" width="104" alt="test image" />
         <a href="<c:url value="/j_spring_security_logout" />" > Logout</a>
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>

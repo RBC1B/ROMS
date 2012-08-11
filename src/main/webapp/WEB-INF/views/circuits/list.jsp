@@ -10,8 +10,9 @@
     <c:set var="pageTitle" value="Circuits" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
+        <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="content-container">
-            <h1>Circuits: Hello World!</h1>
+            <h1>Circuits</h1>
             <table id="circuit-list">
                 <thead>
                     <tr>
@@ -31,7 +32,10 @@
                             <td>${circuit.email}</td>
                             <td>${circuit.telephone}</td>
                             <td>${circuit.cotown}</td>
-                            <td><a href="edit">EDIT</a>&nbsp;<a href="delete">DELETE</a></td>
+                            <td><a href="<c:url value="/circuits/${circuit.circuitName}" />">View</a>&nbsp;
+                                <a href="<c:url value="/circuits/${circuit.circuitName}/edit" />">Edit</a>&nbsp;
+                                <a href="delete">Delete</a>
+                            </td>
                         </tr>
                     </c:forEach>
                 </tbody>

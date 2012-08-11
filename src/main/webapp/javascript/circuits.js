@@ -9,7 +9,6 @@ $(document).ready(function() {
     });
 
     $("tfoot input").keyup(function () {
-		/* Filter on the column (the index) of this element */
 		circuitTable.fnFilter( this.value, $("tfoot input").index(this) );
 	});
 

@@ -10,6 +10,7 @@
     <c:set var="pageTitle" value="Circuit" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
+        <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <h1>Circuit: Hello World!</h1>
         ${circuit}
 

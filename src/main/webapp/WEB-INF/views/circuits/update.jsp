@@ -11,6 +11,7 @@
     <c:set var="pageTitle" value="Create/Edit Circuit" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
+        <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <h1>Circuit</h1>
         <c:url var="formAction" value="/circuits" />
         <form:form commandName="circuit" method="post" action="${formAction}">
