@@ -8,16 +8,16 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Create/Edit Circuit - ROMS</title>
-    </head>
+    <c:set var="pageTitle" value="Create/Edit Circuit" />
+    <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <h1>Circuit</h1>
-        <c:url value="/circuits" var="formAction"/>
+        <c:url var="formAction" value="/circuits" />
         <form:form commandName="circuit" method="post" action="${formAction}">
             <form:label path="name">Name <form:input path="name" /></form:label>
             <input type="submit" />
         </form:form>
+
+        <%@ include file="/WEB-INF/views/common/footer.jsp" %>
     </body>
 </html>
