@@ -13,14 +13,6 @@ public class Qualifications {
     private String qualification;
     private String description;
 
-    public Qualifications() {
-    }
-
-    public Qualifications(String q, String d) {
-        this.qualification = q;
-        this.description = d;
-    }
-
     /**
      * @return the qualification
      */

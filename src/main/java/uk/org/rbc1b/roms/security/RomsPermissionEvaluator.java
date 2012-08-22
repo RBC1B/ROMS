@@ -11,7 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.util.StringUtils;
 
 /**
- * Implementation of the permission validator to match the JACL AppNames and levels
+ * Implementation of the permission validator to match the JACL AppNames and levels.
  * with the part of the application being viewed
  * @author oliver.elder.esq
  */
@@ -55,6 +55,9 @@ public class RomsPermissionEvaluator implements PermissionEvaluator {
 
     }
 
+    /**
+     * Access level values, corresponding to the levels 0-3.
+     */
     public static enum AccessLevel {
 
         NOACCESS, READ, EDIT, ADD, DELETE

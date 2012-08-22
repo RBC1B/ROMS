@@ -8,31 +8,14 @@ package uk.org.rbc1b.roms.db;
  *
  * @author ramindursingh
  */
-public class Volunteer  implements java.io.Serializable {
+public class Volunteer implements java.io.Serializable {
+
     private Long rbcid;
     private String forename;
     private String surname;
     private String middleName;
     private String pictureName;
     private EmergencyContact econtact;
-
-    public Volunteer(){
-        // default constructor required by hibernate
-    }
-
-    public Volunteer(Long rbcid, String forename, String surname){
-        this.rbcid = rbcid;
-        this.forename = forename;
-        this.surname = surname;
-    }
-
-    public Volunteer(Long rbcid, String forename, String surname, String middleName, String pictureName){
-        this.rbcid = rbcid;
-        this.forename = forename;
-        this.surname = surname;
-        this.middleName = middleName;
-        this.pictureName = pictureName;
-    }
 
     /**
      * @return the rbcid
@@ -116,12 +99,5 @@ public class Volunteer  implements java.io.Serializable {
      */
     public void setEcontact(EmergencyContact econtact) {
         this.econtact = econtact;
-    }
-
-    public String getHTMLTable(){
-        String html="<table>"
-                + "<tr><td>test</td></tr>"
-                + "</table>";
-        return html;
     }
 }

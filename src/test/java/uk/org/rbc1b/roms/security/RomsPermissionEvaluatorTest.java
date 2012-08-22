@@ -19,6 +19,7 @@ import org.springframework.security.core.GrantedAuthority;
  * @author rhioli
  */
 public class RomsPermissionEvaluatorTest {
+    //CHECKSTYLE:OFF
 
     private RomsPermissionEvaluator evaluator;
     private MockAuthentication authentication;

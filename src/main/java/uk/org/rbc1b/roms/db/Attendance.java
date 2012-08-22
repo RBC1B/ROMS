@@ -9,14 +9,9 @@ package uk.org.rbc1b.roms.db;
  * @author ramindursingh
  */
 public class Attendance {
+
     private AttendanceID attendanceid;
     private String department;
-    
-    public Attendance(){}
-    public Attendance(AttendanceID aid, String dept){
-        this.attendanceid=aid;
-        this.department=dept;
-    }
 
     /**
      * @return the attendanceid

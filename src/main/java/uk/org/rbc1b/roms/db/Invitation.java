@@ -9,21 +9,12 @@ package uk.org.rbc1b.roms.db;
  * @author ramindursingh
  */
 public class Invitation {
+
     private InvitationID invitationid;
     private String department;
     private String abletocome;
     private String reason;
     private String comments;
-
-    public Invitation(){}
-
-    public Invitation(InvitationID iid, String department, String abletocome, String reason, String comments){
-        this.invitationid=iid;
-        this.department=department;
-        this.abletocome=abletocome;
-        this.reason=reason;
-        this.comments=comments;
-    }
 
     /**
      * @return the invitationid

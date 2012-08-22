@@ -5,11 +5,13 @@
 package uk.org.rbc1b.roms.db;
 
 import java.sql.Date;
+
 /**
  *
  * @author ramindursingh
  */
 public class Contact {
+
     private Long id;
     private String street;
     private String town;
@@ -294,12 +296,5 @@ public class Contact {
      */
     public void setAssignmentpending(String assignmentpending) {
         this.assignmentpending = assignmentpending;
-    }
-
-    public String getHTMLTable(){
-        String html="<table>"
-                + "<tr><td>test</td></tr>"
-                + "</table>";
-        return html;
     }
 }

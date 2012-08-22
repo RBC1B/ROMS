@@ -1,19 +1,19 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (c) Black Crow System Limited, 2010-2012. All rights reserved.
+ * This software is distributed under the License of Black Crow Systems Limited.
  */
 package uk.org.rbc1b.roms.db;
 
 import java.io.Serializable;
 import java.sql.Date;
 
-/*
- * Assignment Class to correspond to table Assignment
- * Copyright (c) Black Crow System Limited, 2010-2012. All rights reserved.
- * This software is distributed under the License of Black Crow Systems Limited.
+/**
+ * Assignment Class to correspond to table Assignment.
+ *
  * @author rahulsingh
  */
 public class Assignment implements Serializable {
+
     private AssignmentId id;
     private Volunteer volunteer;
     private Role role;
@@ -21,18 +21,6 @@ public class Assignment implements Serializable {
     private String comments;
     private String tradeNumber;
     private String team;
-
-    public Assignment(){}
-
-    public Assignment(AssignmentId id, Volunteer vol, Role role, Date date, String comments, String tradeNo, String team){
-        this.id = id;
-        this.volunteer = vol;
-        this.role = role;
-        this.date = date;
-        this.comments = comments;
-        this.tradeNumber = tradeNo;
-        this.team = team;
-    }
 
     /**
      * @return the id
@@ -133,20 +121,24 @@ public class Assignment implements Serializable {
     }
 
     @Override
-    public boolean equals(Object e){
-        Assignment that = (Assignment) e;
-        if (this.id.equals(that.id)){
-            return true;
-        } else {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Assignment other = (Assignment) obj;
+        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 59 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 67 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
     }
-
 }

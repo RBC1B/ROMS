@@ -17,49 +17,6 @@ public class InvitationID implements Serializable {
     private String projectname;
     private Date invitedate;
 
-    public InvitationID() {
-        // default constructor required by hibernate
-    }
-
-    public InvitationID(long rbcid, String projectname, Date invitedate) {
-        this.rbcid = rbcid;
-        this.projectname = projectname;
-        this.invitedate = invitedate;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null) {
-            return false;
-        }
-        if (!(o instanceof InvitationID)) {
-            return false;
-        }
-        final InvitationID iid = (InvitationID) o;
-        if (this.rbcid != iid.rbcid) {
-            return false;
-        }
-        if (!this.projectname.equalsIgnoreCase(iid.getProjectname())) {
-            return false;
-        }
-        if (this.invitedate != iid.getInvitedate()) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 29 * hash + (int) (this.rbcid ^ (this.rbcid >>> 32));
-        hash = 29 * hash + (this.projectname != null ? this.projectname.hashCode() : 0);
-        hash = 29 * hash + (this.invitedate != null ? this.invitedate.hashCode() : 0);
-        return hash;
-    }
-
     /**
      * @return the rbcid
      */
@@ -100,5 +57,38 @@ public class InvitationID implements Serializable {
      */
     public void setInvitedate(Date invitedate) {
         this.invitedate = invitedate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null) {
+            return false;
+        }
+        if (!(o instanceof InvitationID)) {
+            return false;
+        }
+        final InvitationID iid = (InvitationID) o;
+        if (this.rbcid != iid.rbcid) {
+            return false;
+        }
+        if (!this.projectname.equalsIgnoreCase(iid.getProjectname())) {
+            return false;
+        }
+        if (this.invitedate != iid.getInvitedate()) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 29 * hash + (int) (this.rbcid ^ (this.rbcid >>> 32));
+        hash = 29 * hash + (this.projectname != null ? this.projectname.hashCode() : 0);
+        hash = 29 * hash + (this.invitedate != null ? this.invitedate.hashCode() : 0);
+        return hash;
     }
 }

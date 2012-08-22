@@ -11,6 +11,7 @@ import java.sql.Date;
  * @author ramindursingh
  */
 public class Personal {
+
     private Long id;
     private Date dob;
     private String gender;
@@ -310,11 +311,5 @@ public class Personal {
      */
     public void setBadgeissue(Date badgeissue) {
         this.badgeissue = badgeissue;
-    }
-    public String getHTMLTable(){
-        String html="<table>"
-                + "<tr><td>test</td></tr>"
-                + "</table>";
-        return html;
     }
 }
