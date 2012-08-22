@@ -77,7 +77,7 @@ public class CircuitsController {
         // initialise the form bean
         model.addAttribute("circuit", new CircuitForm());
 
-        return "circuits/update";
+        return "circuits/edit";
     }
 
     /**
