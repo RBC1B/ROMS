@@ -7,15 +7,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <c:set var="pageTitle" value="Circuit" />
+    <c:set var="pageTitle" value="Kingdom Hall" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="content-container">
-            <h1>Circuit: Hello World!</h1>
-            ${circuit}
+            <h1>Kingdom Hall: ${kingdomHall.kingdomHall}</h1>
+            ${kingdomHall}
         </div>
-
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
     </body>
 </html>

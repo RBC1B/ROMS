@@ -134,4 +134,9 @@ public class KingdomHall implements java.io.Serializable {
     public void setProjects(Set<Project> projects) {
         this.projects = projects;
     }
+
+    @Override
+    public String toString() {
+        return "KingdomHall{" + "kingdomHall=" + kingdomHall + '}';
+    }
 }
