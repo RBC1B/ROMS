@@ -135,7 +135,9 @@
 
 
         <!-- imports -->
+        <!-- due to a "feature" netbeans introduced in 7.1, imports get turned into star with no way to turn it off
         <module name="AvoidStarImport" />
+        -->
         <module name="IllegalImport">
             <property name="illegalPkgs" value="sun, org.apache.commons.logging, org.apache.log4j" />
         </module>
