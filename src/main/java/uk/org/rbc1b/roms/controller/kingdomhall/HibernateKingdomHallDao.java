@@ -29,7 +29,15 @@ public class HibernateKingdomHallDao implements KingdomHallDao {
     @Override
     public List<KingdomHall> findKingdomHalls() {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(KingdomHall.class);
-        return criteria.list();
+        List<KingdomHall> halls = criteria.list();
+        for (KingdomHall hall : halls) {
+            //Hibernate.initialize(hall.getCongregation());
+            //Hibernate.initialize(hall.getCongregations());
+            hall.setCongregation(null);
+            hall.setCongregations(null);
+            hall.setProjects(null);
+        }
+        return halls;
     }
 
     @Override

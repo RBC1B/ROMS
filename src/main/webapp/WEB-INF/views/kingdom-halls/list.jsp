@@ -23,11 +23,11 @@
                 <tbody>
                     <c:forEach items="${kingdomHalls}" var="kingdomHall">
                         <tr>
-                            <td>${kingdomHall.kingdomHall}</td>
+                            <td>${kingdomHall.name}</td>
                             <td>${kingdomHall.town}</td>
-                            <td>${kingdomHall.postcode}</td>
-                            <td><a href="<c:url value="/kingdom-halls/${kingdomHall.kingdomHall}" />">View</a>&nbsp;
-                                <a href="<c:url value="/kingdom-halls/${kingdomHall.kingdomHall}/edit" />">Edit</a>&nbsp;
+                            <td>${kingdomHall.postCode}</td>
+                            <td><a href="<c:url value="/kingdom-halls/${kingdomHall.name}" />">View</a>&nbsp;
+                                <a href="<c:url value="/kingdom-halls/${kingdomHall.name}/edit" />">Edit</a>&nbsp;
                                 <a href="delete">Delete</a>
                             </td>
                         </tr>

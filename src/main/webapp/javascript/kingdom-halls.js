@@ -5,7 +5,10 @@ $(document).ready(function() {
         "iDisplayLength": 50,
         "aoColumnDefs": [
             { 'bSortable': false, 'aTargets': [ 3 ] }
-        ]
+        ],
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": ""
     });
 
     $("tfoot input").keyup(function () {
