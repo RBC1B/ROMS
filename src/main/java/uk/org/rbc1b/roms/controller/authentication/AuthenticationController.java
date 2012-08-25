@@ -17,6 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class AuthenticationController {
 
+    /**
+     * Display the login form.
+     * @param status status flag, used after unsuccessful login attempts
+     * @param model mvc model
+     * @return view name
+     */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String handleLoginGetRequest(@RequestParam(value = "status", required = false) String status, ModelMap model) {
         if (status != null) {
@@ -25,6 +31,10 @@ public class AuthenticationController {
         return "login";
     }
 
+    /**
+     * Display the logout request.
+     * @return view name
+     */
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String handleLogoutGetRequest() {
         return "logout";

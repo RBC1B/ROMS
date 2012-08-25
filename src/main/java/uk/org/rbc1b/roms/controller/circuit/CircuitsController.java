@@ -28,7 +28,9 @@ public class CircuitsController {
     private CircuitDao circuitDao;
 
     /**
-     * @return model containing the list of circuits
+     * Display the list of circuits.
+     * @param model mvc model
+     * @return view
      */
     @RequestMapping(method = RequestMethod.GET)
     @PreAuthorize("hasPermission('Circuit', 'READ')")
@@ -40,6 +42,13 @@ public class CircuitsController {
         return "circuits/list";
     }
 
+    /**
+     * Display a specified circuit.
+     * @param name circuit name (primary key)
+     * @param model mvc model
+     * @return view name
+     * @throws NoSuchRequestHandlingMethodException on failure to look up the circuit
+     */
     @RequestMapping(value = "{name}", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('Circuit', 'READ')")
     @Transactional(readOnly = true)
@@ -57,7 +66,9 @@ public class CircuitsController {
     }
 
     /**
-     * Display the form to create a new circuit
+     * Display the form to create a new circuit.
+     * @param model mvc model
+     * @return view name
      */
     @RequestMapping(value = "new", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('Circuit', 'ADD')")
@@ -66,11 +77,13 @@ public class CircuitsController {
         // initialise the form bean
         model.addAttribute("circuit", new CircuitForm());
 
-        return "circuits/update";
+        return "circuits/edit";
     }
 
     /**
-     * Create a new circuit
+     * Create a new circuit.
+     * @param circuitForm form bean
+     * @return view name
      */
     @RequestMapping(method = RequestMethod.POST)
     @PreAuthorize("hasPermission('Circuit', 'ADD')")
@@ -96,6 +109,9 @@ public class CircuitsController {
         return "redirect:circuits/" + circuitForm.getName();
     }
 
+    /**
+     * @param circuitDao circuit dao
+     */
     public void setCircuitDao(CircuitDao circuitDao) {
         this.circuitDao = circuitDao;
     }

@@ -29,6 +29,7 @@ public class QualificationsController {
     private QualificationDao qualificationDao;
 
     /**
+     * @param model spring mvc model
      * @return model containing the list of qualifications
      */
     @RequestMapping(method = RequestMethod.GET)
@@ -41,6 +42,12 @@ public class QualificationsController {
         return "qualifications/list";
     }
 
+    /**
+     * @param name qualification primary key
+     * @param model spring mvc model
+     * @return mvc view name
+     * @throws NoSuchRequestHandlingMethodException 404 response
+     */
     @RequestMapping(value = "{name}", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('Qualification', 'READ')")
     @Transactional(readOnly = true)
@@ -58,7 +65,9 @@ public class QualificationsController {
     }
 
     /**
-     * Display the form to create a new qualification
+     * Display the form to create a new qualification.
+     * @param model mvc model
+     * @return mvc view name
      */
     @RequestMapping(value = "new", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('Qualification', 'ADD')")
@@ -71,7 +80,9 @@ public class QualificationsController {
     }
 
     /**
-     * Create a new qualification
+     * Create a new qualification.
+     * @param qualificationForm  form bean
+     * @return mvc redirect
      */
     @RequestMapping(method = RequestMethod.POST)
     @PreAuthorize("hasPermission('Qualification', 'ADD')")

@@ -3,13 +3,15 @@
  * and open the template in the editor.
  */
 package uk.org.rbc1b.roms.db;
-import java.util.*;
+
+import java.util.Date;
 
 /**
  *
  * @author ramindursingh
  */
 public class User {
+
     private String id;
     private Integer rbcid;
     private Integer pin;
@@ -88,17 +90,16 @@ public class User {
     }
 
     /**
-     * @return the lastchanged
+     * @return the lastchange
      */
     public Date getLastchange() {
         return lastchange;
     }
 
     /**
-     * @param lastchanged the lastchanged to set
+     * @param lastchange the lastchanged to set
      */
     public void setLastchange(Date lastchange) {
         this.lastchange = lastchange;
     }
-
 }

@@ -4,7 +4,8 @@
  */
 package uk.org.rbc1b.roms.controller.circuit;
 
-import uk.org.rbc1b.roms.controller.circuit.CircuitDao;
+
+
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
@@ -41,10 +42,10 @@ public class HibernateCircuitDao implements CircuitDao {
         this.sessionFactory.getCurrentSession().save(circuit);
     }
 
-
+    /**
+     * @param sessionFactory  hibernate session factory
+     */
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
-
-
 }

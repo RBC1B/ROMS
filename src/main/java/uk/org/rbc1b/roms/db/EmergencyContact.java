@@ -9,6 +9,7 @@ package uk.org.rbc1b.roms.db;
  * @author ramindursingh
  */
 public class EmergencyContact {
+
     private Long rbcid;
     private String ename;
     private String erelation;
@@ -158,12 +159,5 @@ public class EmergencyContact {
      */
     public void setVolunteer(Volunteer volunteer) {
         this.volunteer = volunteer;
-    }
-
-    public String getHTMLTable(){
-        String html="<table>"
-                + "<tr><td>test</td></tr>"
-                + "</table>";
-        return html;
     }
 }

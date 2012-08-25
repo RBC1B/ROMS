@@ -4,8 +4,6 @@
  */
 package uk.org.rbc1b.roms.controller.qualification;
 
-import uk.org.rbc1b.roms.controller.qualification.*;
-import uk.org.rbc1b.roms.controller.qualification.QualificationDao;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
