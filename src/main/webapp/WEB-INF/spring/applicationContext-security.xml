@@ -7,13 +7,14 @@
                     http://www.springframework.org/schema/security
                     http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
-    <http pattern="/css/**" security="none"/>
     <http pattern="/login" security="none"/>
     <http pattern="/logout" security="none"/>
+    <http pattern="/css/**" security="none"/>
 
-    <http auto-config="true" use-expressions="true">
+    <http use-expressions="true">
         <intercept-url pattern="/**" access="isAuthenticated()" />
         <form-login login-page='/login' default-target-url="/" authentication-failure-url="/login?status=fail" />
+        <http-basic />
         <logout logout-success-url="/logout" />
         <session-management>
             <concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
