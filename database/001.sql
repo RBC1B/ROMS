@@ -8,7 +8,8 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 create table Application(
     ApplicationId bigint(20) auto_increment,
-    Name varchar(20) unique,
+    Name varchar(30) unique, -- display name
+    Code varchar(12) unique, -- used in backend as an identifier
     Comments varchar(250),
     primary key (ApplicationId)
 )engine=InnoDB;
@@ -233,7 +234,6 @@ create table ApplicationAccess(
     ApplicationId bigint(20),
     DepartmentAccess integer,
     NonDepartmentAccess integer,
-    Name varchar (50) unique,
     primary key (ApplicationAccessId),
     unique (PersonId, ApplicationId),
     constraint foreign key (PersonId) references Person(PersonId) on delete cascade,
@@ -436,16 +436,16 @@ create table Updates(
     constraint foreign key (PersonId) references Person(PersonId) on delete set null
 )engine=InnoDB;
 
-insert into Application (Name, Comments) values
-    ('Attendance & Invitations','Mangaging project invites and gates list'),
-    ('Circuit', 'Managing Circuits in RBC region'),
-    ('Congregation','Managing Congregations in RBC region'),
-    ('Database','Managing database and definitions'),
-    ('Kingdom Halls','Managing Kingdom Halls in RBC region'),
-    ('Projects','Managing Projects'),
-    ('Skills','Managing volunteer\'s skills and qualifications'),
-    ('User','Managing User access'),
-    ('Volunteers','Managing Volunteers');
+insert into Application (Name, Code, Comments) values
+    ('Attendance & Invitations', 'ATTENDANCE', 'Mangaging project invites and gates list'),
+    ('Circuit', 'CIRCUIT', 'Managing Circuits in RBC region'),
+    ('Congregation', 'CONG', 'Managing Congregations in RBC region'),
+    ('Database', 'DATABASE', 'Managing database and definitions'),
+    ('Kingdom Halls', 'KINGDOMHALL', 'Managing Kingdom Halls in RBC region'),
+    ('Projects', 'PROJECT', 'Managing Projects'),
+    ('Skills', 'SKILL', 'Managing volunteer\'s skills and qualifications'),
+    ('User', 'USER', 'Managing User access'),
+    ('Volunteers', 'VOLUNTEER', 'Managing Volunteers');
 
 insert into OwnershipType (Name) values
     ('Freehold'),
