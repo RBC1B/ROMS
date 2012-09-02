@@ -37,7 +37,7 @@ public class KingdomHallsController {
      * @return view
      */
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=text/html")
-    @PreAuthorize("hasPermission('KingdomHall', 'READ')")
+    @PreAuthorize("hasPermission('KINGDOMHALL', 'READ')")
     @Transactional(readOnly = true)
     public String handleList(ModelMap model) {
 
@@ -52,7 +52,7 @@ public class KingdomHallsController {
      * @return view
      */
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json")
-    @PreAuthorize("hasPermission('KingdomHall', 'READ')")
+    @PreAuthorize("hasPermission('KINGDOMHALL', 'READ')")
     @Transactional(readOnly = true)
     @ResponseBody
     public AjaxDataTableResult<KingdomHallListModel> handlePageList(@RequestParam(value = "sEcho") String echoId) {
@@ -73,7 +73,7 @@ public class KingdomHallsController {
      * @throws NoSuchRequestHandlingMethodException on failure to look up the kingdom hall
      */
     @RequestMapping(value = "{name}", method = RequestMethod.GET)
-    @PreAuthorize("hasPermission('KingdomHall', 'READ')")
+    @PreAuthorize("hasPermission('KINGDOMHALL', 'READ')")
     @Transactional(readOnly = true)
     public String handleCircuit(@PathVariable String name, ModelMap model) throws NoSuchRequestHandlingMethodException {
 

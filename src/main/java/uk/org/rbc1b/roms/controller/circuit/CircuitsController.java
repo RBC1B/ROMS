@@ -34,7 +34,7 @@ public class CircuitsController {
      * @return view
      */
     @RequestMapping(method = RequestMethod.GET)
-    @PreAuthorize("hasPermission('Circuit', 'READ')")
+    @PreAuthorize("hasPermission('CIRCUIT', 'READ')")
     @Transactional(readOnly = true)
     public String handleList(ModelMap model) {
 
@@ -52,7 +52,7 @@ public class CircuitsController {
      * @throws NoSuchRequestHandlingMethodException on failure to look up the circuit
      */
     @RequestMapping(value = "{name}", method = RequestMethod.GET)
-    @PreAuthorize("hasPermission('Circuit', 'READ')")
+    @PreAuthorize("hasPermission('CIRCUIT', 'READ')")
     @Transactional(readOnly = true)
     public String handleCircuit(@PathVariable String name, ModelMap model) throws NoSuchRequestHandlingMethodException {
 
@@ -74,7 +74,7 @@ public class CircuitsController {
      * @return view name
      */
     @RequestMapping(value = "new", method = RequestMethod.GET)
-    @PreAuthorize("hasPermission('Circuit', 'ADD')")
+    @PreAuthorize("hasPermission('CIRCUIT', 'ADD')")
     public String handleNewForm(ModelMap model) {
 
         // initialise the form bean
@@ -90,7 +90,7 @@ public class CircuitsController {
      * @return view name
      */
     @RequestMapping(method = RequestMethod.POST)
-    @PreAuthorize("hasPermission('Circuit', 'ADD')")
+    @PreAuthorize("hasPermission('CIRCUIT', 'ADD')")
     @Transactional
     public String handleNewSubmit(@Valid CircuitForm circuitForm) {
 

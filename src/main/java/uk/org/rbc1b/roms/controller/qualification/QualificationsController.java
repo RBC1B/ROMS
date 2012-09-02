@@ -33,7 +33,7 @@ public class QualificationsController {
      * @return model containing the list of qualifications
      */
     @RequestMapping(method = RequestMethod.GET)
-    @PreAuthorize("hasPermission('Qualification', 'READ')")
+    @PreAuthorize("hasPermission('SKILL', 'READ')")
     @Transactional(readOnly = true)
     public String handleList(ModelMap model) {
 
@@ -49,7 +49,7 @@ public class QualificationsController {
      * @throws NoSuchRequestHandlingMethodException 404 response
      */
     @RequestMapping(value = "{name}", method = RequestMethod.GET)
-    @PreAuthorize("hasPermission('Qualification', 'READ')")
+    @PreAuthorize("hasPermission('SKILL', 'READ')")
     @Transactional(readOnly = true)
     public String handleQualification(@PathVariable String name, ModelMap model) throws NoSuchRequestHandlingMethodException {
 
@@ -70,7 +70,7 @@ public class QualificationsController {
      * @return mvc view name
      */
     @RequestMapping(value = "new", method = RequestMethod.GET)
-    @PreAuthorize("hasPermission('Qualification', 'ADD')")
+    @PreAuthorize("hasPermission('SKILL', 'ADD')")
     public String handleNewForm(ModelMap model) {
 
         // initialise the form bean
@@ -85,7 +85,7 @@ public class QualificationsController {
      * @return mvc redirect
      */
     @RequestMapping(method = RequestMethod.POST)
-    @PreAuthorize("hasPermission('Qualification', 'ADD')")
+    @PreAuthorize("hasPermission('SKILL', 'ADD')")
     @Transactional
     public String handleNewSubmit(@Valid QualificationForm qualificationForm) {
 
