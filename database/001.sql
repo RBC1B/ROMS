@@ -134,7 +134,7 @@ create table TitleHolder(
 
 create table InterviewStatus(
     InterviewStatusId bigint(20) auto_increment,
-    Status varchar (50) unique,
+    Description varchar (50) unique,
     primary key (InterviewStatusId)
 )engine=InnoDB;
 
@@ -191,8 +191,8 @@ create table Volunteer(
     MaritalStatusId bigint(20),
     BaptismDate date,
     InterviewDate date,
-    InterviewA bigint(20),
-    InterviewB bigint(20),
+    InterviewerA bigint(20),
+    InterviewerB bigint(20),
     InterviewComments varchar(150),
     JoinedDate date,
     FormDate date,
@@ -214,8 +214,8 @@ create table Volunteer(
     constraint foreign key (EmergencyContactId) references Person(PersonId) on delete set null,
     constraint foreign key (EmergencyContactRelationshipId) references Relationship(RelationshipId) on delete set null,
     constraint foreign key (MaritalStatusId) references MaritalStatus(MaritalStatusId) on delete set null,
-    constraint foreign key (InterviewA) references Person(PersonId) on delete set null,
-    constraint foreign key (InterviewB) references Person(PersonId) on delete set null,
+    constraint foreign key (InterviewerA) references Person(PersonId) on delete set null,
+    constraint foreign key (InterviewerB) references Person(PersonId) on delete set null,
     constraint foreign key (InterviewStatusId) references InterviewStatus(InterviewStatusId) on delete set null
 )engine=InnoDB;
 
@@ -289,10 +289,10 @@ create table ProjectType(
     primary key (ProjectTypeId)
 )engine=InnoDB;
 
-create table InviteConfirmation(
-    InviteConfirmationId bigint(20) auto_increment,
+create table InvitationConfirmation(
+    InvitationConfirmationId bigint(20) auto_increment,
     Description varchar (25) unique,
-    primary key (InviteConfirmationId)
+    primary key (InvitationConfirmationId)
 )engine=InnoDB;
 
 create table Commentator(
@@ -328,7 +328,7 @@ create table Project(
     ContactPersonId bigint(20),
     RequestDate date,
     VisitDate date,
-    ProjectEstimateCost varchar(50),
+    EstimateCost varchar(50),
     ProjectStatusId bigint(20),
     SupportingCongregation varchar(250),
     ProjectConstraints text,
@@ -372,20 +372,20 @@ create table Attendance(
     PersonId bigint(20),
     InviteDate date,
     AbleToCome boolean,
-    InviteConfirmationId bigint(20),
+    InvitationConfirmationId bigint(20),
     DepartmentId bigint(20),
     Attended boolean,
     primary key (AttendanceId),
     unique (ProjectId, PersonId, InviteDate),
     constraint foreign key (ProjectId) references Project(ProjectId) on delete cascade,
     constraint foreign key (PersonId) references Person(PersonId) on delete cascade,
-    constraint foreign key (InviteConfirmationId) references InviteConfirmation(InviteConfirmationId) on delete set null,
+    constraint foreign key (InvitationConfirmationId) references InvitationConfirmation(InvitationConfirmationId) on delete set null,
     constraint foreign key (DepartmentId) references Department(DepartmentId) on delete set null
 )engine=InnoDB;
 
 create table Qualification(
     QualificationId bigint(20) auto_increment,
-    Qualification varchar(50) unique,
+    Name varchar(50) unique,
     Description varchar(150),
     AppearOnBadge boolean default false,
     primary key (QualificationId)
@@ -404,7 +404,7 @@ create table VolunteerQualification(
 
 create table Skill(
     SkillId bigint(20) auto_increment,
-    Skill varchar (50) unique,
+    Name varchar (50) unique,
     DepartmentId bigint(20),
     Description varchar(250),
     AppearOnBadge boolean default false,
@@ -474,7 +474,7 @@ insert into CongregationRole(Description) values
     ('CoBE'),
     ('Secretary');
 
-insert into InterviewStatus (Status) values
+insert into InterviewStatus (Description) values
     ('Invite Due'),
     ('Invited'),
     ('No-Show'),
@@ -536,7 +536,7 @@ insert into Department (Name, SuperDepartmentId, Description) values
     ('Land Acquisition and Sale','49',''),
     ('Land Search','49',''),
     ('Planning Policy','49','');
- 
+
 insert into RbcStatus (Description) values
     ('Active'),
     ('Do Not Use'),
@@ -568,7 +568,7 @@ insert into MaritalStatus(Description) values
     ('Divorced'),
     ('Married'),
     ('Other'),
-    ('Seperated'),
+    ('Separated'),
     ('Single'),
     ('Widowed');
 
@@ -624,7 +624,7 @@ insert into ProjectType (Description) values
     ('Rebuild'),
     ('Refurbishment');
 
-insert into InviteConfirmation (Description) values
+insert into InvitationConfirmation (Description) values
     ('Assembly/Convention'),
     ('Circuit Visit'),
     ('Holiday'),
