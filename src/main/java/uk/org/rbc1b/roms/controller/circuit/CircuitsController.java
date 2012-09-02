@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
-import uk.org.rbc1b.roms.db.Circuit;
+import uk.org.rbc1b.roms.db.congregation.Circuit;
 
 /**
  *
@@ -29,6 +29,7 @@ public class CircuitsController {
 
     /**
      * Display the list of circuits.
+     *
      * @param model mvc model
      * @return view
      */
@@ -44,6 +45,7 @@ public class CircuitsController {
 
     /**
      * Display a specified circuit.
+     *
      * @param name circuit name (primary key)
      * @param model mvc model
      * @return view name
@@ -67,6 +69,7 @@ public class CircuitsController {
 
     /**
      * Display the form to create a new circuit.
+     *
      * @param model mvc model
      * @return view name
      */
@@ -82,6 +85,7 @@ public class CircuitsController {
 
     /**
      * Create a new circuit.
+     *
      * @param circuitForm form bean
      * @return view name
      */
@@ -91,18 +95,7 @@ public class CircuitsController {
     public String handleNewSubmit(@Valid CircuitForm circuitForm) {
 
         Circuit circuit = new Circuit();
-        circuit.setCircuitName(circuitForm.getName());
-        circuit.setCircuitOverseer(circuitForm.getOverseerName());
-        circuit.setCocounty(circuitForm.getOverseerCounty());
-        circuit.setComments(circuitForm.getComments());
-        circuit.setCopostcode(circuitForm.getOverseerPostcode());
-        circuit.setCostreet(circuitForm.getOverseerStreet());
-        circuit.setCotown(circuitForm.getOverseerTelephone());
-        circuit.setEmail(circuitForm.getOverseerEmail());
-        circuit.setMobile(circuitForm.getOverseerMobile());
-        circuit.setTelephone(circuitForm.getOverseerTelephone());
-
-        //circuit.setCongregations(); - no congregations initially created
+        circuit.setName(circuitForm.getName());
 
         circuitDao.createCircuit(circuit);
 

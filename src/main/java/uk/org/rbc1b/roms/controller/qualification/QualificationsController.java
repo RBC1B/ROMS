@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
-import uk.org.rbc1b.roms.db.Qualification;
+import uk.org.rbc1b.roms.db.volunteer.Qualification;
 
 /**
  * Qualification types which may be applied to a volunteer.
@@ -90,7 +90,7 @@ public class QualificationsController {
     public String handleNewSubmit(@Valid QualificationForm qualificationForm) {
 
         Qualification qualification = new Qualification();
-        qualification.setQualification(qualificationForm.getQualification());
+        qualification.setName(qualificationForm.getQualification());
         qualification.setDescription(qualificationForm.getDescription());
 
         //qualification.setQualifcations(); - no qualifications initially created

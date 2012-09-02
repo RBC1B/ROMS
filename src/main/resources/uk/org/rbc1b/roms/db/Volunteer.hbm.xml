@@ -2,23 +2,23 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 05-Nov-2011 17:12:44 by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-    <class catalog="RBC1B" name="uk.org.rbc1b.roms.db.Volunteer" table="Volunteer">
-        <id name="rbcid" type="java.lang.Long">
-            <column name="RBCID"/>
-            <generator class="identity"/>
-        </id>
-        <property name="forename" type="string">
-            <column length="50" name="Forename"/>
-        </property>
-        <property name="surname" type="string">
-            <column length="50" name="Surname"/>
-        </property>
-        <property name="middleName" type="string">
-            <column length="50" name="MiddleName"/>
-        </property>
-        <property name="pictureName" type="string">
-            <column length="50" name="PictureName"/>
-        </property>
-        <one-to-one name="econtact" class="uk.org.rbc1b.roms.db.EmergencyContact" />
-    </class>
+  <class catalog="RBC1B" name="uk.org.rbc1b.roms.db.volunteer.Volunteer" table="Volunteer">
+    <id name="rbcid" type="java.lang.Long">
+      <column name="RBCID"/>
+      <generator class="identity"/>
+    </id>
+    <property name="forename" type="string">
+      <column length="50" name="Forename"/>
+    </property>
+    <property name="surname" type="string">
+      <column length="50" name="Surname"/>
+    </property>
+    <property name="middleName" type="string">
+      <column length="50" name="MiddleName"/>
+    </property>
+    <property name="pictureName" type="string">
+      <column length="50" name="PictureName"/>
+    </property>
+    <one-to-one class="uk.org.rbc1b.roms.db.EmergencyContact" name="econtact"/>
+  </class>
 </hibernate-mapping>

@@ -2,12 +2,12 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated Apr 12, 2012 2:36:13 PM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-  <class catalog="RBC1B" name="uk.org.rbc1b.roms.db.KingdomHall" table="KingdomHall">
+  <class catalog="RBC1B" name="uk.org.rbc1b.roms.db.kingdomhall.KingdomHall" table="KingdomHall">
     <id name="kingdomHall" type="string">
       <column length="50" name="KingdomHall"/>
       <generator class="assigned"/>
     </id>
-    <many-to-one class="uk.org.rbc1b.roms.db.Congregation" fetch="select" name="congregation">
+    <many-to-one class="uk.org.rbc1b.roms.db.congregation.Congregation" fetch="select" name="congregation">
       <column length="50" name="TitleHolder"/>
     </many-to-one>
     <property name="street" type="string">
@@ -44,13 +44,13 @@
       <key>
         <column length="50" name="KingdomHall"/>
       </key>
-      <one-to-many class="uk.org.rbc1b.roms.db.Congregation"/>
+      <one-to-many class="uk.org.rbc1b.roms.db.congregation.Congregation"/>
     </set>
     <set inverse="true" name="projects">
       <key>
         <column length="50" name="KingdomHall"/>
       </key>
-      <one-to-many class="uk.org.rbc1b.roms.db.Project"/>
+      <one-to-many class="uk.org.rbc1b.roms.db.project.Project"/>
     </set>
   </class>
 </hibernate-mapping>

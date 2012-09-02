@@ -2,15 +2,15 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated Apr 12, 2012 2:36:13 PM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-  <class catalog="RBC1B" name="uk.org.rbc1b.roms.db.Congregation" table="Congregation">
+  <class catalog="RBC1B" name="uk.org.rbc1b.roms.db.congregation.Congregation" table="Congregation">
     <id name="congName" type="string">
       <column length="50" name="CongName"/>
       <generator class="assigned"/>
     </id>
-    <many-to-one class="uk.org.rbc1b.roms.db.KingdomHall" fetch="select" name="kingdomHall">
+    <many-to-one class="uk.org.rbc1b.roms.db.kingdomhall.KingdomHall" fetch="select" name="kingdomHall">
       <column length="50" name="KingdomHall"/>
     </many-to-one>
-    <many-to-one class="uk.org.rbc1b.roms.db.Circuit" fetch="select" name="circuit">
+    <many-to-one class="uk.org.rbc1b.roms.db.congregation.Circuit" fetch="select" name="circuit">
       <column length="50" name="CircuitName"/>
     </many-to-one>
     <property name="congNumber" type="string">
@@ -44,7 +44,7 @@
       <key>
         <column length="50" name="TitleHolder"/>
       </key>
-      <one-to-many class="uk.org.rbc1b.roms.db.KingdomHall"/>
+      <one-to-many class="uk.org.rbc1b.roms.db.kingdomhall.KingdomHall"/>
     </set>
   </class>
 </hibernate-mapping>

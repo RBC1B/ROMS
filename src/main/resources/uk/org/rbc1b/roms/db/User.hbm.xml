@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 05-Nov-2011 17:12:44 by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-  <class catalog="RBC1B" name="uk.org.rbc1b.roms.db.User" table="User">
+  <class catalog="RBC1B" name="uk.org.rbc1b.roms.db.application.User" table="User">
     <id name="id" type="string">
       <column name="UserName"/>
       <generator class="assigned"/>

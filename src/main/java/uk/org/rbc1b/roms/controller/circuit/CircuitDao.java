@@ -5,7 +5,7 @@
 package uk.org.rbc1b.roms.controller.circuit;
 
 import java.util.List;
-import uk.org.rbc1b.roms.db.Circuit;
+import uk.org.rbc1b.roms.db.congregation.Circuit;
 
 /**
  * Look up circuit information.

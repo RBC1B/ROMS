@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-  <class catalog="RBC1B" name="uk.org.rbc1b.roms.db.Role" table="Role">
+  <class catalog="RBC1B" name="uk.org.rbc1b.roms.db.volunteer.Role" table="Role">
     <id name="role" type="java.lang.String">
       <column name="Role"/>
       <generator class="assigned"/>

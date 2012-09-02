@@ -2,15 +2,15 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated Apr 12, 2012 2:36:13 PM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-  <class catalog="RBC1B" name="uk.org.rbc1b.roms.db.Project" table="Project">
+  <class catalog="RBC1B" name="uk.org.rbc1b.roms.db.project.Project" table="Project">
     <id name="projectName" type="string">
       <column length="50" name="ProjectName"/>
       <generator class="assigned"/>
     </id>
-    <many-to-one class="uk.org.rbc1b.roms.db.KingdomHall" fetch="select" name="kingdomHall">
+    <many-to-one class="uk.org.rbc1b.roms.db.kingdomhall.KingdomHall" fetch="select" name="kingdomHall">
       <column length="50" name="KingdomHall"/>
     </many-to-one>
-    <many-to-one class="uk.org.rbc1b.roms.db.ProjectType" fetch="select" name="projectType">
+    <many-to-one class="uk.org.rbc1b.roms.db.project.ProjectType" fetch="select" name="projectType">
       <column length="20" name="ProjectType"/>
     </many-to-one>
     <property name="priority" type="string">

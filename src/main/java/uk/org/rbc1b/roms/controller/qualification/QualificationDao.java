@@ -5,7 +5,7 @@
 package uk.org.rbc1b.roms.controller.qualification;
 
 import java.util.List;
-import uk.org.rbc1b.roms.db.Qualification;
+import uk.org.rbc1b.roms.db.volunteer.Qualification;
 
 /**
  * Look up qualification information.

@@ -16,7 +16,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.controller.AjaxDataTableResult;
-import uk.org.rbc1b.roms.db.KingdomHall;
+import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 
 /**
  * Controller for the kingdom hall related pages.
@@ -95,9 +95,9 @@ public class KingdomHallsController {
         List<KingdomHallListModel> modelList = new ArrayList<KingdomHallListModel>(halls.size());
         for (KingdomHall hall : halls) {
             KingdomHallListModel model = new KingdomHallListModel();
-            model.setName(hall.getKingdomHall());
-            model.setPostCode(hall.getPostcode());
-            model.setTown(hall.getTown());
+            model.setName(hall.getName());
+            model.setPostCode(hall.getAddress().getPostcode());
+            model.setTown(hall.getAddress().getTown());
             modelList.add(model);
         }
         return modelList;

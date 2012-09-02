@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 23-Sep-2011 14:10:17 by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-  <class catalog="RBC1B" name="uk.org.rbc1b.roms.db.Assignment" table="Assignment">
+  <class catalog="RBC1B" name="uk.org.rbc1b.roms.db.volunteer.Assignment" table="Assignment">
     <composite-id class="uk.org.rbc1b.roms.db.AssignmentId" name="id">
       <key-property name="rbcid" type="java.lang.Long">
         <column name="RBCID" precision="10" scale="0"/>
@@ -11,10 +11,10 @@
         <column name="Department"/>
       </key-many-to-one>
     </composite-id>
-    <many-to-one class="uk.org.rbc1b.roms.db.Volunteer" fetch="select" insert="false" name="volunteer" update="false">
+    <many-to-one class="uk.org.rbc1b.roms.db.volunteer.Volunteer" fetch="select" insert="false" name="volunteer" update="false">
       <column name="RBCID" not-null="true" precision="10" scale="0"/>
     </many-to-one>
-    <many-to-one cascade="save-update" class="uk.org.rbc1b.roms.db.Role" column="Role" name="role" unique="true"/>
+    <many-to-one cascade="save-update" class="uk.org.rbc1b.roms.db.volunteer.Role" column="Role" name="role" unique="true"/>
     <property name="date" type="date">
       <column name="Date"/>
     </property>
