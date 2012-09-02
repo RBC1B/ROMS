@@ -27,7 +27,7 @@
             <password-encoder hash="sha" />
             <jdbc-user-service data-source-ref="dataSource"
                                users-by-username-query="SELECT UserName, Password, 'true' FROM User WHERE UserName = ?"
-                               authorities-by-username-query="SELECT UserName, CONCAT_WS(':', AppName, acl) from JACL WHERE UserName = ?" />
+                               authorities-by-username-query="SELECT u.UserName, CONCAT_WS(':', a.Code, aa.DepartmentAccess)  FROM User AS u INNER JOIN ApplicationAccess AS aa ON u.PersonId = aa.PersonId INNER JOIN Application AS a ON a.ApplicationId = aa.ApplicationId  WHERE u.UserName = ?" />
         </authentication-provider>
     </authentication-manager>
 
