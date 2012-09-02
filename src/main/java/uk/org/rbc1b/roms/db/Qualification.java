@@ -8,7 +8,7 @@ package uk.org.rbc1b.roms.db;
  *
  * @author ramindursingh
  */
-public class Qualifications {
+public class Qualification {
 
     private String qualification;
     private String description;
