@@ -11,7 +11,7 @@ package uk.org.rbc1b.roms.db.volunteer;
 public class InterviewStatus {
 
     private Integer interviewStatusId;
-    private String status;
+    private String description;
 
     public Integer getInterviewStatusId() {
         return interviewStatusId;
@@ -21,12 +21,12 @@ public class InterviewStatus {
         this.interviewStatusId = interviewStatusId;
     }
 
-    public String getStatus() {
-        return status;
+    public String getDescription() {
+        return description;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override

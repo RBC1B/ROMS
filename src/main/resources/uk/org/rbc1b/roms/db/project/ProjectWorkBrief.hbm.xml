@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping  package="uk.org.rbc1b.roms.db.project">
+    <class name="ProjectWorkBrief" table="ProjectWorkBrief">
+        <id name="projectWorkBriefId" >
+            <generator class="identity"/>
+        </id>
+        <many-to-one name="project" column="ProjectId" />
+        <many-to-one name="workFeature" column="WorkFeatureId" />
+        <property name="brief" />
+    </class>
+</hibernate-mapping>

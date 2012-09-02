@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping  package="uk.org.rbc1b.roms.db.volunteer">
+    <class name="Assignment" table="Assignment">
+        <id name="assignmentId" >
+            <generator class="identity"/>
+        </id>
+        <many-to-one name="person" column="PersonId" />
+        <many-to-one name="department" column="DepartmentId" />
+        <many-to-one name="role" column="RoleId" />
+        <property name="assignedDate" />
+        <many-to-one name="tradeNumber" column="TradeNumberId" />
+        <many-to-one name="team" column="TeamId" />
+    </class>
+</hibernate-mapping>

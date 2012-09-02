@@ -6,7 +6,7 @@ package uk.org.rbc1b.roms.db.volunteer;
 
 /**
  *
- * @author rhioli
+ * @author oliver.elder.esq
  */
 public class Relationship {
 

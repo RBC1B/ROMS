@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="uk.org.rbc1b.roms.db.congregation">
+    <class name="RbcRegion" table="RbcRegion">
+        <id name="rbcRegionId" >
+            <generator class="identity"/>
+        </id>
+        <property name="name" length="50" unique="true" />
+    </class>
+</hibernate-mapping>

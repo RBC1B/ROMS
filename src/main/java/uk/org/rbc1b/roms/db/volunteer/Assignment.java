@@ -4,8 +4,8 @@
  */
 package uk.org.rbc1b.roms.db.volunteer;
 
-import uk.org.rbc1b.roms.db.Person;
 import java.sql.Date;
+import uk.org.rbc1b.roms.db.Person;
 
 /**
  * @author oliver.elder.esq

@@ -1,11 +1,10 @@
 package uk.org.rbc1b.roms.db.project;
 
-import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
-import uk.org.rbc1b.roms.db.congregation.Congregation;
 import java.util.Date;
 import java.util.Set;
 import uk.org.rbc1b.roms.db.Address;
 import uk.org.rbc1b.roms.db.Person;
+import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 
 /**
  * @author oliver.elder.esq
@@ -24,7 +23,7 @@ public class Project {
     private Date visitDate;
     private String estimateCost;
     private ProjectStatus status;
-    private Congregation supportingCongregation;
+    private String supportingCongregation;
     private String constraints;
     private Person coordinator;
     private ProjectStage stage;
@@ -143,11 +142,11 @@ public class Project {
         this.status = status;
     }
 
-    public Congregation getSupportingCongregation() {
+    public String getSupportingCongregation() {
         return supportingCongregation;
     }
 
-    public void setSupportingCongregation(Congregation supportingCongregation) {
+    public void setSupportingCongregation(String supportingCongregation) {
         this.supportingCongregation = supportingCongregation;
     }
 

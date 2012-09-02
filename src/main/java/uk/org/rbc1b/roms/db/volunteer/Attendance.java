@@ -19,7 +19,7 @@ public class Attendance {
     private Person person;
     private Date inviteDate;
     private boolean ableToCome;
-    private InviteConfirmation inviteConfirmation;
+    private InvitationConfirmation invitationConfirmation;
     private Department department;
     private boolean attended;
 
@@ -55,12 +55,12 @@ public class Attendance {
         this.department = department;
     }
 
-    public InviteConfirmation getInviteConfirmation() {
-        return inviteConfirmation;
+    public InvitationConfirmation getInvitationConfirmation() {
+        return invitationConfirmation;
     }
 
-    public void setInviteConfirmation(InviteConfirmation inviteConfirmation) {
-        this.inviteConfirmation = inviteConfirmation;
+    public void setInvitationConfirmation(InvitationConfirmation invitationConfirmation) {
+        this.invitationConfirmation = invitationConfirmation;
     }
 
     public Date getInviteDate() {

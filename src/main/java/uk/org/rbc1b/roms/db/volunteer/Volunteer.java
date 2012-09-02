@@ -4,8 +4,8 @@
  */
 package uk.org.rbc1b.roms.db.volunteer;
 
-import uk.org.rbc1b.roms.db.Person;
 import java.sql.Date;
+import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.congregation.Congregation;
 
 /**
@@ -14,7 +14,7 @@ import uk.org.rbc1b.roms.db.congregation.Congregation;
  */
 public class Volunteer {
 
-    private Person person;
+    private Integer personId;
     private RbcStatus rbcStatus;
     private Congregation congregation;
     private Appointment appointment;
@@ -210,12 +210,12 @@ public class Volunteer {
         this.oversightComments = oversightComments;
     }
 
-    public Person getPerson() {
-        return person;
+    public Integer getPersonId() {
+        return personId;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setPersonId(Integer personId) {
+        this.personId = personId;
     }
 
     public RbcStatus getRbcStatus() {
@@ -260,8 +260,6 @@ public class Volunteer {
 
     @Override
     public String toString() {
-        return "Volunteer{" + "person=" + person + '}';
+        return "Volunteer{" + "personId=" + personId + '}';
     }
-
-
 }

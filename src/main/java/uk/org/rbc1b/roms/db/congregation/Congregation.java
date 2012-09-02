@@ -6,7 +6,7 @@ import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 /**
  * @author oliver.elder.esq
  */
-public class Congregation implements java.io.Serializable {
+public class Congregation {
 
     private Integer congregationId;
     private String name;

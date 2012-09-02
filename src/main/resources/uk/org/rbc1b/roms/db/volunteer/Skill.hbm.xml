@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping  package="uk.org.rbc1b.roms.db.volunteer">
+    <class name="Skill" table="Skill">
+        <id name="skillId" >
+            <generator class="identity"/>
+        </id>
+        <property name="name" length="50" />
+        <many-to-one name="department" column="DepartmentId" />
+        <property name="description" length="250" />
+        <property name="appearOnBadge"  />
+    </class>
+</hibernate-mapping>

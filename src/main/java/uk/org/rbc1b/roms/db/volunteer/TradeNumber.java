@@ -11,15 +11,7 @@ package uk.org.rbc1b.roms.db.volunteer;
 public class TradeNumber {
 
     private Integer tradeNumberId;
-    private String name;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    private String description;
 
     public Integer getTradeNumberId() {
         return tradeNumberId;
@@ -27,6 +19,14 @@ public class TradeNumber {
 
     public void setTradeNumberId(Integer tradeNumberId) {
         this.tradeNumberId = tradeNumberId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override

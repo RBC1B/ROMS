@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping  package="uk.org.rbc1b.roms.db.volunteer">
+    <class name="VolunteerSkill" table="VolunteerSkill">
+        <id name="volunteerSkillId" >
+            <generator class="identity"/>
+        </id>
+        <many-to-one name="person" column="PersonId" />
+        <many-to-one name="skill" column="SkillId" />
+        <property name="level" />
+        <property name="comments" length="250" />
+        <property name="trainingDate" />
+        <property name="trainingResults" length="15" />
+    </class>
+</hibernate-mapping>

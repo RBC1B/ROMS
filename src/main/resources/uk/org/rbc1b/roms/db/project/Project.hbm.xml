@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping  package="uk.org.rbc1b.roms.db.project">
+    <class name="Project" table="Project">
+        <id name="projectId" >
+            <generator class="identity"/>
+        </id>
+        <property name="name" length="50" unique="true" />
+        <many-to-one name="projectType" column="ProjectTypeId" />
+        <many-to-one name="kingdomHall" column="KingdomHallId" />
+        <property name="priority" length="50" />
+        <component name="address">
+            <property name="street" length="50"  />
+            <property name="town" length="50"  />
+            <property name="county" length="50"  />
+            <property name="postcode" length="10"  />
+        </component>
+        <property name="telephone" length="20" />
+        <many-to-one name="contactPerson" column="ContactPersonId" />
+        <property name="requestDate" />
+        <property name="visitDate" />
+        <property name="estimateCost" length="50" />
+        <many-to-one name="status" column="ProjectStatusId" />
+        <property name="supportingCongregation" length="250" />
+        <property name="constraints" column="ProjectConstraints" />
+        <many-to-one name="coordinator" column="CoordinatorId" />
+        <many-to-one name="stage" column="ProjectStageId" />
+        <property name="completedDate" />
+        <set name="workBriefs" inverse="true" cascade="all-delete-orphan">
+            <key column="ProjectId" />
+            <one-to-many class="uk.org.rbc1b.roms.db.project.ProjectWorkBrief" />
+        </set>
+    </class>
+</hibernate-mapping>

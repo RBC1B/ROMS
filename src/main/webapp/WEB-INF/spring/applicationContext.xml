@@ -28,24 +28,49 @@
         </property>
         <property name="mappingResources">
             <list>
-                <value>uk/org/rbc1b/roms/db/Assignment.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/Attendance.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/Circuit.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/Congregation.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/Contact.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/Department.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/EmergencyContact.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/Invitation.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/JACL.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/KingdomHall.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/Personal.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/Project.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/ProjectType.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/ProjectWorkStage.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/Role.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/Qualifications.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/User.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/Volunteer.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/Person.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/Updates.hbm.xml</value>
+
+                <value>uk/org/rbc1b/roms/db/congregation/Circuit.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/congregation/Congregation.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/congregation/CongregationContact.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/congregation/CongregationRole.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/congregation/RbcRegion.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/congregation/RbcSubRegion.hbm.xml</value>
+
+                <value>uk/org/rbc1b/roms/db/kingdomhall/HallFeature.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/kingdomhall/KingdomHall.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/kingdomhall/KingdomHallFeature.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/kingdomhall/OwnershipType.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/kingdomhall/TitleHolder.hbm.xml</value>
+
+                <value>uk/org/rbc1b/roms/db/project/Commentator.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/project/Project.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/project/ProjectEvent.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/project/ProjectStage.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/project/ProjectStatus.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/project/ProjectType.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/project/ProjectWorkBrief.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/project/WorkFeature.hbm.xml</value>
+
+                <value>uk/org/rbc1b/roms/db/volunteer/Appointment.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/volunteer/Assignment.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/volunteer/Attendance.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/volunteer/Department.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/volunteer/Fulltime.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/volunteer/InterviewStatus.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/volunteer/InvitationConfirmation.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/volunteer/MaritalStatus.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/volunteer/Qualification.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/volunteer/RbcStatus.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/volunteer/Relationship.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/volunteer/Role.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/volunteer/Skill.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/volunteer/Team.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/volunteer/TradeNumber.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/volunteer/Volunteer.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/volunteer/VolunteerQualification.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/volunteer/VolunteerSkill.hbm.xml</value>
             </list>
         </property>
     </bean>

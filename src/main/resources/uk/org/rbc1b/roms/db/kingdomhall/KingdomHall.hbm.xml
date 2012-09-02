@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping  package="uk.org.rbc1b.roms.db.kingdomhall">
+    <class name="KingdomHall" table="KingdomHall">
+        <id name="kingdomHallId" >
+            <generator class="identity"/>
+        </id>
+        <property name="name" length="50" unique="true" />
+        <component name="address">
+            <property name="street" length="50"  />
+            <property name="town" length="50"  />
+            <property name="county" length="50"  />
+            <property name="postcode" length="10"  />
+        </component>
+        <many-to-one name="ownershipType" column="OwnershipTypeId" />
+        <property name="drawings" length="50"  />
+        <!-- TODO: <many-to-one name="titleHolder" column="" /> -->
+        <set name="features" inverse="true" cascade="all-delete-orphan">
+            <key column="KingdomHallId" />
+            <one-to-many class="uk.org.rbc1b.roms.db.kingdomhall.KingdomHallFeature" />
+        </set>
+    </class>
+</hibernate-mapping>

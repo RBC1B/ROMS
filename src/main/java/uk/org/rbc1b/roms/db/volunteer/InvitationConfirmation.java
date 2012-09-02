@@ -8,9 +8,9 @@ package uk.org.rbc1b.roms.db.volunteer;
  *
  * @author oliver.elder.esq
  */
-public class InviteConfirmation {
+public class InvitationConfirmation {
 
-    private Integer inviteConfirmationId;
+    private Integer invitationConfirmationId;
     private String description;
 
     public String getDescription() {
@@ -21,16 +21,16 @@ public class InviteConfirmation {
         this.description = description;
     }
 
-    public Integer getInviteConfirmationId() {
-        return inviteConfirmationId;
+    public Integer getInvitationConfirmationId() {
+        return invitationConfirmationId;
     }
 
-    public void setInviteConfirmationId(Integer inviteConfirmationId) {
-        this.inviteConfirmationId = inviteConfirmationId;
+    public void setInvitationConfirmationId(Integer invitationConfirmationId) {
+        this.invitationConfirmationId = invitationConfirmationId;
     }
 
     @Override
     public String toString() {
-        return "InviteConfirmation{" + "inviteConfirmationId=" + inviteConfirmationId + '}';
+        return "InvitationConfirmation{" + "invitationConfirmationId=" + invitationConfirmationId + '}';
     }
 }
