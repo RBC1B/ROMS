@@ -24,8 +24,8 @@ public class HibernateCircuitDao implements CircuitDao {
     private SessionFactory sessionFactory;
 
     @Override
-    public Circuit findCircuit(final String name) {
-        return (Circuit) this.sessionFactory.getCurrentSession().get(Circuit.class, name);
+    public Circuit findCircuit(final Integer circuitId) {
+        return (Circuit) this.sessionFactory.getCurrentSession().get(Circuit.class, circuitId);
     }
 
     @Override

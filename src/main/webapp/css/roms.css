@@ -121,3 +121,10 @@ div.dataTables_wrapper a.paginate_button {
     margin-left: 5px;
     margin-right: 5px;
 }
+
+div.entity-list-results {
+}
+
+div.entity-list-add-new {
+    margin-top:25px;
+}

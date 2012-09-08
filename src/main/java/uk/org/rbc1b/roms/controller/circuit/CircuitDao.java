@@ -14,11 +14,11 @@ import uk.org.rbc1b.roms.db.congregation.Circuit;
 public interface CircuitDao {
 
     /**
-     * Find the circuit matching the name, or null if no match.
-     * @param name circuit name
+     * Find the circuit matching the id, or null if no match.
+     * @param circuitId id
      * @return  circuit
      */
-    Circuit findCircuit(String name);
+    Circuit findCircuit(Integer circuitId);
 
     /**
      * Find all matching circuits.

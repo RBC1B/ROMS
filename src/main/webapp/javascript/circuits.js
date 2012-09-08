@@ -4,7 +4,7 @@ $(document).ready(function() {
         "sPaginationType": "full_numbers",
         "iDisplayLength": 50,
         "aoColumnDefs": [
-            { 'bSortable': false, 'aTargets': [ 5 ] }
+            { 'bSortable': false, 'aTargets': [ 2 ] }
         ],
         "bStateSave": true,
         "fnStateSave": function (oSettings, oData) {

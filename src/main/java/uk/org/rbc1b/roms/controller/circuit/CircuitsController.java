@@ -46,20 +46,20 @@ public class CircuitsController {
     /**
      * Display a specified circuit.
      *
-     * @param name circuit name (primary key)
+     * @param circuitId circuit id (primary key)
      * @param model mvc model
      * @return view name
      * @throws NoSuchRequestHandlingMethodException on failure to look up the circuit
      */
-    @RequestMapping(value = "{name}", method = RequestMethod.GET)
+    @RequestMapping(value = "{circuitId}", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('CIRCUIT', 'READ')")
     @Transactional(readOnly = true)
-    public String handleCircuit(@PathVariable String name, ModelMap model) throws NoSuchRequestHandlingMethodException {
+    public String handleCircuit(@PathVariable Integer circuitId, ModelMap model) throws NoSuchRequestHandlingMethodException {
 
-        Circuit circuit = circuitDao.findCircuit(name);
+        Circuit circuit = circuitDao.findCircuit(circuitId);
 
         if (circuit == null) {
-            throw new NoSuchRequestHandlingMethodException("No circuit with name [" + name + "]", this.getClass());
+            throw new NoSuchRequestHandlingMethodException("No circuit #" + circuitId, this.getClass());
         }
 
         model.addAttribute("circuit", circuit);
@@ -99,7 +99,7 @@ public class CircuitsController {
 
         circuitDao.createCircuit(circuit);
 
-        return "redirect:circuits/" + circuitForm.getName();
+        return "redirect:circuits/" + circuit.getCircuitId();
     }
 
     /**
