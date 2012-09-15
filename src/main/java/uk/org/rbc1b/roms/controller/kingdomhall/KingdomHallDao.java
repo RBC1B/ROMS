@@ -5,7 +5,7 @@
 package uk.org.rbc1b.roms.controller.kingdomhall;
 
 import java.util.List;
-import uk.org.rbc1b.roms.db.KingdomHall;
+import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 
 /**
  * Look up Kingdom Hall information.

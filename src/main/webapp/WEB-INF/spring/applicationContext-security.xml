@@ -7,13 +7,14 @@
                     http://www.springframework.org/schema/security
                     http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
-    <http pattern="/css/**" security="none"/>
     <http pattern="/login" security="none"/>
     <http pattern="/logout" security="none"/>
+    <http pattern="/css/**" security="none"/>
 
-    <http auto-config="true" use-expressions="true">
+    <http use-expressions="true">
         <intercept-url pattern="/**" access="isAuthenticated()" />
         <form-login login-page='/login' default-target-url="/" authentication-failure-url="/login?status=fail" />
+        <http-basic />
         <logout logout-success-url="/logout" />
         <session-management>
             <concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
@@ -26,7 +27,7 @@
             <password-encoder hash="sha" />
             <jdbc-user-service data-source-ref="dataSource"
                                users-by-username-query="SELECT UserName, Password, 'true' FROM User WHERE UserName = ?"
-                               authorities-by-username-query="SELECT UserName, CONCAT_WS(':', AppName, acl) from JACL WHERE UserName = ?" />
+                               authorities-by-username-query="SELECT u.UserName, CONCAT_WS(':', a.Code, aa.DepartmentAccess)  FROM User AS u INNER JOIN ApplicationAccess AS aa ON u.PersonId = aa.PersonId INNER JOIN Application AS a ON a.ApplicationId = aa.ApplicationId  WHERE u.UserName = ?" />
         </authentication-provider>
     </authentication-manager>
 

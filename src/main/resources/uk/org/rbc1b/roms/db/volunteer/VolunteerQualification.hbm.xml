@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping  package="uk.org.rbc1b.roms.db.volunteer">
+    <class name="VolunteerQualification" table="VolunteerQualification">
+        <id name="volunteerQualificationId" >
+            <generator class="identity"/>
+        </id>
+        <many-to-one name="person" column="PersonId" />
+        <many-to-one name="qualification" column="QualificationId" />
+        <property name="comments" length="100" />
+    </class>
+</hibernate-mapping>

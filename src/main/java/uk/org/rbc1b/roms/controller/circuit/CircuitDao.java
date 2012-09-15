@@ -5,7 +5,7 @@
 package uk.org.rbc1b.roms.controller.circuit;
 
 import java.util.List;
-import uk.org.rbc1b.roms.db.Circuit;
+import uk.org.rbc1b.roms.db.congregation.Circuit;
 
 /**
  * Look up circuit information.
@@ -14,11 +14,11 @@ import uk.org.rbc1b.roms.db.Circuit;
 public interface CircuitDao {
 
     /**
-     * Find the circuit matching the name, or null if no match.
-     * @param name circuit name
+     * Find the circuit matching the id, or null if no match.
+     * @param circuitId id
      * @return  circuit
      */
-    Circuit findCircuit(String name);
+    Circuit findCircuit(Integer circuitId);
 
     /**
      * Find all matching circuits.

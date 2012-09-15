@@ -9,7 +9,7 @@ import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import uk.org.rbc1b.roms.db.KingdomHall;
+import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 
 /**
  *
@@ -31,11 +31,7 @@ public class HibernateKingdomHallDao implements KingdomHallDao {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(KingdomHall.class);
         List<KingdomHall> halls = criteria.list();
         for (KingdomHall hall : halls) {
-            //Hibernate.initialize(hall.getCongregation());
-            //Hibernate.initialize(hall.getCongregations());
-            hall.setCongregation(null);
-            hall.setCongregations(null);
-            hall.setProjects(null);
+            hall.setFeatures(null);
         }
         return halls;
     }

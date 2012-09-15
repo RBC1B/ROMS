@@ -11,7 +11,7 @@ import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import uk.org.rbc1b.roms.db.Circuit;
+import uk.org.rbc1b.roms.db.congregation.Circuit;
 
 /**
  *
@@ -24,8 +24,8 @@ public class HibernateCircuitDao implements CircuitDao {
     private SessionFactory sessionFactory;
 
     @Override
-    public Circuit findCircuit(final String name) {
-        return (Circuit) this.sessionFactory.getCurrentSession().get(Circuit.class, name);
+    public Circuit findCircuit(final Integer circuitId) {
+        return (Circuit) this.sessionFactory.getCurrentSession().get(Circuit.class, circuitId);
     }
 
     @Override

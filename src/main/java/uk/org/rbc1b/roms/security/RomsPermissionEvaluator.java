@@ -56,7 +56,7 @@ public class RomsPermissionEvaluator implements PermissionEvaluator {
     }
 
     /**
-     * Access level values, corresponding to the levels 0-3.
+     * Access level values, corresponding to the levels 0-4.
      */
     public static enum AccessLevel {
 

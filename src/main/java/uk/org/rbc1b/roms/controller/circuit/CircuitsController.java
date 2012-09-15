@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
-import uk.org.rbc1b.roms.db.Circuit;
+import uk.org.rbc1b.roms.db.congregation.Circuit;
 
 /**
  *
@@ -29,11 +29,12 @@ public class CircuitsController {
 
     /**
      * Display the list of circuits.
+     *
      * @param model mvc model
      * @return view
      */
     @RequestMapping(method = RequestMethod.GET)
-    @PreAuthorize("hasPermission('Circuit', 'READ')")
+    @PreAuthorize("hasPermission('CIRCUIT', 'READ')")
     @Transactional(readOnly = true)
     public String handleList(ModelMap model) {
 
@@ -44,20 +45,21 @@ public class CircuitsController {
 
     /**
      * Display a specified circuit.
-     * @param name circuit name (primary key)
+     *
+     * @param circuitId circuit id (primary key)
      * @param model mvc model
      * @return view name
      * @throws NoSuchRequestHandlingMethodException on failure to look up the circuit
      */
-    @RequestMapping(value = "{name}", method = RequestMethod.GET)
-    @PreAuthorize("hasPermission('Circuit', 'READ')")
+    @RequestMapping(value = "{circuitId}", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('CIRCUIT', 'READ')")
     @Transactional(readOnly = true)
-    public String handleCircuit(@PathVariable String name, ModelMap model) throws NoSuchRequestHandlingMethodException {
+    public String handleCircuit(@PathVariable Integer circuitId, ModelMap model) throws NoSuchRequestHandlingMethodException {
 
-        Circuit circuit = circuitDao.findCircuit(name);
+        Circuit circuit = circuitDao.findCircuit(circuitId);
 
         if (circuit == null) {
-            throw new NoSuchRequestHandlingMethodException("No circuit with name [" + name + "]", this.getClass());
+            throw new NoSuchRequestHandlingMethodException("No circuit #" + circuitId, this.getClass());
         }
 
         model.addAttribute("circuit", circuit);
@@ -67,11 +69,12 @@ public class CircuitsController {
 
     /**
      * Display the form to create a new circuit.
+     *
      * @param model mvc model
      * @return view name
      */
     @RequestMapping(value = "new", method = RequestMethod.GET)
-    @PreAuthorize("hasPermission('Circuit', 'ADD')")
+    @PreAuthorize("hasPermission('CIRCUIT', 'ADD')")
     public String handleNewForm(ModelMap model) {
 
         // initialise the form bean
@@ -82,31 +85,21 @@ public class CircuitsController {
 
     /**
      * Create a new circuit.
+     *
      * @param circuitForm form bean
      * @return view name
      */
     @RequestMapping(method = RequestMethod.POST)
-    @PreAuthorize("hasPermission('Circuit', 'ADD')")
+    @PreAuthorize("hasPermission('CIRCUIT', 'ADD')")
     @Transactional
     public String handleNewSubmit(@Valid CircuitForm circuitForm) {
 
         Circuit circuit = new Circuit();
-        circuit.setCircuitName(circuitForm.getName());
-        circuit.setCircuitOverseer(circuitForm.getOverseerName());
-        circuit.setCocounty(circuitForm.getOverseerCounty());
-        circuit.setComments(circuitForm.getComments());
-        circuit.setCopostcode(circuitForm.getOverseerPostcode());
-        circuit.setCostreet(circuitForm.getOverseerStreet());
-        circuit.setCotown(circuitForm.getOverseerTelephone());
-        circuit.setEmail(circuitForm.getOverseerEmail());
-        circuit.setMobile(circuitForm.getOverseerMobile());
-        circuit.setTelephone(circuitForm.getOverseerTelephone());
-
-        //circuit.setCongregations(); - no congregations initially created
+        circuit.setName(circuitForm.getName());
 
         circuitDao.createCircuit(circuit);
 
-        return "redirect:circuits/" + circuitForm.getName();
+        return "redirect:circuits/" + circuit.getCircuitId();
     }
 
     /**

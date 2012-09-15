@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping  package="uk.org.rbc1b.roms.db.project">
+    <class name="WorkFeature" table="WorkFeature">
+        <id name="workFeatureId" >
+            <generator class="identity"/>
+        </id>
+        <property name="description" length="50" />
+    </class>
+</hibernate-mapping>
+

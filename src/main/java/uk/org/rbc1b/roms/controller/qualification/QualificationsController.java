@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
-import uk.org.rbc1b.roms.db.Qualification;
+import uk.org.rbc1b.roms.db.volunteer.Qualification;
 
 /**
  * Qualification types which may be applied to a volunteer.
@@ -33,7 +33,7 @@ public class QualificationsController {
      * @return model containing the list of qualifications
      */
     @RequestMapping(method = RequestMethod.GET)
-    @PreAuthorize("hasPermission('Qualification', 'READ')")
+    @PreAuthorize("hasPermission('SKILL', 'READ')")
     @Transactional(readOnly = true)
     public String handleList(ModelMap model) {
 
@@ -49,7 +49,7 @@ public class QualificationsController {
      * @throws NoSuchRequestHandlingMethodException 404 response
      */
     @RequestMapping(value = "{name}", method = RequestMethod.GET)
-    @PreAuthorize("hasPermission('Qualification', 'READ')")
+    @PreAuthorize("hasPermission('SKILL', 'READ')")
     @Transactional(readOnly = true)
     public String handleQualification(@PathVariable String name, ModelMap model) throws NoSuchRequestHandlingMethodException {
 
@@ -70,7 +70,7 @@ public class QualificationsController {
      * @return mvc view name
      */
     @RequestMapping(value = "new", method = RequestMethod.GET)
-    @PreAuthorize("hasPermission('Qualification', 'ADD')")
+    @PreAuthorize("hasPermission('SKILL', 'ADD')")
     public String handleNewForm(ModelMap model) {
 
         // initialise the form bean
@@ -85,12 +85,12 @@ public class QualificationsController {
      * @return mvc redirect
      */
     @RequestMapping(method = RequestMethod.POST)
-    @PreAuthorize("hasPermission('Qualification', 'ADD')")
+    @PreAuthorize("hasPermission('SKILL', 'ADD')")
     @Transactional
     public String handleNewSubmit(@Valid QualificationForm qualificationForm) {
 
         Qualification qualification = new Qualification();
-        qualification.setQualification(qualificationForm.getQualification());
+        qualification.setName(qualificationForm.getQualification());
         qualification.setDescription(qualificationForm.getDescription());
 
         //qualification.setQualifcations(); - no qualifications initially created
