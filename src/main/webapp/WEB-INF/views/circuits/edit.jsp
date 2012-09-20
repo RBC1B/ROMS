@@ -16,7 +16,7 @@
         <c:url var="formAction" value="/circuits" />
         <form:form commandName="circuit" method="post" action="${formAction}">
             <form:label path="name">Name <form:input path="name" /></form:label>
-            <input type="submit" />
+                <input type="submit" />
         </form:form>
 
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>

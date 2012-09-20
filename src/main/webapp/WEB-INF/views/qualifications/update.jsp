@@ -17,7 +17,7 @@
         <c:url var="formAction" value="/qualifications" />
         <form:form commandName="qualification" method="post" action="${formAction}">
             <form:label path="qualification">Name <form:input path="qualification" /></form:label>
-            <input type="submit" />
+                <input type="submit" />
         </form:form>
 
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>

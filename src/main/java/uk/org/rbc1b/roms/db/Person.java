@@ -5,8 +5,8 @@
 package uk.org.rbc1b.roms.db;
 
 /**
- * The basic person identifier.
- * <p>This can be extended to volunteers, users, and non RBC-overseers.
+ * The basic person identifier. <p>This can be extended to volunteers, users,
+ * and non RBC-overseers.
  *
  * @author oliver.elder.esq
  */

@@ -5,7 +5,9 @@
 package uk.org.rbc1b.roms.db;
 
 /**
- * Shared component that defines the postal address of a person, hall or project.
+ * Shared component that defines the postal address of a person, hall or
+ * project.
+ *
  * @author oliver.elder.esq
  */
 public class Address {

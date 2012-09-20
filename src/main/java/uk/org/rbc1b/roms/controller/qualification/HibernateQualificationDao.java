@@ -40,10 +40,7 @@ public class HibernateQualificationDao implements QualificationDao {
         this.sessionFactory.getCurrentSession().save(qualification);
     }
 
-
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
-
-
 }

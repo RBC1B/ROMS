@@ -19,6 +19,7 @@ public class AuthenticationController {
 
     /**
      * Display the login form.
+     *
      * @param status status flag, used after unsuccessful login attempts
      * @param model mvc model
      * @return view name
@@ -33,6 +34,7 @@ public class AuthenticationController {
 
     /**
      * Display the logout request.
+     *
      * @return view name
      */
     @RequestMapping(value = "/logout", method = RequestMethod.GET)

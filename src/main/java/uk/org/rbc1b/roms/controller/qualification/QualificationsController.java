@@ -66,6 +66,7 @@ public class QualificationsController {
 
     /**
      * Display the form to create a new qualification.
+     *
      * @param model mvc model
      * @return mvc view name
      */
@@ -81,7 +82,8 @@ public class QualificationsController {
 
     /**
      * Create a new qualification.
-     * @param qualificationForm  form bean
+     *
+     * @param qualificationForm form bean
      * @return mvc redirect
      */
     @RequestMapping(method = RequestMethod.POST)

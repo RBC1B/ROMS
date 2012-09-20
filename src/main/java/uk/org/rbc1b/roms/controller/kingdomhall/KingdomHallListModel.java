@@ -6,9 +6,11 @@ package uk.org.rbc1b.roms.controller.kingdomhall;
 
 /**
  * The summary view of the kingdom hall, shown in the list.
+ *
  * @author oliver.elder.esq
  */
 public class KingdomHallListModel {
+
     private String name;
     private String town;
     private String postCode;
@@ -36,6 +38,4 @@ public class KingdomHallListModel {
     public void setTown(String town) {
         this.town = town;
     }
-
-
 }

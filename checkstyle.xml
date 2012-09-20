@@ -20,10 +20,10 @@
 
     <!-- Duplicate code -->
     <!--
-    <module name="StrictDuplicateCode">
-        <property name="min" value="100" />
-    </module>
-     -->
+   <module name="StrictDuplicateCode">
+       <property name="min" value="100" />
+   </module>
+    -->
 
     <!-- Regexp -->
     <module name="RegexpSingleline">
@@ -170,7 +170,7 @@
         </module>
         <!-- <module name="ClassDataAbstractionCoupling" /> -->
         <!-- <module name="ClassFanOutComplexity"> <property name="max" value="15" /> </module> <module name="CyclomaticComplexity"> <property name="max" value="15"
-            /> </module> <module name="NPathComplexity"> <property name="max" value="20" /> </module> <module name="JavaNCSS" /> -->
+        /> </module> <module name="NPathComplexity"> <property name="max" value="20" /> </module> <module name="JavaNCSS" /> -->
 
         <!-- miscellaneous -->
         <!-- <module name="TodoComment" /> -->
@@ -231,10 +231,10 @@
         <module name="ParameterNumber" />
         <module name="OuterTypeNumber" />
         <!-- if/when the code can exclude getters and setters we will re-instate this
-        <module name="MethodCount">
-            <property name="maxTotal" value="80" />
-        </module>
-         -->
+       <module name="MethodCount">
+           <property name="maxTotal" value="80" />
+       </module>
+        -->
 
 
         <!-- white space -->
@@ -255,9 +255,9 @@
         <!-- legacy checkstyle 4 config - everything but GENERIC_END <module name="WhitespaceAfter"> <property name="tokens" value="COMMA, SEMI, TYPECAST" /> </module> -->
         <module name="WhitespaceAround" />
         <!-- legacy checkstyle 4 config - everything but GENERIC_START, GENERIC_END, WILDCARD_TYPE, RCURLY <module name="WhitespaceAround"> <property name="tokens"
-            value="ASSIGN, BAND, BAND_ASSIGN, BOR, BOR_ASSIGN, BSR, BSR_ASSIGN, BXOR, BXOR_ASSIGN, COLON, DIV, DIV_ASSIGN, EQUAL, GE, GT, LAND, LCURLY, LE, LITERAL_ASSERT, LITERAL_CATCH,
-            LITERAL_DO, LITERAL_ELSE, LITERAL_FINALLY, LITERAL_FOR, LITERAL_IF, LITERAL_RETURN, LITERAL_SYNCHRONIZED, LITERAL_TRY, LITERAL_WHILE, LOR, LT, MINUS, MINUS_ASSIGN,
-            MOD, MOD_ASSIGN, NOT_EQUAL, PLUS, PLUS_ASSIGN, QUESTION, SL, SLIST, SL_ASSIGN, SR, SR_ASSIGN, STAR, STAR_ASSIGN, TYPE_EXTENSION_AND" /> </module> -->
+        value="ASSIGN, BAND, BAND_ASSIGN, BOR, BOR_ASSIGN, BSR, BSR_ASSIGN, BXOR, BXOR_ASSIGN, COLON, DIV, DIV_ASSIGN, EQUAL, GE, GT, LAND, LCURLY, LE, LITERAL_ASSERT, LITERAL_CATCH,
+        LITERAL_DO, LITERAL_ELSE, LITERAL_FINALLY, LITERAL_FOR, LITERAL_IF, LITERAL_RETURN, LITERAL_SYNCHRONIZED, LITERAL_TRY, LITERAL_WHILE, LOR, LT, MINUS, MINUS_ASSIGN,
+        MOD, MOD_ASSIGN, NOT_EQUAL, PLUS, PLUS_ASSIGN, QUESTION, SL, SLIST, SL_ASSIGN, SR, SR_ASSIGN, STAR, STAR_ASSIGN, TYPE_EXTENSION_AND" /> </module> -->
 
     </module>
 

@@ -5,8 +5,9 @@
 package uk.org.rbc1b.roms.db.application;
 
 /**
- * Mapping of the sections of the webapp, e.g. Volunteers.
- * <p>Each section is called an application.
+ * Mapping of the sections of the webapp, e.g. Volunteers. <p>Each section is
+ * called an application.
+ *
  * @author oliver.elder.esq
  */
 public class Application {

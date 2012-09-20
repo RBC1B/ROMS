@@ -49,7 +49,8 @@ public class CircuitsController {
      * @param circuitId circuit id (primary key)
      * @param model mvc model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException on failure to look up the circuit
+     * @throws NoSuchRequestHandlingMethodException on failure to look up the
+     * circuit
      */
     @RequestMapping(value = "{circuitId}", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('CIRCUIT', 'READ')")

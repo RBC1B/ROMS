@@ -7,12 +7,14 @@ package uk.org.rbc1b.roms.controller;
 import java.util.List;
 
 /**
- * Wrapper class for DataTable results.
- * <p>The field names are specific to the data table naming
+ * Wrapper class for DataTable results. <p>The field names are specific to the
+ * data table naming
+ *
  * @author oliver.elder.esq
  * @param <T> list data type
  */
 public class AjaxDataTableResult<T> {
+
     private String sEcho;
     private List<T> aaData;
     private Integer iTotalRecords;
@@ -73,6 +75,4 @@ public class AjaxDataTableResult<T> {
     public void setsEcho(String sEcho) {
         this.sEcho = sEcho;
     }
-
-
 }

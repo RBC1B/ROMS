@@ -32,7 +32,7 @@
 
 
     <!-- replace the mvc:annotation-driven element with the beans below to allow us to
-        override the binding initialiser -->
+    override the binding initialiser -->
     <bean id="handlerMapping" class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
 
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">

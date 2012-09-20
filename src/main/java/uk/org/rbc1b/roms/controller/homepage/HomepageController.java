@@ -18,6 +18,7 @@ public class HomepageController {
 
     /**
      * Display the home page.
+     *
      * @return view name
      */
     @RequestMapping(method = RequestMethod.GET)

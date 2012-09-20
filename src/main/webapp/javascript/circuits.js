@@ -4,7 +4,10 @@ $(document).ready(function() {
         "sPaginationType": "full_numbers",
         "iDisplayLength": 50,
         "aoColumnDefs": [
-            { 'bSortable': false, 'aTargets': [ 2 ] }
+        {
+            'bSortable': false, 
+            'aTargets': [ 2 ]
+        }
         ],
         "bStateSave": true,
         "fnStateSave": function (oSettings, oData) {
@@ -16,26 +19,26 @@ $(document).ready(function() {
     });
 
     $("tfoot input").keyup(function () {
-		circuitTable.fnFilter( this.value, $("tfoot input").index(this) );
-	});
+        circuitTable.fnFilter( this.value, $("tfoot input").index(this) );
+    });
 
     $("tfoot input").each( function (i) {
-		circuitColumnValues[i] = this.value;
-	});
+        circuitColumnValues[i] = this.value;
+    });
 
-	$("tfoot input").focus( function () {
-		if (this.className == "search_init" ) {
-			this.className = "";
-			this.value = "";
-		}
-	});
+    $("tfoot input").focus( function () {
+        if (this.className == "search_init" ) {
+            this.className = "";
+            this.value = "";
+        }
+    });
 
-	$("tfoot input").blur( function (i) {
-		if ( this.value == "" ) {
-			this.className = "search_init";
-			this.value = circuitColumnValues[$("tfoot input").index(this)];
-		}
-	});
+    $("tfoot input").blur( function (i) {
+        if ( this.value == "" ) {
+            this.className = "search_init";
+            this.value = circuitColumnValues[$("tfoot input").index(this)];
+        }
+    });
 
 } );
 

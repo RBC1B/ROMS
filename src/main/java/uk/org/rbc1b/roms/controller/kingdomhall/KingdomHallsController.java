@@ -48,6 +48,7 @@ public class KingdomHallsController {
 
     /**
      * Display the page list of kingdom halls, returning JSON.
+     *
      * @param echoId request identifier returned back to the caller
      * @return view
      */
@@ -70,7 +71,8 @@ public class KingdomHallsController {
      * @param name kingdom hall name (primary key)
      * @param model mvc model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException on failure to look up the kingdom hall
+     * @throws NoSuchRequestHandlingMethodException on failure to look up the
+     * kingdom hall
      */
     @RequestMapping(value = "{name}", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('KINGDOMHALL', 'READ')")

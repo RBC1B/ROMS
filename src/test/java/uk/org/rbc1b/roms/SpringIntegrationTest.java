@@ -30,7 +30,8 @@ public class SpringIntegrationTest {
 
     /**
      */
-    @Test @Ignore
+    @Test
+    @Ignore
     public void testSpringConfiguration() {
         assertNotNull(configuration);
     }

@@ -15,7 +15,7 @@
         <h1>ROMS Login</h1>
         <c:if test="${not empty status}"><p class="error">Invalid login details supplied. Please try again</p></c:if>
 
-        <form action="<c:url value='j_spring_security_check' />" method="POST">
+            <form action="<c:url value='j_spring_security_check' />" method="POST">
             <fieldset>
                 <input type='text' name='j_username' value=''>
             </fieldset>

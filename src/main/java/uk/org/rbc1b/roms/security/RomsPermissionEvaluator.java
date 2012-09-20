@@ -11,16 +11,19 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.util.StringUtils;
 
 /**
- * Implementation of the permission validator to match the JACL AppNames and levels.
- * with the part of the application being viewed
+ * Implementation of the permission validator to match the JACL AppNames and
+ * levels. with the part of the application being viewed
+ *
  * @author oliver.elder.esq
  */
 public class RomsPermissionEvaluator implements PermissionEvaluator {
 
     /**
-     * @param authentication authentication (username, authorities) derived form the data source
+     * @param authentication authentication (username, authorities) derived form
+     * the data source
      * @param targetDomainObject object type to be viewed/modified, e.g. Circuit
-     * @param permission permission level required, matching the AccessLevel enumeration
+     * @param permission permission level required, matching the AccessLevel
+     * enumeration
      * @return true if the user can perform the task
      */
     @Override
