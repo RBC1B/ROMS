@@ -42,9 +42,9 @@
                         </tr>
                     </tfoot>
                 </table>
-                <div class="entity-list-add-new">
-                    <a href="<c:url value="/circuits/new" />">Create new circuit</a>
-                </div>
+            </div>
+            <div class="entity-list-add-new">
+                <a href="<c:url value="/circuits/new" />">Create new circuit</a>
             </div>
         </div>
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>

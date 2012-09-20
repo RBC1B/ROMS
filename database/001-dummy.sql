@@ -42,3 +42,14 @@ values (1, 8, 4, 4);
 -- Volunteers
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess)
 values (1, 9, 4, 4);
+
+
+-- Kingdom Halls
+insert into KingdomHall(Name, Street, Town, County, Postcode, OwnershipTypeId, Drawings)
+values ('Spangly new hall', 'Nice Street', 'Sunnytown', 'Angus', 'DD2 8FE', 1, 'None')
+
+insert into KingdomHall(Name, Street, Town, County, Postcode, OwnershipTypeId, Drawings)
+values ('Slightly scruffy hall', 'Pleasant Street', 'Grimsby', 'Southshire', 'AB1 2EF', 2, 'Detailed, old')
+
+insert into KingdomHall(Name, Street, Town, County, Postcode, OwnershipTypeId, Drawings)
+values ('Ripe For Demolition', 'Rundown Street', 'Hull', 'Nowhere', 'ZZ10 4RG', 3, 'Destroyed mysteriously')

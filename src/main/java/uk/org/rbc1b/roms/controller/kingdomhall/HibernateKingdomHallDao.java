@@ -22,8 +22,8 @@ public class HibernateKingdomHallDao implements KingdomHallDao {
     private SessionFactory sessionFactory;
 
     @Override
-    public KingdomHall findKingdomHall(String name) {
-        return (KingdomHall) this.sessionFactory.getCurrentSession().get(KingdomHall.class, name);
+    public KingdomHall findKingdomHall(Integer kingdomHallId) {
+        return (KingdomHall) this.sessionFactory.getCurrentSession().get(KingdomHall.class, kingdomHallId);
     }
 
     @Override

@@ -17,10 +17,10 @@ public interface KingdomHallDao {
     /**
      * Find the kingdom hall matching the name, or null if no match.
      *
-     * @param name kingdom hall name
+     * @param kingdomHallId kingdom hall id
      * @return kingdom hall
      */
-    KingdomHall findKingdomHall(String name);
+    KingdomHall findKingdomHall(Integer kingdomHallId);
 
     /**
      * Find all matching KingdomHalls.

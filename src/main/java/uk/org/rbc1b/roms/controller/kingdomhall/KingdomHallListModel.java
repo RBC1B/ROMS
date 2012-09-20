@@ -11,9 +11,18 @@ package uk.org.rbc1b.roms.controller.kingdomhall;
  */
 public class KingdomHallListModel {
 
+    private Integer kingdomHallId;
     private String name;
     private String town;
     private String postCode;
+
+    public Integer getKingdomHallId() {
+        return kingdomHallId;
+    }
+
+    public void setKingdomHallId(Integer kingdomHallId) {
+        this.kingdomHallId = kingdomHallId;
+    }
 
     public String getName() {
         return name;

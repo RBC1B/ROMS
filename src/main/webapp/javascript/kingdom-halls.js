@@ -4,10 +4,13 @@ $(document).ready(function() {
         "sPaginationType": "full_numbers",
         "iDisplayLength": 50,
         "aoColumnDefs": [
-        {
-            'bSortable': false, 
-            'aTargets': [ 3 ]
-        }
+            { 'bSortable': false, 'aTargets': [ 3 ] }
+        ],
+        "aoColumns": [
+            { "mData": "kingdomHallId" },
+            { "mData": "name" },
+            { "mData": "town" },
+            { "mData": "postCode" }
         ],
         "bProcessing": true,
         "bServerSide": true,
