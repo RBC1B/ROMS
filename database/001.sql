@@ -1,72 +1,76 @@
+DROP DATABASE IF EXISTS ROMS;
+
+-- set up the database user accounts
+CREATE USER 'rbcadmin' IF NOT EXISTS IDENTIFIED BY 'rbcadmin';
+
 CREATE DATABASE ROMS;
 
-CREATE USER 'rbcadmin' IDENTIFIED BY 'rbcadmin';
 GRANT ALL ON ROMS.* TO rbcadmin;
 
 use ROMS;
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 create table Application(
-    ApplicationId bigint(20) auto_increment,
-    Name varchar(30) unique, -- display name
-    Code varchar(12) unique, -- used in backend as an identifier
-    Comments varchar(250),
+    ApplicationId   bigint(20)  auto_increment,
+    Name            varchar(30) not null    unique, -- display name
+    Code            varchar(12) not null    unique, -- used in backend as an identifier
+    Comments        varchar(250),
     primary key (ApplicationId)
 )engine=InnoDB;
 
 create table Person(
-    PersonId bigint(20) auto_increment,
-    Forename varchar(50),
-    MiddleName varchar(50),
-    Surname varchar(50),
-    Street varchar (50),
-    Town varchar (50),
-    County varchar (50),
-    Postcode varchar (10),
-    Telephone varchar (15),
-    Mobile varchar (15),
-    WorkPhone varchar (50),
-    Email varchar (50),
-    Comments varchar (250),
+    PersonId    bigint(20)  not null    auto_increment,
+    Forename    varchar(50) not null,
+    MiddleName  varchar(50),
+    Surname     varchar(50) not null,
+    Street      varchar(50),
+    Town        varchar(50),
+    County      varchar(50),
+    Postcode    varchar(10),
+    Telephone   varchar(15),
+    Mobile      varchar(15),
+    WorkPhone   varchar(50),
+    Email       varchar(50),
+    Comments    varchar(250),
     primary key (PersonId)
 )engine=InnoDB;
 
 create table Circuit(
-    CircuitId bigint(20) auto_increment,
-    Name varchar (50) unique,
+    CircuitId   bigint(20)      auto_increment,
+    Name        varchar(50)     not null    unique,
     primary key (CircuitId)
 )engine=InnoDB;
 
 create table OwnershipType(
-    OwnershipTypeId bigint(20) auto_increment,
-    Name varchar (50) unique,
+    OwnershipTypeId     bigint(20)  not null    auto_increment,
+    Name                varchar(50) not null    unique,
     primary key (OwnershipTypeId)
 )engine=InnoDB;
 
 create table HallFeature(
-    HallFeatureId bigint(20) auto_increment,
-    Name varchar (50) unique,
+    HallFeatureId   bigint(20)  auto_increment,
+    Name            varchar(50) not null unique,
     primary key (HallFeatureId)
 )engine=InnoDB;
 
 create table KingdomHall(
-    KingdomHallId bigint(20) auto_increment,
-    Name varchar (50) unique,
-    Street varchar (50),
-    Town varchar (50),
-    County varchar (50),
-    Postcode varchar (10),
+    KingdomHallId   bigint(20)  auto_increment,
+    Name            varchar(50) not null unique,
+    Street          varchar(50) not null,
+    Town            varchar(50) not null,
+    County          varchar(50),
+    Postcode        varchar(10) not null,
     OwnershipTypeId bigint(20),
-    Drawings varchar(50),
+    Drawings        varchar(50),
     primary key (KingdomHallId),
-    constraint foreign key (OwnershipTypeId) references OwnershipType(OwnershipTypeId) on delete set null
+    constraint foreign key (OwnershipTypeId) references OwnershipType(OwnershipTypeId)
 )engine=InnoDB;
 
 create table KingdomHallFeature(
-    KingdomHallFeatureId bigint(20) auto_increment,
-    KingdomHallId bigint(20),
-    HallFeatureId bigint(20),
-    Comments varchar(250),
+    KingdomHallFeatureId    bigint(20)  auto_increment,
+    KingdomHallId           bigint(20)  not null,
+    HallFeatureId           bigint(20)  not null,
+    Comments                varchar(250),
     primary key (KingdomHallFeatureId),
     unique(KingdomHallId, HallFeatureId),
     constraint foreign key (KingdomHallId) references KingdomHall(KingdomHallId) on delete cascade,
@@ -74,166 +78,166 @@ create table KingdomHallFeature(
 )engine=InnoDB;
 
 create table RbcRegion(
-    RbcRegionId bigint(20) auto_increment,
-    Name varchar (50) unique,
+    RbcRegionId     bigint(20)  auto_increment,
+    Name            varchar(50) not null unique,
     primary key (RbcRegionId)
 )engine=InnoDB;
 
 create table RbcSubRegion(
-    RbcSubRegionId bigint(20) auto_increment,
-    Name varchar (50) unique,
+    RbcSubRegionId  bigint(20)  auto_increment,
+    Name            varchar(50) not null    unique,
     primary key (RbcSubRegionId)
 )engine=InnoDB;
 
 create table Congregation(
-    CongregationId bigint(20) auto_increment,
-    Name varchar (50) unique,
-    Number varchar (10),
-    KingdomHallId bigint(20),
-    CircuitId bigint(20),
-    RbcRegionId bigint(20),
-    RbcSubRegionId bigint(20),
-    Publishers varchar(10),
-    Attendance varchar(10),
-    Funds varchar(50),
-    Loans varchar(10),
-    MonthlyIncome varchar(10),
-    Strategy varchar (1000),
+    CongregationId  bigint(20)  not null    auto_increment,
+    Name            varchar(50) not null    unique,
+    Number          varchar(10) not null    unique,
+    KingdomHallId   bigint(20),
+    CircuitId       bigint(20)  not null,
+    RbcRegionId     bigint(20),
+    RbcSubRegionId  bigint(20),
+    Publishers      varchar(10),
+    Attendance      varchar(10),
+    Funds           varchar(50),
+    Loans           varchar(10),
+    MonthlyIncome   varchar(10),
+    Strategy        varchar (1000),
     primary key (CongregationId),
     constraint foreign key (KingdomHallId) references KingdomHall(KingdomHallId) on delete set null,
-    constraint foreign key (CircuitId) references Circuit(CircuitId) on delete set null,
+    constraint foreign key (CircuitId) references Circuit(CircuitId),
     constraint foreign key (RbcRegionId) references RbcRegion(RbcRegionId) on delete set null,
     constraint foreign key (RbcSubRegionId) references RbcSubRegion(RbcSubRegionId) on delete set null
 )engine=InnoDB;
 
 create table CongregationRole(
-    CongregationRoleId bigint(20) auto_increment,
-    Description varchar (50) unique,
+    CongregationRoleId  bigint(20)  auto_increment,
+    Description         varchar(50) not null    unique,
     primary key (CongregationRoleId)
 )engine=InnoDB;
 
 create table CongregationContact(
-    CongregationContactId bigint(20) auto_increment,
-    CongregationId bigint(20),
-    CongregationRoleId bigint(20),
-    PersonId bigint(20),
+    CongregationContactId   bigint(20)  auto_increment,
+    CongregationId          bigint(20)  not null,
+    CongregationRoleId      bigint(20)  not null,
+    PersonId                bigint(20)  not null,
     primary key (CongregationContactId),
     unique(CongregationId, CongregationRoleId),
-    constraint foreign key (CongregationId) references Congregation(CongregationId) on delete set null,
-    constraint foreign key (CongregationRoleId) references CongregationRole(CongregationRoleId)on delete set null,
-    constraint foreign key (PersonId) references Person(PersonId) on delete set null
+    constraint foreign key (CongregationId) references Congregation(CongregationId) on delete cascade,
+    constraint foreign key (CongregationRoleId) references CongregationRole(CongregationRoleId),
+    constraint foreign key (PersonId) references Person(PersonId) on delete cascade
 )engine=InnoDB;
 
 create table TitleHolder(
-    TitleHolderId bigint(20) auto_increment,
-    KingdomHallId bigint(20) unique,
-    CongregationId bigint(20) unique,
+    TitleHolderId   bigint(20)  auto_increment,
+    KingdomHallId   bigint(20)  not null    unique,
+    CongregationId  bigint(20)  not null    unique,
     primary key (TitleHolderId),
-    constraint foreign key (KingdomHallId) references KingdomHall(KingdomHallId) on delete set null,
-    constraint foreign key (CongregationId) references Congregation(CongregationId) on delete set null
+    constraint foreign key (KingdomHallId) references KingdomHall(KingdomHallId) on delete cascade,
+    constraint foreign key (CongregationId) references Congregation(CongregationId) on delete cascade
 )engine=InnoDB;
 
 create table InterviewStatus(
-    InterviewStatusId bigint(20) auto_increment,
-    Description varchar (50) unique,
+    InterviewStatusId   bigint(20)  auto_increment,
+    Description         varchar(50) not null    unique,
     primary key (InterviewStatusId)
 )engine=InnoDB;
 
 create table Department(
-    DepartmentId bigint(20) auto_increment,
-    Name varchar (50) unique,
-    SuperDepartmentId bigint(20),
-    Description varchar(50),
+    DepartmentId        bigint(20)  auto_increment,
+    Name                varchar(50) not null    unique,
+    SuperDepartmentId   bigint(20),
+    Description         varchar(50),
     primary key (DepartmentId),
     constraint foreign key (SuperDepartmentId) references Department(DepartmentId) on delete set null
 )engine=InnoDB;
 
 create table RbcStatus(
-    RbcStatusId bigint(20) auto_increment,
-    Description varchar (15) unique,
+    RbcStatusId     bigint(20)      auto_increment,
+    Description     varchar (15)    not null    unique,
     primary key (RbcStatusId)
 )engine=InnoDB;
 
 create table Appointment(
-    AppointmentId bigint(20) auto_increment,
-    Description varchar (25) unique,
+    AppointmentId   bigint(20)  auto_increment,
+    Description     varchar(25) not null    unique,
     primary key (AppointmentId)
 )engine=InnoDB;
 
 create table Fulltime(
-    FulltimeId bigint(20) auto_increment,
-    Description varchar (25) unique,
+    FulltimeId  bigint(20)  auto_increment,
+    Description varchar(25) not null    unique,
     primary key (FulltimeId)
 )engine=InnoDB;
 
 create table Relationship(
-    RelationshipId bigint(20) auto_increment,
-    Description varchar (50) unique,
+    RelationshipId  bigint(20)  auto_increment,
+    Description     varchar(50) not null    unique,
     primary key (RelationshipId)
 )engine=InnoDB;
 
 create table MaritalStatus(
-    MaritalStatusId bigint(20) auto_increment,
-    Description varchar (50) unique,
+    MaritalStatusId bigint(20)  auto_increment,
+    Description     varchar(50) not null    unique,
     primary key (MaritalStatusId)
 )engine=InnoDB;
 
 create table Volunteer(
-    PersonId bigint(20),
-    RbcStatusId bigint(20),
-    CongregationId bigint(20),
-    AppointmentId bigint(20),
-    FulltimeId bigint(20),
-    Availability varchar(7),
-    EmergencyContactId bigint(20),
+    PersonId            bigint(20)  not null    unique,
+    RbcStatusId         bigint(20)  not null,
+    CongregationId      bigint(20),
+    AppointmentId       bigint(20),
+    FulltimeId          bigint(20),
+    Availability        varchar(7),
+    EmergencyContactId  bigint(20),
     EmergencyContactRelationshipId bigint(20),
-    DOB date,
-    Gender varchar(1),
-    MaritalStatusId bigint(20),
-    BaptismDate date,
-    InterviewDate date,
-    InterviewerA bigint(20),
-    InterviewerB bigint(20),
-    InterviewComments varchar(150),
-    JoinedDate date,
-    FormDate date,
-    InterviewStatusId bigint(20),
-    Oversight boolean,
-    OversightComments varchar(50),
-    ReliefUK boolean,
-    ReliefUKComments varchar(50),
-    ReliefAbroad boolean,
+    DOB                 date,
+    Gender              varchar(1)  not null,
+    MaritalStatusId     bigint(20)  not null,
+    BaptismDate         date,
+    InterviewDate       date,
+    InterviewerA        bigint(20),
+    InterviewerB        bigint(20),
+    InterviewComments   varchar(150),
+    JoinedDate          date,
+    FormDate            date,
+    InterviewStatusId   bigint(20)  not null,
+    Oversight           boolean     not null,
+    OversightComments   varchar(50),
+    ReliefUK            boolean     not null,
+    ReliefUKComments    varchar(50),
+    ReliefAbroad        boolean     not null,
     ReliefAbroadComments varchar(50),
-    HHCFormCode varchar(15),
-    BadgeIssueDate date,
+    HHCFormCode         varchar(15),
+    BadgeIssueDate      date,
     primary key(PersonId),
     constraint foreign key (PersonId) references Person(PersonId) on delete cascade,
-    constraint foreign key (RbcStatusId) references RbcStatus(RbcStatusId) on delete set null,
+    constraint foreign key (RbcStatusId) references RbcStatus(RbcStatusId),
     constraint foreign key (CongregationId) references Congregation(CongregationId) on delete set null,
-    constraint foreign key (AppointmentId) references Appointment(AppointmentId) on delete set null,
-    constraint foreign key (FulltimeId) references Fulltime(FulltimeId) on delete set null,
+    constraint foreign key (AppointmentId) references Appointment(AppointmentId),
+    constraint foreign key (FulltimeId) references Fulltime(FulltimeId),
     constraint foreign key (EmergencyContactId) references Person(PersonId) on delete set null,
     constraint foreign key (EmergencyContactRelationshipId) references Relationship(RelationshipId) on delete set null,
-    constraint foreign key (MaritalStatusId) references MaritalStatus(MaritalStatusId) on delete set null,
+    constraint foreign key (MaritalStatusId) references MaritalStatus(MaritalStatusId),
     constraint foreign key (InterviewerA) references Person(PersonId) on delete set null,
     constraint foreign key (InterviewerB) references Person(PersonId) on delete set null,
-    constraint foreign key (InterviewStatusId) references InterviewStatus(InterviewStatusId) on delete set null
+    constraint foreign key (InterviewStatusId) references InterviewStatus(InterviewStatusId)
 )engine=InnoDB;
 
 create table User(
-    PersonId bigint(20),
-    UserName varchar (50) unique,
-    Password varchar(50),
+    PersonId    bigint(20),
+    UserName    varchar(50) not null    unique,
+    Password    varchar(50) not null,
     primary key (PersonId),
     constraint foreign key (PersonId) references Person(PersonId) on delete cascade
 )engine=InnoDB;
 
 create table ApplicationAccess(
-    ApplicationAccessId bigint(20) auto_increment,
-    PersonId bigint(20),
-    ApplicationId bigint(20),
-    DepartmentAccess integer,
-    NonDepartmentAccess integer,
+    ApplicationAccessId bigint(20)  auto_increment,
+    PersonId            bigint(20)  not null,
+    ApplicationId       bigint(20),
+    DepartmentAccess    integer     not null,
+    NonDepartmentAccess integer     not null,
     primary key (ApplicationAccessId),
     unique (PersonId, ApplicationId),
     constraint foreign key (PersonId) references Person(PersonId) on delete cascade,
@@ -241,140 +245,140 @@ create table ApplicationAccess(
 )engine=InnoDB;
 
 create table Role(
-    RoleId bigint(20) auto_increment,
-    Description varchar (50) unique,
+    RoleId      bigint(20)  auto_increment,
+    Description varchar(50) not null    unique,
     primary key (RoleId)
 )engine=InnoDB;
 
 create table TradeNumber(
-    TradeNumberId bigint(20) auto_increment,
-    Description varchar (50) unique,
+    TradeNumberId   bigint(20)  auto_increment,
+    Description     varchar(50) not null    unique,
     primary key (TradeNumberId)
 )engine=InnoDB;
 
 create table Team(
-    TeamId bigint(20) auto_increment,
-    Description varchar (50) unique,
+    TeamId      bigint(20)  auto_increment,
+    Description varchar(50) not null    unique,
     primary key (TeamId)
 )engine=InnoDB;
 
 create table Assignment(
-    AssignmentId bigint(20) auto_increment,
-    PersonId bigint(20),
-    DepartmentId bigint(20),
-    RoleId bigint(20),
-    AssignedDate date,
-    TradeNumberId bigint(20),
-    TeamId bigint(20),
+    AssignmentId    bigint(20)  auto_increment,
+    PersonId        bigint(20)  not null,
+    DepartmentId    bigint(20)  not null,
+    RoleId          bigint(20)  not null,
+    AssignedDate    date        not null,
+    TradeNumberId   bigint(20)  not null,
+    TeamId          bigint(20)  not null,
     primary key (AssignmentId),
     constraint foreign key (PersonId) references Person(PersonId) on delete cascade,
     constraint foreign key (DepartmentId) references Department(DepartmentId) on delete cascade,
-    constraint foreign key (RoleId) references Role(RoleId) on delete set null,
-    constraint foreign key (TradeNumberId) references TradeNumber(TradeNumberId) on delete set null,
-    constraint foreign key (TeamId) references Team(TeamId) on delete set null
+    constraint foreign key (RoleId) references Role(RoleId),
+    constraint foreign key (TradeNumberId) references TradeNumber(TradeNumberId),
+    constraint foreign key (TeamId) references Team(TeamId)
 )engine=InnoDB;
 
 create table ProjectStage(
-    ProjectStageId bigint(20) auto_increment,
-    Name varchar (5) unique,
-    Description varchar(50),
-    AssignedTo varchar(500),
-    WorkNotes varchar(1000),
+    ProjectStageId  bigint(20)  auto_increment,
+    Name            varchar(5)  not null    unique,
+    Description     varchar(50),
+    AssignedTo      varchar(500),
+    WorkNotes       varchar(1000),
     primary key (ProjectStageId)
 )engine=InnoDB;
 
 create table ProjectType(
-    ProjectTypeId bigint(20) auto_increment,
-    Description varchar (25) unique,
+    ProjectTypeId   bigint(20)  auto_increment,
+    Description     varchar(25) not null    unique,
     primary key (ProjectTypeId)
 )engine=InnoDB;
 
 create table InvitationConfirmation(
-    InvitationConfirmationId bigint(20) auto_increment,
-    Description varchar (25) unique,
+    InvitationConfirmationId    bigint(20)  auto_increment,
+    Description                 varchar(25) not null    unique,
     primary key (InvitationConfirmationId)
 )engine=InnoDB;
 
 create table Commentator(
-    CommentatorId bigint(20) auto_increment,
-    DepartmentId bigint(20) unique,
+    CommentatorId   bigint(20)  auto_increment,
+    DepartmentId    bigint(20)  not null    unique,
     primary key (CommentatorId),
-    constraint foreign key (DepartmentId) references Department(DepartmentId) on delete set null
+    constraint foreign key (DepartmentId) references Department(DepartmentId)
 )engine=InnoDB;
 
 create table WorkFeature(
-    WorkFeatureId bigint(20) auto_increment,
-    Description varchar(50) unique,
+    WorkFeatureId   bigint(20)  auto_increment,
+    Description     varchar(50) not null    unique,
     primary key (WorkFeatureId)
 )engine=InnoDB;
 
 create table ProjectStatus(
-    ProjectStatusId bigint(20) auto_increment,
-    Description varchar(50) unique,
+    ProjectStatusId bigint(20)  auto_increment,
+    Description     varchar(50) not null    unique,
     primary key (ProjectStatusId)
 )engine=InnoDB;
 
 create table Project(
-    ProjectId bigint(20) auto_increment,
-    Name varchar(50) unique,
-    ProjectTypeId bigint(20),
-    KingdomHallId bigint(20),
-    Priority varchar(50),
-    Street varchar (80),
-    Town varchar(50),
-    County varchar(50),
-    Postcode varchar(10),
-    Telephone varchar(20),
+    ProjectId       bigint(20)  auto_increment,
+    Name            varchar(50) not null    unique,
+    ProjectTypeId   bigint(20)  not null,
+    KingdomHallId   bigint(20),
+    Priority        varchar(50),
+    Street          varchar (80),
+    Town            varchar(50),
+    County          varchar(50),
+    Postcode        varchar(10),
+    Telephone       varchar(20),
     ContactPersonId bigint(20),
-    RequestDate date,
-    VisitDate date,
-    EstimateCost varchar(50),
-    ProjectStatusId bigint(20),
+    RequestDate     date,
+    VisitDate       date,
+    EstimateCost    varchar(50),
+    ProjectStatusId bigint(20)  not null,
     SupportingCongregation varchar(250),
     ProjectConstraints text,
-    CoordinatorId bigint(20),
-    ProjectStageId bigint(20),
-    CompletedDate date,
+    CoordinatorId   bigint(20),
+    ProjectStageId  bigint(20)  not null,
+    CompletedDate   date,
     primary key (ProjectId),
-    constraint foreign key (ProjectTypeId) references ProjectType(ProjectTypeId) on delete set null,
+    constraint foreign key (ProjectTypeId) references ProjectType(ProjectTypeId),
     constraint foreign key (KingdomHallId) references KingdomHall(KingdomHallId) on delete set null,
     constraint foreign key (ContactPersonId) references Person(PersonId) on delete set null,
-    constraint foreign key (ProjectStatusId) references ProjectStatus(ProjectStatusId) on delete set null,
+    constraint foreign key (ProjectStatusId) references ProjectStatus(ProjectStatusId),
     constraint foreign key (CoordinatorId) references Person(PersonId) on delete set null,
-    constraint foreign key (ProjectStageId) references ProjectStage(ProjectStageId) on delete set null
+    constraint foreign key (ProjectStageId) references ProjectStage(ProjectStageId)
 )engine=InnoDB;
 
 create table ProjectWorkBrief(
-    ProjectWorkBriefId bigint(20) auto_increment,
-    ProjectId bigint(20),
-    WorkFeatureId bigint(20),
-    Brief text,
+    ProjectWorkBriefId  bigint(20)  auto_increment,
+    ProjectId           bigint(20)  not null,
+    WorkFeatureId       bigint(20)  not null,
+    Brief               text,
     primary key (ProjectWorkBriefId),
     unique (ProjectId, WorkFeatureId),
     constraint foreign key (ProjectId) references Project(ProjectId) on delete cascade,
-    constraint foreign key (WorkFeatureId) references WorkFeature(WorkFeatureId) on delete set null
+    constraint foreign key (WorkFeatureId) references WorkFeature(WorkFeatureId)
 )engine=InnoDB;
 
 create table ProjectEvent(
-    ProjectEventId bigint(20) auto_increment,
-    ProjectId bigint(20),
-    CommentatorId bigint(20),
-    Comments text,
-    Visible boolean default true,
+    ProjectEventId  bigint(20)  auto_increment,
+    ProjectId       bigint(20)  not null,
+    CommentatorId   bigint(20),
+    Comments        text,
+    Visible         boolean default true,
     primary key (ProjectEventId),
     constraint foreign key (ProjectId) references Project(ProjectId) on delete cascade,
     constraint foreign key (CommentatorId) references Commentator(CommentatorId) on delete set null
 )engine=InnoDB;
 
 create table Attendance(
-    AttendanceId bigint(20) auto_increment,
-    ProjectId bigint(20),
-    PersonId bigint(20),
-    InviteDate date,
-    AbleToCome boolean,
-    InvitationConfirmationId bigint(20),
-    DepartmentId bigint(20),
-    Attended boolean,
+    AttendanceId    bigint(20)  auto_increment,
+    ProjectId       bigint(20)  not null,
+    PersonId        bigint(20)  not null,
+    InviteDate      date        not null,
+    AbleToCome      boolean,
+    InvitationConfirmationId    bigint(20),
+    DepartmentId    bigint(20),
+    Attended        boolean,
     primary key (AttendanceId),
     unique (ProjectId, PersonId, InviteDate),
     constraint foreign key (ProjectId) references Project(ProjectId) on delete cascade,
@@ -384,18 +388,18 @@ create table Attendance(
 )engine=InnoDB;
 
 create table Qualification(
-    QualificationId bigint(20) auto_increment,
-    Name varchar(50) unique,
-    Description varchar(150),
-    AppearOnBadge boolean default false,
+    QualificationId bigint(20)  auto_increment,
+    Name            varchar(50) not null    unique,
+    Description     varchar(150),
+    AppearOnBadge   boolean default false,
     primary key (QualificationId)
 )engine=InnoDB;
 
 create table VolunteerQualification(
-    VolunteerQualificationId bigint(20) auto_increment,
-    PersonId bigint(20),
-    QualificationId bigint(20),
-    Comments varchar(100),
+    VolunteerQualificationId    bigint(20)  auto_increment,
+    PersonId                    bigint(20)  not null,
+    QualificationId             bigint(20)  not null,
+    Comments                    varchar(100),
     primary key (VolunteerQualificationId),
     unique (PersonId, QualificationId),
     constraint foreign key (PersonId) references Person(PersonId) on delete cascade,
@@ -403,23 +407,23 @@ create table VolunteerQualification(
 )engine=InnoDB;
 
 create table Skill(
-    SkillId bigint(20) auto_increment,
-    Name varchar (50) unique,
-    DepartmentId bigint(20),
-    Description varchar(250),
-    AppearOnBadge boolean default false,
+    SkillId         bigint(20)  auto_increment,
+    Name            varchar(50) not null    unique,
+    DepartmentId    bigint(20),
+    Description     varchar(250),
+    AppearOnBadge   boolean default false,
     primary key (SkillId),
     constraint foreign key (DepartmentId) references Department(DepartmentId) on delete set null
 )engine=InnoDB;
 
 create table VolunteerSkill(
-    VolunteerSkillId bigint(20) auto_increment,
-    PersonId bigint(20),
-    SkillId bigint(20),
-    Level integer,
-    Comments varchar(250),
-    TrainingDate date,
-    TrainingResults varchar(15),
+    VolunteerSkillId    bigint(20)  auto_increment,
+    PersonId            bigint(20)  not null,
+    SkillId             bigint(20)  not null,
+    Level               integer     not null,
+    Comments            varchar(250),
+    TrainingDate        date,
+    TrainingResults     varchar(15),
     primary key (VolunteerSkillId),
     unique (PersonId, SkillId),
     constraint foreign key (PersonId) references Person(PersonId) on delete cascade,
@@ -427,11 +431,11 @@ create table VolunteerSkill(
 )engine=InnoDB;
 
 create table Updates(
-    UpdatesId bigint(20) auto_increment,
-    UpdatedTable varchar(50),
-    PersonId bigint(20),
-    UpdateInformation text,
-    UpdateTime timestamp,
+    UpdatesId           bigint(20)  auto_increment,
+    UpdatedTable        varchar(50) not null,
+    PersonId            bigint(20),
+    UpdateInformation   text,
+    UpdateTime          timestamp   not null,
     primary key (UpdatesId),
     constraint foreign key (PersonId) references Person(PersonId) on delete set null
 )engine=InnoDB;
