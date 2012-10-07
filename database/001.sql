@@ -1,8 +1,5 @@
 DROP DATABASE IF EXISTS ROMS;
 
--- set up the database user accounts
-CREATE USER 'rbcadmin' IF NOT EXISTS IDENTIFIED BY 'rbcadmin';
-
 CREATE DATABASE ROMS;
 
 GRANT ALL ON ROMS.* TO rbcadmin;
@@ -364,7 +361,8 @@ create table ProjectEvent(
     ProjectId       bigint(20)  not null,
     CommentatorId   bigint(20),
     Comments        text,
-    Visible         boolean default true,
+    Visible         boolean     default true,
+    Created         timestamp   not null,
     primary key (ProjectEventId),
     constraint foreign key (ProjectId) references Project(ProjectId) on delete cascade,
     constraint foreign key (CommentatorId) references Commentator(CommentatorId) on delete set null

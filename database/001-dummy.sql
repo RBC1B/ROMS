@@ -201,11 +201,11 @@ values (1, 3, 'Add shelfs along main wall. Fix the door lock.');
 insert into ProjectWorkBrief(ProjectId, WorkFeatureId, Brief)
 values (1, 8, 'Replace slabs at front door');
 
-insert into ProjectEvent(ProjectId, CommentatorId, Comments, Visible)
-values(1, 7, 'Arranged first meeting with BoE and RBC representatives', true);
+insert into ProjectEvent(ProjectId, CommentatorId, Comments, Visible, Created)
+values(1, 7, 'Arranged first meeting with BoE and RBC representatives', true, '2012-07-02');
 
-insert into ProjectEvent(ProjectId, CommentatorId, Comments, Visible)
-values(1, 7, 'Agreed project timescales', false);
+insert into ProjectEvent(ProjectId, CommentatorId, Comments, Visible, Created)
+values(1, 7, 'Agreed project timescales', false, '2012-07-12');
 
 insert into Project(Name,ProjectTypeId,KingdomHallId,Priority,Street,Town,County,Postcode,Telephone,ContactPersonId,RequestDate,VisitDate,EstimateCost,
 				ProjectStatusId,SupportingCongregation,ProjectConstraints,CoordinatorId,ProjectStageId)
