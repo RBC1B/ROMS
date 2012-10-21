@@ -5,7 +5,6 @@
 package uk.org.rbc1b.roms.db.application;
 
 import java.util.Set;
-import uk.org.rbc1b.roms.db.Person;
 
 /**
  *
