@@ -4,6 +4,7 @@
  */
 package uk.org.rbc1b.roms.db.application;
 
+import java.util.Set;
 import uk.org.rbc1b.roms.db.Person;
 
 /**
@@ -12,9 +13,18 @@ import uk.org.rbc1b.roms.db.Person;
  */
 public class User {
 
-    private Person person;
+    private Set<ApplicationAccess> applicationAccess;
+    private Integer personId;
     private String userName;
     private String password;
+
+    public Set<ApplicationAccess> getApplicationAccess() {
+        return applicationAccess;
+    }
+
+    public void setApplicationAccess(Set<ApplicationAccess> applicationAccess) {
+        this.applicationAccess = applicationAccess;
+    }
 
     public String getPassword() {
         return password;
@@ -24,12 +34,12 @@ public class User {
         this.password = password;
     }
 
-    public Person getPerson() {
-        return person;
+    public Integer getPersonId() {
+        return personId;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setPersonId(Integer personId) {
+        this.personId = personId;
     }
 
     public String getUserName() {
@@ -42,6 +52,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "person=" + person + '}';
+        return "User{" + "personId=" + personId + '}';
     }
 }

@@ -31,6 +31,10 @@
                 <value>uk/org/rbc1b/roms/db/Person.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/Updates.hbm.xml</value>
 
+                <value>uk/org/rbc1b/roms/db/application/Application.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/application/ApplicationAccess.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/application/User.hbm.xml</value>
+
                 <value>uk/org/rbc1b/roms/db/congregation/Circuit.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/congregation/Congregation.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/congregation/CongregationContact.hbm.xml</value>

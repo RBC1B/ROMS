@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping  package="uk.org.rbc1b.roms.db.application">
+    <class name="ApplicationAccess" table="ApplicationAccess">
+        <id name="applicationAccessId" >
+            <generator class="identity"/>
+        </id>
+        <many-to-one name="person" column="PersonId" />
+        <many-to-one name="application" column="ApplicationId" />
+        <property name="departmentAccess" />
+        <property name="nonDepartmentAccess" />
+        <property name="name" />
+    </class>
+</hibernate-mapping>
