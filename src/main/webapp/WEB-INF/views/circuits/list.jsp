@@ -10,8 +10,8 @@
     <c:set var="pageTitle" value="Circuits" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
-        <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="content-container">
+        <div class="container">
+            <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
             <h1>Circuits</h1>
             <div class="entity-list-results">
                 <table id="circuit-list">
@@ -46,8 +46,8 @@
             <div class="entity-list-add-new">
                 <a href="<c:url value="/circuits/new" />">Create new circuit</a>
             </div>
+            <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
-        <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         <script type="text/javascript" charset="utf8" src="<c:url value='/javascript/circuits.js' />" ></script>
     </body>
 </html>

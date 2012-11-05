@@ -10,12 +10,11 @@
     <c:set var="pageTitle" value="Circuit" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
-        <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="content-container">
+        <div class="container">
+            <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
             <h1>Circuit: Hello World!</h1>
             ${circuit}
+            <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
-
-        <%@ include file="/WEB-INF/views/common/footer.jsp" %>
     </body>
 </html>
