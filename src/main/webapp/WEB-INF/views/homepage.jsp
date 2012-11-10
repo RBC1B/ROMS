@@ -12,8 +12,34 @@
     <body>
         <div class="container">
             <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-            <h1>RBC Online Management System for Construction</h1>
-            <img src="<c:url value="/images/oli-lion.jpg" />" height="140" width="104" alt="test image" />
+            <h1>Dashboard</h1>
+            <hr>
+            <div class="row-fluid">
+              <div class="well span4">
+                <h3>Your Projects</h3>
+                <ul class="nav nav-tabs nav-stacked">
+                    <li>Herpendon</li>
+                    <li>East Molseley</li>
+                    <li>Potters Bar</li>
+                </ul>
+              </div>
+              <div class="well span4">
+                <h3>Recent Volunteers</h3>
+                <ul class="nav nav-tabs nav-stacked">
+                    <li>Moses</li>
+                    <li>Abraham</li>
+                    <li>Joshua</li>
+                </ul>
+              </div>
+              <div class="well span4">
+                <h3>Unused Volunteers</h3>
+                <ul class="nav nav-tabs nav-stacked">
+                    <li>Nimrod</li>
+                    <li>Cain</li>
+                    <li>Balaam</li>
+                </ul>
+              </div>
+            </div>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
     </body>

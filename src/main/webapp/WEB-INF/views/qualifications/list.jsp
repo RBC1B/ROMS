@@ -15,7 +15,7 @@
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="content-container">
             <h1>Qualifications</h1>
-            <table id="qualification-list">
+            <table class="table table-bordered table-striped table-hover" id="qualification-list">
                 <thead>
                     <tr>
                         <th>Qualification</th>

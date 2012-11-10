@@ -14,7 +14,7 @@
             <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
             <h1>Circuits</h1>
             <div class="entity-list-results">
-                <table id="circuit-list">
+                <table class="table table-bordered table-striped table-hover" id="circuit-list">
                     <thead>
                         <tr>
                             <th>ID</th>

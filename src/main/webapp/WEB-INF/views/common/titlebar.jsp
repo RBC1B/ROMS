@@ -1,5 +1,5 @@
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<div class="navbar">
+<div class="navbar navbar-inverse">
     <div class="navbar-inner">
         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">MENU</a>
         <a class="brand" href="http://localhost:8080/ROMS/">RBC ROMS</a>

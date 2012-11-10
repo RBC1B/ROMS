@@ -1,5 +1,10 @@
 <footer class="footer">
     <hr />
+    <ul class="breadcrumb">
+      <li><a href="#">Bread</a> <span class="divider">/</span></li>
+      <li><a href="#">Crumbs</a> <span class="divider">/</span></li>
+      <li class="active">You are Here</li>
+     </ul
     <div class="pull-right">
         <p><a href="#">Help</a></p>
     </div>

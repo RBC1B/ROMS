@@ -14,7 +14,7 @@
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
             <h1>Kingdom Halls</h1>
             <div class="entity-list-results">
-                <table id="kingdom-hall-list">
+                <table class="table table-bordered table-striped table-hover" id="kingdom-hall-list">
                     <thead>
                         <tr>
                             <th>ID</th>
