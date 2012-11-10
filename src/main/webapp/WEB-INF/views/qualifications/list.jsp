@@ -11,6 +11,7 @@
     <c:set var="pageTitle" value="Qualifications" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
+      <div class="container">
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="content-container">
             <h1>Qualifications</h1>
@@ -45,5 +46,6 @@
         </div>
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         <script type="text/javascript" charset="utf8" src="<c:url value='/javascript/qualifications.js' />" ></script>
-    </body>
+       </div>
+      </body>
 </html>

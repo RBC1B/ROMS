@@ -11,10 +11,11 @@
     <c:set var="pageTitle" value="Qualification" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
+      <div class="container">
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <h1>Qualification: Hello World!</h1>
         ${qualification}
-
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+       </div>
     </body>
 </html>

@@ -1,4 +1,6 @@
 <%--
+    Document   : kingdomhallShow
+    Created on : 30-Jun-2012, 13:19:18
     Author     : oliver.elder.esq
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -8,8 +10,8 @@
     <c:set var="pageTitle" value="Kingdom Halls" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
+        <div class="container">
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="content-container">
             <h1>Kingdom Halls</h1>
             <div class="entity-list-results">
                 <table id="kingdom-hall-list">
@@ -49,8 +51,8 @@
             <div class="entity-list-add-new">
                 <a href="<c:url value="/kingdom-halls/new" />">Create new kingdom hall</a>
             </div>
-        </div>
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+        </div>
         <script type="text/javascript" charset="utf8" src="<c:url value='/javascript/kingdom-halls.js' />" ></script>
-    </body>
+        </body>
 </html>

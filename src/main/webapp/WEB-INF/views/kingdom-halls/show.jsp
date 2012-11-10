@@ -10,11 +10,11 @@
     <c:set var="pageTitle" value="Kingdom Hall" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
+       <div class="container">
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="content-container">
             <h1>Kingdom Hall: ${kingdomHall.kingdomHall}</h1>
             ${kingdomHall}
-        </div>
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+        </div>
     </body>
 </html>
