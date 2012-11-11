@@ -10,8 +10,8 @@
     <c:set var="pageTitle" value="Circuit" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
-        <div class="container">
             <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
+        <div class="container-fluid">
             <h1>Circuit: Hello World!</h1>
             ${circuit}
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>

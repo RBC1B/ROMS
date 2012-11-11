@@ -10,8 +10,8 @@
     <c:set var="pageTitle" value="Circuits" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
-        <div class="container">
             <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
+        <div class="container-fluid">
             <h1>Circuits</h1>
             <div class="entity-list-results">
                 <table class="table table-bordered table-striped table-hover" id="circuit-list">
@@ -27,9 +27,9 @@
                             <tr>
                                 <td>${circuit.circuitId}</td>
                                 <td>${circuit.name}</td>
-                                <td><a href="<c:url value="/circuits/${circuit.circuitId}" />">View</a>&nbsp;
-                                    <a href="<c:url value="/circuits/${circuit.circuitId}/edit" />">Edit</a>&nbsp;
-                                    <a href="delete">Delete</a>
+                                <td><a class="btn btn-success" href="<c:url value="/circuits/${circuit.circuitId}" />">View</a>&nbsp;
+                                    <a class="btn btn-warning" href="<c:url value="/circuits/${circuit.circuitId}/edit" />">Edit</a>&nbsp;
+                                    <a class="btn btn-danger" href="delete">Delete</a>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -44,8 +44,13 @@
                 </table>
             </div>
             <div class="entity-list-add-new">
-                <a href="<c:url value="/circuits/new" />">Create new circuit</a>
+                <a class="btn btn-primary" href="<c:url value="/circuits/new" />">Create new circuit</a>
             </div>
+            <p>&nbsp;</p>
+            <ul class="breadcrumb">
+              <li><a href="<c:url value="/" />">ROMS</a> <span class="divider">/</span></li>
+              <li class="active">Circuits</li>
+            </ul>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
         <script type="text/javascript" charset="utf8" src="<c:url value='/javascript/circuits.js' />" ></script>

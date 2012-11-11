@@ -11,9 +11,9 @@
     <c:set var="pageTitle" value="Create/Edit Kingdom Hall" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
-       <div class="container">
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-            <h1>Kingdom Hall</h1>
+        <div class="container-fluid">
+        <h1>Kingdom Hall</h1>
             <c:url var="formAction" value="/kingdom-halls" />
             <form:form commandName="kingdomHall" method="post" action="${formAction}">
                 <form:label path="name">Name <form:input path="name" /></form:label>

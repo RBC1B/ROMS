@@ -1,10 +1,21 @@
 <footer class="footer">
     <hr />
-    <ul class="breadcrumb">
-      <li><a href="#">Bread</a> <span class="divider">/</span></li>
-      <li><a href="#">Crumbs</a> <span class="divider">/</span></li>
-      <li class="active">You are Here</li>
-     </ul
+   <div class="row-fluid">
+       <div class="span4">
+    <ul class="nav nav-list">
+      <li class="nav-header">Sections:</li>
+      <sec:authorize access="hasPermission('CIRCUIT', 'READ')"><li><a href="<c:url value="/circuits" />">Circuits</a></li></sec:authorize>
+      <sec:authorize access="hasPermission('KINGDOMHALL', 'READ')"><li><a href="<c:url value="/kingdom-halls" />">Kingdom Halls</a></li></sec:authorize>
+      <sec:authorize access="hasPermission('CONG', 'READ')"><li><a href="<c:url value="/congregations" />">Congregations</a></li></sec:authorize>
+      <sec:authorize access="hasPermission('VOLUNTEER', 'READ')"><li><a href="<c:url value="/volunteers" />">Volunteers</a></li></sec:authorize>
+      <sec:authorize access="hasPermission('SKILL', 'READ')"><li><a href="<c:url value="/qualifications" />">Qualifications</a></li></sec:authorize>
+     </ul>
+    </div><!--- /span4 --->
+       <div class="span4">
+    </div><!--- /span4 --->
+       <div class="span4">
+    </div><!--- /span4 --->
+    </div><!--- /row-fluid --->
     <div class="pull-right">
         <p><a href="#">Help</a></p>
     </div>
