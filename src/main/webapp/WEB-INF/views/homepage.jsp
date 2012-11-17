@@ -16,53 +16,41 @@
             <hr>
             <div class="row-fluid">
               <div class="well span4">
-                <h3>Forthcoming Projects</h3>
+                <h3>Organisations</h3>
                 <ul class="nav nav-tabs nav-stacked">
-                    <li>Potters Bar</li>
-                    <li>Potters Bar</li>
-                    <li>Potters Bar</li>
+                    <li>Congregation</li>
+                    <li>Circuit</li>
                 </ul>
               </div>
               <div class="well span4">
-                <h3>Announcements</h3>
+                <h3>Kingdom Hall</h3>
                 <ul class="nav nav-tabs nav-stacked">
-                    <p>RBC ROMS Launch Date Announced!
-                        <a href="">click here for more info ></a></p>
+                    <li>List Of Kingdom Halls</li>
+                        <a href="">Details of Kingdom Halls ></a></p>
                 </ul>
               </div>
               <div class="well span4">
-                <h3>My ToDo List</h3>
+                <h3>Projects</h3>
                 <ul class="nav nav-tabs nav-stacked">
-                    <li>Get an iPad</li>
-                    <li>Get an iPhone</li>
-                    <li>Get an iCar</li>
-                    <li>Order Superyacht</li>
+                    <li>Project Coordination</li>
+                    <li>Project Design</li>
+                    <li>Upcoming Projects</li>
                 </ul>
               </div>
             </div>
             <div class="row-fluid">
               <div class="well span4">
-                <h3>My Projects</h3>
+                <h3>Volunteers</h3>
                 <ul class="nav nav-tabs nav-stacked">
-                    <li>Herpendon</li>
-                    <li>East Molseley</li>
-                    <li>Potters Bar</li>
+                    <li>Contact Details</li>
+                    <li>Skills & Training</li>
+                    <li>Gate List</li>
                 </ul>
               </div>
               <div class="well span4">
-                <h3>Recent Volunteers</h3>
+                <h3>My Profile</h3>
                 <ul class="nav nav-tabs nav-stacked">
-                    <li>Moses</li>
-                    <li>Abraham</li>
-                    <li>Joshua</li>
-                </ul>
-              </div>
-              <div class="well span4">
-                <h3>Unused Volunteers</h3>
-                <ul class="nav nav-tabs nav-stacked">
-                    <li>Nimrod</li>
-                    <li>Cain</li>
-                    <li>Balaam</li>
+                    <li>Ramindur</li>
                 </ul>
               </div>
             </div>
