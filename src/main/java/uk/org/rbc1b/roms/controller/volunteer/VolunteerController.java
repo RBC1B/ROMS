@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import uk.org.rbc1b.roms.controller.circuit.CircuitForm;
 
 /**
  *
@@ -41,7 +40,7 @@ public class VolunteerController {
         return "volunteers/list";
     }
 
-        /**
+    /**
      * Display the form to create a new circuit.
      *
      * @param model mvc model
@@ -57,7 +56,6 @@ public class VolunteerController {
         return "volunteers/edit";
     }
 
-    
     /**
      * @param volunteerDao volunteer dao
      */
