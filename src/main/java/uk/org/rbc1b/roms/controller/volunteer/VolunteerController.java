@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import uk.org.rbc1b.roms.controller.circuit.CircuitForm;
 
 /**
  *
@@ -40,6 +41,23 @@ public class VolunteerController {
         return "volunteers/list";
     }
 
+        /**
+     * Display the form to create a new circuit.
+     *
+     * @param model mvc model
+     * @return view name
+     */
+    @RequestMapping(value = "new", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('VOLUNTEER', 'ADD')")
+    public String handleNewForm(ModelMap model) {
+
+        // initialise the form bean
+        model.addAttribute("volunteer", new VolunteerForm());
+
+        return "volunteers/edit";
+    }
+
+    
     /**
      * @param volunteerDao volunteer dao
      */
