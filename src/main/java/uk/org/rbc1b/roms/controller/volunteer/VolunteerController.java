@@ -41,6 +41,22 @@ public class VolunteerController {
     }
 
     /**
+     * Display the form to create a new circuit.
+     *
+     * @param model mvc model
+     * @return view name
+     */
+    @RequestMapping(value = "new", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('VOLUNTEER', 'ADD')")
+    public String handleNewForm(ModelMap model) {
+
+        // initialise the form bean
+        model.addAttribute("volunteer", new VolunteerForm());
+
+        return "volunteers/edit";
+    }
+
+    /**
      * @param volunteerDao volunteer dao
      */
     public void setVolunteerDao(VolunteerDao volunteerDao) {
