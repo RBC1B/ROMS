@@ -15,6 +15,7 @@ import uk.org.rbc1b.roms.db.congregation.Congregation;
 public class Volunteer {
 
     private Integer personId;
+    private Person person;
     private RbcStatus rbcStatus;
     private Congregation congregation;
     private Appointment appointment;
@@ -261,5 +262,19 @@ public class Volunteer {
     @Override
     public String toString() {
         return "Volunteer{" + "personId=" + personId + '}';
+    }
+
+    /**
+     * @return the person
+     */
+    public Person getPerson() {
+        return person;
+    }
+
+    /**
+     * @param person the person to set
+     */
+    public void setPerson(Person person) {
+        this.person = person;
     }
 }
