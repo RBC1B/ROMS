@@ -21,6 +21,7 @@
                             <th>ID</th>
                             <th>First Name</th>
                             <th>Last Name</th>
+                            <th>Congregation</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -29,6 +30,7 @@
                                 <td>${volunteer.personId}</td>
                                 <td>${volunteer.person.forename}</td>
                                 <td>${volunteer.person.surname}</td>
+                                <td>${volunteer.congregation.name}</td>
                                 <td><a class="btn btn-success" href="<c:url value="/volunteers/${volunteer.personId}" />">View</a>&nbsp;
                                     <a class="btn btn-warning" href="<c:url value="/volunteers/${volunteer.personId}/edit" />">Edit</a>&nbsp;
                                     <a class="btn btn-danger" href="delete">Delete</a>

@@ -15,7 +15,7 @@ import uk.org.rbc1b.roms.db.congregation.Congregation;
 public class Volunteer {
 
     private Integer personId;
-    private Person person;
+    private Person person; // recognise person relationship one-way only.
     private RbcStatus rbcStatus;
     private Congregation congregation;
     private Appointment appointment;

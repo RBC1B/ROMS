@@ -7,7 +7,7 @@
         </id>
         <many-to-one name="person" class="uk.org.rbc1b.roms.db.Person" column="PersonId" unique="true" lazy="false"/>
         <many-to-one name="rbcStatus" column="RbcStatusId" />
-        <many-to-one name="congregation" column="CongregationId" />
+        <many-to-one name="congregation" class="uk.org.rbc1b.roms.db.congregation.Congregation" column="CongregationId" lazy="false" />
         <many-to-one name="appointment" column="AppointmentId" />
         <many-to-one name="fulltime" column="FulltimeId" />
         <property name="availability" length="7" />
