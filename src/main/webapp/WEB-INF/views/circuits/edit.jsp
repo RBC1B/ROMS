@@ -16,8 +16,12 @@
             <h1>Circuit</h1>
             <c:url var="formAction" value="/circuits" />
             <form:form commandName="circuit" method="post" action="${formAction}">
-                <form:label path="name">Name <form:input path="name" /></form:label>
-                    <input type="submit" />
+                <div class="form">
+                    <input class="input-xlarge" id="disabledInput" type="text" placeholder="Cicuit ID" disabled><br>
+                    <form:input path="*" placeholder="Circuit Name" /><br>
+                    <form:input path="*" placeholder="Circuit Overseer" /><br>
+                    <input type="submit" class="btn-primary" />
+                </div>
             </form:form>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
