@@ -1,5 +1,5 @@
 <%-- 
-    Document   : update
+    Document   : edit
     Created on : 23-Aug-2012, 20:23:17
     Author     : Tina
 --%>
@@ -22,5 +22,6 @@
            </form:form>
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
       </div>
+    <script type="text/javascript" charset="utf8" src="<c:url value='/javascript/circuits.js' />" ></script>
     </body>
 </html>

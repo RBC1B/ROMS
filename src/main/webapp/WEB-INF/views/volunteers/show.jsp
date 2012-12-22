@@ -15,5 +15,6 @@
       <div class="container">
         <h1>Hello World!</h1>
       </div>
+     <script type="text/javascript" charset="utf8" src="<c:url value='/javascript/circuits.js' />" ></script>
     </body>
 </html>

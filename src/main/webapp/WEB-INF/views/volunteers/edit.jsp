@@ -48,6 +48,10 @@
                 <br>
                 <div class="form">
                     <p>5. Date of birth:</p>
+                    <div class="input-append date" id="dp3" data-date="15-13-1980" data-date-format="dd-mm-yyyy">
+                    <input class="span2" size="16" type="text" value="15-03-1980">
+                    <span class="add-on"><i class="icon-th"></i></span>
+                    </div>
                 </div>
                 <br>
                 <div class="form">
@@ -103,5 +107,6 @@
             </form:form>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
+       <script type="text/javascript" charset="utf8" src="<c:url value='/javascript/circuits.js' />" ></script>
     </body>
 </html>
