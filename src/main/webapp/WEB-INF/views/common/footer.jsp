@@ -17,7 +17,7 @@
     </div><!--- /span4 --->
     </div><!--- /row-fluid --->
     <div class="pull-right">
-        <p><a href="#">Help</a></p>
+        <p><a href="#navbar"><i class="icon-circle-arrow-up"></i>&nbsp;Back to Top</a></p><!--- So users on smaller screens don't have to scroll all the way back to the top --->
     </div>
 </footer>
 <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.min.js"></script>

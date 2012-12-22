@@ -17,71 +17,89 @@
             <c:url var="formAction" value="/volunteers" />
             <form:form commandName="volunteer" method="post" action="${formAction}">
                 <div>
-                    Indicate form(s) of service with which you are willing to assist:
+                    <p>Indicate form(s) of service with which you are willing to assist:</p>
                     <!--form:checkbox path="" /> -->
                 </div>
-                <div>1(a) Legal name: 
-                    Last <form:input path="person.surname" />
-                    First <form:input path="person.forename" />
-                    Middle <form:input path="person.middleName" />
+                <div class="form">
+                    <p>1(a) Legal name:</p> 
+                    <form:input path="person.forename" placeholder="First"/>
+                    <form:input path="person.middleName" placeholder="Middle" />
+                    <form:input path="person.surname" placeholder="Last"/>
                 </div>
-                <div>1(b) Gender 
+                <br>
+                <div class="form">
+                    <p>2. Full Postal Address: </p>
+                    <form:input path="person.address.street" placeholder="Street"/>
+                    <form:input path="person.address.town" placeholder="Town"/>
+                    <form:input path="person.address.county" placeholder="County"/>
+                    <form:input path="person.address.postcode" placeholder="Postcode"/>
+                </div>
+                <br>
+                <div class="form">
+                    <p>3. Phones: </p>
+                    <form:input path="person.telephone" placeholder="Home"/>
+                    <form:input path="person.workPhone" placeholder="Work"/>
+                    <form:input path="person.mobile" placeholder="Mobile"/>
+                </div>
+                <br>
+                <div class="form">
+                    <p>4. Email: </p><form:input path="person.email" />
+                </div>
+                <br>
+                <div class="form">
+                    <p>5. Date of birth:</p>
+                </div>
+                <br>
+                <div class="form">
+                    <p>6. Date of baptism:</p>
+                </div>
+                <br>
+                <div class="form">
+                    <p>7. Marital status:</p>
+                </div>
+                 <div class="form">
+                     <p>8. Gender</p> 
                     <form:radiobutton path="gender" value="M" /> Male
                     <form:radiobutton path="gender" value="F" /> Female
-                </div>    
-                <div>
-                    2(a) Date of birth:
-                </div>
-                <div>
-                    2(b) Date of baptism:
-                </div>
-                <div>
-                    3. Addresses: 
-                    Street <form:input path="person.address.street" />
-                    Town <form:input path="person.address.town" />
-                    County <form:input path="person.address.county" />
-                    Postcode <form:input path="person.address.postcode" />
-                </div>
-                <div>
-                    Email: <form:input path="person.email" />
-                </div>
-                <div>
-                    Phones: 
-                    Home: <form:input path="person.telephone" />
-                    Work: <form:input path="person.workPhone" />
-                    Mobile: <form:input path="person.mobile" />
-                </div>
-                <div>
-                    5. Current privileges: 
+                </div>               
+                 <br>
+                <div class="form">
+                    <p>9. Current privileges:</p> 
                     <form:checkbox path="elder" />Elder
                     <form:checkbox path="ministerialServant" />Ministerial servant
                     <form:checkbox path="regularPioneer" />Regular pioneer
-                </div>
-                <div>
-                    6. Name of mate if married: ???
-                </div>
-                <div>
-                    7. Work background:
+                </div>                               <br>
+                <br>
+                <div class="form">
+                    <p>0. Availability:</p>
                     TBD
                 </div>
-                <div>
-                    8. In case of accident or illness notify:
+                <br>
+                <div class="form">
+                    <p>11. Work background:</p>
+                    TBD
+                </div>
+                <br>
+                <div class="form">
+                    <p>12. In case of accident or illness notify:</p>
                     TBD
                     <form:select path="emergencyRelationshipId">
                         <form:option value="" label="-- Choose one--" />
                     </form:select>
                 </div>
-                <div>
-                    Congregation
+                <br>
+                <div class="form">
+                    <p>Congregation</p>
                     <form:select path="congregationId">
                         <form:option value="" label="-- Choose one--" />
                     </form:select>
                 </div>
-                <div>
-                    Form date
+                <br>
+                <div class="form">
+                    <p>Form date</p>
                     
                 </div>
-                <input type="submit" />
+                <input type="submit" class="btn"/>
             </form:form>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>

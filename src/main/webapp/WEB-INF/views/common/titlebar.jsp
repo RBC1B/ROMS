@@ -1,10 +1,10 @@
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<div class="navbar navbar-inverse navbar-fixed-top">
+<div class="navbar navbar-inverse navbar-fixed-top" id="navbar">
     <div class="navbar-inner">
        <div class="container-fluid">
         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">MENU</a>
-        <a class="brand" href="http://localhost:8080/ROMS/">RBC ROMS</a>
-        <!-- Everything you want hidden at 940px or less, place within here -->
+        <a class="brand" href="http://localhost:8080/ROMS/">&nbsp;RBC ROMS</a>
+        <!-- Everything you want minimised at 940px or less, place within here -->
         <div class="nav-collapse">
             <ul class="nav" >
                 <li class="dropdown">
@@ -19,7 +19,7 @@
                 <sec:authorize access="hasPermission('VOLUNTEER', 'READ')"><li><a href="<c:url value="/volunteers" />">Volunteers</a></li></sec:authorize>
                 <sec:authorize access="hasPermission('SKILL', 'READ')"><li><a href="<c:url value="/qualifications" />">My Profile</a></li></sec:authorize>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">My ROMS <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">&nbsp;My ROMS <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>My ROMS</li>
                         <li>My Projects</li>
@@ -28,8 +28,12 @@
                     </ul>
                 </li>
             </ul>
-            <a class="btn btn-info pull-right" href="<c:url value="/j_spring_security_logout" />" >Logout</a>
+            <p class="pull-right">    
+              <a class="btn btn-info" href="#"><i class="icon-question-sign icon-white"></i>&nbsp;Help</a>
+              &nbsp;<a class="btn btn-danger" href="<c:url value="/j_spring_security_logout" />" >Logout</a>&nbsp;
+            </p>
         </div>
+       <!-- Everything between parenthesis will be minimised at 940px or less -->         
        </div>           
     </div>
 </div>
