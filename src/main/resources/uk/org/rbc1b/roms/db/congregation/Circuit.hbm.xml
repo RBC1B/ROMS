@@ -6,6 +6,6 @@
             <generator class="identity"/>
         </id>
         <property name="name" length="50" unique="true" />
-        <many-to-one name="circuitOverseer" class="uk.org.rbc1b.roms.db.Person" column="CircuitOverseerID" lazy="false"/>
+        <many-to-one name="circuitOverseer" class="uk.org.rbc1b.roms.db.Person" column="CircuitOverseerID" lazy="false" cascade="all"/>
     </class>
 </hibernate-mapping>

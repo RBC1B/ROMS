@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
+import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.congregation.Circuit;
 
 /**
@@ -96,6 +97,10 @@ public class CircuitsController {
     public String handleNewSubmit(@Valid CircuitForm circuitForm) {
 
         Circuit circuit = new Circuit();
+        Person circuitOverseer = new Person();
+        circuitOverseer.setForename(circuitForm.getCoForename());
+        circuitOverseer.setSurname(circuitForm.getCoSurname());
+        circuit.setCircuitOverseer(circuitOverseer);
         circuit.setName(circuitForm.getName());
 
         circuitDao.createCircuit(circuit);
