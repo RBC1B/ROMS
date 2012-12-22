@@ -1,5 +1,5 @@
 <%--
-    Document   : circuitEdit
+    Document   : volunteerEdit
     Created on : 14-Jul-2012, 00:54:53
     Author     : oliver.elder.esq
 --%>
@@ -48,6 +48,19 @@
                 <br>
                 <div class="form">
                     <p>5. Date of birth:</p>
+
+                     <script type:"text/javascript">
+                     <div class="input-append date" id="dpMonths" data-date="102/2012" data-date-format="mm/yyyy" data-date-viewmode="years" data-date-minviewmode="months">
+                     <input class="span2" size="16" type="text" value="02/2012" readonly="">
+		     <span class="add-on"><i class="icon-calendar"></i></span>
+		     </div>
+                    
+                    
+                    
+                <input type="text" class="span2" value="02/16/12" data-date-format="mm/dd/yy" id="dp2">
+                
+                
+                </div>
                 </div>
                 <br>
                 <div class="form">
@@ -71,7 +84,7 @@
                 </div>                               <br>
                 <br>
                 <div class="form">
-                    <p>0. Availability:</p>
+                    <p>10. Availability:</p>
                     TBD
                 </div>
                 <br>
@@ -103,5 +116,6 @@
             </form:form>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
+       <script type="text/javascript" charset="utf8" src="<c:url value='/javascript/circuits.js' />" ></script>
     </body>
 </html>

@@ -15,6 +15,7 @@
             <h1>Circuit: Hello World!</h1>
             ${circuit}
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-        </div>
+        </div>    
+      <script type="text/javascript" charset="utf8" src="<c:url value='/javascript/circuits.js' />" ></script>
     </body>
 </html>
