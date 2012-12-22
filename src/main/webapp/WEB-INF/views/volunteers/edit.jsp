@@ -48,12 +48,18 @@
                 <br>
                 <div class="form">
                     <p>5. Date of birth:</p>
-                <input type="text" class="span2" value="02/16/12" data-date-format="mm/dd/yy" id="dp2">
+                    <input data-datepicker="datepicker" class="small" type="text" value="01/05/2011" />
                 </div>
                 </div>
                 <br>
                 <div class="form">
                     <p>6. Date of baptism:</p>
+                    
+                    <script>$('.datepicker').datepicker()</script>
+                    <input type="text" class="span2" value="02/16/12" data-date-format="mm/dd/yy" id="dp2">                    
+                    
+                    
+                    
                 </div>
                 <br>
                 <div class="form">
