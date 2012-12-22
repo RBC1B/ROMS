@@ -20,6 +20,14 @@
                     <p>Indicate form(s) of service with which you are willing to assist:</p>
                     <!--form:checkbox path="" /> -->
                 </div>
+                <div class="tabbable"> <!-- Only required for left/right tabs -->
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#tab1" data-toggle="tab">Section 1</a></li>
+                    <li><a href="#tab2" data-toggle="tab">Section 2</a></li>
+                    <li><a href="#tab3" data-toggle="tab">Section 3</a></li>
+                </ul>
+                <div class="tab-content">
+                <div class="tab-pane active" id="tab1">    
                 <div class="form">
                     <p>1(a) Legal name:</p> 
                     <form:input path="person.forename" placeholder="First"/>
@@ -48,36 +56,54 @@
                 <br>
                 <div class="form">
                     <p>5. Date of birth:</p>
-                    <input data-datepicker="datepicker" class="small" type="text" value="01/05/2011" />
+
+                     <script type="text/javascript">$('.datepicker').datepicker()</script>
+                     <div class="input-append date" id="dpMonths" data-date="102/2012" data-date-format="mm/yyyy" data-date-viewmode="years" data-date-minviewmode="months">
+                     <input class="span2" size="16" type="text" value="02/2012" readonly="">
+		     <span class="add-on"><i class="icon-calendar"></i></span>
+		     </div>
+                    
+                    
+                    
+                <input type="text" class="span2" value="02/16/12" data-date-format="mm/dd/yy" id="dp2">
+                
+                
                 </div>
                 </div>
                 <br>
                 <div class="form">
                     <p>6. Date of baptism:</p>
-                    
-                    <script>$('.datepicker').datepicker()</script>
-                    <input type="text" class="span2" value="02/16/12" data-date-format="mm/dd/yy" id="dp2">                    
-                    
-                    
-                    
                 </div>
+                <div class="tab-pane" id="tab2">
                 <br>
                 <div class="form">
                     <p>7. Marital status:</p>
                 </div>
                  <div class="form">
-                     <p>8. Gender</p> 
-                    <form:radiobutton path="gender" value="M" /> Male
-                    <form:radiobutton path="gender" value="F" /> Female
+                    <p>8. Gender</p>
+                    <label class="radio inline">
+                    <form:radiobutton path="gender" id="optionsRadios1" value="M" /> Male
+                    </label>
+                    <label class="radio inline">
+                    <form:radiobutton path="gender" id="optionsRadios1" value="F" /> Female
+                    </label>
                 </div>               
                  <br>
                 <div class="form">
-                    <p>9. Current privileges:</p> 
+                    <p>9. Current privileges:</p>
+                    <label class="checkbox inline">
                     <form:checkbox path="elder" />Elder
-                    <form:checkbox path="ministerialServant" />Ministerial servant
+                    </label>
+                    <label class="checkbox inline">
+                    <form:checkbox path="ministerialServant" />MSP
+                    </label>
+                    <label class="checkbox inline">
                     <form:checkbox path="regularPioneer" />Regular pioneer
+                    </label>
                 </div>                               <br>
+                </div>
                 <br>
+                <div class="tab-pane" id="tab3">
                 <div class="form">
                     <p>10. Availability:</p>
                     TBD
@@ -104,8 +130,8 @@
                 </div>
                 <br>
                 <div class="form">
-                    <p>Form date</p>
-                    
+                    <p>Form date</p>  
+                </div>
                 </div>
                 <input type="submit" class="btn"/>
             </form:form>
