@@ -41,7 +41,7 @@ public class VolunteerController {
     }
 
     /**
-     * Display the form to create a new circuit.
+     * Display the form to create a new volunteer.
      *
      * @param model mvc model
      * @return view name
