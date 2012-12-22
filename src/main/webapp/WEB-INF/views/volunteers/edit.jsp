@@ -49,8 +49,10 @@
                 <div class="form">
                     <p>5. Date of birth:</p>
 
-                     <script type:"text/javascript">
+                    
+                    
                      <div class="input-append date" id="dpMonths" data-date="102/2012" data-date-format="mm/yyyy" data-date-viewmode="years" data-date-minviewmode="months">
+                     <script type="text/javascript">$('.datepicker').datepicker()</script>
                      <input class="span2" size="16" type="text" value="02/2012" readonly="">
 		     <span class="add-on"><i class="icon-calendar"></i></span>
 		     </div>
