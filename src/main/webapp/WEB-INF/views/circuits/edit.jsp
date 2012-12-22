@@ -17,9 +17,10 @@
             <c:url var="formAction" value="/circuits" />
             <form:form commandName="circuit" method="post" action="${formAction}">
                 <div class="form">
-                    <input class="input-append" id="disabledInput" type="text" placeholder="Cicuit ID" disabled><br>
-                    <form:input path="*" placeholder="Circuit Name"/><br>
-                    <form:input path="*" type="text" name="circuitoverseer" placeholder="Circuit Overseer" value="" id="searchinput" data-provide="typeahead" data-source="circuit.Name" maxlength="30" autocomplete="on"  /><br>
+                    <input class="input-append" id="disabledInput" type="text" placeholder="Cicuit ID" disabled><br />
+                    <form:label path="name"> <form:input path="name" placeholder="Circuit Name"/> </form:label>
+                    <form:label path="coForename"><form:input path="coForename" placeholder="Circuit Overseer Forename" /></form:label>
+                    <form:label path="coSurname"><form:input path="coSurname" placeholder="Circuit Overseer Surname" /></form:label>
                     <input type="submit" class="btn btn-primary" />
                 </div>
             </form:form>
