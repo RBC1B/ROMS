@@ -17,10 +17,10 @@
             <c:url var="formAction" value="/circuits" />
             <form:form commandName="circuit" method="post" action="${formAction}">
                 <div class="form">
-                    <input class="input-xlarge" id="disabledInput" type="text" placeholder="Cicuit ID" disabled><br>
-                    <form:input path="*" placeholder="Circuit Name" /><br>
-                    <form:input path="*" placeholder="Circuit Overseer" /><br>
-                    <input type="submit" class="btn-primary" />
+                    <input class="input-append" id="disabledInput" type="text" placeholder="Cicuit ID" disabled><br>
+                    <form:input path="*" placeholder="Circuit Name"/><br>
+                    <form:input path="*" type="text" name="circuitoverseer" placeholder="Circuit Overseer" value="" id="searchinput" data-provide="typeahead" data-source="circuit.Name" maxlength="30" autocomplete="on"  /><br>
+                    <input type="submit" class="btn btn-primary" />
                 </div>
             </form:form>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
