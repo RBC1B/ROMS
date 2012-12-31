@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 @RequestMapping("/volunteers")
-public class VolunteerController {
+public class VolunteersController {
 
     @Autowired
     private VolunteerDao volunteerDao;
