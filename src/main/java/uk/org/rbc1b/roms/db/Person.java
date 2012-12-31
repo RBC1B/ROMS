@@ -5,14 +5,14 @@
 package uk.org.rbc1b.roms.db;
 
 /**
- * The basic person identifier. <p>This can be extended to volunteers, users,
- * and non RBC-overseers.
+ * The basic person identifier. <p>This can be extended to volunteers, users, and non RBC-overseers.
  *
  * @author oliver.elder.esq
  */
 public class Person {
 
     private Integer personId;
+    private Congregation congregation;
     private String forename;
     private String middleName;
     private String surname;
@@ -37,6 +37,14 @@ public class Person {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public Congregation getCongregation() {
+        return congregation;
+    }
+
+    public void setCongregation(Congregation congregation) {
+        this.congregation = congregation;
     }
 
     public String getEmail() {

@@ -4,7 +4,7 @@
  */
 package uk.org.rbc1b.roms.db.kingdomhall;
 
-import uk.org.rbc1b.roms.db.congregation.Congregation;
+import uk.org.rbc1b.roms.db.Congregation;
 
 /**
  *

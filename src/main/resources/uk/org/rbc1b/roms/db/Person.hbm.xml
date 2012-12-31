@@ -8,6 +8,7 @@
         <property name="forename" length="50" />
         <property name="middleName" length="50" />
         <property name="surname" length="50" />
+        <many-to-one class="uk.org.rbc1b.roms.db.Congregation" column="CongregationId" lazy="false" name="congregation"/>
         <component name="address">
             <property name="street" length="50"  />
             <property name="town" length="50"  />

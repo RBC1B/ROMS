@@ -1,4 +1,4 @@
-package uk.org.rbc1b.roms.db.congregation;
+package uk.org.rbc1b.roms.db.circuit;
 
 import uk.org.rbc1b.roms.db.Person;
 

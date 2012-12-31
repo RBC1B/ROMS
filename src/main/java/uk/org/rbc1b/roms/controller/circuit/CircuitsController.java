@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.db.Person;
-import uk.org.rbc1b.roms.db.congregation.Circuit;
+import uk.org.rbc1b.roms.db.circuit.Circuit;
 
 /**
  *

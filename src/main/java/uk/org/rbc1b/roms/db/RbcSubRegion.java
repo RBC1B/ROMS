@@ -2,15 +2,15 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package uk.org.rbc1b.roms.db.congregation;
+package uk.org.rbc1b.roms.db;
 
 /**
  *
  * @author oliver.elder.esq
  */
-public class RbcRegion {
+public class RbcSubRegion {
 
-    private Integer rbcRegionId;
+    private Integer rbcSubRegionId;
     private String name;
 
     public String getName() {
@@ -21,16 +21,16 @@ public class RbcRegion {
         this.name = name;
     }
 
-    public Integer getRbcRegionId() {
-        return rbcRegionId;
+    public Integer getRbcSubRegionId() {
+        return rbcSubRegionId;
     }
 
-    public void setRbcRegionId(Integer rbcRegionId) {
-        this.rbcRegionId = rbcRegionId;
+    public void setRbcSubRegionId(Integer rbcSubRegionId) {
+        this.rbcSubRegionId = rbcSubRegionId;
     }
 
     @Override
     public String toString() {
-        return "RbcRegion{" + "rbcRegionId=" + rbcRegionId + '}';
+        return "RbcSubRegion{" + "rbcSubRegionId=" + rbcSubRegionId + '}';
     }
 }

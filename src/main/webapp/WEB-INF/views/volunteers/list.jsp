@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : list
     Created on : 20-Sep-2012, 11:33:13
     Author     : rahulsingh
@@ -30,7 +30,7 @@
                                 <td>${volunteer.personId}</td>
                                 <td>${volunteer.person.forename}</td>
                                 <td>${volunteer.person.surname}</td>
-                                <td>${volunteer.congregation.name}</td>
+                                <td>${volunteer.person.congregation.name}</td>
                                 <td><a class="btn btn-success" href="<c:url value="/volunteers/${volunteer.personId}" />">View</a>&nbsp;
                                     <a class="btn btn-warning" href="<c:url value="/volunteers/${volunteer.personId}/edit" />">Edit</a>&nbsp;
                                     <a class="btn btn-danger" href="delete">Delete</a>

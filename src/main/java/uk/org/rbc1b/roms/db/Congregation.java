@@ -1,6 +1,7 @@
-package uk.org.rbc1b.roms.db.congregation;
+package uk.org.rbc1b.roms.db;
 
 import java.util.Set;
+import uk.org.rbc1b.roms.db.circuit.Circuit;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 
 /**

@@ -1,36 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<hibernate-mapping  package="uk.org.rbc1b.roms.db.volunteer">
-    <class name="Volunteer" table="Volunteer">
-        <id name="personId" >
-            <generator class="assigned" />
-        </id>
-        <many-to-one name="person" class="uk.org.rbc1b.roms.db.Person" column="PersonId" unique="true" lazy="false"/>
-        <many-to-one name="rbcStatus" column="RbcStatusId" />
-        <many-to-one name="congregation" class="uk.org.rbc1b.roms.db.congregation.Congregation" column="CongregationId" lazy="false" />
-        <many-to-one name="appointment" column="AppointmentId" />
-        <many-to-one name="fulltime" column="FulltimeId" />
-        <property name="availability" length="7" />
-        <many-to-one name="emergencyContact" column="EmergencyContactId" />
-        <many-to-one name="emergencyContactRelationship" column="EmergencyContactRelationshipId" />
-        <property name="dob" column="DOB" />
-        <property name="gender" length="1" />
-        <many-to-one name="maritalStatus" column="MaritalStatusId" />
-        <property name="baptismDate" />
-        <property name="interviewDate" />
-        <many-to-one name="interviewerA" column="InterviewerA" />
-        <many-to-one name="interviewerB" column="InterviewerB" />
-        <property name="interviewComments" length="150" />
-        <property name="joinedDate" />
-        <property name="formDate" />
-        <many-to-one name="interviewStatus" column="InterviewStatusId" />
-        <property name="oversight" />
-        <property name="oversightComments" length="50" />
-        <property name="reliefUK" />
-        <property name="reliefUKComments" length="50" />
-        <property name="reliefAbroad" />
-        <property name="reliefAbroadComments" length="50" />
-        <property name="hhcFormCode" column="HHCFormCode" length="15" />
-        <property name="badgeIssueDate" />
-    </class>
+<hibernate-mapping package="uk.org.rbc1b.roms.db.volunteer">
+  <class name="Volunteer" table="Volunteer">
+    <id name="personId">
+      <generator class="assigned"/>
+    </id>
+    <many-to-one class="uk.org.rbc1b.roms.db.Person" column="PersonId" lazy="false" name="person" unique="true"/>
+    <many-to-one column="RbcStatusId" name="rbcStatus"/>
+    <many-to-one column="AppointmentId" name="appointment"/>
+    <many-to-one column="FulltimeId" name="fulltime"/>
+    <property length="7" name="availability"/>
+    <many-to-one column="EmergencyContactId" name="emergencyContact"/>
+    <many-to-one column="EmergencyContactRelationshipId" name="emergencyContactRelationship"/>
+    <property column="DOB" name="dob"/>
+    <property length="1" name="gender"/>
+    <many-to-one column="MaritalStatusId" name="maritalStatus"/>
+    <property name="baptismDate"/>
+    <property name="interviewDate"/>
+    <many-to-one column="InterviewerA" name="interviewerA"/>
+    <many-to-one column="InterviewerB" name="interviewerB"/>
+    <property length="150" name="interviewComments"/>
+    <property name="joinedDate"/>
+    <property name="formDate"/>
+    <many-to-one column="InterviewStatusId" name="interviewStatus"/>
+    <property name="oversight"/>
+    <property length="50" name="oversightComments"/>
+    <property name="reliefUK"/>
+    <property length="50" name="reliefUKComments"/>
+    <property name="reliefAbroad"/>
+    <property length="50" name="reliefAbroadComments"/>
+    <property column="HHCFormCode" length="15" name="hhcFormCode"/>
+    <property name="badgeIssueDate"/>
+  </class>
 </hibernate-mapping>
