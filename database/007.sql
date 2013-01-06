@@ -1,3 +1,3 @@
-*/Scipt to add "BadgeExpiryDate" and "PDFAcknowledgements" field */
+*/ Audit table creation script */
 
-ALTER TABLE `roms`.`volunteer` ADD COLUMN `BadgeExpiryDate` DATE NULL DEFAULT NULL COMMENT 'This needs to be set to 3 Years after the BadgeIssueDate'  AFTER `BadgeIssueDate` , ADD COLUMN `PDFAcknowledgements` BLOB NULL  AFTER `CreatedBy` ;
+CREATE  TABLE `roms`.`Audit` (  `AuditID` BIGINT NOT NULL ,  `Field` VARCHAR(60) NULL ,  `OldValue` VARCHAR(60) NULL ,  `NewValue` VARCHAR(60) NULL ,  PRIMARY KEY (`AuditID`) );

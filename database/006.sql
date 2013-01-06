@@ -1,3 +1,3 @@
-*/Change to add in "Relief in UK/Abroad" and releavant comments field */
+*/Scipt to add "BadgeExpiryDate" and "PDFAcknowledgements" field */
 
-ALTER TABLE `roms`.`volunteer` DROP COLUMN `ReliefAbroadComments` , DROP COLUMN `ReliefAbroad` , CHANGE COLUMN `ReliefUK` `Relief in UK/Abroad` TINYINT(1) NOT NULL  , CHANGE COLUMN `ReliefUKComments` `ReliefComments` VARCHAR(50) NULL  ;
+ALTER TABLE `roms`.`volunteer` ADD COLUMN `BadgeExpiryDate` DATE NULL DEFAULT NULL COMMENT 'This needs to be set to 3 Years after the BadgeIssueDate'  AFTER `BadgeIssueDate` , ADD COLUMN `PDFAcknowledgements` BLOB NULL  AFTER `CreatedBy` ;
