@@ -1,3 +1,3 @@
-*/Change to add in "Relief in UK/Abroad" and releavant comments field */
+*/Script to add to new colunms to the Volunteer table. "DateCreated & CreatedBy" */
 
-ALTER TABLE `roms`.`volunteer` DROP COLUMN `ReliefAbroadComments` , DROP COLUMN `ReliefAbroad` , CHANGE COLUMN `ReliefUK` `Relief in UK/Abroad` TINYINT(1) NOT NULL  , CHANGE COLUMN `ReliefUKComments` `ReliefComments` VARCHAR(50) NULL  ;
+ALTER TABLE `roms`.`volunteer` ADD COLUMN `DateCreated` DATE NULL  AFTER `BadgeIssueDate` , ADD COLUMN `CreatedBy` VARCHAR(60) NULL  AFTER `DateCreated` ;
