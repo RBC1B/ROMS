@@ -1,10 +1,9 @@
-*/Script to Alter the Circuit table */
+/*Script to Alter the Circuit table */
 
 
 ALTER TABLE Circuit ADD COLUMN CircuitOverseerID BIGINT(20);
- FOREIGN KEY (fk_Person) REFERENCES Person(PersonID) ON DELETE CASCADE;
 
-*/Script to add FK relationship to Person table */
+/*Script to add FK relationship to Person table */
 
 
 ALTER TABLE Circuit ADD 
@@ -13,7 +12,7 @@ ALTER TABLE Circuit ADD
       REFERENCES Person(PersonID);
 
 
-*/Script to add values to CircuitOverseerId column */
+/*Script to add values to CircuitOverseerId column */
 
 
 update ROMS.Circuit set CircuitOverseerId = 1
