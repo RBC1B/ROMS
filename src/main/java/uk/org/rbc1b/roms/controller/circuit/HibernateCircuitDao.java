@@ -9,7 +9,7 @@ import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import uk.org.rbc1b.roms.db.congregation.Circuit;
+import uk.org.rbc1b.roms.db.circuit.Circuit;
 
 /**
  *

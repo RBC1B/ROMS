@@ -16,8 +16,14 @@
         <h1>Kingdom Hall</h1>
             <c:url var="formAction" value="/kingdom-halls" />
             <form:form commandName="kingdomHall" method="post" action="${formAction}">
-                <form:label path="name">Name <form:input path="name" /></form:label>
-                <input type="submit" />
+                <input class="input-append" id="disabledInput" type="text" placeholder="Kingdom Hall ID" disabled><br>
+                <form:label path="*"><form:input path="*" placeholder="Kingdom Hall Name" /></form:label>
+                <form:label path="*"><form:input path="*" placeholder="Kingdom Hall Street" /></form:label>
+                <form:label path="*"><form:input path="*" placeholder="Kingdom Hall Town" /></form:label>
+                <form:label path="*"><form:input path="*" placeholder="Kingdom Hall County" /></form:label>
+                <form:label path="*"><form:input path="*" placeholder="Kingdom Hall Postcode" /></form:label>
+                <form:input path="*" type="text" name="*" placeholder="Title Holder" value="" id="searchinput" data-provide="typeahead" data-source="congregation.Name" maxlength="30" autocomplete="on"  /><br>
+                <input type="submit" class="btn btn-primary"/>
             </form:form>
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
        </div>

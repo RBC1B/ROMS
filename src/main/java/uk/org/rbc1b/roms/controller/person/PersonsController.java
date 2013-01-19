@@ -27,17 +27,18 @@ public class PersonsController {
     private PersonDao personDao;
 
     /**
-     * Person search. Pass in a candidate, match this against the user
-     * first/last name and return the person object in JSON format
+     * Person search. Pass in a candidate, match this against the user first/last name and return the person object in JSON format
      *
-     * @param query person match lookup
+     * @param forename person match lookup first name
+     * @param surname person match lookup last name
      * @return model containing the list of people
      */
     @RequestMapping(value = "search", method = RequestMethod.GET, headers = "Accept=application/json")
     //@PreAuthorize - not clear who will not be allowed to access
     @Transactional(readOnly = true)
     @ResponseBody
-    public List<Person> handleList(@RequestParam String query) {
-        return personDao.findPersons(query);
+    public List<Person> handleList(@RequestParam(value = "forename", required = true) String forename,
+            @RequestParam(value = "surname", required = true) String surname) {
+        return personDao.findPersons(forename, surname);
     }
 }

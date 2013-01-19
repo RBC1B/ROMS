@@ -1,4 +1,3 @@
-/* Add the CircuitOverseerId to the Circuit table */
 use ROMS;
 
 update Circuit set CircuitOverseerId = 1

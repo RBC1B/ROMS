@@ -28,6 +28,11 @@
         </property>
         <property name="mappingResources">
             <list>
+                <value>uk/org/rbc1b/roms/db/Congregation.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/CongregationContact.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/CongregationRole.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/RbcRegion.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/RbcSubRegion.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/Person.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/Updates.hbm.xml</value>
 
@@ -35,12 +40,7 @@
                 <value>uk/org/rbc1b/roms/db/application/ApplicationAccess.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/application/User.hbm.xml</value>
 
-                <value>uk/org/rbc1b/roms/db/congregation/Circuit.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/congregation/Congregation.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/congregation/CongregationContact.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/congregation/CongregationRole.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/congregation/RbcRegion.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/congregation/RbcSubRegion.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/circuit/Circuit.hbm.xml</value>
 
                 <value>uk/org/rbc1b/roms/db/kingdomhall/HallFeature.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/kingdomhall/KingdomHall.hbm.xml</value>

@@ -6,7 +6,6 @@ package uk.org.rbc1b.roms.db.volunteer;
 
 import java.sql.Date;
 import uk.org.rbc1b.roms.db.Person;
-import uk.org.rbc1b.roms.db.congregation.Congregation;
 
 /**
  *
@@ -17,7 +16,6 @@ public class Volunteer {
     private Integer personId;
     private Person person; // recognise person relationship one-way only.
     private RbcStatus rbcStatus;
-    private Congregation congregation;
     private Appointment appointment;
     private Fulltime fulltime;
     private String availability;   // 7 char string, representing T or F, Monday to Sunday
@@ -73,14 +71,6 @@ public class Volunteer {
 
     public void setBaptismDate(Date baptismDate) {
         this.baptismDate = baptismDate;
-    }
-
-    public Congregation getCongregation() {
-        return congregation;
-    }
-
-    public void setCongregation(Congregation congregation) {
-        this.congregation = congregation;
     }
 
     public Date getDob() {

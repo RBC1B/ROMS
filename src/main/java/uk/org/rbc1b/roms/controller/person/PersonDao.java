@@ -16,9 +16,10 @@ public interface PersonDao {
 
     /**
      * Look up the list of people matching the criteria.
-     *
-     * @param keyword terms to search for person - first, last names
+     * <p>We look for exact match names
+     * @param forename person's first name
+     * @param surname  person's last name
      * @return list or people
      */
-    List<Person> findPersons(String keyword);
+    List<Person> findPersons(String forename, String surname);
 }

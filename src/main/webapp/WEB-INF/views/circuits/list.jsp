@@ -10,7 +10,7 @@
     <c:set var="pageTitle" value="Circuits" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
-            <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
+        <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
             <h1>Circuits</h1>
             <div class="entity-list-results">
@@ -48,8 +48,8 @@
             </div>
             <p>&nbsp;</p>
             <ul class="breadcrumb">
-              <li><a href="<c:url value="/" />">ROMS</a> <span class="divider">/</span></li>
-              <li class="active">Circuits</li>
+                <li><a href="<c:url value="/" />">ROMS</a> <span class="divider">/</span></li>
+                <li class="active">Circuits</li>
             </ul>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
