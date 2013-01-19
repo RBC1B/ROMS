@@ -24,9 +24,9 @@
       var GOOG_FIXURL_LANG = (navigator.language || '').slice(0,2),GOOG_FIXURL_SITE = location.host;
     </script>
     <script src="http://linkhelp.clients.google.com/tbproxy/lh/wm/fixurl.js"></script>
-  </div>           
+  </div>
     <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
-      <script type="text/javascript" charset="utf8" src="<c:url value='/javascript/circuits.js' />" ></script>
+      <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/circuits.js' />" ></script>
     </body>
 </html>

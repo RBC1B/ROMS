@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : show
     Created on : 23-Aug-2012, 20:22:52
     Author     : Tina
@@ -17,6 +17,6 @@
             ${qualification}
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
        </div>
-     <script type="text/javascript" charset="utf8" src="<c:url value='/javascript/circuits.js' />" ></script>
+     <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/circuits.js' />" ></script>
     </body>
 </html>

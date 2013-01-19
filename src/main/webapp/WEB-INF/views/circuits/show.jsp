@@ -19,6 +19,6 @@
             Email:    ${circuit.circuitOverseer.email} <br />
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
-        <script type="text/javascript" charset="utf8" src="<c:url value='/javascript/circuits.js' />" ></script>
+        <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/circuits.js' />" ></script>
     </body>
 </html>

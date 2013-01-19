@@ -53,11 +53,11 @@
             </div>
             <p>&nbsp;</p>
             <ul class="breadcrumb">
-              <li><a href="<c:url value="/" />">ROMS</a> <span class="divider">/</span></li>
-              <li class="active">Kingdom Halls</li>
+                <li><a href="<c:url value="/" />">ROMS</a> <span class="divider">/</span></li>
+                <li class="active">Kingdom Halls</li>
             </ul>
-        <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+            <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
-        <script type="text/javascript" charset="utf8" src="<c:url value='/javascript/kingdom-halls.js' />" ></script>
-        </body>
+        <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/kingdom-halls.js' />" ></script>
+    </body>
 </html>

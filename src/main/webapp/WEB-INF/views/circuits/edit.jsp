@@ -18,7 +18,7 @@
             <form:form commandName="circuit" method="post" action="${formAction}">
                 <div class="form">
                     <input class="input-append" id="disabledInput" type="text" placeholder="Cicuit ID" disabled><br />
-                    <form:label path="name"> <form:input path="name" placeholder="Circuit Name"/> </form:label>
+                    <form:label path="name"> <form:input path="name" placeholder="Circuit Name"/></form:label>
                     <form:label path="coForename"><form:input path="coForename" placeholder="Circuit Overseer Forename" /></form:label>
                     <form:label path="coSurname"><form:input path="coSurname" placeholder="Circuit Overseer Surname" /></form:label>
                     <input type="submit" class="btn btn-primary" />
@@ -26,6 +26,6 @@
             </form:form>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
-        <script type="text/javascript" charset="utf8" src="<c:url value='/javascript/circuits.js' />" ></script>
+        <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/circuits.js' />" ></script>
     </body>
 </html>

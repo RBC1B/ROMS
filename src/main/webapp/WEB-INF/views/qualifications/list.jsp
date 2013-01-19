@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : list
     Created on : 23-Aug-2012, 20:22:25
     Author     : Tina
@@ -48,7 +48,7 @@
               <li class="active">Qualifications</li>
             </ul>
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-        <script type="text/javascript" charset="utf8" src="<c:url value='/javascript/qualifications.js' />" ></script>
+        <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/qualifications.js' />" ></script>
        </div>
       </body>
 </html>

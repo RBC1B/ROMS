@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : show
     Created on : 20-Sep-2012, 11:42:19
     Author     : rahulsingh
@@ -12,9 +12,9 @@
         <title>JSP Page</title>
     </head>
     <body>
-      <div class="container">
-        <h1>Hello World!</h1>
-      </div>
-     <script type="text/javascript" charset="utf8" src="<c:url value='/javascript/circuits.js' />" ></script>
+        <div class="container">
+            <h1>Hello World!</h1>
+        </div>
+        <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/circuits.js' />" ></script>
     </body>
 </html>
