@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import uk.org.rbc1b.roms.db.Congregation;
 import uk.org.rbc1b.roms.db.Person;
 
 /**
@@ -33,12 +34,31 @@ public class PersonsController {
      * @param surname person match lookup last name
      * @return model containing the list of people
      */
-    @RequestMapping(value = "search", method = RequestMethod.GET, headers = "Accept=application/json")
+    @RequestMapping(value = "search", method = RequestMethod.GET, produces = "application/json")
     //@PreAuthorize - not clear who will not be allowed to access
     @Transactional(readOnly = true)
     @ResponseBody
-    public List<Person> handleList(@RequestParam(value = "forename", required = true) String forename,
+    public PersonsSearchResponse handleSearch(@RequestParam(value = "forename", required = true) String forename,
             @RequestParam(value = "surname", required = true) String surname) {
-        return personDao.findPersons(forename, surname);
+        List<Person> persons = personDao.findPersons(forename, surname);
+
+        // delete the lazy loaded sub collections to prevent the JSON marshaller blowing up
+        PersonsSearchResponse response = new PersonsSearchResponse();
+        if (!persons.isEmpty()) {
+            for (Person person : persons) {
+                Congregation congregation = person.getCongregation();
+                if (congregation == null) {
+                    continue;
+                }
+
+                congregation.setCircuit(null);
+                congregation.setContacts(null);
+                congregation.setKingdomHall(null);
+                congregation.setRbcRegion(null);
+                congregation.setRbcSubRegion(null);
+            }
+            response.setPersons(persons);
+        }
+        return response;
     }
 }

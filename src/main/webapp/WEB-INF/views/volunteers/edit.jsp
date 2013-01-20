@@ -137,6 +137,28 @@
             </form:form>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
+        <!-- mustache template used to display the person selection form -->
+        <script id="person-search-form" type="text/html" charset="utf-8">
+            <select name="personId">
+                {{#persons}}
+                <option id="{{personId}}">{{forename}} {{surname}}{{#congregation}}, {{congregation.name}}{{/congregation}}</option>
+                {{/persons}}
+                <option>None</option>
+            </select>
+        </script>
+        <div id="volunteer-person-modal" class="modal hide fade">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3>Select matching person</h3>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn">Close</a>
+                <a href="#" class="btn btn-primary">Save changes</a>
+            </div>
+        </div>
+        <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/mustache.js' />" ></script>
         <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/volunteers.js' />" ></script>
     </body>
 </html>

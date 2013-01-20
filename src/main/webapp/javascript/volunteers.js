@@ -13,14 +13,23 @@ $(document).ready(function() {
 });
 
 function findPerson(forename, surname) {
-
     $.ajax({
         url: '../persons/search',
+        contentType: "application/json",
         dataType: 'json',
         data:  {forename: forename, surname: surname},
         success: function(data) {
-            alert(data);
+            // if we have no matches, no need to show selection form
+            if (!data.persons) {
+                return;
+            }
+
+            var template = $("#person-search-form").html();
+            var html = Mustache.to_html(template, data);
+            
+            $("#volunteer-person-modal .modal-body").html(html)
+            $("#volunteer-person-modal").modal('show')
+
         }
     });
-
 }
