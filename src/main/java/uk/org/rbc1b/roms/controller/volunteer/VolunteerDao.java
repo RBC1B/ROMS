@@ -17,10 +17,10 @@ public interface VolunteerDao {
     /**
      * Find the volunteer with matching id, or null with no match.
      *
-     * @param volId id
+     * @param volunteerId id
      * @return volunteer
      */
-    Volunteer findVolunteer(Integer volId);
+    Volunteer findVolunteer(Integer volunteerId);
 
     /**
      * Find all matching volunteers.

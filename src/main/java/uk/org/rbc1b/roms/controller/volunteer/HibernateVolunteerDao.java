@@ -22,8 +22,8 @@ public class HibernateVolunteerDao implements VolunteerDao {
     private SessionFactory sessionFactory;
 
     @Override
-    public Volunteer findVolunteer(final Integer volId) {
-        return (Volunteer) this.sessionFactory.getCurrentSession().get(Volunteer.class, volId);
+    public Volunteer findVolunteer(Integer volunteerId) {
+        return (Volunteer) this.sessionFactory.getCurrentSession().get(Volunteer.class, volunteerId);
     }
 
     @Override

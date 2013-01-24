@@ -5,7 +5,6 @@
 package uk.org.rbc1b.roms.controller.person;
 
 import java.util.List;
-import uk.org.rbc1b.roms.db.Person;
 
 /**
  * Root element for the person search response.
@@ -14,13 +13,13 @@ import uk.org.rbc1b.roms.db.Person;
  */
 public class PersonsSearchResponse {
 
-    private List<Person> persons;
+    private List<PersonSearchResult> results;
 
-    public List<Person> getPersons() {
-        return persons;
+    public List<PersonSearchResult> getResults() {
+        return results;
     }
 
-    public void setPersons(List<Person> persons) {
-        this.persons = persons;
+    public void setResults(List<PersonSearchResult> results) {
+        this.results = results;
     }
 }
