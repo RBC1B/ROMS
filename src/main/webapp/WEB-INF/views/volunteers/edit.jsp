@@ -139,12 +139,18 @@
         </div>
         <!-- mustache template used to display the person selection form -->
         <script id="person-search-form" type="text/html" charset="utf-8">
-            <select name="personId">
+            {{#matchedVolunteers}}
+                <p>Existing volunteers matched:</p>
+                {{#volunteers}}
+                <p><a href="<c:url value='/volunteers/{{personId}}'/>">{{forename}} {{surname}}{{#congregationName}}, {{congregationName}}{{/congregationName}}</a></p>
+                {{/volunteers}}
+            {{/matchedVolunteers}}
+            {{#matchedPersons}}
+                <p>Existing people (not volunteers) matched:</p>
                 {{#persons}}
-                <option id="{{personId}}">{{forename}} {{surname}}{{#congregation}}, {{congregation.name}}{{/congregation}}</option>
+                <a href="#" class="matched-person" data-person-id="{{personId}}">{{forename}} {{surname}}{{#congregationName}}, {{congregationName}}{{/congregationName}}</a>
                 {{/persons}}
-                <option>None</option>
-            </select>
+            {{/matchedPersons}}
         </script>
         <div id="volunteer-person-modal" class="modal hide fade">
             <div class="modal-header">
@@ -154,8 +160,7 @@
             <div class="modal-body">
             </div>
             <div class="modal-footer">
-                <a href="#" class="btn">Close</a>
-                <a href="#" class="btn btn-primary">Save changes</a>
+                <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Ignore</a>
             </div>
         </div>
         <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/mustache.js' />" ></script>
