@@ -17,6 +17,8 @@
                 </li>
                 <sec:authorize access="hasPermission('CONG', 'READ')"><li><a href="<c:url value="/congregations" />">Projects</a></li></sec:authorize>
                 <sec:authorize access="hasPermission('VOLUNTEER', 'READ')"><li><a href="<c:url value="/volunteers" />">Volunteers</a></li></sec:authorize>
+                <sec:authorize access="hasPermission('QUALIFICATION', 'READ')"><li><a href="<c:url value="/qualifications" />">Qualification</a></li></sec:authorize>
+                <sec:authorize access="hasPermission('SKILL', 'READ')"><li><a href="<c:url value="/skills" />">Skills</a></li></sec:authorize>
                 <sec:authorize access="hasPermission('SKILL', 'READ')"><li><a href="<c:url value="/qualifications" />">My Profile</a></li></sec:authorize>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">&nbsp;My ROMS <b class="caret"></b></a>
