@@ -19,8 +19,6 @@
                 <div class="form">
                     <input class="input-append" id="disabledInput" type="text" placeholder="Cicuit ID" disabled><br />
                     <form:label path="name"> <form:input path="name" placeholder="Circuit Name"/></form:label>
-                    <form:label path="coForename"><form:input path="coForename" placeholder="Circuit Overseer Forename" /></form:label>
-                    <form:label path="coSurname"><form:input path="coSurname" placeholder="Circuit Overseer Surname" /></form:label>
                     <input type="submit" class="btn btn-primary" />
                 </div>
             </form:form>

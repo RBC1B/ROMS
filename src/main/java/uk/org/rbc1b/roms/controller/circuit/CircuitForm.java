@@ -17,10 +17,6 @@ public class CircuitForm {
     @NotNull
     @Size(max = 50)
     private String name;
-    @Size(max = 50)
-    private String coForename;
-    @Size(max = 50)
-    private String coSurname;
 
     /**
      * @return name
@@ -34,33 +30,5 @@ public class CircuitForm {
      */
     public void setName(String name) {
         this.name = name;
-    }
-
-    /**
-     * @return the coForename
-     */
-    public String getCoForename() {
-        return coForename;
-    }
-
-    /**
-     * @param coForename the coForename to set
-     */
-    public void setCoForename(String coForename) {
-        this.coForename = coForename;
-    }
-
-    /**
-     * @return the coSurname
-     */
-    public String getCoSurname() {
-        return coSurname;
-    }
-
-    /**
-     * @param coSurname the coSurname to set
-     */
-    public void setCoSurname(String coSurname) {
-        this.coSurname = coSurname;
     }
 }
