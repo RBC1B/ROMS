@@ -32,9 +32,9 @@
                                 <td>${skill.department.name}</td>
                                 <td>${skill.description}</td>
                                 <td>${skill.appearOnBadge}</td>
-                                <td><a class="btn btn-success" href="<c:url value="/skills/${skill.skillId}" />">View</a>&nbsp;
-                                    <a class="btn btn-warning" href="<c:url value="/skills/${skill.skillId}/edit" />">Edit</a>&nbsp;
-                                    <a class="btn btn-danger" href="delete">Delete</a>
+                                <td><a class="btn btn-success" href="<c:url value="/skills/${skill.skillId}" />">View</a>&nbsp;&nbsp;&nbsp;&nbsp;&#124;&nbsp;
+                                    <a href="<c:url value="/skills/${skill.skillId}/edit" />">Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;&#124;&nbsp;
+                                    <a href="delete">Delete</a>
                                 </td>
                             </tr>
                         </c:forEach>

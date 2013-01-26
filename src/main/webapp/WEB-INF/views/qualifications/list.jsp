@@ -27,8 +27,8 @@
                         <tr>
                             <td>${qualification.qualification}</td>
                             <td>${qualification.description}</td>
-                            <td><a href="<c:url value="/qualifications/${qualification.qualification}" />">View</a>&nbsp;
-                                <a href="<c:url value="/qualifications/${qualification.qualification}/edit" />">Edit</a>&nbsp;
+                            <td><a class="btn btn-success" href="<c:url value="/qualifications/${qualification.qualification}" />">View</a>&nbsp;&nbsp;&nbsp;&nbsp;&#124;&nbsp;
+                                <a href="<c:url value="/qualifications/${qualification.qualification}/edit" />">Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;&#124;&nbsp;
                                 <a href="delete">Delete</a>
                             </td>
                         </tr>
