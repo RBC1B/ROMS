@@ -18,7 +18,7 @@ public class CircuitForm {
     @NotNull
     @Size(max = 50)
     private String name;
-    private Person person = new Person();
+    private Person circuitOverseer = new Person();
 
     /**
      * @return name
@@ -35,16 +35,16 @@ public class CircuitForm {
     }
 
     /**
-     * @return the person
+     * @return the circuitOverseer
      */
-    public Person getPerson() {
-        return person;
+    public Person getCircuitOverseer() {
+        return circuitOverseer;
     }
 
     /**
-     * @param person the person to set
+     * @param circuitOverseer the circuitOverseer to set
      */
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setCircuitOverseer(Person circuitOverseer) {
+        this.circuitOverseer = circuitOverseer;
     }
 }

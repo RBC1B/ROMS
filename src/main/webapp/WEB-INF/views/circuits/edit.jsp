@@ -22,16 +22,16 @@
                         <p>Circuit</p>
                         <form:input path="name" placeholder="Circuit Name"/>
                         <p>Circuit Overseer</p>
-                        <form:input path="person.forename" placeholder = "First Name" />
-                        <form:input path="person.middleName" placeholder = "Middle Name"/>
-                        <form:input path="person.surname" placeholder = "Surname"/>
-                        <form:input path="person.email" placeholder = "E-mail"/>
-                        <form:input path="person.address.street" placeholder = "Street"/>
-                        <form:input path="person.address.town" placeholder = "Town"/>
-                        <form:input path="person.address.county" placeholder = "County"/>
-                        <form:input path="person.address.postcode" placeholder = "Post Code"/>
-                        <form:input path="person.telephone" placeholder = "Telephone Number"/>
-                        <form:input path="person.mobile" placeholder = "Mobile Number"/>
+                        <form:input path="circuitOverseer.forename" placeholder = "First Name" />
+                        <form:input path="circuitOverseer.middleName" placeholder = "Middle Name"/>
+                        <form:input path="circuitOverseer.surname" placeholder = "Surname"/>
+                        <form:input path="circuitOverseer.email" placeholder = "E-mail"/>
+                        <form:input path="circuitOverseer.address.street" placeholder = "Street"/>
+                        <form:input path="circuitOverseer.address.town" placeholder = "Town"/>
+                        <form:input path="circuitOverseer.address.county" placeholder = "County"/>
+                        <form:input path="circuitOverseer.address.postcode" placeholder = "Post Code"/>
+                        <form:input path="circuitOverseer.telephone" placeholder = "Telephone Number"/>
+                        <form:input path="circuitOverseer.mobile" placeholder = "Mobile Number"/>
                     </div>
                     <input type="submit" class="btn btn-primary" />
                 </div>
