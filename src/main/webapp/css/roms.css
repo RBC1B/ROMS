@@ -13,7 +13,22 @@ div.dataTables_wrapper a.paginate_button {
 
 div.entity-list-results {
 }
+a.discourage {
+    color:red;    
+}
 
 div.entity-list-add-new {
     margin-top:25px;
 }
+.paging_full_numbers span.paginate_active {
+	background-color: #fff;
+}
+/*
+    Data tables background colours editing
+*/
+table.dataTable tr.odd td.sorting_1 { background-color: #fff; }
+table.dataTable tr.odd td.sorting_2 { background-color: #ddd; }
+table.dataTable tr.odd td.sorting_3 { background-color: #e9e9e9; }
+table.dataTable tr.even td.sorting_1 { background-color: #fff; }
+table.dataTable tr.even td.sorting_2 { background-color: #ddd; }
+table.dataTable tr.even td.sorting_3 { background-color: #e9e9e9; }

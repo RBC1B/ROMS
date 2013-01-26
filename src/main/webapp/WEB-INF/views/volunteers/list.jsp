@@ -17,12 +17,19 @@
             <div class="entity-list-results">
                 <table class="table table-bordered table-striped table-hover" id="volunteer-list">
                     <thead>
+
+                        <tr>
+                            <th></th>
+                            <th><input type="text" name="search_firstname" value="Search first name" class="search_init" /></th>
+                            <th><input type="text" name="search_lastname" value="Search last name" class="search_init" /></th>
+                            <th><input type="text" name="search_cong" value="Search congregation" class="search_init" /></th>
+                        </tr> 
                         <tr>
                             <th>ID</th>
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Congregation</th>
-                        </tr>
+                        </tr> 
                     </thead>
                     <tbody>
                         <c:forEach items="${volunteers}" var="volunteer">
@@ -31,20 +38,15 @@
                                 <td>${volunteer.person.forename}</td>
                                 <td>${volunteer.person.surname}</td>
                                 <td>${volunteer.person.congregation.name}</td>
-                                <td><a class="btn btn-success" href="<c:url value="/volunteers/${volunteer.personId}" />">View</a>&nbsp;
-                                    <a class="btn btn-warning" href="<c:url value="/volunteers/${volunteer.personId}/edit" />">Edit</a>&nbsp;
-                                    <a class="btn btn-danger" href="delete">Delete</a>
+                                <td><a class="btn btn-success" href="<c:url value="/volunteers/${volunteer.personId}" />">View</a>&nbsp;&nbsp;&nbsp;&nbsp;&#124;&nbsp;
+                                    <a href="<c:url value="/volunteers/${volunteer.personId}/edit" />">Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;&#124;&nbsp;
+                                    <a href="delete">Delete</a>
                                 </td>
                             </tr>
                         </c:forEach>
                     </tbody>
                     <tfoot>
-                        <tr>
-                            <th></th>
-                            <th><input type="text" name="search_name" value="Search names" class="search_init" /></th>
-                            <th></th>
-                        </tr>
-                    </tfoot>
+                  </tfoot>
                 </table>
             </div>
             <div class="entity-list-add-new">
