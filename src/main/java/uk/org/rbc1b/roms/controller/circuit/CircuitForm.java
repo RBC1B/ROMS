@@ -6,6 +6,7 @@ package uk.org.rbc1b.roms.controller.circuit;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import uk.org.rbc1b.roms.db.Person;
 
 /**
  * Request form bean when creating/editing the circuit.
@@ -17,10 +18,7 @@ public class CircuitForm {
     @NotNull
     @Size(max = 50)
     private String name;
-    @Size(max = 50)
-    private String coForename;
-    @Size(max = 50)
-    private String coSurname;
+    private Person person = new Person();
 
     /**
      * @return name
@@ -37,30 +35,16 @@ public class CircuitForm {
     }
 
     /**
-     * @return the coForename
+     * @return the person
      */
-    public String getCoForename() {
-        return coForename;
+    public Person getPerson() {
+        return person;
     }
 
     /**
-     * @param coForename the coForename to set
+     * @param person the person to set
      */
-    public void setCoForename(String coForename) {
-        this.coForename = coForename;
-    }
-
-    /**
-     * @return the coSurname
-     */
-    public String getCoSurname() {
-        return coSurname;
-    }
-
-    /**
-     * @param coSurname the coSurname to set
-     */
-    public void setCoSurname(String coSurname) {
-        this.coSurname = coSurname;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 }

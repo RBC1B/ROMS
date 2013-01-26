@@ -35,4 +35,11 @@ public interface CircuitDao {
      * @param circuit new circuit to create
      */
     void createCircuit(Circuit circuit);
+
+    /**
+     * Update a circuit using the matching Id.
+     *
+     * @param circuitId id
+     */
+    void updateCircuit(Integer circuitId);
 }
