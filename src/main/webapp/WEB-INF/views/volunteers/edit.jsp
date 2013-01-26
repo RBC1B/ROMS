@@ -55,23 +55,13 @@
                             <br />
                             <div class="form">
                                 <p>5. Date of birth:</p>
-
-                                <!--<script type="text/javascript">$('.datepicker').datepicker()</script> -->
-                                <div class="input-append date" id="dpMonths" data-date="102/2012" data-date-format="mm/yyyy" data-date-viewmode="years" data-date-minviewmode="months">
-                                    <input class="span2" size="16" type="text" value="02/2012" readonly="">
-                                    <span class="add-on"><i class="icon-calendar"></i></span>
-                                </div>
-
-
-
-                                <input type="text" class="span2" value="02/16/12" data-date-format="mm/dd/yy" id="dp2">
-
-
+                                <input class="datepicker" name="birthdate" type="text" placeholder="15/03/1980" data-date-format="dd/mm/yy">
                             </div>
                         </div>
                         <br />
                         <div class="form">
                             <p>6. Date of baptism:</p>
+                            <input class="datepicker" name="baptismdate" type="text" placeholder="15/03/1980" data-date-format="dd/mm/yy">
                         </div>
                         <br />
                         <div class="form">
@@ -166,5 +156,6 @@
     </div>
     <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/mustache.js' />" ></script>
     <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/volunteers.js' />" ></script>
+    <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/jquery-ui-1.10.0.custom.min.js' />" ></script>
 </body>
 </html>

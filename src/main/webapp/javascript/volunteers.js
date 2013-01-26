@@ -10,6 +10,9 @@ $(document).ready(function() {
 
         findPerson(forename, surname);
     });
+    
+    $( ".datepicker" ).datepicker();
+
 });
 
 function findPerson(forename, surname) {
