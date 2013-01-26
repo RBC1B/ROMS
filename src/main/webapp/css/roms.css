@@ -1,4 +1,6 @@
-
+body {
+    padding-top: 90px; /* 60px to make the container go all the way to the bottom of the topbar */
+}
 div.content-container {
     margin: 10px 15px;
 }
@@ -21,7 +23,7 @@ div.entity-list-add-new {
     margin-top:25px;
 }
 .paging_full_numbers span.paginate_active {
-	background-color: #fff;
+    background-color: #fff;
 }
 /*
     Data tables background colours editing

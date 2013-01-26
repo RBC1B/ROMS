@@ -50,6 +50,8 @@
                             <div class="form">
                                 <p>4. Email: </p><form:input path="person.email" />
                             </div>
+                        </div>
+                        <div class="tab-pane" id="tab2">
                             <br />
                             <div class="form">
                                 <p>5. Date of birth:</p>
@@ -71,99 +73,98 @@
                         <div class="form">
                             <p>6. Date of baptism:</p>
                         </div>
-                        <div class="tab-pane" id="tab2">
-                            <br />
-                            <div class="form">
-                                <p>7. Marital status:</p>
-                            </div>
-                            <div class="form">
-                                <p>8. Gender</p>
-                                <label class="radio inline">
-                                    <form:radiobutton path="gender" id="optionsRadios1" value="M" /> Male
-                                </label>
-                                <label class="radio inline">
-                                    <form:radiobutton path="gender" id="optionsRadios1" value="F" /> Female
-                                </label>
-                            </div>
-                            <br />
-                            <div class="form">
-                                <p>9. Current privileges:</p>
-                                <label class="checkbox inline">
-                                    <form:checkbox path="elder" />Elder
-                                </label>
-                                <label class="checkbox inline">
-                                    <form:checkbox path="ministerialServant" />MSP
-                                </label>
-                                <label class="checkbox inline">
-                                    <form:checkbox path="regularPioneer" />Regular pioneer
-                                </label>
-                            </div>
-                            <br />
+                        <br />
+                        <div class="form">
+                            <p>7. Marital status:</p>
+                        </div>
+                        <div class="form">
+                            <p>8. Gender</p>
+                            <label class="radio inline">
+                                <form:radiobutton path="gender" id="optionsRadios1" value="M" /> Male
+                            </label>
+                            <label class="radio inline">
+                                <form:radiobutton path="gender" id="optionsRadios1" value="F" /> Female
+                            </label>
                         </div>
                         <br />
-                        <div class="tab-pane" id="tab3">
-                            <div class="form">
-                                <p>10. Availability:</p>
-                                TBD
-                            </div>
-                            <br>
-                            <div class="form">
-                                <p>11. Work background:</p>
-                                TBD
-                            </div>
-                            <br>
-                            <div class="form">
-                                <p>12. In case of accident or illness notify:</p>
-                                TBD
-                                <form:select path="emergencyRelationshipId">
-                                    <form:option value="" label="-- Choose one--" />
-                                </form:select>
-                            </div>
-                            <br>
-                            <div class="form">
-                                <p>Congregation</p>
-                                <form:select path="congregationId">
-                                    <form:option value="" label="-- Choose one--" />
-                                </form:select>
-                            </div>
-                            <br />
-                            <div class="form">
-                                <p>Form date</p>
-                            </div>
+                        <div class="form">
+                            <p>9. Current privileges:</p>
+                            <label class="checkbox inline">
+                                <form:checkbox path="elder" />Elder
+                            </label>
+                            <label class="checkbox inline">
+                                <form:checkbox path="ministerialServant" />MSP
+                            </label>
+                            <label class="checkbox inline">
+                                <form:checkbox path="regularPioneer" />Regular pioneer
+                            </label>
                         </div>
-                        <input type="submit" class="btn"/>
+                        <br />
                     </div>
+                    <br />
+                    <div class="tab-pane" id="tab3">
+                        <div class="form">
+                            <p>10. Availability:</p>
+                            TBD
+                        </div>
+                        <br>
+                        <div class="form">
+                            <p>11. Work background:</p>
+                            TBD
+                        </div>
+                        <br>
+                        <div class="form">
+                            <p>12. In case of accident or illness notify:</p>
+                            TBD
+                            <form:select path="emergencyRelationshipId">
+                                <form:option value="" label="-- Choose one--" />
+                            </form:select>
+                        </div>
+                        <br>
+                        <div class="form">
+                            <p>Congregation</p>
+                            <form:select path="congregationId">
+                                <form:option value="" label="-- Choose one--" />
+                            </form:select>
+                        </div>
+                        <br />
+                        <div class="form">
+                            <p>Form date</p>
+                        </div>
+                    </div>
+                    <input type="submit" class="btn"/>
                 </div>
-            </form:form>
-            <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+            </div>
+        </form:form>
+        <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+    </div>
+    <!-- mustache template used to display the person selection form -->
+    <script id="person-search-form" type="text/html" charset="utf-8">
+        {{#matchedVolunteers}}
+        <p>Existing volunteers matched:</p>
+        {{#volunteers}}
+        <p><a href="<c:url value='/volunteers/{{personId}}'/>">{{forename}} {{surname}}{{#congregationName}}, {{congregationName}}{{/congregationName}}</a></p>
+        {{/volunteers}}
+        {{/matchedVolunteers}}
+        {{#matchedPersons}}
+        <p>Existing people (not volunteers) matched:</p>
+        {{#persons}}
+        <a href="#" class="matched-person" data-person-id="{{personId}}">{{forename}} {{surname}}{{#congregationName}}, {{congregationName}}{{/congregationName}}</a>
+        {{/persons}}
+        {{/matchedPersons}}
+    </script>
+    <div id="volunteer-person-modal" class="modal hide fade">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Select matching person</h3>
         </div>
-        <!-- mustache template used to display the person selection form -->
-        <script id="person-search-form" type="text/html" charset="utf-8">
-            {{#matchedVolunteers}}
-                <p>Existing volunteers matched:</p>
-                {{#volunteers}}
-                <p><a href="<c:url value='/volunteers/{{personId}}'/>">{{forename}} {{surname}}{{#congregationName}}, {{congregationName}}{{/congregationName}}</a></p>
-                {{/volunteers}}
-            {{/matchedVolunteers}}
-            {{#matchedPersons}}
-                <p>Existing people (not volunteers) matched:</p>
-                {{#persons}}
-                <a href="#" class="matched-person" data-person-id="{{personId}}">{{forename}} {{surname}}{{#congregationName}}, {{congregationName}}{{/congregationName}}</a>
-                {{/persons}}
-            {{/matchedPersons}}
-        </script>
-        <div id="volunteer-person-modal" class="modal hide fade">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h3>Select matching person</h3>
-            </div>
-            <div class="modal-body">
-            </div>
-            <div class="modal-footer">
-                <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Ignore</a>
-            </div>
+        <div class="modal-body">
         </div>
-        <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/mustache.js' />" ></script>
-        <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/volunteers.js' />" ></script>
-    </body>
+        <div class="modal-footer">
+            <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Ignore</a>
+        </div>
+    </div>
+    <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/mustache.js' />" ></script>
+    <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/volunteers.js' />" ></script>
+</body>
 </html>
