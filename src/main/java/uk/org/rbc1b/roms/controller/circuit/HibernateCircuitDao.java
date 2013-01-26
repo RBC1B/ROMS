@@ -46,4 +46,15 @@ public class HibernateCircuitDao implements CircuitDao {
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
+
+    /**
+     * Update a circuit.
+     *
+     * @param circuitId id
+     */
+    @Override
+    public void updateCircuit(Integer circuitId) {
+        Circuit circuit = this.findCircuit(circuitId);
+        this.sessionFactory.getCurrentSession().saveOrUpdate(circuit);
+    }
 }
