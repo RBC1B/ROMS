@@ -39,7 +39,7 @@ public interface CircuitDao {
     /**
      * Update a circuit using the matching Id.
      *
-     * @param circuitId id
+     * @param circuit object to update
      */
-    void updateCircuit(Integer circuitId);
+    void updateCircuit(Circuit circuit);
 }

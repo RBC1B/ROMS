@@ -6,6 +6,7 @@ package uk.org.rbc1b.roms.controller.circuit;
 
 import java.util.List;
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -43,12 +44,18 @@ public class HibernateCircuitDao implements CircuitDao {
     /**
      * Update a circuit.
      *
-     * @param circuitId id
+     * @param circuit object to be updated
      */
     @Override
-    public void updateCircuit(Integer circuitId) {
-        Circuit circuit = this.findCircuit(circuitId);
-        this.sessionFactory.getCurrentSession().saveOrUpdate(circuit);
+    public void updateCircuit(Circuit circuit) {
+        Session session = this.sessionFactory.getCurrentSession();
+        // get existing circuit via id.
+        Circuit existingCircuit = (Circuit) session.get(Circuit.class, circuit.getCircuitId());
+        // assign updated values to the object.
+        existingCircuit.setName(circuit.getName());
+        existingCircuit.setCircuitOverseer(circuit.getCircuitOverseer());
+        // save the updated circuit.
+        session.saveOrUpdate(existingCircuit);
     }
 
     /**
