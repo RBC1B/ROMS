@@ -51,7 +51,6 @@
     </bean>
 
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
-    <bean id="conversion-service" class="org.springframework.format.support.FormattingConversionServiceFactoryBean" />
-
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean" />
 
 </beans>
