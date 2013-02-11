@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package uk.org.rbc1b.roms.controller.person;
+package uk.org.rbc1b.roms.controller.common.person;
 
 import java.util.List;
 import org.hibernate.Criteria;
@@ -25,6 +25,11 @@ public class HibernatePersonDao implements PersonDao {
     private SessionFactory sessionFactory;
 
     @Override
+    public Person findPerson(Integer personId) {
+        return (Person) this.sessionFactory.getCurrentSession().get(Person.class, personId);
+    }
+
+    @Override
     public List<Person> findPersons(String forename, String surname) {
         Session session = this.sessionFactory.getCurrentSession();
 
@@ -33,4 +38,17 @@ public class HibernatePersonDao implements PersonDao {
 
         return criteria.list();
     }
+
+
+    @Override
+    public void savePerson(Person person) {
+        this.sessionFactory.getCurrentSession().saveOrUpdate(person);
+    }
+
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+
 }

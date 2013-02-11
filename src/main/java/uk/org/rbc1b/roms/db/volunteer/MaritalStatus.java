@@ -10,8 +10,25 @@ package uk.org.rbc1b.roms.db.volunteer;
  */
 public class MaritalStatus {
 
+    public static final MaritalStatus SINGLE = new MaritalStatus(5);
     private Integer maritalStatusId;
     private String description;
+
+    /**
+     * Default constructor.
+     */
+    public MaritalStatus() {
+        // do nothing
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param maritalStatusId id
+     */
+    public MaritalStatus(Integer maritalStatusId) {
+        this.maritalStatusId = maritalStatusId;
+    }
 
     public String getDescription() {
         return description;

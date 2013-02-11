@@ -28,4 +28,11 @@ public interface VolunteerDao {
      * @return list of matching volunteers
      */
     List<Volunteer> findVolunteers();
+
+
+    /**
+     * Save a volunteer.
+     * @param volunteer volunteer to
+     */
+    void saveVolunteer(Volunteer volunteer);
 }

@@ -4,6 +4,8 @@
  */
 package uk.org.rbc1b.roms.controller.person;
 
+import java.util.Date;
+
 /**
  * Individual result from the person search.
  *
@@ -11,29 +13,19 @@ package uk.org.rbc1b.roms.controller.person;
  */
 public class PersonSearchResult {
 
-    private boolean volunteer;
-    private Integer personId;
+    private Date birthDate;
     private String congregationName;
     private String forename;
+    private Integer personId;
     private String surname;
+    private boolean volunteer;
 
-    /**
-     * @return true if the person has been confirmed as a volunteer
-     */
-    public boolean isVolunteer() {
-        return volunteer;
+    public Date getBirthDate() {
+        return birthDate;
     }
 
-    public void setVolunteer(boolean volunteer) {
-        this.volunteer = volunteer;
-    }
-
-    public Integer getPersonId() {
-        return personId;
-    }
-
-    public void setPersonId(Integer personId) {
-        this.personId = personId;
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 
     public String getCongregationName() {
@@ -52,11 +44,30 @@ public class PersonSearchResult {
         this.forename = forename;
     }
 
+    public Integer getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(Integer personId) {
+        this.personId = personId;
+    }
+
     public String getSurname() {
         return surname;
     }
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    /**
+     * @return true if the person has been confirmed as a volunteer
+     */
+    public boolean isVolunteer() {
+        return volunteer;
+    }
+
+    public void setVolunteer(boolean volunteer) {
+        this.volunteer = volunteer;
     }
 }

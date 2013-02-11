@@ -39,7 +39,7 @@ div.dataTables_wrapper a.paginate_button {
 div.entity-list-results {
 }
 a.discourage {
-    color:red;    
+    color:red;
 }
 
 div.entity-list-add-new {
@@ -57,3 +57,11 @@ table.dataTable tr.odd td.sorting_3 { background-color: #e9e9e9; }
 table.dataTable tr.even td.sorting_1 { background-color: #fff; }
 table.dataTable tr.even td.sorting_2 { background-color: #ddd; }
 table.dataTable tr.even td.sorting_3 { background-color: #e9e9e9; }
+
+/*****************************************************************************/
+/* Volunteer editing                                                         */
+/*****************************************************************************/
+#volunteer-birthdate {
+    float: left;
+    margin-right: 5px;
+}

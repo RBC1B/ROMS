@@ -4,6 +4,7 @@
  */
 package uk.org.rbc1b.roms.controller.person;
 
+import uk.org.rbc1b.roms.controller.common.person.PersonDao;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,7 @@ public class PersonsController {
         result.setForename(person.getForename());
         result.setSurname(person.getSurname());
         result.setPersonId(person.getPersonId());
+        result.setBirthDate(person.getBirthDate());
 
         if (person.getCongregation() != null) {
             result.setCongregationName(person.getCongregation().getName());

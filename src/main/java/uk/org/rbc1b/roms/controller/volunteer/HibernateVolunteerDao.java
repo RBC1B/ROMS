@@ -34,4 +34,16 @@ public class HibernateVolunteerDao implements VolunteerDao {
 
         return criteria.list();
     }
+
+    @Override
+    public void saveVolunteer(Volunteer volunteer) {
+        this.sessionFactory.getCurrentSession().saveOrUpdate(volunteer);
+    }
+
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+
 }

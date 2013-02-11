@@ -72,7 +72,6 @@
                 <value>uk/org/rbc1b/roms/db/volunteer/Skill.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/Team.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/TradeNumber.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/volunteer/Volunteer.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/VolunteerQualification.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/VolunteerSkill.hbm.xml</value>
             </list>

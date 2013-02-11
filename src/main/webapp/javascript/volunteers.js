@@ -1,8 +1,8 @@
 $(document).ready(function() {
-    $('#person\\.surname').blur(function() {
+    $('#surname').blur(function() {
 
-        var forename = $('#person\\.forename').val();
-        var surname = $('#person\\.surname').val();
+        var forename = $('#forename').val();
+        var surname = $('#surname').val();
 
         if(!forename || !surname) {
             return;
@@ -10,8 +10,8 @@ $(document).ready(function() {
 
         findPerson(forename, surname);
     });
-    
-    $( ".datepicker" ).datepicker();
+
+    $(".datepicker").datepicker({ dateFormat: "dd/mm/yy" });
 
 });
 
@@ -64,7 +64,7 @@ function findPerson(forename, surname) {
 
             // if they select the person id, set it to the hidden volunteer person id field
             $("a.matched-person").on("click", function(event){
-               $("input[name='person.personId']").val($(this).data("person-id"));
+               $("input[name='personId']").val($(this).data("person-id"));
                modalElement.modal('hide')
             });
         }

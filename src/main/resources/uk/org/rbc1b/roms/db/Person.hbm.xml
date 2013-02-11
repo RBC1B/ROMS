@@ -8,6 +8,7 @@
         <property name="forename" length="50" />
         <property name="middleName" length="50" />
         <property name="surname" length="50" />
+        <property name="birthDate"/>
         <many-to-one class="uk.org.rbc1b.roms.db.Congregation" column="CongregationId" lazy="false" name="congregation"/>
         <component name="address">
             <property name="street" length="50"  />
@@ -21,4 +22,31 @@
         <property name="email" length="50" />
         <property name="comments" length="250" />
     </class>
+    <joined-subclass name="uk.org.rbc1b.roms.db.volunteer.Volunteer" extends="Person">
+        <key column="personId" />
+        <many-to-one column="RbcStatusId" name="rbcStatus"/>
+        <many-to-one column="AppointmentId" name="appointment"/>
+        <many-to-one column="FulltimeId" name="fulltime"/>
+        <property length="7" name="availability"/>
+        <many-to-one column="EmergencyContactId" name="emergencyContact"/>
+        <many-to-one column="EmergencyContactRelationshipId" name="emergencyContactRelationship"/>
+        <property length="1" name="gender"/>
+        <many-to-one column="MaritalStatusId" name="maritalStatus"/>
+        <property name="baptismDate"/>
+        <property name="interviewDate"/>
+        <many-to-one column="InterviewerA" name="interviewerA"/>
+        <many-to-one column="InterviewerB" name="interviewerB"/>
+        <property length="150" name="interviewComments"/>
+        <property name="joinedDate"/>
+        <property name="formDate"/>
+        <many-to-one column="InterviewStatusId" name="interviewStatus"/>
+        <property name="oversight"/>
+        <property length="50" name="oversightComments"/>
+        <property name="reliefUK"/>
+        <property length="50" name="reliefUKComments"/>
+        <property name="reliefAbroad"/>
+        <property length="50" name="reliefAbroadComments"/>
+        <property column="HHCFormCode" length="15" name="hhcFormCode"/>
+        <property name="badgeIssueDate"/>
+    </joined-subclass>
 </hibernate-mapping>

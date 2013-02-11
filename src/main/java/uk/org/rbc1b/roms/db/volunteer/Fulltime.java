@@ -10,8 +10,27 @@ package uk.org.rbc1b.roms.db.volunteer;
  */
 public class Fulltime {
 
+    public static final Integer BETHEL = 1;
+    public static final Integer PUBLISHER = 2;
+    public static final Integer REGULAR_PIONEER = 3;
     private Integer fulltimeId;
     private String description;
+
+    /**
+     * Default constructor.
+     */
+    public Fulltime() {
+        // do nothing
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param fulltimeId full time id
+     */
+    public Fulltime(Integer fulltimeId) {
+        this.fulltimeId = fulltimeId;
+    }
 
     public String getDescription() {
         return description;

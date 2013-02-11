@@ -12,6 +12,7 @@ package uk.org.rbc1b.roms.db;
 public class Person {
 
     private Integer personId;
+    private java.sql.Date birthDate;
     private Congregation congregation;
     private String forename;
     private String middleName;
@@ -29,6 +30,14 @@ public class Person {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public java.sql.Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(java.sql.Date birthDate) {
+        this.birthDate = birthDate;
     }
 
     public String getComments() {

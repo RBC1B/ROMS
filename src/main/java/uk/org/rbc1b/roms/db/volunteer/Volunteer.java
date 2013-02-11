@@ -4,33 +4,29 @@
  */
 package uk.org.rbc1b.roms.db.volunteer;
 
-import java.sql.Date;
 import uk.org.rbc1b.roms.db.Person;
 
 /**
  *
  * @author oliver.elder.esq
  */
-public class Volunteer {
+public class Volunteer extends Person {
 
-    private Integer personId;
-    private Person person; // recognise person relationship one-way only.
     private RbcStatus rbcStatus;
     private Appointment appointment;
     private Fulltime fulltime;
     private String availability;   // 7 char string, representing T or F, Monday to Sunday
     private Person emergencyContact;
     private Relationship emergencyContactRelationship;
-    private Date dob;
     private String gender;    // M or F
     private MaritalStatus maritalStatus;
-    private Date baptismDate;
-    private Date interviewDate;
+    private java.sql.Date baptismDate;
+    private java.sql.Date interviewDate;
     private Person interviewerA;
     private Person interviewerB;
     private String interviewComments;
-    private Date joinedDate;
-    private Date formDate;
+    private java.sql.Date joinedDate;
+    private java.sql.Date formDate;
     private InterviewStatus interviewStatus;
     private boolean oversight;
     private String oversightComments;
@@ -39,7 +35,33 @@ public class Volunteer {
     private boolean reliefAbroad;
     private String reliefAbroadComments;
     private String hhcFormCode;
-    private Date badgeIssueDate;
+    private java.sql.Date badgeIssueDate;
+
+    /**
+     * Default constructor.
+     */
+    public Volunteer() {
+        // do nothing
+    }
+
+    /**
+     * Instantiate a volunteer from the person.
+     * @param person underlying person to be extended
+     */
+    public Volunteer(Person person) {
+        this.setPersonId(person.getPersonId());
+        this.setBirthDate(person.getBirthDate());
+        this.setCongregation(person.getCongregation());
+        this.setForename(person.getForename());
+        this.setMiddleName(person.getMiddleName());
+        this.setSurname(person.getSurname());
+        this.setAddress(person.getAddress());
+        this.setTelephone(person.getTelephone());
+        this.setMobile(person.getMobile());
+        this.setWorkPhone(person.getWorkPhone());
+        this.setEmail(person.getEmail());
+        this.setComments(person.getComments());
+    }
 
     public Appointment getAppointment() {
         return appointment;
@@ -57,28 +79,20 @@ public class Volunteer {
         this.availability = availability;
     }
 
-    public Date getBadgeIssueDate() {
+    public java.sql.Date getBadgeIssueDate() {
         return badgeIssueDate;
     }
 
-    public void setBadgeIssueDate(Date badgeIssueDate) {
+    public void setBadgeIssueDate(java.sql.Date badgeIssueDate) {
         this.badgeIssueDate = badgeIssueDate;
     }
 
-    public Date getBaptismDate() {
+    public java.sql.Date getBaptismDate() {
         return baptismDate;
     }
 
-    public void setBaptismDate(Date baptismDate) {
+    public void setBaptismDate(java.sql.Date baptismDate) {
         this.baptismDate = baptismDate;
-    }
-
-    public Date getDob() {
-        return dob;
-    }
-
-    public void setDob(Date dob) {
-        this.dob = dob;
     }
 
     public Person getEmergencyContact() {
@@ -97,11 +111,11 @@ public class Volunteer {
         this.emergencyContactRelationship = emergencyContactRelationship;
     }
 
-    public Date getFormDate() {
+    public java.sql.Date getFormDate() {
         return formDate;
     }
 
-    public void setFormDate(Date formDate) {
+    public void setFormDate(java.sql.Date formDate) {
         this.formDate = formDate;
     }
 
@@ -137,11 +151,11 @@ public class Volunteer {
         this.interviewComments = interviewComments;
     }
 
-    public Date getInterviewDate() {
+    public java.sql.Date getInterviewDate() {
         return interviewDate;
     }
 
-    public void setInterviewDate(Date interviewDate) {
+    public void setInterviewDate(java.sql.Date interviewDate) {
         this.interviewDate = interviewDate;
     }
 
@@ -169,11 +183,11 @@ public class Volunteer {
         this.interviewerB = interviewerB;
     }
 
-    public Date getJoinedDate() {
+    public java.sql.Date getJoinedDate() {
         return joinedDate;
     }
 
-    public void setJoinedDate(Date joinedDate) {
+    public void setJoinedDate(java.sql.Date joinedDate) {
         this.joinedDate = joinedDate;
     }
 
@@ -199,14 +213,6 @@ public class Volunteer {
 
     public void setOversightComments(String oversightComments) {
         this.oversightComments = oversightComments;
-    }
-
-    public Integer getPersonId() {
-        return personId;
-    }
-
-    public void setPersonId(Integer personId) {
-        this.personId = personId;
     }
 
     public RbcStatus getRbcStatus() {
@@ -251,20 +257,6 @@ public class Volunteer {
 
     @Override
     public String toString() {
-        return "Volunteer{" + "personId=" + personId + '}';
-    }
-
-    /**
-     * @return the person
-     */
-    public Person getPerson() {
-        return person;
-    }
-
-    /**
-     * @param person the person to set
-     */
-    public void setPerson(Person person) {
-        this.person = person;
+        return "Volunteer{" + "personId=" + super.getPersonId() + '}';
     }
 }

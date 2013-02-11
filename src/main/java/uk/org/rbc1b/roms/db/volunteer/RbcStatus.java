@@ -10,8 +10,25 @@ package uk.org.rbc1b.roms.db.volunteer;
  */
 public class RbcStatus {
 
+    public static final RbcStatus ACTIVE = new RbcStatus(1);
     private Integer rbcStatusId;
     private String description;
+
+    /**
+     * Default constructor.
+     */
+    public RbcStatus() {
+        // do nothing
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param rbcStatusId id
+     */
+    public RbcStatus(Integer rbcStatusId) {
+        this.rbcStatusId = rbcStatusId;
+    }
 
     public String getDescription() {
         return description;
