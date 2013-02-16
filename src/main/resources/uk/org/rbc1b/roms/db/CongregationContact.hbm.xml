@@ -6,7 +6,7 @@
       <generator class="identity"/>
     </id>
     <many-to-one column="CongregationId" name="congregation"/>
-    <many-to-one column="CongregationRoleId" name="congregationRole"/>
+    <property name="congregationRoleId"/>
     <many-to-one column="PersonId" name="person"/>
   </class>
 </hibernate-mapping>

@@ -38,4 +38,19 @@ public interface ReferenceDao {
      */
     List<Pair<Integer, String>> findRelationshipValues();
 
+    /**
+     * @return list of hall ownership type values
+     */
+    List<Pair<Integer, String>> findOwnershipTypeValues();
+
+    /**
+     * @return list of congregation role type values
+     */
+    List<Pair<Integer, String>> findCongregationRoleValues();
+
+    /**
+     * @return list of assignment role type values
+     */
+    List<Pair<Integer, String>> findAssignmentRoleValues();
+
 }

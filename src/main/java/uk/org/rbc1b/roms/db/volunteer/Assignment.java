@@ -15,7 +15,7 @@ public class Assignment {
     private Integer assignmentId;
     private Person person;
     private Department department;
-    private Role role;
+    private Integer roleId;
     private Date assignedDate;
     private TradeNumber tradeNumber;
     private Team team;
@@ -52,12 +52,12 @@ public class Assignment {
         this.person = person;
     }
 
-    public Role getRole() {
-        return role;
+    public Integer getRoleId() {
+        return roleId;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
     }
 
     public Team getTeam() {

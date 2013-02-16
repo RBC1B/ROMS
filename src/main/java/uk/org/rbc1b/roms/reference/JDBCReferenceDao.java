@@ -23,6 +23,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class JDBCReferenceDao implements ReferenceDao {
+
     private JdbcTemplate jdbcTemplate;
 
     @Override
@@ -62,6 +63,30 @@ public class JDBCReferenceDao implements ReferenceDao {
     public List<Pair<Integer, String>> findRelationshipValues() {
         return this.jdbcTemplate.query(
                 "SELECT RelationshipId AS id, Description AS value FROM Relationship",
+                new IntegerStringPairRowMapper());
+    }
+
+    @Override
+    @Cacheable("reference.ownershipType")
+    public List<Pair<Integer, String>> findOwnershipTypeValues() {
+        return this.jdbcTemplate.query(
+                "SELECT OwnershipTypeId AS id, Name AS value FROM OwnershipType",
+                new IntegerStringPairRowMapper());
+    }
+
+    @Override
+    @Cacheable("reference.congregationRole")
+    public List<Pair<Integer, String>> findCongregationRoleValues() {
+        return this.jdbcTemplate.query(
+                "SELECT CongregationRoleId AS id, Description AS value FROM CongregationRole",
+                new IntegerStringPairRowMapper());
+    }
+
+    @Override
+    @Cacheable("reference.assignmentRole")
+    public List<Pair<Integer, String>> findAssignmentRoleValues() {
+        return this.jdbcTemplate.query(
+                "SELECT RoleId AS id, Description AS value FROM Role",
                 new IntegerStringPairRowMapper());
     }
 

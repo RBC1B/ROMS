@@ -12,7 +12,7 @@ public class CongregationContact {
 
     private Integer congregationContactId;
     private Congregation congregation;
-    private CongregationRole congregationRole;
+    private Integer congregationRoleId;
     private Person person;
 
     public Congregation getCongregation() {
@@ -31,12 +31,12 @@ public class CongregationContact {
         this.congregationContactId = congregationContactId;
     }
 
-    public CongregationRole getCongregationRole() {
-        return congregationRole;
+    public Integer getCongregationRoleId() {
+        return congregationRoleId;
     }
 
-    public void setCongregationRole(CongregationRole congregationRole) {
-        this.congregationRole = congregationRole;
+    public void setCongregationRoleId(Integer congregationRoleId) {
+        this.congregationRoleId = congregationRoleId;
     }
 
     public Person getPerson() {

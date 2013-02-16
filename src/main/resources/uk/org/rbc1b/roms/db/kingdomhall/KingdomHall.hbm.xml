@@ -12,7 +12,7 @@
             <property name="county" length="50"  />
             <property name="postcode" length="10"  />
         </component>
-        <many-to-one name="ownershipType" column="OwnershipTypeId" />
+        <property name="ownershipTypeId" />
         <property name="drawings" length="50"  />
         <!-- TODO: <many-to-one name="titleHolder" column="" /> -->
         <set name="features" inverse="true" cascade="all-delete-orphan">

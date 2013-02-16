@@ -11,7 +11,7 @@ public class KingdomHall implements java.io.Serializable {
     private Integer kingdomHallId;
     private String name;
     private Address address;
-    private OwnershipType ownershipType;
+    private Integer ownershipTypeId;
     private String drawings;
     private Set<KingdomHallFeature> features;
     private TitleHolder titleHolder;
@@ -48,12 +48,12 @@ public class KingdomHall implements java.io.Serializable {
         this.name = name;
     }
 
-    public OwnershipType getOwnershipType() {
-        return ownershipType;
+    public Integer getOwnershipTypeId() {
+        return ownershipTypeId;
     }
 
-    public void setOwnershipType(OwnershipType ownershipType) {
-        this.ownershipType = ownershipType;
+    public void setOwnershipTypeId(Integer ownershipTypeId) {
+        this.ownershipTypeId = ownershipTypeId;
     }
 
     public Set<KingdomHallFeature> getFeatures() {

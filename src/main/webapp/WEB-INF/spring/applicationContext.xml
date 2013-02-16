@@ -30,7 +30,6 @@
             <list>
                 <value>uk/org/rbc1b/roms/db/Congregation.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/CongregationContact.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/CongregationRole.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/RbcRegion.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/RbcSubRegion.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/Person.hbm.xml</value>
@@ -45,7 +44,6 @@
                 <value>uk/org/rbc1b/roms/db/kingdomhall/HallFeature.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/kingdomhall/KingdomHall.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/kingdomhall/KingdomHallFeature.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/kingdomhall/OwnershipType.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/kingdomhall/TitleHolder.hbm.xml</value>
 
                 <value>uk/org/rbc1b/roms/db/project/Commentator.hbm.xml</value>
@@ -62,7 +60,6 @@
                 <value>uk/org/rbc1b/roms/db/volunteer/Department.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/InvitationConfirmation.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/Qualification.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/volunteer/Role.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/Skill.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/Team.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/TradeNumber.hbm.xml</value>
