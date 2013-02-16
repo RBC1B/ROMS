@@ -11,23 +11,23 @@ import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
  */
 public class Project {
 
-    private Integer projectId;
-    private String name;
-    private ProjectType projectType;
-    private KingdomHall kingdomHall;
-    private String priority;
     private Address address;
-    private String telephone;
+    private String constraints;
+    private Date completedDate;
     private Person contactPerson;
-    private Date requestDate;
-    private Date visitDate;
+    private Person coordinator;
     private String estimateCost;
+    private KingdomHall kingdomHall;
+    private String name;
+    private Integer projectId;
+    private Integer projectTypeId;
+    private String priority;
+    private Date requestDate;
+    private ProjectStage stage;
     private ProjectStatus status;
     private String supportingCongregation;
-    private String constraints;
-    private Person coordinator;
-    private ProjectStage stage;
-    private Date completedDate;
+    private String telephone;
+    private Date visitDate;
     private Set<ProjectWorkBrief> workBriefs;
 
     public Address getAddress() {
@@ -110,12 +110,12 @@ public class Project {
         this.projectId = projectId;
     }
 
-    public ProjectType getProjectType() {
-        return projectType;
+    public Integer getProjectTypeId() {
+        return projectTypeId;
     }
 
-    public void setProjectType(ProjectType projectType) {
-        this.projectType = projectType;
+    public void setProjectTypeId(Integer projectTypeId) {
+        this.projectTypeId = projectTypeId;
     }
 
     public Date getRequestDate() {

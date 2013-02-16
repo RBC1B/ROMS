@@ -53,4 +53,9 @@ public interface ReferenceDao {
      */
     List<Pair<Integer, String>> findAssignmentRoleValues();
 
+    /**
+     * @return list of project type values
+     */
+    List<Pair<Integer, String>> findProjectTypeValues();
+
 }

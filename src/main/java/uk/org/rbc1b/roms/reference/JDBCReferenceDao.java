@@ -90,6 +90,14 @@ public class JDBCReferenceDao implements ReferenceDao {
                 new IntegerStringPairRowMapper());
     }
 
+    @Override
+    @Cacheable("reference.projectType")
+    public List<Pair<Integer, String>> findProjectTypeValues() {
+        return this.jdbcTemplate.query(
+                "SELECT ProjectTypeId AS id, Description AS value FROM ProjectType",
+                new IntegerStringPairRowMapper());
+    }
+
     @Autowired
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
