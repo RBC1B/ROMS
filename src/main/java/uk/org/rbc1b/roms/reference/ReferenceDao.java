@@ -18,4 +18,24 @@ public interface ReferenceDao {
      */
     List<Pair<Integer, String>> findMaritalStatusValues();
 
+    /**
+     * @return list of RBC status values
+     */
+    List<Pair<Integer, String>> findRBCStatusValues();
+
+    /**
+     * @return list of interview status values
+     */
+    List<Pair<Integer, String>> findInterviewStatusValues();
+
+    /**
+     * @return list of full time service values
+     */
+    List<Pair<Integer, String>> findFulltimeValues();
+
+    /**
+     * @return list of (emergency contact) relationship values
+     */
+    List<Pair<Integer, String>> findRelationshipValues();
+
 }

@@ -495,7 +495,7 @@ insert into Department (Name, SuperDepartmentId, Description) values
     ('Alarms','3',''),
     ('Block Paving','3',''),
     ('Bricklaying','3',''),
-    ('Crpentry','3',''),
+    ('Carpentry','3',''),
     ('Carpeting','3',''),
     ('Ceiling','3',''),
     ('Decorating','3',''),

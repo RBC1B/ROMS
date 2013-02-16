@@ -57,16 +57,11 @@
                 <value>uk/org/rbc1b/roms/db/project/ProjectWorkBrief.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/project/WorkFeature.hbm.xml</value>
 
-                <value>uk/org/rbc1b/roms/db/volunteer/Appointment.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/Assignment.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/Attendance.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/Department.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/volunteer/Fulltime.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/volunteer/InterviewStatus.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/InvitationConfirmation.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/Qualification.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/volunteer/RbcStatus.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/volunteer/Relationship.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/Role.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/Skill.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/Team.hbm.xml</value>

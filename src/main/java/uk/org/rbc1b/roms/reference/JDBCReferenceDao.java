@@ -33,6 +33,38 @@ public class JDBCReferenceDao implements ReferenceDao {
                 new IntegerStringPairRowMapper());
     }
 
+    @Override
+    @Cacheable("reference.rbcStatus")
+    public List<Pair<Integer, String>> findRBCStatusValues() {
+        return this.jdbcTemplate.query(
+                "SELECT RbcStatusId AS id, Description AS value FROM RbcStatus",
+                new IntegerStringPairRowMapper());
+    }
+
+    @Override
+    @Cacheable("reference.interviewStatus")
+    public List<Pair<Integer, String>> findInterviewStatusValues() {
+        return this.jdbcTemplate.query(
+                "SELECT InterviewStatusId AS id, Description AS value FROM InterviewStatus",
+                new IntegerStringPairRowMapper());
+    }
+
+    @Override
+    @Cacheable("reference.fulltime")
+    public List<Pair<Integer, String>> findFulltimeValues() {
+        return this.jdbcTemplate.query(
+                "SELECT FulltimeId AS id, Description AS value FROM FulltimeStatus",
+                new IntegerStringPairRowMapper());
+    }
+
+    @Override
+    @Cacheable("reference.relationship")
+    public List<Pair<Integer, String>> findRelationshipValues() {
+        return this.jdbcTemplate.query(
+                "SELECT RelationshipId AS id, Description AS value FROM Relationship",
+                new IntegerStringPairRowMapper());
+    }
+
     @Autowired
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);

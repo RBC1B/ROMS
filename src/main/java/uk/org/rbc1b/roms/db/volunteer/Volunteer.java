@@ -12,12 +12,11 @@ import uk.org.rbc1b.roms.db.Person;
  */
 public class Volunteer extends Person {
 
-    private RbcStatus rbcStatus;
-    private Appointment appointment;
-    private Fulltime fulltime;
+    private Integer appointmentId;
     private String availability;   // 7 char string, representing T or F, Monday to Sunday
     private Person emergencyContact;
-    private Relationship emergencyContactRelationship;
+    private Integer emergencyContactRelationshipId;
+    private Integer fulltimeId;
     private String gender;    // M or F
     private Integer maritalStatusId;
     private java.sql.Date baptismDate;
@@ -27,9 +26,10 @@ public class Volunteer extends Person {
     private String interviewComments;
     private java.sql.Date joinedDate;
     private java.sql.Date formDate;
-    private InterviewStatus interviewStatus;
+    private Integer interviewStatusId;
     private boolean oversight;
     private String oversightComments;
+    private Integer rbcStatusId;
     private boolean reliefUK;
     private String reliefUKComments;
     private boolean reliefAbroad;
@@ -64,12 +64,12 @@ public class Volunteer extends Person {
         this.setComments(person.getComments());
     }
 
-    public Appointment getAppointment() {
-        return appointment;
+    public Integer getAppointmentId() {
+        return appointmentId;
     }
 
-    public void setAppointment(Appointment appointment) {
-        this.appointment = appointment;
+    public void setAppointmentId(Integer appointmentId) {
+        this.appointmentId = appointmentId;
     }
 
     public String getAvailability() {
@@ -104,12 +104,12 @@ public class Volunteer extends Person {
         this.emergencyContact = emergencyContact;
     }
 
-    public Relationship getEmergencyContactRelationship() {
-        return emergencyContactRelationship;
+    public Integer getEmergencyContactRelationshipId() {
+        return emergencyContactRelationshipId;
     }
 
-    public void setEmergencyContactRelationship(Relationship emergencyContactRelationship) {
-        this.emergencyContactRelationship = emergencyContactRelationship;
+    public void setEmergencyContactRelationshipId(Integer emergencyContactRelationshipId) {
+        this.emergencyContactRelationshipId = emergencyContactRelationshipId;
     }
 
     public java.sql.Date getFormDate() {
@@ -120,12 +120,12 @@ public class Volunteer extends Person {
         this.formDate = formDate;
     }
 
-    public Fulltime getFulltime() {
-        return fulltime;
+    public Integer getFulltimeId() {
+        return fulltimeId;
     }
 
-    public void setFulltime(Fulltime fulltime) {
-        this.fulltime = fulltime;
+    public void setFulltimeId(Integer fulltimeId) {
+        this.fulltimeId = fulltimeId;
     }
 
     public String getGender() {
@@ -160,12 +160,12 @@ public class Volunteer extends Person {
         this.interviewDate = interviewDate;
     }
 
-    public InterviewStatus getInterviewStatus() {
-        return interviewStatus;
+    public Integer getInterviewStatusId() {
+        return interviewStatusId;
     }
 
-    public void setInterviewStatus(InterviewStatus interviewStatus) {
-        this.interviewStatus = interviewStatus;
+    public void setInterviewStatusId(Integer interviewStatusId) {
+        this.interviewStatusId = interviewStatusId;
     }
 
     public Person getInterviewerA() {
@@ -216,12 +216,12 @@ public class Volunteer extends Person {
         this.oversightComments = oversightComments;
     }
 
-    public RbcStatus getRbcStatus() {
-        return rbcStatus;
+    public Integer getRbcStatusId() {
+        return rbcStatusId;
     }
 
-    public void setRbcStatus(RbcStatus rbcStatus) {
-        this.rbcStatus = rbcStatus;
+    public void setRbcStatusId(Integer rbcStatusId) {
+        this.rbcStatusId = rbcStatusId;
     }
 
     public boolean isReliefAbroad() {

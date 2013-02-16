@@ -17,10 +17,6 @@ import uk.org.rbc1b.roms.controller.common.congregation.CongregationDao;
 import uk.org.rbc1b.roms.controller.common.person.PersonDao;
 import uk.org.rbc1b.roms.db.Address;
 import uk.org.rbc1b.roms.db.Person;
-import uk.org.rbc1b.roms.db.volunteer.Appointment;
-import uk.org.rbc1b.roms.db.volunteer.Fulltime;
-import uk.org.rbc1b.roms.db.volunteer.InterviewStatus;
-import uk.org.rbc1b.roms.db.volunteer.RbcStatus;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import uk.org.rbc1b.roms.reference.ReferenceDao;
 
@@ -32,8 +28,16 @@ import uk.org.rbc1b.roms.reference.ReferenceDao;
 @Controller
 @RequestMapping("/volunteers")
 public class VolunteersController {
-    public static final int SINGLE_MARITAL_STATUS_ID = 5;
 
+    public static final int SINGLE_MARITAL_STATUS = 5;
+    public static final int RBC_STATUS_ACTIVE = 1;
+    public static final int INTERVIEW_STATUS_INVITE_DUE = 1;
+    public static final int FULLTIME_BETHEL = 1;
+    public static final int FULLTIME_PUBLISHER = 2;
+    public static final int FULLTIME_REGULAR_PIONEER = 3;
+    public static final int APPOINTMENT_ELDER = 1;
+    public static final int APPOINTMENT_MINISTERIAL_SERVANT = 2;
+    public static final int APPOINTMENT_PUBLISHER = 3;
     @Autowired
     private VolunteerDao volunteerDao;
     @Autowired
@@ -128,24 +132,65 @@ public class VolunteersController {
         volunteer.setBaptismDate(new java.sql.Date(form.getBaptismDate().toDateMidnight().getMillis()));
 
         if (form.isElder()) {
-            volunteer.setAppointment(new Appointment(Appointment.ELDER));
+            volunteer.setAppointmentId(APPOINTMENT_ELDER);
         } else if (form.isMinisterialServant()) {
-            volunteer.setAppointment(new Appointment(Appointment.MINISTERIAL_SERVANT));
+            volunteer.setAppointmentId(APPOINTMENT_MINISTERIAL_SERVANT);
         } else {
-            volunteer.setAppointment(new Appointment(Appointment.PUBLISHER));
+            volunteer.setAppointmentId(APPOINTMENT_PUBLISHER);
         }
         volunteer.setGender(form.getGender());
 
         if (form.isRegularPioneer()) {
-            volunteer.setFulltime(new Fulltime(Fulltime.REGULAR_PIONEER));
+            volunteer.setFulltimeId(FULLTIME_REGULAR_PIONEER);
         } else {
-            volunteer.setFulltime(new Fulltime(Fulltime.PUBLISHER));
+            volunteer.setFulltimeId(FULLTIME_PUBLISHER);
         }
 
-        volunteer.setRbcStatus(RbcStatus.ACTIVE);
-        volunteer.setMaritalStatusId(SINGLE_MARITAL_STATUS_ID);
-        volunteer.setInterviewStatus(InterviewStatus.INVITE_DUE);
+        volunteer.setRbcStatusId(RBC_STATUS_ACTIVE);
+        volunteer.setMaritalStatusId(SINGLE_MARITAL_STATUS);
+        volunteer.setInterviewStatusId(INTERVIEW_STATUS_INVITE_DUE);
         volunteerDao.saveVolunteer(volunteer);
+
+
+
+
+//        private RbcStatus rbcStatus;
+//    private Appointment appointment;
+//    private Fulltime fulltime;
+//    private String availability;   // 7 char string, representing T or F, Monday to Sunday
+//    private Person emergencyContact;
+//    private Relationship emergencyContactRelationship;
+//    private String gender;    // M or F
+//    private Integer maritalStatusId;
+//    private java.sql.Date baptismDate;
+//    private java.sql.Date interviewDate;
+//    private Person interviewerA;
+//    private Person interviewerB;
+//    private String interviewComments;
+//    private java.sql.Date joinedDate;
+//    private java.sql.Date formDate;
+//    private InterviewStatus interviewStatus;
+//    private boolean oversight;
+//    private String oversightComments;
+//    private boolean reliefUK;
+//    private String reliefUKComments;
+//    private boolean reliefAbroad;
+//    private String reliefAbroadComments;
+//    private String hhcFormCode;
+//    private java.sql.Date badgeIssueDate;
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //    private Integer emergencyRelationshipId;
 
