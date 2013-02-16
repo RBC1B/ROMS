@@ -1,21 +1,34 @@
 $(document).ready(function() {
     $('#surname').blur(function() {
-
-        var forename = $('#forename').val();
-        var surname = $('#surname').val();
-
-        if(!forename || !surname) {
-            return;
-        }
-
-        findPerson(forename, surname);
+        matchVolunteerPerson();
     });
 
     $(".datepicker").datepicker({ dateFormat: "dd/mm/yy" });
 
 });
 
-function findPerson(forename, surname) {
+function matchVolunteerPerson() {
+    var forename = $('#forename').val();
+    var surname = $('#surname').val();
+
+    if(!forename || !surname) {
+        return;
+    }
+
+    var $personId = $("input[name='personId']");
+
+    var existingPersonName = $personId.data("full-name");
+    if (existingPersonName == forename + " " + surname) {
+        // no change in value
+        return;
+    }
+    var existingPersonId = $personId.val();
+    findVolunteerPerson(forename, surname, existingPersonId, existingPersonName);
+
+    $personId.data("full-name", forename + " " + surname);
+}
+
+function findVolunteerPerson(forename, surname, existingPersonId, existingPersonName) {
     $.ajax({
         url: '../persons/search',
         contentType: "application/json",
@@ -26,24 +39,31 @@ function findPerson(forename, surname) {
             checkVolunteer: true
         },
         success: function(data) {
-            // if we have no matches, no need to show selection form
-            if (!data.results) {
+            // no match, and no person linked. We don't show anything
+            if (!data.results && !existingPersonId) {
                 return;
             }
 
             // enrich the results, splitting out the volunters from the persons.
-            // if we are matchng an existing volunteer we don't want to create a new one
+            // if we are matching an existing volunteer we don't want to create a new one
             var volunteers = new Array();
             var persons = new Array();
-            for (var i = 0; i < data.results.length; i++) {
-                var result = data.results[i];
-                if (result.volunteer) {
-                    volunteers.push(result);
-                } else {
-                    persons.push(result);
+            if (data.results) {
+                for (var i = 0; i < data.results.length; i++) {
+                    var result = data.results[i];
+
+                    if (result.personId != existingPersonId) {
+                        if (result.volunteer) {
+                            volunteers.push(result);
+                        } else {
+                            persons.push(result);
+                        }
+                    }
                 }
             }
 
+            data.existingPersonId = existingPersonId;
+            data.existingPersonName = existingPersonName;
             if (volunteers.length > 0) {
                 data.matchedVolunteers = true;
                 data.volunteers = volunteers;

@@ -33,7 +33,7 @@
                     </label>
                 </fieldset>
                 <fieldset>
-                    <div id="volunteer-birthdate">
+                    <div class="pull-left" id="volunteer-birthdate">
                         <label>2.(a) Date of birth:</label>
                         <form:input class="datepicker" path="birthDate" placeholder="15/03/1980" data-date-format="dd/mm/yy" />
                     </div>
@@ -110,14 +110,19 @@
 </div>
 <!-- mustache template used to display the person selection form -->
 <script id="person-search-form" type="text/html" charset="utf-8">
+    {{#existingPersonId}}
+    <p>You are already linked to {{existingPersonName}}</p>
+    <p><a href="#" class="matched-person" data-person-id="{{existingPersonId}}">Leave linked to {{existingPersonName}} (same as ignore)</a></p>
+    <p><a href="#" class="matched-person" data-person-id="">Unlink {{existingPersonName}} (create a new person)</a></p>
+    {{/existingPersonId}}
     {{#matchedVolunteers}}
-    <p>Existing volunteers matched:</p>
+    <p>Edit an existing volunteer:</p>
     {{#volunteers}}
     <p><a href="<c:url value='/volunteers/{{personId}}'/>">{{forename}} {{surname}}{{#congregationName}}, {{congregationName}}{{/congregationName}}</a></p>
     {{/volunteers}}
     {{/matchedVolunteers}}
     {{#matchedPersons}}
-    <p>Existing people (not volunteers) matched:</p>
+    <p>Link to an existing person (not currently a volunteer):</p>
     {{#persons}}
     <a href="#" class="matched-person" data-person-id="{{personId}}">{{forename}} {{surname}}{{#congregationName}}, {{congregationName}}{{/congregationName}}</a>
     {{/persons}}
