@@ -31,7 +31,7 @@
         <many-to-one column="EmergencyContactId" name="emergencyContact"/>
         <many-to-one column="EmergencyContactRelationshipId" name="emergencyContactRelationship"/>
         <property length="1" name="gender"/>
-        <many-to-one column="MaritalStatusId" name="maritalStatus"/>
+        <property name="maritalStatusId"/>
         <property name="baptismDate"/>
         <property name="interviewDate"/>
         <many-to-one column="InterviewerA" name="interviewerA"/>

@@ -20,9 +20,9 @@ import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.volunteer.Appointment;
 import uk.org.rbc1b.roms.db.volunteer.Fulltime;
 import uk.org.rbc1b.roms.db.volunteer.InterviewStatus;
-import uk.org.rbc1b.roms.db.volunteer.MaritalStatus;
 import uk.org.rbc1b.roms.db.volunteer.RbcStatus;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
+import uk.org.rbc1b.roms.reference.ReferenceDao;
 
 /**
  *
@@ -32,6 +32,7 @@ import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 @Controller
 @RequestMapping("/volunteers")
 public class VolunteersController {
+    public static final int SINGLE_MARITAL_STATUS_ID = 5;
 
     @Autowired
     private VolunteerDao volunteerDao;
@@ -39,6 +40,8 @@ public class VolunteersController {
     private PersonDao personDao;
     @Autowired
     private CongregationDao congregationDao;
+    @Autowired
+    private ReferenceDao referenceDao;
 
     /**
      * Display a list of volunteers.
@@ -68,7 +71,7 @@ public class VolunteersController {
 
         // initialise the form bean
         model.addAttribute("volunteer", new VolunteerForm());
-
+        model.addAttribute("maritalStatusValues", referenceDao.findMaritalStatusValues());
         return "volunteers/edit";
     }
 
@@ -140,7 +143,7 @@ public class VolunteersController {
         }
 
         volunteer.setRbcStatus(RbcStatus.ACTIVE);
-        volunteer.setMaritalStatus(MaritalStatus.SINGLE);
+        volunteer.setMaritalStatusId(SINGLE_MARITAL_STATUS_ID);
         volunteer.setInterviewStatus(InterviewStatus.INVITE_DUE);
         volunteerDao.saveVolunteer(volunteer);
 

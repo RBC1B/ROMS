@@ -19,7 +19,7 @@ public class Volunteer extends Person {
     private Person emergencyContact;
     private Relationship emergencyContactRelationship;
     private String gender;    // M or F
-    private MaritalStatus maritalStatus;
+    private Integer maritalStatusId;
     private java.sql.Date baptismDate;
     private java.sql.Date interviewDate;
     private Person interviewerA;
@@ -46,6 +46,7 @@ public class Volunteer extends Person {
 
     /**
      * Instantiate a volunteer from the person.
+     *
      * @param person underlying person to be extended
      */
     public Volunteer(Person person) {
@@ -191,12 +192,12 @@ public class Volunteer extends Person {
         this.joinedDate = joinedDate;
     }
 
-    public MaritalStatus getMaritalStatus() {
-        return maritalStatus;
+    public Integer getMaritalStatusId() {
+        return maritalStatusId;
     }
 
-    public void setMaritalStatus(MaritalStatus maritalStatus) {
-        this.maritalStatus = maritalStatus;
+    public void setMaritalStatusId(Integer maritalStatusId) {
+        this.maritalStatusId = maritalStatusId;
     }
 
     public boolean isOversight() {

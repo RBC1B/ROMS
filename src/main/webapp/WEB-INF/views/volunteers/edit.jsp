@@ -73,17 +73,20 @@
 
                 <fieldset>
                     <label>6. Marital status:</label>
+                    <form:select path="maritalStatusId">
+                        <form:option value="" label="Select One" />
+                        <form:options items="${maritalStatusValues}" itemValue="key" itemLabel="value" />
+                    </form:select>
                 </fieldset>
-
+                <fieldset>
+                    <label>7. Work background is handled in the next step</label>
+                </fieldset>
 
                 <fieldset>
                     <label>10. Availability:</label>
                     TBD
                 </fieldset>
-                <fieldset>
-                    <label>11. Work background:</label>
-                    TBD
-                </fieldset>
+
                 <fieldset>
                     <label>12. In case of accident or illness notify:</label>
                     TBD

@@ -64,7 +64,6 @@
                 <value>uk/org/rbc1b/roms/db/volunteer/Fulltime.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/InterviewStatus.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/InvitationConfirmation.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/volunteer/MaritalStatus.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/Qualification.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/RbcStatus.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/Relationship.hbm.xml</value>

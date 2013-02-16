@@ -34,6 +34,8 @@ public class VolunteerForm {
     @NotNull
     @Size(min = 2)
     private String forename;
+    @NotNull
+    private Integer maritalStatusId;
     private String middleName;
     @NotNull
     @Size(min = 2)
@@ -131,6 +133,14 @@ public class VolunteerForm {
 
     public void setForename(String forename) {
         this.forename = forename;
+    }
+
+    public Integer getMaritalStatusId() {
+        return maritalStatusId;
+    }
+
+    public void setMaritalStatusId(Integer maritalStatusId) {
+        this.maritalStatusId = maritalStatusId;
     }
 
     public String getMiddleName() {
