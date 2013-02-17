@@ -37,7 +37,11 @@ public class HibernateVolunteerDao implements VolunteerDao {
 
     @Override
     public void saveVolunteer(Volunteer volunteer) {
-        this.sessionFactory.getCurrentSession().saveOrUpdate(volunteer);
+        if (volunteer.getPersonId() == null) {
+            this.sessionFactory.getCurrentSession().save(volunteer);
+        } else {
+            this.sessionFactory.getCurrentSession().merge(volunteer);
+        }
     }
 
 

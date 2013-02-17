@@ -71,6 +71,7 @@ public class VolunteersController {
      */
     @RequestMapping(value = "new", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('VOLUNTEER', 'ADD')")
+    @Transactional(readOnly = true)
     public String handleNewForm(ModelMap model) {
 
         // initialise the form bean
