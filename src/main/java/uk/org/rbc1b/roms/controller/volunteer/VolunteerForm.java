@@ -19,41 +19,45 @@ public class VolunteerForm {
     @NotNull
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private DateTime baptismDate;
-    private boolean elder;
-    private Integer emergencyRelationshipId;
-    @NotNull
-    @Size(min = 1, max = 1)
-    private String gender;    // M or F
-    private boolean ministerialServant;
-    private boolean regularPioneer;
-    private Integer personId;
     @NotNull
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private DateTime birthDate;
+    @NotNull
     private Integer congregationId;
+    private String county;
+    private boolean elder;
+    private String email;
+    private Integer emergencyRelationshipId;
     @NotNull
     @Size(min = 2)
     private String forename;
     @NotNull
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private DateTime formDate;
+    @NotNull
+    @Size(min = 1, max = 1)
+    private String gender;    // M or F
+    @NotNull
     private Integer maritalStatusId;
     private String middleName;
+    private boolean ministerialServant;
+    private String mobile;
+    private boolean regularPioneer;
+    private Integer personId;
+    @NotNull
+    @Size(min = 2)
+    private String postcode;
     @NotNull
     @Size(min = 2)
     private String surname;
     @NotNull
     @Size(min = 2)
     private String street;
+    private String telephone;
     @NotNull
     @Size(min = 2)
     private String town;
-    private String county;
-    @NotNull
-    @Size(min = 2)
-    private String postcode;
-    private String telephone;
-    private String mobile;
     private String workPhone;
-    private String email;
 
     public DateTime getBaptismDate() {
         return baptismDate;
@@ -133,6 +137,14 @@ public class VolunteerForm {
 
     public void setForename(String forename) {
         this.forename = forename;
+    }
+
+    public DateTime getFormDate() {
+        return formDate;
+    }
+
+    public void setFormDate(DateTime formDate) {
+        this.formDate = formDate;
     }
 
     public Integer getMaritalStatusId() {

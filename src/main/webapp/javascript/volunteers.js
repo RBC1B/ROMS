@@ -3,7 +3,60 @@ $(document).ready(function() {
         matchVolunteerPerson();
     });
 
-    $(".datepicker").datepicker({ dateFormat: "dd/mm/yy" });
+    $(".datepicker").datepicker({
+        dateFormat: "dd/mm/yy"
+    });
+
+    $("#volunteer").validate({
+        rules: {
+            forename: {
+                minlength: 2,
+                required: true
+            },
+            surname: {
+                minlength: 2,
+                required: true
+            },
+            gender: {
+                required: true
+            },
+            birthDate: {
+                required: true
+            },
+            baptismDate: {
+                required: true
+            },
+            street: {
+                minlength: 2,
+                required: true
+            },
+            town: {
+                minlength: 2,
+                required: true
+            },
+            postcode: {
+                minlength: 2,
+                required: true
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            maritalStatusId: {
+                required: true
+            },
+            formDate: {
+                required: true
+            }
+        },
+        highlight: function(element) {
+            $(element).closest('.control-group').removeClass('success').addClass('error');
+        },
+        success: function(element) {
+            element.addClass('valid').closest('.control-group').removeClass('error').addClass('success');
+        }
+
+    });
 
 });
 
@@ -84,8 +137,8 @@ function findVolunteerPerson(forename, surname, existingPersonId, existingPerson
 
             // if they select the person id, set it to the hidden volunteer person id field
             $("a.matched-person").on("click", function(event){
-               $("input[name='personId']").val($(this).data("person-id"));
-               modalElement.modal('hide')
+                $("input[name='personId']").val($(this).data("person-id"));
+                modalElement.modal('hide')
             });
         }
     });

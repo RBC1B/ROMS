@@ -76,11 +76,12 @@ public class VolunteersController {
         // initialise the form bean
         model.addAttribute("volunteer", new VolunteerForm());
         model.addAttribute("maritalStatusValues", referenceDao.findMaritalStatusValues());
-        return "volunteers/edit";
+        return "volunteers/create";
     }
 
     /**
-     * Handle the volunteer core details form submission. <p>This handles both new volunteers and editing existing ones
+     * Handle the volunteer core details form submission.
+     * <p>This handles new volunteer creation only.
      *
      * @param form volunteer form
      * @return redirect url
@@ -124,6 +125,7 @@ public class VolunteersController {
 
         volunteer.setEmail(form.getEmail());
         volunteer.setForename(form.getForename());
+        volunteer.setFormDate(new java.sql.Date(form.getFormDate().toDateMidnight().getMillis()));
         volunteer.setMiddleName(form.getMiddleName());
         volunteer.setSurname(form.getSurname());
         volunteer.setMobile(form.getMobile());
@@ -151,51 +153,10 @@ public class VolunteersController {
         volunteer.setInterviewStatusId(INTERVIEW_STATUS_INVITE_DUE);
         volunteerDao.saveVolunteer(volunteer);
 
-
-
-
-//        private RbcStatus rbcStatus;
-//    private Appointment appointment;
-//    private Fulltime fulltime;
-//    private String availability;   // 7 char string, representing T or F, Monday to Sunday
 //    private Person emergencyContact;
-//    private Relationship emergencyContactRelationship;
-//    private String gender;    // M or F
-//    private Integer maritalStatusId;
-//    private java.sql.Date baptismDate;
-//    private java.sql.Date interviewDate;
-//    private Person interviewerA;
-//    private Person interviewerB;
-//    private String interviewComments;
-//    private java.sql.Date joinedDate;
-//    private java.sql.Date formDate;
-//    private InterviewStatus interviewStatus;
-//    private boolean oversight;
-//    private String oversightComments;
-//    private boolean reliefUK;
-//    private String reliefUKComments;
-//    private boolean reliefAbroad;
-//    private String reliefAbroadComments;
-//    private String hhcFormCode;
-//    private java.sql.Date badgeIssueDate;
+//    private Relationship emergencyContactRelationshipId;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    private Integer emergencyRelationshipId;
-
-
-        return "redirect:/";
+        return "redirect:/volunteers/" + volunteer.getPersonId();
     }
 
     /**
