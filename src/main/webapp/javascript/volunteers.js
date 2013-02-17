@@ -137,9 +137,47 @@ function findVolunteerPerson(forename, surname, existingPersonId, existingPerson
 
             // if they select the person id, set it to the hidden volunteer person id field
             $("a.matched-person").on("click", function(event){
-                $("input[name='personId']").val($(this).data("person-id"));
+                populateVolunteerFromPerson($(this).data("person-id"));
                 modalElement.modal('hide')
             });
         }
     });
+}
+
+function populateVolunteerFromPerson(personId) {
+    $personId = $("input[name='personId']");
+    if (!personId) {
+        $personId.val(personId);
+        return;
+    }
+    var existingPersonId = $personId.val();
+
+    if (existingPersonId == personId) {
+        return;
+    }
+
+    // new person - pull the person data and populate the form.
+    $.ajax({
+        url: '../persons/' + personId,
+        contentType: "application/json",
+        dataType: 'json',
+        success: function(data) {
+            $("input[name='birthDate']").val(data.birthDate);
+            $("input[name='middleName']").val(data.middleName);
+            $("input[name='telephone']").val(data.telephone);
+            $("input[name='mobile']").val(data.mobile);
+            $("input[name='workPhone']").val(data.workPhone);
+            $("input[name='email']").val(data.email);
+            if(data.congregation) {
+                $("input[name='congregationId']").val(data.congregation.congregationId);
+            }
+            if (data.address) {
+                $("input[name='street']").val(data.address.street);
+                $("input[name='town']").val(data.address.town);
+                $("input[name='county']").val(data.address.county);
+                $("input[name='postcode']").val(data.address.postcode);
+            }
+        }
+    });
+    $personId.val(personId);
 }

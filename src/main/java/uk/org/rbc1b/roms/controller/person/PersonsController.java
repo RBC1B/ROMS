@@ -4,16 +4,19 @@
  */
 package uk.org.rbc1b.roms.controller.person;
 
-import uk.org.rbc1b.roms.controller.common.person.PersonDao;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
+import uk.org.rbc1b.roms.controller.common.person.PersonDao;
 import uk.org.rbc1b.roms.controller.volunteer.VolunteerDao;
 import uk.org.rbc1b.roms.db.Person;
 
@@ -30,6 +33,27 @@ public class PersonsController {
     private PersonDao personDao;
     @Autowired
     private VolunteerDao volunteerDao;
+
+    /**
+     * @param personId person primary key
+     * @return person object
+     * @throws NoSuchRequestHandlingMethodException 404 response
+     */
+    @RequestMapping(value = "{personId}", method = RequestMethod.GET, produces = "application/json")
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
+    @Transactional(readOnly = true)
+    @ResponseBody
+    public Person handlePerson(@PathVariable Integer personId) throws NoSuchRequestHandlingMethodException {
+
+        Person person = personDao.findPerson(personId);
+
+        if (person == null) {
+            throw new NoSuchRequestHandlingMethodException("No person with id [" + personId + "]", this.getClass());
+        }
+
+        return person;
+    }
+
 
     /**
      * Person search. Pass in a candidate, match this against the user first/last name and return the person object in JSON format
