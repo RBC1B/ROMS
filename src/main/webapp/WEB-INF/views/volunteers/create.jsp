@@ -120,9 +120,8 @@
                     <div class="control-group">
                         <label class="control-label">Congregation</label>
                         <div class="controls">
-                            <form:select path="congregationId">
-                                <form:option value="" label="-- Choose one--" />
-                            </form:select>
+                            <form:input path="congregationName" placeholder="Congregation name" />
+                            <form:hidden path="congregationId" />
                         </div>
                     </div>
                     <div class="control-group">

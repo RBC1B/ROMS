@@ -7,6 +7,29 @@ $(document).ready(function() {
         dateFormat: "dd/mm/yy"
     });
 
+    $("input[name=congregationName]").typeahead({
+        source: function (query, process) {
+            $.ajax({
+                url: '../congregations/search',
+                contentType: "application/json",
+                dataType: 'json',
+                data:  {
+                    name: query
+                },
+                success: function(data) {
+                    var results = [];
+                    if(data.results) {
+                        $.each(data.results, function() {
+                            results.push(this.name);
+                        });
+                    }
+                    return process(results);
+                }
+            });
+        },
+        minLength: 2
+    });
+
     $("#volunteer").validate({
         rules: {
             forename: {
@@ -43,6 +66,32 @@ $(document).ready(function() {
                 email: true
             },
             maritalStatusId: {
+                required: true
+            },
+            congregationName: {
+                required: true,
+                remote: {
+                    // check for an exact match. Populate the congregation id
+                    url: '../congregations/search',
+                    contentType: "application/json",
+                    dataType: 'json',
+                    data: {
+                        name: function() {
+                            return $('input[name=congregationName]').val();
+                        }
+                    },
+                    dataFilter: function(rawData) {
+                        var data = JSON.parse(rawData)
+                        if (data.results && data.results[0].name == $('input[name=congregationName]').val()) {
+                            $('input[name=congregationId]').val(data.results[0].id);
+                            return true;
+
+                        }
+                        return false;
+                    }
+                }
+            },
+            congregationId: {
                 required: true
             },
             formDate: {

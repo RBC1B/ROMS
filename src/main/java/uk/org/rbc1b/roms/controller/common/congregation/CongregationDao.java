@@ -4,6 +4,7 @@
  */
 package uk.org.rbc1b.roms.controller.common.congregation;
 
+import java.util.List;
 import uk.org.rbc1b.roms.db.Congregation;
 
 /**
@@ -19,4 +20,12 @@ public interface CongregationDao {
      * @return Congregation, or null if no matching instance
      */
     Congregation findCongregation(Integer congregationId);
+
+    /**
+     * Find the list of congregations matching the partial name.
+     * @param name name
+     * @return congregations
+     */
+    List<Congregation> findCongregations(String name);
+
 }

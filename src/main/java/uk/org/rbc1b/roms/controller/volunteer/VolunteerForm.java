@@ -24,6 +24,7 @@ public class VolunteerForm {
     private DateTime birthDate;
     @NotNull
     private Integer congregationId;
+    private Integer congregationName;
     private String county;
     private boolean elder;
     private String email;
@@ -129,6 +130,14 @@ public class VolunteerForm {
 
     public void setCongregationId(Integer congregationId) {
         this.congregationId = congregationId;
+    }
+
+    public Integer getCongregationName() {
+        return congregationName;
+    }
+
+    public void setCongregationName(Integer congregationName) {
+        this.congregationName = congregationName;
     }
 
     public String getForename() {

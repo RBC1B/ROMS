@@ -118,9 +118,7 @@ public class VolunteersController {
 
         volunteer.setBirthDate(new java.sql.Date(form.getBirthDate().toDateMidnight().getMillis()));
 
-        if (form.getCongregationId() == null) {
-            volunteer.setCongregation(null);
-        } else if (volunteer.getCongregation() == null || !volunteer.getCongregation().getCongregationId().equals(form.getCongregationId())) {
+        if (volunteer.getCongregation() == null || !volunteer.getCongregation().getCongregationId().equals(form.getCongregationId())) {
             volunteer.setCongregation(congregationDao.findCongregation(form.getCongregationId()));
         }
 

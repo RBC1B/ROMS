@@ -4,7 +4,10 @@
  */
 package uk.org.rbc1b.roms.controller.common.congregation;
 
+import java.util.List;
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.org.rbc1b.roms.db.Congregation;
@@ -23,6 +26,13 @@ public class HibernateCongregationDao implements CongregationDao {
     @Override
     public Congregation findCongregation(Integer congregationId) {
         return (Congregation) this.sessionFactory.getCurrentSession().get(Congregation.class, congregationId);
+    }
+
+    @Override
+    public List<Congregation> findCongregations(String name) {
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Congregation.class);
+        criteria.add(Restrictions.like("name", "%" + name + "%"));
+        return criteria.list();
     }
 
     public void setSessionFactory(SessionFactory sessionFactory) {
