@@ -104,6 +104,16 @@ $(document).ready(function() {
         success: function(element) {
             element.addClass('valid').closest('.control-group').removeClass('error').addClass('success');
         }
+        ,
+        errorPlacement: function(error, element) {
+            //error.appendTo(element.closest('.control-group').children("controls").last());
+            var $controls = element.closest(".controls");
+            if ($controls.length > 0) {
+                error.appendTo($controls);
+            } else {
+                error.appendTo(element.closest(".control-group"));
+            }
+        }
 
     });
 
