@@ -68,6 +68,25 @@ $(document).ready(function() {
             maritalStatusId: {
                 required: true
             },
+            emergencyContactForename: {
+                minlength: 2,
+                required: true
+            },
+            emergencyContactSurname: {
+                minlength: 2,
+                required: true
+            },
+            emergencyContactStreet: {
+                minlength: 2,
+                required: true
+            },
+            emergencyContactTown: {
+                minlength: 2,
+                required: true
+            },
+            emergencyRelationshipId: {
+                required: true
+            },
             congregationName: {
                 required: true,
                 remote: {

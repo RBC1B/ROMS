@@ -77,6 +77,7 @@ public class VolunteersController {
         // initialise the form bean
         model.addAttribute("volunteer", new VolunteerForm());
         model.addAttribute("maritalStatusValues", referenceDao.findMaritalStatusValues());
+        model.addAttribute("relationshipValues", referenceDao.findRelationshipValues());
         return "volunteers/create";
     }
 

@@ -66,7 +66,7 @@
                         <form:input path="county" placeholder="County" />
                     </div>
                     <div class="control-group">
-                        <form:input path="postcode" size="10" maxlength="10" placeholder="Postcode" />
+                        <form:input path="postcode" maxlength="10" placeholder="Postcode" />
                     </div>
                     <div class="control-group">
                         <div class="controls">
@@ -109,14 +109,51 @@
                         </div>
                     </div>
                     <p>7. Work background is handled in the next step</p>
+
+
+                    <div class="control-group pull-left">
+                        <label class="control-label">8. In case of accident or illness notify:</label>
+                        <div class="controls">
+                            <form:input path="emergencyContactForename" placeholder="First"/>
+                        </div>
+                        <form:hidden path="personId" />
+                    </div>
+                    <div class="control-group pull-left">
+                        <form:input path="emergencyContactSurname" placeholder="Last"/>
+                    </div>
                     <div class="control-group">
-                        <label class="control-label">12. In case of accident or illness notify:</label>
                         <div class="controls">
                             <form:select path="emergencyRelationshipId">
-                                <form:option value="" label="-- Choose one--" />
+                                <form:option value="" label="Relationship" />
+                                <form:options items="${relationshipValues}" itemValue="key" itemLabel="value" />
                             </form:select>
                         </div>
                     </div>
+                    <div class="control-group pull-left">
+                        <label class="control-label">8.(b) Phones:</label>
+                        <div class="controls">
+                            <form:input path="emergencyContactTelephone" placeholder="Home"/>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <form:input path="emergencyContactMobile" placeholder="Mobile"/>
+                    </div>
+                    <div class="control-group pull-left">
+                        <label class="control-label">8.(c) Address</label>
+                        <div class="controls">
+                            <form:input path="emergencyContactStreet" placeholder="Street" />
+                        </div>
+                    </div>
+                    <div class="control-group pull-left">
+                        <form:input path="emergencyContactTown" placeholder="Town" />
+                    </div>
+                    <div class="control-group pull-left">
+                        <form:input path="emergencyContactCounty" placeholder="County" />
+                    </div>
+                    <div class="control-group">
+                        <form:input path="emergencyContactPostcode" maxlength="10" placeholder="Postcode" />
+                    </div>
+
                     <div class="control-group">
                         <label class="control-label">Congregation</label>
                         <div class="controls">

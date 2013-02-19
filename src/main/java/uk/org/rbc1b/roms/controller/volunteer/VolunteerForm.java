@@ -28,6 +28,24 @@ public class VolunteerForm {
     private String county;
     private boolean elder;
     private String email;
+    @NotNull
+    @Size(min = 2)
+    private String emergencyContactForename;
+    @NotNull
+    @Size(min = 2)
+    private String emergencyContactSurname;
+    private Integer emergencyContactPersonId;
+    private String emergencyContactTelephone;
+    private String emergencyContactMobile;
+    private String emergencyContactCounty;
+    @NotNull
+    @Size(min = 2)
+    private String emergencyContactStreet;
+    @NotNull
+    @Size(min = 2)
+    private String emergencyContactTown;
+    private String emergencyContactPostcode;
+    @NotNull
     private Integer emergencyRelationshipId;
     @NotNull
     @Size(min = 2)
@@ -74,6 +92,78 @@ public class VolunteerForm {
 
     public void setElder(boolean elder) {
         this.elder = elder;
+    }
+
+    public String getEmergencyContactForename() {
+        return emergencyContactForename;
+    }
+
+    public void setEmergencyContactForename(String emergencyContactForename) {
+        this.emergencyContactForename = emergencyContactForename;
+    }
+
+    public String getEmergencyContactSurname() {
+        return emergencyContactSurname;
+    }
+
+    public void setEmergencyContactSurname(String emergencyContactSurname) {
+        this.emergencyContactSurname = emergencyContactSurname;
+    }
+
+    public Integer getEmergencyContactPersonId() {
+        return emergencyContactPersonId;
+    }
+
+    public void setEmergencyContactPersonId(Integer emergencyContactPersonId) {
+        this.emergencyContactPersonId = emergencyContactPersonId;
+    }
+
+    public String getEmergencyContactTelephone() {
+        return emergencyContactTelephone;
+    }
+
+    public void setEmergencyContactTelephone(String emergencyContactTelephone) {
+        this.emergencyContactTelephone = emergencyContactTelephone;
+    }
+
+    public String getEmergencyContactMobile() {
+        return emergencyContactMobile;
+    }
+
+    public void setEmergencyContactMobile(String emergencyContactMobile) {
+        this.emergencyContactMobile = emergencyContactMobile;
+    }
+
+    public String getEmergencyContactCounty() {
+        return emergencyContactCounty;
+    }
+
+    public void setEmergencyContactCounty(String emergencyContactCounty) {
+        this.emergencyContactCounty = emergencyContactCounty;
+    }
+
+    public String getEmergencyContactStreet() {
+        return emergencyContactStreet;
+    }
+
+    public void setEmergencyContactStreet(String emergencyContactStreet) {
+        this.emergencyContactStreet = emergencyContactStreet;
+    }
+
+    public String getEmergencyContactTown() {
+        return emergencyContactTown;
+    }
+
+    public void setEmergencyContactTown(String emergencyContactTown) {
+        this.emergencyContactTown = emergencyContactTown;
+    }
+
+    public String getEmergencyContactPostcode() {
+        return emergencyContactPostcode;
+    }
+
+    public void setEmergencyContactPostcode(String emergencyContactPostcode) {
+        this.emergencyContactPostcode = emergencyContactPostcode;
     }
 
     public Integer getEmergencyRelationshipId() {
