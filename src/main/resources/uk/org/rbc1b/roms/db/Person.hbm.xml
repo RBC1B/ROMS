@@ -28,7 +28,7 @@
         <property name="appointmentId" />
         <property name="fulltimeId"/>
         <property length="7" name="availability"/>
-        <many-to-one column="EmergencyContactId" name="emergencyContact"/>
+        <many-to-one column="EmergencyContactId" name="emergencyContact" cascade="save-update" />
         <property name="emergencyContactRelationshipId" />
         <property length="1" name="gender" not-null="true" />
         <property name="maritalStatusId" not-null="true" />

@@ -82,8 +82,7 @@ public class VolunteersController {
     }
 
     /**
-     * Handle the volunteer core details form submission.
-     * <p>This handles new volunteer creation only.
+     * Handle the volunteer core details form submission. <p>This handles new volunteer creation only.
      *
      * @param form volunteer form
      * @return redirect url
@@ -148,15 +147,37 @@ public class VolunteersController {
             volunteer.setFulltimeId(FULLTIME_PUBLISHER);
         }
 
+        volunteer.setEmergencyContact(createEmergencyContact(form));
+        volunteer.setEmergencyContactRelationshipId(form.getEmergencyRelationshipId());
         volunteer.setRbcStatusId(RBC_STATUS_ACTIVE);
         volunteer.setMaritalStatusId(SINGLE_MARITAL_STATUS);
         volunteer.setInterviewStatusId(INTERVIEW_STATUS_INVITE_DUE);
         volunteerDao.saveVolunteer(volunteer);
 
-//    private Person emergencyContact;
-//    private Relationship emergencyContactRelationshipId;
-
         return "redirect:/volunteers/" + volunteer.getPersonId();
+    }
+
+    private Person createEmergencyContact(VolunteerForm form) {
+        if (form.getEmergencyContactPersonId() != null) {
+            return personDao.findPerson(form.getEmergencyContactPersonId());
+        }
+
+        Person emergencyContact = new Person();
+
+        Address address = new Address();
+        address.setStreet(form.getEmergencyContactStreet());
+        address.setTown(form.getEmergencyContactTown());
+        address.setCounty(form.getEmergencyContactCounty());
+        address.setPostcode(form.getEmergencyContactPostcode());
+        emergencyContact.setAddress(address);
+
+        emergencyContact.setForename(form.getEmergencyContactForename());
+        emergencyContact.setSurname(form.getEmergencyContactSurname());
+        emergencyContact.setTelephone(form.getEmergencyContactTelephone());
+        emergencyContact.setMobile(form.getEmergencyContactMobile());
+
+        return emergencyContact;
+
     }
 
     /**
