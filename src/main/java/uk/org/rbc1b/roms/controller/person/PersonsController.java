@@ -54,7 +54,6 @@ public class PersonsController {
         return person;
     }
 
-
     /**
      * Person search. Pass in a candidate, match this against the user first/last name and return the person object in JSON format
      *

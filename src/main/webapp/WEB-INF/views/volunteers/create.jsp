@@ -173,44 +173,40 @@
                         </div>
                     </div>
                 </fieldset>
+            </form:form>
+            <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+        </div>
+        <!-- mustache template used to display the person selection form -->
+        <script id="volunteer-person-search-form" type="text/html" charset="utf-8">
+            {{#existingPersonId}}
+            <p>You are already linked to {{existingPersonName}}</p>
+            <p><a href="#" class="matched-person" data-person-id="{{existingPersonId}}">Leave linked to {{existingPersonName}} (same as ignore)</a></p>
+            <p><a href="#" class="matched-person" data-person-id="">Unlink {{existingPersonName}} (create a new person)</a></p>
+            {{/existingPersonId}}
+            {{#matchedVolunteers}}
+            <p>Edit an existing volunteer:</p>
+            {{#volunteers}}
+            <p><a href="<c:url value='/volunteers/{{personId}}'/>">{{forename}} {{surname}}{{#congregationName}}, {{congregationName}}{{/congregationName}}</a></p>
+            {{/volunteers}}
+            {{/matchedVolunteers}}
+            {{#matchedPersons}}
+            <p>Link to an existing person (not currently a volunteer):</p>
+            {{#persons}}
+            <a href="#" class="matched-person" data-person-id="{{personId}}">{{forename}} {{surname}}{{#congregationName}}, {{congregationName}}{{/congregationName}}</a>
+            {{/persons}}
+            {{/matchedPersons}}
+        </script>
+        <div id="volunteer-person-modal" class="modal hide fade">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3>Select matching person</h3>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Ignore</a>
             </div>
         </div>
-    </form:form>
-    <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-</div>
-<!-- mustache template used to display the person selection form -->
-<script id="person-search-form" type="text/html" charset="utf-8">
-    {{#existingPersonId}}
-    <p>You are already linked to {{existingPersonName}}</p>
-    <p><a href="#" class="matched-person" data-person-id="{{existingPersonId}}">Leave linked to {{existingPersonName}} (same as ignore)</a></p>
-    <p><a href="#" class="matched-person" data-person-id="">Unlink {{existingPersonName}} (create a new person)</a></p>
-    {{/existingPersonId}}
-    {{#matchedVolunteers}}
-    <p>Edit an existing volunteer:</p>
-    {{#volunteers}}
-    <p><a href="<c:url value='/volunteers/{{personId}}'/>">{{forename}} {{surname}}{{#congregationName}}, {{congregationName}}{{/congregationName}}</a></p>
-    {{/volunteers}}
-    {{/matchedVolunteers}}
-    {{#matchedPersons}}
-    <p>Link to an existing person (not currently a volunteer):</p>
-    {{#persons}}
-    <a href="#" class="matched-person" data-person-id="{{personId}}">{{forename}} {{surname}}{{#congregationName}}, {{congregationName}}{{/congregationName}}</a>
-    {{/persons}}
-    {{/matchedPersons}}
-</script>
-<div id="volunteer-person-modal" class="modal hide fade">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>Select matching person</h3>
-    </div>
-    <div class="modal-body">
-    </div>
-    <div class="modal-footer">
-        <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Ignore</a>
-    </div>
-</div>
-<script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/mustache.js' />" ></script>
-<script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/volunteers.js' />" ></script>
-<script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/jquery-ui-1.10.0.custom.min.js' />" ></script>
-</body>
+        <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/volunteers.js' />" ></script>
+    </body>
 </html>
