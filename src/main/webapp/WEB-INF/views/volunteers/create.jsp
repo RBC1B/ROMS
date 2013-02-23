@@ -2,7 +2,7 @@
     Document   : volunteerEdit
     Created on : 14-Jul-2012, 00:54:53
     Author     : oliver.elder.esq
---%>
+--%>F
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -173,82 +173,85 @@
                             <div class="controls">
                                 <form:input path="emergencyContactForename" placeholder="First"/>
                             </div>
-                        <form:hidden path="emergencyContactPersonId" />
-                    </div>
-                    <div class="control-group pull-left">
-                        <form:input path="emergencyContactSurname" placeholder="Last"/>
-                    </div>
-                    <div class="control-group">
-                        <div class="controls">
-                            <form:select path="emergencyRelationshipId">
-                                <form:option value="" label="Relationship" />
-                                <form:options items="${relationshipValues}" itemValue="key" itemLabel="value" />
-                            </form:select>
+                            <form:hidden path="emergencyContactPersonId" />
+                        </div>
+                        <div class="control-group pull-left">
+                            <form:input path="emergencyContactSurname" placeholder="Last"/>
+                        </div>
+                        <div class="control-group">
+                            <div class="controls">
+                                <form:select path="emergencyRelationshipId">
+                                    <form:option value="" label="Relationship" />
+                                    <form:options items="${relationshipValues}" itemValue="key" itemLabel="value" />
+                                </form:select>
+                            </div>
+                        </div>
+                        <p id="emergency-contact-linked" style="display:none;">Contact is linked to a person.</p>
+                        <div id="emergency-contact-additional-fields">
+                            <div class="control-group pull-left">
+                                <label class="control-label">8.(b) Phones:</label>
+                                <div class="controls">
+                                    <form:input path="emergencyContactTelephone" placeholder="Home"/>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <form:input path="emergencyContactMobile" placeholder="Mobile"/>
+                            </div>
+                            <div class="control-group pull-left">
+                                <label class="control-label">8.(c) Address</label>
+                                <div class="controls">
+                                    <form:input path="emergencyContactStreet" placeholder="Street" />
+                                </div>
+                            </div>
+                            <div class="control-group pull-left">
+                                <form:input path="emergencyContactTown" placeholder="Town" />
+                            </div>
+                            <div class="control-group pull-left">
+                                <form:input path="emergencyContactCounty" placeholder="County" />
+                            </div>
+                            <div class="control-group">
+                                <form:input path="emergencyContactPostcode" maxlength="10" placeholder="Postcode" />
+                            </div>
                         </div>
                     </div>
-                    <div class="control-group pull-left">
-                        <label class="control-label">8.(b) Phones:</label>
-                        <div class="controls">
-                            <form:input path="emergencyContactTelephone" placeholder="Home"/>
-                        </div>
-                    </div>
+            </div>
+            <div class="row">
+                <div class="span2">
                     <div class="control-group">
-                        <form:input path="emergencyContactMobile" placeholder="Mobile"/>
+                        <label class="control-label">Congregation</label>
                     </div>
-                    <div class="control-group pull-left">
-                        <label class="control-label">8.(c) Address</label>
-                        <div class="controls">
-                            <form:input path="emergencyContactStreet" placeholder="Street" />
-                        </div>
-                    </div>
-                    <div class="control-group pull-left">
-                        <form:input path="emergencyContactTown" placeholder="Town" />
-                    </div>
-                    <div class="control-group pull-left">
-                        <form:input path="emergencyContactCounty" placeholder="County" />
-                    </div>
-                    <div class="control-group">
-                        <form:input path="emergencyContactPostcode" maxlength="10" placeholder="Postcode" />
-                    </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="span2">
-                <div class="control-group">
-                    <label class="control-label">Congregation</label>
                 </div>
-            </div>
-            <div class="span10"> 
-                <div class="controls">
-                    <form:input path="congregationName" placeholder="Congregation name" />
-                    <form:hidden path="congregationId" />
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="span2">
-                <div class="control-group">
-                    <label class="control-label">Form date</label>
-                </div>
-            </div>
-            <div class="span10"> 
-                <div class="controls">
-                    <input class="datepicker" name="formDate" type="text" placeholder="15/03/1980" data-date-format="dd/mm/yy">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="span2 offset8">
-                <div class="control-group">
+                <div class="span10"> 
                     <div class="controls">
-                        <input type="submit" class="btn btn-large btn-success"/>
+                        <form:input path="congregationName" placeholder="Congregation name" />
+                        <form:hidden path="congregationId" />
                     </div>
                 </div>
             </div>
-        </div>
-    </fieldset>
-</form:form>
-<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+            <div class="row">
+                <div class="span2">
+                    <div class="control-group">
+                        <label class="control-label">Form date</label>
+                    </div>
+                </div>
+                <div class="span10"> 
+                    <div class="controls">
+                        <input class="datepicker" name="formDate" type="text" placeholder="15/03/1980" data-date-format="dd/mm/yy">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="span2 offset8">
+                    <div class="control-group">
+                        <div class="controls">
+                            <input type="submit" class="btn btn-large btn-success"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form:form>
+    <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </div>
 <!-- mustache template used to display the person selection form -->
 <script id="volunteer-person-search-form" type="text/html" charset="utf-8">
@@ -283,20 +286,20 @@
 </div>
 <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/volunteers.js' />" ></script>
 </body>
-        <!-- mustache template used to display the emergency contqct person selection form -->
-        <script id="volunteer-emergency-contact-search-form" type="text/html" charset="utf-8">
-            {{#existingPersonId}}
-            <p>The contact is already linked to {{existingPersonName}}</p>
-            <p><a href="#" class="matched-person" data-person-id="{{existingPersonId}}">Leave linked to {{existingPersonName}} (same as ignore)</a></p>
-            <p><a href="#" class="matched-person" data-person-id="">Unlink {{existingPersonName}} (create a new person)</a></p>
-            {{/existingPersonId}}
-            {{#matchedPersons}}
-                <p>Link to an existing person:</p>
-                {{#results}}
-                    <a href="#" class="matched-person" data-person-id="{{personId}}">{{forename}} {{surname}}{{#congregationName}}, {{congregationName}}{{/congregationName}}</a>
-                {{/results}}
-            {{/matchedPersons}}
-        </script>
-        <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/volunteers.js' />" ></script>
-    </body>
+<!-- mustache template used to display the emergency contqct person selection form -->
+<script id="volunteer-emergency-contact-search-form" type="text/html" charset="utf-8">
+    {{#existingPersonId}}
+    <p>The contact is already linked to {{existingPersonName}}</p>
+    <p><a href="#" class="matched-person" data-person-id="{{existingPersonId}}">Leave linked to {{existingPersonName}} (same as ignore)</a></p>
+    <p><a href="#" class="matched-person" data-person-id="">Unlink {{existingPersonName}} (create a new person)</a></p>
+    {{/existingPersonId}}
+    {{#matchedPersons}}
+    <p>Link to an existing person:</p>
+    {{#results}}
+    <a href="#" class="matched-person" data-person-id="{{personId}}">{{forename}} {{surname}}{{#congregationName}}, {{congregationName}}{{/congregationName}}</a>
+    {{/results}}
+    {{/matchedPersons}}
+</script>
+<script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/volunteers.js' />" ></script>
+</body>
 </html>

@@ -196,13 +196,15 @@ roms.volunteer.populateEmergencyContactFromPerson = function(selectedPersonId, $
     
     if (selectedPersonId) {
         // disable all the additional fields. include the text that indicates we are 
-        alert("selected " + selectedPersonId);
+        $("#emergency-contact-additional-fields input").prop("disabled", true);
+        $("#emergency-contact-additional-fields").hide("fast");
+        $("#emergency-contact-linked").show("fast");
     } else {
         alert("unselected");
+        $("#emergency-contact-additional-fields input").prop("disabled", true)
+        $("#emergency-contact-additional-fields").show("fast");
+        $("#emergency-contact-linked").hide("fast");
     }
-    
-    
-    alert(selectedPersonId);
 }
 
 $(document).ready(function() {
