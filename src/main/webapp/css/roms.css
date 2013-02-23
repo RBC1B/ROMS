@@ -67,3 +67,16 @@ label.error {
 div.control-group.pull-left {
     margin-right: 10px;
 }
+.form-horizontal .control-group {
+    margin-bottom:5px!important;
+}
+.form-horizontal .control-label {
+    text-align: left!important;
+}
+.form-horizontal .controls {
+    margin-left: 0!important;
+}
+input, textarea, .uneditable-input {
+    width: 128px!important;
+    margin-bottom: 5px;
+}

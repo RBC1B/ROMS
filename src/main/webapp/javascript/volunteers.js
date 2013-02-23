@@ -118,7 +118,7 @@ roms.volunteer.populateVolunteerFromPerson = function(selectedPersonId, $personI
         contentType: "application/json",
         dataType: 'json',
         success: function(data) {
-            $("input[name='birthDate']").val(data.birthDate);
+            $("#birthDate").val(data.birthDate);
             $("input[name='middleName']").val(data.middleName);
             $("input[name='telephone']").val(data.telephone);
             $("input[name='mobile']").val(data.mobile);
