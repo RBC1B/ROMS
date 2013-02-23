@@ -15,27 +15,32 @@ create table Application(
     primary key (ApplicationId)
 )engine=InnoDB;
 
+-- create the person. We don't create the foreign key to the congregation until the table is created
 create table Person(
-    PersonId    bigint(20)  not null    auto_increment,
-    Forename    varchar(50) not null,
-    MiddleName  varchar(50),
-    Surname     varchar(50) not null,
-    Street      varchar(50),
-    Town        varchar(50),
-    County      varchar(50),
-    Postcode    varchar(10),
-    Telephone   varchar(15),
-    Mobile      varchar(15),
-    WorkPhone   varchar(50),
-    Email       varchar(50),
-    Comments    varchar(250),
+    PersonId        bigint(20)  not null    auto_increment,
+    Forename        varchar(50) not null,
+    MiddleName      varchar(50),
+    Surname         varchar(50) not null,
+    Street          varchar(50),
+    Town            varchar(50),
+    County          varchar(50),
+    Postcode        varchar(10),
+    Telephone       varchar(15),
+    Mobile          varchar(15),
+    WorkPhone       varchar(50),
+    Email           varchar(50),
+    Comments        varchar(250),
+    CongregationId  bigint(20),
+    BirthDate       date,
     primary key (PersonId)
 )engine=InnoDB;
 
 create table Circuit(
-    CircuitId   bigint(20)      auto_increment,
-    Name        varchar(50)     not null    unique,
-    primary key (CircuitId)
+    CircuitId           bigint(20)      auto_increment,
+    Name                varchar(50)     not null    unique,
+    CircuitOverseerId   bigint(20),
+    primary key (CircuitId),
+    foreign key (CircuitOverseerId) references Person(PersonId)
 )engine=InnoDB;
 
 create table OwnershipType(
@@ -106,6 +111,10 @@ create table Congregation(
     constraint foreign key (RbcRegionId) references RbcRegion(RbcRegionId) on delete set null,
     constraint foreign key (RbcSubRegionId) references RbcSubRegion(RbcSubRegionId) on delete set null
 )engine=InnoDB;
+
+-- we can now add the foeign key to the person congregation id
+alter table Person add 
+    constraint foreign key (CongregationId) references Congregation(CongregationId) on delete set null;
 
 create table CongregationRole(
     CongregationRoleId  bigint(20)  auto_increment,
@@ -182,13 +191,11 @@ create table MaritalStatus(
 create table Volunteer(
     PersonId            bigint(20)  not null    unique,
     RbcStatusId         bigint(20)  not null,
-    CongregationId      bigint(20),
     AppointmentId       bigint(20),
     FulltimeId          bigint(20),
     Availability        varchar(7),
     EmergencyContactId  bigint(20),
     EmergencyContactRelationshipId bigint(20),
-    DOB                 date,
     Gender              varchar(1)  not null,
     MaritalStatusId     bigint(20)  not null,
     BaptismDate         date,
@@ -210,7 +217,6 @@ create table Volunteer(
     primary key(PersonId),
     constraint foreign key (PersonId) references Person(PersonId) on delete cascade,
     constraint foreign key (RbcStatusId) references RbcStatus(RbcStatusId),
-    constraint foreign key (CongregationId) references Congregation(CongregationId) on delete set null,
     constraint foreign key (AppointmentId) references Appointment(AppointmentId),
     constraint foreign key (FulltimeId) references Fulltime(FulltimeId),
     constraint foreign key (EmergencyContactId) references Person(PersonId) on delete set null,
