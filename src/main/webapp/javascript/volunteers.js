@@ -114,7 +114,7 @@ roms.volunteer.populateVolunteerFromPerson = function(selectedPersonId, $personI
 
     // new person - pull the person data and populate the form.
     $.ajax({
-        url: '../persons/' + selectedPersonId,
+        url: '../persons/' + selectedPersonId  + "/reference",
         contentType: "application/json",
         dataType: 'json',
         success: function(data) {

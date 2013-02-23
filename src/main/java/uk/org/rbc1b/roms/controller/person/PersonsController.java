@@ -10,15 +10,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
+import uk.org.rbc1b.roms.controller.common.model.EntityModel;
 import uk.org.rbc1b.roms.controller.common.person.PersonDao;
+import uk.org.rbc1b.roms.controller.congregation.CongregationsController;
 import uk.org.rbc1b.roms.controller.volunteer.VolunteerDao;
+import uk.org.rbc1b.roms.controller.volunteer.VolunteersController;
 import uk.org.rbc1b.roms.db.Person;
+import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 
 /**
  * Control access to the underlying person data.
@@ -36,15 +41,73 @@ public class PersonsController {
 
     /**
      * @param personId person primary key
+     * @param model model
+     * @return view name
+     * @throws NoSuchRequestHandlingMethodException 404 response
+     */
+    @RequestMapping(value = "{personId}", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
+    @Transactional(readOnly = true)
+    public String handlePerson(@PathVariable Integer personId, ModelMap model) throws NoSuchRequestHandlingMethodException {
+        Person person = personDao.findPerson(personId);
+
+        if (person == null) {
+            throw new NoSuchRequestHandlingMethodException("No person with id [" + personId + "]", this.getClass());
+        }
+
+        Volunteer volunteer = volunteerDao.findVolunteer(person.getPersonId());
+        if (volunteer != null) {
+            return "redirect:" + VolunteersController.generateUri(personId);
+        }
+
+        model.addAttribute("person", generatePersonModel(person));
+
+        return "persons/show";
+
+
+    }
+
+    private PersonModel generatePersonModel(Person person) {
+
+        PersonModel model = new PersonModel();
+        model.setAddress(person.getAddress());
+        model.setBirthDate(person.getBirthDate());
+        model.setComments(person.getComments());
+
+        if (person.getCongregation() != null) {
+            EntityModel congregation = new EntityModel();
+            congregation.setId(person.getCongregation().getCongregationId());
+            congregation.setName(person.getCongregation().getName());
+            congregation.setUri(CongregationsController.generateUri(person.getCongregation().getCongregationId()));
+
+            model.setCongregation(congregation);
+        }
+
+        model.setEmail(person.getEmail());
+        model.setForename(person.getForename());
+        model.setMiddleName(person.getMiddleName());
+        model.setSurname(person.getSurname());
+        model.setMobile(person.getMobile());
+        model.setTelephone(person.getTelephone());
+        model.setWorkPhone(person.getWorkPhone());
+
+        return model;
+    }
+
+    /**
+     * Note: There seems to be a bug in Spring 3.1 that causes the same uri with
+     * a different produces attribute throw an " Ambiguous handler methods
+     * mapped" exception.
+     *
+     * @param personId person primary key
      * @return person object
      * @throws NoSuchRequestHandlingMethodException 404 response
      */
-    @RequestMapping(value = "{personId}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "{personId}/reference", method = RequestMethod.GET, produces = "application/json")
     @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional(readOnly = true)
     @ResponseBody
-    public Person handlePerson(@PathVariable Integer personId) throws NoSuchRequestHandlingMethodException {
-
+    public Person handleAjaxPerson(@PathVariable Integer personId) throws NoSuchRequestHandlingMethodException {
         Person person = personDao.findPerson(personId);
 
         if (person == null) {
@@ -55,7 +118,8 @@ public class PersonsController {
     }
 
     /**
-     * Person search. Pass in a candidate, match this against the user first/last name and return the person object in JSON format
+     * Person search. Pass in a candidate, match this against the user
+     * first/last name and return the person object in JSON format
      *
      * @param forename person match lookup first name
      * @param surname person match lookup last name

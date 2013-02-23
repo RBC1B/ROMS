@@ -25,8 +25,19 @@ import uk.org.rbc1b.roms.db.Congregation;
 @RequestMapping("/congregations")
 public class CongregationsController {
 
+    private static final String BASE_URI = "/congregations/";
     @Autowired
     private CongregationDao congregationDao;
+
+    /**
+     * Generate the uri used to access the congregation pages.
+     *
+     * @param congregationId optional congregation id
+     * @return uri
+     */
+    public static String generateUri(Integer congregationId) {
+        return congregationId != null ? BASE_URI + congregationId : BASE_URI;
+    }
 
     /**
      * Search for a congregation by name.
