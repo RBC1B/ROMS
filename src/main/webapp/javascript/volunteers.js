@@ -139,7 +139,7 @@ roms.volunteer.populateVolunteerFromPerson = function(selectedPersonId, $personI
 }
 
 roms.volunteer.matchEmergencyContactPerson = function(forename, surname, $personId) {
-
+    var _parent = this;
     if(!forename || !surname) {
         return;
     }
@@ -166,12 +166,43 @@ roms.volunteer.matchEmergencyContactPerson = function(forename, surname, $person
                 return;
             }
 
-            alert(data);
+            data.existingPersonId = existingPersonId;
+            data.existingPersonName = existingPersonName;
 
+            if (data.results) {
+                data.matchedPersons = true;
+            }
+
+            var template = $("#volunteer-emergency-contact-search-form").html();
+            var html = Mustache.to_html(template, data);
+
+            $("#volunteer-person-modal .modal-body").html(html)
+            var modalElement = $("#volunteer-person-modal")
+
+            modalElement.modal('show')
+
+            // if they select the person id, set it to the hidden volunteer person id field
+            $("a.matched-person").on("click", function(event){
+                _parent.populateEmergencyContactFromPerson($(this).data("person-id"), $personId);
+                modalElement.modal('hide')
+            });
         }
     });
 
     $personId.data("full-name", forename + " " + surname);
+}
+
+roms.volunteer.populateEmergencyContactFromPerson = function(selectedPersonId, $personId) {
+    
+    if (selectedPersonId) {
+        // disable all the additional fields. include the text that indicates we are 
+        alert("selected " + selectedPersonId);
+    } else {
+        alert("unselected");
+    }
+    
+    
+    alert(selectedPersonId);
 }
 
 $(document).ready(function() {

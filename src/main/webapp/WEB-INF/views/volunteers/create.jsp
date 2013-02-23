@@ -173,8 +173,7 @@
                             <div class="controls">
                                 <form:input path="emergencyContactForename" placeholder="First"/>
                             </div>
-                            <form:hidden path="personId" />
-                        </div>
+                        <form:hidden path="emergencyContactPersonId" />
                     </div>
                     <div class="control-group pull-left">
                         <form:input path="emergencyContactSurname" placeholder="Last"/>
@@ -284,4 +283,20 @@
 </div>
 <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/volunteers.js' />" ></script>
 </body>
+        <!-- mustache template used to display the emergency contqct person selection form -->
+        <script id="volunteer-emergency-contact-search-form" type="text/html" charset="utf-8">
+            {{#existingPersonId}}
+            <p>The contact is already linked to {{existingPersonName}}</p>
+            <p><a href="#" class="matched-person" data-person-id="{{existingPersonId}}">Leave linked to {{existingPersonName}} (same as ignore)</a></p>
+            <p><a href="#" class="matched-person" data-person-id="">Unlink {{existingPersonName}} (create a new person)</a></p>
+            {{/existingPersonId}}
+            {{#matchedPersons}}
+                <p>Link to an existing person:</p>
+                {{#results}}
+                    <a href="#" class="matched-person" data-person-id="{{personId}}">{{forename}} {{surname}}{{#congregationName}}, {{congregationName}}{{/congregationName}}</a>
+                {{/results}}
+            {{/matchedPersons}}
+        </script>
+        <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/volunteers.js' />" ></script>
+    </body>
 </html>
