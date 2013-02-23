@@ -29,15 +29,16 @@ import uk.org.rbc1b.roms.reference.ReferenceDao;
 @RequestMapping("/volunteers")
 public class VolunteersController {
 
-    public static final int SINGLE_MARITAL_STATUS = 5;
-    public static final int RBC_STATUS_ACTIVE = 1;
-    public static final int INTERVIEW_STATUS_INVITE_DUE = 1;
-    public static final int FULLTIME_BETHEL = 1;
-    public static final int FULLTIME_PUBLISHER = 2;
-    public static final int FULLTIME_REGULAR_PIONEER = 3;
-    public static final int APPOINTMENT_ELDER = 1;
-    public static final int APPOINTMENT_MINISTERIAL_SERVANT = 2;
-    public static final int APPOINTMENT_PUBLISHER = 3;
+    private static final String BASE_URI = "/volunteers/";
+    private static final int SINGLE_MARITAL_STATUS = 5;
+    private static final int RBC_STATUS_ACTIVE = 1;
+    private static final int INTERVIEW_STATUS_INVITE_DUE = 1;
+    private static final int FULLTIME_BETHEL = 1;
+    private static final int FULLTIME_PUBLISHER = 2;
+    private static final int FULLTIME_REGULAR_PIONEER = 3;
+    private static final int APPOINTMENT_ELDER = 1;
+    private static final int APPOINTMENT_MINISTERIAL_SERVANT = 2;
+    private static final int APPOINTMENT_PUBLISHER = 3;
     @Autowired
     private VolunteerDao volunteerDao;
     @Autowired
@@ -46,6 +47,16 @@ public class VolunteersController {
     private CongregationDao congregationDao;
     @Autowired
     private ReferenceDao referenceDao;
+
+    /**
+     * Generate the uri used to access the volunteer pages.
+     *
+     * @param volunteerId optional volunteer id
+     * @return uri
+     */
+    public static String generateUri(Integer volunteerId) {
+        return volunteerId != null ? BASE_URI + volunteerId : BASE_URI;
+    }
 
     /**
      * Display a list of volunteers.
@@ -82,7 +93,8 @@ public class VolunteersController {
     }
 
     /**
-     * Handle the volunteer core details form submission. <p>This handles new volunteer creation only.
+     * Handle the volunteer core details form submission. <p>This handles new
+     * volunteer creation only.
      *
      * @param form volunteer form
      * @return redirect url
@@ -154,7 +166,7 @@ public class VolunteersController {
         volunteer.setInterviewStatusId(INTERVIEW_STATUS_INVITE_DUE);
         volunteerDao.saveVolunteer(volunteer);
 
-        return "redirect:/volunteers/" + volunteer.getPersonId();
+        return "redirect:" + generateUri(volunteer.getPersonId());
     }
 
     private Person createEmergencyContact(VolunteerForm form) {

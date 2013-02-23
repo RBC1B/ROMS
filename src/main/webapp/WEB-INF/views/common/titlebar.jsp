@@ -1,4 +1,6 @@
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<!-- data attribute is used to determine the relative paths for ajax requests -->
+<div id="relative-path" data-relative-path="<c:url value="/" />" ></div>
 <div class="navbar navbar-inverse navbar-fixed-top" id="navbar">
     <div class="navbar-inner">
        <div class="container-fluid">

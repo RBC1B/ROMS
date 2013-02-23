@@ -53,14 +53,14 @@ values ('Ian', 'Smith', 'Slightly grumpy CBE');
 insert into Person(Forename, Surname, Comments)
 values ('Douglas', 'Fitzpatrick', 'Requested user with minimal permissions');
 
-insert into Person(Forename, MiddleName, Surname, Comments)
-values ('Jack', 'Of', 'Alltrades', 'Hightly skilled volunteer');
+insert into Person(Forename, MiddleName, Surname, Comments, BirthDate)
+values ('Jack', 'Of', 'Alltrades', 'Hightly skilled volunteer', '1961-08-12');
 
 insert into Person(Forename, Surname, Comments)
 values ('Arthur', 'Anyjobs', 'Willing volunteer');
 
-insert into Person(Forename, Surname, Comments)
-values ('Ken', 'Whereheis', 'Unlikely to show up volunteer');
+insert into Person(Forename, Surname, Comments, BirthDate)
+values ('Ken', 'Whereheis', 'Unlikely to show up volunteer', '1978-11-14');
 
 
 insert into User(PersonId, UserName, Password)
@@ -161,9 +161,9 @@ values (1, 8, "100 seats in brown. No seats with arm rests.");
 
 
 -- Circuits
-insert into Circuit(Name) value ('London No. 12');
-insert into Circuit(Name) value ('Fife No. 2');
-insert into Circuit(Name) value ('North of Watford No. 17');
+insert into Circuit(Name, CircuitOverseerId) value ('London No. 12', 1);
+insert into Circuit(Name, CircuitOverseerId) value ('Fife No. 2', 2);
+insert into Circuit(Name, CircuitOverseerId) value ('North of Watford No. 17', 4);
 
 -- Congregations
 insert into Congregation(Name, Number, KingdomHallId, CircuitId, RbcRegionId, RbcSubRegionId, Publishers,
@@ -239,14 +239,17 @@ insert into Qualification(Name, Description, AppearOnBadge)
 values ('Email technicial', 'Fully trained in the difference between reply and reply to all ', false);
 
 -- Volunteer
-insert into Volunteer(PersonId, RbcStatusId, CongregationId, AppointmentId, FulltimeId, Availability,
-EmergencyContactId, EmergencyContactRelationshipId, DOB, Gender, MaritalStatusId, BaptismDate, InterviewDate,
+insert into Volunteer(PersonId, RbcStatusId, AppointmentId, FulltimeId, Availability,
+EmergencyContactId, EmergencyContactRelationshipId, Gender, MaritalStatusId, BaptismDate, InterviewDate,
 InterviewerA, InterviewerB, InterviewComments, JoinedDate, FormDate, InterviewStatusId, Oversight, OversightComments,
 ReliefUK, ReliefUKComments, ReliefAbroad, ReliefAbroadComments, HHCFormCode, BadgeIssueDate)
-values(5, 1, 1, 1, 3, 'TTTTTTT',
-3, 5, '1961-08-12', 'M', 2, '1982-06-19', '2008-02-09',
+values(5, 1, 1, 3, 'TTTTTTT',
+3, 5, 'M', 2, '1982-06-19', '2008-02-09',
 1, 2, 'Jolly nice bloke', '2008-02-11', '2008-01-03', 5, true, 'Very capable...still a jolly nice bloke?',
 true, '3 weeks notice', true, '6 weeks notice', 'HHCForm-1', '2010-04-17');
+
+-- update the person cong now. Can before because of the relationships between person, circuit and congregation
+update Person set CongregationId = 1 where PersonId = 5;
 
 insert into Assignment(PersonId, DepartmentId, RoleId, AssignedDate, TradeNumberId, TeamId)
 values(5, 10, 5, '2010-04-11', 1, 1);
@@ -281,14 +284,16 @@ values(1, 5, '2012-11-25', null, null, null, null);
 
 
 
-insert into Volunteer(PersonId, RbcStatusId, CongregationId, AppointmentId, FulltimeId, Availability,
-EmergencyContactId, EmergencyContactRelationshipId, DOB, Gender, MaritalStatusId, BaptismDate, InterviewDate,
+insert into Volunteer(PersonId, RbcStatusId, AppointmentId, FulltimeId, Availability,
+EmergencyContactId, EmergencyContactRelationshipId, Gender, MaritalStatusId, BaptismDate, InterviewDate,
 InterviewerA, InterviewerB, InterviewComments, JoinedDate, FormDate, InterviewStatusId, Oversight, OversightComments,
 ReliefUK, ReliefUKComments, ReliefAbroad, ReliefAbroadComments, HHCFormCode, BadgeIssueDate)
-values(6, 4, 2, null, null, 'TTFTTTT',
-null, null, null, 'M', 5, null, null,
+values(6, 4, null, null, 'TTFTTTT',
+null, null, 'M', 5, null, null,
 null, null, null, null, null, 3, false, null,
 false, null, false, null, null, null);
+
+update Person set congregationId = 2 where PersonId = 6;
 
 insert into VolunteerQualification(PersonId, QualificationId, Comments)
 values(6, 2, 'Hand washing is a bit suspect');
@@ -300,11 +305,13 @@ insert into Attendance(ProjectId, PersonId, InviteDate, AbleToCome, InvitationCo
 values(1, 6, '2012-07-24', false, 3, 10, false);
 
 
-insert into Volunteer(PersonId, RbcStatusId, CongregationId, AppointmentId, FulltimeId, Availability,
-EmergencyContactId, EmergencyContactRelationshipId, DOB, Gender, MaritalStatusId, BaptismDate, InterviewDate,
+insert into Volunteer(PersonId, RbcStatusId, AppointmentId, FulltimeId, Availability,
+EmergencyContactId, EmergencyContactRelationshipId, Gender, MaritalStatusId, BaptismDate, InterviewDate,
 InterviewerA, InterviewerB, InterviewComments, JoinedDate, FormDate, InterviewStatusId, Oversight, OversightComments,
 ReliefUK, ReliefUKComments, ReliefAbroad, ReliefAbroadComments, HHCFormCode, BadgeIssueDate)
-values(7, 4, 3, null, 2, 'FFFFFFT',
-3, 5, '1978-11-14', 'M', 4, '1999-07-10', '2012-05-29',
+values(7, 4, null, 2, 'FFFFFFT',
+3, 5, 'M', 4, '1999-07-10', '2012-05-29',
 1, null, null, null, '2012-03-13', 3, false, null,
 false, null, false, null, null, null);
+
+update Person set congregationId = 3 where PersonId = 7;
