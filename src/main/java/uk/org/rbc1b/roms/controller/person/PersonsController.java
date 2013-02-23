@@ -6,6 +6,7 @@ package uk.org.rbc1b.roms.controller.person;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -49,22 +50,67 @@ public class PersonsController {
     @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional(readOnly = true)
     public String handlePerson(@PathVariable Integer personId, ModelMap model) throws NoSuchRequestHandlingMethodException {
-        Person person = personDao.findPerson(personId);
+        Person person = fetchPerson(personId);
 
-        if (person == null) {
-            throw new NoSuchRequestHandlingMethodException("No person with id [" + personId + "]", this.getClass());
-        }
-
-        Volunteer volunteer = volunteerDao.findVolunteer(person.getPersonId());
-        if (volunteer != null) {
+        if (volunteerDao.findVolunteer(person.getPersonId()) != null) {
             return "redirect:" + VolunteersController.generateUri(personId);
         }
 
         model.addAttribute("person", generatePersonModel(person));
 
         return "persons/show";
+    }
+
+    /**
+     * Display the form to create a new person.
+     *
+     * @param model mvc model
+     * @return view name
+     */
+    @RequestMapping(value = "{personId}/edit", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('VOLUNTEER', 'ADD')")
+    @Transactional(readOnly = true)
+    public String handleEditForm(@PathVariable Integer personId, ModelMap model) throws NoSuchRequestHandlingMethodException {
+
+        Person person = fetchPerson(personId);
+
+        if (volunteerDao.findVolunteer(person.getPersonId()) != null) {
+            return "redirect:" + VolunteersController.generateUri(personId);
+        }
+
+        PersonForm form = new PersonForm();
+        form.setPersonId(person.getPersonId());
+
+        if (person.getBirthDate() != null) {
+            form.setBirthDate(new DateTime(person.getBirthDate().getTime()));
+        }
+        form.setComments(person.getComments());
+
+        if (person.getCongregation() != null) {
+            form.setCongregationId(person.getCongregation().getCongregationId());
+            form.setCongregationName(person.getCongregation().getName());
+        }
 
 
+        form.setSurname(person.getSurname());
+        form.setForename(person.getForename());
+        form.setMiddleName(person.getMiddleName());
+
+        if (person.getAddress() != null) {
+            form.setCounty(person.getAddress().getCounty());
+            form.setPostcode(person.getAddress().getPostcode());
+            form.setStreet(person.getAddress().getStreet());
+            form.setTown(person.getAddress().getTown());
+        }
+        form.setEmail(person.getEmail());
+        form.setTelephone(person.getTelephone());
+        form.setMobile(person.getMobile());
+        form.setWorkPhone(person.getWorkPhone());
+
+        model.addAttribute("person", form);
+        
+        return "persons/edit";
+        
     }
 
     private PersonModel generatePersonModel(Person person) {
@@ -108,11 +154,7 @@ public class PersonsController {
     @Transactional(readOnly = true)
     @ResponseBody
     public Person handleAjaxPerson(@PathVariable Integer personId) throws NoSuchRequestHandlingMethodException {
-        Person person = personDao.findPerson(personId);
-
-        if (person == null) {
-            throw new NoSuchRequestHandlingMethodException("No person with id [" + personId + "]", this.getClass());
-        }
+        Person person = fetchPerson(personId);
 
         return person;
     }
@@ -162,6 +204,14 @@ public class PersonsController {
             result.setVolunteer(volunteerDao.findVolunteer(person.getPersonId()) != null);
         }
         return result;
+    }
+
+    private Person fetchPerson(Integer personId) throws NoSuchRequestHandlingMethodException {
+        Person person = personDao.findPerson(personId);
+        if (person == null) {
+            throw new NoSuchRequestHandlingMethodException("No person with id [" + personId + "]", this.getClass());
+        }
+        return person;
     }
 
     public void setPersonDao(PersonDao personDao) {

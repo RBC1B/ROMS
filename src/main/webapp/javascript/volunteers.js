@@ -193,25 +193,7 @@ $(document).ready(function() {
     });
 
     $("#congregationName").typeahead({
-        source: function (query, process) {
-            $.ajax({
-                url: "../congregations/search",
-                contentType: "application/json",
-                dataType: "json",
-                data:  {
-                    name: query
-                },
-                success: function(data) {
-                    var results = [];
-                    if(data.results) {
-                        $.each(data.results, function() {
-                            results.push(this.name);
-                        });
-                    }
-                    return process(results);
-                }
-            });
-        },
+        source: roms.common.congregationTypeAheadSource,
         minLength: 2
     });
 
@@ -302,13 +284,8 @@ $(document).ready(function() {
                 required: true
             }
         },
-        highlight: function(element) {
-            $(element).closest('.control-group').removeClass('success').addClass('error');
-        },
-        success: function(element) {
-            element.addClass('valid').closest('.control-group').removeClass('error').addClass('success');
-        }
-        ,
+        highlight: froms.common.validatorHighlight,
+        success: roms.common.validatorSuccess,
         errorPlacement: roms.common.validatorErrorPlacement
     });
 
