@@ -284,7 +284,7 @@ $(document).ready(function() {
                 required: true
             }
         },
-        highlight: froms.common.validatorHighlight,
+        highlight: roms.common.validatorHighlight,
         success: roms.common.validatorSuccess,
         errorPlacement: roms.common.validatorErrorPlacement
     });
