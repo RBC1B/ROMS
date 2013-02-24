@@ -8,8 +8,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.joda.time.DateTime;
 import org.springframework.format.annotation.DateTimeFormat;
-import uk.org.rbc1b.roms.db.Address;
-import uk.org.rbc1b.roms.db.Congregation;
 
 /**
  * From bean used when editing the person.

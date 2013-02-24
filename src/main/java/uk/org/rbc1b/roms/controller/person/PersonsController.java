@@ -24,7 +24,6 @@ import uk.org.rbc1b.roms.controller.congregation.CongregationsController;
 import uk.org.rbc1b.roms.controller.volunteer.VolunteerDao;
 import uk.org.rbc1b.roms.controller.volunteer.VolunteersController;
 import uk.org.rbc1b.roms.db.Person;
-import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 
 /**
  * Control access to the underlying person data.
@@ -44,7 +43,7 @@ public class PersonsController {
      * @param personId person primary key
      * @param model model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException 404 response
+     * @throws NoSuchRequestHandlingMethodException when no person matching the id is found
      */
     @RequestMapping(value = "{personId}", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
@@ -64,8 +63,10 @@ public class PersonsController {
     /**
      * Display the form to create a new person.
      *
+     * @param personId person primary key
      * @param model mvc model
      * @return view name
+     * @throws NoSuchRequestHandlingMethodException when no person matching the id is found
      */
     @RequestMapping(value = "{personId}/edit", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('VOLUNTEER', 'ADD')")
@@ -108,9 +109,9 @@ public class PersonsController {
         form.setWorkPhone(person.getWorkPhone());
 
         model.addAttribute("person", form);
-        
+
         return "persons/edit";
-        
+
     }
 
     private PersonModel generatePersonModel(Person person) {
@@ -141,9 +142,8 @@ public class PersonsController {
     }
 
     /**
-     * Note: There seems to be a bug in Spring 3.1 that causes the same uri with
-     * a different produces attribute throw an " Ambiguous handler methods
-     * mapped" exception.
+     * Note: There seems to be a bug in Spring 3.1 that causes the same uri with a different produces attribute throw an " Ambiguous handler methods mapped"
+     * exception.
      *
      * @param personId person primary key
      * @return person object
@@ -160,8 +160,7 @@ public class PersonsController {
     }
 
     /**
-     * Person search. Pass in a candidate, match this against the user
-     * first/last name and return the person object in JSON format
+     * Person search. Pass in a candidate, match this against the user first/last name and return the person object in JSON format
      *
      * @param forename person match lookup first name
      * @param surname person match lookup last name
