@@ -17,12 +17,12 @@
             <c:url var="formAction" value="/circuits" />
             <form:form commandName="circuit" method="post" action="${formAction}">
                 <div class="form">
-                    <input class="input-append" id="disabledInput" type="text" placeholder="Cicuit ID" disabled><br />
                     <div class="form">
                         <p>Circuit</p>
+                        <form:input path="circuitId" readonly="true" placeholder="${circuitId}"/>
                         <form:input path="name" placeholder="Circuit Name"/>
                         <p>Circuit Overseer</p>
-                        <form:input path="circuitOverseer.forename" placeholder = "First Name" />
+                        <form:input path="circuitOverseer.forename" placeholder = "First Name"/>
                         <form:input path="circuitOverseer.middleName" placeholder = "Middle Name"/>
                         <form:input path="circuitOverseer.surname" placeholder = "Surname"/>
                         <form:input path="circuitOverseer.email" placeholder = "E-mail"/>

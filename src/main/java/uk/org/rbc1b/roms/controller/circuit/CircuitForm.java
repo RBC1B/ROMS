@@ -15,8 +15,9 @@ import uk.org.rbc1b.roms.db.Person;
  */
 public class CircuitForm {
 
+    private Integer circuitId;
     @NotNull
-    @Size(max = 50)
+    @Size(min = 2, max = 50)
     private String name;
     private Person circuitOverseer = new Person();
 
@@ -46,5 +47,19 @@ public class CircuitForm {
      */
     public void setCircuitOverseer(Person circuitOverseer) {
         this.circuitOverseer = circuitOverseer;
+    }
+
+    /**
+     * @return the circuitId
+     */
+    public Integer getCircuitId() {
+        return circuitId;
+    }
+
+    /**
+     * @param circuitId the circuitId to set
+     */
+    public void setCircuitId(Integer circuitId) {
+        this.circuitId = circuitId;
     }
 }

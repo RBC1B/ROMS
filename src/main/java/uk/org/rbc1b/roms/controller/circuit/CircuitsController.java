@@ -109,7 +109,7 @@ public class CircuitsController {
     }
 
     /**
-     * Create a new circuit.
+     * Create or update a new circuit.
      *
      * @param circuitForm form bean
      * @return view name
@@ -120,9 +120,13 @@ public class CircuitsController {
     public String handleNewSubmit(@Valid CircuitForm circuitForm) {
 
         Circuit circuit = new Circuit();
+        if (circuitForm.getCircuitId() != null) {
+            circuit.setCircuitId(circuitForm.getCircuitId());
+        }
         circuit.setName(circuitForm.getName());
+        circuit.setCircuitOverseer(circuitForm.getCircuitOverseer());
 
-        circuitDao.createCircuit(circuit);
+        circuitDao.saveCircuit(circuit);
 
         return "redirect:circuits/" + circuit.getCircuitId();
     }

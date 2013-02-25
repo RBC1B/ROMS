@@ -30,16 +30,9 @@ public interface CircuitDao {
     List<Circuit> findCircuits();
 
     /**
-     * Create a new circuit.
-     *
-     * @param circuit new circuit to create
-     */
-    void createCircuit(Circuit circuit);
-
-    /**
-     * Update a circuit using the matching Id.
+     * Update or create a new circuit using the matching Id.
      *
      * @param circuit object to update
      */
-    void updateCircuit(Circuit circuit);
+    void saveCircuit(Circuit circuit);
 }
