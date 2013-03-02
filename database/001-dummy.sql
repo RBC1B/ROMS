@@ -44,8 +44,14 @@ alter table Person AUTO_INCREMENT=1;
 insert into Person(Forename, Surname, Comments)
 values ('Ramindur', 'Singh', 'Test user account');
 
-insert into Person(Forename, Surname, Comments)
-values ('Billy', 'Bonzo', 'Circuit overseer and all round good guy');
+insert into Person(Forename, MiddleName, Surname,
+                    Street, Town, County, Postcode,
+                    Telephone, Mobile, WorkPhone, Email,
+                    Comments, BirthDate)
+values ('Billy', 'Alfred', 'Bonzo',
+        '29 Acacia Road', 'Ericsville', 'Yorkshire', 'Y01 7DU',
+        '01904 551550', '07855 841311', '01904 551551', 'billy.bonzo@gmail.com',
+        'Circuit overseer and all round good guy', '1961-04-10');
 
 insert into Person(Forename, Surname, Comments)
 values ('Ian', 'Smith', 'Slightly grumpy CBE');
