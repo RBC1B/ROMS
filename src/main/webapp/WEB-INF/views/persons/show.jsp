@@ -61,7 +61,7 @@
                             <c:if test="${person.address.town != null}">${person.address.town}<br/></c:if>
                             <c:if test="${person.address.county != null}">${person.address.county}<br/></c:if>
                             <c:if test="${person.address.postcode != null}">${person.address.postcode}<br/></c:if>
-                        </address>
+                            </address>
                     </c:if>
                 </dd>
             </dl>
@@ -69,6 +69,10 @@
                 <h2>Comments</h2>
                 <p>${person.comments}</p>
             </c:if>
+
+            <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
+                <a href="edit" class="btn btn-primary">Edit Person</a>
+            </sec:authorize>
 
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>

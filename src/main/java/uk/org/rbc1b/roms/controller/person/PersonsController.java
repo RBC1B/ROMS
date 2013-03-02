@@ -69,7 +69,7 @@ public class PersonsController {
      * @throws NoSuchRequestHandlingMethodException when no person matching the id is found
      */
     @RequestMapping(value = "{personId}/edit", method = RequestMethod.GET)
-    @PreAuthorize("hasPermission('VOLUNTEER', 'ADD')")
+    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     @Transactional(readOnly = true)
     public String handleEditForm(@PathVariable Integer personId, ModelMap model) throws NoSuchRequestHandlingMethodException {
 
