@@ -2,22 +2,21 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package uk.org.rbc1b.roms.controller.common.congregation;
+package uk.org.rbc1b.roms.db;
 
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import uk.org.rbc1b.roms.db.Congregation;
+import org.springframework.stereotype.Repository;
 
 /**
  * Hibernate implementation of the congregation dao.
  *
  * @author oliver.elder.esq
  */
-@Component
+@Repository
 public class HibernateCongregationDao implements CongregationDao {
 
     @Autowired

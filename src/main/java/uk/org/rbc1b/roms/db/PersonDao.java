@@ -2,10 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package uk.org.rbc1b.roms.controller.common.person;
+package uk.org.rbc1b.roms.db;
 
 import java.util.List;
-import uk.org.rbc1b.roms.db.Person;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Add/edit/delete/update the core person data.
@@ -20,6 +21,8 @@ public interface PersonDao {
      * @param personId person id
      * @return Person, or null if no matching instance
      */
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
+    @Transactional(readOnly = true)
     Person findPerson(Integer personId);
 
     /**
@@ -29,6 +32,8 @@ public interface PersonDao {
      * @param surname person's last name
      * @return list or people
      */
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
+    @Transactional(readOnly = true)
     List<Person> findPersons(String forename, String surname);
 
     /**
@@ -36,5 +41,7 @@ public interface PersonDao {
      *
      * @param person person to persist
      */
+    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
+    @Transactional
     void savePerson(Person person);
 }

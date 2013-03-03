@@ -1,9 +1,9 @@
-/* 
+/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 $(document).ready(function() {
-    
+
     $(".datepicker").datepicker({
         dateFormat: "dd/mm/yy",
         changeYear: true
@@ -13,7 +13,7 @@ $(document).ready(function() {
         source: roms.common.congregationTypeAheadSource,
         minLength: 2
     });
-    
+
     $("#person").validate({
         rules: {
             forename: {
@@ -50,10 +50,10 @@ $(document).ready(function() {
                 }
             }
         },
-        highlight: froms.common.validatorHighlight,
+        highlight: roms.common.validatorHighlight,
         success: roms.common.validatorSuccess,
         errorPlacement: roms.common.validatorErrorPlacement
     });
-            
+
 });
 

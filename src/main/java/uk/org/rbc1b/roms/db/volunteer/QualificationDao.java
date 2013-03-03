@@ -2,10 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package uk.org.rbc1b.roms.controller.qualification;
+package uk.org.rbc1b.roms.db.volunteer;
 
 import java.util.List;
-import uk.org.rbc1b.roms.db.volunteer.Qualification;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Look up qualification information.
@@ -20,6 +21,8 @@ public interface QualificationDao {
      * @param name qualification name
      * @return qualification
      */
+    @PreAuthorize("hasPermission('SKILL', 'READ')")
+    @Transactional(readOnly = true)
     Qualification findQualification(String name);
 
     /**
@@ -27,6 +30,8 @@ public interface QualificationDao {
      *
      * @return list of matching qualifications
      */
+    @PreAuthorize("hasPermission('SKILL', 'READ')")
+    @Transactional(readOnly = true)
     List<Qualification> findQualifications();
 
     /**
@@ -34,5 +39,7 @@ public interface QualificationDao {
      *
      * @param qualification new qualification to create
      */
+    @PreAuthorize("hasPermission('SKILL', 'ADD')")
+    @Transactional
     void createQualification(Qualification qualification);
 }

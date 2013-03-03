@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package uk.org.rbc1b.roms.controller.common.person;
+package uk.org.rbc1b.roms.db;
 
 import java.util.List;
 import org.hibernate.Criteria;
@@ -10,15 +10,14 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import uk.org.rbc1b.roms.db.Person;
+import org.springframework.stereotype.Repository;
 
 /**
  * Implements PersonDao.
  *
  * @author rahulsingh
  */
-@Component
+@Repository
 public class HibernatePersonDao implements PersonDao {
 
     @Autowired
@@ -39,16 +38,16 @@ public class HibernatePersonDao implements PersonDao {
         return criteria.list();
     }
 
-
     @Override
     public void savePerson(Person person) {
-        this.sessionFactory.getCurrentSession().saveOrUpdate(person);
+        if (person.getPersonId() != null) {
+            this.sessionFactory.getCurrentSession().merge(person);
+        } else {
+            this.sessionFactory.getCurrentSession().save(person);
+        }
     }
-
 
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
-
-
 }

@@ -6,18 +6,17 @@ package uk.org.rbc1b.roms.controller.volunteer;
 
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import uk.org.rbc1b.roms.controller.common.congregation.CongregationDao;
-import uk.org.rbc1b.roms.controller.common.person.PersonDao;
 import uk.org.rbc1b.roms.db.Address;
+import uk.org.rbc1b.roms.db.CongregationDao;
 import uk.org.rbc1b.roms.db.Person;
+import uk.org.rbc1b.roms.db.PersonDao;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
+import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
 import uk.org.rbc1b.roms.reference.ReferenceDao;
 
 /**
@@ -39,13 +38,9 @@ public class VolunteersController {
     private static final int APPOINTMENT_ELDER = 1;
     private static final int APPOINTMENT_MINISTERIAL_SERVANT = 2;
     private static final int APPOINTMENT_PUBLISHER = 3;
-    @Autowired
     private VolunteerDao volunteerDao;
-    @Autowired
     private PersonDao personDao;
-    @Autowired
     private CongregationDao congregationDao;
-    @Autowired
     private ReferenceDao referenceDao;
 
     /**
@@ -65,8 +60,6 @@ public class VolunteersController {
      * @return view
      */
     @RequestMapping(method = RequestMethod.GET)
-    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
-    @Transactional(readOnly = true)
     public String handleList(ModelMap model) {
 
         model.addAttribute("volunteers", volunteerDao.findVolunteers());
@@ -81,8 +74,6 @@ public class VolunteersController {
      * @return view name
      */
     @RequestMapping(value = "new", method = RequestMethod.GET)
-    @PreAuthorize("hasPermission('VOLUNTEER', 'ADD')")
-    @Transactional(readOnly = true)
     public String handleNewForm(ModelMap model) {
 
         // initialise the form bean
@@ -93,15 +84,12 @@ public class VolunteersController {
     }
 
     /**
-     * Handle the volunteer core details form submission. <p>This handles new
-     * volunteer creation only.
+     * Handle the volunteer core details form submission. <p>This handles new volunteer creation only.
      *
      * @param form volunteer form
      * @return redirect url
      */
     @RequestMapping(method = RequestMethod.POST)
-    @PreAuthorize("hasPermission('VOLUNTEER', 'ADD')")
-    @Transactional
     public String handleSubmit(@ModelAttribute("volunteer") @Valid VolunteerForm form) {
 
         Volunteer volunteer;
@@ -195,6 +183,7 @@ public class VolunteersController {
     /**
      * @param personDao person dao
      */
+    @Autowired
     public void setPersonDao(PersonDao personDao) {
         this.personDao = personDao;
     }
@@ -202,6 +191,7 @@ public class VolunteersController {
     /**
      * @param volunteerDao volunteer dao
      */
+    @Autowired
     public void setVolunteerDao(VolunteerDao volunteerDao) {
         this.volunteerDao = volunteerDao;
     }

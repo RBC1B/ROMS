@@ -2,10 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package uk.org.rbc1b.roms.controller.volunteer;
+package uk.org.rbc1b.roms.db.volunteer;
 
 import java.util.List;
-import uk.org.rbc1b.roms.db.volunteer.Volunteer;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Look up volunteer information.
@@ -20,6 +21,8 @@ public interface VolunteerDao {
      * @param volunteerId id
      * @return volunteer
      */
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
+    @Transactional(readOnly = true)
     Volunteer findVolunteer(Integer volunteerId);
 
     /**
@@ -27,6 +30,8 @@ public interface VolunteerDao {
      *
      * @return list of matching volunteers
      */
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
+    @Transactional(readOnly = true)
     List<Volunteer> findVolunteers();
 
 
@@ -34,5 +39,7 @@ public interface VolunteerDao {
      * Save a volunteer.
      * @param volunteer volunteer to
      */
+    @PreAuthorize("hasPermission('VOLUNTEER', 'ADD')")
+    @Transactional
     void saveVolunteer(Volunteer volunteer);
 }

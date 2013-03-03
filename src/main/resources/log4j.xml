@@ -20,6 +20,11 @@
         <appender-ref ref="console" />
     </category>
 
+    <category name="org.hibernate.SQL" additivity="false">
+        <priority value="error" />
+        <appender-ref ref="console" />
+    </category>
+
     <root>
         <priority value ="error" />
         <appender-ref ref="console" />

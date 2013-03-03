@@ -6,11 +6,10 @@ package uk.org.rbc1b.roms.controller.person;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.Valid;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,11 +18,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.controller.common.model.EntityModel;
-import uk.org.rbc1b.roms.controller.common.person.PersonDao;
 import uk.org.rbc1b.roms.controller.congregation.CongregationsController;
-import uk.org.rbc1b.roms.controller.volunteer.VolunteerDao;
 import uk.org.rbc1b.roms.controller.volunteer.VolunteersController;
+import uk.org.rbc1b.roms.db.Address;
+import uk.org.rbc1b.roms.db.CongregationDao;
 import uk.org.rbc1b.roms.db.Person;
+import uk.org.rbc1b.roms.db.PersonDao;
+import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
 
 /**
  * Control access to the underlying person data.
@@ -34,10 +35,20 @@ import uk.org.rbc1b.roms.db.Person;
 @RequestMapping("/persons")
 public class PersonsController {
 
-    @Autowired
+    private static final String BASE_URI = "/persons/";
     private PersonDao personDao;
-    @Autowired
     private VolunteerDao volunteerDao;
+    private CongregationDao congregationDao;
+
+    /**
+     * Generate the uri used to access the person pages.
+     *
+     * @param personId optional volunteer id
+     * @return uri
+     */
+    public static String generateUri(Integer personId) {
+        return personId != null ? BASE_URI + personId : BASE_URI;
+    }
 
     /**
      * @param personId person primary key
@@ -46,8 +57,6 @@ public class PersonsController {
      * @throws NoSuchRequestHandlingMethodException when no person matching the id is found
      */
     @RequestMapping(value = "{personId}", method = RequestMethod.GET)
-    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
-    @Transactional(readOnly = true)
     public String handlePerson(@PathVariable Integer personId, ModelMap model) throws NoSuchRequestHandlingMethodException {
         Person person = fetchPerson(personId);
 
@@ -56,6 +65,7 @@ public class PersonsController {
         }
 
         model.addAttribute("person", generatePersonModel(person));
+        model.addAttribute("editUri", generateUri(personId) + "/edit");
 
         return "persons/show";
     }
@@ -69,8 +79,6 @@ public class PersonsController {
      * @throws NoSuchRequestHandlingMethodException when no person matching the id is found
      */
     @RequestMapping(value = "{personId}/edit", method = RequestMethod.GET)
-    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
-    @Transactional(readOnly = true)
     public String handleEditForm(@PathVariable Integer personId, ModelMap model) throws NoSuchRequestHandlingMethodException {
 
         Person person = fetchPerson(personId);
@@ -109,9 +117,55 @@ public class PersonsController {
         form.setWorkPhone(person.getWorkPhone());
 
         model.addAttribute("person", form);
+        model.addAttribute("submitUri", generateUri(personId));
 
         return "persons/edit";
 
+    }
+
+    /**
+     * Handle the person edit form submit.
+     *
+     * @param personId person primary key
+     * @param form populate person form
+     * @return view name
+     * @throws NoSuchRequestHandlingMethodException when no person matching the id is found
+     */
+    @RequestMapping(value = "{personId}", method = RequestMethod.POST)
+    private String handleEditSubmit(@PathVariable Integer personId, @Valid PersonForm form) throws NoSuchRequestHandlingMethodException {
+        Person person = fetchPerson(personId);
+
+        if (form.getStreet() != null || form.getTown() != null || form.getCounty() != null || form.getPostcode() != null) {
+            Address address = new Address();
+            address.setCounty(form.getCounty());
+            address.setPostcode(form.getPostcode());
+            address.setStreet(form.getStreet());
+            address.setTown(form.getTown());
+            person.setAddress(address);
+        } else {
+            person.setAddress(null);
+        }
+
+        person.setBirthDate(form.getBirthDate() != null ? new java.sql.Date(form.getBirthDate().toDateMidnight().getMillis()) : null);
+        person.setComments(form.getComments());
+
+        if (form.getCongregationId() == null) {
+            person.setCongregation(null);
+        } else if (person.getCongregation() == null || !person.getCongregation().getCongregationId().equals(form.getCongregationId())) {
+            person.setCongregation(congregationDao.findCongregation(form.getCongregationId()));
+        }
+
+        person.setEmail(form.getEmail());
+        person.setForename(form.getForename());
+        person.setMiddleName(form.getMiddleName());
+        person.setMobile(form.getMobile());
+        person.setSurname(form.getSurname());
+        person.setTelephone(form.getTelephone());
+        person.setWorkPhone(form.getWorkPhone());
+
+        personDao.savePerson(person);
+
+        return "redirect:" + generateUri(personId);
     }
 
     private PersonModel generatePersonModel(Person person) {
@@ -150,8 +204,6 @@ public class PersonsController {
      * @throws NoSuchRequestHandlingMethodException 404 response
      */
     @RequestMapping(value = "{personId}/reference", method = RequestMethod.GET, produces = "application/json")
-    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
-    @Transactional(readOnly = true)
     @ResponseBody
     public Person handleAjaxPerson(@PathVariable Integer personId) throws NoSuchRequestHandlingMethodException {
         Person person = fetchPerson(personId);
@@ -168,8 +220,6 @@ public class PersonsController {
      * @return model containing the list of people
      */
     @RequestMapping(value = "search", method = RequestMethod.GET, produces = "application/json")
-    //@PreAuthorize - not clear who will not be allowed to access
-    @Transactional(readOnly = true)
     @ResponseBody
     public PersonsSearchResponse handleSearch(@RequestParam(value = "forename", required = true) String forename,
             @RequestParam(value = "surname", required = true) String surname, @RequestParam(value = "checkVolunteer") boolean checkVolunteer) {
@@ -213,10 +263,17 @@ public class PersonsController {
         return person;
     }
 
+    @Autowired
+    public void setCongregationDao(CongregationDao congregationDao) {
+        this.congregationDao = congregationDao;
+    }
+
+    @Autowired
     public void setPersonDao(PersonDao personDao) {
         this.personDao = personDao;
     }
 
+    @Autowired
     public void setVolunteerDao(VolunteerDao volunteerDao) {
         this.volunteerDao = volunteerDao;
     }

@@ -8,12 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import uk.org.rbc1b.roms.controller.common.congregation.CongregationDao;
+import uk.org.rbc1b.roms.db.CongregationDao;
 import uk.org.rbc1b.roms.db.Congregation;
 
 /**
@@ -26,7 +25,6 @@ import uk.org.rbc1b.roms.db.Congregation;
 public class CongregationsController {
 
     private static final String BASE_URI = "/congregations/";
-    @Autowired
     private CongregationDao congregationDao;
 
     /**
@@ -46,8 +44,6 @@ public class CongregationsController {
      * @return list of matching congregations
      */
     @RequestMapping(value = "search", method = RequestMethod.GET, produces = "application/json")
-    //@PreAuthorize - not clear who will not be allowed to access
-    @Transactional(readOnly = true)
     @ResponseBody
     public CongregationSearchResponse handleSearch(@RequestParam(value = "name", required = true) String name) {
         List<Congregation> congregations = congregationDao.findCongregations(name);
@@ -64,5 +60,10 @@ public class CongregationsController {
             response.setResults(results);
         }
         return response;
+    }
+
+    @Autowired
+    public void setCongregationDao(CongregationDao congregationDao) {
+        this.congregationDao = congregationDao;
     }
 }

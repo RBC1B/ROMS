@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package uk.org.rbc1b.roms.controller.common.congregation;
+package uk.org.rbc1b.roms.db;
 
 import java.util.List;
-import uk.org.rbc1b.roms.db.Congregation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Look up the congregation object instances.
@@ -19,6 +19,7 @@ public interface CongregationDao {
      * @param congregationId congregation id
      * @return Congregation, or null if no matching instance
      */
+    @Transactional(readOnly = true)
     Congregation findCongregation(Integer congregationId);
 
     /**
@@ -26,6 +27,7 @@ public interface CongregationDao {
      * @param name name
      * @return congregations
      */
+    @Transactional(readOnly = true)
     List<Congregation> findCongregations(String name);
 
 }

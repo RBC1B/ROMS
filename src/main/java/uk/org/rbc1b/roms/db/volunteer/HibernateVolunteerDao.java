@@ -2,20 +2,20 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package uk.org.rbc1b.roms.controller.volunteer;
+package uk.org.rbc1b.roms.db.volunteer;
 
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import uk.org.rbc1b.roms.db.volunteer.Volunteer;
+import org.springframework.stereotype.Repository;
+
 
 /**
  *
  * @author rahulsingh
  */
-@Component
+@Repository
 public class HibernateVolunteerDao implements VolunteerDao {
 
     @Autowired

@@ -10,14 +10,13 @@ import java.util.List;
 import javax.validation.Valid;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.controller.AjaxDataTableResult;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
+import uk.org.rbc1b.roms.db.kingdomhall.KingdomHallDao;
 
 /**
  * Controller for the kingdom hall related pages.
@@ -28,7 +27,6 @@ import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 @RequestMapping("/kingdom-halls")
 public class KingdomHallsController {
 
-    @Autowired
     private KingdomHallDao kingdomHallDao;
 
     /**
@@ -38,8 +36,6 @@ public class KingdomHallsController {
      * @return view
      */
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=text/html")
-    @PreAuthorize("hasPermission('KINGDOMHALL', 'READ')")
-    @Transactional(readOnly = true)
     public String handleList(ModelMap model) {
 
         model.addAttribute("kingdomHalls", createKingdomHallListModels(kingdomHallDao.findKingdomHalls()));
@@ -54,8 +50,6 @@ public class KingdomHallsController {
      * @return view
      */
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json")
-    @PreAuthorize("hasPermission('KINGDOMHALL', 'READ')")
-    @Transactional(readOnly = true)
     @ResponseBody
     public AjaxDataTableResult<KingdomHallListModel> handlePageList(@RequestParam(value = "sEcho") String echoId) {
         AjaxDataTableResult<KingdomHallListModel> result = new AjaxDataTableResult<KingdomHallListModel>();
@@ -72,12 +66,9 @@ public class KingdomHallsController {
      * @param kingdomHallId kingdom hall id (primary key)
      * @param model mvc model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException on failure to look up the
-     * kingdom hall
+     * @throws NoSuchRequestHandlingMethodException on failure to look up the kingdom hall
      */
     @RequestMapping(value = "{kingdomHallId}", method = RequestMethod.GET)
-    @PreAuthorize("hasPermission('KINGDOMHALL', 'READ')")
-    @Transactional(readOnly = true)
     public String handleKingdomHall(@PathVariable Integer kingdomHallId, ModelMap model) throws NoSuchRequestHandlingMethodException {
 
         KingdomHall kingdomHall = kingdomHallDao.findKingdomHall(kingdomHallId);
@@ -91,7 +82,6 @@ public class KingdomHallsController {
         return "kingdom-halls/show";
     }
 
-
     /**
      * Display the form to create a new circuit.
      *
@@ -99,7 +89,6 @@ public class KingdomHallsController {
      * @return view name
      */
     @RequestMapping(value = "new", method = RequestMethod.GET)
-    @PreAuthorize("hasPermission('KINGDOMHALL', 'ADD')")
     public String handleNewForm(ModelMap model) {
 
         // initialise the form bean
@@ -115,8 +104,6 @@ public class KingdomHallsController {
      * @return view name
      */
     @RequestMapping(method = RequestMethod.POST)
-    @PreAuthorize("hasPermission('KINGDOMHALL', 'ADD')")
-    @Transactional
     public String handleNewSubmit(@Valid KingdomHallForm kingdomHallForm) {
 
         KingdomHall kingdomHall = new KingdomHall();
@@ -126,7 +113,6 @@ public class KingdomHallsController {
 
         return "redirect:kingdom-halls/" + kingdomHall.getKingdomHallId();
     }
-
 
     private List<KingdomHallListModel> createKingdomHallListModels(List<KingdomHall> halls) {
         if (CollectionUtils.isEmpty(halls)) {
@@ -142,5 +128,10 @@ public class KingdomHallsController {
             modelList.add(model);
         }
         return modelList;
+    }
+
+    @Autowired
+    public void setKingdomHallDao(KingdomHallDao kingdomHallDao) {
+        this.kingdomHallDao = kingdomHallDao;
     }
 }

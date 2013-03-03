@@ -71,7 +71,7 @@
             </c:if>
 
             <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
-                <a href="edit" class="btn btn-primary">Edit Person</a>
+                <a href="<c:url value='${editUri}' />" class="btn btn-primary">Edit Person</a>
             </sec:authorize>
 
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
