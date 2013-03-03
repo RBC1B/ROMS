@@ -45,11 +45,15 @@ div.control-group.pull-left {
 .form-horizontal .controls {
     margin-left: 0!important;
 }
-input, textarea, .uneditable-input {
-    width: 128px!important;
-    margin-bottom: 5px;
+.control-group, .controls {
+    display: inline!important;
 }
-
+label {
+    display: inline!important;
+}
+.radio, .checkbox {
+    display: inline-block!important;
+}
 /*****************************************************************************/
 /* Data tables bootstrap styles                                              */
 /* See: http://www.datatables.net/media/blog/bootstrap_2/DT_bootstrap.css    */
