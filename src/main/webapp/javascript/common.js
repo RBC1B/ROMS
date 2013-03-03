@@ -20,11 +20,11 @@ roms.common.validatorErrorPlacement = function(error, element) {
 };
 
 roms.common.validatorHighlight  = function(element) {
-    $(element).closest('.control-group').removeClass('success').addClass('error');
+    $(element).closest('.control-group').addClass('error');
 }
 
 roms.common.validatorSuccess = function(element) {
-    element.addClass('valid').closest('.control-group').removeClass('error').addClass('success');
+    element.addClass('valid').closest('.control-group').removeClass('error');
 }
 
 roms.common.congregationTypeAheadSource = function(query, process) {
