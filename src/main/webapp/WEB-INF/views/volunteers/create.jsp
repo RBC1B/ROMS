@@ -22,16 +22,16 @@
                             <label class="control-label">1.(a) Legal name:</label>
                         </div>
                         <div class="span10">    
-                            <div class="control-group pull-left">
+                            <div class="control-group">
                                 <div class="controls">
                                     <form:input path="forename" placeholder="First"/>
                                 </div>
                                 <form:hidden path="personId" />
                             </div>
-                            <div class="control-group pull-left">
+                            <div class="control-group">
                                 <form:input path="middleName" placeholder="Middle" />
                             </div>
-                            <div class="control-group pull-left">
+                            <div class="control-group">
                                 <form:input path="surname" placeholder="Last"/>
                             </div>
                         </div>
@@ -55,7 +55,7 @@
                     </div>
                     <div class="row">
                         <div class="span2">
-                            <div class="control-group pull-left">
+                            <div class="control-group">
                                 <label class="control-label">2.(a) Date of birth:</label>
                             </div>
                         </div>
@@ -79,7 +79,7 @@
                     </div>
                     <div class="row">
                         <div class="span2">
-                            <div class="control-group pull-left">
+                            <div class="control-group">
                                 <label class="control-label">3. Addresses: </label>
                             </div>
                         </div>
@@ -87,10 +87,10 @@
                             <div class="controls">
                                 <form:input path="street" placeholder="Street" />
                             </div>
-                            <div class="control-group pull-left">
+                            <div class="control-group">
                                 <form:input path="town" placeholder="Town" />
                             </div>
-                            <div class="control-group pull-left">
+                            <div class="control-group">
                                 <form:input path="county" placeholder="County" />
                             </div>
                             <div class="control-group">
@@ -105,7 +105,7 @@
                     </div>
                     <div class="row">
                         <div class="span2">
-                            <div class="control-group pull-left">
+                            <div class="control-group">
                                 <label class="control-label">4. Phones: </label>
                             </div>
                         </div>
@@ -113,7 +113,7 @@
                             <div class="controls">
                                 <form:input path="telephone" placeholder="Home"/>
                             </div>
-                            <div class="control-group pull-left">
+                            <div class="control-group">
                                 <form:input path="workPhone" placeholder="Work"/>
                             </div>
                             <div class="control-group">
@@ -156,28 +156,30 @@
                             </div>
                         </div>
                     </div>
+                    <br />
                     <div class="row">
                         <div class="span2">                    
-                            <p>7. Work background is handled in the next step</p>
+                            <p>7. Work background</p>
                         </div>
-                        <div class="span10">
+                        <div class="span10"><span class="alert">This area is handled in the next step.</span>
                         </div>
                     </div>                       
                     <div class="row">
                         <div class="span2">
-                            <div class="control-group pull-left">
-                                <label class="control-label">8. In case of accident or illness notify:</label>
+                            <div class="control-group">
+                                <label class="control-label">8.(a) In case of accident or illness notify:</label>
                             </div> 
                         </div>
                         <div class="span10"> 
                             <div class="controls">
                                 <form:input path="emergencyContactForename" placeholder="First"/>
-                            </div>
+                            
                             <form:hidden path="emergencyContactPersonId" />
                         </div>
-                        <div class="control-group pull-left">
+                        <div class="control-group">
                             <form:input path="emergencyContactSurname" placeholder="Last"/>
                         </div>
+                        
                         <div class="control-group">
                             <div class="controls">
                                 <form:select path="emergencyRelationshipId">
@@ -186,35 +188,38 @@
                                 </form:select>
                             </div>
                         </div>
+                        </div>
                         <p id="emergency-contact-linked" style="display:none;">Contact is linked to a person.</p>
-                        <div id="emergency-contact-additional-fields">
-                            <div class="control-group pull-left">
-                                <label class="control-label">8.(b) Phones:</label>
+                    </div><!--- / row --->
+                        <div id="emergency-contact-additional-fields row">
+                                <label class="control-label span2">8.(b) Phones:</label>
+                                <div class="span10">
                                 <div class="controls">
                                     <form:input path="emergencyContactTelephone" placeholder="Home"/>
                                 </div>
-                            </div>
                             <div class="control-group">
                                 <form:input path="emergencyContactMobile" placeholder="Mobile"/>
                             </div>
-                            <div class="control-group pull-left">
-                                <label class="control-label">8.(c) Address</label>
+                                </div><!-- /span10 --->
+                                <div class="clearfix"></div>
+                                <label class="control-label span2">8.(c) Address</label>
+                                <div class="span10">
                                 <div class="controls">
                                     <form:input path="emergencyContactStreet" placeholder="Street" />
                                 </div>
-                            </div>
-                            <div class="control-group pull-left">
+                            <div class="control-group">
                                 <form:input path="emergencyContactTown" placeholder="Town" />
                             </div>
-                            <div class="control-group pull-left">
+                            <div class="control-group">
                                 <form:input path="emergencyContactCounty" placeholder="County" />
                             </div>
                             <div class="control-group">
                                 <form:input path="emergencyContactPostcode" maxlength="10" placeholder="Postcode" />
                             </div>
-                        </div>
-                    </div>
-            </div>
+                            </div>
+            </div><!--- / row --->
+            <div class="clearfix"></div>
+            <p>&nbsp;</p>
             <div class="row">
                 <div class="span2">
                     <div class="control-group">
@@ -241,7 +246,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="span2 offset8">
+                <div class="span2 offset2">
                     <div class="control-group">
                         <div class="controls">
                             <input type="submit" class="btn btn-large btn-success"/>
