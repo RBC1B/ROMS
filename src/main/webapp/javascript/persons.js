@@ -30,7 +30,7 @@ $(document).ready(function() {
             congregationName: {
                 remote: {
                     // check for an exact match. Populate the congregation id
-                    url: "../congregations/search",
+                    url: roms.common.relativePath + "congregations/search",
                     contentType: "application/json",
                     dataType: "json",
                     data: {

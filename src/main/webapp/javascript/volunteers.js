@@ -36,7 +36,7 @@ roms.volunteer.findVolunteerPerson = function(forename, surname, $personId, exis
     var _parent = this;
     var existingPersonId = $personId.val();
     $.ajax({
-        url: '../persons/search',
+        url: roms.common.relativePath + 'persons/search',
         contentType: "application/json",
         dataType: 'json',
         data:  {
@@ -114,7 +114,7 @@ roms.volunteer.populateVolunteerFromPerson = function(selectedPersonId, $personI
 
     // new person - pull the person data and populate the form.
     $.ajax({
-        url: '../persons/' + selectedPersonId  + "/reference",
+        url: roms.common.relativePath + 'persons/' + selectedPersonId  + "/reference",
         contentType: "application/json",
         dataType: 'json',
         success: function(data) {
@@ -152,7 +152,7 @@ roms.volunteer.matchEmergencyContactPerson = function(forename, surname, $person
     var existingPersonId = $personId.val();
 
     $.ajax({
-        url: '../persons/search',
+        url: roms.common.relativePath + 'persons/search',
         contentType: "application/json",
         dataType: 'json',
         data:  {
@@ -193,9 +193,9 @@ roms.volunteer.matchEmergencyContactPerson = function(forename, surname, $person
 }
 
 roms.volunteer.populateEmergencyContactFromPerson = function(selectedPersonId, $personId) {
-    
+
     if (selectedPersonId) {
-        // disable all the additional fields. include the text that indicates we are 
+        // disable all the additional fields. include the text that indicates we are
         $("#emergency-contact-additional-fields input").prop("disabled", true);
         $("#emergency-contact-additional-fields").hide("fast");
         $("#emergency-contact-linked").show("fast");
@@ -291,7 +291,7 @@ $(document).ready(function() {
                 required: true,
                 remote: {
                     // check for an exact match. Populate the congregation id
-                    url: "../congregations/search",
+                    url: roms.common.relativePath + "congregations/search",
                     contentType: "application/json",
                     dataType: "json",
                     data: {
