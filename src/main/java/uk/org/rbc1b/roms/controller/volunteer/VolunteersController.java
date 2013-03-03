@@ -180,12 +180,22 @@ public class VolunteersController {
 
     }
 
+    @Autowired
+    public void setCongregationDao(CongregationDao congregationDao) {
+        this.congregationDao = congregationDao;
+    }
+
     /**
      * @param personDao person dao
      */
     @Autowired
     public void setPersonDao(PersonDao personDao) {
         this.personDao = personDao;
+    }
+
+    @Autowired
+    public void setReferenceDao(ReferenceDao referenceDao) {
+        this.referenceDao = referenceDao;
     }
 
     /**
