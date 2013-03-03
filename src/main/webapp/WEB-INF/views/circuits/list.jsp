@@ -34,13 +34,6 @@
                             </tr>
                         </c:forEach>
                     </tbody>
-                    <tfoot>
-                        <tr>
-                            <th></th>
-                            <th><input type="text" name="search_name" value="Search names" class="search_init" /></th>
-                            <th></th>
-                        </tr>
-                    </tfoot>
                 </table>
             </div>
             <div class="entity-list-add-new">
