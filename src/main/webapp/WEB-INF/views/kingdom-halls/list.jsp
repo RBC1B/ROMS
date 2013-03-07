@@ -17,7 +17,6 @@
                 <table class="table table-bordered table-striped table-hover" id="kingdom-hall-list">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Name</th>
                             <th>Town</th>
                             <th>Post Code</th>
@@ -27,25 +26,19 @@
                     <tbody>
                         <c:forEach items="${kingdomHalls}" var="kingdomHall">
                             <tr>
-                                <td>${kingdomHall.kingdomHallId}</td>
                                 <td>${kingdomHall.name}</td>
                                 <td>${kingdomHall.town}</td>
                                 <td>${kingdomHall.postCode}</td>
-                                <td><a class="btn btn-success" href="<c:url value="/kingdom-halls/${kingdomHall.kingdomHallId}" />">View</a>&nbsp;&nbsp;&nbsp;&nbsp;&#124;&nbsp;
-                                    <a href="<c:url value="/kingdom-halls/${kingdomHall.kingdomHallId}/edit" />">Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;&#124;&nbsp;
-                                    <a href="delete">Delete</a>
+                                <td>
+                                    <ul class="inline list-actions">
+                                        <li><a class="btn btn-success" href="<c:url value="/kingdom-halls/${kingdomHall.kingdomHallId}" />">View</a></li>
+                                        <li><a class="list-action" href="<c:url value="/kingdom-halls/${kingdomHall.kingdomHallId}/edit" />">Edit</a></li>
+                                        <li><a class="list-action" href="delete">Delete</a></li>
+                                    </ul>
                                 </td>
                             </tr>
                         </c:forEach>
                     </tbody>
-                    <tfoot>
-                        <tr>
-                            <th><input type="text" name="search_name" value="Search names" class="search_init" /></th>
-                            <th><input type="text" name="search_town" value="Search towns" class="search_init" /></th>
-                            <th><input type="text" name="search_postcode" value="Search post code" class="search_init" /></th>
-                            <th></th>
-                        </tr>
-                    </tfoot>
                 </table>
             </div>
             <div class="entity-list-add-new">

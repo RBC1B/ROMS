@@ -1,44 +1,14 @@
-var kingdomHallColumnValues = new Array();
 $(document).ready(function() {
-    var kingdomHallTable = $('#kingdom-hall-list').dataTable({
-        "sPaginationType": "full_numbers",
-        "iDisplayLength": 50,
-        "aoColumnDefs": [
-            { 'bSortable': false, 'aTargets': [ 3 ] }
-        ],
-        "aoColumns": [
-            { "mData": "kingdomHallId" },
-            { "mData": "name" },
-            { "mData": "town" },
-            { "mData": "postCode" }
-        ],
-        "bProcessing": true,
-        "bServerSide": true,
-        "sAjaxSource": ""
-    });
-
-    $("tfoot input").keyup(function () {
-        kingdomHallTable.fnFilter( this.value, $("tfoot input").index(this) );
-    });
-
-    $("tfoot input").each( function (i) {
-        kingdomHallColumnValues[i] = this.value;
-    });
-
-    $("tfoot input").focus( function () {
-        if (this.className == "search_init" ) {
-            this.className = "";
-            this.value = "";
+    roms.common.datatables(
+        $('#kingdom-hall-list'),
+        {
+            "iDisplayLength": 10,
+            "aoColumnDefs": [
+            {
+                'bSortable': false,
+                'aTargets': [ 3 ]
+            }
+            ]
         }
-    });
-
-    $("tfoot input").blur( function (i) {
-        if ( this.value == "" ) {
-            this.className = "search_init";
-            this.value = kingdomHallColumnValues[$("tfoot input").index(this)];
-        }
-    });
-
-} );
-
-
+    );
+});

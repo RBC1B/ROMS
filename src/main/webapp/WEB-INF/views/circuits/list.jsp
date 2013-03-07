@@ -17,7 +17,6 @@
                 <table class="table table-bordered table-striped table-hover" id="circuit-list">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Name</th>
                             <th>Action</th>
                         </tr>
@@ -25,11 +24,13 @@
                     <tbody>
                         <c:forEach items="${circuits}" var="circuit">
                             <tr>
-                                <td>${circuit.circuitId}</td>
                                 <td>${circuit.name}</td>
-                                <td><a class="btn btn-success" href="<c:url value="/circuits/${circuit.circuitId}" />">View</a>&nbsp;&nbsp;&nbsp;&nbsp;&#124;&nbsp;
-                                    <a href="<c:url value="/circuits/${circuit.circuitId}/edit" />">Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;&#124;&nbsp;
-                                    <a href="delete">Delete</a>
+                                <td>
+                                    <ul class="inline list-actions">
+                                        <li><a class="btn btn-success" href="<c:url value="/circuits/${circuit.circuitId}" />">View</a></li>
+                                        <li><a class="list-action" href="<c:url value="/circuits/${circuit.circuitId}/edit" />">Edit</a></li>
+                                        <li><a class="list-action" href="delete">Delete</a></li>
+                                    </ul>
                                 </td>
                             </tr>
                         </c:forEach>

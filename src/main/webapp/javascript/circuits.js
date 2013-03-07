@@ -1,4 +1,3 @@
-var circuitColumnValues = new Array();
 $(document).ready(function() {
     roms.common.datatables(
         $('#circuit-list'),
@@ -11,7 +10,7 @@ $(document).ready(function() {
             }
             ]
         }
-        );
-} );
+    );
+});
 
 
