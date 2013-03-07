@@ -17,35 +17,30 @@
                 <table class="table table-bordered table-striped table-hover" id="skill-list">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Name</th>
                             <th>Department</th>
                             <th>Description</th>
                             <th>Appear On Badge</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <c:forEach items="${skills}" var="skill">
                             <tr>
-                                <td>${skill.skillId}</td>
                                 <td>${skill.name}</td>
                                 <td>${skill.department.name}</td>
                                 <td>${skill.description}</td>
                                 <td>${skill.appearOnBadge}</td>
-                                <td><a class="btn btn-success" href="<c:url value="/skills/${skill.skillId}" />">View</a>&nbsp;&nbsp;&nbsp;&nbsp;&#124;&nbsp;
-                                    <a href="<c:url value="/skills/${skill.skillId}/edit" />">Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;&#124;&nbsp;
-                                    <a href="delete">Delete</a>
+                                <td>
+                                    <ul class="inline list-actions">
+                                        <li><a class="btn btn-success" href="<c:url value="/skills/${skill.skillId}" />">View</a></li>
+                                        <li><a class="list-action" href="<c:url value="/skills/${skill.skillId}/edit" />">Edit</a></li>
+                                        <li><a class="list-action" href="delete">Delete</a></li>
+                                    </ul>
                                 </td>
                             </tr>
                         </c:forEach>
                     </tbody>
-                    <tfoot>
-                        <tr>
-                            <th></th>
-                            <th><input type="text" name="search_name" value="Search names" class="search_init" /></th>
-                            <th></th>
-                        </tr>
-                    </tfoot>
                 </table>
             </div>
             <div class="entity-list-add-new">
