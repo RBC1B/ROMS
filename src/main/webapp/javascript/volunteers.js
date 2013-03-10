@@ -317,8 +317,6 @@ $(document).ready(function() {
                 required: true
             }
         },
-        highlight: roms.common.validatorHighlight,
-        success: roms.common.validatorSuccess,
         errorPlacement: roms.common.validatorErrorPlacement
     });
 

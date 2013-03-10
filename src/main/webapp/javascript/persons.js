@@ -50,8 +50,6 @@ $(document).ready(function() {
                 }
             }
         },
-        highlight: roms.common.validatorHighlight,
-        success: roms.common.validatorSuccess,
         errorPlacement: roms.common.validatorErrorPlacement
     });
 

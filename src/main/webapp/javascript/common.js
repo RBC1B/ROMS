@@ -11,21 +11,13 @@ if (!roms.common) {
 };
 
 roms.common.validatorErrorPlacement = function(error, element) {
-    var $controls = element.closest(".controls");
-    if ($controls.length > 0) {
-        error.appendTo($controls);
+    var $container = element.closest(".error-container");
+    if ($container.length > 0) {
+        error.appendTo($container);
     } else {
-        error.appendTo(element.closest(".control-group"));
+        element.after(error);
     }
 };
-
-roms.common.validatorHighlight  = function(element) {
-    $(element).closest('.control-group').addClass('error');
-}
-
-roms.common.validatorSuccess = function(element) {
-    element.addClass('valid').closest('.control-group').removeClass('error');
-}
 
 roms.common.congregationTypeAheadSource = function(query, process) {
     $.ajax({
