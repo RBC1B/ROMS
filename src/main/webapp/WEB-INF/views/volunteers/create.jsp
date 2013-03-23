@@ -153,9 +153,10 @@
                             </form:select>
                         </div>
                     </div>
-                    <p id="emergency-contact-linked" class="controls" style="display:none;">
-                        <span class="span3">This is linked to a person</span>
-                    </p>
+                    <div id="emergency-contact-linked" class="controls alert span10" style="display:none;">
+                        <button type="button" class="close">Unlink</button>
+                        Linked to an existing person in the database
+                    </div>
                 </fieldset>
                 <div id="emergency-contact-additional-fields">
                     <fieldset class="control-group">
