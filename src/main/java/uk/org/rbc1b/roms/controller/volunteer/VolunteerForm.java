@@ -56,8 +56,6 @@ public class VolunteerForm {
     @NotNull
     @Size(min = 1, max = 1)
     private String gender;    // M or F
-    @NotNull
-    private Integer maritalStatusId;
     private String middleName;
     private boolean ministerialServant;
     private String mobile;
@@ -66,6 +64,9 @@ public class VolunteerForm {
     @NotNull
     @Size(min = 2)
     private String postcode;
+    private String spouseForename;
+    private String spouseSurname;
+    private Integer spousePersonId;
     @NotNull
     @Size(min = 2)
     private String surname;
@@ -246,20 +247,36 @@ public class VolunteerForm {
         this.formDate = formDate;
     }
 
-    public Integer getMaritalStatusId() {
-        return maritalStatusId;
-    }
-
-    public void setMaritalStatusId(Integer maritalStatusId) {
-        this.maritalStatusId = maritalStatusId;
-    }
-
     public String getMiddleName() {
         return middleName;
     }
 
     public void setMiddleName(String middleName) {
         this.middleName = middleName;
+    }
+
+    public String getSpouseForename() {
+        return spouseForename;
+    }
+
+    public void setSpouseForename(String spouseForename) {
+        this.spouseForename = spouseForename;
+    }
+
+    public String getSpouseSurname() {
+        return spouseSurname;
+    }
+
+    public void setSpouseSurname(String spouseSurname) {
+        this.spouseSurname = spouseSurname;
+    }
+
+    public Integer getSpousePersonId() {
+        return spousePersonId;
+    }
+
+    public void setSpousePersonId(Integer spousePersonId) {
+        this.spousePersonId = spousePersonId;
     }
 
     public String getSurname() {

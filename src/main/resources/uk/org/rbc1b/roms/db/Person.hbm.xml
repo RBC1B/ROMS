@@ -31,7 +31,8 @@
         <many-to-one column="EmergencyContactId" name="emergencyContact" cascade="save-update" />
         <property name="emergencyContactRelationshipId" />
         <property length="1" name="gender" not-null="true" />
-        <property name="maritalStatusId" not-null="true" />
+        <property name="maritalStatusId" />
+        <many-to-one column="SpousePersonId" name="spouse" cascade="save-update" />
         <property name="baptismDate"/>
         <property name="interviewDate"/>
         <many-to-one column="InterviewerA" name="interviewerA"/>

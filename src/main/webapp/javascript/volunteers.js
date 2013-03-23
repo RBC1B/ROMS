@@ -3,11 +3,21 @@ $(document).ready(function() {
         matchVolunteerPerson($("#forename").val(), $("#surname").val(), $("#personId"));
     });
 
+    $("#spouseSurname").blur(function() {
+        matchLinkedPerson(
+            $("#spouseForename").val(),
+            $("#spouseSurname").val(),
+            $("#spousePersonId"),
+            populateSpouseFromPerson
+        );
+    });
+
     $("#emergencyContactSurname").blur(function() {
-        matchEmergencyContactPerson(
+        matchLinkedPerson(
             $("#emergencyContactForename").val(),
             $("#emergencyContactSurname").val(),
-            $("#emergencyContactPersonId")
+            $("#emergencyContactPersonId"),
+            populateEmergencyContactFromPerson
         );
     });
 
@@ -26,6 +36,14 @@ $(document).ready(function() {
         if($(this).is(':checked')) {
             $("input[name='elder']").prop("checked", false);
         }
+    });
+
+    $("#spouse-linked button.close").click(function() {
+        populateSpouseFromPerson(null, $("#spousePersonId"));
+    });
+
+    $("#emergency-contact-linked button.close").click(function() {
+        populateEmergencyContactFromPerson(null, $("#emergencyContactPersonId"));
     });
 
     $("#congregationName").typeahead({
@@ -123,10 +141,6 @@ $(document).ready(function() {
         errorPlacement: roms.common.validatorErrorPlacement
     });
 
-    $("#emergency-contact-linked button.close").click(function() {
-        populateEmergencyContactFromPerson(null, $("#emergencyContactPersonId"));
-    });
-
     /**
      * Match the entered name of the volunteer with an existing person/volunteer
      * @param forename entered forename
@@ -211,7 +225,7 @@ $(document).ready(function() {
 
                 // if they select the person id, set it to the hidden volunteer person id field
                 $("a.matched-person").on("click", function(event){
-                    _parent.populateVolunteerFromPerson($(this).data("person-id"), $personId);
+                    populateVolunteerFromPerson($(this).data("person-id"), $personId);
                     modalElement.modal('hide')
                 });
             }
@@ -259,7 +273,7 @@ $(document).ready(function() {
         $personId.val(selectedPersonId);
     }
 
-    function matchEmergencyContactPerson(forename, surname, $personId) {
+    function matchLinkedPerson(forename, surname, $personId, populateFunction) {
         if(!forename || !surname) {
             return;
         }
@@ -293,7 +307,7 @@ $(document).ready(function() {
                     data.matchedPersons = true;
                 }
 
-                var template = $("#volunteer-emergency-contact-search-form").html();
+                var template = $("#volunteer-person-link-search-form").html();
                 var html = Mustache.to_html(template, data);
 
                 $("#volunteer-person-modal .modal-body").html(html)
@@ -303,13 +317,22 @@ $(document).ready(function() {
 
                 // if they select the person id, set it to the hidden volunteer person id field
                 $("a.matched-person").on("click", function(event){
-                    populateEmergencyContactFromPerson($(this).data("person-id"), $personId);
+                    populateFunction($(this).data("person-id"), $personId);
                     modalElement.modal('hide')
                 });
             }
         });
 
         $personId.data("full-name", forename + " " + surname);
+    }
+
+    function populateSpouseFromPerson(selectedPersonId, $personId) {
+        if (selectedPersonId) {
+            $("#spouse-linked").show("fast");
+        } else {
+            $("#spouse-linked").hide("fast");
+        }
+        $personId.val(selectedPersonId);
     }
 
     function populateEmergencyContactFromPerson(selectedPersonId, $personId) {
@@ -324,6 +347,7 @@ $(document).ready(function() {
             $("#emergency-contact-additional-fields").show("fast");
             $("#emergency-contact-linked").hide("fast");
         }
+        $personId.val(selectedPersonId);
     }
 
 });

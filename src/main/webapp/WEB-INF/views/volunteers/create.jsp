@@ -21,13 +21,13 @@
                     <label class="control-label">1.(a) Legal name:</label>
                     <div class="controls controls-row">
                         <div class="span2">
+                            <form:input path="surname" placeholder="Last"/>
+                        </div>,
+                        <div class="span2">
                             <form:input path="forename" placeholder="First"/>
                         </div>
                         <div class="span2">
                             <form:input path="middleName" placeholder="Middle" />
-                        </div>
-                        <div class="span2">
-                            <form:input path="surname" placeholder="Last"/>
                         </div>
                     </div>
                 </fieldset>
@@ -63,13 +63,13 @@
                 <fieldset class="control-group">
                     <label class="control-label">3. Addresses: </label>
                     <div class="controls controls-row">
-                        <div class="span2">
+                        <div class="span3">
                             <form:input path="street" placeholder="Street" />
                         </div>
                         <div class="span2">
                             <form:input path="town" placeholder="Town" />
                         </div>
-                        <div class="span2">
+                        <div class="span1">
                             <form:input path="county" placeholder="County" />
                         </div>
                         <div class="span1">
@@ -80,7 +80,7 @@
                 <fieldset class="control-group">
                     <label class="control-label"></label>
                     <div class="controls controls-row">
-                        <div class="span2">
+                        <div class="span3">
                             <form:input path="email" placeholder="Email" />
                         </div>
                     </div>
@@ -118,14 +118,19 @@
                     </div>
                 </fieldset>
                 <fieldset class="control-group">
-                    <label class="control-label">6. Marital status:</label>
+                    <form:hidden path="spousePersonId" />
+                    <label class="control-label">6. Name of mate, if married:</label>
                     <div class="controls controls-row">
-                        <div class="span3 error-container">
-                            <form:select path="maritalStatusId">
-                                <form:option value="" label="Select One" />
-                                <form:options items="${maritalStatusValues}" itemValue="key" itemLabel="value" />
-                            </form:select>
+                        <div class="span2">
+                            <form:input path="spouseForename" placeholder="First Name"/>
                         </div>
+                        <div class="span2">
+                            <form:input path="spouseSurname" placeholder="Surname"/>
+                        </div>
+                    </div>
+                    <div id="spouse-linked" class="controls alert span10" style="display:none;">
+                        <button type="button" class="close">Unlink</button>
+                        Linked to an existing person in the database
                     </div>
                 </fieldset>
                 <fieldset class="control-group">
@@ -173,13 +178,13 @@
                     <fieldset class="control-group">
                         <label class="control-label">8.(c) Address</label>
                         <div class="controls controls-row">
-                            <div class="span2">
+                            <div class="span3">
                                 <form:input path="emergencyContactStreet" placeholder="Street" />
                             </div>
                             <div class="span2">
                                 <form:input path="emergencyContactTown" placeholder="Town" />
                             </div>
-                            <div class="span2">
+                            <div class="span1">
                                 <form:input path="emergencyContactCounty" placeholder="County" />
                             </div>
                             <div class="span1">
@@ -247,10 +252,10 @@
                 <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Ignore</a>
             </div>
         </div>
-        <!-- mustache template used to display the emergency contact person selection form -->
-        <script id="volunteer-emergency-contact-search-form" type="text/html" charset="utf-8">
+        <!-- mustache template used to display the emergency contact or spouse person selection form -->
+        <script id="volunteer-person-link-search-form" type="text/html" charset="utf-8">
             {{#existingPersonId}}
-            <p>The contact is already linked to {{existingPersonName}}</p>
+            <p>The name is already linked to {{existingPersonName}}</p>
             <p><a href="#" class="matched-person" data-person-id="{{existingPersonId}}">Leave linked to {{existingPersonName}} (same as ignore)</a></p>
             <p><a href="#" class="matched-person" data-person-id="">Unlink {{existingPersonName}} (create a new person)</a></p>
             {{/existingPersonId}}

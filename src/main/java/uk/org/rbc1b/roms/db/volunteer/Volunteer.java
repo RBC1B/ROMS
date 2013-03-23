@@ -34,6 +34,7 @@ public class Volunteer extends Person {
     private String reliefUKComments;
     private boolean reliefAbroad;
     private String reliefAbroadComments;
+    private Person spouse;
     private String hhcFormCode;
     private java.sql.Date badgeIssueDate;
 
@@ -254,6 +255,14 @@ public class Volunteer extends Person {
 
     public void setReliefUKComments(String reliefUKComments) {
         this.reliefUKComments = reliefUKComments;
+    }
+
+    public Person getSpouse() {
+        return spouse;
+    }
+
+    public void setSpouse(Person spouse) {
+        this.spouse = spouse;
     }
 
     @Override

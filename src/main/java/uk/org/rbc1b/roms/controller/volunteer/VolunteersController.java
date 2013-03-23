@@ -5,6 +5,7 @@
 package uk.org.rbc1b.roms.controller.volunteer;
 
 import javax.validation.Valid;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -29,15 +30,12 @@ import uk.org.rbc1b.roms.reference.ReferenceDao;
 public class VolunteersController {
 
     private static final String BASE_URI = "/volunteers/";
-    private static final int SINGLE_MARITAL_STATUS = 5;
+    private static final int MARRIED_MARITAL_STATUS = 2;
     private static final int RBC_STATUS_ACTIVE = 1;
     private static final int INTERVIEW_STATUS_INVITE_DUE = 1;
-    private static final int FULLTIME_BETHEL = 1;
-    private static final int FULLTIME_PUBLISHER = 2;
     private static final int FULLTIME_REGULAR_PIONEER = 3;
     private static final int APPOINTMENT_ELDER = 1;
     private static final int APPOINTMENT_MINISTERIAL_SERVANT = 2;
-    private static final int APPOINTMENT_PUBLISHER = 3;
     private VolunteerDao volunteerDao;
     private PersonDao personDao;
     private CongregationDao congregationDao;
@@ -78,7 +76,6 @@ public class VolunteersController {
 
         // initialise the form bean
         model.addAttribute("volunteer", new VolunteerForm());
-        model.addAttribute("maritalStatusValues", referenceDao.findMaritalStatusValues());
         model.addAttribute("relationshipValues", referenceDao.findRelationshipValues());
         return "volunteers/create";
     }
@@ -136,21 +133,25 @@ public class VolunteersController {
             volunteer.setAppointmentId(APPOINTMENT_ELDER);
         } else if (form.isMinisterialServant()) {
             volunteer.setAppointmentId(APPOINTMENT_MINISTERIAL_SERVANT);
-        } else {
-            volunteer.setAppointmentId(APPOINTMENT_PUBLISHER);
         }
         volunteer.setGender(form.getGender());
 
         if (form.isRegularPioneer()) {
             volunteer.setFulltimeId(FULLTIME_REGULAR_PIONEER);
-        } else {
-            volunteer.setFulltimeId(FULLTIME_PUBLISHER);
         }
 
-        volunteer.setEmergencyContact(createEmergencyContact(form));
+        Person emergencyContact = createEmergencyContact(form);
+
+        volunteer.setEmergencyContact(emergencyContact);
         volunteer.setEmergencyContactRelationshipId(form.getEmergencyRelationshipId());
+
+        Person spouse = createSpouse(form, emergencyContact);
+        if (spouse != null) {
+            volunteer.setMaritalStatusId(MARRIED_MARITAL_STATUS);
+            volunteer.setSpouse(spouse);
+        }
+
         volunteer.setRbcStatusId(RBC_STATUS_ACTIVE);
-        volunteer.setMaritalStatusId(SINGLE_MARITAL_STATUS);
         volunteer.setInterviewStatusId(INTERVIEW_STATUS_INVITE_DUE);
         volunteerDao.saveVolunteer(volunteer);
 
@@ -178,6 +179,27 @@ public class VolunteersController {
 
         return emergencyContact;
 
+    }
+
+    private Person createSpouse(VolunteerForm form, Person emergencyContact) {
+        if (form.getSpousePersonId() != null) {
+            return personDao.findPerson(form.getSpousePersonId());
+        }
+
+        // if the emergency contact is new too, see if it is the same person
+        if (emergencyContact.getPersonId() == null) {
+            if (ObjectUtils.equals(emergencyContact.getForename(), form.getSpouseForename())
+                    && ObjectUtils.equals(emergencyContact.getSurname(), form.getSurname())) {
+
+                return emergencyContact;
+            }
+        }
+
+        // create a new person
+        Person spouse = new Person();
+        spouse.setForename(form.getSpouseForename());
+        spouse.setSurname(form.getSpouseSurname());
+        return spouse;
     }
 
     @Autowired

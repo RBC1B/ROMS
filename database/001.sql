@@ -113,7 +113,7 @@ create table Congregation(
 )engine=InnoDB;
 
 -- we can now add the foeign key to the person congregation id
-alter table Person add 
+alter table Person add
     constraint foreign key (CongregationId) references Congregation(CongregationId) on delete set null;
 
 create table CongregationRole(
@@ -197,7 +197,8 @@ create table Volunteer(
     EmergencyContactId  bigint(20),
     EmergencyContactRelationshipId bigint(20),
     Gender              varchar(1)  not null,
-    MaritalStatusId     bigint(20)  not null,
+    MaritalStatusId     bigint(20),
+    SpousePersonId      bigint(20),
     BaptismDate         date,
     InterviewDate       date,
     InterviewerA        bigint(20),
@@ -554,12 +555,10 @@ insert into RbcStatus (Description) values
 
 insert into Appointment (Description) values
     ('Elder'),
-    ('Ministerial Servant'),
-    ('Publisher');
+    ('Ministerial Servant');
 
 insert into Fulltime (Description) values
     ('Bethel'),
-    ('Publisher'),
     ('Regular Pioneer');
 
 insert into Relationship(Description) values
