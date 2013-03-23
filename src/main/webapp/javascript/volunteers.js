@@ -16,6 +16,18 @@ $(document).ready(function() {
         changeYear: true
     });
 
+    // elder and ministerial values are exclusive
+    $("input[name='elder']").change(function() {
+        if($(this).is(':checked')) {
+            $("input[name='ministerialServant']").prop("checked", false);
+        }
+    });
+    $("input[name='ministerialServant']").change(function() {
+        if($(this).is(':checked')) {
+            $("input[name='elder']").prop("checked", false);
+        }
+    });
+
     $("#congregationName").typeahead({
         source: roms.common.congregationTypeAheadSource,
         minLength: 2
