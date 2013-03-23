@@ -24,6 +24,7 @@ import uk.org.rbc1b.roms.db.Address;
 import uk.org.rbc1b.roms.db.CongregationDao;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.PersonDao;
+import uk.org.rbc1b.roms.db.PersonSearchCriteria;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
 
 /**
@@ -48,6 +49,27 @@ public class PersonsController {
      */
     public static String generateUri(Integer personId) {
         return personId != null ? BASE_URI + personId : BASE_URI;
+    }
+
+    /**
+     * Display the list of persons.
+     *
+     * @param model mvc model
+     * @param searchCriteria search criteria passed in the form
+     * @return view
+     */
+    @RequestMapping(method = RequestMethod.GET, headers = "Accept=text/html")
+    public String handleList(ModelMap model, PersonSearchCriteria searchCriteria) {
+
+        List<Person> persons = personDao.findPersons(searchCriteria);
+        List<PersonModel> modelList = new ArrayList<PersonModel>(persons.size());
+        for (Person person : persons) {
+            modelList.add(generatePersonModel(person));
+        }
+
+        model.addAttribute("persons", modelList);
+
+        return "persons/list";
     }
 
     /**
@@ -171,6 +193,8 @@ public class PersonsController {
     private PersonModel generatePersonModel(Person person) {
 
         PersonModel model = new PersonModel();
+        model.setUri(generateUri(person.getPersonId()));
+        model.setEditUri(generateUri(person.getPersonId()) + "/edit");
         model.setAddress(person.getAddress());
         model.setBirthDate(person.getBirthDate());
         model.setComments(person.getComments());

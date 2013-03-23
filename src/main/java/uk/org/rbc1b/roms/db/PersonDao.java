@@ -30,11 +30,21 @@ public interface PersonDao {
      *
      * @param forename person's first name
      * @param surname person's last name
-     * @return list or people
+     * @return list of people
      */
     @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional(readOnly = true)
     List<Person> findPersons(String forename, String surname);
+
+    /**
+     * Look up the list of people matching the criteria. All criteria is optional. Names and email addresses are partial matches.
+     *
+     * @param searchCriteria search criteria
+     * @return list of people
+     */
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
+    @Transactional(readOnly = true)
+    List<Person> findPersons(PersonSearchCriteria searchCriteria);
 
     /**
      * Save/update the person.

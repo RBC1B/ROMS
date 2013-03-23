@@ -2,13 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package uk.org.rbc1b.roms.controller;
+package uk.org.rbc1b.roms.controller.common.model;
 
 import java.util.List;
 
 /**
- * Wrapper class for DataTable results. <p>The field names are specific to the
- * data table naming
+ * Wrapper class for DataTable results.
+ * <p>The field names are specific to the data table naming
  *
  * @author oliver.elder.esq
  * @param <T> list data type

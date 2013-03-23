@@ -39,6 +39,28 @@ public class HibernatePersonDao implements PersonDao {
     }
 
     @Override
+    public List<Person> findPersons(PersonSearchCriteria searchCriteria) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(Person.class);
+        criteria.setMaxResults(100);
+
+        if (searchCriteria.getForename() != null) {
+            criteria.add(Restrictions.like("forename", "%" + searchCriteria.getForename() + "%"));
+        }
+        if (searchCriteria.getSurname() != null) {
+            criteria.add(Restrictions.like("surname", "%" + searchCriteria.getSurname() + "%"));
+        }
+        if (searchCriteria.getEmail() != null) {
+            criteria.add(Restrictions.like("email", "%" + searchCriteria.getEmail() + "%"));
+        }
+        if (searchCriteria.getCongregationId() != null) {
+            criteria.add(Restrictions.eq("congregationId", searchCriteria.getCongregationId()));
+        }
+
+        return criteria.list();
+    }
+
+    @Override
     public void savePerson(Person person) {
         if (person.getPersonId() != null) {
             this.sessionFactory.getCurrentSession().merge(person);
