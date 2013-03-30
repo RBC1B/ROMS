@@ -4,6 +4,7 @@
  */
 $(document).ready(function() {
 
+    // edit page
     $(".datepicker").datepicker({
         dateFormat: "dd/mm/yy",
         changeYear: true
@@ -52,6 +53,31 @@ $(document).ready(function() {
         },
         errorPlacement: roms.common.validatorErrorPlacement
     });
+
+
+    var listActionTemplate = $("#list-action").html();
+
+    // list page
+    roms.common.datatables(
+        $('#person-list'),
+        {
+            "iDisplayLength": 20,
+            "bProcessing": true,
+            "bServerSide": true,
+            "sAjaxSource": roms.common.relativePath + 'persons',
+            "aoColumns": [
+                {   "sName": "forename", "mData": "forename" },
+                {   "sName": "surname", "mData": "surname" },
+                {   "sName": "congregation", "mData": "congregation.name", "sDefaultContent": "" },
+                {   "sName": "action", "bSortable": false,
+                    "mData":
+                        function ( data, type, val ) {
+                            return Mustache.to_html(listActionTemplate, data);
+                        }
+                }
+            ]
+        }
+        );
 
 });
 

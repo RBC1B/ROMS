@@ -17,33 +17,31 @@
             <div class="entity-list-results">
                 <table class="table table-bordered table-striped table-hover" id="person-list">
                     <thead>
-
-                        <tr>
-                            <th><input type="text" name="search_firstname" value="Search first name" class="search_init" /></th>
-                            <th><input type="text" name="search_lastname" value="Search last name" class="search_init" /></th>
-                            <th><input type="text" name="search_cong" value="Search congregation" class="search_init" /></th>
-                        </tr>
                         <tr>
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Congregation</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
+                        <!--
                         <c:forEach items="${persons}" var="person">
                             <tr>
                                 <td>${person.forename}</td>
                                 <td>${person.surname}</td>
                                 <td>${person.congregation.name}</td>
-                                <td><a class="btn btn-success" href="<c:url value="${person.uri}" />">View</a>&nbsp;&nbsp;&nbsp;&nbsp;&#124;&nbsp;
-                                    <a href="<c:url value="${person.editUri}" />">Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;&#124;&nbsp;
-                                    <a href="delete">Delete</a>
+                                <td>
+                                    <ul class="inline list-actions">
+                                        <li><a class="btn btn-success" href="<c:url value="${person.uri}" />">View</a></li>
+                                        <li><a class="list-action" href="<c:url value="${person.editUri}" />">Edit</a></li>
+                                        <li><a class="list-action" href="delete">Delete</a></li>
+                                    </ul>
                                 </td>
                             </tr>
                         </c:forEach>
+                        -->
                     </tbody>
-                    <tfoot>
-                  </tfoot>
                 </table>
             </div>
 
@@ -54,6 +52,13 @@
             </ul>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
+        <script id="list-action" type="text/html" charset="utf-8">
+            <ul class="inline list-actions">
+                {{#uri}}<li><a class="btn btn-success" href="<c:url value="{{uri}}" />">View</a></li>{{/uri}}
+                {{#editUri}}<li><a class="list-action" href="<c:url value="{{editUri}}" />">Edit</a></li>{{/editUri}}
+                {{#deleteUri}}<li><a class="list-action" href="<c:url value="{{deleteUri}}" />">Delete</a></li>{{/deleteUri}}
+            </ul>
+        </script>
         <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/persons.js' />" ></script>
     </body>
 </html>

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
+import uk.org.rbc1b.roms.controller.common.model.AjaxDataTableResult;
 import uk.org.rbc1b.roms.controller.common.model.EntityModel;
 import uk.org.rbc1b.roms.controller.congregation.CongregationsController;
 import uk.org.rbc1b.roms.controller.volunteer.VolunteersController;
@@ -73,6 +74,31 @@ public class PersonsController {
     }
 
     /**
+     * Display the list of persons.
+     *
+     * @param echo datatables echo param, used to match requests with responses
+     * @param searchCriteria search criteria passed in the form
+     * @return view
+     */
+    @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json")
+    @ResponseBody
+    public AjaxDataTableResult handleDatatableAjaxList(@RequestParam("sEcho") String echo, PersonSearchCriteria searchCriteria) {
+
+        List<Person> persons = personDao.findPersons(searchCriteria);
+        List<PersonModel> modelList = new ArrayList<PersonModel>(persons.size());
+        for (Person person : persons) {
+            modelList.add(generatePersonModel(person));
+        }
+
+        AjaxDataTableResult<PersonModel> result = new AjaxDataTableResult<PersonModel>();
+        result.setAaData(modelList);
+        result.setiTotalDisplayRecords(modelList.size());
+        result.setiTotalRecords(1000);
+        result.setsEcho(echo);
+        return result;
+    }
+
+    /**
      * @param personId person primary key
      * @param model model
      * @return view name
@@ -85,9 +111,7 @@ public class PersonsController {
         if (volunteerDao.findVolunteer(person.getPersonId()) != null) {
             return "redirect:" + VolunteersController.generateUri(personId);
         }
-
         model.addAttribute("person", generatePersonModel(person));
-        model.addAttribute("editUri", generateUri(personId) + "/edit");
 
         return "persons/show";
     }
@@ -194,7 +218,7 @@ public class PersonsController {
 
         PersonModel model = new PersonModel();
         model.setUri(generateUri(person.getPersonId()));
-        model.setEditUri(generateUri(person.getPersonId()) + "/edit");
+
         model.setAddress(person.getAddress());
         model.setBirthDate(person.getBirthDate());
         model.setComments(person.getComments());
@@ -215,6 +239,9 @@ public class PersonsController {
         model.setMobile(person.getMobile());
         model.setTelephone(person.getTelephone());
         model.setWorkPhone(person.getWorkPhone());
+
+        model.setUri(generateUri(person.getPersonId()));
+        model.setEditUri(generateUri(person.getPersonId()) + "/edit");
 
         return model;
     }

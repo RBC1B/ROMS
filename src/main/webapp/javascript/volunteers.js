@@ -168,7 +168,6 @@ $(document).ready(function() {
      * to allow the user the select the match, if any
      */
     function findVolunteerPerson(forename, surname, $personId, existingPersonName)  {
-        var _parent = this;
         var existingPersonId = $personId.val();
         $.ajax({
             url: roms.common.relativePath + 'persons/search',
