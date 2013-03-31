@@ -25,22 +25,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!--
-                        <c:forEach items="${persons}" var="person">
-                            <tr>
-                                <td>${person.forename}</td>
-                                <td>${person.surname}</td>
-                                <td>${person.congregation.name}</td>
-                                <td>
-                                    <ul class="inline list-actions">
-                                        <li><a class="btn btn-success" href="<c:url value="${person.uri}" />">View</a></li>
-                                        <li><a class="list-action" href="<c:url value="${person.editUri}" />">Edit</a></li>
-                                        <li><a class="list-action" href="delete">Delete</a></li>
-                                    </ul>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                        -->
                     </tbody>
                 </table>
             </div>

@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
-import uk.org.rbc1b.roms.controller.common.model.AjaxDataTableResult;
+import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableRequestData;
+import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableResult;
 import uk.org.rbc1b.roms.controller.common.model.EntityModel;
 import uk.org.rbc1b.roms.controller.congregation.CongregationsController;
 import uk.org.rbc1b.roms.controller.volunteer.VolunteersController;
@@ -76,13 +77,19 @@ public class PersonsController {
     /**
      * Display the list of persons.
      *
-     * @param echo datatables echo param, used to match requests with responses
-     * @param searchCriteria search criteria passed in the form
+     * @param requestData data tables request data
      * @return view
      */
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json")
     @ResponseBody
-    public AjaxDataTableResult handleDatatableAjaxList(@RequestParam("sEcho") String echo, PersonSearchCriteria searchCriteria) {
+    public AjaxDataTableResult handleDatatableAjaxList(AjaxDataTableRequestData requestData) {
+
+        PersonSearchCriteria searchCriteria = new PersonSearchCriteria();
+        searchCriteria.setSearch(requestData.getSearch());
+        searchCriteria.setSortValue(requestData.getSortValue());
+        searchCriteria.setSortDirection(requestData.getSortDirection());
+        searchCriteria.setStartIndex(requestData.getDisplayStart());
+        searchCriteria.setMaxResults(requestData.getDisplayLength());
 
         List<Person> persons = personDao.findPersons(searchCriteria);
         List<PersonModel> modelList = new ArrayList<PersonModel>(persons.size());
@@ -94,7 +101,7 @@ public class PersonsController {
         result.setAaData(modelList);
         result.setiTotalDisplayRecords(modelList.size());
         result.setiTotalRecords(1000);
-        result.setsEcho(echo);
+        result.setsEcho(requestData.getEcho());
         return result;
     }
 

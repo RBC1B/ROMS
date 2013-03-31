@@ -6,11 +6,14 @@ package uk.org.rbc1b.roms.db;
 
 import java.util.List;
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import uk.org.rbc1b.roms.controller.common.SortDirection;
 
 /**
  * Implements PersonDao.
@@ -42,19 +45,17 @@ public class HibernatePersonDao implements PersonDao {
     public List<Person> findPersons(PersonSearchCriteria searchCriteria) {
         Session session = this.sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(Person.class);
-        criteria.setMaxResults(100);
+        criteria.setFirstResult(searchCriteria.getStartIndex());
+        criteria.setMaxResults(searchCriteria.getMaxResults());
 
-        if (searchCriteria.getForename() != null) {
-            criteria.add(Restrictions.like("forename", "%" + searchCriteria.getForename() + "%"));
-        }
-        if (searchCriteria.getSurname() != null) {
-            criteria.add(Restrictions.like("surname", "%" + searchCriteria.getSurname() + "%"));
-        }
-        if (searchCriteria.getEmail() != null) {
-            criteria.add(Restrictions.like("email", "%" + searchCriteria.getEmail() + "%"));
-        }
-        if (searchCriteria.getCongregationId() != null) {
-            criteria.add(Restrictions.eq("congregationId", searchCriteria.getCongregationId()));
+        if (searchCriteria.getSortValue() != null) {
+            if (searchCriteria.getSortValue().equals("congregation.name")) {
+                criteria.setFetchMode("congregation", FetchMode.JOIN);
+                criteria.createAlias("congregation", "congregation");
+            }
+            criteria.addOrder(searchCriteria.getSortDirection() == SortDirection.ASCENDING
+                    ? Order.asc(searchCriteria.getSortValue())
+                    : Order.desc(searchCriteria.getSortValue()));
         }
 
         return criteria.list();
