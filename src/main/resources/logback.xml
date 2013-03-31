@@ -3,26 +3,19 @@
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd_HH:mm:ss.SSS} %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <category name="org.springframework" additivity="false">
-        <level value="error" />
-        <appender-ref ref="STDOUT" />
-    </category>
+    <category name="org.springframework" additivity="false" level="ERROR" />
 
-    <category name="org.hibernate" additivity="false">
-        <level value="error" />
-        <appender-ref ref="STDOUT" />
-    </category>
+    <category name="org.hibernate" additivity="false" level="INFO" />
 
-    <category name="org.hibernate.SQL" additivity="false">
-        <level value="error" />
-        <appender-ref ref="STDOUT" />
-    </category>
+    <category name="org.hibernate.type" additivity="false" level="INFO" />
 
-    <root level="error">
+    <category name="org.hibernate.SQL" additivity="false" level="INFO" />
+
+    <root level="ERROR">
         <appender-ref ref="STDOUT" />
     </root>
 
