@@ -17,33 +17,15 @@
             <div class="entity-list-results">
                 <table class="table table-bordered table-striped table-hover" id="volunteer-list">
                     <thead>
-
-                        <tr>
-                            <th></th>
-                            <th><input type="text" name="search_firstname" value="Search first name" class="search_init" /></th>
-                            <th><input type="text" name="search_lastname" value="Search last name" class="search_init" /></th>
-                            <th><input type="text" name="search_cong" value="Search congregation" class="search_init" /></th>
-                        </tr>
                         <tr>
                             <th>ID</th>
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Congregation</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach items="${volunteers}" var="volunteer">
-                            <tr>
-                                <td>${volunteer.personId}</td>
-                                <td>${volunteer.forename}</td>
-                                <td>${volunteer.surname}</td>
-                                <td>${volunteer.congregation.name}</td>
-                                <td><a class="btn btn-success" href="<c:url value="/volunteers/${volunteer.personId}" />">View</a>&nbsp;&nbsp;&nbsp;&nbsp;&#124;&nbsp;
-                                    <a href="<c:url value="/volunteers/${volunteer.personId}/edit" />">Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;&#124;&nbsp;
-                                    <a href="delete">Delete</a>
-                                </td>
-                            </tr>
-                        </c:forEach>
                     </tbody>
                     <tfoot>
                   </tfoot>
@@ -59,6 +41,13 @@
             </ul>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
+        <script id="list-action" type="text/html" charset="utf-8">
+            <ul class="inline list-actions">
+                {{#uri}}<li><a class="btn btn-success" href="<c:url value="{{uri}}" />">View</a></li>{{/uri}}
+                {{#editUri}}<li><a class="list-action" href="<c:url value="{{editUri}}" />">Edit</a></li>{{/editUri}}
+                {{#deleteUri}}<li><a class="list-action" href="<c:url value="{{deleteUri}}" />">Delete</a></li>{{/deleteUri}}
+            </ul>
+        </script>
         <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/volunteers.js' />" ></script>
     </body>
 </html>

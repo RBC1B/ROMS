@@ -1,4 +1,6 @@
 $(document).ready(function() {
+
+    // create/edit
     $("#surname").blur(function() {
         matchVolunteerPerson($("#forename").val(), $("#surname").val(), $("#personId"));
     });
@@ -348,5 +350,30 @@ $(document).ready(function() {
         }
         $personId.val(selectedPersonId);
     }
+
+        // list
+    var listActionTemplate = $("#list-action").html();
+
+    roms.common.datatables(
+        $('#volunteer-list'),
+        {
+            "iDisplayLength": 20,
+            "bProcessing": true,
+            "bServerSide": true,
+            "sAjaxSource": roms.common.relativePath + 'volunteers',
+            "aoColumns": [
+                {   "sName": "ID", "mData": "id" },
+                {   "sName": "forename", "mData": "forename" },
+                {   "sName": "surname", "mData": "surname" },
+                {   "sName": "congregation", "mData": "congregation.name", "sDefaultContent": "" },
+                {   "sName": "action", "bSortable": false,
+                    "mData":
+                        function ( data, type, val ) {
+                            return Mustache.to_html(listActionTemplate, data);
+                        }
+                }
+            ]
+        }
+        );
 
 });

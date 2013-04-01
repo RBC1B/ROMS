@@ -6,10 +6,15 @@ package uk.org.rbc1b.roms.db.volunteer;
 
 import java.util.List;
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
+import uk.org.rbc1b.roms.controller.common.SortDirection;
 
 /**
  *
@@ -27,12 +32,52 @@ public class HibernateVolunteerDao implements VolunteerDao {
     }
 
     @Override
-    public List<Volunteer> findVolunteers() {
-        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Volunteer.class);
+    public List<Volunteer> findVolunteers(VolunteerSearchCriteria searchCriteria) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Criteria criteria = createVolunteerSearchCriteria(searchCriteria, session);
 
-        //TODO: support for other search criteria.
+        criteria.setFirstResult(searchCriteria.getStartIndex());
+        criteria.setMaxResults(searchCriteria.getMaxResults());
+
+        if (searchCriteria.getSortValue() != null) {
+            criteria.addOrder(searchCriteria.getSortDirection() == SortDirection.ASCENDING
+                    ? Order.asc(searchCriteria.getSortValue())
+                    : Order.desc(searchCriteria.getSortValue()));
+        }
 
         return criteria.list();
+
+    }
+
+    @Override
+    public int findVolunteersCount(VolunteerSearchCriteria searchCriteria) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Criteria criteria = createVolunteerSearchCriteria(searchCriteria, session);
+
+        criteria.setProjection(Projections.rowCount());
+
+        return ((Long) criteria.uniqueResult()).intValue();
+    }
+
+    private Criteria createVolunteerSearchCriteria(VolunteerSearchCriteria searchCriteria, Session session) {
+
+        Criteria criteria = session.createCriteria(Volunteer.class);
+
+        if (searchCriteria.getSearch() != null || "congregation.name".equals(searchCriteria.getSortValue())) {
+            criteria.createAlias("congregation", "congregation", JoinType.LEFT_OUTER_JOIN);
+        }
+
+        if (searchCriteria.getSearch() != null) {
+            String searchValue = "%" + searchCriteria.getSearch() + "%";
+
+            criteria.add(Restrictions.or(Restrictions.like("forename", searchValue),
+                    Restrictions.like("middleName", searchValue),
+                    Restrictions.like("surname", searchValue),
+                    Restrictions.like("email", searchValue),
+                    Restrictions.like("congregation.name", searchValue)));
+        }
+
+        return criteria;
     }
 
     @Override
@@ -44,10 +89,7 @@ public class HibernateVolunteerDao implements VolunteerDao {
         }
     }
 
-
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
-
-
 }

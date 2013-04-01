@@ -4,6 +4,8 @@
  */
 package uk.org.rbc1b.roms.controller.volunteer;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.Valid;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +14,18 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableRequestData;
+import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableResult;
+import uk.org.rbc1b.roms.controller.common.model.EntityModel;
+import uk.org.rbc1b.roms.controller.congregation.CongregationsController;
 import uk.org.rbc1b.roms.db.Address;
 import uk.org.rbc1b.roms.db.CongregationDao;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.PersonDao;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
+import uk.org.rbc1b.roms.db.volunteer.VolunteerSearchCriteria;
 import uk.org.rbc1b.roms.reference.ReferenceDao;
 
 /**
@@ -55,14 +63,75 @@ public class VolunteersController {
      * Display a list of volunteers.
      *
      * @param model mvc model
+     * @param searchCriteria search criteria
      * @return view
      */
     @RequestMapping(method = RequestMethod.GET)
-    public String handleList(ModelMap model) {
+    public String handleList(ModelMap model, VolunteerSearchCriteria searchCriteria) {
 
-        model.addAttribute("volunteers", volunteerDao.findVolunteers());
+        model.addAttribute("volunteers", volunteerDao.findVolunteers(searchCriteria));
 
         return "volunteers/list";
+    }
+
+    /**
+     * Display the list of volunteers.
+     *
+     * @param requestData data tables request data
+     * @return view
+     */
+    @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json")
+    @ResponseBody
+    public AjaxDataTableResult handleDatatableAjaxList(AjaxDataTableRequestData requestData) {
+        VolunteerSearchCriteria searchCriteria = new VolunteerSearchCriteria();
+        searchCriteria.setSearch(requestData.getSearch());
+        searchCriteria.setSortValue(requestData.getSortValue());
+        searchCriteria.setSortDirection(requestData.getSortDirection());
+        searchCriteria.setStartIndex(requestData.getDisplayStart());
+        searchCriteria.setMaxResults(requestData.getDisplayLength());
+
+        AjaxDataTableResult<VolunteerListModel> result = new AjaxDataTableResult<VolunteerListModel>();
+        result.setEcho(requestData.getEcho());
+
+        int totalResults = volunteerDao.findVolunteersCount(searchCriteria);
+        result.setTotalRecords(totalResults);
+        if (totalResults > 0) {
+            List<Volunteer> volunteers = volunteerDao.findVolunteers(searchCriteria);
+            List<VolunteerListModel> modelList = new ArrayList<VolunteerListModel>(volunteers.size());
+            for (Volunteer volunteer : volunteers) {
+                modelList.add(generateVolunteerListModel(volunteer));
+            }
+            result.setRecords(modelList);
+            result.setTotalDisplayRecords(modelList.size());
+        }
+
+        return result;
+
+    }
+
+    private VolunteerListModel generateVolunteerListModel(Volunteer volunteer) {
+        VolunteerListModel model = new VolunteerListModel();
+        model.setId(volunteer.getPersonId());
+        model.setUri(generateUri(volunteer.getPersonId()));
+
+        if (volunteer.getCongregation() != null) {
+            EntityModel congregation = new EntityModel();
+            congregation.setId(volunteer.getCongregation().getCongregationId());
+            congregation.setName(volunteer.getCongregation().getName());
+            congregation.setUri(CongregationsController.generateUri(volunteer.getCongregation().getCongregationId()));
+
+            model.setCongregation(congregation);
+        }
+
+        model.setEmail(volunteer.getEmail());
+        model.setForename(volunteer.getForename());
+        model.setMiddleName(volunteer.getMiddleName());
+        model.setSurname(volunteer.getSurname());
+
+        model.setUri(generateUri(volunteer.getPersonId()));
+        model.setEditUri(generateUri(volunteer.getPersonId()) + "/edit");
+
+        return model;
     }
 
     /**

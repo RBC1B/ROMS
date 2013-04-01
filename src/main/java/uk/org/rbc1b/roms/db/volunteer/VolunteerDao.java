@@ -28,15 +28,26 @@ public interface VolunteerDao {
     /**
      * Find all matching volunteers.
      *
+     * @param searchCriteria search criteria
      * @return list of matching volunteers
      */
     @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional(readOnly = true)
-    List<Volunteer> findVolunteers();
+    List<Volunteer> findVolunteers(VolunteerSearchCriteria searchCriteria);
 
+    /**
+     * Look up the number of volunteers matching the criteria.
+     *
+     * @param searchCriteria search criteria
+     * @return list of people
+     */
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
+    @Transactional(readOnly = true)
+    int findVolunteersCount(VolunteerSearchCriteria searchCriteria);
 
     /**
      * Save a volunteer.
+     *
      * @param volunteer volunteer to
      */
     @PreAuthorize("hasPermission('VOLUNTEER', 'ADD')")

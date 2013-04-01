@@ -54,10 +54,9 @@ $(document).ready(function() {
         errorPlacement: roms.common.validatorErrorPlacement
     });
 
-
+    // list
     var listActionTemplate = $("#list-action").html();
 
-    // list page
     roms.common.datatables(
         $('#person-list'),
         {
