@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
- * Request form bean when creating/editing the qualification.
+ * Request form bean when creating/editing the name.
  *
  * @author Tina
  */
@@ -16,7 +16,7 @@ public class QualificationForm {
 
     @NotNull
     @Size(max = 50)
-    private String qualification;
+    private String name;
     @Size(max = 50)
     private String description;
 
@@ -28,11 +28,11 @@ public class QualificationForm {
         this.description = description;
     }
 
-    public String getQualification() {
-        return qualification;
+    public String getName() {
+        return name;
     }
 
-    public void setQualification(String qualification) {
-        this.qualification = qualification;
+    public void setName(String name) {
+        this.name = name;
     }
 }

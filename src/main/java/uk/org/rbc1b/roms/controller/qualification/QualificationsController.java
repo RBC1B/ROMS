@@ -83,14 +83,14 @@ public class QualificationsController {
     public String handleNewSubmit(@Valid QualificationForm qualificationForm) {
 
         Qualification qualification = new Qualification();
-        qualification.setName(qualificationForm.getQualification());
+        qualification.setName(qualificationForm.getName());
         qualification.setDescription(qualificationForm.getDescription());
 
         //qualification.setQualifcations(); - no qualifications initially created
 
         qualificationDao.createQualification(qualification);
 
-        return "redirect:qualifications/" + qualificationForm.getQualification();
+        return "redirect:qualifications/" + qualificationForm.getName();
     }
 
     @Autowired
