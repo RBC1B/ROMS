@@ -37,7 +37,7 @@ public interface PersonDao {
     List<Person> findPersons(String forename, String surname);
 
     /**
-     * Look up the list of people matching the criteria. All criteria is optional. Names and email addresses are partial matches.
+     * Look up the list of people matching the criteria. All criteria is optional.
      *
      * @param searchCriteria search criteria
      * @return list of people
@@ -45,6 +45,16 @@ public interface PersonDao {
     @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional(readOnly = true)
     List<Person> findPersons(PersonSearchCriteria searchCriteria);
+
+    /**
+     * Look up the number of people matching the criteria.
+     *
+     * @param searchCriteria search criteria
+     * @return list of people
+     */
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
+    @Transactional(readOnly = true)
+    int findPersonsCount(PersonSearchCriteria searchCriteria);
 
     /**
      * Save/update the person.

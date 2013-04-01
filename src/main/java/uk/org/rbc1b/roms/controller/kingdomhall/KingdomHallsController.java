@@ -53,10 +53,10 @@ public class KingdomHallsController {
     @ResponseBody
     public AjaxDataTableResult<KingdomHallListModel> handlePageList(@RequestParam(value = "sEcho") String echoId) {
         AjaxDataTableResult<KingdomHallListModel> result = new AjaxDataTableResult<KingdomHallListModel>();
-        result.setAaData(createKingdomHallListModels(kingdomHallDao.findKingdomHalls()));
-        result.setiTotalDisplayRecords(result.getAaData().size());
-        result.setiTotalRecords(result.getAaData().size());
-        result.setsEcho(echoId);
+        result.setRecords(createKingdomHallListModels(kingdomHallDao.findKingdomHalls()));
+        result.setTotalDisplayRecords(result.getAaData().size());
+        result.setTotalRecords(result.getAaData().size());
+        result.setEcho(echoId);
         return result;
     }
 

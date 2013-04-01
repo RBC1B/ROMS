@@ -17,8 +17,8 @@ public class AjaxDataTableResult<T> {
 
     private String sEcho;
     private List<T> aaData;
-    private Integer iTotalRecords;
-    private Integer iTotalDisplayRecords;
+    private int iTotalRecords;
+    private int iTotalDisplayRecords;
 
     /**
      * @return List of data making up each result row
@@ -28,38 +28,41 @@ public class AjaxDataTableResult<T> {
     }
 
     /**
-     * @param aaData List of data making up each result row
+     * The method name doesn't match the variable to allow us to drop the hungarian notation.
+     * @param records List of data making up each result row
      */
-    public void setAaData(List<T> aaData) {
-        this.aaData = aaData;
+    public void setRecords(List<T> records) {
+        this.aaData = records;
     }
 
     /**
      * @return total number of records to display
      */
-    public Integer getiTotalDisplayRecords() {
+    public int getiTotalDisplayRecords() {
         return iTotalDisplayRecords;
     }
 
     /**
-     * @param iTotalDisplayRecords total number of records to display
+     * The method name doesn't match the variable to allow us to drop the hungarian notation.
+     * @param totalDisplayRecords total number of records to display
      */
-    public void setiTotalDisplayRecords(Integer iTotalDisplayRecords) {
-        this.iTotalDisplayRecords = iTotalDisplayRecords;
+    public void setTotalDisplayRecords(int totalDisplayRecords) {
+        this.iTotalDisplayRecords = totalDisplayRecords;
     }
 
     /**
      * @return total number of records across all pages
      */
-    public Integer getiTotalRecords() {
+    public int getiTotalRecords() {
         return iTotalRecords;
     }
 
     /**
-     * @param iTotalRecords total number of records across all pages
+     * The method name doesn't match the variable to allow us to drop the hungarian notation.
+     * @param totalRecords total number of records across all pages
      */
-    public void setiTotalRecords(Integer iTotalRecords) {
-        this.iTotalRecords = iTotalRecords;
+    public void setTotalRecords(int totalRecords) {
+        this.iTotalRecords = totalRecords;
     }
 
     /**
@@ -70,9 +73,10 @@ public class AjaxDataTableResult<T> {
     }
 
     /**
-     * @param sEcho unique identifier for request, echoed back to caller
+     * The method name doesn't match the variable to allow us to drop the hungarian notation.
+     * @param echo unique identifier for request, echoed back to caller
      */
-    public void setsEcho(String sEcho) {
-        this.sEcho = sEcho;
+    public void setEcho(String echo) {
+        this.sEcho = echo;
     }
 }

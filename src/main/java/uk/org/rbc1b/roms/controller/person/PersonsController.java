@@ -91,17 +91,21 @@ public class PersonsController {
         searchCriteria.setStartIndex(requestData.getDisplayStart());
         searchCriteria.setMaxResults(requestData.getDisplayLength());
 
-        List<Person> persons = personDao.findPersons(searchCriteria);
-        List<PersonModel> modelList = new ArrayList<PersonModel>(persons.size());
-        for (Person person : persons) {
-            modelList.add(generatePersonModel(person));
+        AjaxDataTableResult<PersonModel> result = new AjaxDataTableResult<PersonModel>();
+        result.setEcho(requestData.getEcho());
+
+        int totalResults = personDao.findPersonsCount(searchCriteria);
+        result.setTotalRecords(totalResults);
+        if (totalResults > 0) {
+            List<Person> persons = personDao.findPersons(searchCriteria);
+            List<PersonModel> modelList = new ArrayList<PersonModel>(persons.size());
+            for (Person person : persons) {
+                modelList.add(generatePersonModel(person));
+            }
+            result.setRecords(modelList);
+            result.setTotalDisplayRecords(modelList.size());
         }
 
-        AjaxDataTableResult<PersonModel> result = new AjaxDataTableResult<PersonModel>();
-        result.setAaData(modelList);
-        result.setiTotalDisplayRecords(modelList.size());
-        result.setiTotalRecords(1000);
-        result.setsEcho(requestData.getEcho());
         return result;
     }
 
