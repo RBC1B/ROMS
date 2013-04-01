@@ -254,6 +254,11 @@ values(5, 1, 1, null, 'TTTTTTT',
 1, 2, 'Jolly nice bloke', '2008-02-11', '2008-01-03', 5, true, 'Very capable...still a jolly nice bloke?',
 true, '3 weeks notice', true, '6 weeks notice', 'HHCForm-1', '2010-04-17');
 
+insert into VolunteerTrade(PersonId, Name, ExperienceDescription, ExperienceYears)
+values (5, "Balloon Modelling", "Worked for kids parties and street entertainer. Specialised in marine life", 3);
+insert into VolunteerTrade(PersonId, Name, ExperienceDescription, ExperienceYears)
+values (5, "Juggling", "Balls and skittles. Only once tried to do chainsaws", 1);
+
 -- update the person cong now. Can before because of the relationships between person, circuit and congregation
 update Person set CongregationId = 1 where PersonId = 5;
 

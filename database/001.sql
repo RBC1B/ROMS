@@ -228,6 +228,16 @@ create table Volunteer(
     constraint foreign key (InterviewStatusId) references InterviewStatus(InterviewStatusId)
 )engine=InnoDB;
 
+create table VolunteerTrade (
+    VolunteerTradeId        bigint(20)      auto_increment,
+    PersonId                bigint(20),
+    Name                    varchar(250)    not null,
+    ExperienceDescription   text,
+    ExperienceYears         integer,
+    primary key (VolunteerTradeId),
+    constraint foreign key (PersonId) references Person(PersonId) on delete cascade
+)engine=InnoDB;
+
 create table User(
     PersonId    bigint(20),
     UserName    varchar(50) not null    unique,
