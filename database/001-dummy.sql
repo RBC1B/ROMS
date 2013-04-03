@@ -41,8 +41,8 @@ alter table VolunteerSkill AUTO_INCREMENT=1;
 alter table VolunteerQualification AUTO_INCREMENT=1;
 alter table Person AUTO_INCREMENT=1;
 
-insert into Person(Forename, Surname, Comments)
-values ('Ramindur', 'Singh', 'Test user account');
+insert into Person(Forename, Surname, Street, Comments)
+values ('Ramindur', 'Singh', '9 The Alders', 'Test user account');
 
 insert into Person(Forename, MiddleName, Surname,
                     Street, Town, County, Postcode,
@@ -56,8 +56,8 @@ values ('Billy', 'Alfred', 'Bonzo',
 insert into Person(Forename, Surname, Comments)
 values ('Ian', 'Smith', 'Slightly grumpy CBE');
 
-insert into Person(Forename, Surname, Comments)
-values ('Douglas', 'Fitzpatrick', 'Requested user with minimal permissions');
+insert into Person(Forename, Surname, Street, Comments)
+values ('Douglas', 'Fitzpatrick', '15 The Grange', 'Requested user with minimal permissions');
 
 insert into Person(Forename, MiddleName, Surname, Comments, BirthDate)
 values ('Jack', 'Of', 'Alltrades', 'Hightly skilled volunteer', '1961-08-12');

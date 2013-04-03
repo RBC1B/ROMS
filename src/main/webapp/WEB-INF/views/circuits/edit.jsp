@@ -19,19 +19,22 @@
                 <div class="form">
                     <div class="form">
                         <p>Circuit</p>
-                        <form:input path="circuitId" readonly="true" placeholder="${circuitId}"/>
-                        <form:input path="name" placeholder="Circuit Name"/>
+                        <fieldset class="control-group">
+                            <form:input path="circuitId" readonly="true" placeholder="${circuitId}"/>
+                            <form:input path="name" placeholder="Circuit Name"/>
+                        </fieldset>
                         <p>Circuit Overseer</p>
-                        <form:input path="circuitOverseer.forename" placeholder = "First Name"/>
-                        <form:input path="circuitOverseer.middleName" placeholder = "Middle Name"/>
-                        <form:input path="circuitOverseer.surname" placeholder = "Surname"/>
-                        <form:input path="circuitOverseer.email" placeholder = "E-mail"/>
-                        <form:input path="circuitOverseer.address.street" placeholder = "Street"/>
-                        <form:input path="circuitOverseer.address.town" placeholder = "Town"/>
-                        <form:input path="circuitOverseer.address.county" placeholder = "County"/>
-                        <form:input path="circuitOverseer.address.postcode" placeholder = "Post Code"/>
-                        <form:input path="circuitOverseer.telephone" placeholder = "Telephone Number"/>
-                        <form:input path="circuitOverseer.mobile" placeholder = "Mobile Number"/>
+                        <form:input path="personId" readonly="true" placeholder="${personId}" />
+                        <form:input path="forename" placeholder = "First Name"/>
+                        <form:input path="middleName" placeholder = "Middle Name"/>
+                        <form:input path="surname" placeholder = "Surname"/>
+                        <form:input path="email" placeholder = "E-mail"/>
+                        <form:input path="street" placeholder = "Street"/>
+                        <form:input path="town" placeholder = "Town"/>
+                        <form:input path="county" placeholder = "County"/>
+                        <form:input path="postcode" placeholder = "Post Code"/>
+                        <form:input path="telephone" placeholder = "Telephone Number"/>
+                        <form:input path="mobile" placeholder = "Mobile Number"/>
                     </div>
                     <input type="submit" class="btn btn-primary" />
                 </div>

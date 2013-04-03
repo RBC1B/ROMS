@@ -6,7 +6,6 @@ package uk.org.rbc1b.roms.controller.circuit;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import uk.org.rbc1b.roms.db.Person;
 
 /**
  * Request form bean when creating/editing the circuit.
@@ -17,9 +16,19 @@ public class CircuitForm {
 
     private Integer circuitId;
     @NotNull
-    @Size(min = 2, max = 50)
+    @Size(min = 2)
     private String name;
-    private Person circuitOverseer = new Person();
+    private Integer personId;
+    private String forename;
+    private String middleName;
+    private String surname;
+    private String email;
+    private String street;
+    private String town;
+    private String county;
+    private String postcode;
+    private String telephone;
+    private String mobile;
 
     /**
      * @return name
@@ -36,20 +45,6 @@ public class CircuitForm {
     }
 
     /**
-     * @return the circuitOverseer
-     */
-    public Person getCircuitOverseer() {
-        return circuitOverseer;
-    }
-
-    /**
-     * @param circuitOverseer the circuitOverseer to set
-     */
-    public void setCircuitOverseer(Person circuitOverseer) {
-        this.circuitOverseer = circuitOverseer;
-    }
-
-    /**
      * @return the circuitId
      */
     public Integer getCircuitId() {
@@ -61,5 +56,159 @@ public class CircuitForm {
      */
     public void setCircuitId(Integer circuitId) {
         this.circuitId = circuitId;
+    }
+
+    /**
+     * @return the personId
+     */
+    public Integer getPersonId() {
+        return personId;
+    }
+
+    /**
+     * @param personId the personId to set
+     */
+    public void setPersonId(Integer personId) {
+        this.personId = personId;
+    }
+
+    /**
+     * @return the forename
+     */
+    public String getForename() {
+        return forename;
+    }
+
+    /**
+     * @param forename the forename to set
+     */
+    public void setForename(String forename) {
+        this.forename = forename;
+    }
+
+    /**
+     * @return the middleName
+     */
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    /**
+     * @param middleName the middleName to set
+     */
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    /**
+     * @return the surname
+     */
+    public String getSurname() {
+        return surname;
+    }
+
+    /**
+     * @param surname the surname to set
+     */
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    /**
+     * @return the email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * @param email the email to set
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /**
+     * @return the street
+     */
+    public String getStreet() {
+        return street;
+    }
+
+    /**
+     * @param street the street to set
+     */
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    /**
+     * @return the town
+     */
+    public String getTown() {
+        return town;
+    }
+
+    /**
+     * @param town the town to set
+     */
+    public void setTown(String town) {
+        this.town = town;
+    }
+
+    /**
+     * @return the county
+     */
+    public String getCounty() {
+        return county;
+    }
+
+    /**
+     * @param county the county to set
+     */
+    public void setCounty(String county) {
+        this.county = county;
+    }
+
+    /**
+     * @return the postcode
+     */
+    public String getPostcode() {
+        return postcode;
+    }
+
+    /**
+     * @param postcode the postcode to set
+     */
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
+    }
+
+    /**
+     * @return the telephone
+     */
+    public String getTelephone() {
+        return telephone;
+    }
+
+    /**
+     * @param telephone the telephone to set
+     */
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    /**
+     * @return the mobile
+     */
+    public String getMobile() {
+        return mobile;
+    }
+
+    /**
+     * @param mobile the mobile to set
+     */
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 }

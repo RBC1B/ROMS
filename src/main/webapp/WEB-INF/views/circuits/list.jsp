@@ -17,6 +17,7 @@
                 <table class="table table-bordered table-striped table-hover" id="circuit-list">
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>Name</th>
                             <th>Action</th>
                         </tr>
@@ -24,6 +25,7 @@
                     <tbody>
                         <c:forEach items="${circuits}" var="circuit">
                             <tr>
+                                <td>${circuit.circuitId}</td>
                                 <td>${circuit.name}</td>
                                 <td>
                                     <ul class="inline list-actions">
