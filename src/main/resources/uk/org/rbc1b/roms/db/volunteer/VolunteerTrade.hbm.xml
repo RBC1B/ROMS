@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping  package="uk.org.rbc1b.roms.db.volunteer">
+    <class name="VolunteerTrade" table="VolunteerTrade">
+        <id name="volunteerTradeId" >
+            <generator class="identity"/>
+        </id>
+        <many-to-one name="person" column="PersonId" />
+        <property name="name" length="250" not-null="true" />
+        <property name="experienceDescription" />
+        <property name="experienceYears" />
+    </class>
+</hibernate-mapping>

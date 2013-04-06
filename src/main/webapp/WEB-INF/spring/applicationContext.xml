@@ -25,6 +25,7 @@
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <!-- <prop key="hibernate.show_sql">true</prop> -->
                 <prop key="current_session_context_class">thread</prop>
                 <prop key="hibernate.transaction.factory_class">org.hibernate.transaction.CMTTransactionFactory</prop>
                 <prop key="hibernate.transaction.jta.platform">org.hibernate.service.jta.platform.internal.SunOneJtaPlatform</prop>
@@ -68,6 +69,7 @@
                 <value>uk/org/rbc1b/roms/db/volunteer/TradeNumber.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/VolunteerQualification.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/VolunteerSkill.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/volunteer/VolunteerTrade.hbm.xml</value>
             </list>
         </property>
     </bean>
