@@ -4,10 +4,13 @@
  */
 package uk.org.rbc1b.roms.controller.volunteer;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.joda.time.DateTime;
 import org.springframework.format.annotation.DateTimeFormat;
+import uk.org.rbc1b.roms.db.volunteer.VolunteerTrade;
 
 /**
  * POJO to contain the volunteer edit form data.
@@ -77,6 +80,7 @@ public class VolunteerForm {
     @NotNull
     @Size(min = 2)
     private String town;
+    private List<VolunteerTrade> trades = new ArrayList<VolunteerTrade>();
     private String workPhone;
 
     public DateTime getBaptismDate() {
@@ -93,6 +97,14 @@ public class VolunteerForm {
 
     public void setElder(boolean elder) {
         this.elder = elder;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getEmergencyContactForename() {
@@ -343,11 +355,11 @@ public class VolunteerForm {
         this.workPhone = workPhone;
     }
 
-    public String getEmail() {
-        return email;
+    public List<VolunteerTrade> getTrades() {
+        return trades;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setTrades(List<VolunteerTrade> trades) {
+        this.trades = trades;
     }
 }

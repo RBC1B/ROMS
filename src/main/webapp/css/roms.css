@@ -48,29 +48,10 @@ div.span3>input[type=text] {
 	max-width: 270px;
 	width: 100%;
 }
-/*
-div.control-group.pull-left {
-    margin-right: 10px;
+div.span6>input[type=text] {
+	max-width: 460px;
+	width: 100%;
 }
-.form-horizontal .control-group {
-    margin-bottom:5px!important;
-}
-.form-horizontal .control-label {
-    text-align: left!important;
-}
-.form-horizontal .controls {
-    margin-left: 0!important;
-}
-.control-group, .controls {
-    display: inline!important;
-}
-label {
-    display: inline!important;
-}
-.radio, .checkbox {
-    display: inline-block!important;
-}
-*/
 
 /*****************************************************************************/
 /* Data tables bootstrap styles                                              */
@@ -239,4 +220,11 @@ div.DTFC_LeftFootWrapper table {
 
 .list-actions a.list-action {
     padding-left: 5px;
+}
+
+/*****************************************************************************/
+/* Create volunteer form                                                     */
+/*****************************************************************************/
+.trades-row {
+    margin-bottom: 10px;
 }

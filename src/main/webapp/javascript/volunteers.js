@@ -28,6 +28,10 @@ $(document).ready(function() {
         changeYear: true
     });
 
+    $(".trades-row").each(function() {
+        initialiseTradeRow($(this));
+    });
+
     // elder and ministerial values are exclusive
     $("input[name='elder']").change(function() {
         if($(this).is(':checked')) {
@@ -51,6 +55,18 @@ $(document).ready(function() {
     $("#congregationName").typeahead({
         source: roms.common.congregationTypeAheadSource,
         minLength: 2
+    });
+
+    // when adding a trades row, clone the last one, clear the values
+    // and at it after that row
+    $("#trades-row-add").click(function() {
+       var $lastTradesRow = $(".trades-row").last();
+       var $clonedTradesRow = $lastTradesRow.clone();
+       $clonedTradesRow.find("input").val('');
+       initialiseTradeRow($clonedTradesRow);
+       $clonedTradesRow.hide();
+       $clonedTradesRow.insertAfter($lastTradesRow);
+       $clonedTradesRow.slideDown(500);
     });
 
     $("#volunteer").validate({
@@ -142,6 +158,23 @@ $(document).ready(function() {
         },
         errorPlacement: roms.common.validatorErrorPlacement
     });
+
+    /**
+     * Initialise the actions on the trade rows
+     */
+    function initialiseTradeRow($row) {
+        $(".trade-experience-years", $row).numeric({ negative : false, decimal: false });
+        $(".trades-row-delete", $row).click(function() {
+            // if this is the last row, clear the values instead
+            if ($(".trades-row").length < 2) {
+                $("input", $row).val('');
+            } else {
+                $row.slideUp(1000, new function() {
+                    $row.remove();
+                });
+            }
+        })
+    }
 
     /**
      * Match the entered name of the volunteer with an existing person/volunteer

@@ -135,9 +135,23 @@
                 </fieldset>
                 <fieldset class="control-group">
                     <label class="control-label">7. Work background</label>
+                    <div class="controls controls-row trades-row">
+                        <div class="span2">
+                            <input type="text" name="trades[].name" placeholder="Name" />
+                        </div>
+                        <div class="span6">
+                            <input type="text" name="trades[].experienceDescription" placeholder="Description"/>
+                        </div>
+                        <div class="span1">
+                            <input type="text" name="trades[].experienceYears" class="trade-experience-years" placeholder="Years"/>
+                        </div>
+                        <div class="span1">
+                            <button type="button" class="btn btn-danger trades-row-delete"><i class="icon-remove icon-white"></i></button>
+                        </div>
+                    </div>
                     <div class="controls controls-row">
-                        <div class="span10">
-                            <span class="alert">This area is handled in the next step.</span>
+                        <div class="span2">
+                            <button id="trades-row-add" type="button" class="btn"><i class="icon-align-left icon-plus"></i> Add trade</button>
                         </div>
                     </div>
                 </fieldset>
@@ -266,6 +280,7 @@
             {{/results}}
             {{/matchedPersons}}
         </script>
+        <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/jquery-numeric-1.3.1.js' />" ></script>
         <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/volunteers.js' />" ></script>
     </body>
 </html>
