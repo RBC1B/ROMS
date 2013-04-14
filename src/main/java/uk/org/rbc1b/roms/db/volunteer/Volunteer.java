@@ -4,6 +4,7 @@
  */
 package uk.org.rbc1b.roms.db.volunteer;
 
+import java.util.Set;
 import uk.org.rbc1b.roms.db.Person;
 
 /**
@@ -37,6 +38,7 @@ public class Volunteer extends Person {
     private Person spouse;
     private String hhcFormCode;
     private java.sql.Date badgeIssueDate;
+    private Set<VolunteerTrade> trades;
 
     /**
      * Default constructor.
@@ -263,6 +265,14 @@ public class Volunteer extends Person {
 
     public void setSpouse(Person spouse) {
         this.spouse = spouse;
+    }
+
+    public Set<VolunteerTrade> getTrades() {
+        return trades;
+    }
+
+    public void setTrades(Set<VolunteerTrade> trades) {
+        this.trades = trades;
     }
 
     @Override

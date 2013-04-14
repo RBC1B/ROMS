@@ -5,8 +5,11 @@
 package uk.org.rbc1b.roms.controller.volunteer;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.validation.Valid;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +29,7 @@ import uk.org.rbc1b.roms.db.PersonDao;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerSearchCriteria;
+import uk.org.rbc1b.roms.db.volunteer.VolunteerTrade;
 import uk.org.rbc1b.roms.reference.ReferenceDao;
 
 /**
@@ -222,6 +226,20 @@ public class VolunteersController {
 
         volunteer.setRbcStatusId(RBC_STATUS_ACTIVE);
         volunteer.setInterviewStatusId(INTERVIEW_STATUS_INVITE_DUE);
+
+        if (form.getTrades() != null) {
+            Set<VolunteerTrade> volunteerTrades = new HashSet<VolunteerTrade>();
+            for (VolunteerTrade trade : form.getTrades()) {
+                if (StringUtils.isNotBlank(trade.getName())) {
+                    trade.setPerson(volunteer);
+                    volunteerTrades.add(trade);
+                }
+            }
+            if (!volunteerTrades.isEmpty()) {
+                volunteer.setTrades(volunteerTrades);
+            }
+        }
+
         volunteerDao.saveVolunteer(volunteer);
 
         return "redirect:" + generateUri(volunteer.getPersonId());
