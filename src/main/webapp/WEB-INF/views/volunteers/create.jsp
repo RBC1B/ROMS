@@ -137,13 +137,13 @@
                     <label class="control-label">7. Work background</label>
                     <div class="controls controls-row trades-row">
                         <div class="span2">
-                            <input type="text" name="trades[].name" placeholder="Name" />
+                            <input type="text" name="trades[index].name" placeholder="Name" />
                         </div>
                         <div class="span6">
-                            <input type="text" name="trades[].experienceDescription" placeholder="Description"/>
+                            <input type="text" name="trades[index].experienceDescription" placeholder="Description"/>
                         </div>
                         <div class="span1">
-                            <input type="text" name="trades[].experienceYears" class="trade-experience-years" placeholder="Years"/>
+                            <input type="text" name="trades[index].experienceYears" class="trade-experience-years" placeholder="Years"/>
                         </div>
                         <div class="span1">
                             <button type="button" class="btn btn-danger trades-row-delete"><i class="icon-remove icon-white"></i></button>

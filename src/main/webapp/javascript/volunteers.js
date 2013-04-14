@@ -156,6 +156,10 @@ $(document).ready(function() {
                 required: true
             }
         },
+        submitHandler :function(form) {
+            indexTradeRowInputs(form);
+            form.submit();
+        },
         errorPlacement: roms.common.validatorErrorPlacement
     });
 
@@ -174,6 +178,16 @@ $(document).ready(function() {
                 });
             }
         })
+    }
+
+    function indexTradeRowInputs($form) {
+        $(".trades-row", $form).each(function(index) {
+            $(this).find("input").each(function() {
+                var name = $(this).prop("name");
+                var indexedName = name.replace("[index]", "[" + index + "]");
+                $(this).prop("name", indexedName);
+            })
+        });
     }
 
     /**
