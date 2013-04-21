@@ -206,16 +206,16 @@
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset class="control-group">
-                        <label class="control-label">Congregation:</label>
-                        <div class="controls controls-row">
-                            <div class="span2">
-                                <form:input path="congregationName" placeholder="Congregation name" />
-                                <form:hidden path="congregationId" />
-                            </div>
-                        </div>
-                    </fieldset>
                 </div>
+                <fieldset class="control-group">
+                    <label class="control-label">Congregation:</label>
+                    <div class="controls controls-row">
+                        <div class="span2">
+                            <form:input path="congregationName" placeholder="Congregation name" />
+                            <form:hidden path="congregationId" />
+                        </div>
+                    </div>
+                </fieldset>
                 <fieldset class="control-group">
                     <label class="control-label">Form date:</label>
                     <div class="controls controls-row">
