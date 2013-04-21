@@ -28,10 +28,6 @@ $(document).ready(function() {
         changeYear: true
     });
 
-    $(".trades-row").each(function() {
-        initialiseTradeRow($(this));
-    });
-
     // elder and ministerial values are exclusive
     $("input[name='elder']").change(function() {
         if($(this).is(':checked')) {
@@ -62,10 +58,18 @@ $(document).ready(function() {
     $("#trades-row-add").click(function() {
        var $lastTradesRow = $(".trades-row").last();
        var $clonedTradesRow = $lastTradesRow.clone();
-       $clonedTradesRow.find("input").val('');
-       initialiseTradeRow($clonedTradesRow);
+       var lastIndex = $lastTradesRow.data("index");
+       var nextIndex = lastIndex + 1;
+       $clonedTradesRow.data("index", nextIndex);
+       $clonedTradesRow.find("input").each(function() {
+           $(this).val('');
+           var name = $(this).prop("name");
+           name = name.replace('[' + lastIndex + ']', '[' + nextIndex + ']');
+           $(this).prop("name", name);
+       })
        $clonedTradesRow.hide();
        $clonedTradesRow.insertAfter($lastTradesRow);
+       initialiseTradeRow($clonedTradesRow);
        $clonedTradesRow.slideDown(500);
     });
 
@@ -157,19 +161,45 @@ $(document).ready(function() {
             }
         },
         submitHandler :function(form) {
-            indexTradeRowInputs(form);
             form.submit();
         },
         errorPlacement: roms.common.validatorErrorPlacement
     });
 
+    $(".trades-row").each(function() {
+        initialiseTradeRow($(this));
+    });
+
     /**
-     * Initialise the actions on the trade rows
+     * Initialise the actions on the trade rows.
+     * Note: this function call needs to be made after the initial form.validate
+     * initialisation, otherwise we cannot add validation.
      */
     function initialiseTradeRow($row) {
+        // limit inputs
         $(".trade-experience-years", $row).numeric({ negative : false, decimal: false });
+
+        // add validation. completely empty rows are allowed (ignored server side)
+        // so the field is only required if other fields are populated
+        $(".trade-experience-name", $row).rules("add", {
+			required: function() {
+                var result = false;
+                $("input", $row).each(function() {
+                    if ($(this).val()) {
+                        // the input has a value set, the name field is required
+                        result = true;
+                        // break the loop
+                        return false;
+                    }
+                    return true;
+                });
+                return result;
+            }
+        });
+
+        // add delete button functionality
         $(".trades-row-delete", $row).click(function() {
-            // if this is the last row, clear the values instead
+            // if this is the only row, clear the values instead
             if ($(".trades-row").length < 2) {
                 $("input", $row).val('');
             } else {
@@ -177,16 +207,6 @@ $(document).ready(function() {
                     $row.remove();
                 });
             }
-        })
-    }
-
-    function indexTradeRowInputs($form) {
-        $(".trades-row", $form).each(function(index) {
-            $(this).find("input").each(function() {
-                var name = $(this).prop("name");
-                var indexedName = name.replace("[index]", "[" + index + "]");
-                $(this).prop("name", indexedName);
-            })
         });
     }
 
