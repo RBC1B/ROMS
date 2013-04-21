@@ -45,7 +45,7 @@ public class VolunteersController {
     private static final int MARRIED_MARITAL_STATUS = 2;
     private static final int RBC_STATUS_ACTIVE = 1;
     private static final int INTERVIEW_STATUS_INVITE_DUE = 1;
-    private static final int FULLTIME_REGULAR_PIONEER = 3;
+    private static final int FULLTIME_REGULAR_PIONEER = 2;
     private static final int APPOINTMENT_ELDER = 1;
     private static final int APPOINTMENT_MINISTERIAL_SERVANT = 2;
     private VolunteerDao volunteerDao;
