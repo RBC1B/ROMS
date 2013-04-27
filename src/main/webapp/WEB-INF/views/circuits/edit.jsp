@@ -1,5 +1,5 @@
 <%--
-    Document   : circuitEdit
+    Document   : circuitEdit/Create
     Created on : 14-Jul-2012, 00:54:53
     Author     : oliver.elder.esq
 --%>
@@ -40,6 +40,18 @@
                 </div>
             </form:form>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+        </div>
+        <div id="circuit-person-modal" class="modal hide fade">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3>Select Matching Person</h3>
+            </div>
+            <div class="modal-body">
+                
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn" data-dismiss="modal">Ignore</a>
+            </div>
         </div>
         <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/circuits.js' />" ></script>
     </body>

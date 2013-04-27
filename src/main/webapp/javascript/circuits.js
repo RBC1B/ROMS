@@ -25,6 +25,8 @@ $(document).ready(function() {
             ]
         }
     );
+    
+    $('#circuit-person-modal').modal('show');
         
 });
 
