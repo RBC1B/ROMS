@@ -12,9 +12,9 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown">Organisation<b class="caret"></b></a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                            <sec:authorize access="hasPermission('CIRCUIT', 'READ')"><li role=menuitem><a href="<c:url value="/circuits" />">Circuits</a></li></sec:authorize>
-                            <sec:authorize access="hasPermission('KINGDOMHALL', 'READ')"><li role=menuitem><a href="<c:url value="/kingdom-halls" />">Kingdom Halls</a></li></sec:authorize>
-                            <sec:authorize access="hasPermission('CONG', 'READ')"><li role=menuitem><a href="<c:url value="/congregations" />">Congregations</a></li></sec:authorize>
+                            <sec:authorize access="hasPermission('CIRCUIT', 'READ')"><li role="menuitem"><a href="<c:url value="/circuits" />">Circuits</a></li></sec:authorize>
+                            <sec:authorize access="hasPermission('KINGDOMHALL', 'READ')"><li role="menuitem"><a href="<c:url value="/kingdom-halls" />">Kingdom Halls</a></li></sec:authorize>
+                            <sec:authorize access="hasPermission('CONG', 'READ')"><li role="menuitem"><a href="<c:url value="/congregations" />">Congregations</a></li></sec:authorize>
                         </ul>
                     </li>
                     <sec:authorize access="hasPermission('CONG', 'READ')"><li><a href="<c:url value="/projects" />">Projects</a></li></sec:authorize>
