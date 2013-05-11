@@ -6,14 +6,13 @@ package uk.org.rbc1b.roms.reference;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import javax.sql.DataSource;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -28,86 +27,90 @@ public class JDBCReferenceDao implements ReferenceDao {
 
     @Override
     @Cacheable("reference.maritalStatus")
-    public List<Pair<Integer, String>> findMaritalStatusValues() {
-        return this.jdbcTemplate.query(
-                "SELECT MaritalStatusId AS id, Description AS value FROM MaritalStatus",
-                new IntegerStringPairRowMapper());
+    public Map<Integer, String> findMaritalStatusValues() {
+        return findReferenceValues("SELECT MaritalStatusId AS id, Description AS value "
+                + "FROM MaritalStatus ORDFER BY MaritalStatusId");
     }
 
     @Override
     @Cacheable("reference.rbcStatus")
-    public List<Pair<Integer, String>> findRBCStatusValues() {
-        return this.jdbcTemplate.query(
-                "SELECT RbcStatusId AS id, Description AS value FROM RbcStatus",
-                new IntegerStringPairRowMapper());
+    public Map<Integer, String> findRBCStatusValues() {
+        return findReferenceValues("SELECT RbcStatusId AS id, Description AS value "
+                + "FROM RbcStatus ORDER BY RbcStatusId");
     }
 
     @Override
     @Cacheable("reference.interviewStatus")
-    public List<Pair<Integer, String>> findInterviewStatusValues() {
-        return this.jdbcTemplate.query(
-                "SELECT InterviewStatusId AS id, Description AS value FROM InterviewStatus",
-                new IntegerStringPairRowMapper());
+    public Map<Integer, String> findInterviewStatusValues() {
+        return findReferenceValues("SELECT InterviewStatusId AS id, Description AS value "
+                + "FROM InterviewStatus ORDER BY InterviewStatusId");
     }
 
     @Override
     @Cacheable("reference.fulltime")
-    public List<Pair<Integer, String>> findFulltimeValues() {
-        return this.jdbcTemplate.query(
-                "SELECT FulltimeId AS id, Description AS value FROM FulltimeStatus",
-                new IntegerStringPairRowMapper());
+    public Map<Integer, String> findFulltimeValues() {
+        return findReferenceValues("SELECT FulltimeId AS id, Description AS value "
+                + "FROM FulltimeStatus ORDER BY FulltimeId");
     }
 
     @Override
     @Cacheable("reference.relationship")
-    public List<Pair<Integer, String>> findRelationshipValues() {
-        return this.jdbcTemplate.query(
-                "SELECT RelationshipId AS id, Description AS value FROM Relationship",
-                new IntegerStringPairRowMapper());
+    public Map<Integer, String> findRelationshipValues() {
+        return findReferenceValues("SELECT RelationshipId AS id, Description AS value "
+                + "FROM Relationship ORDER BY RelationshipId");
     }
 
     @Override
     @Cacheable("reference.ownershipType")
-    public List<Pair<Integer, String>> findOwnershipTypeValues() {
-        return this.jdbcTemplate.query(
-                "SELECT OwnershipTypeId AS id, Name AS value FROM OwnershipType",
-                new IntegerStringPairRowMapper());
+    public Map<Integer, String> findOwnershipTypeValues() {
+        return findReferenceValues("SELECT OwnershipTypeId AS id, Name AS value "
+                + "FROM OwnershipType ORDER BY OwnershipTypeId");
     }
 
     @Override
     @Cacheable("reference.congregationRole")
-    public List<Pair<Integer, String>> findCongregationRoleValues() {
-        return this.jdbcTemplate.query(
-                "SELECT CongregationRoleId AS id, Description AS value FROM CongregationRole",
-                new IntegerStringPairRowMapper());
+    public Map<Integer, String> findCongregationRoleValues() {
+        return findReferenceValues("SELECT CongregationRoleId AS id, Description AS value "
+                + "FROM CongregationRole ORDER BY CongregationRoleId");
     }
 
     @Override
     @Cacheable("reference.assignmentRole")
-    public List<Pair<Integer, String>> findAssignmentRoleValues() {
-        return this.jdbcTemplate.query(
-                "SELECT RoleId AS id, Description AS value FROM Role",
-                new IntegerStringPairRowMapper());
+    public Map<Integer, String> findAssignmentRoleValues() {
+        return findReferenceValues("SELECT RoleId AS id, Description AS value "
+                + "FROM Role ORDER BY RoleId");
     }
 
     @Override
     @Cacheable("reference.projectType")
-    public List<Pair<Integer, String>> findProjectTypeValues() {
-        return this.jdbcTemplate.query(
-                "SELECT ProjectTypeId AS id, Description AS value FROM ProjectType",
-                new IntegerStringPairRowMapper());
+    public Map<Integer, String> findProjectTypeValues() {
+        return findReferenceValues("SELECT ProjectTypeId AS id, Description AS value "
+                + "FROM ProjectType ORDER BY ProjectTypeId");
+
+    }
+
+    @Override
+    @Cacheable("reference.projectStatus")
+    public Map<Integer, String> findProjectStatusValues() {
+        return findReferenceValues("SELECT ProjectStatusId AS id, Description AS value "
+                + "FROM ProjectStatus ORDER BY ProjectStatusId");
+    }
+
+    private Map<Integer, String> findReferenceValues(String sql) {
+
+        final Map<Integer, String> resultMap = new LinkedHashMap<Integer, String>();
+
+        this.jdbcTemplate.query(sql, new RowCallbackHandler() {
+            @Override
+            public void processRow(ResultSet rs) throws SQLException {
+                resultMap.put(rs.getInt("id"), rs.getString("value"));
+            }
+        });
+        return resultMap;
     }
 
     @Autowired
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
-    }
-
-    private static final class IntegerStringPairRowMapper implements RowMapper<Pair<Integer, String>> {
-
-        @Override
-        public Pair<Integer, String> mapRow(ResultSet rs, int rowNum) throws SQLException {
-            return new ImmutablePair<Integer, String>(rs.getInt("id"), rs.getString("value"));
-        }
     }
 }

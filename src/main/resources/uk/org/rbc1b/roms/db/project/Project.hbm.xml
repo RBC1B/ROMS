@@ -20,11 +20,11 @@
         <property name="requestDate" />
         <property name="visitDate" />
         <property name="estimateCost" length="50" />
-        <many-to-one name="status" column="ProjectStatusId" />
+        <property name="projectStatusId" />
         <property name="supportingCongregation" length="250" />
         <property name="constraints" column="ProjectConstraints" />
         <many-to-one name="coordinator" column="CoordinatorId" />
-        <many-to-one name="stage" column="ProjectStageId" />
+        <property name="projectStageId" />
         <property name="completedDate" />
         <set name="workBriefs" inverse="true" cascade="all-delete-orphan">
             <key column="ProjectId" />

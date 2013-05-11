@@ -4,58 +4,62 @@
  */
 package uk.org.rbc1b.roms.reference;
 
-import java.util.List;
-import org.apache.commons.lang3.tuple.Pair;
+import java.util.Map;
 
 /**
  * Dao used to look up reference information, primarily used in forms.
+ *
  * @author oliver.elder.esq
  */
 public interface ReferenceDao {
 
     /**
-     * @return list of marital status values
+     * @return ordered map of marital status values
      */
-    List<Pair<Integer, String>> findMaritalStatusValues();
+    Map<Integer, String> findMaritalStatusValues();
 
     /**
-     * @return list of RBC status values
+     * @return ordered map of RBC status values
      */
-    List<Pair<Integer, String>> findRBCStatusValues();
+    Map<Integer, String> findRBCStatusValues();
 
     /**
-     * @return list of interview status values
+     * @return ordered map of interview status values
      */
-    List<Pair<Integer, String>> findInterviewStatusValues();
+    Map<Integer, String> findInterviewStatusValues();
 
     /**
-     * @return list of full time service values
+     * @return ordered map of full time service values
      */
-    List<Pair<Integer, String>> findFulltimeValues();
+    Map<Integer, String> findFulltimeValues();
 
     /**
-     * @return list of (emergency contact) relationship values
+     * @return ordered map of (emergency contact) relationship values
      */
-    List<Pair<Integer, String>> findRelationshipValues();
+    Map<Integer, String> findRelationshipValues();
 
     /**
-     * @return list of hall ownership type values
+     * @return ordered map of hall ownership type values
      */
-    List<Pair<Integer, String>> findOwnershipTypeValues();
+    Map<Integer, String> findOwnershipTypeValues();
 
     /**
-     * @return list of congregation role type values
+     * @return ordered map of congregation role type values
      */
-    List<Pair<Integer, String>> findCongregationRoleValues();
+    Map<Integer, String> findCongregationRoleValues();
 
     /**
-     * @return list of assignment role type values
+     * @return ordered map of assignment role type values
      */
-    List<Pair<Integer, String>> findAssignmentRoleValues();
+    Map<Integer, String> findAssignmentRoleValues();
 
     /**
-     * @return list of project type values
+     * @return ordered map of project type values
      */
-    List<Pair<Integer, String>> findProjectTypeValues();
+    Map<Integer, String> findProjectTypeValues();
 
+    /**
+     * @return ordered map of project type values
+     */
+    Map<Integer, String> findProjectStatusValues();
 }

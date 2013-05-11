@@ -23,8 +23,8 @@ public class Project {
     private Integer projectTypeId;
     private String priority;
     private Date requestDate;
-    private ProjectStage stage;
-    private ProjectStatus status;
+    private Integer projectStageId;
+    private Integer projectStatusId;
     private String supportingCongregation;
     private String telephone;
     private Date visitDate;
@@ -126,20 +126,20 @@ public class Project {
         this.requestDate = requestDate;
     }
 
-    public ProjectStage getStage() {
-        return stage;
+    public Integer getProjectStageId() {
+        return projectStageId;
     }
 
-    public void setStage(ProjectStage stage) {
-        this.stage = stage;
+    public void setProjectStageId(Integer projectStageId) {
+        this.projectStageId = projectStageId;
     }
 
-    public ProjectStatus getStatus() {
-        return status;
+    public Integer getProjectStatusId() {
+        return projectStatusId;
     }
 
-    public void setStatus(ProjectStatus status) {
-        this.status = status;
+    public void setProjectStatusId(Integer projectStatusId) {
+        this.projectStatusId = projectStatusId;
     }
 
     public String getSupportingCongregation() {
