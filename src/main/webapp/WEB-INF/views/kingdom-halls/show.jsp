@@ -1,7 +1,5 @@
 <%--
-    Document   : circuit
-    Created on : 01-Jul-2012, 00:06:12
-    Author     : oliver.elder.esq
+    Author     : oliver
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -12,7 +10,7 @@
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
-            <h1>Kingdom Hall: ${kingdomHall.kingdomHall}</h1>
+            <h1>Kingdom Hall: ${kingdomHall.name}</h1>
             ${kingdomHall}
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>

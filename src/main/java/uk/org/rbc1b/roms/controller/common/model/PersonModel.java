@@ -2,10 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package uk.org.rbc1b.roms.controller.person;
+package uk.org.rbc1b.roms.controller.common.model;
 
 import java.sql.Date;
-import uk.org.rbc1b.roms.controller.common.model.EntityModel;
 import uk.org.rbc1b.roms.db.Address;
 
 /**

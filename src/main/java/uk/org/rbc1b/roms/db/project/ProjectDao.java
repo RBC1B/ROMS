@@ -26,6 +26,15 @@ public interface ProjectDao {
     List<Project> findProjects();
 
     /**
+     * Look up the project details.
+     * @param projectId project id
+     * @return list of projects
+     */
+    @PreAuthorize("hasPermission('PROJECT', 'READ')")
+    @Transactional(readOnly = true)
+    Project findProject(Integer projectId);
+
+    /**
      * Look up the ordered map of project stages.
      *
      * @return project stag, mapped by id

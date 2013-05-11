@@ -33,10 +33,10 @@
                             <td>${project.name}</td>
                             <td>${project.type}</td>
                             <td>${project.status}</td>
-                            <td><span class="a-project-status" data-original-title="${project.stageDescription} - ${project.stageAssignedTo}">${project.stageName}</span></td>
+                            <td><span class="a-project-status" data-original-title="${project.stage.description} - ${project.stage.assignedTo}">${project.stage.name}</span></td>
                             <td><fmt:formatDate value="${project.requestDate}" pattern="yyyy-MM-dd" /></td>
                             <td><fmt:formatDate value="${project.completedDate}" pattern="yyyy-MM-dd" /></td>
-                            <td><a href="<c:url value='${project.contactPersonUri}'/>">${project.contactPersonName}</a></td>
+                            <td><c:if test="${not empty project.contactPerson}"><a href="<c:url value='${project.contactPerson.uri}'/>">${project.contactPerson.name}</a></c:if></td>
                             <td>
                                 <ul class="inline list-actions">
                                     <li><a class="btn btn-success" href="<c:url value="${project.uri}" />">View</a></li>

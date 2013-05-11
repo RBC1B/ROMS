@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
@@ -32,8 +33,21 @@ public class HibernateProjectDao implements ProjectDao {
         Session session = this.sessionFactory.getCurrentSession();
 
         Criteria criteria = session.createCriteria(Project.class)
-            .createAlias("contactPerson", "contactPerson", JoinType.LEFT_OUTER_JOIN);
+                .createAlias("contactPerson", "contactPerson", JoinType.LEFT_OUTER_JOIN);
         return criteria.list();
+    }
+
+    @Override
+    public Project findProject(Integer projectId) {
+        Project project = (Project) this.sessionFactory.getCurrentSession().get(Project.class, projectId);
+        if (project == null) {
+            return null;
+        }
+        Hibernate.initialize(project.getContactPerson());
+        Hibernate.initialize(project.getCoordinator());
+        Hibernate.initialize(project.getKingdomHall());
+
+        return project;
     }
 
     @Override

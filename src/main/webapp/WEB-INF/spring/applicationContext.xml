@@ -55,7 +55,6 @@
                 <value>uk/org/rbc1b/roms/db/project/Project.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/project/ProjectEvent.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/project/ProjectStage.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/project/ProjectStatus.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/project/ProjectWorkBrief.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/project/WorkFeature.hbm.xml</value>
 

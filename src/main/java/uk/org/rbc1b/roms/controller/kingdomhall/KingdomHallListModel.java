@@ -7,14 +7,24 @@ package uk.org.rbc1b.roms.controller.kingdomhall;
 /**
  * The summary view of the kingdom hall, shown in the list.
  *
- * @author oliver.elder.esq
+ * @author oliver
  */
 public class KingdomHallListModel {
 
+    private String editUri;
     private Integer kingdomHallId;
     private String name;
     private String town;
     private String postCode;
+    private String uri;
+
+    public String getEditUri() {
+        return editUri;
+    }
+
+    public void setEditUri(String editUri) {
+        this.editUri = editUri;
+    }
 
     public Integer getKingdomHallId() {
         return kingdomHallId;
@@ -46,5 +56,13 @@ public class KingdomHallListModel {
 
     public void setTown(String town) {
         this.town = town;
+    }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 }

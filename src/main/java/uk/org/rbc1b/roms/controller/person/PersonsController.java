@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableRequestData;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableResult;
-import uk.org.rbc1b.roms.controller.common.model.EntityModel;
-import uk.org.rbc1b.roms.controller.congregation.CongregationsController;
+import uk.org.rbc1b.roms.controller.common.model.PersonModel;
+import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
 import uk.org.rbc1b.roms.controller.volunteer.VolunteersController;
 import uk.org.rbc1b.roms.db.Address;
 import uk.org.rbc1b.roms.db.CongregationDao;
@@ -38,20 +38,10 @@ import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
 @RequestMapping("/persons")
 public class PersonsController {
 
-    private static final String BASE_URI = "/persons/";
     private PersonDao personDao;
     private VolunteerDao volunteerDao;
     private CongregationDao congregationDao;
-
-    /**
-     * Generate the uri used to access the person pages.
-     *
-     * @param personId optional volunteer id
-     * @return uri
-     */
-    public static String generateUri(Integer personId) {
-        return personId != null ? BASE_URI + personId : BASE_URI;
-    }
+    private PersonModelFactory personModelFactory;
 
     /**
      * Display the list of persons.
@@ -66,7 +56,7 @@ public class PersonsController {
         List<Person> persons = personDao.findPersons(searchCriteria);
         List<PersonModel> modelList = new ArrayList<PersonModel>(persons.size());
         for (Person person : persons) {
-            modelList.add(generatePersonModel(person));
+            modelList.add(personModelFactory.generatePersonModel(person));
         }
 
         model.addAttribute("persons", modelList);
@@ -100,7 +90,7 @@ public class PersonsController {
             List<Person> persons = personDao.findPersons(searchCriteria);
             List<PersonModel> modelList = new ArrayList<PersonModel>(persons.size());
             for (Person person : persons) {
-                modelList.add(generatePersonModel(person));
+                modelList.add(personModelFactory.generatePersonModel(person));
             }
             result.setRecords(modelList);
             result.setTotalDisplayRecords(modelList.size());
@@ -122,7 +112,7 @@ public class PersonsController {
         if (volunteerDao.findVolunteer(person.getPersonId()) != null) {
             return "redirect:" + VolunteersController.generateUri(personId);
         }
-        model.addAttribute("person", generatePersonModel(person));
+        model.addAttribute("person", personModelFactory.generatePersonModel(person));
 
         return "persons/show";
     }
@@ -174,7 +164,7 @@ public class PersonsController {
         form.setWorkPhone(person.getWorkPhone());
 
         model.addAttribute("person", form);
-        model.addAttribute("submitUri", generateUri(personId));
+        model.addAttribute("submitUri", personModelFactory.generateUri(personId));
 
         return "persons/edit";
 
@@ -222,40 +212,10 @@ public class PersonsController {
 
         personDao.savePerson(person);
 
-        return "redirect:" + generateUri(personId);
+        return "redirect:" + personModelFactory.generateUri(personId);
     }
 
-    private PersonModel generatePersonModel(Person person) {
 
-        PersonModel model = new PersonModel();
-        model.setUri(generateUri(person.getPersonId()));
-
-        model.setAddress(person.getAddress());
-        model.setBirthDate(person.getBirthDate());
-        model.setComments(person.getComments());
-
-        if (person.getCongregation() != null) {
-            EntityModel congregation = new EntityModel();
-            congregation.setId(person.getCongregation().getCongregationId());
-            congregation.setName(person.getCongregation().getName());
-            congregation.setUri(CongregationsController.generateUri(person.getCongregation().getCongregationId()));
-
-            model.setCongregation(congregation);
-        }
-
-        model.setEmail(person.getEmail());
-        model.setForename(person.getForename());
-        model.setMiddleName(person.getMiddleName());
-        model.setSurname(person.getSurname());
-        model.setMobile(person.getMobile());
-        model.setTelephone(person.getTelephone());
-        model.setWorkPhone(person.getWorkPhone());
-
-        model.setUri(generateUri(person.getPersonId()));
-        model.setEditUri(generateUri(person.getPersonId()) + "/edit");
-
-        return model;
-    }
 
     /**
      * Note: There seems to be a bug in Spring 3.1 that causes the same uri with a different produces attribute throw an " Ambiguous handler methods mapped"
@@ -333,6 +293,11 @@ public class PersonsController {
     @Autowired
     public void setPersonDao(PersonDao personDao) {
         this.personDao = personDao;
+    }
+
+    @Autowired
+    public void setPersonModelFactory(PersonModelFactory personModelFactory) {
+        this.personModelFactory = personModelFactory;
     }
 
     @Autowired

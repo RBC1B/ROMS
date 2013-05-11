@@ -5,6 +5,8 @@
 package uk.org.rbc1b.roms.controller.project;
 
 import java.util.Date;
+import uk.org.rbc1b.roms.controller.common.model.EntityModel;
+import uk.org.rbc1b.roms.db.project.ProjectStage;
 
 /**
  * Representation of the project used when displaying the list.
@@ -18,13 +20,10 @@ public class ProjectListModel {
     private String name;
     private String type;
     private String status;
-    private String stageName;
-    private String stageDescription;
-    private String stageAssignedTo;
+    private ProjectStage stage;
     private Date requestDate;
     private Date completedDate;
-    private String contactPersonName;
-    private String contactPersonUri;
+    private EntityModel contactPerson;
 
     public String getUri() {
         return uri;
@@ -66,28 +65,12 @@ public class ProjectListModel {
         this.status = status;
     }
 
-    public String getStageName() {
-        return stageName;
+    public ProjectStage getStage() {
+        return stage;
     }
 
-    public void setStageName(String stageName) {
-        this.stageName = stageName;
-    }
-
-    public String getStageDescription() {
-        return stageDescription;
-    }
-
-    public void setStageDescription(String stageDescription) {
-        this.stageDescription = stageDescription;
-    }
-
-    public String getStageAssignedTo() {
-        return stageAssignedTo;
-    }
-
-    public void setStageAssignedTo(String stageAssignedTo) {
-        this.stageAssignedTo = stageAssignedTo;
+    public void setStage(ProjectStage stage) {
+        this.stage = stage;
     }
 
     public Date getRequestDate() {
@@ -106,19 +89,11 @@ public class ProjectListModel {
         this.completedDate = completedDate;
     }
 
-    public String getContactPersonName() {
-        return contactPersonName;
+    public EntityModel getContactPerson() {
+        return contactPerson;
     }
 
-    public void setContactPersonName(String contactPersonName) {
-        this.contactPersonName = contactPersonName;
-    }
-
-    public String getContactPersonUri() {
-        return contactPersonUri;
-    }
-
-    public void setContactPersonUri(String contactPersonUri) {
-        this.contactPersonUri = contactPersonUri;
+    public void setContactPerson(EntityModel contactPerson) {
+        this.contactPerson = contactPerson;
     }
 }

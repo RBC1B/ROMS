@@ -47,12 +47,9 @@
                         <a href="mailto:${person.email}">${person.email}</a>
                     </c:if>
                 </dd>
-                <dt>Home phone:</dt>
-                <dd>${person.telephone}</dd>
-                <dt>Mobile phone:</dt>
-                <dd>${person.mobile}</dd>
-                <dt>Work phone:</dt>
-                <dd>${person.workPhone}</dd>
+                <dt>Home phone:</dt><dd>${person.telephone}</dd>
+                <dt>Mobile phone:</dt><dd>${person.mobile}</dd>
+                <dt>Work phone:</dt><dd>${person.workPhone}</dd>
                 <dt>Address:</dt>
                 <dd>
                     <c:if test="${person.address != null}">

@@ -31,8 +31,8 @@
                                 <td>${kingdomHall.postCode}</td>
                                 <td>
                                     <ul class="inline list-actions">
-                                        <li><a class="btn btn-success" href="<c:url value="/kingdom-halls/${kingdomHall.kingdomHallId}" />">View</a></li>
-                                        <li><a class="list-action" href="<c:url value="/kingdom-halls/${kingdomHall.kingdomHallId}/edit" />">Edit</a></li>
+                                        <li><a class="btn btn-success" href="<c:url value="${kingdomHall.uri}" />">View</a></li>
+                                        <li><a class="list-action" href="<c:url value="${kingdomHall.editUri}" />">Edit</a></li>
                                         <li><a class="list-action" href="delete">Delete</a></li>
                                     </ul>
                                 </td>
@@ -42,7 +42,7 @@
                 </table>
             </div>
             <div class="entity-list-add-new">
-                <a class="btn btn-primary" href="<c:url value="/kingdom-halls/new" />">Create new kingdom hall</a>
+                <a class="btn btn-primary" href="<c:url value="${newUri}" />">Create new kingdom hall</a>
             </div>
             <p>&nbsp;</p>
             <ul class="breadcrumb">

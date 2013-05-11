@@ -27,7 +27,18 @@ import uk.org.rbc1b.roms.db.kingdomhall.KingdomHallDao;
 @RequestMapping("/kingdom-halls")
 public class KingdomHallsController {
 
+    private static final String BASE_URI = "/kingdom-halls/";
     private KingdomHallDao kingdomHallDao;
+
+    /**
+     * Generate the uri used to access the kingdom hall pages.
+     *
+     * @param kingdomHallId optional kingdom hall id
+     * @return uri
+     */
+    public static String generateUri(Integer kingdomHallId) {
+        return kingdomHallId != null ? BASE_URI + kingdomHallId : BASE_URI;
+    }
 
     /**
      * Display the list of kingdom halls.
@@ -39,7 +50,7 @@ public class KingdomHallsController {
     public String handleList(ModelMap model) {
 
         model.addAttribute("kingdomHalls", createKingdomHallListModels(kingdomHallDao.findKingdomHalls()));
-
+        model.addAttribute("newUri", generateUri(null) + "/new");
         return "kingdom-halls/list";
     }
 
@@ -125,6 +136,8 @@ public class KingdomHallsController {
             model.setName(hall.getName());
             model.setPostCode(hall.getAddress().getPostcode());
             model.setTown(hall.getAddress().getTown());
+            model.setUri(generateUri(hall.getKingdomHallId()));
+            model.setEditUri(generateUri(hall.getKingdomHallId()) + "/edit");
             modelList.add(model);
         }
         return modelList;
