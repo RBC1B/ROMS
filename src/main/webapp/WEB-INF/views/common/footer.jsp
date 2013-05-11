@@ -25,7 +25,7 @@
 <script type="text/javascript" charset="utf-8" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js"></script>
 <script type="text/javascript" charset="utf-8" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/jquery.validate.min.js"></script>
 <script type="text/javascript" charset="utf-8" src="//ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
-<script type="text/javascript" charset="utf-8" src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/mustache.js' />"></script>
 <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/common.js' />"></script>
 

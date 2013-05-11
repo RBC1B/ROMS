@@ -33,7 +33,7 @@
                             <td>${project.name}</td>
                             <td>${project.type}</td>
                             <td>${project.status}</td>
-                            <td>${project.stage}</td>
+                            <td><span class="a-project-status" data-original-title="${project.stageDescription} - ${project.stageAssignedTo}">${project.stageName}</span></td>
                             <td><fmt:formatDate value="${project.requestDate}" pattern="yyyy-MM-dd" /></td>
                             <td><fmt:formatDate value="${project.completedDate}" pattern="yyyy-MM-dd" /></td>
                             <td><a href="<c:url value='${project.contactPersonUri}'/>">${project.contactPersonName}</a></td>

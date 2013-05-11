@@ -79,7 +79,11 @@ public class ProjectsController {
         }
         model.setName(project.getName());
         model.setRequestDate(project.getRequestDate());
-        model.setStage(stages.get(project.getProjectStageId()).getName());
+
+        ProjectStage stage = stages.get(project.getProjectStageId());
+        model.setStageName(stage.getName());
+        model.setStageDescription(stage.getDescription());
+        model.setStageAssignedTo(stage.getAssignedTo());
         model.setStatus(statuses.get(project.getProjectStatusId()));
         model.setType(types.get(project.getProjectTypeId()));
         model.setUri(generateUri(project.getProjectId()));

@@ -18,7 +18,9 @@ public class ProjectListModel {
     private String name;
     private String type;
     private String status;
-    private String stage;
+    private String stageName;
+    private String stageDescription;
+    private String stageAssignedTo;
     private Date requestDate;
     private Date completedDate;
     private String contactPersonName;
@@ -64,12 +66,28 @@ public class ProjectListModel {
         this.status = status;
     }
 
-    public String getStage() {
-        return stage;
+    public String getStageName() {
+        return stageName;
     }
 
-    public void setStage(String stage) {
-        this.stage = stage;
+    public void setStageName(String stageName) {
+        this.stageName = stageName;
+    }
+
+    public String getStageDescription() {
+        return stageDescription;
+    }
+
+    public void setStageDescription(String stageDescription) {
+        this.stageDescription = stageDescription;
+    }
+
+    public String getStageAssignedTo() {
+        return stageAssignedTo;
+    }
+
+    public void setStageAssignedTo(String stageAssignedTo) {
+        this.stageAssignedTo = stageAssignedTo;
     }
 
     public Date getRequestDate() {

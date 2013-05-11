@@ -11,4 +11,7 @@ $(document).ready(function() {
             ]
         }
     );
+
+    $(".a-project-status").tooltip();
+
 });
