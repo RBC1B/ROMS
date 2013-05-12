@@ -14,10 +14,11 @@ import javax.validation.constraints.Size;
  */
 public class QualificationForm {
 
+    private Integer qualificationId;
     @NotNull
     @Size(max = 50)
     private String name;
-    @Size(max = 50)
+    @Size(max = 150)
     private String description;
 
     public String getDescription() {
@@ -34,5 +35,19 @@ public class QualificationForm {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * @return the qualificationId
+     */
+    public Integer getQualificationId() {
+        return qualificationId;
+    }
+
+    /**
+     * @param qualificationId the qualificationId to set
+     */
+    public void setQualificationId(Integer qualificationId) {
+        this.qualificationId = qualificationId;
     }
 }

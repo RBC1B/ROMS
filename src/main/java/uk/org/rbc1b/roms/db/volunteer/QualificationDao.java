@@ -26,6 +26,17 @@ public interface QualificationDao {
     Qualification findQualification(String name);
 
     /**
+     * Find the qualification matching id, or null if no match found.
+     *
+     * @param qualificationId qualification id
+     * @return qualification
+     *
+     */
+    @PreAuthorize("hasPermission('SKILL', 'READ')")
+    @Transactional(readOnly = true)
+    Qualification findQualification(Integer qualificationId);
+
+    /**
      * Find all matching qualifications.
      *
      * @return list of matching qualifications
@@ -35,6 +46,15 @@ public interface QualificationDao {
     List<Qualification> findQualifications();
 
     /**
+     * Save a qualification.
+     *
+     * @param qualification a qualification to save
+     */
+    @PreAuthorize("hasPermission('SKILL','EDIT')")
+    @Transactional
+    void saveQualification(Qualification qualification);
+
+    /**
      * Create a new qualification.
      *
      * @param qualification new qualification to create
@@ -42,4 +62,13 @@ public interface QualificationDao {
     @PreAuthorize("hasPermission('SKILL', 'ADD')")
     @Transactional
     void createQualification(Qualification qualification);
+
+    /**
+     * Deletes a qualification.
+     *
+     * @param qualification to delete
+     */
+    @PreAuthorize("hasPermission('SKILL', 'DELETE')")
+    @Transactional
+    void deleteQualification(Qualification qualification);
 }

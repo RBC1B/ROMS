@@ -26,6 +26,11 @@ public class HibernateQualificationDao implements QualificationDao {
     }
 
     @Override
+    public Qualification findQualification(final Integer qualificationId) {
+        return (Qualification) this.sessionFactory.getCurrentSession().get(Qualification.class, qualificationId);
+    }
+
+    @Override
     public List<Qualification> findQualifications() {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Qualification.class);
 
@@ -35,8 +40,18 @@ public class HibernateQualificationDao implements QualificationDao {
     }
 
     @Override
+    public void saveQualification(Qualification qualification) {
+        this.sessionFactory.getCurrentSession().update(qualification);
+    }
+
+    @Override
     public void createQualification(Qualification qualification) {
         this.sessionFactory.getCurrentSession().save(qualification);
+    }
+
+    @Override
+    public void deleteQualification(Qualification qualification) {
+        this.sessionFactory.getCurrentSession().delete(qualification);
     }
 
     public void setSessionFactory(SessionFactory sessionFactory) {

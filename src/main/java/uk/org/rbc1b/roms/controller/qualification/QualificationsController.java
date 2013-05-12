@@ -5,6 +5,8 @@
 package uk.org.rbc1b.roms.controller.qualification;
 
 import javax.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -12,18 +14,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
+import uk.org.rbc1b.roms.controller.LoggingHandlerExceptionResolver;
 import uk.org.rbc1b.roms.db.volunteer.Qualification;
 import uk.org.rbc1b.roms.db.volunteer.QualificationDao;
 
 /**
  * Qualification types which may be applied to a volunteer.
  *
- * @author Tina
+ * @author ramindur
  */
 @Controller
 @RequestMapping("/qualifications")
 public class QualificationsController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoggingHandlerExceptionResolver.class);
     private QualificationDao qualificationDao;
 
     /**
@@ -70,7 +74,7 @@ public class QualificationsController {
         // initialise the form bean
         model.addAttribute("qualification", new QualificationForm());
 
-        return "qualifications/update";
+        return "/qualifications/new";
     }
 
     /**
@@ -79,7 +83,7 @@ public class QualificationsController {
      * @param qualificationForm form bean
      * @return mvc redirect
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "new", method = RequestMethod.POST)
     public String handleNewSubmit(@Valid QualificationForm qualificationForm) {
 
         Qualification qualification = new Qualification();
@@ -90,11 +94,46 @@ public class QualificationsController {
 
         qualificationDao.createQualification(qualification);
 
-        return "redirect:qualifications/" + qualificationForm.getName();
+        return "redirect:/qualifications";
+    }
+
+    /**
+     * Saves a changed qualification.
+     *
+     * @param qualificationForm form bean
+     * @return mvc redirect
+     */
+    @RequestMapping(value = "save", method = RequestMethod.POST)
+    public String handleSaveRequest(@Valid QualificationForm qualificationForm) {
+        Qualification qualification = new Qualification();
+        qualification.setQualificationId(qualificationForm.getQualificationId());
+        qualification.setName(qualificationForm.getName());
+        qualification.setDescription(qualificationForm.getDescription());
+        qualificationDao.saveQualification(qualification);
+        LOGGER.error("Qualification Updated:" + qualification.getQualificationId()
+                + ", " + qualification.getName()
+                + ", " + qualification.getDescription());
+        return "redirect:/qualifications";
     }
 
     @Autowired
     public void setQualificationDao(QualificationDao qualificationDao) {
         this.qualificationDao = qualificationDao;
+    }
+
+    /**
+     * Delete a qualification.
+     *
+     * @param qualificationId primary key
+     * @param model spring mvc model
+     *
+     * @return mvc redirect
+     */
+    @RequestMapping(value = "delete/{qualificationId}", method = RequestMethod.GET)
+    public String handleDelete(@PathVariable Integer qualificationId, ModelMap model) {
+        Qualification qualification = qualificationDao.findQualification(qualificationId);
+        qualificationDao.deleteQualification(qualification);
+        LOGGER.error("Qualification to delete:" + qualificationId);
+        return "redirect:/qualifications";
     }
 }

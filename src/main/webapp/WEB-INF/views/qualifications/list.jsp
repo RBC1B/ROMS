@@ -17,6 +17,7 @@
             <table class="table table-bordered table-striped table-hover" id="qualification-list">
                 <thead>
                     <tr>
+                        <th>Qualfication ID</th>
                         <th>Qualification</th>
                         <th>Description</th>
                         <th>Action</th>
@@ -25,24 +26,28 @@
                 <tbody>
                     <c:forEach items="${qualifications}" var="qualification">
                         <tr>
-                            <td>${qualification.qualification}</td>
+                            <td>${qualification.qualificationId}</td>
+                            <td>${qualification.name}</td>
                             <td>${qualification.description}</td>
                             <td>
-                                <ul class="inline list-actions">
-                                    <li><a class="btn btn-success" href="<c:url value="/qualifications/${qualification.qualification}" />">View</a></li>
-                                    <li><a class="list-action" href="<c:url value="/qualifications/${qualification.qualification}/edit" />">Edit</a></li>
-                                    <li><a class="list-action" href="delete">Delete</a></li>
+                                <ul>
+                                    <a id='edit' class="edit" href="">
+                                        <img src="<c:url value='/images/pencil.ico' />" width="20" height="20" alt="Edit">Edit 
+                                    </a>
+                                    <a id='delete' class="delete" href="">
+                                        <img src="<c:url value='/images/delete.ico' />" width="20" height="20" alt="Delete">Delete
+                                    </a>
                                 </ul>
                             </td>
                         </tr>
                     </c:forEach>
                 </tbody>
             </table>
+            <div id="new-qualification">
+                <a class="btn btn-primary" href="qualifications/new" />New Qualification</a>
+            </div>
+            
             <p>&nbsp;</p>
-            <ul class="breadcrumb">
-                <li><a href="<c:url value="/" />">ROMS</a> <span class="divider">/</span></li>
-                <li class="active">Qualifications</li>
-            </ul>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
             <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/qualifications.js' />" ></script>
         </div>
