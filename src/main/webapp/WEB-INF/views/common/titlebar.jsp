@@ -22,13 +22,7 @@
                     <sec:authorize access="hasPermission('QUALIFICATION', 'READ')"><li><a href="<c:url value="/qualifications" />">Qualification</a></li></sec:authorize>
                     <sec:authorize access="hasPermission('SKILL', 'READ')"><li><a href="<c:url value="/skills" />">Skills</a></li></sec:authorize>
                     <sec:authorize access="hasPermission('SKILL', 'READ')"><li><a href="<c:url value="/qualifications" />">My Profile</a></li></sec:authorize>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">&nbsp;My ROMS <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li>My ROMS</li>
-                            <li>My Projects</li>
-                            <li>My Department</li>
-                            <li>My Volunteers</li>
+                   
                         </ul>
                     </li>
                 </ul>
