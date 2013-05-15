@@ -32,7 +32,7 @@
                 </table>
             </div>
             <div class="entity-list-add-new">
-                <a class="btn btn-primary" href="<c:url value="/volunteers/new" />">Create new Volunteer</a>
+                <a class="btn btn-primary" href="<c:url value="${newUri}" />">Create new Volunteer</a>
             </div>
             <p>&nbsp;</p>
             <ul class="breadcrumb">
@@ -43,9 +43,9 @@
         </div>
         <script id="list-action" type="text/html" charset="utf-8">
             <ul class="inline list-actions">
-                {{#uri}}<li><a class="btn btn-success" href="<c:url value="{{uri}}" />">View</a></li>{{/uri}}
-                {{#editUri}}<li><a class="list-action" href="<c:url value="{{editUri}}" />">Edit</a></li>{{/editUri}}
-                {{#deleteUri}}<li><a class="list-action" href="<c:url value="{{deleteUri}}" />">Delete</a></li>{{/deleteUri}}
+                {{#uri}}<li><a class="btn btn-success" href="{{uriBase}}{{uri}}">View</a></li>{{/uri}}
+                {{#editUri}}<li><a class="list-action" href="{{uriBase}}{{editUri}}">Edit</a></li>{{/editUri}}
+                {{#deleteUri}}<li><a class="list-action" href="{{uriBase}}{{deleteUri}}">Delete</a></li>{{/deleteUri}}
             </ul>
         </script>
         <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/volunteers.js' />" ></script>

@@ -22,7 +22,7 @@
                     <sec:authorize access="hasPermission('QUALIFICATION', 'READ')"><li><a href="<c:url value="/qualifications" />">Qualification</a></li></sec:authorize>
                     <sec:authorize access="hasPermission('SKILL', 'READ')"><li><a href="<c:url value="/skills" />">Skills</a></li></sec:authorize>
                     <sec:authorize access="hasPermission('SKILL', 'READ')"><li><a href="<c:url value="/qualifications" />">My Profile</a></li></sec:authorize>
-                   
+
                         </ul>
                     </li>
                 </ul>

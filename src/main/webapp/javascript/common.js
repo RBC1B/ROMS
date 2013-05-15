@@ -21,7 +21,7 @@ roms.common.validatorErrorPlacement = function(error, element) {
 
 roms.common.congregationTypeAheadSource = function(query, process) {
     $.ajax({
-        url: roms.common.relativePath +"congregations/search",
+        url: roms.common.relativePath + "/congregations/search",
         contentType: "application/json",
         dataType: "json",
         data:  {
@@ -200,6 +200,7 @@ roms.common.datatables = function($table, options) {
 
 
 // store the relative path, used for all the ajax calls
+// we trim the trailing slash to allow uris that include it look absolute
 $(document).ready(function() {
-    roms.common.relativePath = $("#relative-path").data("relative-path");
+    roms.common.relativePath = $("#relative-path").data("relative-path").replace(/\/$/, '');
 });

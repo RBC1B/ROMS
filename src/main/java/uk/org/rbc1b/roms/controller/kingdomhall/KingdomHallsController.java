@@ -50,7 +50,7 @@ public class KingdomHallsController {
     public String handleList(ModelMap model) {
 
         model.addAttribute("kingdomHalls", createKingdomHallListModels(kingdomHallDao.findKingdomHalls()));
-        model.addAttribute("newUri", generateUri(null) + "/new");
+        model.addAttribute("newUri", generateUri(null) + "new");
         return "kingdom-halls/list";
     }
 

@@ -134,7 +134,7 @@ $(document).ready(function() {
                 required: true,
                 remote: {
                     // check for an exact match. Populate the congregation id
-                    url: roms.common.relativePath + "congregations/search",
+                    url: roms.common.relativePath + "/congregations/search",
                     contentType: "application/json",
                     dataType: "json",
                     data: {
@@ -239,7 +239,7 @@ $(document).ready(function() {
     function findVolunteerPerson(forename, surname, $personId, existingPersonName)  {
         var existingPersonId = $personId.val();
         $.ajax({
-            url: roms.common.relativePath + 'persons/search',
+            url: roms.common.relativePath + '/persons/search',
             contentType: "application/json",
             dataType: 'json',
             data:  {
@@ -317,7 +317,7 @@ $(document).ready(function() {
 
         // new person - pull the person data and populate the form.
         $.ajax({
-            url: roms.common.relativePath + 'persons/' + selectedPersonId  + "/reference",
+            url: roms.common.relativePath + '/persons/' + selectedPersonId  + "/reference",
             contentType: "application/json",
             dataType: 'json',
             success: function(data) {
@@ -354,7 +354,7 @@ $(document).ready(function() {
         var existingPersonId = $personId.val();
 
         $.ajax({
-            url: roms.common.relativePath + 'persons/search',
+            url: roms.common.relativePath + '/persons/search',
             contentType: "application/json",
             dataType: 'json',
             data:  {
@@ -427,7 +427,7 @@ $(document).ready(function() {
             "iDisplayLength": 20,
             "bProcessing": true,
             "bServerSide": true,
-            "sAjaxSource": roms.common.relativePath + 'volunteers',
+            "sAjaxSource": roms.common.relativePath + '/volunteers',
             "aoColumns": [
                 {   "sName": "ID", "mData": "id" },
                 {   "sName": "forename", "mData": "forename" },
@@ -436,6 +436,7 @@ $(document).ready(function() {
                 {   "sName": "action", "bSortable": false,
                     "mData":
                         function ( data, type, val ) {
+                            data.uriBase = roms.common.relativePath;
                             return Mustache.to_html(listActionTemplate, data);
                         }
                 }

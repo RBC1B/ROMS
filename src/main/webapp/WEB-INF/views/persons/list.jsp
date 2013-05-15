@@ -36,11 +36,11 @@
             </ul>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
-        <script id="list-action" type="text/html" charset="utf-8">
+        <script id="list-action" type="text/html">
             <ul class="inline list-actions">
-                {{#uri}}<li><a class="btn btn-success" href="<c:url value="{{uri}}" />">View</a></li>{{/uri}}
-                {{#editUri}}<li><a class="list-action" href="<c:url value="{{editUri}}" />">Edit</a></li>{{/editUri}}
-                {{#deleteUri}}<li><a class="list-action" href="<c:url value="{{deleteUri}}" />">Delete</a></li>{{/deleteUri}}
+                {{#uri}}<li><a class="btn btn-success" href="{{uriBase}}{{uri}}">View</a></li>{{/uri}}
+                {{#editUri}}<li><a class="list-action" href="{{uriBase}}{{editUri}}">Edit</a></li>{{/editUri}}
+                {{#deleteUri}}<li><a class="list-action" href="{{uriBase}}{{deleteUri}}">Delete</a></li>{{/deleteUri}}
             </ul>
         </script>
         <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/persons.js' />" ></script>

@@ -31,7 +31,7 @@ $(document).ready(function() {
             congregationName: {
                 remote: {
                     // check for an exact match. Populate the congregation id
-                    url: roms.common.relativePath + "congregations/search",
+                    url: roms.common.relativePath + "/congregations/search",
                     contentType: "application/json",
                     dataType: "json",
                     data: {
@@ -63,7 +63,7 @@ $(document).ready(function() {
             "iDisplayLength": 20,
             "bProcessing": true,
             "bServerSide": true,
-            "sAjaxSource": roms.common.relativePath + 'persons',
+            "sAjaxSource": roms.common.relativePath + '/persons',
             "aoColumns": [
                 {   "sName": "forename", "mData": "forename" },
                 {   "sName": "surname", "mData": "surname" },
@@ -71,6 +71,7 @@ $(document).ready(function() {
                 {   "sName": "action", "bSortable": false,
                     "mData":
                         function ( data, type, val ) {
+                            data.uriBase = roms.common.relativePath;
                             return Mustache.to_html(listActionTemplate, data);
                         }
                 }

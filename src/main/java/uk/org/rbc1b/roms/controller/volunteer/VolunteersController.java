@@ -74,7 +74,7 @@ public class VolunteersController {
     public String handleList(ModelMap model, VolunteerSearchCriteria searchCriteria) {
 
         model.addAttribute("volunteers", volunteerDao.findVolunteers(searchCriteria));
-
+        model.addAttribute("newUri", generateUri(null) + "new");
         return "volunteers/list";
     }
 
