@@ -22,9 +22,6 @@
                     <sec:authorize access="hasPermission('QUALIFICATION', 'READ')"><li><a href="<c:url value="/qualifications" />">Qualification</a></li></sec:authorize>
                     <sec:authorize access="hasPermission('SKILL', 'READ')"><li><a href="<c:url value="/skills" />">Skills</a></li></sec:authorize>
                     <sec:authorize access="hasPermission('SKILL', 'READ')"><li><a href="<c:url value="/qualifications" />">My Profile</a></li></sec:authorize>
-
-                        </ul>
-                    </li>
                 </ul>
                 <p class="pull-right">
                     <a class="btn btn-info" href="#"><i class="icon-question-sign icon-white"></i>&nbsp;Help</a>
