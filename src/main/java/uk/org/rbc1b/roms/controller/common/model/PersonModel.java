@@ -14,6 +14,7 @@ import uk.org.rbc1b.roms.db.Address;
  */
 public class PersonModel {
 
+    private Integer id;
     private String uri;
     private String editUri;
     private java.sql.Date birthDate;
@@ -27,6 +28,14 @@ public class PersonModel {
     private String workPhone;
     private String email;
     private String comments;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getUri() {
         return uri;

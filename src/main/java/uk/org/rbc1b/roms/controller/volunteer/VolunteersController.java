@@ -15,12 +15,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableRequestData;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableResult;
 import uk.org.rbc1b.roms.controller.common.model.EntityModel;
+import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
 import uk.org.rbc1b.roms.controller.congregation.CongregationsController;
 import uk.org.rbc1b.roms.db.Address;
 import uk.org.rbc1b.roms.db.CongregationDao;
@@ -52,6 +55,7 @@ public class VolunteersController {
     private PersonDao personDao;
     private CongregationDao congregationDao;
     private ReferenceDao referenceDao;
+    private PersonModelFactory personModelFactory;
 
     /**
      * Generate the uri used to access the volunteer pages.
@@ -131,6 +135,60 @@ public class VolunteersController {
         model.setForename(volunteer.getForename());
         model.setMiddleName(volunteer.getMiddleName());
         model.setSurname(volunteer.getSurname());
+
+        model.setUri(generateUri(volunteer.getPersonId()));
+        model.setEditUri(generateUri(volunteer.getPersonId()) + "/edit");
+
+        return model;
+    }
+
+    /**
+     * @param volunteerId volunteer primary key
+     * @param model model
+     * @return view name
+     * @throws NoSuchRequestHandlingMethodException when no person matching the id is found
+     */
+    @RequestMapping(value = "{volunteerId}", method = RequestMethod.GET)
+    public String handleVolunteer(@PathVariable Integer volunteerId, ModelMap model) throws NoSuchRequestHandlingMethodException {
+
+        Volunteer volunteer = volunteerDao.findVolunteer(volunteerId);
+        if (volunteer == null) {
+            if (personDao.findPerson(volunteerId) != null) {
+                return "redirect:" + personModelFactory.generateUri(volunteerId);
+            }
+            throw new NoSuchRequestHandlingMethodException("No volunteer or person with id [" + volunteerId + "]", this.getClass());
+        }
+
+        model.addAttribute("volunteer", generateVolunteerModel(volunteer));
+
+        return "volunteers/show";
+    }
+
+    private VolunteerModel generateVolunteerModel(Volunteer volunteer) {
+        VolunteerModel model = new VolunteerModel();
+
+        model.setId(volunteer.getPersonId());
+        model.setUri(generateUri(volunteer.getPersonId()));
+        model.setAddress(volunteer.getAddress());
+        model.setBirthDate(volunteer.getBirthDate());
+        model.setComments(volunteer.getComments());
+
+        if (volunteer.getCongregation() != null) {
+            EntityModel congregation = new EntityModel();
+            congregation.setId(volunteer.getCongregation().getCongregationId());
+            congregation.setName(volunteer.getCongregation().getName());
+            congregation.setUri(CongregationsController.generateUri(volunteer.getCongregation().getCongregationId()));
+
+            model.setCongregation(congregation);
+        }
+
+        model.setEmail(volunteer.getEmail());
+        model.setForename(volunteer.getForename());
+        model.setMiddleName(volunteer.getMiddleName());
+        model.setSurname(volunteer.getSurname());
+        model.setMobile(volunteer.getMobile());
+        model.setTelephone(volunteer.getTelephone());
+        model.setWorkPhone(volunteer.getWorkPhone());
 
         model.setUri(generateUri(volunteer.getPersonId()));
         model.setEditUri(generateUri(volunteer.getPersonId()) + "/edit");
@@ -303,13 +361,15 @@ public class VolunteersController {
     }
 
     @Autowired
+    public void setPersonModelFactory(PersonModelFactory personModelFactory) {
+        this.personModelFactory = personModelFactory;
+    }
+
+    @Autowired
     public void setReferenceDao(ReferenceDao referenceDao) {
         this.referenceDao = referenceDao;
     }
 
-    /**
-     * @param volunteerDao volunteer dao
-     */
     @Autowired
     public void setVolunteerDao(VolunteerDao volunteerDao) {
         this.volunteerDao = volunteerDao;

@@ -41,6 +41,7 @@ public class PersonModelFactory {
         }
 
         PersonModel model = new PersonModel();
+        model.setId(person.getPersonId());
         model.setUri(generateUri(person.getPersonId()));
 
         model.setAddress(person.getAddress());
