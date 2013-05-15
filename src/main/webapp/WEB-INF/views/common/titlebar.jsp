@@ -5,7 +5,7 @@
     <div class="navbar-inner">
         <div class="container-fluid">
             <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">MENU</a>
-            <a class="brand" href="http://localhost:8080/ROMS/">&nbsp;RBC ROMS</a>
+            <a class="brand" href="<c:url value="/" />">RBC ROMS</a>
             <!-- Everything you want minimised at 940px or less, place within here -->
             <div class="nav-collapse">
                 <ul class="nav" >
