@@ -168,7 +168,7 @@
                         <div class="span2">
                             <form:select path="emergencyRelationshipId">
                                 <form:option value="" label="Relationship" />
-                                <form:options items="${relationshipValues}" itemValue="key" itemLabel="value" />
+                                <form:options items="${relationshipValues}" />
                             </form:select>
                         </div>
                     </div>
