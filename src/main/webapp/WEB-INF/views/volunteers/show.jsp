@@ -15,7 +15,7 @@
                 <div class="media-body">
                     <h1 class="media-heading">#${volunteer.id}: ${volunteer.forename} ${volunteer.middleName} ${volunteer.surname}</h1>
                     <dl class="dl-horizontal">
-                        <dt>Status:</dt><dd>TBD</dd>
+                        <dt>Status:</dt><dd>${volunteer.status}</dd>
                         <dt>Comments:</dt><dd>${volunteer.comments}</dd>
                     </dl>
                 </div>

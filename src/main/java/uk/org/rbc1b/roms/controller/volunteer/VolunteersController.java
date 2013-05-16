@@ -190,6 +190,8 @@ public class VolunteersController {
         model.setTelephone(volunteer.getTelephone());
         model.setWorkPhone(volunteer.getWorkPhone());
 
+        model.setStatus(referenceDao.findRBCStatusValues().get(volunteer.getRbcStatusId()));
+
         model.setUri(generateUri(volunteer.getPersonId()));
         model.setEditUri(generateUri(volunteer.getPersonId()) + "/edit");
 
