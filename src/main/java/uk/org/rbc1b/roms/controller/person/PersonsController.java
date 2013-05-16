@@ -109,7 +109,7 @@ public class PersonsController {
     public String handlePerson(@PathVariable Integer personId, ModelMap model) throws NoSuchRequestHandlingMethodException {
         Person person = fetchPerson(personId);
 
-        if (volunteerDao.findVolunteer(person.getPersonId()) != null) {
+        if (volunteerDao.findVolunteer(person.getPersonId(), null) != null) {
             return "redirect:" + VolunteersController.generateUri(personId);
         }
         model.addAttribute("person", personModelFactory.generatePersonModel(person));
@@ -130,7 +130,7 @@ public class PersonsController {
 
         Person person = fetchPerson(personId);
 
-        if (volunteerDao.findVolunteer(person.getPersonId()) != null) {
+        if (volunteerDao.findVolunteer(person.getPersonId(), null) != null) {
             return "redirect:" + VolunteersController.generateUri(personId);
         }
 
@@ -272,7 +272,7 @@ public class PersonsController {
         }
 
         if (checkVolunteer) {
-            result.setVolunteer(volunteerDao.findVolunteer(person.getPersonId()) != null);
+            result.setVolunteer(volunteerDao.findVolunteer(person.getPersonId(), null) != null);
         }
         return result;
     }

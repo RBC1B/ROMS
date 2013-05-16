@@ -29,7 +29,7 @@ public class JDBCReferenceDao implements ReferenceDao {
     @Cacheable("reference.maritalStatus")
     public Map<Integer, String> findMaritalStatusValues() {
         return findReferenceValues("SELECT MaritalStatusId AS id, Description AS value "
-                + "FROM MaritalStatus ORDFER BY MaritalStatusId");
+                + "FROM MaritalStatus ORDER BY MaritalStatusId");
     }
 
     @Override

@@ -5,7 +5,10 @@
 package uk.org.rbc1b.roms.db.volunteer;
 
 import java.util.List;
+import java.util.Set;
+import org.apache.commons.collections.CollectionUtils;
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
@@ -27,8 +30,17 @@ public class HibernateVolunteerDao implements VolunteerDao {
     private SessionFactory sessionFactory;
 
     @Override
-    public Volunteer findVolunteer(Integer volunteerId) {
-        return (Volunteer) this.sessionFactory.getCurrentSession().get(Volunteer.class, volunteerId);
+    public Volunteer findVolunteer(Integer volunteerId, Set<VolunteerData> data) {
+        Volunteer volunteer = (Volunteer) this.sessionFactory.getCurrentSession().get(Volunteer.class, volunteerId);
+        if (volunteer != null && CollectionUtils.isNotEmpty(data)) {
+            if (data.remove(VolunteerData.SPOUSE)) {
+                Hibernate.initialize(volunteer.getSpouse());
+            }
+            if (data.remove(VolunteerData.EMERGENCY_CONTACT)) {
+                Hibernate.initialize(volunteer.getEmergencyContact());
+            }
+        }
+        return volunteer;
     }
 
     @Override

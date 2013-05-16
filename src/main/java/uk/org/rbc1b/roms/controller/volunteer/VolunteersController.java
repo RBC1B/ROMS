@@ -5,6 +5,7 @@
 package uk.org.rbc1b.roms.controller.volunteer;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,6 +32,7 @@ import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.PersonDao;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
+import uk.org.rbc1b.roms.db.volunteer.VolunteerDao.VolunteerData;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerSearchCriteria;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerTrade;
 import uk.org.rbc1b.roms.reference.ReferenceDao;
@@ -51,6 +53,7 @@ public class VolunteersController {
     private static final int FULLTIME_REGULAR_PIONEER = 2;
     private static final int APPOINTMENT_ELDER = 1;
     private static final int APPOINTMENT_MINISTERIAL_SERVANT = 2;
+    private static final Set<VolunteerData> VOLUNTEER_DATA = EnumSet.of(VolunteerData.SPOUSE, VolunteerData.EMERGENCY_CONTACT);
     private VolunteerDao volunteerDao;
     private PersonDao personDao;
     private CongregationDao congregationDao;
@@ -151,7 +154,7 @@ public class VolunteersController {
     @RequestMapping(value = "{volunteerId}", method = RequestMethod.GET)
     public String handleVolunteer(@PathVariable Integer volunteerId, ModelMap model) throws NoSuchRequestHandlingMethodException {
 
-        Volunteer volunteer = volunteerDao.findVolunteer(volunteerId);
+        Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
         if (volunteer == null) {
             if (personDao.findPerson(volunteerId) != null) {
                 return "redirect:" + personModelFactory.generateUri(volunteerId);
@@ -190,7 +193,18 @@ public class VolunteersController {
         model.setTelephone(volunteer.getTelephone());
         model.setWorkPhone(volunteer.getWorkPhone());
 
+        model.setGender(volunteer.getGender());
         model.setStatus(referenceDao.findRBCStatusValues().get(volunteer.getRbcStatusId()));
+
+        if (volunteer.getMaritalStatusId() != null) {
+            model.setMaritalStatus(referenceDao.findMaritalStatusValues().get(volunteer.getMaritalStatusId()));
+        }
+
+        model.setEmergencyContact(personModelFactory.generatePersonModel(volunteer.getEmergencyContact()));
+        if (volunteer.getEmergencyContactRelationshipId() != null) {
+            model.setEmergencyContactRelationship(referenceDao.findRelationshipValues().get(volunteer.getEmergencyContactRelationshipId()));
+        }
+        model.setSpouse(personModelFactory.generatePersonModel(volunteer.getSpouse()));
 
         model.setUri(generateUri(volunteer.getPersonId()));
         model.setEditUri(generateUri(volunteer.getPersonId()) + "/edit");
@@ -226,7 +240,7 @@ public class VolunteersController {
 
         // look up the existing volunteer/person if possible
         if (form.getPersonId() != null) {
-            volunteer = volunteerDao.findVolunteer(form.getPersonId());
+            volunteer = volunteerDao.findVolunteer(form.getPersonId(), VOLUNTEER_DATA);
             if (volunteer == null) {
                 Person person = personDao.findPerson(form.getPersonId());
                 if (person == null) {

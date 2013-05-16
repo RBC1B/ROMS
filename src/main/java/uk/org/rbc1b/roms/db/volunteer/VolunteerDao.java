@@ -5,6 +5,7 @@
 package uk.org.rbc1b.roms.db.volunteer;
 
 import java.util.List;
+import java.util.Set;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,11 +20,12 @@ public interface VolunteerDao {
      * Find the volunteer with matching id, or null with no match.
      *
      * @param volunteerId id
+     * @param data additional data to populate
      * @return volunteer
      */
     @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional(readOnly = true)
-    Volunteer findVolunteer(Integer volunteerId);
+    Volunteer findVolunteer(Integer volunteerId, Set<VolunteerData> data);
 
     /**
      * Find all matching volunteers.
@@ -53,4 +55,13 @@ public interface VolunteerDao {
     @PreAuthorize("hasPermission('VOLUNTEER', 'ADD')")
     @Transactional
     void saveVolunteer(Volunteer volunteer);
+
+
+    /**
+     * Additional data to pull in when generating the volunteer details.
+     */
+    public static enum VolunteerData {
+        SPOUSE, EMERGENCY_CONTACT;
+    }
+
 }
