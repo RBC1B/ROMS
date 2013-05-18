@@ -27,7 +27,7 @@ create table Person(
     Postcode        varchar(10),
     Telephone       varchar(15),
     Mobile          varchar(15),
-    WorkPhone       varchar(50),
+    WorkPhone       varchar(15),
     Email           varchar(50),
     Comments        varchar(250),
     CongregationId  bigint(20),

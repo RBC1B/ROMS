@@ -26,6 +26,13 @@ public class JDBCReferenceDao implements ReferenceDao {
     private JdbcTemplate jdbcTemplate;
 
     @Override
+    @Cacheable("reference.appointment")
+    public Map<Integer, String> findAppointmentValues() {
+        return findReferenceValues("SELECT AppointmentId AS id, Description AS value "
+                + "FROM Appointment ORDER BY AppointmentId");
+    }
+
+    @Override
     @Cacheable("reference.maritalStatus")
     public Map<Integer, String> findMaritalStatusValues() {
         return findReferenceValues("SELECT MaritalStatusId AS id, Description AS value "

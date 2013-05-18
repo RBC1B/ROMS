@@ -200,9 +200,16 @@ public class VolunteersController {
             model.setMaritalStatus(referenceDao.findMaritalStatusValues().get(volunteer.getMaritalStatusId()));
         }
 
+        if (volunteer.getAppointmentId() != null) {
+            model.setAppointment(referenceDao.findAppointmentValues().get(volunteer.getAppointmentId()));
+        }
+        model.setBaptismDate(volunteer.getBaptismDate());
         model.setEmergencyContact(personModelFactory.generatePersonModel(volunteer.getEmergencyContact()));
         if (volunteer.getEmergencyContactRelationshipId() != null) {
             model.setEmergencyContactRelationship(referenceDao.findRelationshipValues().get(volunteer.getEmergencyContactRelationshipId()));
+        }
+        if (volunteer.getFulltimeId() != null) {
+            model.setFulltime(referenceDao.findFulltimeValues().get(volunteer.getFulltimeId()));
         }
         model.setSpouse(personModelFactory.generatePersonModel(volunteer.getSpouse()));
 

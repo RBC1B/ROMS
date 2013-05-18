@@ -4,6 +4,7 @@
  */
 package uk.org.rbc1b.roms.controller.volunteer;
 
+import java.sql.Date;
 import uk.org.rbc1b.roms.controller.common.model.PersonModel;
 
 /**
@@ -13,12 +14,31 @@ import uk.org.rbc1b.roms.controller.common.model.PersonModel;
  */
 public class VolunteerModel extends PersonModel {
 
+    private String appointment;
+    private java.sql.Date baptismDate;
     private PersonModel emergencyContact;
     private String emergencyContactRelationship;
+    private String fulltime;
     private String gender;
     private String maritalStatus;
     private String status;
     private PersonModel spouse;
+
+    public String getAppointment() {
+        return appointment;
+    }
+
+    public void setAppointment(String appointment) {
+        this.appointment = appointment;
+    }
+
+    public Date getBaptismDate() {
+        return baptismDate;
+    }
+
+    public void setBaptismDate(Date baptismDate) {
+        this.baptismDate = baptismDate;
+    }
 
     public PersonModel getEmergencyContact() {
         return emergencyContact;
@@ -34,6 +54,14 @@ public class VolunteerModel extends PersonModel {
 
     public void setEmergencyContactRelationship(String emergencyContactRelationship) {
         this.emergencyContactRelationship = emergencyContactRelationship;
+    }
+
+    public String getFulltime() {
+        return fulltime;
+    }
+
+    public void setFulltime(String fulltime) {
+        this.fulltime = fulltime;
     }
 
     public String getGender() {
