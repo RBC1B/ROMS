@@ -53,7 +53,8 @@ public class VolunteersController {
     private static final int FULLTIME_REGULAR_PIONEER = 2;
     private static final int APPOINTMENT_ELDER = 1;
     private static final int APPOINTMENT_MINISTERIAL_SERVANT = 2;
-    private static final Set<VolunteerData> VOLUNTEER_DATA = EnumSet.of(VolunteerData.SPOUSE, VolunteerData.EMERGENCY_CONTACT);
+    private static final Set<VolunteerData> VOLUNTEER_DATA = EnumSet.of(VolunteerData.SPOUSE,
+            VolunteerData.EMERGENCY_CONTACT, VolunteerData.TRADES);
     private VolunteerDao volunteerDao;
     private PersonDao personDao;
     private CongregationDao congregationDao;
@@ -212,6 +213,7 @@ public class VolunteersController {
             model.setFulltime(referenceDao.findFulltimeValues().get(volunteer.getFulltimeId()));
         }
         model.setSpouse(personModelFactory.generatePersonModel(volunteer.getSpouse()));
+        model.setTrades(volunteer.getTrades().isEmpty() ? null : volunteer.getTrades());
 
         model.setUri(generateUri(volunteer.getPersonId()));
         model.setEditUri(generateUri(volunteer.getPersonId()) + "/edit");

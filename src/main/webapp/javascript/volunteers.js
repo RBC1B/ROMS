@@ -418,7 +418,7 @@ $(document).ready(function() {
         $personId.val(selectedPersonId);
     }
 
-        // list
+    // list
     var listActionTemplate = $("#list-action").html();
 
     roms.common.datatables(
@@ -442,6 +442,14 @@ $(document).ready(function() {
                 }
             ]
         }
-        );
+    );
+
+    // display
+    roms.common.datatables(
+        $("#volunteer-skills-trades"),
+        {
+            "iDisplayLength": 20
+        }
+    );
 
 });

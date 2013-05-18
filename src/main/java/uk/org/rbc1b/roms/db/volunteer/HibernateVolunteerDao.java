@@ -33,11 +33,14 @@ public class HibernateVolunteerDao implements VolunteerDao {
     public Volunteer findVolunteer(Integer volunteerId, Set<VolunteerData> data) {
         Volunteer volunteer = (Volunteer) this.sessionFactory.getCurrentSession().get(Volunteer.class, volunteerId);
         if (volunteer != null && CollectionUtils.isNotEmpty(data)) {
-            if (data.remove(VolunteerData.SPOUSE)) {
+            if (data.contains(VolunteerData.SPOUSE)) {
                 Hibernate.initialize(volunteer.getSpouse());
             }
-            if (data.remove(VolunteerData.EMERGENCY_CONTACT)) {
+            if (data.contains(VolunteerData.EMERGENCY_CONTACT)) {
                 Hibernate.initialize(volunteer.getEmergencyContact());
+            }
+            if (data.contains(VolunteerData.TRADES)) {
+                Hibernate.initialize(volunteer.getTrades());
             }
         }
         return volunteer;

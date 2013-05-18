@@ -5,7 +5,9 @@
 package uk.org.rbc1b.roms.controller.volunteer;
 
 import java.sql.Date;
+import java.util.Set;
 import uk.org.rbc1b.roms.controller.common.model.PersonModel;
+import uk.org.rbc1b.roms.db.volunteer.VolunteerTrade;
 
 /**
  * Model of volunteer details.
@@ -23,6 +25,7 @@ public class VolunteerModel extends PersonModel {
     private String maritalStatus;
     private String status;
     private PersonModel spouse;
+    private Set<VolunteerTrade> trades;
 
     public String getAppointment() {
         return appointment;
@@ -95,4 +98,13 @@ public class VolunteerModel extends PersonModel {
     public void setSpouse(PersonModel spouse) {
         this.spouse = spouse;
     }
+
+    public Set<VolunteerTrade> getTrades() {
+        return trades;
+    }
+
+    public void setTrades(Set<VolunteerTrade> trades) {
+        this.trades = trades;
+    }
+
 }

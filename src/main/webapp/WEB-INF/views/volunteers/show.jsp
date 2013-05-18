@@ -168,11 +168,33 @@
                     </dl>
                 </div>
                 <div class="tab-pane" id="skills">
-                    skills tbd
+                    <c:choose>
+                        <c:when test="${volunteer.trades != null}">
+                            <table id="volunteer-skills-trades" class="table table-bordered table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Years</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach items="${volunteer.trades}" var="trade">
+                                        <tr>
+                                            <td>${trade.name}</td>
+                                            <td>${trade.experienceDescription}</td>
+                                            <td>${trade.experienceYears}</td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                        </c:when>
+                        <c:otherwise>Not set</c:otherwise>
+                    </c:choose>
                 </div>
             </div>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
-        <script type="text/javascript" charset="utf8" src="<c:url value='/javascript/volunteer.js' />" ></script>
+        <script type="text/javascript" charset="utf8" src="<c:url value='/javascript/volunteers.js' />" ></script>
     </body>
 </html>
