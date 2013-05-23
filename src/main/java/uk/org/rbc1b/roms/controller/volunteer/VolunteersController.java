@@ -23,9 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableRequestData;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableResult;
-import uk.org.rbc1b.roms.controller.common.model.EntityModel;
 import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
-import uk.org.rbc1b.roms.controller.congregation.CongregationsController;
 import uk.org.rbc1b.roms.db.Address;
 import uk.org.rbc1b.roms.db.CongregationDao;
 import uk.org.rbc1b.roms.db.Person;
@@ -46,7 +44,6 @@ import uk.org.rbc1b.roms.reference.ReferenceDao;
 @RequestMapping("/volunteers")
 public class VolunteersController {
 
-    private static final String BASE_URI = "/volunteers/";
     private static final int MARRIED_MARITAL_STATUS = 2;
     private static final int RBC_STATUS_ACTIVE = 1;
     private static final int INTERVIEW_STATUS_INVITE_DUE = 1;
@@ -54,22 +51,13 @@ public class VolunteersController {
     private static final int APPOINTMENT_ELDER = 1;
     private static final int APPOINTMENT_MINISTERIAL_SERVANT = 2;
     private static final Set<VolunteerData> VOLUNTEER_DATA = EnumSet.of(VolunteerData.SPOUSE,
-            VolunteerData.EMERGENCY_CONTACT, VolunteerData.TRADES);
+            VolunteerData.EMERGENCY_CONTACT, VolunteerData.TRADES, VolunteerData.INTERVIEWER);
     private VolunteerDao volunteerDao;
     private PersonDao personDao;
     private CongregationDao congregationDao;
     private ReferenceDao referenceDao;
     private PersonModelFactory personModelFactory;
-
-    /**
-     * Generate the uri used to access the volunteer pages.
-     *
-     * @param volunteerId optional volunteer id
-     * @return uri
-     */
-    public static String generateUri(Integer volunteerId) {
-        return volunteerId != null ? BASE_URI + volunteerId : BASE_URI;
-    }
+    private VolunteerModelFactory volunteerModelFactory;
 
     /**
      * Display a list of volunteers.
@@ -82,7 +70,7 @@ public class VolunteersController {
     public String handleList(ModelMap model, VolunteerSearchCriteria searchCriteria) {
 
         model.addAttribute("volunteers", volunteerDao.findVolunteers(searchCriteria));
-        model.addAttribute("newUri", generateUri(null) + "new");
+        model.addAttribute("newUri", volunteerModelFactory.generateUri(null) + "new");
         return "volunteers/list";
     }
 
@@ -111,7 +99,7 @@ public class VolunteersController {
             List<Volunteer> volunteers = volunteerDao.findVolunteers(searchCriteria);
             List<VolunteerListModel> modelList = new ArrayList<VolunteerListModel>(volunteers.size());
             for (Volunteer volunteer : volunteers) {
-                modelList.add(generateVolunteerListModel(volunteer));
+                modelList.add(volunteerModelFactory.generateVolunteerListModel(volunteer));
             }
             result.setRecords(modelList);
             result.setTotalDisplayRecords(modelList.size());
@@ -119,31 +107,6 @@ public class VolunteersController {
 
         return result;
 
-    }
-
-    private VolunteerListModel generateVolunteerListModel(Volunteer volunteer) {
-        VolunteerListModel model = new VolunteerListModel();
-        model.setId(volunteer.getPersonId());
-        model.setUri(generateUri(volunteer.getPersonId()));
-
-        if (volunteer.getCongregation() != null) {
-            EntityModel congregation = new EntityModel();
-            congregation.setId(volunteer.getCongregation().getCongregationId());
-            congregation.setName(volunteer.getCongregation().getName());
-            congregation.setUri(CongregationsController.generateUri(volunteer.getCongregation().getCongregationId()));
-
-            model.setCongregation(congregation);
-        }
-
-        model.setEmail(volunteer.getEmail());
-        model.setForename(volunteer.getForename());
-        model.setMiddleName(volunteer.getMiddleName());
-        model.setSurname(volunteer.getSurname());
-
-        model.setUri(generateUri(volunteer.getPersonId()));
-        model.setEditUri(generateUri(volunteer.getPersonId()) + "/edit");
-
-        return model;
     }
 
     /**
@@ -163,62 +126,9 @@ public class VolunteersController {
             throw new NoSuchRequestHandlingMethodException("No volunteer or person with id [" + volunteerId + "]", this.getClass());
         }
 
-        model.addAttribute("volunteer", generateVolunteerModel(volunteer));
+        model.addAttribute("volunteer", volunteerModelFactory.generateVolunteerModel(volunteer));
 
         return "volunteers/show";
-    }
-
-    private VolunteerModel generateVolunteerModel(Volunteer volunteer) {
-        VolunteerModel model = new VolunteerModel();
-
-        model.setId(volunteer.getPersonId());
-        model.setUri(generateUri(volunteer.getPersonId()));
-        model.setAddress(volunteer.getAddress());
-        model.setBirthDate(volunteer.getBirthDate());
-        model.setComments(volunteer.getComments());
-
-        if (volunteer.getCongregation() != null) {
-            EntityModel congregation = new EntityModel();
-            congregation.setId(volunteer.getCongregation().getCongregationId());
-            congregation.setName(volunteer.getCongregation().getName());
-            congregation.setUri(CongregationsController.generateUri(volunteer.getCongregation().getCongregationId()));
-
-            model.setCongregation(congregation);
-        }
-
-        model.setEmail(volunteer.getEmail());
-        model.setForename(volunteer.getForename());
-        model.setMiddleName(volunteer.getMiddleName());
-        model.setSurname(volunteer.getSurname());
-        model.setMobile(volunteer.getMobile());
-        model.setTelephone(volunteer.getTelephone());
-        model.setWorkPhone(volunteer.getWorkPhone());
-
-        model.setGender(volunteer.getGender());
-        model.setStatus(referenceDao.findRBCStatusValues().get(volunteer.getRbcStatusId()));
-
-        if (volunteer.getMaritalStatusId() != null) {
-            model.setMaritalStatus(referenceDao.findMaritalStatusValues().get(volunteer.getMaritalStatusId()));
-        }
-
-        if (volunteer.getAppointmentId() != null) {
-            model.setAppointment(referenceDao.findAppointmentValues().get(volunteer.getAppointmentId()));
-        }
-        model.setBaptismDate(volunteer.getBaptismDate());
-        model.setEmergencyContact(personModelFactory.generatePersonModel(volunteer.getEmergencyContact()));
-        if (volunteer.getEmergencyContactRelationshipId() != null) {
-            model.setEmergencyContactRelationship(referenceDao.findRelationshipValues().get(volunteer.getEmergencyContactRelationshipId()));
-        }
-        if (volunteer.getFulltimeId() != null) {
-            model.setFulltime(referenceDao.findFulltimeValues().get(volunteer.getFulltimeId()));
-        }
-        model.setSpouse(personModelFactory.generatePersonModel(volunteer.getSpouse()));
-        model.setTrades(volunteer.getTrades().isEmpty() ? null : volunteer.getTrades());
-
-        model.setUri(generateUri(volunteer.getPersonId()));
-        model.setEditUri(generateUri(volunteer.getPersonId()) + "/edit");
-
-        return model;
     }
 
     /**
@@ -325,7 +235,7 @@ public class VolunteersController {
 
         volunteerDao.saveVolunteer(volunteer);
 
-        return "redirect:" + generateUri(volunteer.getPersonId());
+        return "redirect:" + volunteerModelFactory.generateUri(volunteer.getPersonId());
     }
 
     private Person createEmergencyContact(VolunteerForm form) {
@@ -398,5 +308,10 @@ public class VolunteersController {
     @Autowired
     public void setVolunteerDao(VolunteerDao volunteerDao) {
         this.volunteerDao = volunteerDao;
+    }
+
+    @Autowired
+    public void setVolunteerModelFactory(VolunteerModelFactory volunteerModelFactory) {
+        this.volunteerModelFactory = volunteerModelFactory;
     }
 }

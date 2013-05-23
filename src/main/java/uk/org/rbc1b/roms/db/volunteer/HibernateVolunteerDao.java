@@ -42,6 +42,10 @@ public class HibernateVolunteerDao implements VolunteerDao {
             if (data.contains(VolunteerData.TRADES)) {
                 Hibernate.initialize(volunteer.getTrades());
             }
+            if (data.contains(VolunteerData.INTERVIEWER)) {
+                Hibernate.initialize(volunteer.getInterviewerA());
+                Hibernate.initialize(volunteer.getInterviewerB());
+            }
         }
         return volunteer;
     }

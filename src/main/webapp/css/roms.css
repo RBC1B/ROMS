@@ -228,3 +228,13 @@ div.DTFC_LeftFootWrapper table {
 .trades-row {
     margin-bottom: 10px;
 }
+
+/*****************************************************************************/
+/* Volunteer details display                                                 */
+/*****************************************************************************/
+#volunteer-availability td {
+    width: 32px;
+}
+#volunteer-availability span {
+    margin-left: 8px;
+}

@@ -61,7 +61,7 @@ public interface VolunteerDao {
      * Additional data to pull in when generating the volunteer details.
      */
     public static enum VolunteerData {
-        SPOUSE, EMERGENCY_CONTACT, TRADES;
+        SPOUSE, EMERGENCY_CONTACT, TRADES, INTERVIEWER;
     }
 
 }

@@ -21,7 +21,7 @@ import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableRequestData;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableResult;
 import uk.org.rbc1b.roms.controller.common.model.PersonModel;
 import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
-import uk.org.rbc1b.roms.controller.volunteer.VolunteersController;
+import uk.org.rbc1b.roms.controller.volunteer.VolunteerModelFactory;
 import uk.org.rbc1b.roms.db.Address;
 import uk.org.rbc1b.roms.db.CongregationDao;
 import uk.org.rbc1b.roms.db.Person;
@@ -42,6 +42,7 @@ public class PersonsController {
     private VolunteerDao volunteerDao;
     private CongregationDao congregationDao;
     private PersonModelFactory personModelFactory;
+    private VolunteerModelFactory volunteerModelFactory;
 
     /**
      * Display the list of persons.
@@ -110,7 +111,7 @@ public class PersonsController {
         Person person = fetchPerson(personId);
 
         if (volunteerDao.findVolunteer(person.getPersonId(), null) != null) {
-            return "redirect:" + VolunteersController.generateUri(personId);
+            return "redirect:" + volunteerModelFactory.generateUri(personId);
         }
         model.addAttribute("person", personModelFactory.generatePersonModel(person));
 
@@ -131,7 +132,7 @@ public class PersonsController {
         Person person = fetchPerson(personId);
 
         if (volunteerDao.findVolunteer(person.getPersonId(), null) != null) {
-            return "redirect:" + VolunteersController.generateUri(personId);
+            return "redirect:" + volunteerModelFactory.generateUri(personId);
         }
 
         PersonForm form = new PersonForm();
@@ -214,8 +215,6 @@ public class PersonsController {
 
         return "redirect:" + personModelFactory.generateUri(personId);
     }
-
-
 
     /**
      * Note: There seems to be a bug in Spring 3.1 that causes the same uri with a different produces attribute throw an " Ambiguous handler methods mapped"
@@ -303,5 +302,10 @@ public class PersonsController {
     @Autowired
     public void setVolunteerDao(VolunteerDao volunteerDao) {
         this.volunteerDao = volunteerDao;
+    }
+
+    @Autowired
+    public void setVolunteerModelFactory(VolunteerModelFactory volunteerModelFactory) {
+        this.volunteerModelFactory = volunteerModelFactory;
     }
 }
