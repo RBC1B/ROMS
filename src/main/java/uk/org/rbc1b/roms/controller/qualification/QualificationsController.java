@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,6 +32,8 @@ public class QualificationsController {
     private QualificationDao qualificationDao;
 
     /**
+     * Display a list of qualifications.
+     *
      * @param model spring mvc model
      * @return model containing the list of qualifications
      */
@@ -43,82 +46,63 @@ public class QualificationsController {
     }
 
     /**
-     * @param name qualification primary key
-     * @param model spring mvc model
-     * @return mvc view name
-     * @throws NoSuchRequestHandlingMethodException 404 response
+     * Displays a qualification for editing.
+     *
+     * @param qualificationId qualification ID
+     * @param model mvc model
+     * @return view name
+     * @throws NoSuchRequestHandlingMethodException on failure to find the
+     * qualification
      */
-    @RequestMapping(value = "{name}", method = RequestMethod.GET)
-    public String handleQualification(@PathVariable String name, ModelMap model) throws NoSuchRequestHandlingMethodException {
-
-        Qualification qualification = qualificationDao.findQualification(name);
-
+    @RequestMapping(value = "{qualificationId}/edit", method = RequestMethod.GET)
+    public String handleQualificationEdit(@PathVariable Integer qualificationId, ModelMap model)
+            throws NoSuchRequestHandlingMethodException {
+        Qualification qualification = this.qualificationDao.findQualification(qualificationId);
         if (qualification == null) {
-            throw new NoSuchRequestHandlingMethodException("No qualification with name [" + name + "]", this.getClass());
+            throw new NoSuchRequestHandlingMethodException("No qualification #" + qualificationId, this.getClass());
+        } else {
+            QualificationForm form = new QualificationForm();
+            form.setQualificationId(qualificationId);
+            form.setName(qualification.getName());
+            form.setDescription(qualification.getDescription());
+            model.addAttribute("qualification", form);
+
+            return "qualifications/edit";
         }
-
-        model.addAttribute("qualification", qualification);
-
-        return "qualifications/show";
     }
 
     /**
-     * Display the form to create a new qualification.
+     * Displays a form to create a new qualification.
      *
      * @param model mvc model
-     * @return mvc view name
+     * @return view name
      */
     @RequestMapping(value = "new", method = RequestMethod.GET)
     public String handleNewForm(ModelMap model) {
 
-        // initialise the form bean
         model.addAttribute("qualification", new QualificationForm());
 
-        return "/qualifications/new";
+        return "qualifications/edit";
     }
 
     /**
-     * Create a new qualification.
+     * Saves a changed qualification or creates a new qualification.
      *
      * @param qualificationForm form bean
      * @return mvc redirect
      */
-    @RequestMapping(value = "new", method = RequestMethod.POST)
-    public String handleNewSubmit(@Valid QualificationForm qualificationForm) {
+    @RequestMapping(method = RequestMethod.POST)
+    public String handleNewSubmit(@ModelAttribute("qualfication") @Valid QualificationForm qualificationForm) {
 
         Qualification qualification = new Qualification();
-        qualification.setName(qualificationForm.getName());
-        qualification.setDescription(qualificationForm.getDescription());
-
-        //qualification.setQualifcations(); - no qualifications initially created
-
-        qualificationDao.createQualification(qualification);
-
-        return "redirect:/qualifications";
-    }
-
-    /**
-     * Saves a changed qualification.
-     *
-     * @param qualificationForm form bean
-     * @return mvc redirect
-     */
-    @RequestMapping(value = "save", method = RequestMethod.POST)
-    public String handleSaveRequest(@Valid QualificationForm qualificationForm) {
-        Qualification qualification = new Qualification();
-        qualification.setQualificationId(qualificationForm.getQualificationId());
+        if (qualificationForm.getQualificationId() != null) {
+            qualification.setQualificationId(qualificationForm.getQualificationId());
+        }
         qualification.setName(qualificationForm.getName());
         qualification.setDescription(qualificationForm.getDescription());
         qualificationDao.saveQualification(qualification);
-        LOGGER.error("Qualification Updated:" + qualification.getQualificationId()
-                + ", " + qualification.getName()
-                + ", " + qualification.getDescription());
-        return "redirect:/qualifications";
-    }
 
-    @Autowired
-    public void setQualificationDao(QualificationDao qualificationDao) {
-        this.qualificationDao = qualificationDao;
+        return "redirect:/qualifications";
     }
 
     /**
@@ -126,14 +110,31 @@ public class QualificationsController {
      *
      * @param qualificationId primary key
      * @param model spring mvc model
-     *
      * @return mvc redirect
+     * @throws NoSuchRequestHandlingMethodException on failure to find the
+     * qualification
      */
-    @RequestMapping(value = "delete/{qualificationId}", method = RequestMethod.GET)
-    public String handleDelete(@PathVariable Integer qualificationId, ModelMap model) {
+    @RequestMapping(value = "{qualificationId}/delete", method = RequestMethod.GET)
+    public String handleDelete(@PathVariable Integer qualificationId, ModelMap model)
+            throws NoSuchRequestHandlingMethodException {
         Qualification qualification = qualificationDao.findQualification(qualificationId);
-        qualificationDao.deleteQualification(qualification);
-        LOGGER.error("Qualification to delete:" + qualificationId);
+        if (qualification != null) {
+            qualificationDao.deleteQualification(qualification);
+
+            // We want to log all deletes
+            LOGGER.error("Qualification to delete:" + qualificationId);
+        }
+
+
         return "redirect:/qualifications";
+    }
+
+    /**
+     *
+     * @param qualificationDao qualification DAO
+     */
+    @Autowired
+    public void setQualificationDao(QualificationDao qualificationDao) {
+        this.qualificationDao = qualificationDao;
     }
 }

@@ -41,12 +41,11 @@ public class HibernateQualificationDao implements QualificationDao {
 
     @Override
     public void saveQualification(Qualification qualification) {
-        this.sessionFactory.getCurrentSession().update(qualification);
-    }
-
-    @Override
-    public void createQualification(Qualification qualification) {
-        this.sessionFactory.getCurrentSession().save(qualification);
+        if (qualification.getQualificationId() == null) {
+            this.sessionFactory.getCurrentSession().save(qualification);
+        } else {
+            this.sessionFactory.getCurrentSession().merge(qualification);
+        }
     }
 
     @Override

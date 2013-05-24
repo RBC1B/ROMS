@@ -17,7 +17,7 @@
             <table class="table table-bordered table-striped table-hover" id="qualification-list">
                 <thead>
                     <tr>
-                        <th>Qualfication ID</th>
+                        <th>Qualification ID</th>
                         <th>Qualification</th>
                         <th>Description</th>
                         <th>Action</th>
@@ -30,13 +30,10 @@
                             <td>${qualification.name}</td>
                             <td>${qualification.description}</td>
                             <td>
-                                <ul>
-                                    <a id='edit' class="edit" href="">
-                                        <img src="<c:url value='/images/pencil.ico' />" width="20" height="20" alt="Edit">Edit 
-                                    </a>
-                                    <a id='delete' class="delete" href="">
-                                        <img src="<c:url value='/images/delete.ico' />" width="20" height="20" alt="Delete">Delete
-                                    </a>
+                                <ul class="inline list-actions">
+                                    <li><a class="list-action" href="<c:url value="/qualifications/${qualification.qualificationId}/edit" />">Edit</a></li>
+                                    <li><a class="list-action" href="<c:url value="/qualifications/${qualification.qualificationId}/delete" />">Delete</a></li>
+
                                 </ul>
                             </td>
                         </tr>
@@ -44,9 +41,9 @@
                 </tbody>
             </table>
             <div id="new-qualification">
-                <a class="btn btn-primary" href="qualifications/new" />New Qualification</a>
+                <a class="btn btn-primary" href="qualifications/new" />Create new qualification</a>
             </div>
-            
+
             <p>&nbsp;</p>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
             <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/qualifications.js' />" ></script>

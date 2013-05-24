@@ -54,14 +54,6 @@ public interface QualificationDao {
     @Transactional
     void saveQualification(Qualification qualification);
 
-    /**
-     * Create a new qualification.
-     *
-     * @param qualification new qualification to create
-     */
-    @PreAuthorize("hasPermission('SKILL', 'ADD')")
-    @Transactional
-    void createQualification(Qualification qualification);
 
     /**
      * Deletes a qualification.
