@@ -47,7 +47,7 @@
                 <h3>Select Matching Person</h3>
             </div>
             <div class="modal-body">
-                
+
             </div>
             <div class="modal-footer">
                 <a href="#" class="btn" data-dismiss="modal">Ignore</a>
