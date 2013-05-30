@@ -18,37 +18,41 @@
                     <dl class="dl-horizontal">
                         <dt>Status:</dt><dd>${volunteer.status}</dd>
                         <dt>Comments:</dt><dd>${volunteer.comments}</dd>
-                        <dt>Assignments:</dt><dd>
-                            <c:choose>
-                                <c:when test="${volunteer.assignments != null}">
-                                    <table class="table table-bordered table-striped table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Department</th>
-                                                <th>Team</th>
-                                                <th>Role</th>
-                                                <th>Assigned</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <c:forEach items="${volunteer.assignments}" var="assignment">
-                                                <tr>
-                                                    <td>${assignment.tradeNumber}</td>
-                                                    <td><a href="${assignment.department.uri}">${assignment.department.name}</a></td>
-                                                    <td><a href="${assignment.team.uri}">${assignment.team.name}</a></td>
-                                                    <td>${assignment.role}</td>
-                                                    <td><fmt:formatDate value="${assignment.assignedDate}" pattern="dd MMM yyyy" /></td>
-                                                </tr>
-                                            </c:forEach>
-                                        </tbody>
-                                    </table>
-                                </c:when>
-                                <c:otherwise>None</c:otherwise>
-                            </c:choose>
-                        </dd>
                     </dl>
                 </div>
+            </div>
+            <div class="clearfix">
+                <c:choose>
+                    <c:when test="${volunteer.assignments != null}">
+                        <h3>Assignments</h3>
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Department</th>
+                                    <th>Team</th>
+                                    <th>Role</th>
+                                    <th>Assigned</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${volunteer.assignments}" var="assignment">
+                                    <tr>
+                                        <td>${assignment.tradeNumber}</td>
+                                        <td><a href="${assignment.department.uri}">${assignment.department.name}</a></td>
+                                        <td><a href="${assignment.team.uri}">${assignment.team.name}</a></td>
+                                        <td>${assignment.role}</td>
+                                        <td><fmt:formatDate value="${assignment.assignedDate}" pattern="dd MMM yyyy" /></td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </c:when>
+                    <c:otherwise>
+                        <br />
+                        <div class="alert alert-block">Volunteer is not assigned to any teams</div>
+                    </c:otherwise>
+                </c:choose>
             </div>
             <div class="clearfix"></div>
             <br />
