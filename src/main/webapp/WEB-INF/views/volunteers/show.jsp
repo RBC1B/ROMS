@@ -18,6 +18,35 @@
                     <dl class="dl-horizontal">
                         <dt>Status:</dt><dd>${volunteer.status}</dd>
                         <dt>Comments:</dt><dd>${volunteer.comments}</dd>
+                        <dt>Assignments:</dt><dd>
+                            <c:choose>
+                                <c:when test="${volunteer.assignments != null}">
+                                    <table class="table table-bordered table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Department</th>
+                                                <th>Team</th>
+                                                <th>Role</th>
+                                                <th>Assigned</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <c:forEach items="${volunteer.assignments}" var="assignment">
+                                                <tr>
+                                                    <td>${assignment.tradeNumber}</td>
+                                                    <td><a href="${assignment.department.uri}">${assignment.department.name}</a></td>
+                                                    <td><a href="${assignment.team.uri}">${assignment.team.name}</a></td>
+                                                    <td>${assignment.role}</td>
+                                                    <td><fmt:formatDate value="${assignment.assignedDate}" pattern="dd MMM yyyy" /></td>
+                                                </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
+                                </c:when>
+                                <c:otherwise>None</c:otherwise>
+                            </c:choose>
+                        </dd>
                     </dl>
                 </div>
             </div>
@@ -273,10 +302,10 @@
                                     <tr>
                                         <c:forEach var="i" begin="0" end="6">
                                             <td>
-                                            <c:choose>
-                                                <c:when test="${volunteer.availability.get(i)}"><span class="icon-ok"></span></c:when>
-                                                <c:otherwise><span class="icon-remove"></span></c:otherwise>
-                                            </c:choose>
+                                                <c:choose>
+                                                    <c:when test="${volunteer.availability.get(i)}"><span class="icon-ok"></span></c:when>
+                                                    <c:otherwise><span class="icon-remove"></span></c:otherwise>
+                                                </c:choose>
                                             </td>
                                         </c:forEach>
                                     </tr>

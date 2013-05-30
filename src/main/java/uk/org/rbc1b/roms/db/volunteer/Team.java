@@ -11,15 +11,7 @@ package uk.org.rbc1b.roms.db.volunteer;
 public class Team {
 
     private Integer teamId;
-    private String name;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    private String description;
 
     public Integer getTeamId() {
         return teamId;
@@ -27,6 +19,14 @@ public class Team {
 
     public void setTeamId(Integer teamId) {
         this.teamId = teamId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override

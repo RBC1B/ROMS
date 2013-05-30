@@ -58,6 +58,17 @@ public interface VolunteerDao {
 
 
     /**
+     * Find the volunteer assignments.
+     *
+     * @param volunteerId id
+     * @return list of assignments
+     */
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
+    @Transactional(readOnly = true)
+    List<Assignment> findAssignments(Integer volunteerId);
+
+
+    /**
      * Additional data to pull in when generating the volunteer details.
      */
     public static enum VolunteerData {

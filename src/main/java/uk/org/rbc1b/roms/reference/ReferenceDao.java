@@ -44,6 +44,11 @@ public interface ReferenceDao {
     Map<Integer, String> findRelationshipValues();
 
     /**
+     * @return ordered map of trade number values
+     */
+    Map<Integer, String> findTradeNumbers();
+
+    /**
      * @return ordered map of hall ownership type values
      */
     Map<Integer, String> findOwnershipTypeValues();

@@ -5,11 +5,11 @@
         <id name="assignmentId" >
             <generator class="identity"/>
         </id>
-        <many-to-one name="person" column="PersonId" />
-        <many-to-one name="department" column="DepartmentId" />
+        <property name="personId" />
+        <property name="departmentId" />
         <property name="roleId" />
         <property name="assignedDate" />
-        <many-to-one name="tradeNumber" column="TradeNumberId" />
-        <many-to-one name="team" column="TeamId" />
+        <property name="tradeNumberId" />
+        <property name="teamId" />
     </class>
 </hibernate-mapping>

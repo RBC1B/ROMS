@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.validation.Valid;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ import uk.org.rbc1b.roms.db.Address;
 import uk.org.rbc1b.roms.db.CongregationDao;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.PersonDao;
+import uk.org.rbc1b.roms.db.volunteer.Assignment;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao.VolunteerData;
@@ -58,6 +60,7 @@ public class VolunteersController {
     private ReferenceDao referenceDao;
     private PersonModelFactory personModelFactory;
     private VolunteerModelFactory volunteerModelFactory;
+    private AssignmentModelFactory assignmentModelFactory;
 
     /**
      * Display a list of volunteers.
@@ -126,7 +129,11 @@ public class VolunteersController {
             throw new NoSuchRequestHandlingMethodException("No volunteer or person with id [" + volunteerId + "]", this.getClass());
         }
 
-        model.addAttribute("volunteer", volunteerModelFactory.generateVolunteerModel(volunteer));
+        List<Assignment> assignments = volunteerDao.findAssignments(volunteerId);
+
+        VolunteerModel volunteerModel = volunteerModelFactory.generateVolunteerModel(volunteer);
+        volunteerModel.setAssignments(generateAssignments(assignments));
+        model.addAttribute("volunteer", volunteerModel);
 
         return "volunteers/show";
     }
@@ -282,14 +289,29 @@ public class VolunteersController {
         return spouse;
     }
 
+    private List<AssignmentModel> generateAssignments(List<Assignment> assignments) {
+        if (CollectionUtils.isEmpty(assignments)) {
+            return null;
+        }
+
+        List<AssignmentModel> modelList = new ArrayList<AssignmentModel>(assignments.size());
+        for (Assignment assignment : assignments) {
+            modelList.add(assignmentModelFactory.generateAssignmentModel(assignment));
+        }
+
+        return modelList;
+    }
+
+    @Autowired
+    public void setAssignmentModelFactory(AssignmentModelFactory assignmentModelFactory) {
+        this.assignmentModelFactory = assignmentModelFactory;
+    }
+
     @Autowired
     public void setCongregationDao(CongregationDao congregationDao) {
         this.congregationDao = congregationDao;
     }
 
-    /**
-     * @param personDao person dao
-     */
     @Autowired
     public void setPersonDao(PersonDao personDao) {
         this.personDao = personDao;

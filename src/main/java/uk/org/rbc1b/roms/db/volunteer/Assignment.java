@@ -5,7 +5,6 @@
 package uk.org.rbc1b.roms.db.volunteer;
 
 import java.sql.Date;
-import uk.org.rbc1b.roms.db.Person;
 
 /**
  * @author oliver.elder.esq
@@ -13,12 +12,12 @@ import uk.org.rbc1b.roms.db.Person;
 public class Assignment {
 
     private Integer assignmentId;
-    private Person person;
-    private Department department;
+    private Integer personId;
+    private Integer departmentId;
     private Integer roleId;
     private Date assignedDate;
-    private TradeNumber tradeNumber;
-    private Team team;
+    private Integer tradeNumberId;
+    private Integer teamId;
 
     public Date getAssignedDate() {
         return assignedDate;
@@ -36,20 +35,20 @@ public class Assignment {
         this.assignmentId = assignmentId;
     }
 
-    public Department getDepartment() {
-        return department;
+    public Integer getDepartmentId() {
+        return departmentId;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void setDepartmentId(Integer departmentId) {
+        this.departmentId = departmentId;
     }
 
-    public Person getPerson() {
-        return person;
+    public Integer getPersonId() {
+        return personId;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setPersonId(Integer personId) {
+        this.personId = personId;
     }
 
     public Integer getRoleId() {
@@ -60,20 +59,20 @@ public class Assignment {
         this.roleId = roleId;
     }
 
-    public Team getTeam() {
-        return team;
+    public Integer getTeamId() {
+        return teamId;
     }
 
-    public void setTeam(Team team) {
-        this.team = team;
+    public void setTeamId(Integer teamId) {
+        this.teamId = teamId;
     }
 
-    public TradeNumber getTradeNumber() {
-        return tradeNumber;
+    public Integer getTradeNumberId() {
+        return tradeNumberId;
     }
 
-    public void setTradeNumber(TradeNumber tradeNumber) {
-        this.tradeNumber = tradeNumber;
+    public void setTradeNumberId(Integer tradeNumberId) {
+        this.tradeNumberId = tradeNumberId;
     }
 
     @Override

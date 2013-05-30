@@ -5,6 +5,7 @@
 package uk.org.rbc1b.roms.controller.volunteer;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import uk.org.rbc1b.roms.controller.common.model.PersonModel;
@@ -42,6 +43,7 @@ public class VolunteerModel extends PersonModel {
     private boolean reliefUK;
     private String reliefUKComments;
     private String hhcFormCode;
+    private List<AssignmentModel> assignments;
 
     /**
      * Determine if the volunteer is available on a given day of the week.
@@ -254,5 +256,13 @@ public class VolunteerModel extends PersonModel {
 
     public void setHhcFormCode(String hhcFormCode) {
         this.hhcFormCode = hhcFormCode;
+    }
+
+    public List<AssignmentModel> getAssignments() {
+        return assignments;
+    }
+
+    public void setAssignments(List<AssignmentModel> assignments) {
+        this.assignments = assignments;
     }
 }
