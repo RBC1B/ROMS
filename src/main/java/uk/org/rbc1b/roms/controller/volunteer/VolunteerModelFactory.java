@@ -4,14 +4,25 @@
  */
 package uk.org.rbc1b.roms.controller.volunteer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.org.rbc1b.roms.controller.common.model.EntityModel;
 import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
 import uk.org.rbc1b.roms.controller.congregation.CongregationsController;
+import uk.org.rbc1b.roms.controller.department.DepartmentModelFactory;
+import uk.org.rbc1b.roms.controller.skill.SkillModelFactory;
+import uk.org.rbc1b.roms.db.volunteer.Assignment;
+import uk.org.rbc1b.roms.db.volunteer.Department;
+import uk.org.rbc1b.roms.db.volunteer.DepartmentDao;
+import uk.org.rbc1b.roms.db.volunteer.Skill;
+import uk.org.rbc1b.roms.db.volunteer.SkillDao;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
+import uk.org.rbc1b.roms.db.volunteer.VolunteerSkill;
 import uk.org.rbc1b.roms.reference.ReferenceDao;
 
 /**
@@ -27,6 +38,11 @@ public class VolunteerModelFactory {
     private static final Map<Integer, Boolean> NO_AVAILABILITY = new HashMap<Integer, Boolean>();
     private ReferenceDao referenceDao;
     private PersonModelFactory personModelFactory;
+    private AssignmentModelFactory assignmentModelFactory;
+    private SkillModelFactory skillModelFactory;
+    private SkillDao skillDao;
+    private DepartmentDao departmentDao;
+    private DepartmentModelFactory departmentModelFactory;
 
     static {
         for (int i = 0; i < DAYS_PER_WEEK; i++) {
@@ -169,6 +185,72 @@ public class VolunteerModelFactory {
         return availabilityMap;
     }
 
+    /**
+     * Generate the models for the volunteer assignments.
+     *
+     * @param assignments assignments
+     * @return model list
+     */
+    public List<AssignmentModel> generateAssignments(List<Assignment> assignments) {
+        if (CollectionUtils.isEmpty(assignments)) {
+            return null;
+        }
+
+        List<AssignmentModel> modelList = new ArrayList<AssignmentModel>(assignments.size());
+        for (Assignment assignment : assignments) {
+            modelList.add(assignmentModelFactory.generateAssignmentModel(assignment));
+        }
+
+        return modelList;
+    }
+
+    /**
+     * Generate the models for the volunteer skills.
+     *
+     * @param volunteerSkills list of volunteer skills
+     * @return model list
+     */
+    public List<VolunteerSkillModel> generateVolunteerSkillsModel(List<VolunteerSkill> volunteerSkills) {
+        if (CollectionUtils.isEmpty(volunteerSkills)) {
+            return null;
+        }
+
+        List<VolunteerSkillModel> modelList = new ArrayList<VolunteerSkillModel>(volunteerSkills.size());
+        for (VolunteerSkill volunteerSkill : volunteerSkills) {
+            VolunteerSkillModel model = new VolunteerSkillModel();
+
+            model.setId(volunteerSkill.getVolunteerSkillId());
+
+            Skill skill = skillDao.findSkill(volunteerSkill.getSkillId());
+            Department department = departmentDao.findDepartment(skill.getDepartmentId());
+
+            model.setAppearOnBadge(skill.isAppearOnBadge());
+            model.setComments(volunteerSkill.getComments());
+
+            EntityModel departmentModel = new EntityModel();
+            departmentModel.setName(department.getName());
+            departmentModel.setId(department.getDepartmentId());
+            departmentModel.setUri(departmentModelFactory.generateUri(department.getDepartmentId()));
+
+            model.setDepartment(departmentModel);
+            model.setDescription(skill.getDescription());
+            model.setLevel(volunteerSkill.getLevel());
+
+            EntityModel skillModel = new EntityModel();
+            skillModel.setName(skill.getName());
+            skillModel.setId(skill.getSkillId());
+            skillModel.setUri(skillModelFactory.generateUri(volunteerSkill.getSkillId()));
+
+            model.setSkill(skillModel);
+            model.setTrainingDate(volunteerSkill.getTrainingDate());
+            model.setTrainingResults(volunteerSkill.getTrainingResults());
+            modelList.add(model);
+
+        }
+
+        return modelList;
+    }
+
     @Autowired
     public void setPersonModelFactory(PersonModelFactory personModelFactory) {
         this.personModelFactory = personModelFactory;
@@ -177,5 +259,30 @@ public class VolunteerModelFactory {
     @Autowired
     public void setReferenceDao(ReferenceDao referenceDao) {
         this.referenceDao = referenceDao;
+    }
+
+    @Autowired
+    public void setAssignmentModelFactory(AssignmentModelFactory assignmentModelFactory) {
+        this.assignmentModelFactory = assignmentModelFactory;
+    }
+
+    @Autowired
+    public void setSkillModelFactory(SkillModelFactory skillModelFactory) {
+        this.skillModelFactory = skillModelFactory;
+    }
+
+    @Autowired
+    public void setSkillDao(SkillDao skillDao) {
+        this.skillDao = skillDao;
+    }
+
+    @Autowired
+    public void setDepartmentDao(DepartmentDao departmentDao) {
+        this.departmentDao = departmentDao;
+    }
+
+    @Autowired
+    public void setDepartmentModelFactory(DepartmentModelFactory departmentModelFactory) {
+        this.departmentModelFactory = departmentModelFactory;
     }
 }

@@ -29,13 +29,13 @@
                         <c:forEach items="${skills}" var="skill">
                             <tr>
                                 <td>${skill.name}</td>
-                                <td>${skill.department.name}</td>
+                                <td><a href="${skill.department.uri}">${skill.department.name}</a></td>
                                 <td>${skill.description}</td>
                                 <td>${skill.appearOnBadge}</td>
                                 <td>
                                     <ul class="inline list-actions">
-                                        <li><a class="btn btn-success" href="<c:url value="/skills/${skill.skillId}" />">View</a></li>
-                                        <li><a class="list-action" href="<c:url value="/skills/${skill.skillId}/edit" />">Edit</a></li>
+                                        <li><a class="btn btn-success" href="<c:url value="${skill.uri}" />">View</a></li>
+                                        <li><a class="list-action" href="<c:url value="/skills/${skill.id}/edit" />">Edit</a></li>
                                         <li><a class="list-action" href="delete">Delete</a></li>
                                     </ul>
                                 </td>

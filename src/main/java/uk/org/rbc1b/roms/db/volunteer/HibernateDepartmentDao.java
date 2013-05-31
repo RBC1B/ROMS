@@ -32,8 +32,6 @@ public class HibernateDepartmentDao implements DepartmentDao {
         return (Department) this.sessionFactory.getCurrentSession().get(Department.class, departmentId);
     }
 
-
-
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }

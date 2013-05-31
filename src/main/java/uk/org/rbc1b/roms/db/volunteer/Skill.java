@@ -12,7 +12,7 @@ public class Skill {
 
     private Integer skillId;
     private String name;
-    private Department department;
+    private Integer departmentId;
     private String description;
     private boolean appearOnBadge;
 
@@ -24,12 +24,12 @@ public class Skill {
         this.appearOnBadge = appearOnBadge;
     }
 
-    public Department getDepartment() {
-        return department;
+    public Integer getDepartmentId() {
+        return departmentId;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void setDepartmentId(Integer departmentId) {
+        this.departmentId = departmentId;
     }
 
     public String getDescription() {

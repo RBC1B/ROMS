@@ -6,7 +6,7 @@
             <generator class="identity"/>
         </id>
         <property name="name" length="50" />
-        <many-to-one name="department" column="DepartmentId" lazy="false" class="uk.org.rbc1b.roms.db.volunteer.Department"/>
+        <property name="departmentId" />
         <property name="description" length="250" />
         <property name="appearOnBadge"  />
     </class>

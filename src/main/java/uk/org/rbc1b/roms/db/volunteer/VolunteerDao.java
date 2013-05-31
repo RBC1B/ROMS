@@ -67,6 +67,16 @@ public interface VolunteerDao {
     @Transactional(readOnly = true)
     List<Assignment> findAssignments(Integer volunteerId);
 
+    /**
+     * Find the volunteer skills.
+     *
+     * @param volunteerId id
+     * @return list of skills
+     */
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
+    @Transactional(readOnly = true)
+    List<VolunteerSkill> findSkills(Integer volunteerId);
+
 
     /**
      * Additional data to pull in when generating the volunteer details.

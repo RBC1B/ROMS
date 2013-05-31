@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Access the department and team information.
+ *
  * @author oliver.elder.esq
  */
 public interface DepartmentDao {

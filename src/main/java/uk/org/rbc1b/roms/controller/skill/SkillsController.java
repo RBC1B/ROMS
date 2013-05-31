@@ -4,6 +4,8 @@
  */
 package uk.org.rbc1b.roms.controller.skill;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,7 @@ import uk.org.rbc1b.roms.db.volunteer.SkillDao;
 public class SkillsController {
 
     private SkillDao skillDao;
+    private SkillModelFactory skillModelFactory;
 
     /**
      * Display the list of skills.
@@ -34,7 +37,13 @@ public class SkillsController {
     @RequestMapping(method = RequestMethod.GET)
     public String handleList(ModelMap model) {
 
-        model.addAttribute("skills", skillDao.findSkills());
+        List<Skill> skills = skillDao.findSkills();
+        List<SkillListModel> modelList = new ArrayList<SkillListModel>(skills.size());
+        for (Skill skill : skills) {
+            modelList.add(skillModelFactory.generateSkillListModel(skill));
+        }
+
+        model.addAttribute("skills", modelList);
 
         return "skills/list";
     }
@@ -97,11 +106,13 @@ public class SkillsController {
         return "redirect:skills/" + skill.getSkillId();
     }
 
-    /**
-     * @param skillDao skill dao
-     */
     @Autowired
     public void setSkillDao(SkillDao skillDao) {
         this.skillDao = skillDao;
+    }
+
+    @Autowired
+    public void setSkillModelFactory(SkillModelFactory skillModelFactory) {
+        this.skillModelFactory = skillModelFactory;
     }
 }

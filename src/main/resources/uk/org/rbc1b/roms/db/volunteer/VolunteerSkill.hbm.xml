@@ -5,8 +5,8 @@
         <id name="volunteerSkillId" >
             <generator class="identity"/>
         </id>
-        <many-to-one name="person" column="PersonId" />
-        <many-to-one name="skill" column="SkillId" />
+        <property name="personId" />
+        <property name="skillId" />
         <property name="level" />
         <property name="comments" length="250" />
         <property name="trainingDate" />

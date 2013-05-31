@@ -5,7 +5,6 @@
 package uk.org.rbc1b.roms.db.volunteer;
 
 import java.sql.Date;
-import uk.org.rbc1b.roms.db.Person;
 
 /**
  *
@@ -14,8 +13,8 @@ import uk.org.rbc1b.roms.db.Person;
 public class VolunteerSkill {
 
     private Integer volunteerSkillId;
-    private Person person;
-    private Skill skill;
+    private Integer personId;
+    private Integer skillId;
     private Integer level;
     private String comments;
     private Date trainingDate;
@@ -45,20 +44,20 @@ public class VolunteerSkill {
         this.level = level;
     }
 
-    public Person getPerson() {
-        return person;
+    public Integer getPersonId() {
+        return personId;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setPersonId(Integer personId) {
+        this.personId = personId;
     }
 
-    public Skill getSkill() {
-        return skill;
+    public Integer getSkillId() {
+        return skillId;
     }
 
-    public void setSkill(Skill skill) {
-        this.skill = skill;
+    public void setSkillId(Integer skillId) {
+        this.skillId = skillId;
     }
 
     public String getTrainingResults() {

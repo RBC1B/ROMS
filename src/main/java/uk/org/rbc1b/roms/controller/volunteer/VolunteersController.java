@@ -10,7 +10,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.validation.Valid;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +33,7 @@ import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao.VolunteerData;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerSearchCriteria;
+import uk.org.rbc1b.roms.db.volunteer.VolunteerSkill;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerTrade;
 import uk.org.rbc1b.roms.reference.ReferenceDao;
 
@@ -60,7 +60,6 @@ public class VolunteersController {
     private ReferenceDao referenceDao;
     private PersonModelFactory personModelFactory;
     private VolunteerModelFactory volunteerModelFactory;
-    private AssignmentModelFactory assignmentModelFactory;
 
     /**
      * Display a list of volunteers.
@@ -130,9 +129,11 @@ public class VolunteersController {
         }
 
         List<Assignment> assignments = volunteerDao.findAssignments(volunteerId);
+        List<VolunteerSkill> skills = volunteerDao.findSkills(volunteerId);
 
         VolunteerModel volunteerModel = volunteerModelFactory.generateVolunteerModel(volunteer);
-        volunteerModel.setAssignments(generateAssignments(assignments));
+        volunteerModel.setAssignments(volunteerModelFactory.generateAssignments(assignments));
+        volunteerModel.setSkills(volunteerModelFactory.generateVolunteerSkillsModel(skills));
         model.addAttribute("volunteer", volunteerModel);
 
         return "volunteers/show";
@@ -287,24 +288,6 @@ public class VolunteersController {
         spouse.setForename(form.getSpouseForename());
         spouse.setSurname(form.getSpouseSurname());
         return spouse;
-    }
-
-    private List<AssignmentModel> generateAssignments(List<Assignment> assignments) {
-        if (CollectionUtils.isEmpty(assignments)) {
-            return null;
-        }
-
-        List<AssignmentModel> modelList = new ArrayList<AssignmentModel>(assignments.size());
-        for (Assignment assignment : assignments) {
-            modelList.add(assignmentModelFactory.generateAssignmentModel(assignment));
-        }
-
-        return modelList;
-    }
-
-    @Autowired
-    public void setAssignmentModelFactory(AssignmentModelFactory assignmentModelFactory) {
-        this.assignmentModelFactory = assignmentModelFactory;
     }
 
     @Autowired

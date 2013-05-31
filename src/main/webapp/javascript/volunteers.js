@@ -446,10 +446,18 @@ $(document).ready(function() {
 
     // display
     roms.common.datatables(
-        $("#volunteer-skills-trades"),
+        $("#volunteer-skills-experience"),
         {
             "iDisplayLength": 20
         }
     );
 
+    roms.common.datatables(
+        $("#volunteer-skills-skills"),
+        {
+            "iDisplayLength": 20
+        }
+    );
+
+    $(".a-skill-description").tooltip();
 });
