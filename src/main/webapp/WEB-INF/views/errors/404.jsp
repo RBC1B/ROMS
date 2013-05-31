@@ -19,7 +19,8 @@
       <li>a mistyped address</li>
       <li>an out-of-date link</li>
     </ul>
-        <p><a href="index.html">Back to home page ></a></p>
+        <p><a href="index.html">&laquo; Back to home page</a></p>
+        <hr/>
     <script>
       var GOOG_FIXURL_LANG = (navigator.language || '').slice(0,2),GOOG_FIXURL_SITE = location.host;
     </script>

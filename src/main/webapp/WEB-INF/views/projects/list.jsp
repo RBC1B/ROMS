@@ -12,6 +12,7 @@
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
             <h1>Projects</h1>
+            <br>
             <table class="table table-bordered table-striped table-hover" id="project-list">
                 <thead>
                     <tr>

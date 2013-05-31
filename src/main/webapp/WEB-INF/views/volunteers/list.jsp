@@ -14,6 +14,7 @@
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
             <h1>Volunteers</h1>
+            <br>
             <div class="entity-list-results">
                 <table class="table table-bordered table-striped table-hover" id="volunteer-list">
                     <thead>
@@ -24,7 +25,7 @@
                             <th>Congregation</th>
                             <th>Action</th>
                         </tr>
-                    </thead>
+                    <thead/>
                     <tbody>
                     </tbody>
                     <tfoot>

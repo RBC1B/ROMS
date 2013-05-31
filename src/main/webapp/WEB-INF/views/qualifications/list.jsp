@@ -14,6 +14,7 @@
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
             <h1>Qualifications</h1>
+            <br>
             <table class="table table-bordered table-striped table-hover" id="qualification-list">
                 <thead>
                     <tr>
@@ -45,6 +46,11 @@
             </div>
 
             <p>&nbsp;</p>
+            
+            <ul class="breadcrumb">
+                <li><a href="<c:url value="/" />">ROMS</a> <span class="divider">/</span></li>
+                <li class="active">Skills</li>
+            </ul>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
             <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/qualifications.js' />" ></script>
         </div>

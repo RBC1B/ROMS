@@ -12,7 +12,8 @@
     <body>
             <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
-            <h1>Circuits</h1>
+            <h1>Congregations</h1>
+            <br>
             <div class="entity-list-results">
                 <table class="table table-bordered table-striped table-hover" id="circuit-list">
                     <thead>
