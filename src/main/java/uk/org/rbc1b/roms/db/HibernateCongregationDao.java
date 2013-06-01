@@ -9,6 +9,7 @@ import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -23,6 +24,7 @@ public class HibernateCongregationDao implements CongregationDao {
     private SessionFactory sessionFactory;
 
     @Override
+    @Cacheable("congregation.congregation")
     public Congregation findCongregation(Integer congregationId) {
         return (Congregation) this.sessionFactory.getCurrentSession().get(Congregation.class, congregationId);
     }

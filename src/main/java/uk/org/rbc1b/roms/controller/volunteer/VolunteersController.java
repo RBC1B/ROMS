@@ -26,6 +26,7 @@ import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableRequestData;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableResult;
 import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
 import uk.org.rbc1b.roms.db.Address;
+import uk.org.rbc1b.roms.db.Congregation;
 import uk.org.rbc1b.roms.db.CongregationDao;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.PersonDao;
@@ -193,10 +194,9 @@ public class VolunteersController {
 
         volunteer.setBirthDate(new java.sql.Date(form.getBirthDate().toDateMidnight().getMillis()));
 
-        if (volunteer.getCongregation() == null || !volunteer.getCongregation().getCongregationId().equals(form.getCongregationId())) {
-            volunteer.setCongregation(congregationDao.findCongregation(form.getCongregationId()));
+        if (ObjectUtils.notEqual(volunteer.getCongregationId(), form.getCongregationId())) {
+            volunteer.setCongregationId(form.getCongregationId());
         }
-
         volunteer.setEmail(form.getEmail());
         volunteer.setForename(form.getForename());
         volunteer.setFormDate(new java.sql.Date(form.getFormDate().toDateMidnight().getMillis()));
@@ -269,8 +269,11 @@ public class VolunteersController {
         VolunteerSpiritualForm form = new VolunteerSpiritualForm();
         form.setAppointmentId(volunteer.getAppointmentId());
         form.setBaptismDate(LocalDate.fromDateFields(volunteer.getBaptismDate()).toDateTimeAtStartOfDay());
-        form.setCongregationName(volunteer.getCongregation().getName());
-        form.setCongregationId(volunteer.getCongregation().getCongregationId());
+
+        Congregation congregation = congregationDao.findCongregation(volunteer.getCongregationId());
+
+        form.setCongregationName(congregation.getName());
+        form.setCongregationId(congregation.getCongregationId());
         form.setFulltimeId(volunteer.getFulltimeId());
 
         model.addAttribute("volunteerSpiritual", form);
@@ -280,6 +283,34 @@ public class VolunteersController {
         model.addAttribute("appointmentValues", referenceDao.findAppointmentValues());
         model.addAttribute("submitUri", volunteerModelFactory.generateUri(volunteerId) + "/spiritual");
         return "volunteers/edit-spiritual";
+    }
+
+    /**
+     * Updated the volunteer spiritual information.
+     *
+     * @param volunteerId volunteer id to edit
+     * @param form form data
+     * @return view name (redirect)
+     * @throws NoSuchRequestHandlingMethodException if volunteer is not found
+     */
+    @RequestMapping(value = "{volunteerId}/spiritual", method = RequestMethod.PUT)
+    public String updateVolunteerSpiritual(@PathVariable Integer volunteerId,
+            @ModelAttribute("volunteerSpiritual") @Valid VolunteerSpiritualForm form) throws NoSuchRequestHandlingMethodException {
+
+        Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
+        if (volunteer == null) {
+            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+        }
+
+        volunteer.setBaptismDate(new java.sql.Date(form.getBaptismDate().toDateMidnight().getMillis()));
+        volunteer.setFulltimeId(form.getFulltimeId());
+        volunteer.setAppointmentId(form.getAppointmentId());
+        volunteer.setCongregationId(form.getCongregationId());
+
+        volunteerDao.saveVolunteer(volunteer);
+
+        return "redirect:" + volunteerModelFactory.generateUri(volunteer.getPersonId()) + "#!spiritual";
+
     }
 
     private Person createEmergencyContact(VolunteerForm form) {

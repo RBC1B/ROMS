@@ -9,7 +9,7 @@
         <property name="middleName" length="50" />
         <property name="surname" length="50" not-null="true" />
         <property name="birthDate"/>
-        <many-to-one class="uk.org.rbc1b.roms.db.Congregation" column="CongregationId" lazy="false" name="congregation"/>
+        <property name="congregationId" />
         <component name="address">
             <property name="street" length="50"  />
             <property name="town" length="50"  />
@@ -49,7 +49,7 @@
         <property length="50" name="reliefAbroadComments"/>
         <property column="HHCFormCode" length="15" name="hhcFormCode"/>
         <property name="badgeIssueDate"/>
-        
+
         <set name="trades" inverse="true" cascade="all-delete-orphan">
             <key column="personId" />
             <one-to-many class="uk.org.rbc1b.roms.db.volunteer.VolunteerTrade" />

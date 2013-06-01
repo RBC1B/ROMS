@@ -132,6 +132,9 @@
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
                     <property name="name" value="qualification.qualification" />
                 </bean>
+                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
+                    <property name="name" value="congregation.congregation" />
+                </bean>
             </set>
         </property>
     </bean>

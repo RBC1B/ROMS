@@ -13,7 +13,7 @@ public class Person {
 
     private Integer personId;
     private java.sql.Date birthDate;
-    private Congregation congregation;
+    private Integer congregationId;
     private String forename;
     private String middleName;
     private String surname;
@@ -48,12 +48,12 @@ public class Person {
         this.comments = comments;
     }
 
-    public Congregation getCongregation() {
-        return congregation;
+    public Integer getCongregationId() {
+        return congregationId;
     }
 
-    public void setCongregation(Congregation congregation) {
-        this.congregation = congregation;
+    public void setCongregationId(Integer congregationId) {
+        this.congregationId = congregationId;
     }
 
     public String getEmail() {

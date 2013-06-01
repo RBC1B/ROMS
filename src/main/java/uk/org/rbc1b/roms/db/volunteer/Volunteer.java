@@ -55,7 +55,7 @@ public class Volunteer extends Person {
     public Volunteer(Person person) {
         this.setPersonId(person.getPersonId());
         this.setBirthDate(person.getBirthDate());
-        this.setCongregation(person.getCongregation());
+        this.setCongregationId(person.getCongregationId());
         this.setForename(person.getForename());
         this.setMiddleName(person.getMiddleName());
         this.setSurname(person.getSurname());

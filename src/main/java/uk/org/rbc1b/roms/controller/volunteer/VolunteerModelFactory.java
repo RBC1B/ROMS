@@ -17,6 +17,8 @@ import uk.org.rbc1b.roms.controller.congregation.CongregationsController;
 import uk.org.rbc1b.roms.controller.department.DepartmentModelFactory;
 import uk.org.rbc1b.roms.controller.qualification.QualificationModelFactory;
 import uk.org.rbc1b.roms.controller.skill.SkillModelFactory;
+import uk.org.rbc1b.roms.db.Congregation;
+import uk.org.rbc1b.roms.db.CongregationDao;
 import uk.org.rbc1b.roms.db.volunteer.Assignment;
 import uk.org.rbc1b.roms.db.volunteer.Department;
 import uk.org.rbc1b.roms.db.volunteer.DepartmentDao;
@@ -44,6 +46,7 @@ public class VolunteerModelFactory {
     private PersonModelFactory personModelFactory;
     private AssignmentModelFactory assignmentModelFactory;
     private SkillModelFactory skillModelFactory;
+    private CongregationDao congregationDao;
     private SkillDao skillDao;
     private DepartmentDao departmentDao;
     private QualificationDao qualificationDao;
@@ -76,16 +79,7 @@ public class VolunteerModelFactory {
         VolunteerListModel model = new VolunteerListModel();
         model.setId(volunteer.getPersonId());
         model.setUri(generateUri(volunteer.getPersonId()));
-
-        if (volunteer.getCongregation() != null) {
-            EntityModel congregation = new EntityModel();
-            congregation.setId(volunteer.getCongregation().getCongregationId());
-            congregation.setName(volunteer.getCongregation().getName());
-            congregation.setUri(CongregationsController.generateUri(volunteer.getCongregation().getCongregationId()));
-
-            model.setCongregation(congregation);
-        }
-
+        model.setCongregation(generateCongregationModel(volunteer.getCongregationId()));
         model.setEmail(volunteer.getEmail());
         model.setForename(volunteer.getForename());
         model.setMiddleName(volunteer.getMiddleName());
@@ -112,16 +106,7 @@ public class VolunteerModelFactory {
         model.setAddress(volunteer.getAddress());
         model.setBirthDate(volunteer.getBirthDate());
         model.setComments(volunteer.getComments());
-
-        if (volunteer.getCongregation() != null) {
-            EntityModel congregation = new EntityModel();
-            congregation.setId(volunteer.getCongregation().getCongregationId());
-            congregation.setName(volunteer.getCongregation().getName());
-            congregation.setUri(CongregationsController.generateUri(volunteer.getCongregation().getCongregationId()));
-
-            model.setCongregation(congregation);
-        }
-
+        model.setCongregation(generateCongregationModel(volunteer.getCongregationId()));
         model.setEmail(volunteer.getEmail());
         model.setForename(volunteer.getForename());
         model.setMiddleName(volunteer.getMiddleName());
@@ -179,6 +164,21 @@ public class VolunteerModelFactory {
         model.setEditRbcStatusUri(generateUri(volunteer.getPersonId()) + "/rbc-status/edit");
 
         return model;
+    }
+
+    private EntityModel generateCongregationModel(Integer congregationId) {
+        if (congregationId == null) {
+            return null;
+        }
+
+        Congregation congregation = congregationDao.findCongregation(congregationId);
+
+        EntityModel congregationModel = new EntityModel();
+        congregationModel.setId(congregation.getCongregationId());
+        congregationModel.setName(congregation.getName());
+        congregationModel.setUri(CongregationsController.generateUri(congregation.getCongregationId()));
+
+        return congregationModel;
     }
 
     private Map<Integer, Boolean> generateAvailability(String availability) {
@@ -318,6 +318,11 @@ public class VolunteerModelFactory {
     @Autowired
     public void setSkillDao(SkillDao skillDao) {
         this.skillDao = skillDao;
+    }
+
+    @Autowired
+    public void setCongregationDao(CongregationDao congregationDao) {
+        this.congregationDao = congregationDao;
     }
 
     @Autowired

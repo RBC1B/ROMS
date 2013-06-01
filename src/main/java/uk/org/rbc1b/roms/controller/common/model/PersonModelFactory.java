@@ -4,8 +4,11 @@
  */
 package uk.org.rbc1b.roms.controller.common.model;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.org.rbc1b.roms.controller.congregation.CongregationsController;
+import uk.org.rbc1b.roms.db.Congregation;
+import uk.org.rbc1b.roms.db.CongregationDao;
 import uk.org.rbc1b.roms.db.Person;
 
 /**
@@ -17,6 +20,7 @@ import uk.org.rbc1b.roms.db.Person;
 public class PersonModelFactory {
 
     private static final String BASE_URI = "/persons/";
+    private CongregationDao congregationDao;
 
     /**
      * Generate the uri used to access the person pages.
@@ -47,16 +51,7 @@ public class PersonModelFactory {
         model.setAddress(person.getAddress());
         model.setBirthDate(person.getBirthDate());
         model.setComments(person.getComments());
-
-        if (person.getCongregation() != null) {
-            EntityModel congregation = new EntityModel();
-            congregation.setId(person.getCongregation().getCongregationId());
-            congregation.setName(person.getCongregation().getName());
-            congregation.setUri(CongregationsController.generateUri(person.getCongregation().getCongregationId()));
-
-            model.setCongregation(congregation);
-        }
-
+        model.setCongregation(generateCongregationModel(person.getCongregationId()));
         model.setEmail(person.getEmail());
         model.setForename(person.getForename());
         model.setMiddleName(person.getMiddleName());
@@ -69,5 +64,25 @@ public class PersonModelFactory {
         model.setEditUri(generateUri(person.getPersonId()) + "/edit");
 
         return model;
+    }
+
+    private EntityModel generateCongregationModel(Integer congregationId) {
+        if (congregationId == null) {
+            return null;
+        }
+
+        Congregation congregation = congregationDao.findCongregation(congregationId);
+
+        EntityModel congregationModel = new EntityModel();
+        congregationModel.setId(congregation.getCongregationId());
+        congregationModel.setName(congregation.getName());
+        congregationModel.setUri(CongregationsController.generateUri(congregation.getCongregationId()));
+
+        return congregationModel;
+    }
+
+    @Autowired
+    public void setCongregationDao(CongregationDao congregationDao) {
+        this.congregationDao = congregationDao;
     }
 }

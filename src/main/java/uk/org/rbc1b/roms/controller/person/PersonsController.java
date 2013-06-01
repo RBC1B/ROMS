@@ -23,6 +23,7 @@ import uk.org.rbc1b.roms.controller.common.model.PersonModel;
 import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
 import uk.org.rbc1b.roms.controller.volunteer.VolunteerModelFactory;
 import uk.org.rbc1b.roms.db.Address;
+import uk.org.rbc1b.roms.db.Congregation;
 import uk.org.rbc1b.roms.db.CongregationDao;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.PersonDao;
@@ -143,9 +144,12 @@ public class PersonsController {
         }
         form.setComments(person.getComments());
 
-        if (person.getCongregation() != null) {
-            form.setCongregationId(person.getCongregation().getCongregationId());
-            form.setCongregationName(person.getCongregation().getName());
+        if (person.getCongregationId() != null) {
+
+            Congregation congregation = congregationDao.findCongregation(person.getCongregationId());
+
+            form.setCongregationId(congregation.getCongregationId());
+            form.setCongregationName(congregation.getName());
         }
 
 
@@ -196,13 +200,7 @@ public class PersonsController {
 
         person.setBirthDate(form.getBirthDate() != null ? new java.sql.Date(form.getBirthDate().toDateMidnight().getMillis()) : null);
         person.setComments(form.getComments());
-
-        if (form.getCongregationId() == null) {
-            person.setCongregation(null);
-        } else if (person.getCongregation() == null || !person.getCongregation().getCongregationId().equals(form.getCongregationId())) {
-            person.setCongregation(congregationDao.findCongregation(form.getCongregationId()));
-        }
-
+        person.setCongregationId(form.getCongregationId());
         person.setEmail(form.getEmail());
         person.setForename(form.getForename());
         person.setMiddleName(form.getMiddleName());
@@ -217,9 +215,8 @@ public class PersonsController {
     }
 
     /**
-     * Note: There seems to be a bug in Spring 3.1 that causes the
-     * same uri with a different produces attribute throw an
-     * "Ambiguous handler methods mapped" exception.
+     * Note: There seems to be a bug in Spring 3.1 that causes the same uri with a different produces attribute throw an "Ambiguous handler methods mapped"
+     * exception.
      *
      * @param personId person primary key
      * @return person object
@@ -267,8 +264,10 @@ public class PersonsController {
         result.setPersonId(person.getPersonId());
         result.setBirthDate(person.getBirthDate());
 
-        if (person.getCongregation() != null) {
-            result.setCongregationName(person.getCongregation().getName());
+        if (person.getCongregationId() != null) {
+            Congregation congregation = congregationDao.findCongregation(person.getCongregationId());
+
+            result.setCongregationName(congregation.getName());
         }
 
         if (checkVolunteer) {
