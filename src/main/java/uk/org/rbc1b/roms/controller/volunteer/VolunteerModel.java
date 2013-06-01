@@ -45,6 +45,7 @@ public class VolunteerModel extends PersonModel {
     private String hhcFormCode;
     private List<AssignmentModel> assignments;
     private List<VolunteerSkillModel> skills;
+    private List<VolunteerQualificationModel> qualifications;
 
     /**
      * Determine if the volunteer is available on a given day of the week.
@@ -273,5 +274,13 @@ public class VolunteerModel extends PersonModel {
 
     public void setSkills(List<VolunteerSkillModel> skills) {
         this.skills = skills;
+    }
+
+    public List<VolunteerQualificationModel> getQualifications() {
+        return qualifications;
+    }
+
+    public void setQualifications(List<VolunteerQualificationModel> qualifications) {
+        this.qualifications = qualifications;
     }
 }

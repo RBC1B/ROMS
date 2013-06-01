@@ -459,5 +459,13 @@ $(document).ready(function() {
         }
     );
 
+    roms.common.datatables(
+        $("#volunteer-skills-qualifications"),
+        {
+            "iDisplayLength": 20
+        }
+    );
+
     $(".a-skill-description").tooltip();
+    $(".a-qualification-description").tooltip();
 });

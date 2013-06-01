@@ -5,8 +5,8 @@
         <id name="volunteerQualificationId" >
             <generator class="identity"/>
         </id>
-        <many-to-one name="person" column="PersonId" />
-        <many-to-one name="qualification" column="QualificationId" />
+        <property name="personId" />
+        <property name="qualificationId" />
         <property name="comments" length="100" />
     </class>
 </hibernate-mapping>

@@ -104,7 +104,7 @@
                                         <c:if test="${volunteer.address.town != null}">${volunteer.address.town}<br/></c:if>
                                         <c:if test="${volunteer.address.county != null}">${volunteer.address.county}<br/></c:if>
                                         <c:if test="${volunteer.address.postcode != null}">${volunteer.address.postcode}<br/></c:if>
-                                    </address>
+                                        </address>
                                 </c:when>
                                 <c:otherwise>-</c:otherwise>
                             </c:choose>
@@ -246,6 +246,38 @@
                         </c:when>
                         <c:otherwise>
                             <div class="alert alert-block">Volunteer has no defined skills</div>
+                        </c:otherwise>
+                    </c:choose>
+
+                    <h3>Qualifications</h3>
+                    <c:choose>
+                        <c:when test="${volunteer.qualifications != null}">
+                            <table id="volunteer-skills-qualifications" class="table table-bordered table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Comments</th>
+                                        <th>Badge</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach items="${volunteer.qualifications}" var="qualification">
+                                        <tr>
+                                            <td><span class="a-qualification-description" data-original-title="${qualification.description}"><a href="${qualification.qualification.uri}">${qualification.qualification.name}</a></span></td>
+                                            <td>${qualification.comments}</td>
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${qualification.appearOnBadge}"><span class="icon-ok"></span></c:when>
+                                                    <c:otherwise><span class="icon-remove"></span></c:otherwise>
+                                                </c:choose>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="alert alert-block">Volunteer has no defined qualifications</div>
                         </c:otherwise>
                     </c:choose>
 

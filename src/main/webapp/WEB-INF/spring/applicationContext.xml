@@ -129,6 +129,9 @@
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
                     <property name="name" value="skill.skill" />
                 </bean>
+                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
+                    <property name="name" value="qualification.qualification" />
+                </bean>
             </set>
         </property>
     </bean>

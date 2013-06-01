@@ -4,8 +4,6 @@
  */
 package uk.org.rbc1b.roms.db.volunteer;
 
-import uk.org.rbc1b.roms.db.Person;
-
 /**
  *
  * @author oliver.elder.esq
@@ -13,8 +11,8 @@ import uk.org.rbc1b.roms.db.Person;
 public class VolunteerQualification {
 
     private Integer volunteerQualificationId;
-    private Person person;
-    private Qualification qualification;
+    private Integer personId;
+    private Integer qualificationId;
     private String comments;
 
     public String getComments() {
@@ -25,20 +23,20 @@ public class VolunteerQualification {
         this.comments = comments;
     }
 
-    public Person getPerson() {
-        return person;
+    public Integer getPersonId() {
+        return personId;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setPersonId(Integer personId) {
+        this.personId = personId;
     }
 
-    public Qualification getQualification() {
-        return qualification;
+    public Integer getQualificationId() {
+        return qualificationId;
     }
 
-    public void setQualification(Qualification qualification) {
-        this.qualification = qualification;
+    public void setQualificationId(Integer qualificationId) {
+        this.qualificationId = qualificationId;
     }
 
     public Integer getVolunteerQualificationId() {

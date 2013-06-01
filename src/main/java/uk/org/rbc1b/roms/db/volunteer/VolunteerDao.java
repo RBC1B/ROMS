@@ -56,7 +56,6 @@ public interface VolunteerDao {
     @Transactional
     void saveVolunteer(Volunteer volunteer);
 
-
     /**
      * Find the volunteer assignments.
      *
@@ -77,12 +76,21 @@ public interface VolunteerDao {
     @Transactional(readOnly = true)
     List<VolunteerSkill> findSkills(Integer volunteerId);
 
+    /**
+     * Find the volunteer qualifications.
+     *
+     * @param volunteerId id
+     * @return list of qualifications
+     */
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
+    @Transactional(readOnly = true)
+    List<VolunteerQualification> findQualifications(Integer volunteerId);
 
     /**
      * Additional data to pull in when generating the volunteer details.
      */
     public static enum VolunteerData {
+
         SPOUSE, EMERGENCY_CONTACT, TRADES, INTERVIEWER;
     }
-
 }

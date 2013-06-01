@@ -128,6 +128,17 @@ public class HibernateVolunteerDao implements VolunteerDao {
         return criteria.list();
     }
 
+    @Override
+    public List<VolunteerQualification> findQualifications(Integer volunteerId) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(VolunteerQualification.class);
+        criteria.add(Restrictions.eq("personId", volunteerId));
+
+        return criteria.list();
+    }
+
+
+
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }

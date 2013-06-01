@@ -32,6 +32,7 @@ import uk.org.rbc1b.roms.db.volunteer.Assignment;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao.VolunteerData;
+import uk.org.rbc1b.roms.db.volunteer.VolunteerQualification;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerSearchCriteria;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerSkill;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerTrade;
@@ -130,10 +131,12 @@ public class VolunteersController {
 
         List<Assignment> assignments = volunteerDao.findAssignments(volunteerId);
         List<VolunteerSkill> skills = volunteerDao.findSkills(volunteerId);
+        List<VolunteerQualification> qualifications = volunteerDao.findQualifications(volunteerId);
 
         VolunteerModel volunteerModel = volunteerModelFactory.generateVolunteerModel(volunteer);
         volunteerModel.setAssignments(volunteerModelFactory.generateAssignments(assignments));
         volunteerModel.setSkills(volunteerModelFactory.generateVolunteerSkillsModel(skills));
+        volunteerModel.setQualifications(volunteerModelFactory.generateVolunteerQualificationsModel(qualifications));
         model.addAttribute("volunteer", volunteerModel);
 
         return "volunteers/show";

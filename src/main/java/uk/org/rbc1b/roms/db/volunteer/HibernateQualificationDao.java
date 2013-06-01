@@ -8,6 +8,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -26,6 +27,7 @@ public class HibernateQualificationDao implements QualificationDao {
     }
 
     @Override
+    @Cacheable("qualification.qualification")
     public Qualification findQualification(final Integer qualificationId) {
         return (Qualification) this.sessionFactory.getCurrentSession().get(Qualification.class, qualificationId);
     }

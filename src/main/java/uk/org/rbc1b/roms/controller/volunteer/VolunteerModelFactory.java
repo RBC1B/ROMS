@@ -15,13 +15,17 @@ import uk.org.rbc1b.roms.controller.common.model.EntityModel;
 import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
 import uk.org.rbc1b.roms.controller.congregation.CongregationsController;
 import uk.org.rbc1b.roms.controller.department.DepartmentModelFactory;
+import uk.org.rbc1b.roms.controller.qualification.QualificationModelFactory;
 import uk.org.rbc1b.roms.controller.skill.SkillModelFactory;
 import uk.org.rbc1b.roms.db.volunteer.Assignment;
 import uk.org.rbc1b.roms.db.volunteer.Department;
 import uk.org.rbc1b.roms.db.volunteer.DepartmentDao;
+import uk.org.rbc1b.roms.db.volunteer.Qualification;
+import uk.org.rbc1b.roms.db.volunteer.QualificationDao;
 import uk.org.rbc1b.roms.db.volunteer.Skill;
 import uk.org.rbc1b.roms.db.volunteer.SkillDao;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
+import uk.org.rbc1b.roms.db.volunteer.VolunteerQualification;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerSkill;
 import uk.org.rbc1b.roms.reference.ReferenceDao;
 
@@ -42,7 +46,9 @@ public class VolunteerModelFactory {
     private SkillModelFactory skillModelFactory;
     private SkillDao skillDao;
     private DepartmentDao departmentDao;
+    private QualificationDao qualificationDao;
     private DepartmentModelFactory departmentModelFactory;
+    private QualificationModelFactory qualificationModelFactory;
 
     static {
         for (int i = 0; i < DAYS_PER_WEEK; i++) {
@@ -251,6 +257,42 @@ public class VolunteerModelFactory {
         return modelList;
     }
 
+    /**
+     * Generate the models for the volunteer qualifications.
+     *
+     * @param volunteerQualifications list of volunteer qualifications
+     * @return model list
+     */
+    public List<VolunteerQualificationModel> generateVolunteerQualificationsModel(List<VolunteerQualification> volunteerQualifications) {
+        if (CollectionUtils.isEmpty(volunteerQualifications)) {
+            return null;
+        }
+
+        List<VolunteerQualificationModel> modelList = new ArrayList<VolunteerQualificationModel>(volunteerQualifications.size());
+        for (VolunteerQualification volunteerQualification : volunteerQualifications) {
+            VolunteerQualificationModel model = new VolunteerQualificationModel();
+
+            model.setId(volunteerQualification.getVolunteerQualificationId());
+
+            model.setAppearOnBadge(true);
+            model.setComments(volunteerQualification.getComments());
+
+            Qualification qualification = qualificationDao.findQualification(volunteerQualification.getQualificationId());
+            model.setDescription(qualification.getDescription());
+
+            EntityModel qualificationModel = new EntityModel();
+            qualificationModel.setId(qualification.getQualificationId());
+            qualificationModel.setName(qualification.getName());
+            qualificationModel.setUri(qualificationModelFactory.generateUri(qualification.getQualificationId()));
+
+            model.setQualification(qualificationModel);
+
+            modelList.add(model);
+        }
+
+        return modelList;
+    }
+
     @Autowired
     public void setPersonModelFactory(PersonModelFactory personModelFactory) {
         this.personModelFactory = personModelFactory;
@@ -284,5 +326,15 @@ public class VolunteerModelFactory {
     @Autowired
     public void setDepartmentModelFactory(DepartmentModelFactory departmentModelFactory) {
         this.departmentModelFactory = departmentModelFactory;
+    }
+
+    @Autowired
+    public void setQualificationDao(QualificationDao qualificationDao) {
+        this.qualificationDao = qualificationDao;
+    }
+
+    @Autowired
+    public void setQualificationModelFactory(QualificationModelFactory qualificationModelFactory) {
+        this.qualificationModelFactory = qualificationModelFactory;
     }
 }
