@@ -14,7 +14,10 @@
             <div class="media">
                 <img src="<c:url value='/images/oli-lion.jpg' />" class="media-object img-polaroid pull-left" />
                 <div class="media-body">
-                    <div id="volunteer-name">
+                    <div id="volunteer-name"
+                         data-forename="${volunteer.forename}"
+                         data-middle-name="${volunteer.middleName}"
+                         data-surname="${volunteer.surname}">
                         <h1 class="media-heading">
                             #${volunteer.id}: ${volunteer.forename} ${volunteer.middleName} ${volunteer.surname}
                             <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
@@ -93,6 +96,7 @@
             </div>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
+        <%@ include file="fragments/show-name-edit-modal.jsp" %>
         <script type="text/javascript" charset="utf8" src="<c:url value='/javascript/volunteers.js' />" ></script>
     </body>
 </html>

@@ -21,13 +21,13 @@
                     <label class="control-label">1.(a) Legal name:</label>
                     <div class="controls controls-row">
                         <div class="span2">
-                            <form:input path="surname" placeholder="Last"/>
+                            <form:input path="surname" maxlength="50" placeholder="Last"/>
                         </div>,
                         <div class="span2">
-                            <form:input path="forename" placeholder="First"/>
+                            <form:input path="forename" maxlength="50" placeholder="First"/>
                         </div>
                         <div class="span2">
-                            <form:input path="middleName" placeholder="Middle" />
+                            <form:input path="middleName" maxlength="50" placeholder="Middle" />
                         </div>
                     </div>
                 </fieldset>

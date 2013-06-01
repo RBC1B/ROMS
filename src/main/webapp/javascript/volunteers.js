@@ -523,8 +523,35 @@ $(document).ready(function() {
 
     $("#volunteer-name a").on("click", function(e) {
         e.preventDefault();
-        alert("clicked");
+
+        // make sure the values are set to the current name
+        // if the user edits it, then cancels the fields would be wrong
+        var $volunteerName = $("#volunteer-name");
+        $("#volunteer-name-modal-form input[name='forename']").val($volunteerName.data("forename"));
+        $("#volunteer-name-modal-form input[name='middleName']").val($volunteerName.data("middle-name"));
+        $("#volunteer-name-modal-form input[name='surname']").val($volunteerName.data("surname"));
+
+        $('#volunteer-name-modal').modal('show');
     });
+
+    $("#volunteer-name-modal-form").validate({
+        rules: {
+            forename: {
+                minlength: 2,
+                required: true
+            },
+            surname: {
+                minlength: 2,
+                required: true
+            }
+        },
+        submitHandler :function(form) {
+            alert("yo");
+            form.submit();
+        },
+        errorPlacement: roms.common.validatorErrorPlacement
+    });
+
 
     $("#volunteer-comments").hover(
         function volunteerNameOver() {
