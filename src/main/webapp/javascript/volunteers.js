@@ -468,4 +468,6 @@ $(document).ready(function() {
 
     $(".a-skill-description").tooltip();
     $(".a-qualification-description").tooltip();
+
+    roms.common.persistentTabs();
 });
