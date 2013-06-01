@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import uk.org.rbc1b.roms.db.CongregationDao;
 import uk.org.rbc1b.roms.db.Congregation;
+import uk.org.rbc1b.roms.db.CongregationDao;
 
 /**
  * Handle congregation related requests.
@@ -45,7 +45,7 @@ public class CongregationsController {
      */
     @RequestMapping(value = "search", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public CongregationSearchResponse handleSearch(@RequestParam(value = "name", required = true) String name) {
+    public CongregationSearchResponse findCongregations(@RequestParam(value = "name", required = true) String name) {
         List<Congregation> congregations = congregationDao.findCongregations(name);
 
         CongregationSearchResponse response = new CongregationSearchResponse();

@@ -37,7 +37,7 @@ public class CircuitsController {
      * @return view
      */
     @RequestMapping(method = RequestMethod.GET)
-    public String handleList(ModelMap model) {
+    public String showCircuitList(ModelMap model) {
 
         model.addAttribute("circuits", circuitDao.findCircuits());
 
@@ -54,7 +54,7 @@ public class CircuitsController {
      * circuit
      */
     @RequestMapping(value = "{circuitId}", method = RequestMethod.GET)
-    public String handleCircuit(@PathVariable Integer circuitId, ModelMap model) throws NoSuchRequestHandlingMethodException {
+    public String showCircuit(@PathVariable Integer circuitId, ModelMap model) throws NoSuchRequestHandlingMethodException {
 
         Circuit circuit = circuitDao.findCircuit(circuitId);
 
@@ -77,7 +77,7 @@ public class CircuitsController {
      * circuit
      */
     @RequestMapping(value = "{circuitId}/edit", method = RequestMethod.GET)
-    public String handleCircuitEdit(@PathVariable Integer circuitId, ModelMap model) throws NoSuchRequestHandlingMethodException {
+    public String showEditCircuitForm(@PathVariable Integer circuitId, ModelMap model) throws NoSuchRequestHandlingMethodException {
         Circuit circuit = circuitDao.findCircuit(circuitId);
 
         if (circuit == null) {
@@ -110,7 +110,7 @@ public class CircuitsController {
      * @return view name
      */
     @RequestMapping(value = "new", method = RequestMethod.GET)
-    public String handleNewForm(ModelMap model) {
+    public String showCreateCircuitForm(ModelMap model) {
 
         // initialise the form bean
         model.addAttribute("circuit", new CircuitForm());
@@ -125,7 +125,7 @@ public class CircuitsController {
      * @return view name
      */
     @RequestMapping(method = RequestMethod.POST)
-    public String handleNewSubmit(@ModelAttribute("circuit") @Valid CircuitForm circuitForm) {
+    public String createCircuit(@ModelAttribute("circuit") @Valid CircuitForm circuitForm) {
 
         Circuit circuit = new Circuit();
         if (circuitForm.getCircuitId() != null) {

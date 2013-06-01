@@ -38,7 +38,7 @@ public class QualificationsController {
      * @return model containing the list of qualifications
      */
     @RequestMapping(method = RequestMethod.GET)
-    public String handleList(ModelMap model) {
+    public String showQualificationList(ModelMap model) {
 
         model.addAttribute("qualifications", qualificationDao.findQualifications());
 
@@ -55,7 +55,7 @@ public class QualificationsController {
      * qualification
      */
     @RequestMapping(value = "{qualificationId}/edit", method = RequestMethod.GET)
-    public String handleQualificationEdit(@PathVariable Integer qualificationId, ModelMap model)
+    public String showEditQualificationForm(@PathVariable Integer qualificationId, ModelMap model)
             throws NoSuchRequestHandlingMethodException {
         Qualification qualification = this.qualificationDao.findQualification(qualificationId);
         if (qualification == null) {
@@ -78,7 +78,7 @@ public class QualificationsController {
      * @return view name
      */
     @RequestMapping(value = "new", method = RequestMethod.GET)
-    public String handleNewForm(ModelMap model) {
+    public String showCreateQualificationForm(ModelMap model) {
 
         model.addAttribute("qualification", new QualificationForm());
 
@@ -92,7 +92,7 @@ public class QualificationsController {
      * @return mvc redirect
      */
     @RequestMapping(method = RequestMethod.POST)
-    public String handleNewSubmit(@ModelAttribute("qualfication") @Valid QualificationForm qualificationForm) {
+    public String createQualification(@ModelAttribute("qualfication") @Valid QualificationForm qualificationForm) {
 
         Qualification qualification = new Qualification();
         if (qualificationForm.getQualificationId() != null) {
@@ -115,7 +115,7 @@ public class QualificationsController {
      * qualification
      */
     @RequestMapping(value = "{qualificationId}/delete", method = RequestMethod.GET)
-    public String handleDelete(@PathVariable Integer qualificationId, ModelMap model)
+    public String deleteQualification(@PathVariable Integer qualificationId, ModelMap model)
             throws NoSuchRequestHandlingMethodException {
         Qualification qualification = qualificationDao.findQualification(qualificationId);
         if (qualification != null) {

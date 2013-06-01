@@ -35,7 +35,7 @@ public class SkillsController {
      * @return view
      */
     @RequestMapping(method = RequestMethod.GET)
-    public String handleList(ModelMap model) {
+    public String showSkillList(ModelMap model) {
 
         List<Skill> skills = skillDao.findSkills();
         List<SkillListModel> modelList = new ArrayList<SkillListModel>(skills.size());
@@ -57,7 +57,7 @@ public class SkillsController {
      * @throws NoSuchRequestHandlingMethodException on failure to look up the skill
      */
     @RequestMapping(value = "{skillId}", method = RequestMethod.GET)
-    public String handleSkill(@PathVariable Integer skillId, ModelMap model) throws NoSuchRequestHandlingMethodException {
+    public String showSkill(@PathVariable Integer skillId, ModelMap model) throws NoSuchRequestHandlingMethodException {
 
         Skill skill = skillDao.findSkill(skillId);
 
@@ -77,7 +77,7 @@ public class SkillsController {
      * @return view name
      */
     @RequestMapping(value = "new", method = RequestMethod.GET)
-    public String handleNewForm(ModelMap model) {
+    public String showCreateSkillForm(ModelMap model) {
 
         // initialise the form bean
         model.addAttribute("skill", new SkillForm());
@@ -92,7 +92,7 @@ public class SkillsController {
      * @return view name
      */
     @RequestMapping(method = RequestMethod.POST)
-    public String handleNewSubmit(@Valid SkillForm skillForm) {
+    public String createSkill(@Valid SkillForm skillForm) {
 
         Skill skill = new Skill();
         skill.setName(skillForm.getName());

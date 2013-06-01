@@ -22,7 +22,7 @@ public class HomepageController {
      * @return view name
      */
     @RequestMapping(method = RequestMethod.GET)
-    public String handleGetRequest() {
+    public String showHomepage() {
         return "homepage";
     }
 }

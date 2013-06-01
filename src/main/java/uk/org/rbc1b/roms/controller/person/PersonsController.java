@@ -52,7 +52,7 @@ public class PersonsController {
      * @return view
      */
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=text/html")
-    public String handleList(ModelMap model, PersonSearchCriteria searchCriteria) {
+    public String showPersonList(ModelMap model, PersonSearchCriteria searchCriteria) {
 
         List<Person> persons = personDao.findPersons(searchCriteria);
         List<PersonModel> modelList = new ArrayList<PersonModel>(persons.size());
@@ -73,7 +73,7 @@ public class PersonsController {
      */
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json")
     @ResponseBody
-    public AjaxDataTableResult handleDatatableAjaxList(AjaxDataTableRequestData requestData) {
+    public AjaxDataTableResult showDatatableAjaxPersonList(AjaxDataTableRequestData requestData) {
 
         PersonSearchCriteria searchCriteria = new PersonSearchCriteria();
         searchCriteria.setSearch(requestData.getSearch());
@@ -107,7 +107,7 @@ public class PersonsController {
      * @throws NoSuchRequestHandlingMethodException when no person matching the id is found
      */
     @RequestMapping(value = "{personId}", method = RequestMethod.GET)
-    public String handlePerson(@PathVariable Integer personId, ModelMap model) throws NoSuchRequestHandlingMethodException {
+    public String showPerson(@PathVariable Integer personId, ModelMap model) throws NoSuchRequestHandlingMethodException {
         Person person = fetchPerson(personId);
 
         if (volunteerDao.findVolunteer(person.getPersonId(), null) != null) {
@@ -127,7 +127,7 @@ public class PersonsController {
      * @throws NoSuchRequestHandlingMethodException when no person matching the id is found
      */
     @RequestMapping(value = "{personId}/edit", method = RequestMethod.GET)
-    public String handleEditForm(@PathVariable Integer personId, ModelMap model) throws NoSuchRequestHandlingMethodException {
+    public String showEditPersonForm(@PathVariable Integer personId, ModelMap model) throws NoSuchRequestHandlingMethodException {
 
         Person person = fetchPerson(personId);
 
@@ -180,7 +180,7 @@ public class PersonsController {
      * @throws NoSuchRequestHandlingMethodException when no person matching the id is found
      */
     @RequestMapping(value = "{personId}", method = RequestMethod.POST)
-    private String handleEditSubmit(@PathVariable Integer personId, @Valid PersonForm form) throws NoSuchRequestHandlingMethodException {
+    private String updatePerson(@PathVariable Integer personId, @Valid PersonForm form) throws NoSuchRequestHandlingMethodException {
         Person person = fetchPerson(personId);
 
         if (form.getStreet() != null || form.getTown() != null || form.getCounty() != null || form.getPostcode() != null) {
@@ -217,8 +217,9 @@ public class PersonsController {
     }
 
     /**
-     * Note: There seems to be a bug in Spring 3.1 that causes the same uri with a different produces attribute throw an " Ambiguous handler methods mapped"
-     * exception.
+     * Note: There seems to be a bug in Spring 3.1 that causes the
+     * same uri with a different produces attribute throw an
+     * "Ambiguous handler methods mapped" exception.
      *
      * @param personId person primary key
      * @return person object
@@ -226,7 +227,7 @@ public class PersonsController {
      */
     @RequestMapping(value = "{personId}/reference", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public Person handleAjaxPerson(@PathVariable Integer personId) throws NoSuchRequestHandlingMethodException {
+    public Person showAjaxPerson(@PathVariable Integer personId) throws NoSuchRequestHandlingMethodException {
         Person person = fetchPerson(personId);
 
         return person;
@@ -242,7 +243,7 @@ public class PersonsController {
      */
     @RequestMapping(value = "search", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public PersonsSearchResponse handleSearch(@RequestParam(value = "forename", required = true) String forename,
+    public PersonsSearchResponse findPersons(@RequestParam(value = "forename", required = true) String forename,
             @RequestParam(value = "surname", required = true) String surname, @RequestParam(value = "checkVolunteer") boolean checkVolunteer) {
         List<Person> persons = personDao.findPersons(forename, surname);
 

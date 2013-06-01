@@ -71,7 +71,7 @@ public class VolunteersController {
      * @return view
      */
     @RequestMapping(method = RequestMethod.GET)
-    public String handleList(ModelMap model, VolunteerSearchCriteria searchCriteria) {
+    public String showVolunteerList(ModelMap model, VolunteerSearchCriteria searchCriteria) {
 
         model.addAttribute("volunteers", volunteerDao.findVolunteers(searchCriteria));
         model.addAttribute("newUri", volunteerModelFactory.generateUri(null) + "new");
@@ -86,7 +86,7 @@ public class VolunteersController {
      */
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json")
     @ResponseBody
-    public AjaxDataTableResult handleDatatableAjaxList(AjaxDataTableRequestData requestData) {
+    public AjaxDataTableResult showDatatableAjaxVolunteerList(AjaxDataTableRequestData requestData) {
         VolunteerSearchCriteria searchCriteria = new VolunteerSearchCriteria();
         searchCriteria.setSearch(requestData.getSearch());
         searchCriteria.setSortValue(requestData.getSortValue());
@@ -120,7 +120,7 @@ public class VolunteersController {
      * @throws NoSuchRequestHandlingMethodException when no person matching the id is found
      */
     @RequestMapping(value = "{volunteerId}", method = RequestMethod.GET)
-    public String handleVolunteer(@PathVariable Integer volunteerId, ModelMap model) throws NoSuchRequestHandlingMethodException {
+    public String showVolunteer(@PathVariable Integer volunteerId, ModelMap model) throws NoSuchRequestHandlingMethodException {
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
         if (volunteer == null) {
@@ -150,7 +150,7 @@ public class VolunteersController {
      * @return view name
      */
     @RequestMapping(value = "new", method = RequestMethod.GET)
-    public String handleNewForm(ModelMap model) {
+    public String showCreateVolunteerForm(ModelMap model) {
 
         // initialise the form bean
         model.addAttribute("volunteer", new VolunteerForm());
@@ -165,7 +165,7 @@ public class VolunteersController {
      * @return redirect url
      */
     @RequestMapping(method = RequestMethod.POST)
-    public String handleSubmit(@ModelAttribute("volunteer") @Valid VolunteerForm form) {
+    public String createVolunteer(@ModelAttribute("volunteer") @Valid VolunteerForm form) {
 
         Volunteer volunteer;
 
@@ -259,7 +259,7 @@ public class VolunteersController {
      * @throws NoSuchRequestHandlingMethodException if volunteer is not found
      */
     @RequestMapping(value = "{volunteerId}/spiritual/edit", method = RequestMethod.GET)
-    public String handleEditSpiritualForm(@PathVariable Integer volunteerId, ModelMap model) throws NoSuchRequestHandlingMethodException {
+    public String showEditVolunteerSpiritualForm(@PathVariable Integer volunteerId, ModelMap model) throws NoSuchRequestHandlingMethodException {
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
         if (volunteer == null) {

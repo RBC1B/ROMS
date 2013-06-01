@@ -47,7 +47,7 @@ public class KingdomHallsController {
      * @return view
      */
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=text/html")
-    public String handleList(ModelMap model) {
+    public String showKingdomHallList(ModelMap model) {
 
         model.addAttribute("kingdomHalls", createKingdomHallListModels(kingdomHallDao.findKingdomHalls()));
         model.addAttribute("newUri", generateUri(null) + "new");
@@ -62,7 +62,7 @@ public class KingdomHallsController {
      */
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json")
     @ResponseBody
-    public AjaxDataTableResult<KingdomHallListModel> handlePageList(@RequestParam(value = "sEcho") String echoId) {
+    public AjaxDataTableResult<KingdomHallListModel> showDatatableAjaxKingdomHallList(@RequestParam(value = "sEcho") String echoId) {
         AjaxDataTableResult<KingdomHallListModel> result = new AjaxDataTableResult<KingdomHallListModel>();
         result.setRecords(createKingdomHallListModels(kingdomHallDao.findKingdomHalls()));
         result.setTotalDisplayRecords(result.getAaData().size());
@@ -80,7 +80,7 @@ public class KingdomHallsController {
      * @throws NoSuchRequestHandlingMethodException on failure to look up the kingdom hall
      */
     @RequestMapping(value = "{kingdomHallId}", method = RequestMethod.GET)
-    public String handleKingdomHall(@PathVariable Integer kingdomHallId, ModelMap model) throws NoSuchRequestHandlingMethodException {
+    public String showKingdomHall(@PathVariable Integer kingdomHallId, ModelMap model) throws NoSuchRequestHandlingMethodException {
 
         KingdomHall kingdomHall = kingdomHallDao.findKingdomHall(kingdomHallId);
 
@@ -100,7 +100,7 @@ public class KingdomHallsController {
      * @return view name
      */
     @RequestMapping(value = "new", method = RequestMethod.GET)
-    public String handleNewForm(ModelMap model) {
+    public String showCreateKingdomHallForm(ModelMap model) {
 
         // initialise the form bean
         model.addAttribute("kingdomHall", new KingdomHallForm());
@@ -115,7 +115,7 @@ public class KingdomHallsController {
      * @return view name
      */
     @RequestMapping(method = RequestMethod.POST)
-    public String handleNewSubmit(@Valid KingdomHallForm kingdomHallForm) {
+    public String createKingdomHall(@Valid KingdomHallForm kingdomHallForm) {
 
         KingdomHall kingdomHall = new KingdomHall();
         kingdomHall.setName(kingdomHallForm.getName());

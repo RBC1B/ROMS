@@ -53,7 +53,7 @@ public class ProjectsController {
      * @return view
      */
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=text/html")
-    public String handleList(ModelMap model) {
+    public String showProjectList(ModelMap model) {
 
         List<Project> projects = projectDao.findProjects();
         Map<Integer, ProjectStage> stages = projectDao.findProjectStages();
@@ -76,7 +76,7 @@ public class ProjectsController {
      * @throws NoSuchRequestHandlingMethodException when no project matching the id is found
      */
     @RequestMapping(value = "{projectId}", method = RequestMethod.GET)
-    public String handleProject(@PathVariable Integer projectId, ModelMap model) throws NoSuchRequestHandlingMethodException {
+    public String showProject(@PathVariable Integer projectId, ModelMap model) throws NoSuchRequestHandlingMethodException {
 
         Project project = projectDao.findProject(projectId);
         if (project == null) {

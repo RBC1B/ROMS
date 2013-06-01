@@ -25,7 +25,7 @@ public class AuthenticationController {
      * @return view name
      */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String handleLoginGetRequest(@RequestParam(value = "status", required = false) String status, ModelMap model) {
+    public String showLoginForm(@RequestParam(value = "status", required = false) String status, ModelMap model) {
         if (status != null) {
             model.addAttribute("status", status);
         }
@@ -38,7 +38,7 @@ public class AuthenticationController {
      * @return view name
      */
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String handleLogoutGetRequest() {
+    public String showLogout() {
         return "logout";
     }
 }
