@@ -46,6 +46,9 @@ public class VolunteerModel extends PersonModel {
     private List<AssignmentModel> assignments;
     private List<VolunteerSkillModel> skills;
     private List<VolunteerQualificationModel> qualifications;
+    private String editSpiritualUri;
+    private String editPersonalUri;
+    private String editRbcStatusUri;
 
     /**
      * Determine if the volunteer is available on a given day of the week.
@@ -282,5 +285,29 @@ public class VolunteerModel extends PersonModel {
 
     public void setQualifications(List<VolunteerQualificationModel> qualifications) {
         this.qualifications = qualifications;
+    }
+
+    public String getEditSpiritualUri() {
+        return editSpiritualUri;
+    }
+
+    public void setEditSpiritualUri(String editSpiritualUri) {
+        this.editSpiritualUri = editSpiritualUri;
+    }
+
+    public String getEditPersonalUri() {
+        return editPersonalUri;
+    }
+
+    public void setEditPersonalUri(String editPersonalUri) {
+        this.editPersonalUri = editPersonalUri;
+    }
+
+    public String getEditRbcStatusUri() {
+        return editRbcStatusUri;
+    }
+
+    public void setEditRbcStatusUri(String editRbcStatusUri) {
+        this.editRbcStatusUri = editRbcStatusUri;
     }
 }

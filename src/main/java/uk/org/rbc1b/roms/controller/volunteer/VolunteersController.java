@@ -12,6 +12,7 @@ import java.util.Set;
 import javax.validation.Valid;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.ObjectUtils;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -247,6 +248,38 @@ public class VolunteersController {
         volunteerDao.saveVolunteer(volunteer);
 
         return "redirect:" + volunteerModelFactory.generateUri(volunteer.getPersonId());
+    }
+
+    /**
+     * Display the form to create a new volunteer.
+     *
+     * @param volunteerId volunteer id to edit
+     * @param model mvc model
+     * @return view name
+     * @throws NoSuchRequestHandlingMethodException if volunteer is not found
+     */
+    @RequestMapping(value = "{volunteerId}/spiritual/edit", method = RequestMethod.GET)
+    public String handleEditSpiritualForm(@PathVariable Integer volunteerId, ModelMap model) throws NoSuchRequestHandlingMethodException {
+
+        Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
+        if (volunteer == null) {
+            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+        }
+
+        VolunteerSpiritualForm form = new VolunteerSpiritualForm();
+        form.setAppointmentId(volunteer.getAppointmentId());
+        form.setBaptismDate(LocalDate.fromDateFields(volunteer.getBaptismDate()).toDateTimeAtStartOfDay());
+        form.setCongregationName(volunteer.getCongregation().getName());
+        form.setCongregationId(volunteer.getCongregation().getCongregationId());
+        form.setFulltimeId(volunteer.getFulltimeId());
+
+        model.addAttribute("volunteerSpiritual", form);
+        model.addAttribute("forename", volunteer.getForename());
+        model.addAttribute("surname", volunteer.getSurname());
+        model.addAttribute("fulltimeValues", referenceDao.findFulltimeValues());
+        model.addAttribute("appointmentValues", referenceDao.findAppointmentValues());
+        model.addAttribute("submitUri", volunteerModelFactory.generateUri(volunteerId) + "/spiritual");
+        return "volunteers/edit-spiritual";
     }
 
     private Person createEmergencyContact(VolunteerForm form) {

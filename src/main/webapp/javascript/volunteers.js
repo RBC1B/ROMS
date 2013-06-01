@@ -1,6 +1,17 @@
 $(document).ready(function() {
 
-    // create/edit
+    // created/edit common
+    $(".datepicker").datepicker({
+        dateFormat: "dd/mm/yy",
+        changeYear: true
+    });
+
+    $("#congregationName").typeahead({
+        source: roms.common.congregationTypeAheadSource,
+        minLength: 2
+    });
+
+    // create
     $("#surname").blur(function() {
         matchVolunteerPerson($("#forename").val(), $("#surname").val(), $("#personId"));
     });
@@ -23,11 +34,6 @@ $(document).ready(function() {
         );
     });
 
-    $(".datepicker").datepicker({
-        dateFormat: "dd/mm/yy",
-        changeYear: true
-    });
-
     // elder and ministerial values are exclusive
     $("input[name='elder']").change(function() {
         if($(this).is(':checked')) {
@@ -46,11 +52,6 @@ $(document).ready(function() {
 
     $("#emergency-contact-linked button.close").click(function() {
         populateEmergencyContactFromPerson(null, $("#emergencyContactPersonId"));
-    });
-
-    $("#congregationName").typeahead({
-        source: roms.common.congregationTypeAheadSource,
-        minLength: 2
     });
 
     // when adding a trades row, clone the last one, clear the values
@@ -443,6 +444,46 @@ $(document).ready(function() {
             ]
         }
     );
+
+    // edit
+    $("#volunteerSpiritual").validate({
+        rules: {
+            baptismDate: {
+                required: true
+            },
+            congregationName: {
+                required: true,
+                remote: {
+                    // check for an exact match. Populate the congregation id
+                    url: roms.common.relativePath + "/congregations/search",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: {
+                        name: function() {
+                            return $("#congregationName").val();
+                        }
+                    },
+                    dataFilter: function(rawData) {
+                        var data = JSON.parse(rawData)
+                        if (data.results && data.results[0].name == $("#congregationName").val()) {
+                            $("#congregationId").val(data.results[0].id);
+                            return true;
+
+                        }
+                        return false;
+                    }
+                }
+            },
+            congregationId: {
+                required: true
+            }
+        },
+        submitHandler :function(form) {
+            form.submit();
+        },
+        errorPlacement: roms.common.validatorErrorPlacement
+    });
+
 
     // display
     roms.common.datatables(

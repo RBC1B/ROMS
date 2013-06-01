@@ -174,7 +174,9 @@ public class VolunteerModelFactory {
         model.setHhcFormCode(volunteer.getHhcFormCode());
 
         model.setUri(generateUri(volunteer.getPersonId()));
-        model.setEditUri(generateUri(volunteer.getPersonId()) + "/edit");
+        model.setEditSpiritualUri(generateUri(volunteer.getPersonId()) + "/spiritual/edit");
+        model.setEditPersonalUri(generateUri(volunteer.getPersonId()) + "/personal/edit");
+        model.setEditRbcStatusUri(generateUri(volunteer.getPersonId()) + "/rbc-status/edit");
 
         return model;
     }
