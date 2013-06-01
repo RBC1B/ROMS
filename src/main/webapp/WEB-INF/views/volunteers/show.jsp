@@ -14,10 +14,25 @@
             <div class="media">
                 <img src="<c:url value='/images/oli-lion.jpg' />" class="media-object img-polaroid pull-left" />
                 <div class="media-body">
-                    <h1 class="media-heading">#${volunteer.id}: ${volunteer.forename} ${volunteer.middleName} ${volunteer.surname}</h1>
+                    <div id="volunteer-name">
+                        <h1 class="media-heading">
+                            #${volunteer.id}: ${volunteer.forename} ${volunteer.middleName} ${volunteer.surname}
+                            <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
+                                <a style="display: none" class="btn btn-primary btn-mini" href="#">Edit</a>
+                            </sec:authorize>
+                        </h1>
+                    </div>
                     <dl class="dl-horizontal">
                         <dt>Status:</dt><dd>${volunteer.status}</dd>
-                        <dt>Comments:</dt><dd>${volunteer.comments}</dd>
+                        <dt>Comments:</dt>
+                        <dd>
+                            <div id="volunteer-comments">
+                                ${volunteer.comments}
+                                <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
+                                    <a style="display: none" class="btn btn-primary btn-mini" href="#">Edit</a>
+                                </sec:authorize>
+                            </div>
+                        </dd>
                     </dl>
                 </div>
             </div>

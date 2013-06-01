@@ -511,4 +511,32 @@ $(document).ready(function() {
     $(".a-qualification-description").tooltip();
 
     roms.common.persistentTabs();
+
+    $("#volunteer-name").hover(
+        function volunteerNameOver() {
+            $(this).find("a").show();
+        },
+        function volunteerNameOut() {
+            $(this).find("a").hide();
+        }
+    );
+
+    $("#volunteer-name a").on("click", function(e) {
+        e.preventDefault();
+        alert("clicked");
+    });
+
+    $("#volunteer-comments").hover(
+        function volunteerNameOver() {
+            $(this).find("a").show();
+        },
+        function volunteerNameOut() {
+            $(this).find("a").hide();
+        }
+    );
+
+    $("#volunteer-comments a").on("click", function(e) {
+        e.preventDefault();
+        alert("clicked");
+    });
 });
