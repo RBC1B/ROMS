@@ -512,11 +512,11 @@ $(document).ready(function() {
 
     roms.common.persistentTabs();
 
-    $("#volunteer-name").hover(
-        function volunteerNameOver() {
+    $(".a-edit-hover").hover(
+        function over() {
             $(this).find("a").show();
         },
-        function volunteerNameOut() {
+        function out() {
             $(this).find("a").hide();
         }
     );
@@ -546,21 +546,39 @@ $(document).ready(function() {
             }
         },
         submitHandler :function(form) {
-            alert("yo");
-            form.submit();
+            $.ajax({
+                url: $(form).attr("action"),
+                data: $(form).serialize(),
+                type: "POST",
+                statusCode: {
+                    404: function() {
+                        alert("Volunteer not found");
+                    },
+                    500: function() {
+                        alert("Failed to save volunteer name");
+                    }
+                },
+                success: function() {
+                    updateVolunteerName();
+                    $('#volunteer-name-modal').modal('hide');
+                }
+            });
         },
         errorPlacement: roms.common.validatorErrorPlacement
     });
 
+    function updateVolunteerName() {
 
-    $("#volunteer-comments").hover(
-        function volunteerNameOver() {
-            $(this).find("a").show();
-        },
-        function volunteerNameOut() {
-            $(this).find("a").hide();
-        }
-    );
+        var forename = $("#volunteer-name-modal-form input[name='forename']").val();
+        var middleName = $("#volunteer-name-modal-form input[name='middleName']").val();
+        var surname = $("#volunteer-name-modal-form input[name='surname']").val();
+
+        $("#volunteer-full-name").html(forename + " " + middleName + " " + surname);
+
+        $("#volunteer-name").data("forename", forename);
+        $("#volunteer-name").data("middle-name", middleName);
+        $("#volunteer-name").data("surname", surname);
+    }
 
     $("#volunteer-comments a").on("click", function(e) {
         e.preventDefault();

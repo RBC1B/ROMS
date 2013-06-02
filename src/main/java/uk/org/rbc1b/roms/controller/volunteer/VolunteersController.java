@@ -14,13 +14,14 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableRequestData;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableResult;
@@ -166,7 +167,7 @@ public class VolunteersController {
      * @return redirect url
      */
     @RequestMapping(method = RequestMethod.POST)
-    public String createVolunteer(@ModelAttribute("volunteer") @Valid VolunteerForm form) {
+    public String createVolunteer(@Valid VolunteerForm form) {
 
         Volunteer volunteer;
 
@@ -286,7 +287,33 @@ public class VolunteersController {
     }
 
     /**
-     * Updated the volunteer spiritual information.
+     * Update the volunteer name.
+     * <p>This is expected to be called with an ajax request, so we return
+     * a 204 response on success
+     * @param volunteerId volunteer id to edit
+     * @param form form data
+     * @throws NoSuchRequestHandlingMethodException if volunteer is not found
+     */
+    @RequestMapping(value = "{volunteerId}/name", method = RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateVolunteerName(@PathVariable Integer volunteerId,
+            @Valid VolunteerNameForm form) throws NoSuchRequestHandlingMethodException {
+
+        Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
+        if (volunteer == null) {
+            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+        }
+
+        volunteer.setForename(form.getForename());
+        volunteer.setMiddleName(form.getMiddleName());
+        volunteer.setSurname(form.getSurname());
+
+        volunteerDao.saveVolunteer(volunteer);
+
+    }
+
+    /**
+     * Update the volunteer spiritual information.
      *
      * @param volunteerId volunteer id to edit
      * @param form form data
@@ -295,7 +322,7 @@ public class VolunteersController {
      */
     @RequestMapping(value = "{volunteerId}/spiritual", method = RequestMethod.PUT)
     public String updateVolunteerSpiritual(@PathVariable Integer volunteerId,
-            @ModelAttribute("volunteerSpiritual") @Valid VolunteerSpiritualForm form) throws NoSuchRequestHandlingMethodException {
+            @Valid VolunteerSpiritualForm form) throws NoSuchRequestHandlingMethodException {
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
         if (volunteer == null) {

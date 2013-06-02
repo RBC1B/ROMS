@@ -14,12 +14,12 @@
             <div class="media">
                 <img src="<c:url value='/images/oli-lion.jpg' />" class="media-object img-polaroid pull-left" />
                 <div class="media-body">
-                    <div id="volunteer-name"
+                    <div id="volunteer-name" class="a-edit-hover"
                          data-forename="${volunteer.forename}"
                          data-middle-name="${volunteer.middleName}"
                          data-surname="${volunteer.surname}">
                         <h1 class="media-heading">
-                            #${volunteer.id}: ${volunteer.forename} ${volunteer.middleName} ${volunteer.surname}
+                            #${volunteer.id}: <span id="volunteer-full-name">${volunteer.forename} ${volunteer.middleName} ${volunteer.surname}</span>
                             <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
                                 <a style="display: none" class="btn btn-primary btn-mini" href="#">Edit</a>
                             </sec:authorize>
@@ -29,7 +29,7 @@
                         <dt>Status:</dt><dd>${volunteer.status}</dd>
                         <dt>Comments:</dt>
                         <dd>
-                            <div id="volunteer-comments">
+                            <div id="volunteer-comments" class="a-edit-hover">
                                 ${volunteer.comments}
                                 <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
                                     <a style="display: none" class="btn btn-primary btn-mini" href="#">Edit</a>

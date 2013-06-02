@@ -8,7 +8,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -125,7 +124,7 @@ public class CircuitsController {
      * @return view name
      */
     @RequestMapping(method = RequestMethod.POST)
-    public String createCircuit(@ModelAttribute("circuit") @Valid CircuitForm circuitForm) {
+    public String createCircuit(@Valid CircuitForm circuitForm) {
 
         Circuit circuit = new Circuit();
         if (circuitForm.getCircuitId() != null) {
