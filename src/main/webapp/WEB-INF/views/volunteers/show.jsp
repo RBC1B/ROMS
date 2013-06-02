@@ -12,7 +12,7 @@
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
             <div class="media">
-                <img src="<c:url value='/images/oli-lion.jpg' />" class="media-object img-polaroid pull-left" />
+                <img src="<c:url value='/images/oli-lion.jpg' />" class="media-object img-polaroid pull-left" alt="volunteer image" />
                 <div class="media-body">
                     <div id="volunteer-name" class="a-edit-hover"
                          data-forename="${volunteer.forename}"
@@ -27,15 +27,18 @@
                     </div>
                     <dl class="dl-horizontal">
                         <dt>Status:</dt><dd>${volunteer.status}</dd>
-                        <dt>Comments:</dt>
-                        <dd>
-                            <div id="volunteer-comments" class="a-edit-hover">
-                                ${volunteer.comments}
+                        <!-- we need to capture the dt,dd so that empty comments can be edited
+                             but there is no wrapping object. Much complaints on the interwebs,
+                             so this will have to do -->
+                        <div id="volunteer-comments" class="a-edit-hover">
+                            <dt>Comments:</dt>
+                            <dd>
+                                <span id="volunteer-comments-content">${volunteer.comments}</span>
                                 <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
                                     <a style="display: none" class="btn btn-primary btn-mini" href="#">Edit</a>
                                 </sec:authorize>
-                            </div>
-                        </dd>
+                            </dd>
+                        </div>
                     </dl>
                 </div>
             </div>
@@ -97,6 +100,7 @@
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
         <%@ include file="fragments/show-name-edit-modal.jsp" %>
-        <script type="text/javascript" charset="utf8" src="<c:url value='/javascript/volunteers.js' />" ></script>
+        <%@ include file="fragments/show-comments-edit-modal.jsp" %>
+        <script type="text/javascript" src="<c:url value='/javascript/volunteers.js' />" ></script>
     </body>
 </html>

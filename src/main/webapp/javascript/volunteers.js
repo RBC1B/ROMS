@@ -582,6 +582,32 @@ $(document).ready(function() {
 
     $("#volunteer-comments a").on("click", function(e) {
         e.preventDefault();
-        alert("clicked");
+        // make sure the values are set to the current comments
+        // if the user edits it, then cancels the fields would be wrong
+        $("#volunteer-comments-modal-form input[name='comments']").val($("#volunteer-comments-content").html());
+
+        $('#volunteer-comments-modal').modal('show');
+    });
+
+    $("#volunteer-comments-modal-form").submit(function() {
+        var $form = $(this);
+        $.ajax({
+            url: $form.attr("action"),
+            data: $form.serialize(),
+            type: "POST",
+            statusCode: {
+                404: function() {
+                    alert("Volunteer not found");
+                },
+                500: function() {
+                    alert("Failed to save volunteer comments");
+                }
+            },
+            success: function() {
+                $("#volunteer-comments-content").html($("#volunteer-comments-modal-form input[name='comments']").val());
+                $('#volunteer-comments-modal').modal('hide');
+            }
+        });
+        return false;
     });
 });

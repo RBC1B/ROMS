@@ -53,7 +53,7 @@
                 <li class="active">Projects</li>
             </ul>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-            <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/projects.js' />" ></script>
+            <script type="text/javascript" src="<c:url value='/javascript/projects.js' />" ></script>
         </div>
     </body>
 </html>

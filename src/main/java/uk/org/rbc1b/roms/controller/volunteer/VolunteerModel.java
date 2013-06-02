@@ -47,6 +47,7 @@ public class VolunteerModel extends PersonModel {
     private List<VolunteerSkillModel> skills;
     private List<VolunteerQualificationModel> qualifications;
     private String editNameUri;
+    private String editCommentsUri;
     private String editSpiritualUri;
     private String editPersonalUri;
     private String editRbcStatusUri;
@@ -294,6 +295,14 @@ public class VolunteerModel extends PersonModel {
 
     public void setEditNameUri(String editNameUri) {
         this.editNameUri = editNameUri;
+    }
+
+    public String getEditCommentsUri() {
+        return editCommentsUri;
+    }
+
+    public void setEditCommentsUri(String editCommentsUri) {
+        this.editCommentsUri = editCommentsUri;
     }
 
     public String getEditSpiritualUri() {

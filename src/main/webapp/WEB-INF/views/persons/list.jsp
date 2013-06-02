@@ -43,6 +43,6 @@
                 {{#deleteUri}}<li><a class="list-action" href="{{uriBase}}{{deleteUri}}">Delete</a></li>{{/deleteUri}}
             </ul>
         </script>
-        <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/persons.js' />" ></script>
+        <script type="text/javascript" src="<c:url value='/javascript/persons.js' />" ></script>
     </body>
 </html>

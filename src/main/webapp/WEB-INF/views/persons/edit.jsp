@@ -110,6 +110,6 @@
             </form:form>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
-        <script type="text/javascript" charset="utf-8" src="<c:url value='/javascript/persons.js' />" ></script>
+        <script type="text/javascript" src="<c:url value='/javascript/persons.js' />" ></script>
     </body>
 </html>

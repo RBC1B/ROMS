@@ -20,6 +20,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
@@ -288,8 +289,9 @@ public class VolunteersController {
 
     /**
      * Update the volunteer name.
-     * <p>This is expected to be called with an ajax request, so we return
-     * a 204 response on success
+     * <p>This is expected to be called with an ajax request, so we return a 204
+     * response on success
+     *
      * @param volunteerId volunteer id to edit
      * @param form form data
      * @throws NoSuchRequestHandlingMethodException if volunteer is not found
@@ -309,7 +311,30 @@ public class VolunteersController {
         volunteer.setSurname(form.getSurname());
 
         volunteerDao.saveVolunteer(volunteer);
+    }
 
+    /**
+     * Update the volunteer comments.
+     * <p>This is expected to be called with an ajax request, so we return a 204
+     * response on success
+     *
+     * @param volunteerId volunteer id to edit
+     * @param comments comments to set
+     * @throws NoSuchRequestHandlingMethodException if volunteer is not found
+     */
+    @RequestMapping(value = "{volunteerId}/comments", method = RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateVolunteerComments(@PathVariable Integer volunteerId,
+            @RequestParam("comments") String comments) throws NoSuchRequestHandlingMethodException {
+
+        Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
+        if (volunteer == null) {
+            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+        }
+
+        volunteer.setComments(comments);
+
+        volunteerDao.saveVolunteer(volunteer);
     }
 
     /**
