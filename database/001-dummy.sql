@@ -219,30 +219,30 @@ values ('Brand new hall near Hull', 2, null, null, '73 Industrial Street', 'Hull
 		1, null, null, null, 7 );
 
 -- Skills
-insert into Skill(Name, DepartmentId, Description, AppearOnBadge)
-values('Compo mixing' , 10,  'Smart enough not to stick his hands in the mix', false);
+insert into Skill(Name, DepartmentId, Description, CategoryId)
+values('Compo mixing' , 10,  'Smart enough not to stick his hands in the mix', 1);
 
-insert into Skill(Name, DepartmentId, Description, AppearOnBadge)
-values('Wheel barrow handling' , 10,  null, true);
+insert into Skill(Name, DepartmentId, Description, CategoryId)
+values('Wheel barrow handling' , 10,  null, 1);
 
-insert into Skill(Name, DepartmentId, Description, AppearOnBadge)
-values('Block work', 10,  null, true);
+insert into Skill(Name, DepartmentId, Description, CategoryId)
+values('Block work', 10,  null, 1);
 
-insert into Skill(Name, DepartmentId, Description, AppearOnBadge)
-values('Decorative brick laying' , 10,  'Does not smear all over the joints', true);
+insert into Skill(Name, DepartmentId, Description, CategoryId)
+values('Decorative brick laying' , 10,  'Does not smear all over the joints', 1);
 
-insert into Skill(Name, DepartmentId, Description, AppearOnBadge)
-values('Structural brick laying' , 10,  'Good for walls hidden round the back', true);
+insert into Skill(Name, DepartmentId, Description, CategoryId)
+values('Structural brick laying' , 10,  'Good for walls hidden round the back', 1);
 
 -- Qualifications
-insert into Qualification(Name, Description, AppearOnBadge)
-values ('Structural Engineer', 'BEng equivalent', true);
+insert into Qualification(Name, Description)
+values ('Structural Engineer', 'BEng equivalent');
 
-insert into Qualification(Name, Description, AppearOnBadge)
-values ('Food preparation', 'HNC', false);
+insert into Qualification(Name, Description)
+values ('Food preparation', 'HNC');
 
-insert into Qualification(Name, Description, AppearOnBadge)
-values ('Email technicial', 'Fully trained in the difference between reply and reply to all ', false);
+insert into Qualification(Name, Description)
+values ('Email technicial', 'Fully trained in the difference between reply and reply to all ');
 
 -- Volunteer
 insert into Volunteer(PersonId, RbcStatusId, AppointmentId, FulltimeId, Availability,
