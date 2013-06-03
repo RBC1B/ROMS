@@ -423,7 +423,7 @@ create table VolunteerQualification(
 
 create table Colour(
     ColourId bigint(20) auto_increment,
-    Colour          varchar(20),
+    Colour          varchar(20) not null unique,
     primary key (ColourId)
 )engine=InnoDB;
 
