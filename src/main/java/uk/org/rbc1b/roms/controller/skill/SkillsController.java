@@ -97,7 +97,6 @@ public class SkillsController {
         Skill skill = new Skill();
         skill.setName(skillForm.getName());
         skill.setDescription(skillForm.getDescription());
-        skill.setAppearOnBadge(skillForm.isAppearOnBadge());
 
         skillDao.createSkill(skill);
 

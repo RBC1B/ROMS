@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="uk.org.rbc1b.roms.db.Category" table="Category">
+        <id name="categoryId">
+            <generator class="identity"/>
+        </id>
+        <property length="50" name="name" unique="true"/>
+        <property length="20" name="colour" />
+        <property name="appearOnBadge" />
+    </class>
+</hibernate-mapping>

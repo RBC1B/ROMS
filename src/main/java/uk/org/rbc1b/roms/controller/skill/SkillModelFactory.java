@@ -6,8 +6,11 @@ package uk.org.rbc1b.roms.controller.skill;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import uk.org.rbc1b.roms.controller.category.CategoryModelFactory;
 import uk.org.rbc1b.roms.controller.common.model.EntityModel;
 import uk.org.rbc1b.roms.controller.department.DepartmentModelFactory;
+import uk.org.rbc1b.roms.db.Category;
+import uk.org.rbc1b.roms.db.CategoryDao;
 import uk.org.rbc1b.roms.db.volunteer.Department;
 import uk.org.rbc1b.roms.db.volunteer.DepartmentDao;
 import uk.org.rbc1b.roms.db.volunteer.Skill;
@@ -23,6 +26,8 @@ public class SkillModelFactory {
     private static final String BASE_URI = "/skills/";
     private DepartmentDao departmentDao;
     private DepartmentModelFactory departmentModelFactory;
+    private CategoryDao categoryDao;
+    private CategoryModelFactory categoryModelFactory;
 
     /**
      * Generate the uri used to access the skill pages.
@@ -41,12 +46,11 @@ public class SkillModelFactory {
      * @return model
      */
     public SkillListModel generateSkillListModel(Skill skill) {
-
         SkillListModel model = new SkillListModel();
-        model.setId(skill.getSkillId());
-        model.setAppearOnBadge(skill.isAppearOnBadge());
+        model.setSkillId(skill.getSkillId());
 
-        Department department = departmentDao.findDepartment(skill.getDepartmentId());
+
+        Department department = departmentDao.findDepartment(skill.getDepartment().getDepartmentId());
 
         EntityModel departmentModel = new EntityModel();
         departmentModel.setName(department.getName());
@@ -57,6 +61,16 @@ public class SkillModelFactory {
         model.setDescription(skill.getDescription());
         model.setName(skill.getName());
         model.setUri(generateUri(skill.getSkillId()));
+
+        Category category = categoryDao.findCategory(skill.getCategory().getCategoryId());
+
+        EntityModel categoryModel = new EntityModel();
+        categoryModel.setId(category.getCategoryId());
+        categoryModel.setName(category.getName());
+        categoryModel.setUri(categoryModelFactory.generateUri(category.getCategoryId()));
+
+        model.setCategory(categoryModel);
+
 
         return model;
     }
@@ -69,5 +83,15 @@ public class SkillModelFactory {
     @Autowired
     public void setDepartmentModelFactory(DepartmentModelFactory departmentModelFactory) {
         this.departmentModelFactory = departmentModelFactory;
+    }
+
+    @Autowired
+    public void setColourDao(CategoryDao colourDao) {
+        this.categoryDao = colourDao;
+    }
+
+    @Autowired
+    public void setColourModelFactory(CategoryModelFactory colourModelFactory) {
+        this.categoryModelFactory = colourModelFactory;
     }
 }

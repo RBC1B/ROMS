@@ -33,6 +33,7 @@
         </property>
         <property name="mappingResources">
             <list>
+                <value>uk/org/rbc1b/roms/db/Category.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/Congregation.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/CongregationContact.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/RbcRegion.hbm.xml</value>
@@ -128,6 +129,9 @@
                 </bean>
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
                     <property name="name" value="skill.skill" />
+                </bean>
+                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
+                    <property name="name" value="category.category" />
                 </bean>
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
                     <property name="name" value="qualification.qualification" />

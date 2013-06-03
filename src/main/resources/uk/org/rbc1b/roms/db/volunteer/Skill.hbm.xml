@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<hibernate-mapping  package="uk.org.rbc1b.roms.db.volunteer">
+<hibernate-mapping package="uk.org.rbc1b.roms.db.volunteer">
     <class name="Skill" table="Skill">
-        <id name="skillId" >
+        <id name="skillId">
             <generator class="identity"/>
         </id>
-        <property name="name" length="50" />
-        <property name="departmentId" />
-        <property name="description" length="250" />
-        <property name="appearOnBadge"  />
+        <property length="50" name="name" unique="true"/>
+        <many-to-one cascade="all" 
+                 class="uk.org.rbc1b.roms.db.volunteer.Department" 
+                 column="DepartmentId" 
+                 lazy="false" 
+                 name="department">
+            
+        </many-to-one>
+        <property length="250" name="description"/>
+        <many-to-one cascade="all" 
+                 class="uk.org.rbc1b.roms.db.Category" 
+                 column="CategoryId" 
+                 lazy="false" 
+                 name="category">
+        </many-to-one>
     </class>
 </hibernate-mapping>

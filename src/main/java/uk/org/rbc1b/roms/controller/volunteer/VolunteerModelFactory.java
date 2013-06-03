@@ -232,9 +232,8 @@ public class VolunteerModelFactory {
             model.setId(volunteerSkill.getVolunteerSkillId());
 
             Skill skill = skillDao.findSkill(volunteerSkill.getSkillId());
-            Department department = departmentDao.findDepartment(skill.getDepartmentId());
+            Department department = departmentDao.findDepartment(skill.getDepartment().getDepartmentId());
 
-            model.setAppearOnBadge(skill.isAppearOnBadge());
             model.setComments(volunteerSkill.getComments());
 
             EntityModel departmentModel = new EntityModel();

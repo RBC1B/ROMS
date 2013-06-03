@@ -18,24 +18,26 @@
                 <table class="table table-bordered table-striped table-hover" id="skill-list">
                     <thead>
                         <tr>
-                            <th>Name</th>
+                            <th>Skill ID</th>
+                            <th>Skill Name</th>
                             <th>Department</th>
                             <th>Description</th>
-                            <th>Appear On Badge</th>
+                            <th>Category</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <c:forEach items="${skills}" var="skill">
                             <tr>
+                                <td>${skill.skillId}</td>
                                 <td>${skill.name}</td>
                                 <td><a href="${skill.department.uri}">${skill.department.name}</a></td>
                                 <td>${skill.description}</td>
-                                <td>${skill.appearOnBadge}</td>
+                                <td>${skill.category.name}</td>
                                 <td>
                                     <ul class="inline list-actions">
                                         <li><a class="btn btn-success" href="<c:url value="${skill.uri}" />">View</a></li>
-                                        <li><a class="list-action" href="<c:url value="/skills/${skill.id}/edit" />">Edit</a></li>
+                                        <li><a class="list-action" href="<c:url value="/skills/${skill.skillId}/edit" />">Edit</a></li>
                                         <li><a class="list-action" href="delete">Delete</a></li>
                                     </ul>
                                 </td>

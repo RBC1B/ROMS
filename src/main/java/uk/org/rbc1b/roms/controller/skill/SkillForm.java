@@ -13,13 +13,29 @@ import javax.validation.constraints.Size;
  */
 public class SkillForm {
 
+    private Integer skillId;
     @NotNull
     @Size(max = 50)
     private String name;
     @Size(max = 250)
     private String description;
-    @Size(max = 3)
-    private boolean appearOnBadge;
+    private Integer categoryId;
+    @Size(max = 20)
+    private String category;
+
+    /**
+     * @return the skillId
+     */
+    public Integer getSkillId() {
+        return skillId;
+    }
+
+    /**
+     * @param skillId the skillId to set
+     */
+    public void setSkillId(Integer skillId) {
+        this.skillId = skillId;
+    }
 
     /**
      * @return the name
@@ -50,16 +66,30 @@ public class SkillForm {
     }
 
     /**
-     * @return the appearOnBadge
+     * @return the categoryId
      */
-    public boolean isAppearOnBadge() {
-        return appearOnBadge;
+    public Integer getCategoryId() {
+        return categoryId;
     }
 
     /**
-     * @param appearOnBadge the appearOnBadge to set
+     * @param categoryId the categoryId to set
      */
-    public void setAppearOnBadge(boolean appearOnBadge) {
-        this.appearOnBadge = appearOnBadge;
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    /**
+     * @return the category
+     */
+    public String getCategory() {
+        return category;
+    }
+
+    /**
+     * @param category the category to set
+     */
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

@@ -13,19 +13,19 @@ import uk.org.rbc1b.roms.controller.common.model.EntityModel;
  */
 public class SkillListModel {
 
-    private Integer id;
+    private Integer skillId;
     private String uri;
     private String name;
     private EntityModel department;
     private String description;
-    private boolean appearOnBadge;
+    private EntityModel category;
 
-    public Integer getId() {
-        return id;
+    public Integer getSkillId() {
+        return skillId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setSkillId(Integer skillId) {
+        this.skillId = skillId;
     }
 
     public String getUri() {
@@ -60,11 +60,17 @@ public class SkillListModel {
         this.description = description;
     }
 
-    public boolean isAppearOnBadge() {
-        return appearOnBadge;
+    /**
+     * @return the category
+     */
+    public EntityModel getCategory() {
+        return category;
     }
 
-    public void setAppearOnBadge(boolean appearOnBadge) {
-        this.appearOnBadge = appearOnBadge;
+    /**
+     * @param category the category to set
+     */
+    public void setCategory(EntityModel category) {
+        this.category = category;
     }
 }

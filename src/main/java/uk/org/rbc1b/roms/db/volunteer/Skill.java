@@ -4,6 +4,8 @@
  */
 package uk.org.rbc1b.roms.db.volunteer;
 
+import uk.org.rbc1b.roms.db.Category;
+
 /**
  *
  * @author oliver.elder.esq
@@ -12,52 +14,82 @@ public class Skill {
 
     private Integer skillId;
     private String name;
-    private Integer departmentId;
+    private Department department;
     private String description;
-    private boolean appearOnBadge;
+    private Category category;
 
-    public boolean isAppearOnBadge() {
-        return appearOnBadge;
-    }
-
-    public void setAppearOnBadge(boolean appearOnBadge) {
-        this.appearOnBadge = appearOnBadge;
-    }
-
-    public Integer getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(Integer departmentId) {
-        this.departmentId = departmentId;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
+    /**
+     * @return the skillId
+     */
     public Integer getSkillId() {
         return skillId;
     }
 
+    /**
+     * @param skillId the skillId to set
+     */
     public void setSkillId(Integer skillId) {
         this.skillId = skillId;
     }
 
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * @return the department
+     */
+    public Department getDepartment() {
+        return department;
+    }
+
+    /**
+     * @param department the department to set
+     */
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    /**
+     * @return the description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    /**
+     * @return the category
+     */
+    public Category getCategory() {
+        return category;
+    }
+
+    /**
+     * @param category the category to set
+     */
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     @Override
     public String toString() {
-        return "Skill{" + "skillId=" + skillId + '}';
+        return "Skill{" + "skillId=" + getSkillId() + '}';
     }
 }
