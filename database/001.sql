@@ -421,14 +421,24 @@ create table VolunteerQualification(
     constraint foreign key (QualificationId) references Qualification(QualificationId) on delete cascade
 )engine=InnoDB;
 
+create table Colour(
+    ColourId bigint(20) auto_increment,
+    Colour          varchar(20),
+    primary key (ColourId)
+)engine=InnoDB;
+
 create table Skill(
     SkillId         bigint(20)  auto_increment,
     Name            varchar(50) not null    unique,
     DepartmentId    bigint(20),
     Description     varchar(250),
     AppearOnBadge   boolean default false,
+    ColourId        bigint(20) default null,
+    ParentSkillId   bigint(20) default null,
     primary key (SkillId),
-    constraint foreign key (DepartmentId) references Department(DepartmentId) on delete set null
+    constraint foreign key (DepartmentId) references Department(DepartmentId) on delete set null,
+    constraint foreign key (ParentSkillId) references Skill(SkillId) on delete set null,
+    constraint foreign key (ColourId) references Colour(ColourId) on delete set null
 )engine=InnoDB;
 
 create table VolunteerSkill(
@@ -680,3 +690,12 @@ insert into ProjectStatus (Description) values
     ('Work In Progress'),
     ('Cancelled'),
     ('Completed');
+
+insert into Colour (Colour) values
+    ('Red'),
+    ('Orange'),
+    ('Yellow'),
+    ('Green'),
+    ('Blue'),
+    ('Indigo'),
+    ('Violet');
