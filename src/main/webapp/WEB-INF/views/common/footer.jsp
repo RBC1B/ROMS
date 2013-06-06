@@ -28,7 +28,7 @@
     </div><!-- /row-fluid -->
     <div class="pull-right">
         <!-- So users on smaller screens don't have to scroll all the way back to the top -->
-        <p><a href="#navbar"><i class="icon-circle-arrow-up"></i>&nbsp;Back to Top</a></p>
+        <btn class="btn btn-primary"><a href="#navbar"><i class="icon-white icon-circle-arrow-up"></i>&nbsp;Back to Top</a></btn>
     </div>
 </footer>
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
