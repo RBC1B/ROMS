@@ -1,5 +1,6 @@
 body {
     padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+    padding-bottom: 20px;
 }
 
 /*****************************************************************************/
@@ -228,7 +229,10 @@ div.DTFC_LeftFootWrapper table {
 .trades-row {
     margin-bottom: 10px;
 }
-
+.form-horizontal .controls {
+margin-left:0px!important;
+}
+ 
 /*****************************************************************************/
 /* Volunteer details display                                                 */
 /*****************************************************************************/
@@ -237,4 +241,9 @@ div.DTFC_LeftFootWrapper table {
 }
 #volunteer-availability span {
     margin-left: 8px;
+}
+/* Minor amendment to appearance of buttons                                   */
+
+.btn-primary a {
+    color:white;
 }
