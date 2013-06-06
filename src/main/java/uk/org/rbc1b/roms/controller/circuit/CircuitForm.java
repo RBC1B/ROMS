@@ -19,9 +19,15 @@ public class CircuitForm {
     @Size(min = 2)
     private String name;
     private Integer personId;
+    @NotNull
+    @Size(min = 2)
     private String forename;
     private String middleName;
+    @NotNull
+    @Size(min = 2)
     private String surname;
+    @NotNull
+    @Size(min = 2)
     private String email;
     private String street;
     private String town;
