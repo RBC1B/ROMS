@@ -20,7 +20,7 @@
         </div><!-- /span4 -->
         <div class="span4">
             <ul class="nav nav-list" >                
-                <li class="nav-header"></li>
+                <li class="nav-header">More...</li>
                 <sec:authorize access="hasPermission('PROJECT', 'READ')"><li><a href="<c:url value="/projects" />">Projects</a></li></sec:authorize>
                 <sec:authorize access="hasPermission('ADMIN', 'READ')"><li><a href="<c:url value="/admin" />">Sys Admin</a></li></sec:authorize>        
             </ul>
