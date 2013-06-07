@@ -37,6 +37,10 @@
                         </fieldset>
                         <fieldset class="control-group">
                             <h4>Circuit Overseer details</h4>
+                            <div id="circuit-overseer-linked" class="controls alert span10" style="display:none;">
+                                <button type="button" class="close">Unlink</button>
+                                Linked to an existing person in the database
+                            </div>
                             <label class="control-label">Circuit Overseer Id:</label>
                             <div class="controls controls-row">
                                 <div class="span1">
@@ -100,7 +104,23 @@
             </form:form>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
-        <div id="circuit-person-modal" class="modal hide fade">
+
+        <!-- Mustache template for displaying the person link, use of mustaches {{}} -->
+        <script id="circuit-overseer-link-form" type="text/html">
+            {{#existingPersonId}}
+            <p>The name is already linked to {{existingPersonName}}</p>
+            <p><a href="#" class="matched-person" data-person-id="{{existingPersonId}}">Leave linked to {{existingPersonName}} (same as ignore)</a></p>
+            <p><a href="#" class="matched-person" data-person-id="">Unlink {{existingPersonName}} (create a new person)</a></p>
+            {{/existingPersonId}}
+            {{#matchedPersons}}
+            <p>Link to an existing person:</p>
+            {{#results}}
+            <a href="#" class="matched-person" data-person-id="{{personId}}">{{forename}} {{surname}}{{#congregationName}}, {{congregationName}}{{/congregationName}}</a>
+            {{/results}}
+            {{/matchedPersons}}
+        </script>
+
+        <div id="circuit-overseer-modal" class="modal hide fade">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h3>Select Matching Person</h3>

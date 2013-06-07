@@ -2,17 +2,17 @@ $(document).ready(function() {
 
     // Event when the surname has lost focus
     $('#surname').blur(function() {
-        matchVolunteerPerson($('#forename').val(), $('#surname').val(), $('#personId'));
+        matchPerson($('#forename').val(), $('#surname').val(), $('#personId'));
     });
     
     /**
-     * Function to match the Circuit Overseer with an existing person or volunteer.
+     * Function to match the Circuit Overseer with an existing person.
      * @param forename the forename from the bean
      * @param surname the surname from the bean
      * @param $personId jquery reference to the personId. Although shown on the form
      * it is read-only and can't be changed.
      */
-    function matchVolunteerPerson(forename, surname, $personId){
+    function matchPerson(forename, surname, $personId){
         // test if either forename or surname aren't set
         if (!forename || !surname){
             return; // can't do the person match
@@ -23,15 +23,61 @@ $(document).ready(function() {
         if (existingPersonName == forename + " " + surname){
             return;
         }
-        this.findVolunteerPerson(forename, surname, $personId, existingPersonName);
+        this.findPerson(forename, surname, $personId, existingPersonName);
         
         $personId.data("full-name", forename + " " + surname);
     }
     /**
-     * Look up the person/volunteer using the AJAX jQuery function. Show modal 
+     * Look up the person using the AJAX jQuery function. Show modal 
      * if there is a match with the forename and surname.
      */
+    function findPerson(forename, surname, $personId, existingPersonName){
+        var existingPersonId = $personId.val();
+        $.ajax({
+            url: roms.common.relativePath + '/persons/search/',
+            contentType: "application/json",
+            dataType: 'json',
+            // parameters name-value pairs to be passed
+            data: {
+                forename: forename,
+                surname: surname,
+                checkVolunteer: false
+            },
+            success: function(data) {
+                // no response and no person id
+                if (!data.results && !existingPersonId){
+                    return;
+                }
+                
+                data.existingPersonId = existingPersonId;
+                data.existingPersonName = existingPersonName;
+
+                if (data.results) {
+                    data.matchedPersons = true;
+                }
+                
+                // Now to use mustache templating technique
+                var tpl = $("#circuit-overseer-link-form").html();
+                var html = Mustache.to_html(tpl, data);
+                // set modal body using class modal-body
+                $("#circuit-overseer-modal .modal-body").html(html)
+                var modalElement = $("#circuit-overseer-modal")
+                
+                modalElement.modal('show');
+                
+                // if select person id, set it to circuit overseer person id field.
+            }
+        });
+    }
     
+    // need a custom validation rule for validating phone numbers
+    $.validator.addMethod("phoneNos",
+            function(value, element) {
+                return /^\d+$/.test(value.replace(/[()\s+-]/g,''));
+            },
+            "Please enter numbers or spaces only"
+    );
+        
     $("#circuit").validate({
         rules: {
             name: {
@@ -64,13 +110,13 @@ $(document).ready(function() {
             },
             telephone: {
                 required: true,
-                digits: true,
-                minlength: 11
+                minlength: 11,
+                phoneNos: true
             },
             mobile: {
                 required: true,
-                digits: true,
-                minlength: 11
+                minlength: 11,
+                phoneNos: true
             }
         },
         errorPlacement: roms.common.validatorErrorPlacement
