@@ -17,11 +17,15 @@
 
     <context:component-scan base-package="uk.org.rbc1b.roms.db" />
     <context:component-scan base-package="uk.org.rbc1b.roms.reference" />
+    <context:component-scan base-package="uk.org.rbc1b.roms.security" />
 
     <jee:jndi-lookup id="dataSource" jndi-name="jdbc/_roms" />
 
     <bean id="hibernateSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
+        <property name="entityInterceptor">
+            <bean class="uk.org.rbc1b.roms.db.AuditInterceptor" />
+        </property>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
@@ -138,6 +142,9 @@
                 </bean>
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
                     <property name="name" value="congregation.congregation" />
+                </bean>
+                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
+                    <property name="name" value="user.userName" />
                 </bean>
             </set>
         </property>

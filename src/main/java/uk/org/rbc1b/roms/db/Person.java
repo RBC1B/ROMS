@@ -9,7 +9,7 @@ package uk.org.rbc1b.roms.db;
  *
  * @author oliver.elder.esq
  */
-public class Person {
+public class Person extends DefaultAuditable {
 
     private Integer personId;
     private java.sql.Date birthDate;

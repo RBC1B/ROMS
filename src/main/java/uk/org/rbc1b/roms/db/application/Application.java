@@ -5,8 +5,7 @@
 package uk.org.rbc1b.roms.db.application;
 
 /**
- * Mapping of the sections of the webapp, e.g. Volunteers. <p>Each section is
- * called an application.
+ * Mapping of the sections of the webapp, e.g. Volunteers. <p>Each section is called an application.
  *
  * @author oliver.elder.esq
  */
@@ -14,6 +13,7 @@ public class Application {
 
     private Integer applicationId;
     private String name;
+    private String code;
     private String comments;
 
     public Integer getApplicationId() {
@@ -22,6 +22,14 @@ public class Application {
 
     public void setApplicationId(Integer applicationId) {
         this.applicationId = applicationId;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getComments() {

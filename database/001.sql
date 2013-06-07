@@ -32,7 +32,10 @@ create table Person(
     Comments        varchar(250),
     CongregationId  bigint(20),
     BirthDate       date,
-    primary key (PersonId)
+    UpdateTime      timestamp   not null,
+    UpdatedBy       bigint(20)  not null,
+    primary key (PersonId),
+    foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
 create table Circuit(

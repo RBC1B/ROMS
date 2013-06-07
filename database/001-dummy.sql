@@ -41,32 +41,32 @@ alter table VolunteerSkill AUTO_INCREMENT=1;
 alter table VolunteerQualification AUTO_INCREMENT=1;
 alter table Person AUTO_INCREMENT=1;
 
-insert into Person(Forename, Surname, Street, Comments)
-values ('Ramindur', 'Singh', '9 The Alders', 'Test user account');
+insert into Person(Forename, Surname, Street, Comments, UpdateTime, UpdatedBy)
+values ('Ramindur', 'Singh', '9 The Alders', 'Test user account', NOW(), 1);
 
 insert into Person(Forename, MiddleName, Surname,
                     Street, Town, County, Postcode,
                     Telephone, Mobile, WorkPhone, Email,
-                    Comments, BirthDate)
+                    Comments, BirthDate, UpdateTime, UpdatedBy)
 values ('Billy', 'Alfred', 'Bonzo',
         '29 Acacia Road', 'Ericsville', 'Yorkshire', 'Y01 7DU',
         '01904 551550', '07855 841311', '01904 551551', 'billy.bonzo@gmail.com',
-        'Circuit overseer and all round good guy', '1961-04-10');
+        'Circuit overseer and all round good guy', '1961-04-10', NOW(), 1);
 
-insert into Person(Forename, Surname, Comments)
-values ('Ian', 'Smith', 'Slightly grumpy CBE');
+insert into Person(Forename, Surname, Comments, UpdateTime, UpdatedBy)
+values ('Ian', 'Smith', 'Slightly grumpy CBE', NOW(), 1);
 
-insert into Person(Forename, Surname, Street, Comments)
-values ('Douglas', 'Fitzpatrick', '15 The Grange', 'Requested user with minimal permissions');
+insert into Person(Forename, Surname, Street, Comments, UpdateTime, UpdatedBy)
+values ('Douglas', 'Fitzpatrick', '15 The Grange', 'Requested user with minimal permissions', NOW(), 1);
 
-insert into Person(Forename, MiddleName, Surname, Comments, BirthDate)
-values ('Jack', 'Of', 'Alltrades', 'Hightly skilled volunteer', '1961-08-12');
+insert into Person(Forename, MiddleName, Surname, Comments, BirthDate, UpdateTime, UpdatedBy)
+values ('Jack', 'Of', 'Alltrades', 'Hightly skilled volunteer', '1961-08-12', NOW(), 1);
 
-insert into Person(Forename, Surname, Comments)
-values ('Arthur', 'Anyjobs', 'Willing volunteer');
+insert into Person(Forename, Surname, Comments, UpdateTime, UpdatedBy)
+values ('Arthur', 'Anyjobs', 'Willing volunteer', NOW(), 1);
 
-insert into Person(Forename, Surname, Comments, BirthDate)
-values ('Ken', 'Whereheis', 'Unlikely to show up volunteer', '1978-11-14');
+insert into Person(Forename, Surname, Comments, BirthDate, UpdateTime, UpdatedBy)
+values ('Ken', 'Whereheis', 'Unlikely to show up volunteer', '1978-11-14', NOW(), 1);
 
 
 insert into User(PersonId, UserName, Password)

@@ -7,23 +7,18 @@ package uk.org.rbc1b.roms.security;
 import java.io.Serializable;
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.util.StringUtils;
 
 /**
- * Implementation of the permission validator to match the JACL AppNames and
- * levels. with the part of the application being viewed
+ * Implementation of the permission validator to match the JACL AppNames and levels. with the part of the application being viewed
  *
  * @author oliver.elder.esq
  */
 public class RomsPermissionEvaluator implements PermissionEvaluator {
 
     /**
-     * @param authentication authentication (username, authorities) derived form
-     * the data source
+     * @param authentication authentication (username, authorities) derived form the data source
      * @param targetDomainObject object type to be viewed/modified, e.g. Circuit
-     * @param permission permission level required, matching the AccessLevel
-     * enumeration
+     * @param permission permission level required, matching the AccessLevel enumeration
      * @return true if the user can perform the task
      */
     @Override
@@ -36,26 +31,22 @@ public class RomsPermissionEvaluator implements PermissionEvaluator {
             throw new IllegalArgumentException("Invalid access level [" + permission + "]");
         }
 
-        for (GrantedAuthority grantedAuthority : authentication.getAuthorities()) {
-            String[] authority = StringUtils.split(grantedAuthority.getAuthority(), ":");
-            if (!((String) targetDomainObject).equals(authority[0])) {
-                continue;
-            }
+        ROMSUserDetails user = (ROMSUserDetails) authentication.getPrincipal();
+        ROMSGrantedAuthority authority = user.findAuthority((String) targetDomainObject);
 
-            // the user authority (0-4) matches the ordinal values of the access levels.
-            // thje have permission the user authority must be greater or equal to the
-            // access level required, i.e. accounts with edit access can read, but not add
-            return Integer.parseInt(authority[1]) >= level.ordinal();
+        if (authority == null) {
+            return false;
         }
 
-        return false;
+        // the user authority (0-4) matches the ordinal values of the access levels.
+        // the have permission the user authority must be greater or equal to the
+        // access level required, i.e. accounts with edit access can read, but not add
+        return authority.getDepartmentLevelAccess().intValue() >= level.ordinal();
     }
 
     @Override
     public boolean hasPermission(Authentication authentication, Serializable targetId, String targetType, Object permission) {
         throw new UnsupportedOperationException("Not supported yet.");
-
-
     }
 
     /**

@@ -9,6 +9,5 @@
         <many-to-one name="application" column="ApplicationId" />
         <property name="departmentAccess" />
         <property name="nonDepartmentAccess" />
-        <property name="name" />
     </class>
 </hibernate-mapping>

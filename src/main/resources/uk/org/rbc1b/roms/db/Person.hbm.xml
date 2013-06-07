@@ -21,6 +21,8 @@
         <property name="workPhone" length="15" />
         <property name="email" length="50" />
         <property name="comments" length="250" />
+        <property name="updateTime" not-null="true"  />
+        <property name="updatedBy" not-null="true"  />
     </class>
     <joined-subclass name="uk.org.rbc1b.roms.db.volunteer.Volunteer" extends="Person">
         <key column="personId" />
