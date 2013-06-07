@@ -23,7 +23,7 @@ $(document).ready(function() {
         if (existingPersonName == forename + " " + surname){
             return;
         }
-        this.findPerson(forename, surname, $personId, existingPersonName);
+        findPerson(forename, surname, $personId, existingPersonName);
         
         $personId.data("full-name", forename + " " + surname);
     }
