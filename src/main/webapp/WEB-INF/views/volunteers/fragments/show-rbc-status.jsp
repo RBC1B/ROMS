@@ -131,3 +131,6 @@ Author: oliver.elder.esq
         </c:choose>
     </dd>
 </dl>
+<sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
+    <a class="btn btn-primary" href="<c:url value='${volunteer.editRbcStatusUri}' />">Edit</a>
+</sec:authorize>
