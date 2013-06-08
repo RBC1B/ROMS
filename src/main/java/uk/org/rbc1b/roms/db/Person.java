@@ -24,6 +24,14 @@ public class Person extends DefaultAuditable {
     private String email;
     private String comments;
 
+    /**
+     * @return the person display name - "forename surname"
+     */
+    public String formatDisplayName() {
+        return forename + " " + surname;
+    }
+
+
     public Address getAddress() {
         return address;
     }

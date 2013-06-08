@@ -12,7 +12,6 @@ import java.util.Set;
 import javax.validation.Valid;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.ObjectUtils;
-import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -24,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
+import uk.org.rbc1b.roms.controller.common.DataConverterUtil;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableRequestData;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableResult;
 import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
@@ -253,7 +253,7 @@ public class VolunteersController {
     }
 
     /**
-     * Display the form to create a new volunteer.
+     * Display the form to edit the info under the spiritual tab on the volunteer.
      *
      * @param volunteerId volunteer id to edit
      * @param model mvc model
@@ -263,14 +263,14 @@ public class VolunteersController {
     @RequestMapping(value = "{volunteerId}/spiritual/edit", method = RequestMethod.GET)
     public String showEditVolunteerSpiritualForm(@PathVariable Integer volunteerId, ModelMap model) throws NoSuchRequestHandlingMethodException {
 
-        Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
+        Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, EnumSet.noneOf(VolunteerData.class));
         if (volunteer == null) {
             throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
         }
 
         VolunteerSpiritualForm form = new VolunteerSpiritualForm();
         form.setAppointmentId(volunteer.getAppointmentId());
-        form.setBaptismDate(LocalDate.fromDateFields(volunteer.getBaptismDate()).toDateTimeAtStartOfDay());
+        form.setBaptismDate(DataConverterUtil.toDateTime(volunteer.getBaptismDate()));
 
         Congregation congregation = congregationDao.findCongregation(volunteer.getCongregationId());
 
@@ -288,9 +288,68 @@ public class VolunteersController {
     }
 
     /**
-     * Update the volunteer name.
-     * <p>This is expected to be called with an ajax request, so we return a 204
-     * response on success
+     * Display the form to edit the info under the rbc status tab on the volunteer.
+     *
+     * @param volunteerId volunteer id to edit
+     * @param model mvc model
+     * @return view name
+     * @throws NoSuchRequestHandlingMethodException if volunteer is not found
+     */
+    @RequestMapping(value = "{volunteerId}/rbc-status/edit", method = RequestMethod.GET)
+    public String showEditVolunteerRbcStatusForm(@PathVariable Integer volunteerId, ModelMap model) throws NoSuchRequestHandlingMethodException {
+
+        Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, EnumSet.of(VolunteerData.INTERVIEWER));
+        if (volunteer == null) {
+            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+        }
+
+        VolunteerRbcStatusForm form = new VolunteerRbcStatusForm();
+
+        form.setFormDate(DataConverterUtil.toDateTime(volunteer.getFormDate()));
+        form.setInterviewDate(DataConverterUtil.toDateTime(volunteer.getInterviewDate()));
+
+        if (volunteer.getInterviewerA() != null) {
+            form.setInterviewerAPersonId(volunteer.getInterviewerA().getPersonId());
+            form.setInterviewerAPersonName(volunteer.getInterviewerA().formatDisplayName());
+        }
+        if (volunteer.getInterviewerB() != null) {
+            form.setInterviewerBPersonId(volunteer.getInterviewerB().getPersonId());
+            form.setInterviewerBPersonName(volunteer.getInterviewerB().formatDisplayName());
+        }
+
+        form.setInterviewComments(volunteer.getInterviewComments());
+        form.setJoinedDate(DataConverterUtil.toDateTime(volunteer.getJoinedDate()));
+        form.setBadgeIssueDate(DataConverterUtil.toDateTime(volunteer.getBadgeIssueDate()));
+
+        if (volunteer.getAvailability() != null || volunteer.getAvailability().length() == 7) {
+            char[] availability = volunteer.getAvailability().toCharArray();
+
+            form.setAvailabilityMonday(availability[0] == 'T');
+            form.setAvailabilityTuesday(availability[1] == 'T');
+            form.setAvailabilityWednesday(availability[2] == 'T');
+            form.setAvailabilityThursday(availability[3] == 'T');
+            form.setAvailabilityFriday(availability[4] == 'T');
+            form.setAvailabilitySaturday(availability[5] == 'T');
+            form.setAvailabilitySunday(availability[6] == 'T');
+        }
+        form.setOversight(volunteer.isOversight());
+        form.setOversightComments(volunteer.getOversightComments());
+        form.setReliefAbroad(volunteer.isReliefAbroad());
+        form.setReliefAbroadComments(volunteer.getReliefAbroadComments());
+        form.setReliefUK(volunteer.isReliefUK());
+        form.setReliefUKComments(volunteer.getReliefUKComments());
+        form.setHhcFormCode(volunteer.getHhcFormCode());
+
+        model.addAttribute("volunteerRbcStatus", form);
+        model.addAttribute("forename", volunteer.getForename());
+        model.addAttribute("surname", volunteer.getSurname());
+        model.addAttribute("submitUri", volunteerModelFactory.generateUri(volunteerId) + "/rbc-status");
+
+        return "volunteers/edit-rbc-status";
+    }
+
+    /**
+     * Update the volunteer name. <p>This is expected to be called with an ajax request, so we return a 204 response on success
      *
      * @param volunteerId volunteer id to edit
      * @param form form data
@@ -314,9 +373,7 @@ public class VolunteersController {
     }
 
     /**
-     * Update the volunteer comments.
-     * <p>This is expected to be called with an ajax request, so we return a 204
-     * response on success
+     * Update the volunteer comments. <p>This is expected to be called with an ajax request, so we return a 204 response on success
      *
      * @param volunteerId volunteer id to edit
      * @param comments comments to set

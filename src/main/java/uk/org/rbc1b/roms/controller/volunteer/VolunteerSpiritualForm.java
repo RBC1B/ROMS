@@ -9,7 +9,7 @@ import org.joda.time.DateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
- * Form data associated with editing a the spiritual data associated with the volunteer.
+ * Form data used when editing a the spiritual data associated with the volunteer.
  *
  * @author oliver.elder.esq
  */

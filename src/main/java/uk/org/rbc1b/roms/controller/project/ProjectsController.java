@@ -97,8 +97,7 @@ public class ProjectsController {
         if (project.getContactPerson() != null) {
             EntityModel contactPerson = new EntityModel();
             contactPerson.setId(project.getContactPerson().getPersonId());
-            contactPerson.setName(project.getContactPerson().getForename() + " "
-                    + project.getContactPerson().getSurname());
+            contactPerson.setName(project.getContactPerson().formatDisplayName());
             contactPerson.setUri(personModelFactory.generateUri(project.getContactPerson().getPersonId()));
 
             model.setContactPerson(contactPerson);
