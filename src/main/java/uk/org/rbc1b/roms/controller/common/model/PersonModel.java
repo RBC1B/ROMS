@@ -29,6 +29,13 @@ public class PersonModel {
     private String email;
     private String comments;
 
+    /**
+     * @return the person display name - "forename surname"
+     */
+    public String getDisplayName() {
+        return forename + " " + surname;
+    }
+
     public Integer getId() {
         return id;
     }

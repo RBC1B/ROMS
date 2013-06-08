@@ -69,7 +69,7 @@ Author: oliver.elder.esq
 <dt>Marital Status:</dt>
 <dd>${volunteer.maritalStatus}
 <c:if test="${volunteer.spouse != null}">
-    (<a href="<c:url value='${volunteer.spouse.uri}' />" >${volunteer.spouse.forename} ${volunteer.spouse.surname}</a>)
+    (<a href="<c:url value='${volunteer.spouse.uri}' />" >${volunteer.spouse.displayName}</a>)
 </c:if>
 </dd>
 </dl>
@@ -79,7 +79,7 @@ Author: oliver.elder.esq
         <dl class="dl-horizontal">
             <dt>Name:</dt>
             <dd>
-                <a href="<c:url value='${volunteer.emergencyContact.uri}' />">${volunteer.emergencyContact.forename} ${volunteer.emergencyContact.surname}</a>
+                <a href="<c:url value='${volunteer.emergencyContact.uri}' />">${volunteer.emergencyContact.displayName}</a>
             </dd>
             <dt>Relationship:</dt><dd>${volunteer.emergencyContactRelationship}</dd>
             <c:if test="${volunteer.emergencyContact.email != null}">

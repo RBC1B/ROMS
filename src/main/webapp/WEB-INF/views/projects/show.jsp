@@ -62,7 +62,7 @@
                     <c:if test="${project.contactPerson != null}">
                         <h3>Contact Person</h3>
                         <dt>Name:</dt>
-                        <dd><a href="<c:url value='${project.contactPerson.uri}' />">${project.contactPerson.forename} ${project.contactPerson.surname}</a></dd>
+                        <dd><a href="<c:url value='${project.contactPerson.uri}' />">${project.contactPerson.displayName}</a></dd>
                         <dt>Email:</dt>
                         <dd>
                             <c:if test="${project.contactPerson.email != null}">
@@ -82,7 +82,7 @@
                     <c:if test="${project.coordinator != null}">
                         <h3>Coordinator</h3>
                         <dt>Name:</dt>
-                        <dd><a href="<c:url value='${project.coordinator.uri}' />">${project.coordinator.forename} ${project.coordinator.surname}</a></dd>
+                        <dd><a href="<c:url value='${project.coordinator.uri}' />">${project.coordinator.displayName}</a></dd>
                         <dt>Email:</dt>
                         <dd>
                             <c:if test="${project.coordinator.email != null}">
