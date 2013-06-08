@@ -5,11 +5,13 @@
 package uk.org.rbc1b.roms.db.volunteer;
 
 import java.sql.Date;
+import uk.org.rbc1b.roms.db.DefaultAuditable;
 
 /**
+ * The volunteers role within a team/department.
  * @author oliver.elder.esq
  */
-public class Assignment {
+public class Assignment extends DefaultAuditable {
 
     private Integer assignmentId;
     private Integer personId;

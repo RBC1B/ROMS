@@ -7,6 +7,7 @@
         </id>
         <property name="name" length="50" />
         <property name="description" length="150" />
-        <property name="appearOnBadge"  />
+        <property name="updateTime" not-null="true"  />
+        <property name="updatedBy" not-null="true"  />
     </class>
 </hibernate-mapping>

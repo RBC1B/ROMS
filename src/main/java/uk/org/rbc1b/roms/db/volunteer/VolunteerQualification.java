@@ -4,11 +4,13 @@
  */
 package uk.org.rbc1b.roms.db.volunteer;
 
+import uk.org.rbc1b.roms.db.DefaultAuditable;
+
 /**
- *
+ * A qualification owned by a volunteer.
  * @author oliver.elder.esq
  */
-public class VolunteerQualification {
+public class VolunteerQualification extends DefaultAuditable {
 
     private Integer volunteerQualificationId;
     private Integer personId;

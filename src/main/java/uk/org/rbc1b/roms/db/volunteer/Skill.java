@@ -5,12 +5,13 @@
 package uk.org.rbc1b.roms.db.volunteer;
 
 import uk.org.rbc1b.roms.db.Category;
+import uk.org.rbc1b.roms.db.DefaultAuditable;
 
 /**
- *
+ * A capability that may be owned by a volunteer, and required on a project.
  * @author oliver.elder.esq
  */
-public class Skill {
+public class Skill extends DefaultAuditable {
 
     private Integer skillId;
     private String name;

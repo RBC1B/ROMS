@@ -8,5 +8,7 @@
         <many-to-one name="project" column="ProjectId" />
         <many-to-one name="workFeature" column="WorkFeatureId" />
         <property name="brief" />
+        <property name="updateTime" not-null="true"  />
+        <property name="updatedBy" not-null="true"  />
     </class>
 </hibernate-mapping>

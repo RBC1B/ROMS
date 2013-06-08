@@ -4,24 +4,17 @@
  */
 package uk.org.rbc1b.roms.db.volunteer;
 
+import uk.org.rbc1b.roms.db.DefaultAuditable;
+
 /**
- *
+ * A recognised identifier of a skill.
  * @author ramindursingh
  */
-public class Qualification {
+public class Qualification extends DefaultAuditable {
 
     private Integer qualificationId;
     private String name;
     private String description;
-    private boolean appearOnBadge;
-
-    public boolean isAppearOnBadge() {
-        return appearOnBadge;
-    }
-
-    public void setAppearOnBadge(boolean appearOnBadge) {
-        this.appearOnBadge = appearOnBadge;
-    }
 
     public String getDescription() {
         return description;

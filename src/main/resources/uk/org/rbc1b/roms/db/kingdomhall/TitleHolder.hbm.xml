@@ -7,6 +7,8 @@
         </id>
         <many-to-one name="kingdomHall" column="KingdomHallId" />
         <many-to-one name="congregation" column="CongregationId" />
+        <property name="updateTime" not-null="true"  />
+        <property name="updatedBy" not-null="true"  />
     </class>
 </hibernate-mapping>
 

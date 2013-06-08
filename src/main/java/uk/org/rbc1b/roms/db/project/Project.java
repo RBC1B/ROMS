@@ -3,13 +3,16 @@ package uk.org.rbc1b.roms.db.project;
 import java.util.Date;
 import java.util.Set;
 import uk.org.rbc1b.roms.db.Address;
+import uk.org.rbc1b.roms.db.DefaultAuditable;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 
 /**
+ * A unit of work to be performed at a given site (kingdom hall or address).
+ *
  * @author oliver.elder.esq
  */
-public class Project {
+public class Project extends DefaultAuditable {
 
     private Address address;
     private String constraints;

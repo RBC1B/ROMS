@@ -9,5 +9,7 @@
         <property name="name" length="250" not-null="true" />
         <property name="experienceDescription" />
         <property name="experienceYears" />
+        <property name="updateTime" not-null="true"  />
+        <property name="updatedBy" not-null="true"  />
     </class>
 </hibernate-mapping>

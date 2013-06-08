@@ -4,11 +4,13 @@
  */
 package uk.org.rbc1b.roms.db.kingdomhall;
 
+import uk.org.rbc1b.roms.db.DefaultAuditable;
+
 /**
- *
+ * An aspect of a kingdom hall, e.g. car park, that may need fixing one day.
  * @author oliver.elder.esq
  */
-public class KingdomHallFeature {
+public class KingdomHallFeature extends DefaultAuditable {
 
     private Integer kingdomHallFeatureId;
     private KingdomHall kingdomHall;

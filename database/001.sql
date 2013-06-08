@@ -42,8 +42,11 @@ create table Circuit(
     CircuitId           bigint(20)      auto_increment,
     Name                varchar(50)     not null    unique,
     CircuitOverseerId   bigint(20),
+    UpdateTime      timestamp   not null,
+    UpdatedBy       bigint(20)  not null,
     primary key (CircuitId),
-    foreign key (CircuitOverseerId) references Person(PersonId)
+    foreign key (CircuitOverseerId) references Person(PersonId),
+    foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
 create table OwnershipType(
@@ -67,8 +70,11 @@ create table KingdomHall(
     Postcode        varchar(10) not null,
     OwnershipTypeId bigint(20),
     Drawings        varchar(50),
+    UpdateTime      timestamp   not null,
+    UpdatedBy       bigint(20)  not null,
     primary key (KingdomHallId),
-    constraint foreign key (OwnershipTypeId) references OwnershipType(OwnershipTypeId)
+    foreign key (OwnershipTypeId) references OwnershipType(OwnershipTypeId),
+    foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
 create table KingdomHallFeature(
@@ -76,10 +82,13 @@ create table KingdomHallFeature(
     KingdomHallId           bigint(20)  not null,
     HallFeatureId           bigint(20)  not null,
     Comments                varchar(250),
+    UpdateTime      timestamp   not null,
+    UpdatedBy       bigint(20)  not null,
     primary key (KingdomHallFeatureId),
     unique(KingdomHallId, HallFeatureId),
-    constraint foreign key (KingdomHallId) references KingdomHall(KingdomHallId) on delete cascade,
-    constraint foreign key (HallFeatureId) references HallFeature(HallFeatureId) on delete cascade
+    foreign key (KingdomHallId) references KingdomHall(KingdomHallId) on delete cascade,
+    foreign key (HallFeatureId) references HallFeature(HallFeatureId) on delete cascade,
+    foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
 create table RbcRegion(
@@ -108,11 +117,14 @@ create table Congregation(
     Loans           varchar(10),
     MonthlyIncome   varchar(10),
     Strategy        varchar (1000),
+    UpdateTime      timestamp   not null,
+    UpdatedBy       bigint(20)  not null,
     primary key (CongregationId),
-    constraint foreign key (KingdomHallId) references KingdomHall(KingdomHallId) on delete set null,
-    constraint foreign key (CircuitId) references Circuit(CircuitId),
-    constraint foreign key (RbcRegionId) references RbcRegion(RbcRegionId) on delete set null,
-    constraint foreign key (RbcSubRegionId) references RbcSubRegion(RbcSubRegionId) on delete set null
+    foreign key (KingdomHallId) references KingdomHall(KingdomHallId) on delete set null,
+    foreign key (CircuitId) references Circuit(CircuitId),
+    foreign key (RbcRegionId) references RbcRegion(RbcRegionId) on delete set null,
+    foreign key (RbcSubRegionId) references RbcSubRegion(RbcSubRegionId) on delete set null,
+    foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
 -- we can now add the foeign key to the person congregation id
@@ -130,20 +142,26 @@ create table CongregationContact(
     CongregationId          bigint(20)  not null,
     CongregationRoleId      bigint(20)  not null,
     PersonId                bigint(20)  not null,
+    UpdateTime              timestamp   not null,
+    UpdatedBy               bigint(20)  not null,
     primary key (CongregationContactId),
     unique(CongregationId, CongregationRoleId),
-    constraint foreign key (CongregationId) references Congregation(CongregationId) on delete cascade,
-    constraint foreign key (CongregationRoleId) references CongregationRole(CongregationRoleId),
-    constraint foreign key (PersonId) references Person(PersonId) on delete cascade
+    foreign key (CongregationId) references Congregation(CongregationId) on delete cascade,
+    foreign key (CongregationRoleId) references CongregationRole(CongregationRoleId),
+    foreign key (PersonId) references Person(PersonId) on delete cascade,
+    foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
 create table TitleHolder(
     TitleHolderId   bigint(20)  auto_increment,
     KingdomHallId   bigint(20)  not null    unique,
     CongregationId  bigint(20)  not null    unique,
+    UpdateTime              timestamp   not null,
+    UpdatedBy               bigint(20)  not null,
     primary key (TitleHolderId),
-    constraint foreign key (KingdomHallId) references KingdomHall(KingdomHallId) on delete cascade,
-    constraint foreign key (CongregationId) references Congregation(CongregationId) on delete cascade
+    foreign key (KingdomHallId) references KingdomHall(KingdomHallId) on delete cascade,
+    foreign key (CongregationId) references Congregation(CongregationId) on delete cascade,
+    foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
 create table InterviewStatus(
@@ -219,16 +237,16 @@ create table Volunteer(
     HHCFormCode         varchar(15),
     BadgeIssueDate      date,
     primary key(PersonId),
-    constraint foreign key (PersonId) references Person(PersonId) on delete cascade,
-    constraint foreign key (RbcStatusId) references RbcStatus(RbcStatusId),
-    constraint foreign key (AppointmentId) references Appointment(AppointmentId),
-    constraint foreign key (FulltimeId) references Fulltime(FulltimeId),
-    constraint foreign key (EmergencyContactId) references Person(PersonId) on delete set null,
-    constraint foreign key (EmergencyContactRelationshipId) references Relationship(RelationshipId) on delete set null,
-    constraint foreign key (MaritalStatusId) references MaritalStatus(MaritalStatusId),
-    constraint foreign key (InterviewerA) references Person(PersonId) on delete set null,
-    constraint foreign key (InterviewerB) references Person(PersonId) on delete set null,
-    constraint foreign key (InterviewStatusId) references InterviewStatus(InterviewStatusId)
+    foreign key (PersonId) references Person(PersonId) on delete cascade,
+    foreign key (RbcStatusId) references RbcStatus(RbcStatusId),
+    foreign key (AppointmentId) references Appointment(AppointmentId),
+    foreign key (FulltimeId) references Fulltime(FulltimeId),
+    foreign key (EmergencyContactId) references Person(PersonId) on delete set null,
+    foreign key (EmergencyContactRelationshipId) references Relationship(RelationshipId) on delete set null,
+    foreign key (MaritalStatusId) references MaritalStatus(MaritalStatusId),
+    foreign key (InterviewerA) references Person(PersonId) on delete set null,
+    foreign key (InterviewerB) references Person(PersonId) on delete set null,
+    foreign key (InterviewStatusId) references InterviewStatus(InterviewStatusId)
 )engine=InnoDB;
 
 create table VolunteerTrade (
@@ -237,8 +255,11 @@ create table VolunteerTrade (
     Name                    varchar(250)    not null,
     ExperienceDescription   text,
     ExperienceYears         integer,
+    UpdateTime          timestamp   not null,
+    UpdatedBy           bigint(20)  not null,
     primary key (VolunteerTradeId),
-    constraint foreign key (PersonId) references Person(PersonId) on delete cascade
+    constraint foreign key (PersonId) references Person(PersonId) on delete cascade,
+    foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
 create table User(
@@ -255,10 +276,13 @@ create table ApplicationAccess(
     ApplicationId       bigint(20),
     DepartmentAccess    integer     not null,
     NonDepartmentAccess integer     not null,
+    UpdateTime          timestamp   not null,
+    UpdatedBy           bigint(20)  not null,
     primary key (ApplicationAccessId),
     unique (PersonId, ApplicationId),
     constraint foreign key (PersonId) references Person(PersonId) on delete cascade,
-    constraint foreign key (ApplicationId) references Application(ApplicationId) on delete cascade
+    constraint foreign key (ApplicationId) references Application(ApplicationId) on delete cascade,
+    foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
 create table Role(
@@ -287,12 +311,15 @@ create table Assignment(
     AssignedDate    date        not null,
     TradeNumberId   bigint(20)  not null,
     TeamId          bigint(20)  not null,
+    UpdateTime      timestamp   not null,
+    UpdatedBy       bigint(20)  not null,
     primary key (AssignmentId),
-    constraint foreign key (PersonId) references Person(PersonId) on delete cascade,
-    constraint foreign key (DepartmentId) references Department(DepartmentId) on delete cascade,
-    constraint foreign key (RoleId) references Role(RoleId),
-    constraint foreign key (TradeNumberId) references TradeNumber(TradeNumberId),
-    constraint foreign key (TeamId) references Team(TeamId)
+    foreign key (PersonId) references Person(PersonId) on delete cascade,
+    foreign key (DepartmentId) references Department(DepartmentId) on delete cascade,
+    foreign key (RoleId) references Role(RoleId),
+    foreign key (TradeNumberId) references TradeNumber(TradeNumberId),
+    foreign key (TeamId) references Team(TeamId),
+    foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
 create table ProjectStage(
@@ -356,13 +383,16 @@ create table Project(
     CoordinatorId   bigint(20),
     ProjectStageId  bigint(20)  not null,
     CompletedDate   date,
+    UpdateTime      timestamp   not null,
+    UpdatedBy       bigint(20)  not null,
     primary key (ProjectId),
-    constraint foreign key (ProjectTypeId) references ProjectType(ProjectTypeId),
-    constraint foreign key (KingdomHallId) references KingdomHall(KingdomHallId) on delete set null,
-    constraint foreign key (ContactPersonId) references Person(PersonId) on delete set null,
-    constraint foreign key (ProjectStatusId) references ProjectStatus(ProjectStatusId),
-    constraint foreign key (CoordinatorId) references Person(PersonId) on delete set null,
-    constraint foreign key (ProjectStageId) references ProjectStage(ProjectStageId)
+    foreign key (ProjectTypeId) references ProjectType(ProjectTypeId),
+    foreign key (KingdomHallId) references KingdomHall(KingdomHallId) on delete set null,
+    foreign key (ContactPersonId) references Person(PersonId) on delete set null,
+    foreign key (ProjectStatusId) references ProjectStatus(ProjectStatusId),
+    foreign key (CoordinatorId) references Person(PersonId) on delete set null,
+    foreign key (ProjectStageId) references ProjectStage(ProjectStageId),
+    foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
 create table ProjectWorkBrief(
@@ -370,10 +400,13 @@ create table ProjectWorkBrief(
     ProjectId           bigint(20)  not null,
     WorkFeatureId       bigint(20)  not null,
     Brief               text,
+    UpdateTime          timestamp   not null,
+    UpdatedBy           bigint(20)  not null,
     primary key (ProjectWorkBriefId),
     unique (ProjectId, WorkFeatureId),
-    constraint foreign key (ProjectId) references Project(ProjectId) on delete cascade,
-    constraint foreign key (WorkFeatureId) references WorkFeature(WorkFeatureId)
+    foreign key (ProjectId) references Project(ProjectId) on delete cascade,
+    foreign key (WorkFeatureId) references WorkFeature(WorkFeatureId),
+    foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
 create table ProjectEvent(
@@ -384,8 +417,8 @@ create table ProjectEvent(
     Visible         boolean     default true,
     Created         timestamp   not null,
     primary key (ProjectEventId),
-    constraint foreign key (ProjectId) references Project(ProjectId) on delete cascade,
-    constraint foreign key (CommentatorId) references Commentator(CommentatorId) on delete set null
+    foreign key (ProjectId) references Project(ProjectId) on delete cascade,
+    foreign key (CommentatorId) references Commentator(CommentatorId) on delete set null
 )engine=InnoDB;
 
 create table Attendance(
@@ -397,20 +430,25 @@ create table Attendance(
     InvitationConfirmationId    bigint(20),
     DepartmentId    bigint(20),
     Attended        boolean,
+    UpdateTime      timestamp   not null,
+    UpdatedBy       bigint(20)  not null,
     primary key (AttendanceId),
     unique (ProjectId, PersonId, InviteDate),
-    constraint foreign key (ProjectId) references Project(ProjectId) on delete cascade,
-    constraint foreign key (PersonId) references Person(PersonId) on delete cascade,
-    constraint foreign key (InvitationConfirmationId) references InvitationConfirmation(InvitationConfirmationId) on delete set null,
-    constraint foreign key (DepartmentId) references Department(DepartmentId) on delete set null
+    foreign key (ProjectId) references Project(ProjectId) on delete cascade,
+    foreign key (PersonId) references Person(PersonId) on delete cascade,
+    foreign key (InvitationConfirmationId) references InvitationConfirmation(InvitationConfirmationId) on delete set null,
+    foreign key (DepartmentId) references Department(DepartmentId) on delete set null,
+    foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
 create table Qualification(
     QualificationId bigint(20)  auto_increment,
     Name            varchar(50) not null    unique,
     Description     varchar(150),
-    AppearOnBadge   boolean default false,
-    primary key (QualificationId)
+    UpdateTime      timestamp   not null,
+    UpdatedBy       bigint(20)  not null,
+    primary key (QualificationId),
+    foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
 create table VolunteerQualification(
@@ -418,10 +456,13 @@ create table VolunteerQualification(
     PersonId                    bigint(20)  not null,
     QualificationId             bigint(20)  not null,
     Comments                    varchar(100),
+    UpdateTime      timestamp   not null,
+    UpdatedBy       bigint(20)  not null,
     primary key (VolunteerQualificationId),
     unique (PersonId, QualificationId),
-    constraint foreign key (PersonId) references Person(PersonId) on delete cascade,
-    constraint foreign key (QualificationId) references Qualification(QualificationId) on delete cascade
+    foreign key (PersonId) references Person(PersonId) on delete cascade,
+    foreign key (QualificationId) references Qualification(QualificationId) on delete cascade,
+    foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
 create table Category(
@@ -437,10 +478,13 @@ create table Skill(
     Name            varchar(50) not null    unique,
     DepartmentId    bigint(20),
     Description     varchar(250),
-    CategoryId        bigint(20) default null,
+    CategoryId      bigint(20) default null,
+    UpdateTime      timestamp   not null,
+    UpdatedBy       bigint(20)  not null,
     primary key (SkillId),
-    constraint foreign key (DepartmentId) references Department(DepartmentId) on delete set null,
-    constraint foreign key (CategoryId) references Category(CategoryId) on delete set null
+    foreign key (DepartmentId) references Department(DepartmentId) on delete set null,
+    foreign key (CategoryId) references Category(CategoryId) on delete set null,
+    foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
 create table VolunteerSkill(
@@ -451,10 +495,13 @@ create table VolunteerSkill(
     Comments            varchar(250),
     TrainingDate        date,
     TrainingResults     varchar(15),
+    UpdateTime          timestamp   not null,
+    UpdatedBy           bigint(20)  not null,
     primary key (VolunteerSkillId),
     unique (PersonId, SkillId),
-    constraint foreign key (PersonId) references Person(PersonId) on delete cascade,
-    constraint foreign key (SkillId) references Skill(SkillId) on delete cascade
+    foreign key (PersonId) references Person(PersonId) on delete cascade,
+    foreign key (SkillId) references Skill(SkillId) on delete cascade,
+    foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
 create table Updates(
@@ -464,7 +511,7 @@ create table Updates(
     UpdateInformation   text,
     UpdateTime          timestamp   not null,
     primary key (UpdatesId),
-    constraint foreign key (PersonId) references Person(PersonId) on delete set null
+    foreign key (PersonId) references Person(PersonId) on delete set null
 )engine=InnoDB;
 
 insert into Application (Name, Code, Comments) values

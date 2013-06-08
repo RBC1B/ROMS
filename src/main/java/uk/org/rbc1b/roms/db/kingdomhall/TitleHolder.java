@@ -5,12 +5,13 @@
 package uk.org.rbc1b.roms.db.kingdomhall;
 
 import uk.org.rbc1b.roms.db.Congregation;
+import uk.org.rbc1b.roms.db.DefaultAuditable;
 
 /**
- *
+ * Congregation that holds the deeds to the hall.
  * @author oliver.elder.esq
  */
-public class TitleHolder {
+public class TitleHolder extends DefaultAuditable {
 
     private Integer titleHolderId;
     private KingdomHall kingdomHall;

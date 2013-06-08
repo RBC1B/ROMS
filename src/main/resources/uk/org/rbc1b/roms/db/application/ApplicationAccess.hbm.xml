@@ -9,5 +9,7 @@
         <many-to-one name="application" column="ApplicationId" />
         <property name="departmentAccess" />
         <property name="nonDepartmentAccess" />
+        <property name="updateTime" not-null="true"  />
+        <property name="updatedBy" not-null="true"  />
     </class>
 </hibernate-mapping>

@@ -5,9 +5,10 @@ import uk.org.rbc1b.roms.db.circuit.Circuit;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 
 /**
+ * Group of people.
  * @author oliver.elder.esq
  */
-public class Congregation {
+public class Congregation extends DefaultAuditable {
 
     private Integer congregationId;
     private String name;

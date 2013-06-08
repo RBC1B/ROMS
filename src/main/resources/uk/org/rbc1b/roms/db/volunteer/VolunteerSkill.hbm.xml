@@ -11,5 +11,7 @@
         <property name="comments" length="250" />
         <property name="trainingDate" />
         <property name="trainingResults" length="15" />
+        <property name="updateTime" not-null="true"  />
+        <property name="updatedBy" not-null="true"  />
     </class>
 </hibernate-mapping>

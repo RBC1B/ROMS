@@ -12,5 +12,7 @@
         <many-to-one name="invitationConfirmation" column="InvitationConfirmationId" />
         <many-to-one name="department" column="DepartmentId" />
         <property name="attended" />
+        <property name="updateTime" not-null="true"  />
+        <property name="updatedBy" not-null="true"  />
     </class>
 </hibernate-mapping>

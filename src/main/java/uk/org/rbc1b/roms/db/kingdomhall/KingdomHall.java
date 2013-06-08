@@ -2,11 +2,13 @@ package uk.org.rbc1b.roms.db.kingdomhall;
 
 import java.util.Set;
 import uk.org.rbc1b.roms.db.Address;
+import uk.org.rbc1b.roms.db.DefaultAuditable;
 
 /**
+ * The building.
  * @author oliver.elder.esq
  */
-public class KingdomHall implements java.io.Serializable {
+public class KingdomHall extends DefaultAuditable {
 
     private Integer kingdomHallId;
     private String name;

@@ -30,5 +30,7 @@
             <key column="ProjectId" />
             <one-to-many class="uk.org.rbc1b.roms.db.project.ProjectWorkBrief" />
         </set>
+        <property name="updateTime" not-null="true"  />
+        <property name="updatedBy" not-null="true"  />
     </class>
 </hibernate-mapping>

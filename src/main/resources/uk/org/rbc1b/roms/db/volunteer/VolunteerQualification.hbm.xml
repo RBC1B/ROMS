@@ -8,5 +8,7 @@
         <property name="personId" />
         <property name="qualificationId" />
         <property name="comments" length="100" />
+        <property name="updateTime" not-null="true"  />
+        <property name="updatedBy" not-null="true"  />
     </class>
 </hibernate-mapping>

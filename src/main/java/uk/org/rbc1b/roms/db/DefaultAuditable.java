@@ -4,6 +4,7 @@
  */
 package uk.org.rbc1b.roms.db;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -11,7 +12,7 @@ import java.util.Date;
  *
  * @author oliver.elder.esq
  */
-public class DefaultAuditable implements Auditable {
+public class DefaultAuditable implements Auditable, Serializable {
 
     private Date updateTime;
     private Integer updatedBy;

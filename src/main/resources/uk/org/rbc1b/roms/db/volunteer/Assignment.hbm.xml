@@ -11,5 +11,7 @@
         <property name="assignedDate" />
         <property name="tradeNumberId" />
         <property name="teamId" />
+        <property name="updateTime" not-null="true"  />
+        <property name="updatedBy" not-null="true"  />
     </class>
 </hibernate-mapping>

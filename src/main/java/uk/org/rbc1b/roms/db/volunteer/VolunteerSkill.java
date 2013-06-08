@@ -5,12 +5,14 @@
 package uk.org.rbc1b.roms.db.volunteer;
 
 import java.sql.Date;
+import uk.org.rbc1b.roms.db.DefaultAuditable;
 
 /**
+ * The skill owned by a volunteer. The Level indicates the competence.
  *
  * @author oliver.elder.esq
  */
-public class VolunteerSkill {
+public class VolunteerSkill extends DefaultAuditable {
 
     private Integer volunteerSkillId;
     private Integer personId;

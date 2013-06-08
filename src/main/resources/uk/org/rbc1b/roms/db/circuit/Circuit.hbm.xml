@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="uk.org.rbc1b.roms.db.circuit">
-  <class name="Circuit" table="Circuit">
-    <id name="circuitId">
-      <generator class="identity"/>
-    </id>
-    <property length="50" name="name" unique="true"/>
-    <many-to-one cascade="all" class="uk.org.rbc1b.roms.db.Person" column="CircuitOverseerID" lazy="false" name="circuitOverseer"/>
-  </class>
+    <class name="Circuit" table="Circuit">
+        <id name="circuitId">
+            <generator class="identity"/>
+        </id>
+        <property length="50" name="name" unique="true"/>
+        <many-to-one cascade="all" class="uk.org.rbc1b.roms.db.Person" column="CircuitOverseerID" lazy="false" name="circuitOverseer"/>
+        <property name="updateTime" not-null="true"  />
+        <property name="updatedBy" not-null="true"  />
+    </class>
 </hibernate-mapping>

@@ -4,6 +4,7 @@
  */
 package uk.org.rbc1b.roms.db.volunteer;
 
+import uk.org.rbc1b.roms.db.DefaultAuditable;
 import uk.org.rbc1b.roms.db.Person;
 
 /**
@@ -11,7 +12,7 @@ import uk.org.rbc1b.roms.db.Person;
  *
  * @author oliver.elder.esq
  */
-public class VolunteerTrade {
+public class VolunteerTrade extends DefaultAuditable {
 
     private Integer volunteerTradeId;
     private Person person;

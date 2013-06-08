@@ -4,13 +4,14 @@
  */
 package uk.org.rbc1b.roms.db.application;
 
+import uk.org.rbc1b.roms.db.DefaultAuditable;
 import uk.org.rbc1b.roms.db.Person;
 
 /**
  *
  * @author oliver.elder.esq
  */
-public class ApplicationAccess {
+public class ApplicationAccess extends DefaultAuditable {
 
     private Integer applicationAccessId;
     private Person person;
