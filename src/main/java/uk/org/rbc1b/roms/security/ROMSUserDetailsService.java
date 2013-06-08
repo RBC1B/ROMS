@@ -30,7 +30,7 @@ public class ROMSUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 
-        final User user = userDao.findUser(userName);
+        final User user = userDao.findUserAndPermissions(userName);
         if (user == null) {
             throw new UsernameNotFoundException("Failed to find user [" + userName + "]");
         }

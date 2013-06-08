@@ -184,7 +184,7 @@ public class PersonsController {
      * @throws NoSuchRequestHandlingMethodException when no person matching the id is found
      */
     @RequestMapping(value = "{personId}", method = RequestMethod.POST)
-    private String updatePerson(@PathVariable Integer personId, @Valid PersonForm form) throws NoSuchRequestHandlingMethodException {
+    public String updatePerson(@PathVariable Integer personId, @Valid PersonForm form) throws NoSuchRequestHandlingMethodException {
         Person person = fetchPerson(personId);
 
         if (form.getStreet() != null || form.getTown() != null || form.getCounty() != null || form.getPostcode() != null) {

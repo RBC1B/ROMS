@@ -38,6 +38,14 @@ create table Person(
     foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
+create table User(
+    PersonId    bigint(20),
+    UserName    varchar(50) not null    unique,
+    Password    varchar(50) not null,
+    primary key (PersonId),
+    constraint foreign key (PersonId) references Person(PersonId) on delete cascade
+)engine=InnoDB;
+
 create table Circuit(
     CircuitId           bigint(20)      auto_increment,
     Name                varchar(50)     not null    unique,
@@ -244,8 +252,8 @@ create table Volunteer(
     foreign key (EmergencyContactId) references Person(PersonId) on delete set null,
     foreign key (EmergencyContactRelationshipId) references Relationship(RelationshipId) on delete set null,
     foreign key (MaritalStatusId) references MaritalStatus(MaritalStatusId),
-    foreign key (InterviewerA) references Person(PersonId) on delete set null,
-    foreign key (InterviewerB) references Person(PersonId) on delete set null,
+    foreign key (InterviewerA) references User(PersonId) on delete set null,
+    foreign key (InterviewerB) references User(PersonId) on delete set null,
     foreign key (InterviewStatusId) references InterviewStatus(InterviewStatusId)
 )engine=InnoDB;
 
@@ -260,14 +268,6 @@ create table VolunteerTrade (
     primary key (VolunteerTradeId),
     constraint foreign key (PersonId) references Person(PersonId) on delete cascade,
     foreign key (UpdatedBy) references Person(PersonId)
-)engine=InnoDB;
-
-create table User(
-    PersonId    bigint(20),
-    UserName    varchar(50) not null    unique,
-    Password    varchar(50) not null,
-    primary key (PersonId),
-    constraint foreign key (PersonId) references Person(PersonId) on delete cascade
 )engine=InnoDB;
 
 create table ApplicationAccess(

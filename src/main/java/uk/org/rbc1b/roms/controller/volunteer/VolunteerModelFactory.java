@@ -146,8 +146,8 @@ public class VolunteerModelFactory {
         model.setJoinedDate(volunteer.getJoinedDate());
         model.setBadgeIssueDate(volunteer.getBadgeIssueDate());
         model.setInterviewDate(volunteer.getBadgeIssueDate());
-        model.setInterviewerA(personModelFactory.generatePersonModel(volunteer.getInterviewerA()));
-        model.setInterviewerB(personModelFactory.generatePersonModel(volunteer.getInterviewerB()));
+        model.setInterviewerA(personModelFactory.generateUserModel(volunteer.getInterviewerA()));
+        model.setInterviewerB(personModelFactory.generateUserModel(volunteer.getInterviewerB()));
         model.setInterviewComments(volunteer.getInterviewComments());
         model.setAvailability(generateAvailability(volunteer.getAvailability()));
         model.setOversight(volunteer.isOversight());

@@ -19,9 +19,9 @@ public class VolunteerRbcStatusForm {
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private DateTime interviewDate;
     private Integer interviewerAPersonId;
-    private String interviewerAPersonName;
+    private String interviewerAUserName;
     private Integer interviewerBPersonId;
-    private String interviewerBPersonName;
+    private String interviewerBUserName;
     private String interviewComments;
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private DateTime joinedDate;
@@ -66,12 +66,12 @@ public class VolunteerRbcStatusForm {
         this.interviewerAPersonId = interviewerAPersonId;
     }
 
-    public String getInterviewerAPersonName() {
-        return interviewerAPersonName;
+    public String getInterviewerAUserName() {
+        return interviewerAUserName;
     }
 
-    public void setInterviewerAPersonName(String interviewerAPersonName) {
-        this.interviewerAPersonName = interviewerAPersonName;
+    public void setInterviewerAUserName(String interviewerAUserName) {
+        this.interviewerAUserName = interviewerAUserName;
     }
 
     public Integer getInterviewerBPersonId() {
@@ -82,12 +82,12 @@ public class VolunteerRbcStatusForm {
         this.interviewerBPersonId = interviewerBPersonId;
     }
 
-    public String getInterviewerBPersonName() {
-        return interviewerBPersonName;
+    public String getInterviewerBUserName() {
+        return interviewerBUserName;
     }
 
-    public void setInterviewerBPersonName(String interviewerBPersonName) {
-        this.interviewerBPersonName = interviewerBPersonName;
+    public void setInterviewerBUserName(String interviewerBUserName) {
+        this.interviewerBUserName = interviewerBUserName;
     }
 
     public String getInterviewComments() {

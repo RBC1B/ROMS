@@ -446,6 +446,11 @@ $(document).ready(function() {
     );
 
     // edit
+    $(".user").typeahead({
+        source: roms.common.userTypeAheadSource,
+        minLength: 2
+    });
+
     $("#volunteerSpiritual").validate({
         rules: {
             baptismDate: {

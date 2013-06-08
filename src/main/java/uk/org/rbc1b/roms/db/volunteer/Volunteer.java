@@ -6,6 +6,7 @@ package uk.org.rbc1b.roms.db.volunteer;
 
 import java.util.Set;
 import uk.org.rbc1b.roms.db.Person;
+import uk.org.rbc1b.roms.db.application.User;
 
 /**
  *
@@ -22,8 +23,8 @@ public class Volunteer extends Person {
     private Integer maritalStatusId;
     private java.sql.Date baptismDate;
     private java.sql.Date interviewDate;
-    private Person interviewerA;
-    private Person interviewerB;
+    private User interviewerA;
+    private User interviewerB;
     private String interviewComments;
     private java.sql.Date joinedDate;
     private java.sql.Date formDate;
@@ -171,19 +172,19 @@ public class Volunteer extends Person {
         this.interviewStatusId = interviewStatusId;
     }
 
-    public Person getInterviewerA() {
+    public User getInterviewerA() {
         return interviewerA;
     }
 
-    public void setInterviewerA(Person interviewerA) {
+    public void setInterviewerA(User interviewerA) {
         this.interviewerA = interviewerA;
     }
 
-    public Person getInterviewerB() {
+    public User getInterviewerB() {
         return interviewerB;
     }
 
-    public void setInterviewerB(Person interviewerB) {
+    public void setInterviewerB(User interviewerB) {
         this.interviewerB = interviewerB;
     }
 

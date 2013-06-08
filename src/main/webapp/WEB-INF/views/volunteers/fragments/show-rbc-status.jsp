@@ -26,11 +26,11 @@ Author: oliver.elder.esq
         <c:choose>
             <c:when test="${volunteer.interviewerA != null || $volunteer.interviewerB != null}">
                 <c:if test="${volunteer.interviewerA != null}">
-                    <a href="<c:url value='${volunteer.interviewerA.uri}' />" >${volunteer.interviewerA.forename} ${volunteer.interviewerA.surname}</a>
+                    <a href="<c:url value='${volunteer.interviewerA.uri}' />" >${volunteer.interviewerA.name}</a>
                 </c:if>
                 <c:if test="${volunteer.interviewerA != null && volunteer.interviewerB != null}">, </c:if>
                 <c:if test="${volunteer.interviewerB != null}">
-                    <a href="<c:url value='${volunteer.interviewerB.uri}' />" >${volunteer.interviewerB.forename} ${volunteer.interviewerB.surname}</a>
+                    <a href="<c:url value='${volunteer.interviewerB.uri}' />" >${volunteer.interviewerB.name}</a>
                 </c:if>
             </c:when>
             <c:otherwise>-</c:otherwise>

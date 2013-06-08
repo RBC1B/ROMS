@@ -39,6 +39,26 @@ roms.common.congregationTypeAheadSource = function(query, process) {
     });
 }
 
+roms.common.userTypeAheadSource = function(query, process) {
+    $.ajax({
+        url: roms.common.relativePath + "/users/search",
+        contentType: "application/json",
+        dataType: "json",
+        data:  {
+            name: query
+        },
+        success: function(data) {
+            var results = [];
+            if(data.results) {
+                $.each(data.results, function() {
+                    results.push(this.userName);
+                });
+            }
+            return process(results);
+        }
+    });
+}
+
 /**
  * Extensions to datatables to fit in with bootstrap styling
  * See http://www.datatables.net/media/blog/bootstrap_2/DT_bootstrap.js

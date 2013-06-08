@@ -25,10 +25,10 @@ Author: oliver.elder.esq
                     <label>Interview date</label>
                     <form:input path="interviewDate" class="datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
                     <label>Interviewer A</label>
-                    <form:input path="interviewerAPersonName" placeholder="Name" />
+                    <form:input path="interviewerAUserName" class="user" placeholder="User Name" />
                     <form:hidden path="interviewerAPersonId" />
                     <label>Interviewer B</label>
-                    <form:input path="interviewerBPersonName" placeholder="Name" />
+                    <form:input path="interviewerBUserName" class="user" placeholder="User Name" />
                     <form:hidden path="interviewerBPersonId" />
                     <label>Interview comments</label>
                     <form:input path="interviewComments" maxlength="150" />

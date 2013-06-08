@@ -9,6 +9,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -27,7 +28,7 @@ public class HibernateUserDao implements UserDao {
 
     @Override
     @Cacheable("user.userName")
-    public User findUser(String userName) {
+    public User findUserAndPermissions(String userName) {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(User.class);
         criteria.add(Restrictions.eq("userName", userName));
 
@@ -46,5 +47,14 @@ public class HibernateUserDao implements UserDao {
         user.setApplicationAccess(new HashSet<ApplicationAccess>(access));
 
         return user;
+    }
+
+    @Override
+    @Cacheable("user.userName")
+    public List<User> findUsers(String userName) {
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(User.class);
+        criteria.add(Restrictions.like("userName", userName + "%"));
+        criteria.addOrder(Order.asc("userName"));
+        return criteria.list();
     }
 }

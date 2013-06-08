@@ -10,6 +10,7 @@ import uk.org.rbc1b.roms.controller.congregation.CongregationsController;
 import uk.org.rbc1b.roms.db.Congregation;
 import uk.org.rbc1b.roms.db.CongregationDao;
 import uk.org.rbc1b.roms.db.Person;
+import uk.org.rbc1b.roms.db.application.User;
 
 /**
  * Create a person model.
@@ -63,6 +64,19 @@ public class PersonModelFactory {
         model.setUri(generateUri(person.getPersonId()));
         model.setEditUri(generateUri(person.getPersonId()) + "/edit");
 
+        return model;
+    }
+
+    /**
+     * Generate the user model. We point the user uri to the person page.
+     * @param user user
+     * @return model
+     */
+    public EntityModel generateUserModel(User user) {
+        EntityModel model = new EntityModel();
+        model.setName(user.getUserName());
+        model.setId(user.getPersonId());
+        model.setUri(generateUri(user.getPersonId()));
         return model;
     }
 

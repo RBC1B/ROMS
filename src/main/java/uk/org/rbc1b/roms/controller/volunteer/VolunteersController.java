@@ -310,11 +310,11 @@ public class VolunteersController {
 
         if (volunteer.getInterviewerA() != null) {
             form.setInterviewerAPersonId(volunteer.getInterviewerA().getPersonId());
-            form.setInterviewerAPersonName(volunteer.getInterviewerA().formatDisplayName());
+            form.setInterviewerAUserName(volunteer.getInterviewerA().getUserName());
         }
         if (volunteer.getInterviewerB() != null) {
             form.setInterviewerBPersonId(volunteer.getInterviewerB().getPersonId());
-            form.setInterviewerBPersonName(volunteer.getInterviewerB().formatDisplayName());
+            form.setInterviewerBUserName(volunteer.getInterviewerB().getUserName());
         }
 
         form.setInterviewComments(volunteer.getInterviewComments());
