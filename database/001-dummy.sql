@@ -248,11 +248,11 @@ values ('Email technicial', 'Fully trained in the difference between reply and r
 insert into Volunteer(PersonId, RbcStatusId, AppointmentId, FulltimeId, Availability,
 EmergencyContactId, EmergencyContactRelationshipId, Gender, MaritalStatusId, BaptismDate, InterviewDate,
 InterviewerA, InterviewerB, InterviewComments, JoinedDate, FormDate, InterviewStatusId, Oversight, OversightComments,
-ReliefUK, ReliefUKComments, ReliefAbroad, ReliefAbroadComments, HHCFormCode, BadgeIssueDate, UpdateTime, UpdatedBy)
+ReliefUK, ReliefUKComments, ReliefAbroad, ReliefAbroadComments, HHCFormCode, BadgeIssueDate)
 values(5, 1, 1, null, 'TTTTTTT',
 3, 5, 'M', 2, '1982-06-19', '2008-02-09',
 1, 2, 'Jolly nice bloke', '2008-02-11', '2008-01-03', 5, true, 'Very capable...still a jolly nice bloke?',
-true, '3 weeks notice', true, '6 weeks notice', 'HHCForm-1', '2010-04-17', NOW(), 1);
+true, '3 weeks notice', true, '6 weeks notice', 'HHCForm-1', '2010-04-17');
 
 insert into VolunteerTrade(PersonId, Name, ExperienceDescription, ExperienceYears, UpdateTime, UpdatedBy)
 values (5, "Balloon Modelling", "Worked for kids parties and street entertainer. Specialised in marine life", 3, NOW(), 1);
@@ -298,11 +298,11 @@ values(1, 5, '2012-11-25', null, null, null, null, NOW(), 1);
 insert into Volunteer(PersonId, RbcStatusId, AppointmentId, FulltimeId, Availability,
 EmergencyContactId, EmergencyContactRelationshipId, Gender, MaritalStatusId, BaptismDate, InterviewDate,
 InterviewerA, InterviewerB, InterviewComments, JoinedDate, FormDate, InterviewStatusId, Oversight, OversightComments,
-ReliefUK, ReliefUKComments, ReliefAbroad, ReliefAbroadComments, HHCFormCode, BadgeIssueDate, UpdateTime, UpdatedBy)
+ReliefUK, ReliefUKComments, ReliefAbroad, ReliefAbroadComments, HHCFormCode, BadgeIssueDate)
 values(6, 4, null, null, 'TTFTTTT',
 null, null, 'M', 5, null, null,
 null, null, null, null, null, 3, false, null,
-false, null, false, null, null, null, NOW(), 1);
+false, null, false, null, null, null);
 
 update Person set congregationId = 2 where PersonId = 6;
 
@@ -319,10 +319,10 @@ values(1, 6, '2012-07-24', false, 3, 10, false, NOW(), 1);
 insert into Volunteer(PersonId, RbcStatusId, AppointmentId, FulltimeId, Availability,
 EmergencyContactId, EmergencyContactRelationshipId, Gender, MaritalStatusId, BaptismDate, InterviewDate,
 InterviewerA, InterviewerB, InterviewComments, JoinedDate, FormDate, InterviewStatusId, Oversight, OversightComments,
-ReliefUK, ReliefUKComments, ReliefAbroad, ReliefAbroadComments, HHCFormCode, BadgeIssueDate, UpdateTime, UpdatedBy)
+ReliefUK, ReliefUKComments, ReliefAbroad, ReliefAbroadComments, HHCFormCode, BadgeIssueDate)
 values(7, 4, null, 2, 'FFFFFFT',
 3, 5, 'M', 4, '1999-07-10', '2012-05-29',
 1, null, null, null, '2012-03-13', 3, false, null,
-false, null, false, null, null, null, NOW(), 1);
+false, null, false, null, null, null);
 
 update Person set congregationId = 3 where PersonId = 7;
