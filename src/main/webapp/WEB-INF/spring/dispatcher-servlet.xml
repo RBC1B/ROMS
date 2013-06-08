@@ -13,9 +13,9 @@
 
     <context:component-scan base-package="uk.org.rbc1b.roms.controller" />
 
-    <mvc:resources mapping="/images/**" location="/images/" cache-period="31556926" />
-    <mvc:resources mapping="/css/**" location="/css/"/>
-    <mvc:resources mapping="/javascript/**" location="/javascript/"/>
+    <mvc:resources mapping="/images/**" location="/images/" cache-period="31556926" /> <!-- 1 year -->
+    <mvc:resources mapping="/css/**" location="/css/" cache-period="2629740" /> <!-- 1 month -->
+    <mvc:resources mapping="/javascript/**" location="/javascript/" cache-period="86400" /> <!-- 1 day -->
 
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/"/>
