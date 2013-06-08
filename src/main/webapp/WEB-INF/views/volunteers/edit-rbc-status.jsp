@@ -39,26 +39,27 @@ Author: oliver.elder.esq
                 </fieldset>
                 <fieldset>
                     <h3>Availability</h3>
+                    <a href="#" id="clear-availability">No days</a>|<a href="#" id="set-availability">All days</a>
                     <label class="checkbox">
-                        <form:checkbox path="availabilityMonday" /> Monday
+                        <form:checkbox path="availabilityMonday" class="availability" /> Monday
                     </label>
                     <label class="checkbox">
-                        <form:checkbox path="availabilityTuesday" /> Tuesday
+                        <form:checkbox path="availabilityTuesday" class="availability" /> Tuesday
                     </label>
                     <label class="checkbox">
-                        <form:checkbox path="availabilityWednesday" /> Wednesday
+                        <form:checkbox path="availabilityWednesday" class="availability" /> Wednesday
                     </label>
                     <label class="checkbox">
-                        <form:checkbox path="availabilityThursday" /> Thursday
+                        <form:checkbox path="availabilityThursday" class="availability" /> Thursday
                     </label>
                     <label class="checkbox">
-                        <form:checkbox path="availabilityFriday" /> Friday
+                        <form:checkbox path="availabilityFriday" class="availability" /> Friday
                     </label>
                     <label class="checkbox">
-                        <form:checkbox path="availabilitySaturday" /> Saturday
+                        <form:checkbox path="availabilitySaturday" class="availability" /> Saturday
                     </label>
                     <label class="checkbox">
-                        <form:checkbox path="availabilitySunday" /> Sunday
+                        <form:checkbox path="availabilitySunday" class="availability" /> Sunday
                     </label>
                 </fieldset>
                 <fieldset>

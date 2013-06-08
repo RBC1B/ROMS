@@ -50,7 +50,6 @@ public class HibernateUserDao implements UserDao {
     }
 
     @Override
-    @Cacheable("user.userName")
     public List<User> findUsers(String userName) {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(User.class);
         criteria.add(Restrictions.like("userName", userName + "%"));

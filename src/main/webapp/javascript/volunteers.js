@@ -489,6 +489,70 @@ $(document).ready(function() {
         errorPlacement: roms.common.validatorErrorPlacement
     });
 
+    $("#clear-availability").on("click", function(event){
+       $(".availability").prop('checked', false);
+       return false;
+    });
+
+    $("#set-availability").on("click", function(event){
+       $(".availability").prop('checked', true);
+       return false;
+    });
+
+    $("#volunteerRbcStatus").validate({
+        rules: {
+            interviewerAUserName: {
+                required: false,
+                remote: {
+                    // check for an exact match. Populate the congregation id
+                    url: roms.common.relativePath + "/users/search",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: {
+                        name: function() {
+                            return $("#interviewerAUserName").val();
+                        }
+                    },
+                    dataFilter: function(rawData) {
+                        var data = JSON.parse(rawData)
+                        if (data.results && data.results[0].userName == $("#interviewerAUserName").val()) {
+                            $("#interviewerAPersonId").val(data.results[0].id);
+                            return true;
+
+                        }
+                        return false;
+                    }
+                }
+            },
+            interviewerBUserName: {
+                required: false,
+                remote: {
+                    // check for an exact match. Populate the congregation id
+                    url: roms.common.relativePath + "/users/search",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: {
+                        name: function() {
+                            return $("#interviewerBUserName").val();
+                        }
+                    },
+                    dataFilter: function(rawData) {
+                        var data = JSON.parse(rawData)
+                        if (data.results && data.results[0].userName == $("#interviewerBUserName").val()) {
+                            $("#interviewerBPersonId").val(data.results[0].id);
+                            return true;
+
+                        }
+                        return false;
+                    }
+                }
+            }
+        },
+        submitHandler :function(form) {
+            form.submit();
+        },
+        errorPlacement: roms.common.validatorErrorPlacement
+    });
 
     // display
     roms.common.datatables(

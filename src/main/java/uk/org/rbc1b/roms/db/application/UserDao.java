@@ -24,7 +24,7 @@ public interface UserDao {
     /**
      * Look up the user by name. We do a prefix match on the name.
      * @param userName user name
-     * @return user
+     * @return users
      */
     @Transactional(readOnly = true)
     List<User> findUsers(String userName);
