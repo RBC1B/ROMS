@@ -62,7 +62,7 @@ public class SkillModelFactory {
         model.setName(skill.getName());
         model.setUri(generateUri(skill.getSkillId()));
 
-        Category category = categoryDao.findCategory(skill.getCategory().getCategoryId());
+        Category category = categoryDao.findCategoryById(skill.getCategory().getCategoryId());
 
         EntityModel categoryModel = new EntityModel();
         categoryModel.setId(category.getCategoryId());

@@ -38,7 +38,7 @@
                                     <ul class="inline list-actions">
                                         <li><a class="btn btn-success" href="<c:url value="${skill.uri}" />">View</a></li>
                                         <li><a class="list-action" href="<c:url value="/skills/${skill.skillId}/edit" />">Edit</a></li>
-                                        <li><a class="list-action" href="delete">Delete</a></li>
+                                        <li><a class="list-action" href="<c:url value="/skills/${skill.skillId}/delete" />">Delete</a></li>
                                     </ul>
                                 </td>
                             </tr>

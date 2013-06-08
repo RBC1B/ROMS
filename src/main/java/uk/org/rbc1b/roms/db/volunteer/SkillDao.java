@@ -34,6 +34,15 @@ public interface SkillDao {
     List<Skill> findSkills();
 
     /**
+     * Save a skill.
+     *
+     * @param skill a skill to save
+     */
+    @PreAuthorize("hasPermission('SKILL','EDIT')")
+    @Transactional
+    void saveSkill(Skill skill);
+
+    /**
      * Create a new skill.
      *
      * @param skill new skill to create
@@ -41,4 +50,13 @@ public interface SkillDao {
     @PreAuthorize("hasPermission('SKILL', 'ADD')")
     @Transactional
     void createSkill(Skill skill);
+
+    /**
+     * Deletes a skill.
+     *
+     * @param skill to delete
+     */
+    @PreAuthorize("hasPermission('SKILL','DELETE')")
+    @Transactional
+    void deleteSkill(Skill skill);
 }

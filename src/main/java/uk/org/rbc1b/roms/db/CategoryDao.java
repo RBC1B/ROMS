@@ -5,6 +5,7 @@
 package uk.org.rbc1b.roms.db;
 
 import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
 /**
  *
@@ -13,11 +14,28 @@ import org.springframework.transaction.annotation.Transactional;
 public interface CategoryDao {
 
     /**
-     * Find the colour.
+     * Find the category.
      *
      * @param categoryId id
-     * @return colour, or null if not found
+     * @return Category, or null if not found
      */
     @Transactional(readOnly = true)
-    Category findCategory(Integer categoryId);
+    Category findCategoryById(Integer categoryId);
+
+    /**
+     * Find the category by name.
+     *
+     * @param name category name
+     * @return Category, or null if not found
+     */
+    @Transactional(readOnly = true)
+    Category findCategoryByName(String name);
+
+    /**
+     * Get all Category.
+     *
+     * @return List Category
+     */
+    @Transactional(readOnly = true)
+    List<Category> getAllCategories();
 }

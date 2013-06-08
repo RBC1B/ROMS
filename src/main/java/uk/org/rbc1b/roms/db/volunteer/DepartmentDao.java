@@ -4,6 +4,7 @@
  */
 package uk.org.rbc1b.roms.db.volunteer;
 
+import java.util.List;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +26,7 @@ public interface DepartmentDao {
     Team findTeam(Integer teamId);
 
     /**
-     * Find the department.
+     * Find the department by id.
      *
      * @param departmentId id
      * @return department information, or null if not found
@@ -33,4 +34,22 @@ public interface DepartmentDao {
     @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional(readOnly = true)
     Department findDepartment(Integer departmentId);
+
+    /**
+     * Find the department by name.
+     *
+     * @param name department name
+     * @return Department, or null if not found
+     */
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
+    @Transactional(readOnly = true)
+    Department findDepartmentByName(String name);
+
+    /**
+     * Get all Departments.
+     *
+     * @return List of departments
+     */
+    @Transactional(readOnly = true)
+    List<Department> getAllDepartments();
 }

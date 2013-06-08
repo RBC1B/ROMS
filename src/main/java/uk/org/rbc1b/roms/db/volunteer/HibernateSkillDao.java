@@ -8,7 +8,6 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -22,7 +21,6 @@ public class HibernateSkillDao implements SkillDao {
     private SessionFactory sessionFactory;
 
     @Override
-    @Cacheable("skill.skill")
     public Skill findSkill(final Integer skillId) {
         return (Skill) this.sessionFactory.getCurrentSession().get(Skill.class, skillId);
     }
@@ -37,8 +35,22 @@ public class HibernateSkillDao implements SkillDao {
     }
 
     @Override
+    public void saveSkill(Skill skill) {
+        if (skill.getSkillId() == null) {
+            this.sessionFactory.getCurrentSession().save(skill);
+        } else {
+            this.sessionFactory.getCurrentSession().merge(skill);
+        }
+    }
+
+    @Override
     public void createSkill(Skill skill) {
         this.sessionFactory.getCurrentSession().save(skill);
+    }
+
+    @Override
+    public void deleteSkill(Skill skill) {
+        this.sessionFactory.getCurrentSession().delete(skill);
     }
 
     /**
