@@ -5,6 +5,11 @@ $(document).ready(function() {
         matchPerson($('#forename').val(), $('#surname').val(), $('#personId'));
     });
     
+    // if the circuit-overseer link is unlinked then reset the form
+    $('#circuit-overseer-linked button.close').click(function() {
+        populateCircuitOverseer(null, $('#personId')); 
+    });
+    
     /**
      * Function to match the Circuit Overseer with an existing person.
      * @param forename the forename from the bean
@@ -23,6 +28,7 @@ $(document).ready(function() {
         if (existingPersonName == forename + " " + surname){
             return;
         }
+        existingPersonName = forename + " " + surname;
         findPerson(forename, surname, $personId, existingPersonName);
         
         $personId.data("full-name", forename + " " + surname);
@@ -66,8 +72,20 @@ $(document).ready(function() {
                 modalElement.modal('show');
                 
                 // if select person id, set it to circuit overseer person id field.
+                $("a.matched-person").on("click", function(event){
+                    populateCircuitOverseer($(this).data("person-id"), $personId);
+                    modalElement.modal('hide')
+                });
             }
         });
+    }
+    function populateCircuitOverseer(selectedPersonId, $personId){
+        // In unlink <a> link, data-person-id="", therefore test for this
+        if (selectedPersonId){
+            $('#circuit-overseer-linked').show('fast');
+        } else {
+            $('#circuit-overseer-linked').hide('fast');
+        }
     }
     
     // need a custom validation rule for validating phone numbers
