@@ -8,7 +8,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<c:url var="formAction" value="/qualifications/delete" />
+<c:url var="formAction" value="/qualifications" />
 <html>
     <c:set var="pageTitle" value="Qualifications" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
