@@ -4,6 +4,7 @@
  */
 package uk.org.rbc1b.roms.controller.qualification;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -107,15 +108,17 @@ public class QualificationsController {
     /**
      * Delete a qualification.
      *
-     * @param qualificationId primary key
+     * @param request HTTP servlet request
      * @param model spring mvc model
      * @return mvc redirect
      * @throws NoSuchRequestHandlingMethodException on failure to find the
      * qualification
      */
-    @RequestMapping(value = "{qualificationId}/delete", method = RequestMethod.GET)
-    public String deleteQualification(@PathVariable Integer qualificationId, ModelMap model)
+    @RequestMapping(value = "delete", method = RequestMethod.DELETE)
+    public String deleteQualification(HttpServletRequest request, ModelMap model)
             throws NoSuchRequestHandlingMethodException {
+        Integer qualificationId;
+        qualificationId = Integer.parseInt(request.getParameter("qualificationId"));
         Qualification qualification = qualificationDao.findQualification(qualificationId);
         if (qualification != null) {
             qualificationDao.deleteQualification(qualification);
@@ -123,8 +126,6 @@ public class QualificationsController {
             // We want to log all deletes
             LOGGER.error("Qualification to delete:" + qualificationId);
         }
-
-
         return "redirect:/qualifications";
     }
 

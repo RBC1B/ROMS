@@ -4,9 +4,11 @@
     Author     : Tina
 --%>
 
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<c:url var="formAction" value="/qualifications/delete" />
 <html>
     <c:set var="pageTitle" value="Qualifications" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -33,8 +35,15 @@
                             <td>
                                 <ul class="inline list-actions">
                                     <li><a class="list-action" href="<c:url value="/qualifications/${qualification.qualificationId}/edit" />">Edit</a></li>
+                                    <!--
                                     <li><a class="list-action" href="<c:url value="/qualifications/${qualification.qualificationId}/delete" />">Delete</a></li>
-
+                                    -->
+                                    <li>
+                                        <form:form method="DELETE" action="${formAction}">
+                                            <input type="hidden" name="qualificationId" value="${qualification.qualificationId}" />
+                                            <input type="submit" value="Delete" class="btn btn-primary" />
+                                        </form:form>
+                                    </li>
                                 </ul>
                             </td>
                         </tr>
