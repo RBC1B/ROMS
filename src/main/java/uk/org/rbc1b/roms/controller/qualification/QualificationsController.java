@@ -108,13 +108,13 @@ public class QualificationsController {
     /**
      * Delete a qualification.
      *
-     * @param request HTTP servlet request
+     * @param request http servlet request
      * @param model spring mvc model
      * @return mvc redirect
      * @throws NoSuchRequestHandlingMethodException on failure to find the
      * qualification
      */
-    @RequestMapping(value = "delete", method = RequestMethod.DELETE)
+    @RequestMapping(method = RequestMethod.DELETE)
     public String deleteQualification(HttpServletRequest request, ModelMap model)
             throws NoSuchRequestHandlingMethodException {
         Integer qualificationId;
