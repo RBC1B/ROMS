@@ -6,7 +6,10 @@ package uk.org.rbc1b.roms.controller.skill;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
+import uk.org.rbc1b.roms.controller.LoggingHandlerExceptionResolver;
 import uk.org.rbc1b.roms.db.Category;
 import uk.org.rbc1b.roms.db.CategoryDao;
 import uk.org.rbc1b.roms.db.volunteer.Department;
@@ -29,6 +33,7 @@ import uk.org.rbc1b.roms.db.volunteer.SkillDao;
 @RequestMapping("/skills")
 public class SkillsController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoggingHandlerExceptionResolver.class);
     private SkillDao skillDao;
     private SkillModelFactory skillModelFactory;
     private CategoryDao categoryDao;
@@ -148,18 +153,25 @@ public class SkillsController {
 
     /**
      * Deletes a skill.
-     * @param skillId skill ID to delete
-     * @return view name
-     * @throws NoSuchRequestHandlingMethodException on failure to find the skill
+     *
+     * @param request http servlet request
+     * @param model spring mvc model
+     * @return mvc redirect
+     * @throws NoSuchRequestHandlingMethodException on
+     * failure to find the skill
      */
-    @RequestMapping(value = "{skillId}/delete", method = RequestMethod.GET)
-    public String deleteSkill(@PathVariable Integer skillId)
+    @RequestMapping(method = RequestMethod.DELETE)
+    public String deleteSkill(HttpServletRequest request, ModelMap model)
             throws NoSuchRequestHandlingMethodException {
+        Integer skillId;
+        skillId = Integer.parseInt(request.getParameter("skillId"));
         Skill skill = this.skillDao.findSkill(skillId);
         if (skill == null) {
             throw new NoSuchRequestHandlingMethodException("No Skill #" + skillId, this.getClass());
         } else {
             this.skillDao.deleteSkill(skill);
+
+            LOGGER.error("Deleted Skill:" + skillId);
             return "redirect:/skills";
         }
     }

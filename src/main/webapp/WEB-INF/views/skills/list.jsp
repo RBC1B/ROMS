@@ -4,8 +4,10 @@
     Author     : ramindur.singh
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<c:url var="formAction" value="/skills" />
 <html>
     <c:set var="pageTitle" value="Departmental Skills" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -38,7 +40,12 @@
                                     <ul class="inline list-actions">
                                         <li><a class="btn btn-success" href="<c:url value="${skill.uri}" />">View</a></li>
                                         <li><a class="list-action" href="<c:url value="/skills/${skill.skillId}/edit" />">Edit</a></li>
-                                        <li><a class="list-action" href="<c:url value="/skills/${skill.skillId}/delete" />">Delete</a></li>
+                                        <li>
+                                            <form:form method="DELETE" action="${formAction}">
+                                                <input type="hidden" name="skillId" value="${skill.skillId}" />
+                                                <input type="submit" value="Delete" class="btn btn-mini" />
+                                            </form:form>
+                                        </li>
                                     </ul>
                                 </td>
                             </tr>

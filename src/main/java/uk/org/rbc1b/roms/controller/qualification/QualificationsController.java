@@ -121,10 +121,12 @@ public class QualificationsController {
         qualificationId = Integer.parseInt(request.getParameter("qualificationId"));
         Qualification qualification = qualificationDao.findQualification(qualificationId);
         if (qualification != null) {
+            throw new NoSuchRequestHandlingMethodException("No Qualification #" + qualificationId, this.getClass());
+        } else {
             qualificationDao.deleteQualification(qualification);
 
             // We want to log all deletes
-            LOGGER.error("Qualification to delete:" + qualificationId);
+            LOGGER.error("Deleted Qualification ID:" + qualificationId);
         }
         return "redirect:/qualifications";
     }
