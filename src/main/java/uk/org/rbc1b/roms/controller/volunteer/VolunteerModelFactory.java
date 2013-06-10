@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.org.rbc1b.roms.controller.common.model.EntityModel;
 import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
-import uk.org.rbc1b.roms.controller.congregation.CongregationsController;
+import uk.org.rbc1b.roms.controller.congregation.CongregationModelFactory;
 import uk.org.rbc1b.roms.controller.department.DepartmentModelFactory;
 import uk.org.rbc1b.roms.controller.qualification.QualificationModelFactory;
 import uk.org.rbc1b.roms.controller.skill.SkillModelFactory;
@@ -178,7 +178,7 @@ public class VolunteerModelFactory {
         EntityModel congregationModel = new EntityModel();
         congregationModel.setId(congregation.getCongregationId());
         congregationModel.setName(congregation.getName());
-        congregationModel.setUri(CongregationsController.generateUri(congregation.getCongregationId()));
+        congregationModel.setUri(CongregationModelFactory.generateUri(congregation.getCongregationId()));
 
         return congregationModel;
     }

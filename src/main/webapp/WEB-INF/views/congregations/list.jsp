@@ -1,11 +1,13 @@
 <%--
     Document   : CongregationList
     Created on : 06-01-2013 18:12
-    Author     : ben.read
+    Author     : Ramindur Singh
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<c:url var="formAction" value="/congregations" />
 <html>
     <c:set var="pageTitle" value="Congregation" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -19,33 +21,34 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Name</th>
+                            <th>Congregation</th>
+                            <th>Kingdom Hall</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach items="${circuits}" var="circuit">
+                        <c:forEach items="${congregations}" var="circuit">
                             <tr>
-                                <td>${circuit.circuitId}</td>
-                                <td>${circuit.name}</td>
-                                <td><a class="btn btn-success" href="<c:url value="/circuits/${circuit.circuitId}" />">View</a>&nbsp;&nbsp;&nbsp;&nbsp;&#124;&nbsp;
-                                    <a href="<c:url value="/circuits/${circuit.circuitId}/edit" />">Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;&#124;&nbsp;
-                                    <a href="delete">Delete</a>
+                                <td>${congregation.congregationId}</td>
+                                <td>${congregation.name}</td>
+                                <td>${congregation.kingdomhall.kingdomHallId}</td>
+                                <td>
+                                    <ul class="inline list-actions">
+                                        <li><a class="btn btn-success" href="<c:url value="/congregations/${congregation.congregationId}" />">View</a></li>
+                                        <li><a href="<c:url value="/circuits/${congregation.congregationId}/edit" />">Edit</a></li>
+                                        <form:form method="DELETE" action="${formAction}">
+                                            <input type="hidden" name="skillId" value="${congregation.congregationId}" />
+                                                <input type="submit" value="Delete" class="btn btn-mini" />
+                                        </form:form>
+                                    </ul>
                                 </td>
                             </tr>
                         </c:forEach>
                     </tbody>
-                    <tfoot>
-                        <tr>
-                            <th></th>
-                            <th><input type="text" name="search_name" value="Search names" class="search_init" /></th>
-                            <th></th>
-                        </tr>
-                    </tfoot>
                 </table>
             </div>
             <div class="entity-list-add-new">
-                <a class="btn btn-primary" href="<c:url value="/circuits/new" />">Create new circuit</a>
+                <a class="btn btn-primary" href="<c:url value="/circuits/new" />">Create new congregation</a>
             </div>
             <p>&nbsp;</p>
             <ul class="breadcrumb">
@@ -54,6 +57,6 @@
             </ul>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
-        <script type="text/javascript" src="<c:url value='/javascript/circuits.js' />" ></script>
+        <script type="text/javascript" src="<c:url value='/javascript/congregations.js' />" ></script>
     </body>
 </html>

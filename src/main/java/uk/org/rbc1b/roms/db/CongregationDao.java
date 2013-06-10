@@ -9,9 +9,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Look up the congregation object instances.
+ *
  * @author oliver.elder.esq
  */
 public interface CongregationDao {
+
+    /**
+     * Get a list of congregations.
+     *
+     * @return congregations
+     */
+    @Transactional(readOnly = true)
+    List<Congregation> findAllCongregations();
 
     /**
      * Look up the congregation by the primary key.
@@ -24,10 +33,10 @@ public interface CongregationDao {
 
     /**
      * Find the list of congregations matching the partial name.
+     *
      * @param name name
      * @return congregations
      */
     @Transactional(readOnly = true)
     List<Congregation> findCongregations(String name);
-
 }

@@ -8,33 +8,43 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import uk.org.rbc1b.roms.db.Congregation;
 import uk.org.rbc1b.roms.db.CongregationDao;
+import uk.org.rbc1b.roms.db.kingdomhall.KingdomHallDao;
 
 /**
  * Handle congregation related requests.
  *
  * @author oliver.elder.esq
+ * @author Ramindur
  */
 @Controller
 @RequestMapping("/congregations")
 public class CongregationsController {
 
-    private static final String BASE_URI = "/congregations/";
     private CongregationDao congregationDao;
+    private CongregationModelFactory congregationModelFactory;
+    private KingdomHallDao kingdomHallDao;
 
     /**
-     * Generate the uri used to access the congregation pages.
+     * Displays the list of congregations.
      *
-     * @param congregationId optional congregation id
-     * @return uri
+     * @param model mvc model
+     * @return view
      */
-    public static String generateUri(Integer congregationId) {
-        return congregationId != null ? BASE_URI + congregationId : BASE_URI;
+    @RequestMapping(method = RequestMethod.GET)
+    public String showCongregationList(ModelMap model) {
+        List<Congregation> congregations = congregationDao.findAllCongregations();
+        List<CongregationListModel> modelList = new ArrayList<CongregationListModel>(congregations.size());
+        for (Congregation congregation : congregations) {
+            modelList.add(null); // ////////////
+        }
+        return "congregations/list";
     }
 
     /**
@@ -62,8 +72,27 @@ public class CongregationsController {
         return response;
     }
 
+    /**
+     * @param congregationDao the congregationDao to set
+     */
     @Autowired
     public void setCongregationDao(CongregationDao congregationDao) {
         this.congregationDao = congregationDao;
+    }
+
+    /**
+     * @param congregationModelFactory the congregationModelFactory to set
+     */
+    @Autowired
+    public void setCongregationModelFactory(CongregationModelFactory congregationModelFactory) {
+        this.congregationModelFactory = congregationModelFactory;
+    }
+
+    /**
+     * @param kingdomHallDao the kingdomHallDao to set
+     */
+    @Autowired
+    public void setKingdomHallDao(KingdomHallDao kingdomHallDao) {
+        this.kingdomHallDao = kingdomHallDao;
     }
 }

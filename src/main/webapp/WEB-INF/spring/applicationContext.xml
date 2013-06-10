@@ -147,6 +147,9 @@
                     <property name="name" value="congregation.congregation" />
                 </bean>
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
+                    <property name="name" value="congregation.congregationList" />
+                </bean>
+                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
                     <property name="name" value="user.userName" />
                 </bean>
             </set>

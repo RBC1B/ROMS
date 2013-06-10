@@ -6,7 +6,7 @@ package uk.org.rbc1b.roms.controller.common.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import uk.org.rbc1b.roms.controller.congregation.CongregationsController;
+import uk.org.rbc1b.roms.controller.congregation.CongregationModelFactory;
 import uk.org.rbc1b.roms.db.Congregation;
 import uk.org.rbc1b.roms.db.CongregationDao;
 import uk.org.rbc1b.roms.db.Person;
@@ -90,7 +90,7 @@ public class PersonModelFactory {
         EntityModel congregationModel = new EntityModel();
         congregationModel.setId(congregation.getCongregationId());
         congregationModel.setName(congregation.getName());
-        congregationModel.setUri(CongregationsController.generateUri(congregation.getCongregationId()));
+        congregationModel.setUri(CongregationModelFactory.generateUri(congregation.getCongregationId()));
 
         return congregationModel;
     }
