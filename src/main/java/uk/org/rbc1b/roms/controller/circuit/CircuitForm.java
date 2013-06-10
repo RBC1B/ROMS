@@ -26,8 +26,6 @@ public class CircuitForm {
     @NotNull
     @Size(min = 2)
     private String surname;
-    @NotNull
-    @Size(min = 2)
     private String email;
     private String street;
     private String town;

@@ -90,14 +90,16 @@ public class CircuitsController {
         form.setMiddleName(circuit.getCircuitOverseer().getMiddleName());
         form.setSurname(circuit.getCircuitOverseer().getSurname());
         form.setEmail(circuit.getCircuitOverseer().getEmail());
-        form.setStreet(circuit.getCircuitOverseer().getAddress().getStreet());
-        form.setTown(circuit.getCircuitOverseer().getAddress().getTown());
-        form.setCounty(circuit.getCircuitOverseer().getAddress().getCounty());
-        form.setPostcode(circuit.getCircuitOverseer().getAddress().getPostcode());
+        if (circuit.getCircuitOverseer().getAddress() != null) {
+            form.setStreet(circuit.getCircuitOverseer().getAddress().getStreet());
+            form.setTown(circuit.getCircuitOverseer().getAddress().getTown());
+            form.setCounty(circuit.getCircuitOverseer().getAddress().getCounty());
+            form.setPostcode(circuit.getCircuitOverseer().getAddress().getPostcode());
+        }
         form.setTelephone(circuit.getCircuitOverseer().getTelephone());
         form.setMobile(circuit.getCircuitOverseer().getMobile());
 
-        model.addAttribute("circuit", form);
+        model.addAttribute("circuitForm", form);
 
         return "circuits/edit";
     }
@@ -112,7 +114,7 @@ public class CircuitsController {
     public String showCreateCircuitForm(ModelMap model) {
 
         // initialise the form bean
-        model.addAttribute("circuit", new CircuitForm());
+        model.addAttribute("circuitForm", new CircuitForm());
 
         return "circuits/edit";
     }
@@ -151,17 +153,34 @@ public class CircuitsController {
         circuitOverseer.setForename(circuitForm.getForename());
         circuitOverseer.setMiddleName(circuitForm.getMiddleName());
         circuitOverseer.setSurname(circuitForm.getSurname());
-        circuitOverseer.setEmail(circuitForm.getEmail());
+        if (circuitForm.getEmail() != null) {
+            circuitOverseer.setEmail(circuitForm.getEmail());
+        }
 
         Address address = new Address();
-        address.setStreet(circuitForm.getStreet());
-        address.setTown(circuitForm.getTown());
-        address.setCounty(circuitForm.getCounty());
-        address.setPostcode(circuitForm.getPostcode());
+        if (circuitForm.getStreet() != null) {
+            address.setStreet(circuitForm.getStreet());
+        }
+        if (circuitForm.getTown() != null) {
+            address.setTown(circuitForm.getTown());
+        }
+        if (circuitForm.getCounty() != null) {
+            address.setCounty(circuitForm.getCounty());
+        }
+        if (circuitForm.getPostcode() != null) {
+            address.setPostcode(circuitForm.getPostcode());
+        }
 
-        circuitOverseer.setAddress(address);
-        circuitOverseer.setTelephone(circuitForm.getTelephone());
-        circuitOverseer.setMobile(circuitForm.getMobile());
+        if ((address.getStreet() != null) || (address.getTown() != null)
+                || (address.getCounty() != null) || (address.getPostcode() != null)) {
+            circuitOverseer.setAddress(address);
+        }
+        if (circuitForm.getTelephone() != null) {
+            circuitOverseer.setTelephone(circuitForm.getTelephone());
+        }
+        if (circuitForm.getMobile() != null) {
+            circuitOverseer.setMobile(circuitForm.getMobile());
+        }
 
         return circuitOverseer;
     }

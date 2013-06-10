@@ -83,8 +83,19 @@ $(document).ready(function() {
         // In unlink <a> link, data-person-id="", therefore test for this
         if (selectedPersonId){
             $('#circuit-overseer-linked').show('fast');
+            // now disable all the input tags within the additional-fields div
+            $('#circuit-overseer-additional-fields input').prop("disabled", true);
+            // hide the circuit-overseer person additional details
+            $('#circuit-overseer-additional-fields').hide('fast');
+            // set personId to selectedPersonId
+            $('#personId').val(selectedPersonId);
+            $('#edit-circuit-overseer-person').show('fast');
         } else {
             $('#circuit-overseer-linked').hide('fast');
+            $('#personId').val('')
+            $('#circuit-overseer-additional-fields').show('fast');
+            $('#edit-circuit-overseer-person').hide('fast');
+            $('#circuit-overseer-additional-fields input').prop("disabled", false);
         }
     }
     

@@ -15,7 +15,7 @@
         <div class="container-fluid">
             <h1>Circuit</h1>
             <c:url var="formAction" value="/circuits" />
-            <form:form commandName="circuit" method="post" action="${formAction}" class="form-horizontal">
+            <form:form commandName="circuitForm" method="post" action="${formAction}" class="form-horizontal">
                 <div class="form">
                     <div class="form">
                         <h4>Circuit details</h4>
@@ -66,42 +66,52 @@
                                 </div>
                             </div>
                         </fieldset>
-                        <fieldset class="control-group">      
-                            <label class="control-label">Email:</label>
-                            <div class="controls controls-row">
-                                <div class="span2">
-                                    <form:input path="email" placeholder = "E-mail"/>
+                        <div id="circuit-overseer-additional-fields">
+                            <fieldset class="control-group">      
+                                <label class="control-label">Email:</label>
+                                <div class="controls controls-row">
+                                    <div class="span2">
+                                        <form:input path="email" placeholder = "E-mail"/>
+                                    </div>
                                 </div>
-                            </div>
-                        </fieldset>
-                        <fieldset class="control-group">
-                            <label class="control-label">Address:</label>
-                            <div class="controls controls-row">
-                                <div class="span3">
-                                    <form:input path="street" placeholder = "Street"/>
+                            </fieldset>
+                            <fieldset class="control-group">
+                                <label class="control-label">Address:</label>
+                                <div class="controls controls-row">
+                                    <div class="span3">
+                                        <form:input path="street" placeholder = "Street"/>
+                                    </div>
+                                    <div class="span2">
+                                        <form:input path="town" placeholder = "Town"/>
+                                    </div>
+                                    <div class="span1">
+                                        <form:input path="county" placeholder = "County"/>
+                                    </div>
+                                    <div class="span1">
+                                        <form:input path="postcode" maxlength="10" placeholder = "Postcode"/>
+                                    </div>
                                 </div>
-                                <div class="span2">
-                                    <form:input path="town" placeholder = "Town"/>
+                            </fieldset>
+                            <fieldset class="control-group">
+                                <label class="control-label">Phones:</label>
+                                <div class="controls controls-row">
+                                    <div class="span2">
+                                        <form:input path="telephone" placeholder = "Telephone Number"/>
+                                    </div>
+                                    <div class="span2">
+                                        <form:input path="mobile" placeholder = "Mobile Number"/>
+                                    </div>
                                 </div>
-                                <div class="span1">
-                                    <form:input path="county" placeholder = "County"/>
+                            </fieldset>
+                        </div>
+                        <c:choose>
+                            <c:when test="${circuitForm.forename != null && circuitForm.surname != null}">
+                                <div class="alert alert-info sapn10" id="edit-circuit-overseer-person" style="display:none;">
+                                    Click this link if you would like to edit the circuit overseer 
+                                    <a href="<c:url value="/persons/${circuitForm.personId}/edit"/>"><b>${circuitForm.forename} ${circuitForm.surname}</b></a>
                                 </div>
-                                <div class="span1">
-                                    <form:input path="postcode" maxlength="10" placeholder = "Postcode"/>
-                                </div>
-                            </div>
-                        </fieldset>
-                        <fieldset class="control-group">
-                            <label class="control-label">Phones:</label>
-                            <div class="controls controls-row">
-                                <div class="span2">
-                                    <form:input path="telephone" placeholder = "Telephone Number"/>
-                                </div>
-                                <div class="span2">
-                                    <form:input path="mobile" placeholder = "Mobile Number"/>
-                                </div>
-                            </div>
-                        </fieldset>
+                            </c:when>
+                        </c:choose>
                     </div>
                     <input type="submit" class="btn btn-primary" />
                 </div>
