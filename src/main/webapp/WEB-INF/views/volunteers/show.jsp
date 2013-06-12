@@ -42,7 +42,7 @@
                     </dl>
                 </div>
             </div>
-            <div class="clearfix">
+            <hr>
                 <c:choose>
                     <c:when test="${volunteer.assignments != null}">
                         <h3>Assignments</h3>
@@ -74,7 +74,6 @@
                         <div class="alert alert-block">Volunteer is not assigned to any teams</div>
                     </c:otherwise>
                 </c:choose>
-            </div>
             <div class="clearfix"></div>
             <br />
             <ul class="nav nav-tabs">
