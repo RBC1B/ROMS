@@ -14,6 +14,7 @@
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
         <h1>Kingdom Hall</h1>
+        <hr>
             <c:url var="formAction" value="/kingdom-halls" />
             <form:form commandName="kingdomHall" method="post" action="${formAction}">
                 <input class="input-append" id="disabledInput" type="text" placeholder="Kingdom Hall ID" disabled><br>

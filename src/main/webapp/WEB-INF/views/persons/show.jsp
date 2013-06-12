@@ -12,6 +12,7 @@
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
             <h1>${person.forename} ${person.middleName} ${person.surname}</h1>
+            <hr>
             <dl class="dl-horizontal">
                 <dt>Congregation:</dt>
                 <dd>

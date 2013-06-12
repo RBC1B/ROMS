@@ -13,7 +13,7 @@
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
             <h1>Kingdom Halls</h1>
-            <br>
+            <hr>
             <div class="entity-list-results">
                 <table class="table table-bordered table-striped table-hover" id="kingdom-hall-list">
                     <thead>

@@ -13,6 +13,7 @@ Author: oliver.elder.esq
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
             <h1>${forename} ${surname} - RBC Status Information</h1>
+            <hr>
 
             <c:url var="formAction" value="${submitUri}" />
             <form:form commandName="volunteerRbcStatus" method="PUT" action="${formAction}">

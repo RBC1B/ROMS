@@ -11,6 +11,7 @@
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
             <h1>Kingdom Hall: ${kingdomHall.name}</h1>
+            <hr>
             ${kingdomHall}
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>

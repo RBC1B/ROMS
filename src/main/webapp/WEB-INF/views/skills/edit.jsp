@@ -15,6 +15,7 @@
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
             <h1>Qualification</h1>
+            <hr>
             <c:url var="formAction" value="/skills" />
             <form:form commandName="skill" method="post" action="${formAction}">
                 <div class="form">

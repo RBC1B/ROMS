@@ -14,6 +14,7 @@
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
             <h1>Circuit</h1>
+            <hr>
             <c:url var="formAction" value="/circuits" />
             <form:form commandName="circuitForm" method="post" action="${formAction}" class="form-horizontal">
                 <div class="form">

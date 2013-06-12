@@ -12,7 +12,7 @@
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
             <h1>Project #${project.projectId}: ${project.name}</h1>
-
+            <hr>
             <div class="span6">
                 <h2>Details</h2>
                 <dl class="dl-horizontal">

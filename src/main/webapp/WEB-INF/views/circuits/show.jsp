@@ -15,6 +15,7 @@
             <div class="media">
                 <div class="media-body">
                     <h1 class="media-heading">#${circuit.circuitId}: ${circuit.name}</h1>
+                    <hr>
                 </div>
             </div>
             <br />

@@ -14,7 +14,7 @@
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
             <h1>Edit Person</h1>
-           <br/>
+           <hr>
             <c:url var="formAction" value="${submitUri}" />
             <form:form class="form-horizontal" commandName="person" method="post" action="${formAction}">
                 <form:hidden path="personId" />

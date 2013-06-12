@@ -13,6 +13,7 @@
             <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
             <h1>Circuit: ${congregation.congregationId} - ${congregation.name}</h1>
+            <hr>
             <h3>Circuit Overseer's details: </h3>
             Forename: ${congregation.circuitOverseer.forename}<br />
             Surname:  ${congregation.circuitOverseer.surname}<br />

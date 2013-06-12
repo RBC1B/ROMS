@@ -14,6 +14,7 @@
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
             <h1>Qualification: Hello World!</h1>
+            <hr>
             ${qualification}
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
        </div>

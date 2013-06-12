@@ -15,7 +15,7 @@
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
             <h1>Departmental Skills</h1>
-            <br>
+            <hr>
             <div class="entity-list-results">
                 <table class="table table-bordered table-striped table-hover" id="skill-list">
                     <thead>

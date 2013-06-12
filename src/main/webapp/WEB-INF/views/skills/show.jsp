@@ -18,6 +18,7 @@
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
             <h1>Skills</h1>
+            <hr>
             <fieldset class="container-fluid">
                 <p>Skill ID</p>
                 <p>${skill.skillId}</p>

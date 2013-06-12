@@ -14,6 +14,7 @@
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
             <h1>People</h1>
+            <hr>
             <div class="entity-list-results">
                 <table class="table table-bordered table-striped table-hover" id="person-list">
                     <thead>

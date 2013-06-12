@@ -14,6 +14,7 @@
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
             <h1>Circuit</h1>
+            <hr>
             <c:url var="formAction" value="/congregation" />
             <form:form commandName="circuit" method="post" action="${formAction}">
                 <div class="form">

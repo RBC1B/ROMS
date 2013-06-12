@@ -14,6 +14,7 @@
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
             <h1>RBC Volunteer Application</h1>
+            <hr>
             <c:url var="formAction" value="/volunteers" />
             <form:form commandName="volunteer" method="post" action="${formAction}" class="form-horizontal">
                 <fieldset class="control-group">
