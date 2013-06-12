@@ -19,13 +19,9 @@
                     <li>a mistyped address</li>
                     <li>an out-of-date link</li>
                 </ul>
-                <p><a href="index.html">&laquo; Back to home page</a></p>
+                <p><a href="<c:url value="/" />">&laquo; Back to dashboard</a></p>
                 <hr/>
-                <script>
-                    var GOOG_FIXURL_LANG = (navigator.language || '').slice(0,2),GOOG_FIXURL_SITE = location.host;
-                </script>
-                <script src="http://linkhelp.clients.google.com/tbproxy/lh/wm/fixurl.js"></script>
-            </div>
+              </div>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
     </body>
