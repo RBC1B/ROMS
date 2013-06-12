@@ -4,7 +4,7 @@ Author: oliver.elder.esq
 --%>
 <h3>Skills</h3>
 <c:choose>
-    <c:when test="${volunteer.skills != null}">
+    <c:when test="${!empty volunteer.skills}">
         <table id="volunteer-skills-skills" class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
@@ -25,7 +25,7 @@ Author: oliver.elder.esq
                     <td>${skill.level}</td>
                     <td>
                 <c:choose>
-                    <c:when test="${skill.trainingDate != null}">
+                    <c:when test="${!empty skill.trainingDate}">
                         <fmt:formatDate value="${skill.trainingDate}" pattern="dd MMM yyyy" />
                     </c:when>
                     <c:otherwise>-</c:otherwise>
@@ -51,7 +51,7 @@ Author: oliver.elder.esq
 
 <h3>Qualifications</h3>
 <c:choose>
-    <c:when test="${volunteer.qualifications != null}">
+    <c:when test="${!empty volunteer.qualifications}">
         <table id="volunteer-skills-qualifications" class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
@@ -83,7 +83,7 @@ Author: oliver.elder.esq
 
 <h3>Experience</h3>
 <c:choose>
-    <c:when test="${volunteer.trades != null}">
+    <c:when test="${!empty volunteer.trades}">
         <table id="volunteer-skills-experience" class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>

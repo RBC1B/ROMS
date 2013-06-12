@@ -69,10 +69,14 @@ public class PersonModelFactory {
 
     /**
      * Generate the user model. We point the user uri to the person page.
+     *
      * @param user user
      * @return model
      */
     public EntityModel generateUserModel(User user) {
+        if (user == null) {
+            return null;
+        }
         EntityModel model = new EntityModel();
         model.setName(user.getUserName());
         model.setId(user.getPersonId());

@@ -6,7 +6,7 @@ Author: oliver.elder.esq
     <dt>Form date:</dt>
     <dd>
         <c:choose>
-            <c:when test="${volunteer.formDate != null}">
+            <c:when test="${!empty volunteer.formDate}">
                 <fmt:formatDate value="${volunteer.formDate}" pattern="dd MMM yyyy" />
             </c:when>
             <c:otherwise>-</c:otherwise>
@@ -15,7 +15,7 @@ Author: oliver.elder.esq
     <dt>Interview date:</dt>
     <dd>
         <c:choose>
-            <c:when test="${volunteer.interviewDate != null}">
+            <c:when test="${!empty volunteer.interviewDate}">
                 <fmt:formatDate value="${volunteer.interviewDate}" pattern="dd MMM yyyy" />
             </c:when>
             <c:otherwise>-</c:otherwise>
@@ -24,12 +24,12 @@ Author: oliver.elder.esq
     <dt>Interviewers:</dt>
     <dd>
         <c:choose>
-            <c:when test="${volunteer.interviewerA != null || $volunteer.interviewerB != null}">
-                <c:if test="${volunteer.interviewerA != null}">
+            <c:when test="${!empty volunteer.interviewerA  || !empty volunteer.interviewerB}">
+                <c:if test="${!empty volunteer.interviewerA}">
                     <a href="<c:url value='${volunteer.interviewerA.uri}' />" >${volunteer.interviewerA.name}</a>
                 </c:if>
-                <c:if test="${volunteer.interviewerA != null && volunteer.interviewerB != null}">, </c:if>
-                <c:if test="${volunteer.interviewerB != null}">
+                <c:if test="${!empty volunteer.interviewerA && !empty volunteer.interviewerB}">,</c:if>
+                <c:if test="${!empty volunteer.interviewerB}">
                     <a href="<c:url value='${volunteer.interviewerB.uri}' />" >${volunteer.interviewerB.name}</a>
                 </c:if>
             </c:when>
@@ -39,7 +39,7 @@ Author: oliver.elder.esq
     <dt>Interview comments:</dt>
     <dd>
         <c:choose>
-            <c:when test="${volunteer.interviewComments != null}">
+            <c:when test="${!empty volunteer.interviewComments}">
                 ${volunteer.interviewComments}
             </c:when>
             <c:otherwise>-</c:otherwise>
@@ -48,7 +48,7 @@ Author: oliver.elder.esq
     <dt>Joined date:</dt>
     <dd>
         <c:choose>
-            <c:when test="${volunteer.joinedDate != null}">
+            <c:when test="${!empty volunteer.joinedDate}">
                 <fmt:formatDate value="${volunteer.joinedDate}" pattern="dd MMM yyyy" />
             </c:when>
             <c:otherwise>-</c:otherwise>
@@ -57,7 +57,7 @@ Author: oliver.elder.esq
     <dt>Badge issue date:</dt>
     <dd>
         <c:choose>
-            <c:when test="${volunteer.badgeIssueDate != null}">
+            <c:when test="${!empty volunteer.badgeIssueDate}">
                 <fmt:formatDate value="${volunteer.badgeIssueDate}" pattern="dd MMM yyyy" />
             </c:when>
             <c:otherwise>-</c:otherwise>
@@ -97,7 +97,7 @@ Author: oliver.elder.esq
             <c:when test="${volunteer.oversight}"><span class="icon-ok"></span></c:when>
             <c:otherwise><span class="icon-remove"></span></c:otherwise>
         </c:choose>
-        <c:if test="${volunteer.oversightComments != null}">
+        <c:if test="${!empty volunteer.oversightComments}">
             (${volunteer.oversightComments})
         </c:if>
     </dd>
@@ -107,7 +107,7 @@ Author: oliver.elder.esq
             <c:when test="${volunteer.reliefUK}"><span class="icon-ok"></span></c:when>
             <c:otherwise><span class="icon-remove"></span></c:otherwise>
         </c:choose>
-        <c:if test="${volunteer.reliefUKComments != null}">
+        <c:if test="${!empty volunteer.reliefUKComments}">
             (${volunteer.reliefUKComments})
         </c:if>
     </dd>
@@ -117,14 +117,14 @@ Author: oliver.elder.esq
             <c:when test="${volunteer.reliefAbroad}"><span class="icon-ok"></span></c:when>
             <c:otherwise><span class="icon-remove"></span></c:otherwise>
         </c:choose>
-        <c:if test="${volunteer.reliefAbroadComments != null}">
+        <c:if test="${!empty volunteer.reliefAbroadComments}">
             (${volunteer.reliefAbroadComments})
         </c:if>
     </dd>
     <dt>HHC Form code:</dt>
     <dd>
         <c:choose>
-            <c:when test="${volunteer.hhcFormCode != null}">
+            <c:when test="${!empty volunteer.hhcFormCode}">
                 ${volunteer.hhcFormCode}
             </c:when>
             <c:otherwise>-</c:otherwise>

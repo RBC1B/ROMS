@@ -39,12 +39,12 @@
                 <div class="control-group">
                     <label class="control-label" for="congregationName">Congregation:</label>
                     <div class="controls">
-                        <form:input path="congregationName" />
+                        <form:input path="congregationName" autocomplete="off" />
                         <form:hidden path="congregationId" />
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label" for="congregationName">Date of birth:</label>
+                    <label class="control-label" for="birthDate">Date of birth:</label>
                     <div class="controls">
                         <form:input class="datepicker" path="birthDate" placeholder="15/03/1980" data-date-format="dd/mm/yy" />
                     </div>

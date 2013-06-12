@@ -212,7 +212,7 @@
                     <label class="control-label">Congregation:</label>
                     <div class="controls controls-row">
                         <div class="span2">
-                            <form:input path="congregationName" placeholder="Congregation name" />
+                            <form:input path="congregationName" placeholder="Congregation name" autocomplete="off" />
                             <form:hidden path="congregationId" />
                         </div>
                     </div>

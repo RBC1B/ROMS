@@ -499,6 +499,16 @@ $(document).ready(function() {
        return false;
     });
 
+    // we always clear the person id on change.
+    // it will be re-calculated in validation
+    $("#interviewerAUserName").change(function() {
+        $("#interviewerAPersonId").val(null);
+    });
+
+    $("#interviewerBUserName").change(function() {
+        $("#interviewerBPersonId").val(null);
+    });
+
     $("#volunteerRbcStatus").validate({
         rules: {
             interviewerAUserName: {
@@ -516,9 +526,10 @@ $(document).ready(function() {
                     dataFilter: function(rawData) {
                         var data = JSON.parse(rawData)
                         if (data.results && data.results[0].userName == $("#interviewerAUserName").val()) {
-                            $("#interviewerAPersonId").val(data.results[0].id);
+                            $("#interviewerAPersonId").val(data.results[0].personId);
                             return true;
-
+                        } else {
+                            $("#interviewerAPersonId").val(null);
                         }
                         return false;
                     }
@@ -539,9 +550,10 @@ $(document).ready(function() {
                     dataFilter: function(rawData) {
                         var data = JSON.parse(rawData)
                         if (data.results && data.results[0].userName == $("#interviewerBUserName").val()) {
-                            $("#interviewerBPersonId").val(data.results[0].id);
+                            $("#interviewerBPersonId").val(data.results[0].personId);
                             return true;
-
+                        } else {
+                            $("#interviewerBPersonId").val(null);
                         }
                         return false;
                     }

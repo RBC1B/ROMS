@@ -17,7 +17,7 @@
                 <dt>Congregation:</dt>
                 <dd>
                     <c:choose>
-                        <c:when test="${person.congregation != null}">
+                        <c:when test="${!empty person.congregation}">
                             <a href="<c:url value='${person.congregation.uri}' />">${person.congregation.name}</a>
                         </c:when>
                         <c:otherwise>-</c:otherwise>
@@ -26,7 +26,7 @@
                 <dt>Birth date:</dt>
                 <dd>
                     <c:choose>
-                        <c:when test="${person.birthDate != null}">
+                        <c:when test="${!empty person.birthDate}">
                             <fmt:formatDate value="${person.birthDate}" pattern="dd MMM yyyy" />
                         </c:when>
                         <c:otherwise>-</c:otherwise>
@@ -39,7 +39,7 @@
                 <dt>Email:</dt>
                 <dd>
                     <c:choose>
-                        <c:when test="${person.email != null}">
+                        <c:when test="${!empty person.email}">
                             <a href="mailto:${person.email}">${person.email}</a>
                         </c:when>
                         <c:otherwise>-</c:otherwise>
@@ -48,21 +48,21 @@
                 <dt>Home phone:</dt>
                 <dd>
                     <c:choose>
-                        <c:when test="${person.telephone != null}">${person.telephone}</c:when>
+                        <c:when test="${!empty person.telephone}">${person.telephone}</c:when>
                         <c:otherwise>-</c:otherwise>
                     </c:choose>
                 </dd>
                 <dt>Mobile phone:</dt>
                 <dd>
                     <c:choose>
-                        <c:when test="${person.mobile != null}">${person.mobile}</c:when>
+                        <c:when test="${!empty person.mobile}">${person.mobile}</c:when>
                         <c:otherwise>-</c:otherwise>
                     </c:choose>
                 </dd>
                 <dt>Work phone:</dt>
                 <dd>
                     <c:choose>
-                        <c:when test="${person.workPhone != null}">${person.workPhone}</c:when>
+                        <c:when test="${!empty person.workPhone}">${person.workPhone}</c:when>
                         <c:otherwise>-</c:otherwise>
                     </c:choose>
                 </dd>
@@ -70,19 +70,19 @@
                 <dt>Address:</dt>
                 <dd>
                     <c:choose>
-                        <c:when test="${person.address != null}">
+                        <c:when test="${!empty person.address}">
                             <address>
-                                <c:if test="${person.address.street != null}">${person.address.street}<br/></c:if>
-                                <c:if test="${person.address.town != null}">${person.address.town}<br/></c:if>
-                                <c:if test="${person.address.county != null}">${person.address.county}<br/></c:if>
-                                <c:if test="${person.address.postcode != null}">${person.address.postcode}<br/></c:if>
+                                <c:if test="${!empty person.address.street}">${person.address.street}<br/></c:if>
+                                <c:if test="${!empty person.address.town}">${person.address.town}<br/></c:if>
+                                <c:if test="${!empty person.address.county}">${person.address.county}<br/></c:if>
+                                <c:if test="${!empty person.address.postcode}">${person.address.postcode}<br/></c:if>
                             </address>
                         </c:when>
                         <c:otherwise>-</c:otherwise>
                     </c:choose>
                 </dd>
             </dl>
-            <c:if test="${person.comments != null}">
+            <c:if test="${!empty person.comments}">
                 <h2>Comments</h2>
                 <p>${person.comments}</p>
             </c:if>

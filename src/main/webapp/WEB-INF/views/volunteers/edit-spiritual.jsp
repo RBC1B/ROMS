@@ -18,7 +18,7 @@ Author: oliver.elder.esq
             <form:form commandName="volunteerSpiritual" method="PUT" action="${formAction}">
                 <fieldset>
                     <label>Congregation</label>
-                    <form:input path="congregationName" placeholder="Congregation name" />
+                    <form:input path="congregationName" placeholder="Congregation name" autocomplete="off" />
                     <form:hidden path="congregationId" />
                     <label>Date of baptism</label>
                     <form:input path="baptismDate" placeholder="15/03/1980" class="datepicker" data-date-format="dd/mm/yy" type="text" value=""/>

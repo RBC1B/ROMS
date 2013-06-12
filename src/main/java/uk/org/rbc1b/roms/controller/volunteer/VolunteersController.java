@@ -32,6 +32,7 @@ import uk.org.rbc1b.roms.db.Congregation;
 import uk.org.rbc1b.roms.db.CongregationDao;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.PersonDao;
+import uk.org.rbc1b.roms.db.application.User;
 import uk.org.rbc1b.roms.db.volunteer.Assignment;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
@@ -194,20 +195,20 @@ public class VolunteersController {
         address.setPostcode(form.getPostcode());
         volunteer.setAddress(address);
 
-        volunteer.setBirthDate(new java.sql.Date(form.getBirthDate().toDateMidnight().getMillis()));
+        volunteer.setBirthDate(DataConverterUtil.toSqlDate(form.getBirthDate()));
 
         if (ObjectUtils.notEqual(volunteer.getCongregationId(), form.getCongregationId())) {
             volunteer.setCongregationId(form.getCongregationId());
         }
         volunteer.setEmail(form.getEmail());
         volunteer.setForename(form.getForename());
-        volunteer.setFormDate(new java.sql.Date(form.getFormDate().toDateMidnight().getMillis()));
+        volunteer.setFormDate(DataConverterUtil.toSqlDate(form.getFormDate()));
         volunteer.setMiddleName(form.getMiddleName());
         volunteer.setSurname(form.getSurname());
         volunteer.setMobile(form.getMobile());
         volunteer.setTelephone(form.getTelephone());
         volunteer.setWorkPhone(form.getWorkPhone());
-        volunteer.setBaptismDate(new java.sql.Date(form.getBaptismDate().toDateMidnight().getMillis()));
+        volunteer.setBaptismDate(DataConverterUtil.toSqlDate(form.getBaptismDate()));
 
         if (form.isElder()) {
             volunteer.setAppointmentId(APPOINTMENT_ELDER);
@@ -411,7 +412,7 @@ public class VolunteersController {
             throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
         }
 
-        volunteer.setBaptismDate(new java.sql.Date(form.getBaptismDate().toDateMidnight().getMillis()));
+        volunteer.setBaptismDate(DataConverterUtil.toSqlDate(form.getBaptismDate()));
         volunteer.setFulltimeId(form.getFulltimeId());
         volunteer.setAppointmentId(form.getAppointmentId());
         volunteer.setCongregationId(form.getCongregationId());
@@ -420,6 +421,69 @@ public class VolunteersController {
 
         return "redirect:" + volunteerModelFactory.generateUri(volunteer.getPersonId()) + "#!spiritual";
 
+    }
+
+    /**
+     * Update the volunteer RBC status.
+     *
+     * @param volunteerId volunteer id to edit
+     * @param form form data
+     * @return view name (redirect)
+     * @throws NoSuchRequestHandlingMethodException if volunteer is not found
+     */
+    @RequestMapping(value = "{volunteerId}/rbc-status", method = RequestMethod.PUT)
+    public String updateVolunteerRbcStatus(@PathVariable Integer volunteerId,
+            @Valid VolunteerRbcStatusForm form) throws NoSuchRequestHandlingMethodException {
+
+        Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
+        if (volunteer == null) {
+            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+        }
+
+        volunteer.setFormDate(DataConverterUtil.toSqlDate(form.getFormDate()));
+        volunteer.setInterviewDate(DataConverterUtil.toSqlDate(form.getInterviewDate()));
+
+        if (form.getInterviewerAPersonId() != null) {
+            User user = new User();
+            user.setPersonId(form.getInterviewerAPersonId());
+            volunteer.setInterviewerA(user);
+        } else {
+            volunteer.setInterviewerA(null);
+        }
+        if (form.getInterviewerBPersonId() != null) {
+            User user = new User();
+            user.setPersonId(form.getInterviewerBPersonId());
+            volunteer.setInterviewerB(user);
+        } else {
+            volunteer.setInterviewerB(null);
+        }
+
+        volunteer.setInterviewComments(form.getInterviewComments());
+        volunteer.setJoinedDate(DataConverterUtil.toSqlDate(form.getJoinedDate()));
+        volunteer.setBadgeIssueDate(DataConverterUtil.toSqlDate(form.getBadgeIssueDate()));
+        volunteer.setAvailability(generateAvailability(form.isAvailabilityMonday(),
+                form.isAvailabilityTuesday(), form.isAvailabilityWednesday(),
+                form.isAvailabilityThursday(), form.isAvailabilityFriday(),
+                form.isAvailabilitySaturday(), form.isAvailabilitySunday()));
+        volunteer.setOversight(form.isOversight());
+        volunteer.setOversightComments(form.getOversightComments());
+        volunteer.setReliefAbroad(form.isReliefAbroad());
+        volunteer.setReliefAbroadComments(form.getReliefAbroadComments());
+        volunteer.setReliefUK(form.isReliefUK());
+        volunteer.setReliefUKComments(form.getReliefUKComments());
+        volunteer.setHhcFormCode(form.getHhcFormCode());
+
+        volunteerDao.saveVolunteer(volunteer);
+
+        return "redirect:" + volunteerModelFactory.generateUri(volunteer.getPersonId()) + "#!rbc-status";
+    }
+
+    private String generateAvailability(boolean... availabilityDays) {
+        StringBuilder builder = new StringBuilder(7);
+        for (boolean availabilityDay : availabilityDays) {
+            builder.append(availabilityDay ? 'T' : 'F');
+        }
+        return builder.toString();
     }
 
     private Person createEmergencyContact(VolunteerForm form) {

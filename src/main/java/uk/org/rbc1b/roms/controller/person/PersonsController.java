@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
+import uk.org.rbc1b.roms.controller.common.DataConverterUtil;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableRequestData;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableResult;
 import uk.org.rbc1b.roms.controller.common.model.PersonModel;
@@ -198,7 +199,7 @@ public class PersonsController {
             person.setAddress(null);
         }
 
-        person.setBirthDate(form.getBirthDate() != null ? new java.sql.Date(form.getBirthDate().toDateMidnight().getMillis()) : null);
+        person.setBirthDate(DataConverterUtil.toSqlDate(form.getBirthDate()));
         person.setComments(form.getComments());
         person.setCongregationId(form.getCongregationId());
         person.setEmail(form.getEmail());

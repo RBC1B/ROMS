@@ -16,7 +16,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 /**
- * User Hibernate to look up the user information.
+ * Use hibernate to look up the user information.
  *
  * @author oliver.elder.esq
  */

@@ -44,7 +44,7 @@
             </div>
             <hr>
                 <c:choose>
-                    <c:when test="${volunteer.assignments != null}">
+                    <c:when test="${!empty volunteer.assignments}">
                         <h3>Assignments</h3>
                         <table class="table table-bordered table-striped table-hover">
                             <thead>
