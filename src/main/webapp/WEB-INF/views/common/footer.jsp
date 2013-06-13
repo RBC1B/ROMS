@@ -1,4 +1,4 @@
-<footer class="footer">
+<footer class="footer hidden">
     <hr />
     <div class="navbar navbar-inverse navbar-fixed-bottom">
         <div class="navbar-inner">
