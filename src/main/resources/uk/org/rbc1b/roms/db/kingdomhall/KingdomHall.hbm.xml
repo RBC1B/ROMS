@@ -12,7 +12,7 @@
             <property name="county" length="50"  />
             <property name="postcode" length="10"  />
         </component>
-        <property name="ownershipTypeId" />
+        <many-to-one name="ownershipType" class="uk.org.rbc1b.roms.db.kingdomhall.OwnershipType"/>
         <property name="drawings" length="50"  />
         <!-- TODO: <many-to-one name="titleHolder" column="" /> -->
         <set name="features" inverse="true" cascade="all-delete-orphan">

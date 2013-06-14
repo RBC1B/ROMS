@@ -15,8 +15,11 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableResult;
+import uk.org.rbc1b.roms.db.Address;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHallDao;
+import uk.org.rbc1b.roms.db.kingdomhall.OwnershipType;
+import uk.org.rbc1b.roms.db.kingdomhall.TitleHolder;
 
 /**
  * Controller for the kingdom hall related pages.
@@ -50,8 +53,42 @@ public class KingdomHallsController {
     public String showKingdomHallList(ModelMap model) {
 
         model.addAttribute("kingdomHalls", createKingdomHallListModels(kingdomHallDao.findKingdomHalls()));
-        model.addAttribute("newUri", generateUri(null) + "new");
+
         return "kingdom-halls/list";
+    }
+
+    /**
+     * Create a new kingdom hall.
+     *
+     * @param kingdomHallForm form bean
+     * @return view name
+     */
+    @RequestMapping(method = RequestMethod.POST)
+    public String createKingdomHall(@Valid KingdomHallForm kingdomHallForm) {
+        KingdomHall kingdomHall = new KingdomHall();
+        if (kingdomHallForm.getKingdomHallId() != null) {
+            kingdomHall.setKingdomHallId(kingdomHallForm.getKingdomHallId());
+        }
+        Address address = new Address();
+        address.setCounty(kingdomHallForm.getCounty());
+        address.setPostcode(kingdomHallForm.getPostcode());
+        address.setStreet(kingdomHallForm.getStreet());
+        address.setTown(kingdomHallForm.getTown());
+
+        kingdomHall.setAddress(address);
+
+        kingdomHall.setName(kingdomHallForm.getName());
+
+        OwnershipType ownershipType = new OwnershipType();
+        ownershipType.setName(kingdomHallForm.getOwnershipTypeName());
+        kingdomHall.setOwnershipType(ownershipType);
+
+        TitleHolder titleHolder = new TitleHolder();
+        titleHolder.setCongregation(kingdomHallForm.getOwningCongregation());
+        kingdomHall.setTitleHolder(titleHolder);
+
+
+        return "redirect:/kingdom-hall";
     }
 
     /**
@@ -77,7 +114,8 @@ public class KingdomHallsController {
      * @param kingdomHallId kingdom hall id (primary key)
      * @param model mvc model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException on failure to look up the kingdom hall
+     * @throws NoSuchRequestHandlingMethodException on failure to look up the
+     * kingdom hall
      */
     @RequestMapping(value = "{kingdomHallId}", method = RequestMethod.GET)
     public String showKingdomHall(@PathVariable Integer kingdomHallId, ModelMap model) throws NoSuchRequestHandlingMethodException {
@@ -106,23 +144,6 @@ public class KingdomHallsController {
         model.addAttribute("kingdomHall", new KingdomHallForm());
 
         return "kingdom-halls/edit";
-    }
-
-    /**
-     * Create a new kingdom hall.
-     *
-     * @param kingdomHallForm form bean
-     * @return view name
-     */
-    @RequestMapping(method = RequestMethod.POST)
-    public String createKingdomHall(@Valid KingdomHallForm kingdomHallForm) {
-
-        KingdomHall kingdomHall = new KingdomHall();
-        kingdomHall.setName(kingdomHallForm.getName());
-
-        kingdomHallDao.createKingdomHall(kingdomHall);
-
-        return "redirect:kingdom-halls/" + kingdomHall.getKingdomHallId();
     }
 
     private List<KingdomHallListModel> createKingdomHallListModels(List<KingdomHall> halls) {

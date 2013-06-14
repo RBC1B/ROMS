@@ -4,6 +4,8 @@
  */
 package uk.org.rbc1b.roms.controller.kingdomhall;
 
+import uk.org.rbc1b.roms.db.Congregation;
+
 /**
  * Form bean for Kingdom hall create and edit actions.
  *
@@ -17,9 +19,8 @@ public class KingdomHallForm {
     private String town;
     private String county;
     private String postcode;
-    private Integer ownershipTypeId;
-    private String drawings;
-    private Integer titleHolderCongregationId;
+    private Congregation owningCongregation;
+    private String ownershipTypeName;
 
     public String getCounty() {
         return county;
@@ -27,14 +28,6 @@ public class KingdomHallForm {
 
     public void setCounty(String county) {
         this.county = county;
-    }
-
-    public String getDrawings() {
-        return drawings;
-    }
-
-    public void setDrawings(String drawings) {
-        this.drawings = drawings;
     }
 
     public Integer getKingdomHallId() {
@@ -53,14 +46,6 @@ public class KingdomHallForm {
         this.name = name;
     }
 
-    public Integer getOwnershipTypeId() {
-        return ownershipTypeId;
-    }
-
-    public void setOwnershipTypeId(Integer ownershipTypeId) {
-        this.ownershipTypeId = ownershipTypeId;
-    }
-
     public String getPostcode() {
         return postcode;
     }
@@ -77,19 +62,39 @@ public class KingdomHallForm {
         this.street = street;
     }
 
-    public Integer getTitleHolderCongregationId() {
-        return titleHolderCongregationId;
-    }
-
-    public void setTitleHolderCongregationId(Integer titleHolderCongregationId) {
-        this.titleHolderCongregationId = titleHolderCongregationId;
-    }
-
     public String getTown() {
         return town;
     }
 
     public void setTown(String town) {
         this.town = town;
+    }
+
+    /**
+     * @return the ownershipTypeName
+     */
+    public String getOwnershipTypeName() {
+        return ownershipTypeName;
+    }
+
+    /**
+     * @param ownershipTypeName the ownershipTypeName to set
+     */
+    public void setOwnershipTypeName(String ownershipTypeName) {
+        this.ownershipTypeName = ownershipTypeName;
+    }
+
+    /**
+     * @return the owningCongregation
+     */
+    public Congregation getOwningCongregation() {
+        return owningCongregation;
+    }
+
+    /**
+     * @param owningCongregation the owningCongregation to set
+     */
+    public void setOwningCongregation(Congregation owningCongregation) {
+        this.owningCongregation = owningCongregation;
     }
 }

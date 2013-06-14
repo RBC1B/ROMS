@@ -6,6 +6,7 @@ import uk.org.rbc1b.roms.db.DefaultAuditable;
 
 /**
  * The building.
+ *
  * @author oliver.elder.esq
  */
 public class KingdomHall extends DefaultAuditable {
@@ -13,7 +14,7 @@ public class KingdomHall extends DefaultAuditable {
     private Integer kingdomHallId;
     private String name;
     private Address address;
-    private Integer ownershipTypeId;
+    private OwnershipType ownershipType;
     private String drawings;
     private Set<KingdomHallFeature> features;
     private TitleHolder titleHolder;
@@ -50,14 +51,6 @@ public class KingdomHall extends DefaultAuditable {
         this.name = name;
     }
 
-    public Integer getOwnershipTypeId() {
-        return ownershipTypeId;
-    }
-
-    public void setOwnershipTypeId(Integer ownershipTypeId) {
-        this.ownershipTypeId = ownershipTypeId;
-    }
-
     public Set<KingdomHallFeature> getFeatures() {
         return features;
     }
@@ -72,6 +65,20 @@ public class KingdomHall extends DefaultAuditable {
 
     public void setTitleHolder(TitleHolder titleHolder) {
         this.titleHolder = titleHolder;
+    }
+
+    /**
+     * @return the ownershipType
+     */
+    public OwnershipType getOwnershipType() {
+        return ownershipType;
+    }
+
+    /**
+     * @param ownershipType the ownershipType to set
+     */
+    public void setOwnershipType(OwnershipType ownershipType) {
+        this.ownershipType = ownershipType;
     }
 
     @Override
