@@ -58,26 +58,26 @@ $(document).ready(function() {
     var listActionTemplate = $("#list-action").html();
 
     roms.common.datatables(
-        $('#person-list'),
-        {
-            "iDisplayLength": 20,
-            "bProcessing": true,
-            "bServerSide": true,
-            "sAjaxSource": roms.common.relativePath + '/persons',
-            "aoColumns": [
-                {   "sName": "forename", "mData": "forename" },
-                {   "sName": "surname", "mData": "surname" },
-                {   "sName": "congregation", "mData": "congregation.name", "sDefaultContent": "" },
-                {   "sName": "action", "bSortable": false,
-                    "mData":
-                        function ( data, type, val ) {
-                            data.uriBase = roms.common.relativePath;
-                            return Mustache.to_html(listActionTemplate, data);
-                        }
-                }
-            ]
-        }
-        );
+            $('#person-list'),
+            {
+                "iDisplayLength": 20,
+                "bProcessing": true,
+                "bServerSide": true,
+                "sAjaxSource": roms.common.relativePath + '/persons',
+                "aoColumns": [
+                    {"sName": "forename", "mData": "forename"},
+                    {"sName": "surname", "mData": "surname"},
+                    {"sName": "congregation", "mData": "congregation.name", "sDefaultContent": ""},
+                    {"sName": "action", "bSortable": false,
+                        "mData":
+                                function(data, type, val) {
+                                    data.uriBase = roms.common.relativePath;
+                                    return Mustache.to_html(listActionTemplate, data);
+                                }
+                    }
+                ]
+            }
+    );
 
 });
 

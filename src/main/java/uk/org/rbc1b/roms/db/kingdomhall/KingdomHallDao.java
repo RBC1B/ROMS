@@ -42,4 +42,13 @@ public interface KingdomHallDao {
     @PreAuthorize("hasPermission('KINGDOMHALL', 'ADD')")
     @Transactional
     void createKingdomHall(KingdomHall kingdomHall);
+
+    /**
+     * Deletes a Kingdom Hall.
+     *
+     * @param kingdomHall to delete
+     */
+    @PreAuthorize("hasPermission('KINGDOMHALL','DELETE')")
+    @Transactional
+    void deleteKingdomHall(KingdomHall kingdomHall);
 }

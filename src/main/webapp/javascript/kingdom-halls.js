@@ -1,14 +1,14 @@
 $(document).ready(function() {
     roms.common.datatables(
-        $('#kingdom-hall-list'),
-        {
-            "iDisplayLength": 10,
-            "aoColumnDefs": [
+            $('#kingdom-hall-list'),
             {
-                'bSortable': false,
-                'aTargets': [ 3 ]
+                "iDisplayLength": 10,
+                "aoColumnDefs": [
+                    {
+                        'bSortable': false,
+                        'aTargets': [3]
+                    }
+                ]
             }
-            ]
-        }
     );
 });

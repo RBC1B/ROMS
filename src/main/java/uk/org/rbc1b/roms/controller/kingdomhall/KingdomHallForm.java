@@ -4,8 +4,6 @@
  */
 package uk.org.rbc1b.roms.controller.kingdomhall;
 
-import uk.org.rbc1b.roms.db.Congregation;
-
 /**
  * Form bean for Kingdom hall create and edit actions.
  *
@@ -19,8 +17,9 @@ public class KingdomHallForm {
     private String town;
     private String county;
     private String postcode;
-    private Congregation owningCongregation;
-    private String ownershipTypeName;
+    private Integer ownershipTypeId;
+    private String drawings;
+    private Integer titleHolderCongregationId;
 
     public String getCounty() {
         return county;
@@ -71,30 +70,44 @@ public class KingdomHallForm {
     }
 
     /**
-     * @return the ownershipTypeName
+     * @return the ownershipTypeId
      */
-    public String getOwnershipTypeName() {
-        return ownershipTypeName;
+    public Integer getOwnershipTypeId() {
+        return ownershipTypeId;
     }
 
     /**
-     * @param ownershipTypeName the ownershipTypeName to set
+     * @param ownershipTypeId the ownershipTypeId to set
      */
-    public void setOwnershipTypeName(String ownershipTypeName) {
-        this.ownershipTypeName = ownershipTypeName;
+    public void setOwnershipTypeId(Integer ownershipTypeId) {
+        this.ownershipTypeId = ownershipTypeId;
     }
 
     /**
-     * @return the owningCongregation
+     * @return the drawings
      */
-    public Congregation getOwningCongregation() {
-        return owningCongregation;
+    public String getDrawings() {
+        return drawings;
     }
 
     /**
-     * @param owningCongregation the owningCongregation to set
+     * @param drawings the drawings to set
      */
-    public void setOwningCongregation(Congregation owningCongregation) {
-        this.owningCongregation = owningCongregation;
+    public void setDrawings(String drawings) {
+        this.drawings = drawings;
+    }
+
+    /**
+     * @return the titleHolderCongregationId
+     */
+    public Integer getTitleHolderCongregationId() {
+        return titleHolderCongregationId;
+    }
+
+    /**
+     * @param titleHolderCongregationId the titleHolderCongregationId to set
+     */
+    public void setTitleHolderCongregationId(Integer titleHolderCongregationId) {
+        this.titleHolderCongregationId = titleHolderCongregationId;
     }
 }

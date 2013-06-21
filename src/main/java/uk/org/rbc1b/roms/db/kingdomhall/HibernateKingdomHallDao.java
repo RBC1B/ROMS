@@ -43,4 +43,9 @@ public class HibernateKingdomHallDao implements KingdomHallDao {
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
+
+    @Override
+    public void deleteKingdomHall(KingdomHall kingdomHall) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -14,7 +14,7 @@ public class KingdomHall extends DefaultAuditable {
     private Integer kingdomHallId;
     private String name;
     private Address address;
-    private OwnershipType ownershipType;
+    private Integer ownershipTypeId;
     private String drawings;
     private Set<KingdomHallFeature> features;
     private TitleHolder titleHolder;
@@ -67,22 +67,22 @@ public class KingdomHall extends DefaultAuditable {
         this.titleHolder = titleHolder;
     }
 
-    /**
-     * @return the ownershipType
-     */
-    public OwnershipType getOwnershipType() {
-        return ownershipType;
-    }
-
-    /**
-     * @param ownershipType the ownershipType to set
-     */
-    public void setOwnershipType(OwnershipType ownershipType) {
-        this.ownershipType = ownershipType;
-    }
-
     @Override
     public String toString() {
         return "KingdomHall{" + "kingdomHallId=" + kingdomHallId + '}';
+    }
+
+    /**
+     * @return the ownershipTypeId
+     */
+    public Integer getOwnershipTypeId() {
+        return ownershipTypeId;
+    }
+
+    /**
+     * @param ownershipTypeId the ownershipTypeId to set
+     */
+    public void setOwnershipTypeId(Integer ownershipTypeId) {
+        this.ownershipTypeId = ownershipTypeId;
     }
 }

@@ -7,19 +7,21 @@ package uk.org.rbc1b.roms.controller.kingdomhall;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
+import uk.org.rbc1b.roms.controller.LoggingHandlerExceptionResolver;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableResult;
 import uk.org.rbc1b.roms.db.Address;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHallDao;
-import uk.org.rbc1b.roms.db.kingdomhall.OwnershipType;
-import uk.org.rbc1b.roms.db.kingdomhall.TitleHolder;
 
 /**
  * Controller for the kingdom hall related pages.
@@ -30,6 +32,7 @@ import uk.org.rbc1b.roms.db.kingdomhall.TitleHolder;
 @RequestMapping("/kingdom-halls")
 public class KingdomHallsController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoggingHandlerExceptionResolver.class);
     private static final String BASE_URI = "/kingdom-halls/";
     private KingdomHallDao kingdomHallDao;
 
@@ -51,7 +54,6 @@ public class KingdomHallsController {
      */
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=text/html")
     public String showKingdomHallList(ModelMap model) {
-
         model.addAttribute("kingdomHalls", createKingdomHallListModels(kingdomHallDao.findKingdomHalls()));
 
         return "kingdom-halls/list";
@@ -74,19 +76,8 @@ public class KingdomHallsController {
         address.setPostcode(kingdomHallForm.getPostcode());
         address.setStreet(kingdomHallForm.getStreet());
         address.setTown(kingdomHallForm.getTown());
-
         kingdomHall.setAddress(address);
-
         kingdomHall.setName(kingdomHallForm.getName());
-
-        OwnershipType ownershipType = new OwnershipType();
-        ownershipType.setName(kingdomHallForm.getOwnershipTypeName());
-        kingdomHall.setOwnershipType(ownershipType);
-
-        TitleHolder titleHolder = new TitleHolder();
-        titleHolder.setCongregation(kingdomHallForm.getOwningCongregation());
-        kingdomHall.setTitleHolder(titleHolder);
-
 
         return "redirect:/kingdom-hall";
     }
@@ -139,7 +130,6 @@ public class KingdomHallsController {
      */
     @RequestMapping(value = "new", method = RequestMethod.GET)
     public String showCreateKingdomHallForm(ModelMap model) {
-
         // initialise the form bean
         model.addAttribute("kingdomHall", new KingdomHallForm());
 
@@ -159,9 +149,35 @@ public class KingdomHallsController {
             model.setTown(hall.getAddress().getTown());
             model.setUri(generateUri(hall.getKingdomHallId()));
             model.setEditUri(generateUri(hall.getKingdomHallId()) + "/edit");
+
             modelList.add(model);
         }
         return modelList;
+    }
+
+    /**
+     * Deletes a Kingdom Hall.
+     *
+     * @param request http servlet request
+     * @param model spring mvc model
+     * @return mvc redirect
+     * @throws NoSuchRequestHandlingMethodException on failure to find the
+     * Kingdom Hall
+     */
+    @RequestMapping(method = RequestMethod.DELETE)
+    public String deleteSkill(HttpServletRequest request, ModelMap model)
+            throws NoSuchRequestHandlingMethodException {
+        Integer kingdomHallId;
+        kingdomHallId = Integer.parseInt(request.getParameter("kingdomHallId"));
+        KingdomHall kingdomHall = this.kingdomHallDao.findKingdomHall(kingdomHallId);
+        if (kingdomHall == null) {
+            throw new NoSuchRequestHandlingMethodException("No Kingdom Hall #" + kingdomHallId, this.getClass());
+        } else {
+            this.kingdomHallDao.deleteKingdomHall(kingdomHall);
+
+            LOGGER.error("Deleted Skill:" + kingdomHallId);
+            return "redirect:/kingdom-halls";
+        }
     }
 
     @Autowired
