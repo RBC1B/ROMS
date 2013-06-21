@@ -107,14 +107,22 @@
                         </div>
                         <c:choose>
                             <c:when test="${circuitForm.forename != null && circuitForm.surname != null}">
-                                <div class="alert alert-info sapn10" id="edit-circuit-overseer-person" style="display:none;">
-                                    Click this link if you would like to edit the circuit overseer 
-                                    <a href="<c:url value="/persons/${circuitForm.personId}/edit"/>"><b>${circuitForm.forename} ${circuitForm.surname}</b></a>
-                                </div>
+                                <fieldset class="control-group">
+                                    <div class="controls controls-row">
+                                        <div class="alert alert-info span9" id="edit-circuit-overseer-person" style="display:none;">
+                                            Click this link if you would like to edit the circuit overseer 
+                                            <a href="<c:url value="/persons/${circuitForm.personId}/edit"/>"><b>${circuitForm.forename} ${circuitForm.surname}</b></a>
+                                        </div>
+                                    </div>
+                                </fieldset>
                             </c:when>
                         </c:choose>
+                        <fieldset class="control-group">
+                            <div class="controls controls-row">
+                                <input type="submit" class="btn btn-primary" />
+                            </div>
+                        </fieldset>
                     </div>
-                    <input type="submit" class="btn btn-primary" />
                 </div>
             </form:form>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
