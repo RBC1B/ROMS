@@ -107,7 +107,7 @@ $(document).ready(function() {
             "Please enter numbers or spaces only"
             );
 
-    $("#circuitForm").validate({
+    $("#circuit").validate({
         rules: {
             name: {
                 required: true,
