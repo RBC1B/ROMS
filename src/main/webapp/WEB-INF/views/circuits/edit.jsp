@@ -57,13 +57,13 @@
                             <label class="control-label">Name Details:</label>
                             <div class="controls controls-row">
                                 <div class="span2">
-                                    <form:input path="forename" placeholder = "First Name"/> 
+                                    <form:input path="forename" placeholder="First Name"/> 
                                 </div>
                                 <div class="span2">
-                                    <form:input path="middleName" placeholder = "Middle Name"/> 
+                                    <form:input path="middleName" placeholder="Middle Name"/> 
                                 </div>
                                 <div class="span2">
-                                    <form:input path="surname" placeholder = "Surname"/>
+                                    <form:input path="surname" placeholder="Surname"/>
                                 </div>
                             </div>
                         </fieldset>
@@ -72,7 +72,7 @@
                                 <label class="control-label">Email:</label>
                                 <div class="controls controls-row">
                                     <div class="span2">
-                                        <form:input path="email" placeholder = "E-mail"/>
+                                        <form:input path="email" placeholder="E-mail"/>
                                     </div>
                                 </div>
                             </fieldset>
@@ -80,16 +80,16 @@
                                 <label class="control-label">Address:</label>
                                 <div class="controls controls-row">
                                     <div class="span3">
-                                        <form:input path="street" placeholder = "Street"/>
+                                        <form:input path="street" placeholder="Street"/>
                                     </div>
                                     <div class="span2">
-                                        <form:input path="town" placeholder = "Town"/>
+                                        <form:input path="town" placeholder="Town"/>
                                     </div>
                                     <div class="span1">
-                                        <form:input path="county" placeholder = "County"/>
+                                        <form:input path="county" placeholder="County"/>
                                     </div>
                                     <div class="span1">
-                                        <form:input path="postcode" maxlength="10" placeholder = "Postcode"/>
+                                        <form:input path="postcode" maxlength="10" placeholder="Postcode"/>
                                     </div>
                                 </div>
                             </fieldset>
