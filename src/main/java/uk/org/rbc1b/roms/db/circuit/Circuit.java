@@ -28,22 +28,16 @@ public class Circuit extends DefaultAuditable {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return "Circuit{" + "circuitId=" + circuitId + '}';
-    }
-
-    /**
-     * @return the circuitOverseer
-     */
     public Person getCircuitOverseer() {
         return circuitOverseer;
     }
 
-    /**
-     * @param circuitOverseer the circuitOverseer to set
-     */
     public void setCircuitOverseer(Person circuitOverseer) {
         this.circuitOverseer = circuitOverseer;
+    }
+
+    @Override
+    public String toString() {
+        return "Circuit{" + "circuitId=" + circuitId + '}';
     }
 }
