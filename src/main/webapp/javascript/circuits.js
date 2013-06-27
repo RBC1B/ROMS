@@ -79,33 +79,57 @@ $(document).ready(function() {
             }
         });
     }
+    
     function populateCircuitOverseer(selectedPersonId, $personId) {
         // In unlink <a> link, data-person-id="", therefore test for this
         if (selectedPersonId) {
             $('#circuit-overseer-linked').show('fast');
-            // now disable all the input tags within the additional-fields div
-            $('#circuit-overseer-additional-fields input').prop("disabled", true);
-            // hide the circuit-overseer person additional details
-            $('#circuit-overseer-additional-fields').hide('fast');
-            // set personId to selectedPersonId
             $('#personId').val(selectedPersonId);
             $('#edit-circuit-overseer-person').show('fast');
+            
+            // now pull the person, given his id, and then populate the fields
+            $.ajax({
+                url: roms.common.relativePath + '/persons/' + selectedPersonId  + "/reference",
+                contentType: "application/json",
+                dataType: 'json',
+                success: function(data) {
+                    $("input[name='middleName']").val(data.middleName);
+                    $("input[name='email']").val(data.email);
+                    // test if the person object has an address
+                    if (data.address) {
+                        $("input[name='street']").val(data.address.street);
+                        $("input[name='town']").val(data.address.town);
+                        $("input[name='county']").val(data.address.county);
+                        $("input[name='postcode']").val(data.address.postcode);
+                    }
+                    $("input[name='telephone']").val(data.telephone);
+                    $("input[name='mobile']").val(data.mobile);
+                }
+            });        
+            $personId.val(selectedPersonId);
         } else {
             $('#circuit-overseer-linked').hide('fast');
-            $('#personId').val('')
-            $('#circuit-overseer-additional-fields').show('fast');
+            // reset the form
+            $('#personId').val('');
+            $("input[name='middleName']").val('');
+            $("input[name='email']").val('');
+            $("input[name='street']").val('');
+            $("input[name='town']").val('');
+            $("input[name='county']").val('');
+            $("input[name='postcode']").val('');
+            $("input[name='telephone']").val('');
+            $("input[name='mobile']").val('');
+            
             $('#edit-circuit-overseer-person').hide('fast');
-            $('#circuit-overseer-additional-fields input').prop("disabled", false);
         }
     }
 
     // need a custom validation rule for validating phone numbers
-    $.validator.addMethod("phoneNos",
-            function(value, element) {
-                return /^\d+$/.test(value.replace(/[()\s+-]/g, ''));
-            },
-            "Please enter numbers or spaces only"
-            );
+    $.validator.addMethod("phoneNos", function(value, element) {
+            return /^\d+$/.test(value.replace(/[()\s+-]/g, ''));
+        },
+        "Please enter numbers or spaces only"
+    );
 
     $("#circuitForm").validate({
         rules: {
