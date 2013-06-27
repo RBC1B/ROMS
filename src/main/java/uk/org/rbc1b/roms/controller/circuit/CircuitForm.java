@@ -16,22 +16,30 @@ public class CircuitForm {
 
     private Integer circuitId;
     @NotNull
-    @Size(min = 2)
+    @Size(min = 2, max = 50)
     private String name;
     private Integer personId;
     @NotNull
-    @Size(min = 2)
+    @Size(min = 2, max = 50)
     private String forename;
+    @Size(max = 50)
     private String middleName;
     @NotNull
-    @Size(min = 2)
+    @Size(min = 2, max = 50)
     private String surname;
+    @Size(max = 70)
     private String email;
+    @Size(min = 4, max = 50)
     private String street;
+    @Size(max = 30)
     private String town;
+    @Size(max = 50)
     private String county;
+    @Size(min = 5, max = 9)
     private String postcode;
+    @Size(min = 9, max = 14)
     private String telephone;
+    @Size(min = 10, max = 11)
     private String mobile;
 
     /**

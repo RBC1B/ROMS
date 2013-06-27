@@ -127,7 +127,7 @@ $(document).ready(function() {
             },
             street: {
                 required: true,
-                minlength: 3
+                minlength: 4
             },
             town: {
                 required: true,
@@ -135,16 +135,19 @@ $(document).ready(function() {
             },
             postcode: {
                 required: true,
-                minlength: 4
+                minlength: 5,
+                maxlength: 9
             },
             telephone: {
                 required: true,
-                minlength: 11,
+                minlength: 9,
+                maxlength: 14,
                 phoneNos: true
             },
             mobile: {
                 required: true,
-                minlength: 11,
+                minlength: 10,
+                maxlength: 11,
                 phoneNos: true
             }
         },
