@@ -1,5 +1,9 @@
 $(document).ready(function() {
-
+    var $oldForename = $('#forename');
+    $oldForename.data('oldForename', $oldForename.val());
+    var $oldSurname = $('#surname');
+    $oldSurname.data('oldSurname', $oldSurname.val());
+    
     // Event when the surname has lost focus
     $('#surname').blur(function() {
         matchPerson($('#forename').val(), $('#surname').val(), $('#personId'));
@@ -56,7 +60,11 @@ $(document).ready(function() {
                 }
 
                 data.existingPersonId = existingPersonId;
-                data.existingPersonName = existingPersonName;
+                if ($oldForename.val()){
+                    data.existingPersonName = $oldForename.data('oldForename') + " " + $oldSurname.data('oldSurname');
+                } else {
+                    data.existingPersonName = existingPersonName;
+                }
 
                 if (data.results) {
                     data.matchedPersons = true;
