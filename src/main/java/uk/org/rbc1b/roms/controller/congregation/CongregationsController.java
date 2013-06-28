@@ -42,8 +42,9 @@ public class CongregationsController {
         List<Congregation> congregations = congregationDao.findAllCongregations();
         List<CongregationListModel> modelList = new ArrayList<CongregationListModel>(congregations.size());
         for (Congregation congregation : congregations) {
-            modelList.add(null); // ////////////
+            modelList.add(congregationModelFactory.generateCongregationListModel(congregation));
         }
+        model.addAttribute("congregations", modelList);
         return "congregations/list";
     }
 

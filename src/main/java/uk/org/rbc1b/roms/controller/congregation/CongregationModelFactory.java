@@ -36,15 +36,17 @@ public class CongregationModelFactory {
      * @param congregation congregation
      * @return model
      */
-    public CongregationListModel generateCongregationSkillListModel(Congregation congregation) {
+    public CongregationListModel generateCongregationListModel(Congregation congregation) {
         CongregationListModel model = new CongregationListModel();
         model.setCongregationId(congregation.getCongregationId());
         model.setName(congregation.getName());
 
-        KingdomHall kingdomHall = kingdomHallDao.findKingdomHall(congregation.getKingdomHall().getKingdomHallId());
-        EntityModel kingdomHallModel = new EntityModel();
-        kingdomHallModel.setName(kingdomHall.getName());
-        kingdomHallModel.setId(kingdomHall.getKingdomHallId());
+        if (congregation.getKingdomHall() != null) {
+            EntityModel kingdomHallModel = new EntityModel();
+            kingdomHallModel.setId(congregation.getKingdomHall().getKingdomHallId());
+            kingdomHallModel.setName(congregation.getKingdomHall().getName());
+            model.setKingdomHall(kingdomHallModel);
+        }
 
         return model;
     }

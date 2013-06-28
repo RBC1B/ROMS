@@ -12,12 +12,12 @@
     <c:set var="pageTitle" value="Congregation" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
-            <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
+        <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
             <h1>Congregations</h1>
             <hr>
             <div class="entity-list-results">
-                <table class="table table-bordered table-striped table-hover" id="circuit-list">
+                <table class="table table-bordered table-striped table-hover" id="congregation-list">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -27,19 +27,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach items="${congregations}" var="circuit">
+                        <c:forEach items="${congregations}" var="congregation">
                             <tr>
                                 <td>${congregation.congregationId}</td>
                                 <td>${congregation.name}</td>
-                                <td>${congregation.kingdomhall.kingdomHallId}</td>
+                                <td>${congregation.kingdomHall.name}</td>
                                 <td>
                                     <ul class="inline list-actions">
                                         <li><a class="btn btn-success" href="<c:url value="/congregations/${congregation.congregationId}" />">View</a></li>
-                                        <li><a href="<c:url value="/circuits/${congregation.congregationId}/edit" />">Edit</a></li>
-                                        <form:form method="DELETE" action="${formAction}">
-                                            <input type="hidden" name="skillId" value="${congregation.congregationId}" />
+                                        <li><a href="<c:url value="/congregations/${congregation.congregationId}/edit" />">Edit</a></li>
+                                        <li>
+                                            <form:form method="DELETE" action="${formAction}">
+                                                <input type="hidden" name="congregatonId" value="${congregation.congregationId}" />
                                                 <input type="submit" value="Delete" class="btn btn-mini" />
-                                        </form:form>
+                                            </form:form>
+                                        </li>
                                     </ul>
                                 </td>
                             </tr>
@@ -48,12 +50,12 @@
                 </table>
             </div>
             <div class="entity-list-add-new">
-                <a class="btn btn-primary" href="<c:url value="/circuits/new" />">Create new congregation</a>
+                <a class="btn btn-primary" href="<c:url value="/congregation/new" />">Create new congregation</a>
             </div>
             <p>&nbsp;</p>
             <ul class="breadcrumb">
-              <li><a href="<c:url value="/" />">ROMS</a> <span class="divider">/</span></li>
-              <li class="active">Circuits</li>
+                <li><a href="<c:url value="/" />">ROMS</a> <span class="divider">/</span></li>
+                <li class="active">Congregations</li>
             </ul>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>

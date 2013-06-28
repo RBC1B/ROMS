@@ -6,8 +6,6 @@ package uk.org.rbc1b.roms.controller.qualification;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
-import uk.org.rbc1b.roms.controller.LoggingHandlerExceptionResolver;
 import uk.org.rbc1b.roms.db.volunteer.Qualification;
 import uk.org.rbc1b.roms.db.volunteer.QualificationDao;
 
@@ -28,7 +25,6 @@ import uk.org.rbc1b.roms.db.volunteer.QualificationDao;
 @RequestMapping("/qualifications")
 public class QualificationsController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LoggingHandlerExceptionResolver.class);
     private QualificationDao qualificationDao;
 
     /**
