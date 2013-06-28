@@ -35,9 +35,6 @@
                             <td>
                                 <ul class="inline list-actions">
                                     <li><a class="list-action" href="<c:url value="/qualifications/${qualification.qualificationId}/edit" />">Edit</a></li>
-                                    <!--
-                                    <li><a class="list-action" href="<c:url value="/qualifications/${qualification.qualificationId}/delete" />">Delete</a></li>
-                                    -->
                                     <li>
                                         <form:form method="DELETE" action="${formAction}">
                                             <input type="hidden" name="qualificationId" value="${qualification.qualificationId}" />
