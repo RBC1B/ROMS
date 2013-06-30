@@ -139,6 +139,6 @@ public class Congregation extends DefaultAuditable {
 
     @Override
     public String toString() {
-        return "Congregation{" + "congregationId=" + congregationId + '}';
+        return name;
     }
 }

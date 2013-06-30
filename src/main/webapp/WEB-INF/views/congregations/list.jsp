@@ -23,6 +23,9 @@
                             <th>ID</th>
                             <th>Congregation</th>
                             <th>Kingdom Hall</th>
+                            <th>Circuit</th>
+                            <th>Region</th>
+                            <th>Sub Region</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -32,6 +35,9 @@
                                 <td>${congregation.congregationId}</td>
                                 <td>${congregation.name}</td>
                                 <td>${congregation.kingdomHall.name}</td>
+                                <td>${congregation.circuit.name}</td>
+                                <td>${congregation.rbcRegion.name}</td>
+                                <td>${congregation.rbcSubRegion.name}</td>
                                 <td>
                                     <ul class="inline list-actions">
                                         <li><a class="btn btn-success" href="<c:url value="/congregations/${congregation.congregationId}" />">View</a></li>
@@ -50,7 +56,7 @@
                 </table>
             </div>
             <div class="entity-list-add-new">
-                <a class="btn btn-primary" href="<c:url value="/congregation/new" />">Create new congregation</a>
+                <a class="btn btn-primary" href="<c:url value="/congregations/new" />">Create new congregation</a>
             </div>
             <p>&nbsp;</p>
             <ul class="breadcrumb">

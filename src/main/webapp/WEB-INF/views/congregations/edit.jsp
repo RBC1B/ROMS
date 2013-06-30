@@ -13,20 +13,22 @@
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
-            <h1>Circuit</h1>
+            <h1>Congregation</h1>
             <hr>
-            <c:url var="formAction" value="/congregation" />
-            <form:form commandName="circuit" method="post" action="${formAction}">
+            <c:url var="formAction" value="/congregations" />
+            <form:form commandName="congregation" method="post" action="${formAction}">
                 <div class="form">
-                    <input class="input-append" id="disabledInput" type="text" placeholder="Congregation ID" disabled><br />
-                    <form:label path="name"> <form:input path="name" placeholder="Congregation Name"/> </form:label>
-                    <form:label path="coForename"><form:input path="coForename" placeholder="Circuit Overseer Forename" /></form:label>
-                    <form:label path="coSurname"><form:input path="coSurname" placeholder="Circuit Overseer Surname" /></form:label>
-                    <input type="submit" class="btn btn-primary" />
+                    <fieldset class="container-fluid">
+                        <p>Congregation ID</p>
+                        <form:input path="congregationId" readonly="true" placeholder="${congregationId}" />
+                        <p>Congregation Name</p>
+                        <form:input path="name" placeholder="Town, Name format" />
+                    </fieldset>
                 </div>
+                <input type="submit" class="btn btn-primary" />
             </form:form>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
-       <script type="text/javascript" src="<c:url value='/javascript/congregations.js' />" ></script>
+        <script type="text/javascript" src="<c:url value='/javascript/congregations.js' />" ></script>
     </body>
 </html>

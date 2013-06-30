@@ -44,6 +44,25 @@ public class HibernateCongregationDao implements CongregationDao {
         return criteria.list();
     }
 
+    @Override
+    public void saveCongregation(Congregation congregation) {
+        if (congregation.getCongregationId() == null) {
+            sessionFactory.getCurrentSession().save(congregation);
+        } else {
+            sessionFactory.getCurrentSession().merge(congregation);
+        }
+    }
+
+    @Override
+    public void createCongregation(Congregation congregation) {
+        sessionFactory.getCurrentSession().save(congregation);
+    }
+
+    @Override
+    public void deleteCongregation(Congregation congregation) {
+        sessionFactory.getCurrentSession().delete(congregation);
+    }
+
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }

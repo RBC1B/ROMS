@@ -6,6 +6,7 @@ package uk.org.rbc1b.roms.db;
 
 /**
  * Linkage of person to congregation.
+ *
  * @author oliver.elder.esq
  */
 public class CongregationContact extends DefaultAuditable {

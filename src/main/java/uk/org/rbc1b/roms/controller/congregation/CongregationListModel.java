@@ -17,6 +17,9 @@ public class CongregationListModel {
     private String name;
     private EntityModel congregation;
     private EntityModel kingdomHall;
+    private EntityModel circuit;
+    private EntityModel rbcRegion;
+    private EntityModel rbcSubRegion;
 
     /**
      * @return the congregationId
@@ -86,5 +89,47 @@ public class CongregationListModel {
      */
     public void setKingdomHall(EntityModel kingdomHall) {
         this.kingdomHall = kingdomHall;
+    }
+
+    /**
+     * @return the circuit
+     */
+    public EntityModel getCircuit() {
+        return circuit;
+    }
+
+    /**
+     * @param circuit the circuit to set
+     */
+    public void setCircuit(EntityModel circuit) {
+        this.circuit = circuit;
+    }
+
+    /**
+     * @return the rbcRegion
+     */
+    public EntityModel getRbcRegion() {
+        return rbcRegion;
+    }
+
+    /**
+     * @param rbcRegion the rbcRegion to set
+     */
+    public void setRbcRegion(EntityModel rbcRegion) {
+        this.rbcRegion = rbcRegion;
+    }
+
+    /**
+     * @return the rbcSubRegion
+     */
+    public EntityModel getRbcSubRegion() {
+        return rbcSubRegion;
+    }
+
+    /**
+     * @param rbcSubRegion the rbcSubRegion to set
+     */
+    public void setRbcSubRegion(EntityModel rbcSubRegion) {
+        this.rbcSubRegion = rbcSubRegion;
     }
 }

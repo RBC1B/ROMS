@@ -31,6 +31,6 @@ public class RbcSubRegion {
 
     @Override
     public String toString() {
-        return "RbcSubRegion{" + "rbcSubRegionId=" + rbcSubRegionId + '}';
+        return name;
     }
 }

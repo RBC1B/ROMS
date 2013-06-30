@@ -4,11 +4,9 @@
  */
 package uk.org.rbc1b.roms.controller.congregation;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.org.rbc1b.roms.controller.common.model.EntityModel;
 import uk.org.rbc1b.roms.db.Congregation;
-import uk.org.rbc1b.roms.db.kingdomhall.*;
 
 /**
  *
@@ -18,7 +16,6 @@ import uk.org.rbc1b.roms.db.kingdomhall.*;
 public class CongregationModelFactory {
 
     private static final String BASE_URI = "/congregations/";
-    private KingdomHallDao kingdomHallDao;
 
     /**
      * Generate the uri used to access congregation pages.
@@ -41,21 +38,34 @@ public class CongregationModelFactory {
         model.setCongregationId(congregation.getCongregationId());
         model.setName(congregation.getName());
 
+        EntityModel kingdomHallModel = new EntityModel();
         if (congregation.getKingdomHall() != null) {
-            EntityModel kingdomHallModel = new EntityModel();
             kingdomHallModel.setId(congregation.getKingdomHall().getKingdomHallId());
             kingdomHallModel.setName(congregation.getKingdomHall().getName());
-            model.setKingdomHall(kingdomHallModel);
         }
+        model.setKingdomHall(kingdomHallModel);
+
+        EntityModel circuitModel = new EntityModel();
+        if (congregation.getCircuit() != null) {
+            circuitModel.setId(congregation.getCircuit().getCircuitId());
+            circuitModel.setName(congregation.getCircuit().getName());
+        }
+        model.setCircuit(circuitModel);
+
+        EntityModel rbcRegionModel = new EntityModel();
+        if (congregation.getRbcRegion() != null) {
+            rbcRegionModel.setId(congregation.getRbcRegion().getRbcRegionId());
+            rbcRegionModel.setName(congregation.getRbcRegion().getName());
+        }
+        model.setRbcRegion(rbcRegionModel);
+
+        EntityModel rbcSubRegionModel = new EntityModel();
+        if (congregation.getRbcSubRegion() != null) {
+            rbcSubRegionModel.setId(congregation.getRbcSubRegion().getRbcSubRegionId());
+            rbcSubRegionModel.setName(congregation.getRbcSubRegion().getName());
+        }
+        model.setRbcSubRegion(rbcSubRegionModel);
 
         return model;
-    }
-
-    /**
-     * @param kingdomHallDao the kingdomHallDao to set
-     */
-    @Autowired
-    public void setKingdomHallDao(KingdomHallDao kingdomHallDao) {
-        this.kingdomHallDao = kingdomHallDao;
     }
 }

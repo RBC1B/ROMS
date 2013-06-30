@@ -5,6 +5,7 @@
 package uk.org.rbc1b.roms.db;
 
 import java.util.List;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -39,4 +40,31 @@ public interface CongregationDao {
      */
     @Transactional(readOnly = true)
     List<Congregation> findCongregations(String name);
+
+    /**
+     * Saves a congregation.
+     *
+     * @param congregation to save
+     */
+    @PreAuthorize("hasPermission('CONGREGATION','EDIT')")
+    @Transactional
+    void saveCongregation(Congregation congregation);
+
+    /**
+     * Creates a new congregation.
+     *
+     * @param congregation to create
+     */
+    @PreAuthorize("hasPermission('CONGREGATION','ADD')")
+    @Transactional
+    void createCongregation(Congregation congregation);
+
+    /**
+     * Deletes a congregation.
+     *
+     * @param congregation to delete
+     */
+    @PreAuthorize("hasPermission('CONGREGATION','DELETE')")
+    @Transactional
+    void deleteCongregation(Congregation congregation);
 }
