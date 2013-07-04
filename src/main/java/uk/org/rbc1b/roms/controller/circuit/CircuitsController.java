@@ -153,34 +153,17 @@ public class CircuitsController {
         circuitOverseer.setForename(circuitForm.getForename());
         circuitOverseer.setMiddleName(circuitForm.getMiddleName());
         circuitOverseer.setSurname(circuitForm.getSurname());
-        if (circuitForm.getEmail() != null) {
-            circuitOverseer.setEmail(circuitForm.getEmail());
-        }
+        circuitOverseer.setEmail(circuitForm.getEmail());
 
         Address address = new Address();
-        if (circuitForm.getStreet() != null) {
-            address.setStreet(circuitForm.getStreet());
-        }
-        if (circuitForm.getTown() != null) {
-            address.setTown(circuitForm.getTown());
-        }
-        if (circuitForm.getCounty() != null) {
-            address.setCounty(circuitForm.getCounty());
-        }
-        if (circuitForm.getPostcode() != null) {
-            address.setPostcode(circuitForm.getPostcode());
-        }
+        address.setStreet(circuitForm.getStreet());
+        address.setTown(circuitForm.getTown());
+        address.setCounty(circuitForm.getCounty());
+        address.setPostcode(circuitForm.getPostcode());
+        circuitOverseer.setAddress(address);
 
-        if ((address.getStreet() != null) || (address.getTown() != null)
-                || (address.getCounty() != null) || (address.getPostcode() != null)) {
-            circuitOverseer.setAddress(address);
-        }
-        if (circuitForm.getTelephone() != null) {
-            circuitOverseer.setTelephone(circuitForm.getTelephone());
-        }
-        if (circuitForm.getMobile() != null) {
-            circuitOverseer.setMobile(circuitForm.getMobile());
-        }
+        circuitOverseer.setTelephone(circuitForm.getTelephone());
+        circuitOverseer.setMobile(circuitForm.getMobile());
 
         return circuitOverseer;
     }

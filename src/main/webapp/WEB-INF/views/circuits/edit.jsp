@@ -48,7 +48,7 @@
                         <form:input path="street" maxlength="70" placeholder="Street" class="span3"/><br />
                         <form:input path="town" maxlength="30" placeholder="Town" class="span2"/><br />
                         <form:input path="county" maxlength="50" placeholder="County" class="span2"/><br />
-                        <form:input path="postcode" maxlength="10" placeholder="Postcode" class="span1"/><br />
+                        <form:input path="postcode" maxlength="10" placeholder="Postcode" class="span2"/><br />
                     </div>
                     <div class="control-group">
                         <label>Phones:</label>
@@ -61,8 +61,12 @@
                         <fieldset>
                             <div class="controls controls-row">
                                 <div class="alert alert-info span9" id="edit-circuit-overseer-person" style="display:none;">
-                                    Click this link if you would like to edit the circuit overseer 
-                                    <a href="<c:url value="/persons/${circuitForm.personId}/edit"/>"><b>${circuitForm.forename} ${circuitForm.surname}</b></a>
+                                    <p id="co-link">
+                                        <script id="edit-circuit-overseer-person-link" type="text/html" charset="utf-8">
+                                            Click this link if you would like to edit additional fields of the Circuit Overseer 
+                                            <a href="<c:url value='/persons/{{personId}}/edit'/>"><b>{{forename}} {{surname}}</b>
+                                        </script>
+                                    </p>
                                 </div>
                             </div>
                         </fieldset>

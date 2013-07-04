@@ -93,7 +93,6 @@ $(document).ready(function() {
         if (selectedPersonId) {
             $('#circuit-overseer-linked').show('fast');
             $('#personId').val(selectedPersonId);
-            $('#edit-circuit-overseer-person').show('fast');
             
             // now pull the person, given his id, and then populate the fields
             $.ajax({
@@ -112,6 +111,11 @@ $(document).ready(function() {
                     }
                     $("input[name='telephone']").val(data.telephone);
                     $("input[name='mobile']").val(data.mobile);
+                    
+                    var tpl = $("#edit-circuit-overseer-person-link").html();
+                    var html = Mustache.to_html(tpl, data);
+                    $('#co-link').html(html);
+                    $("#edit-circuit-overseer-person").show('fast');
                 }
             });        
             $personId.val(selectedPersonId);
