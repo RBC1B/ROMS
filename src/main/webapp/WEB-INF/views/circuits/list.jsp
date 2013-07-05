@@ -3,6 +3,7 @@
     Created on : 30-Jun-2012, 13:19:18
     Author     : oliver.elder.esq
 --%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -31,8 +32,16 @@
                                 <td>
                                     <ul class="inline list-actions">
                                         <li><a class="btn btn-success" href="<c:url value="/circuits/${circuit.circuitId}" />">View</a></li>
-                                        <li><a class="list-action" href="<c:url value="/circuits/${circuit.circuitId}/edit" />">Edit</a></li>
-                                        <li><a class="list-action" href="delete">Delete</a></li>
+                                        <li>
+                                            <c:url var="formAction" value="/circuits/${circuit.circuitId}" />
+                                            <form:form action="${formAction}" method="post" enctype="multipart/form-data" >
+                                                <input type="hidden" name="_method" value="PUT" />
+                                                <input type="submit" value="Edit" class="btn btn-primary" />
+                                            </form:form>
+                                        </li>
+                                        <li>
+                                            
+                                        <a class="list-action" href="delete">Delete</a></li>
                                     </ul>
                                 </td>
                             </tr>

@@ -52,7 +52,7 @@ public class CircuitsController {
      * @throws NoSuchRequestHandlingMethodException on failure to look up the
      * circuit
      */
-    @RequestMapping(value = "{circuitId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{circuitId}", method = RequestMethod.GET)
     public String showCircuit(@PathVariable Integer circuitId, ModelMap model) throws NoSuchRequestHandlingMethodException {
 
         Circuit circuit = circuitDao.findCircuit(circuitId);
@@ -75,7 +75,7 @@ public class CircuitsController {
      * @throws NoSuchRequestHandlingMethodException on failure to look up the
      * circuit
      */
-    @RequestMapping(value = "{circuitId}/edit", method = RequestMethod.GET)
+    @RequestMapping(value = "/{circuitId}", method = RequestMethod.PUT)
     public String showEditCircuitForm(@PathVariable Integer circuitId, ModelMap model) throws NoSuchRequestHandlingMethodException {
         Circuit circuit = circuitDao.findCircuit(circuitId);
 
