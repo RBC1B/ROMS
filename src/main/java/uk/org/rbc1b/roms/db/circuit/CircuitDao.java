@@ -35,11 +35,20 @@ public interface CircuitDao {
     List<Circuit> findCircuits();
 
     /**
-     * Update or create a new circuit using the matching Id.
+     * Create a new circuit.
+     *
+     * @param circuit object to create
+     */
+    @PreAuthorize("hasPermission('CIRCUIT', 'ADD')")
+    @Transactional
+    void createCircuit(Circuit circuit);
+
+    /**
+     * Update a circuit using the matching Id.
      *
      * @param circuit object to update
      */
     @PreAuthorize("hasPermission('CIRCUIT', 'EDIT')")
     @Transactional
-    void saveCircuit(Circuit circuit);
+    void updateCircuit(Circuit circuit);
 }

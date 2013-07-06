@@ -32,16 +32,7 @@
                                 <td>
                                     <ul class="inline list-actions">
                                         <li><a class="btn btn-success" href="<c:url value="/circuits/${circuit.circuitId}" />">View</a></li>
-                                        <li>
-                                            <c:url var="formAction" value="/circuits/${circuit.circuitId}" />
-                                            <form:form action="${formAction}" method="post" enctype="multipart/form-data" >
-                                                <input type="hidden" name="_method" value="PUT" />
-                                                <input type="submit" value="Edit" class="btn btn-primary" />
-                                            </form:form>
-                                        </li>
-                                        <li>
-                                            
-                                        <a class="list-action" href="delete">Delete</a></li>
+                                        <li><a class="list-action" href="<c:url value="/circuits/${circuit.circuitId}/edit" />">Edit</a></li>
                                     </ul>
                                 </td>
                             </tr>

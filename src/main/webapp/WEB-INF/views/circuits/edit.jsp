@@ -8,19 +8,26 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <c:set var="pageTitle" value="Create/Edit Circuit" />
+    <c:choose>
+        <c:when test="${!empty circuitForm.circuitId}">
+            <c:set var="pageTitle" value="Edit Circuit #{circuitForm.name}" />
+        </c:when>
+        <c:otherwise>
+            <c:set var="pageTitle" value="Create Circuit" />
+        </c:otherwise>
+    </c:choose>
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
             <h1>Circuit</h1>
             <hr>
-            <c:url var="formAction" value="/circuits" />
-            <form:form commandName="circuitForm" method="post" action="${formAction}">
+            <c:url var="formAction" value="${submitUri}" />
+            <form:form commandName="circuitForm" method="${submitMethod}" action="${formAction}">
                 <fieldset>
                     <legend>Circuit Details</legend>
                     <form:hidden path="circuitId"/>
-                    <label>Circuit Name:</label>
+                    <label>Circuit Name</label>
                     <form:input path="name" maxlength="50" placeholder="Circuit Name" class="span2"/><br />
                 </fieldset>
                 <br />
@@ -63,7 +70,7 @@
                                 <div class="alert alert-info span9" id="edit-circuit-overseer-person" style="display:none;">
                                     <p id="co-link">
                                         <script id="edit-circuit-overseer-person-link" type="text/html" charset="utf-8">
-                                            Click this link if you would like to edit additional fields of the Circuit Overseer 
+                                            Click this link if you would like to edit additional fields of the Circuit Overseer
                                             <a href="<c:url value='/persons/{{personId}}/edit'/>"><b>{{forename}} {{surname}}</b>
                                         </script>
                                     </p>

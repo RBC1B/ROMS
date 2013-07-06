@@ -34,18 +34,14 @@ public class HibernateCircuitDao implements CircuitDao {
         return criteria.list();
     }
 
-    /**
-     * Update or create a new circuit.
-     *
-     * @param circuit object to be updated
-     */
     @Override
-    public void saveCircuit(Circuit circuit) {
-        if (circuit.getCircuitId() == null) {
-            this.sessionFactory.getCurrentSession().save(circuit);
-        } else {
-            this.sessionFactory.getCurrentSession().merge(circuit);
-        }
+    public void createCircuit(Circuit circuit) {
+        this.sessionFactory.getCurrentSession().save(circuit);
+    }
+
+    @Override
+    public void updateCircuit(Circuit circuit) {
+        this.sessionFactory.getCurrentSession().merge(circuit);
     }
 
     /**
