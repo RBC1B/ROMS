@@ -73,9 +73,18 @@ insert into User(PersonId, UserName, Password)
 values (1, 'RaminderSingh', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3');
 
 insert into User(PersonId, UserName, Password)
-values (4, 'DouglasF', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3');
+values (2, 'AddOnly', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3');
 
--- RaminderSingh full access
+insert into User(PersonId, UserName, Password)
+values (3, 'EditOnly', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3');
+
+insert into User(PersonId, UserName, Password)
+values (4, 'ReadOnly', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3');
+
+insert into User(PersonId, UserName, Password)
+values (5, 'NoPermissions', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3');
+
+-- RaminderSingh full access (DELETE)
 -- Attendance & Invitations
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
 values (1, 1, 4, 4, NOW(), 1);
@@ -104,33 +113,93 @@ values (1, 8, 4, 4, NOW(), 1);
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
 values (1, 9, 4, 4, NOW(), 1);
 
--- DouglasF read only access
+-- AddOnly add-access to all applications
+-- Attendance & Invitations
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (4, 1, 1, 0, NOW(), 1);
+values (2, 1, 3, 3, NOW(), 1);
 -- Circuit
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (4, 2, 1, 0, NOW(), 1);
+values (2, 2, 3, 3, NOW(), 1);
 -- Congregation
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (4, 3, 1, 0, NOW(), 1);
+values (2, 3, 3, 3, NOW(), 1);
 -- Database
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (4, 4, 1, 0, NOW(), 1);
+values (2, 4, 3, 3, NOW(), 1);
 -- Kingdom Halls
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (4, 5, 1, 0, NOW(), 1);
+values (2, 5, 3, 3, NOW(), 1);
 -- Projects
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (4, 6, 1, 0, NOW(), 1);
+values (2, 6, 3, 3, NOW(), 1);
 -- Skills
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (4, 7, 1, 0, NOW(), 1);
+values (2, 7, 3, 3, NOW(), 1);
 -- User
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (4, 8, 1, 0, NOW(), 1);
+values (2, 8, 3, 3, NOW(), 1);
 -- Volunteers
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (4, 9, 1, 0, NOW(), 1);
+values (2, 9, 3, 3, NOW(), 1);
+
+
+-- EditOnly edit only for all applications
+-- Attendance & Invitations
+insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
+values (3, 1, 2, 2, NOW(), 1);
+-- Circuit
+insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
+values (3, 2, 2, 2, NOW(), 1);
+-- Congregation
+insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
+values (3, 3, 2, 2, NOW(), 1);
+-- Database
+insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
+values (3, 4, 2, 2, NOW(), 1);
+-- Kingdom Halls
+insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
+values (3, 5, 2, 2, NOW(), 1);
+-- Projects
+insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
+values (3, 6, 2, 2, NOW(), 1);
+-- Skills
+insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
+values (3, 7, 2, 2, NOW(), 1);
+-- User
+insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
+values (3, 8, 2, 2, NOW(), 1);
+-- Volunteers
+insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
+values (3, 9, 2, 2, NOW(), 1);
+
+
+-- ReadOnly read only access
+insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
+values (4, 1, 1, 1, NOW(), 1);
+-- Circuit
+insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
+values (4, 2, 1, 1, NOW(), 1);
+-- Congregation
+insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
+values (4, 3, 1, 1, NOW(), 1);
+-- Database
+insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
+values (4, 4, 1, 1, NOW(), 1);
+-- Kingdom Halls
+insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
+values (4, 5, 1, 1, NOW(), 1);
+-- Projects
+insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
+values (4, 6, 1, 1, NOW(), 1);
+-- Skills
+insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
+values (4, 7, 1, 1, NOW(), 1);
+-- User
+insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
+values (4, 8, 1, 1, NOW(), 1);
+-- Volunteers
+insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
+values (4, 9, 1, 1, NOW(), 1);
 
 -- Kingdom Halls
 insert into KingdomHall(Name, Street, Town, County, Postcode, OwnershipTypeId, Drawings, UpdateTime, UpdatedBy)
