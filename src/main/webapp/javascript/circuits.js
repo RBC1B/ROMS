@@ -1,9 +1,32 @@
+/*
+ * The MIT License
+ *
+ * Copyright 2013 RBC1B.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 $(document).ready(function() {
     var $oldForename = $('#forename');
     $oldForename.data('oldForename', $oldForename.val());
     var $oldSurname = $('#surname');
     $oldSurname.data('oldSurname', $oldSurname.val());
-    
+
     // Event when the surname has lost focus
     $('#surname').blur(function() {
         matchPerson($('#forename').val(), $('#surname').val(), $('#personId'));
@@ -38,7 +61,7 @@ $(document).ready(function() {
         $personId.data("full-name", forename + " " + surname);
     }
     /**
-     * Look up the person using the AJAX jQuery function. Show modal 
+     * Look up the person using the AJAX jQuery function. Show modal
      * if there is a match with the forename and surname.
      */
     function findPerson(forename, surname, $personId, existingPersonName) {
@@ -87,13 +110,13 @@ $(document).ready(function() {
             }
         });
     }
-    
+
     function populateCircuitOverseer(selectedPersonId, $personId) {
         // In unlink <a> link, data-person-id="", therefore test for this
         if (selectedPersonId) {
             $('#circuit-overseer-linked').show('fast');
             $('#personId').val(selectedPersonId);
-            
+
             // now pull the person, given his id, and then populate the fields
             $.ajax({
                 url: roms.common.relativePath + '/persons/' + selectedPersonId  + "/reference",
@@ -111,13 +134,13 @@ $(document).ready(function() {
                     }
                     $("input[name='telephone']").val(data.telephone);
                     $("input[name='mobile']").val(data.mobile);
-                    
+
                     var tpl = $("#edit-circuit-overseer-person-link").html();
                     var html = Mustache.to_html(tpl, data);
                     $('#co-link').html(html);
                     $("#edit-circuit-overseer-person").show('fast');
                 }
-            });        
+            });
             $personId.val(selectedPersonId);
         } else {
             $('#circuit-overseer-linked').hide('fast');
@@ -131,7 +154,7 @@ $(document).ready(function() {
             $("input[name='postcode']").val('');
             $("input[name='telephone']").val('');
             $("input[name='mobile']").val('');
-            
+
             $('#edit-circuit-overseer-person').hide('fast');
         }
     }
