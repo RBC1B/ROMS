@@ -16,7 +16,6 @@
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <context:component-scan base-package="uk.org.rbc1b.roms.db" />
-    <context:component-scan base-package="uk.org.rbc1b.roms.reference" />
     <context:component-scan base-package="uk.org.rbc1b.roms.security" />
 
     <jee:jndi-lookup id="dataSource" jndi-name="jdbc/_roms" />

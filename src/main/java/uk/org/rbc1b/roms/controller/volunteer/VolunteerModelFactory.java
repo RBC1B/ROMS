@@ -29,7 +29,7 @@ import uk.org.rbc1b.roms.db.volunteer.SkillDao;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerQualification;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerSkill;
-import uk.org.rbc1b.roms.reference.ReferenceDao;
+import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 
 /**
  * Generate the volunteer model.

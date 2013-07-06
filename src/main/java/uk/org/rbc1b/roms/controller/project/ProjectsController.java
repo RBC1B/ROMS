@@ -20,7 +20,7 @@ import uk.org.rbc1b.roms.controller.kingdomhall.KingdomHallsController;
 import uk.org.rbc1b.roms.db.project.Project;
 import uk.org.rbc1b.roms.db.project.ProjectDao;
 import uk.org.rbc1b.roms.db.project.ProjectStage;
-import uk.org.rbc1b.roms.reference.ReferenceDao;
+import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 
 /**
  * Control access to the underlying person data.

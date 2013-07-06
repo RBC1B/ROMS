@@ -11,7 +11,7 @@ import uk.org.rbc1b.roms.db.volunteer.Assignment;
 import uk.org.rbc1b.roms.db.volunteer.Department;
 import uk.org.rbc1b.roms.db.volunteer.DepartmentDao;
 import uk.org.rbc1b.roms.db.volunteer.Team;
-import uk.org.rbc1b.roms.reference.ReferenceDao;
+import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 
 /**
  * Factory class to create the assignment model.

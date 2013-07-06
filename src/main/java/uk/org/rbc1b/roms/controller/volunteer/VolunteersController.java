@@ -41,7 +41,7 @@ import uk.org.rbc1b.roms.db.volunteer.VolunteerQualification;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerSearchCriteria;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerSkill;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerTrade;
-import uk.org.rbc1b.roms.reference.ReferenceDao;
+import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 
 /**
  *

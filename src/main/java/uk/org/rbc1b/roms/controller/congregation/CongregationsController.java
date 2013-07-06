@@ -28,7 +28,7 @@ import uk.org.rbc1b.roms.db.circuit.Circuit;
 import uk.org.rbc1b.roms.db.circuit.CircuitDao;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHallDao;
-import uk.org.rbc1b.roms.reference.ReferenceDao;
+import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 
 /**
  * Handle congregation related requests.
