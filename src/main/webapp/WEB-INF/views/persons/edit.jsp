@@ -16,94 +16,54 @@
             <h1>Edit Person</h1>
            <hr>
             <c:url var="formAction" value="${submitUri}" />
-            <form:form class="form-horizontal" commandName="person" method="post" action="${formAction}">
-                <form:hidden path="personId" />
-                <div class="control-group">
-                    <label class="control-label" for="forename">Forename:</label>
-                    <div class="controls">
-                        <form:input path="forename" />
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="middleName">Middle Name:</label>
-                    <div class="controls">
-                        <form:input path="middleName" />
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="surname">Surname:</label>
-                    <div class="controls">
-                        <form:input path="surname" />
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="congregationName">Congregation:</label>
-                    <div class="controls">
-                        <form:input path="congregationName" autocomplete="off" />
-                        <form:hidden path="congregationId" />
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="birthDate">Date of birth:</label>
-                    <div class="controls">
-                        <form:input class="datepicker" path="birthDate" placeholder="15/03/1980" data-date-format="dd/mm/yy" />
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="email">Email:</label>
-                    <div class="controls">
-                        <form:input path="email" />
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="telephone">Home phone:</label>
-                    <div class="controls">
-                        <form:input path="telephone" />
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="mobile">Mobile phone:</label>
-                    <div class="controls">
-                        <form:input path="mobile" />
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="workPhone">Work phone:</label>
-                    <div class="controls">
-                        <form:input path="workPhone" />
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <label class="control-label" for="street">Address:</label>
-                    <div class="controls">
-                        <form:input path="street" placeholder="Street" />
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="town"></label>
-                    <div class="controls">
-                        <form:input path="town" placeholder="Town" />
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="county"></label>
-                    <div class="controls">
-                        <form:input path="county" placeholder="County" />
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="postcode"></label>
-                    <div class="controls">
-                        <form:input path="postcode" placeholder="Postcode" />
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="comments">Comments</label>
-                    <div class="controls">
-                        <form:textarea path="comments" rows="5" />
-                    </div>
-                </div>
+            <form:form commandName="person" method="post" action="${formAction}">
+                <fieldset>
+                    <legend>Name</legend>
+                    <form:hidden path="personId" />
+                    <label for="forename">Forename</label>
+                    <form:input path="forename" maxlength="50" />
+                    <label for="middleName">Middle Name</label>
+                    <form:input path="middleName" maxlength="50" />
+                    <label for="surname">Surname</label>
+                    <form:input path="surname" maxlength="50" />
+                </fieldset>
+                <fieldset>
+                    <legend>Spiritual</legend>
+                    <label for="congregationName">Congregation</label>
+                    <form:input path="congregationName" autocomplete="off" />
+                    <form:hidden path="congregationId" />
+                </fieldset>
+                <fieldset>
+                    <legend>Personal</legend>
+                    <label for="birthDate">Date of birth</label>
+                    <form:input class="datepicker" path="birthDate" placeholder="15/03/1980" data-date-format="dd/mm/yy" />
+                </fieldset>
+                <fieldset>
+                    <legend>Contact</legend>
+                    <label for="email">Email</label>
+                    <form:input path="email" maxlength="50" />
+                    <label for="telephone">Home phone</label>
+                    <form:input path="telephone" maxlength="15" />
+                    <label for="mobile">Mobile phone:</label>
+                    <form:input path="mobile" maxlength="15" />
+                    <label for="workPhone">Work phone:</label>
+                    <form:input path="workPhone" maxlength="15" />
+                </fieldset>
+                <fieldset>
+                    <legend>Address</legend>
+                    <label for="street">Street</label>
+                    <form:input path="street" maxlength="50"/>
+                    <label for="town">Town</label>
+                    <form:input path="town" maxlength="50" />
+                    <label for="county">County</label>
+                    <form:input path="county" maxlength="50" />
+                    <label for="postcode">Postcode</label>
+                    <form:input path="postcode" maxlength="10" />
+                </fieldset>
+                <fieldset>
+                    <legend>Comments</legend>
+                    <form:textarea path="comments" rows="5" />
+                </fieldset>
                 <div class="form-actions">
                     <input type="submit" class="btn btn-primary"/>
                 </div>

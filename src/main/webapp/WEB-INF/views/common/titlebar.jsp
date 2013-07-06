@@ -21,6 +21,7 @@
                         <a href="#" class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown">People <b class="caret"></b></a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                             <sec:authorize access="hasPermission('VOLUNTEER', 'READ')"><li role="menuitem"><a href="<c:url value="/volunteers" />">Volunteers</a></li></sec:authorize>
+                            <sec:authorize access="hasPermission('VOLUNTEER', 'READ')"><li role="menuitem"><a href="<c:url value="/persons" />">Persons</a></li></sec:authorize>
                             <sec:authorize access="hasPermission('SKILL', 'READ')"><li role="menuitem"><a href="<c:url value="/qualifications" />">Qualifications</a></li></sec:authorize>
                             <sec:authorize access="hasPermission('EXPERIENCE', 'READ')"><li role="menuitem"><a href="<c:url value="/experience" />">Experience</a></li></sec:authorize>
                             <sec:authorize access="hasPermission('SKILL', 'READ')"><li role="menuitem"><a href="<c:url value="/skills" />">Skills</a></li></sec:authorize>
