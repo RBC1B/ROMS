@@ -59,5 +59,5 @@ public interface ProjectDao {
      * @return project stag, mapped by id
      */
     @Transactional(readOnly = true)
-    Map<Integer, ProjectStage> findProjectStages();
+    Map<Integer, ProjectStageType> findProjectStages();
 }

@@ -80,8 +80,10 @@ THE SOFTWARE.
 
                 <value>uk/org/rbc1b/roms/db/project/Commentator.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/project/Project.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/project/ProjectEvent.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/project/ProjectStage.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/project/ProjectStageEvent.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/project/ProjectStageTask.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/project/ProjectStageType.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/project/ProjectWorkBrief.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/project/WorkFeature.hbm.xml</value>
 
@@ -143,6 +145,9 @@ THE SOFTWARE.
                 </bean>
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
                     <property name="name" value="reference.projectStatus" />
+                </bean>
+                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
+                    <property name="name" value="reference.projectStageEventType" />
                 </bean>
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
                     <property name="name" value="project.stage" />

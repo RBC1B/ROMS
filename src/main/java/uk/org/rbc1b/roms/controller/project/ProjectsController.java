@@ -38,7 +38,7 @@ import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
 import uk.org.rbc1b.roms.controller.kingdomhall.KingdomHallsController;
 import uk.org.rbc1b.roms.db.project.Project;
 import uk.org.rbc1b.roms.db.project.ProjectDao;
-import uk.org.rbc1b.roms.db.project.ProjectStage;
+import uk.org.rbc1b.roms.db.project.ProjectStageType;
 import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 
 /**
@@ -75,7 +75,7 @@ public class ProjectsController {
     public String showProjectList(ModelMap model) {
 
         List<Project> projects = projectDao.findProjects();
-        Map<Integer, ProjectStage> stages = projectDao.findProjectStages();
+        Map<Integer, ProjectStageType> stages = projectDao.findProjectStages();
         Map<Integer, String> types = referenceDao.findProjectTypeValues();
         Map<Integer, String> statuses = referenceDao.findProjectStatusValues();
         List<ProjectListModel> modelList = new ArrayList<ProjectListModel>(projects.size());
@@ -107,7 +107,7 @@ public class ProjectsController {
         return "projects/show";
     }
 
-    private ProjectListModel generateProjectListModel(Project project, Map<Integer, ProjectStage> stages,
+    private ProjectListModel generateProjectListModel(Project project, Map<Integer, ProjectStageType> stages,
             Map<Integer, String> types, Map<Integer, String> statuses) {
         ProjectListModel model = new ProjectListModel();
         model.setProjectId(project.getProjectId());
@@ -133,7 +133,7 @@ public class ProjectsController {
 
     private ProjectModel generateProjectModel(Project project) {
 
-        Map<Integer, ProjectStage> stages = projectDao.findProjectStages();
+        Map<Integer, ProjectStageType> stages = projectDao.findProjectStages();
         Map<Integer, String> types = referenceDao.findProjectTypeValues();
         Map<Integer, String> statuses = referenceDao.findProjectStatusValues();
 

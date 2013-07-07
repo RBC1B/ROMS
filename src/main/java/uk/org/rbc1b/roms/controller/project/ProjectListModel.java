@@ -25,7 +25,7 @@ package uk.org.rbc1b.roms.controller.project;
 
 import java.util.Date;
 import uk.org.rbc1b.roms.controller.common.model.EntityModel;
-import uk.org.rbc1b.roms.db.project.ProjectStage;
+import uk.org.rbc1b.roms.db.project.ProjectStageType;
 
 /**
  * Representation of the project used when displaying the list.
@@ -39,7 +39,7 @@ public class ProjectListModel {
     private String name;
     private String type;
     private String status;
-    private ProjectStage stage;
+    private ProjectStageType stage;
     private Date requestDate;
     private Date completedDate;
     private EntityModel contactPerson;
@@ -84,11 +84,11 @@ public class ProjectListModel {
         this.status = status;
     }
 
-    public ProjectStage getStage() {
+    public ProjectStageType getStage() {
         return stage;
     }
 
-    public void setStage(ProjectStage stage) {
+    public void setStage(ProjectStageType stage) {
         this.stage = stage;
     }
 

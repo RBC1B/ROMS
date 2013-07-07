@@ -91,4 +91,9 @@ public interface ReferenceDao {
      * @return ordered map of project type values
      */
     Map<Integer, String> findProjectStatusValues();
+
+    /**
+     * @return ordered map of project type values
+     */
+    Map<Integer, String> findProjectStageEventTypeValues();
 }

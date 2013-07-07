@@ -23,17 +23,44 @@
  */
 package uk.org.rbc1b.roms.db.project;
 
-/**
- *
- * @author oliver.elder.esq
- */
-public class ProjectEvent {
+import java.util.Date;
 
-    private Integer projectEventId;
-    private Project project;
+/**
+ * Events associated with the project stages.
+ */
+public class ProjectStageEvent {
+
+    private Integer projectStageEventId;
+    private ProjectStage projectStage;
+    private Integer projectStageEventTypeId;
     private Commentator commentator;
     private String comments;
     private boolean visible;
+    private Date created;
+
+    public Integer getProjectStageEventId() {
+        return projectStageEventId;
+    }
+
+    public void setProjectStageEventId(Integer projectStageEventId) {
+        this.projectStageEventId = projectStageEventId;
+    }
+
+    public ProjectStage getProjectStage() {
+        return projectStage;
+    }
+
+    public void setProjectStage(ProjectStage projectStage) {
+        this.projectStage = projectStage;
+    }
+
+    public Integer getProjectStageEventTypeId() {
+        return projectStageEventTypeId;
+    }
+
+    public void setProjectStageEventTypeId(Integer projectStageEventTypeId) {
+        this.projectStageEventTypeId = projectStageEventTypeId;
+    }
 
     public Commentator getCommentator() {
         return commentator;
@@ -51,22 +78,6 @@ public class ProjectEvent {
         this.comments = comments;
     }
 
-    public Project getProject() {
-        return project;
-    }
-
-    public void setProject(Project project) {
-        this.project = project;
-    }
-
-    public Integer getProjectEventId() {
-        return projectEventId;
-    }
-
-    public void setProjectEventId(Integer projectEventId) {
-        this.projectEventId = projectEventId;
-    }
-
     public boolean isVisible() {
         return visible;
     }
@@ -75,8 +86,16 @@ public class ProjectEvent {
         this.visible = visible;
     }
 
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
     @Override
     public String toString() {
-        return "ProjectEvent{" + "projectEventId=" + projectEventId + '}';
+        return "ProjectStageEvent{" + "projectStageEventId=" + projectStageEventId + '}';
     }
 }

@@ -71,15 +71,15 @@ public class HibernateProjectDao implements ProjectDao {
 
     @Override
     @Cacheable("project.stage")
-    public Map<Integer, ProjectStage> findProjectStages() {
+    public Map<Integer, ProjectStageType> findProjectStages() {
         Session session = this.sessionFactory.getCurrentSession();
 
-        Criteria criteria = session.createCriteria(ProjectStage.class).addOrder(Order.asc("projectStageId"));
-        List<ProjectStage> stages = criteria.list();
+        Criteria criteria = session.createCriteria(ProjectStageType.class).addOrder(Order.asc("projectStageId"));
+        List<ProjectStageType> stages = criteria.list();
 
-        Map<Integer, ProjectStage> resultMap = new LinkedHashMap<Integer, ProjectStage>(stages.size());
-        for (ProjectStage stage : stages) {
-            resultMap.put(stage.getProjectStageId(), stage);
+        Map<Integer, ProjectStageType> resultMap = new LinkedHashMap<Integer, ProjectStageType>(stages.size());
+        for (ProjectStageType stage : stages) {
+            resultMap.put(stage.getProjectStageTypeId(), stage);
         }
         return resultMap;
     }

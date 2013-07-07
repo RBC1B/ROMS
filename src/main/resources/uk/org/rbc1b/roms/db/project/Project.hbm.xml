@@ -30,6 +30,10 @@
             <key column="ProjectId" />
             <one-to-many class="uk.org.rbc1b.roms.db.project.ProjectWorkBrief" />
         </set>
+        <set name="stages" inverse="true" cascade="all-delete-orphan">
+            <key column="ProjectId" />
+            <one-to-many class="uk.org.rbc1b.roms.db.project.ProjectStage" />
+        </set>
         <property name="updateTime" not-null="true"  />
         <property name="updatedBy" not-null="true"  />
     </class>

@@ -3,7 +3,7 @@ use ROMS;
 
 -- clean up all existing data
 delete from Attendance;
-delete from ProjectEvent;
+delete from ProjectStageEvent;
 delete from ProjectWorkBrief;
 delete from Project;
 delete from TitleHolder;
@@ -24,7 +24,7 @@ delete from Person;
 
 -- reset the auto-increments
 alter table Attendance AUTO_INCREMENT=1;
-alter table ProjectEvent AUTO_INCREMENT=1;
+alter table ProjectStageEvent AUTO_INCREMENT=1;
 alter table ProjectWorkBrief AUTO_INCREMENT=1;
 alter table Project AUTO_INCREMENT=1;
 alter table TitleHolder AUTO_INCREMENT=1;
@@ -263,9 +263,9 @@ insert into TitleHolder(KingdomHallId, CongregationId, UpdateTime, UpdatedBy) va
 insert into CongregationContact(CongregationId, CongregationRoleId, PersonId, UpdateTime, UpdatedBy) values (2, 1, 3, NOW(), 1);
 
 insert into Project(Name,ProjectTypeId,KingdomHallId,Priority,Street,Town,County,Postcode,Telephone,ContactPersonId,RequestDate,VisitDate,EstimateCost,
-				ProjectStatusId,SupportingCongregation,ProjectConstraints,CoordinatorId,ProjectStageId, UpdateTime, UpdatedBy)
+				ProjectStatusId,SupportingCongregation,ProjectConstraints,CoordinatorId,UpdateTime, UpdatedBy)
 values ('Slightly scruffy hall spruce', 1, 2, 2, null, null, null, null, null, 2, '2012-09-12', '2012-11-24', '£300 + VAT',
-		2, 'Murmurings of approval all round', 'The cong is reknowned as terrible cooks', 4, 3, NOW(), 1);
+		2, 'Murmurings of approval all round', 'The cong is reknowned as terrible cooks', 4, NOW(), 1);
 
 insert into ProjectWorkBrief(ProjectId, WorkFeatureId, Brief, UpdateTime, UpdatedBy)
 values (1, 6, 'Fill and pain walls. Replace light fixtures. Move radiator to opposite wall. Replace floor tiles.', NOW(), 1);
@@ -276,16 +276,10 @@ values (1, 3, 'Add shelfs along main wall. Fix the door lock.', NOW(), 1);
 insert into ProjectWorkBrief(ProjectId, WorkFeatureId, Brief, UpdateTime, UpdatedBy)
 values (1, 8, 'Replace slabs at front door', NOW(), 1);
 
-insert into ProjectEvent(ProjectId, CommentatorId, Comments, Visible, Created)
-values(1, 7, 'Arranged first meeting with BoE and RBC representatives', true, '2012-07-02');
-
-insert into ProjectEvent(ProjectId, CommentatorId, Comments, Visible, Created)
-values(1, 7, 'Agreed project timescales', false, '2012-07-12');
-
 insert into Project(Name,ProjectTypeId,KingdomHallId,Priority,Street,Town,County,Postcode,Telephone,ContactPersonId,RequestDate,VisitDate,EstimateCost,
-				ProjectStatusId,SupportingCongregation,ProjectConstraints,CoordinatorId,ProjectStageId, UpdateTime, UpdatedBy)
+				ProjectStatusId,SupportingCongregation,ProjectConstraints,CoordinatorId, UpdateTime, UpdatedBy)
 values ('Brand new hall near Hull', 2, null, null, '73 Industrial Street', 'Hull', null, 'HL12 5FD', '1234 53367', null, null, null, null,
-		1, null, null, null, 7, NOW(), 1);
+		1, null, null, null, NOW(), 1);
 
 -- Skills
 insert into Skill(Name, DepartmentId, Description, CategoryId, UpdateTime, UpdatedBy)

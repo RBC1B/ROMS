@@ -130,6 +130,14 @@ public class JDBCReferenceDao implements ReferenceDao {
                 + "FROM ProjectStatus ORDER BY ProjectStatusId");
     }
 
+    @Override
+    @Cacheable("reference.projectStageEventType")
+    public Map<Integer, String> findProjectStageEventTypeValues() {
+        return findReferenceValues("SELECT ProjectStageEventTypeId AS id, Description AS value "
+                + "FROM ProjectStageEventType ORDER BY ProjectStageEventTypeId");
+    }
+
+
     private Map<Integer, String> findReferenceValues(String sql) {
 
         final Map<Integer, String> resultMap = new LinkedHashMap<Integer, String>();
