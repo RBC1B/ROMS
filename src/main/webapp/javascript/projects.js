@@ -29,7 +29,7 @@ $(document).ready(function() {
             "aoColumnDefs": [
             {
                 'bSortable': false,
-                'aTargets': [ 8 ]
+                'aTargets': [ 7 ]
             }
             ]
         }

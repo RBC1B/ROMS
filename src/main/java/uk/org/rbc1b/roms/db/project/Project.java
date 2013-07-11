@@ -49,7 +49,6 @@ public class Project extends DefaultAuditable {
     private Integer projectTypeId;
     private String priority;
     private Date requestDate;
-    private Integer projectStageId;
     private Integer projectStatusId;
     private Set<ProjectStage> stages;
     private String supportingCongregation;
@@ -151,14 +150,6 @@ public class Project extends DefaultAuditable {
 
     public void setRequestDate(Date requestDate) {
         this.requestDate = requestDate;
-    }
-
-    public Integer getProjectStageId() {
-        return projectStageId;
-    }
-
-    public void setProjectStageId(Integer projectStageId) {
-        this.projectStageId = projectStageId;
     }
 
     public Integer getProjectStatusId() {

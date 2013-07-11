@@ -24,7 +24,6 @@
         <property name="supportingCongregation" length="250" />
         <property name="constraints" column="ProjectConstraints" />
         <many-to-one name="coordinator" column="CoordinatorId" />
-        <property name="projectStageId" />
         <property name="completedDate" />
         <set name="workBriefs" inverse="true" cascade="all-delete-orphan">
             <key column="ProjectId" />

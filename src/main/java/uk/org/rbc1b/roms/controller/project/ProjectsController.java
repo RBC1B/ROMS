@@ -38,7 +38,6 @@ import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
 import uk.org.rbc1b.roms.controller.kingdomhall.KingdomHallsController;
 import uk.org.rbc1b.roms.db.project.Project;
 import uk.org.rbc1b.roms.db.project.ProjectDao;
-import uk.org.rbc1b.roms.db.project.ProjectStageType;
 import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 
 /**
@@ -75,12 +74,11 @@ public class ProjectsController {
     public String showProjectList(ModelMap model) {
 
         List<Project> projects = projectDao.findProjects();
-        Map<Integer, ProjectStageType> stages = projectDao.findProjectStages();
         Map<Integer, String> types = referenceDao.findProjectTypeValues();
         Map<Integer, String> statuses = referenceDao.findProjectStatusValues();
         List<ProjectListModel> modelList = new ArrayList<ProjectListModel>(projects.size());
         for (Project project : projects) {
-            modelList.add(generateProjectListModel(project, stages, types, statuses));
+            modelList.add(generateProjectListModel(project, types, statuses));
         }
 
         model.addAttribute("projects", modelList);
@@ -107,7 +105,7 @@ public class ProjectsController {
         return "projects/show";
     }
 
-    private ProjectListModel generateProjectListModel(Project project, Map<Integer, ProjectStageType> stages,
+    private ProjectListModel generateProjectListModel(Project project,
             Map<Integer, String> types, Map<Integer, String> statuses) {
         ProjectListModel model = new ProjectListModel();
         model.setProjectId(project.getProjectId());
@@ -123,7 +121,6 @@ public class ProjectsController {
         }
         model.setName(project.getName());
         model.setRequestDate(project.getRequestDate());
-        model.setStage(stages.get(project.getProjectStageId()));
         model.setStatus(statuses.get(project.getProjectStatusId()));
         model.setType(types.get(project.getProjectTypeId()));
         model.setUri(generateUri(project.getProjectId()));
@@ -133,7 +130,6 @@ public class ProjectsController {
 
     private ProjectModel generateProjectModel(Project project) {
 
-        Map<Integer, ProjectStageType> stages = projectDao.findProjectStages();
         Map<Integer, String> types = referenceDao.findProjectTypeValues();
         Map<Integer, String> statuses = referenceDao.findProjectStatusValues();
 
@@ -155,7 +151,6 @@ public class ProjectsController {
         model.setPriority(project.getPriority());
         model.setProjectId(project.getProjectId());
         model.setRequestDate(project.getRequestDate());
-        model.setStage(stages.get(project.getProjectStageId()));
         model.setStatus(statuses.get(project.getProjectStatusId()));
         model.setSupportingCongregation(project.getSupportingCongregation());
         model.setTelephone(project.getTelephone());
