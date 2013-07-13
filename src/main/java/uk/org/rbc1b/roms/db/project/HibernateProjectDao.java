@@ -31,6 +31,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -70,11 +71,21 @@ public class HibernateProjectDao implements ProjectDao {
     }
 
     @Override
-    @Cacheable("project.stage")
-    public Map<Integer, ProjectStageType> findProjectStages() {
+    public List<ProjectStage> findProjectStages(Integer projectId) {
         Session session = this.sessionFactory.getCurrentSession();
 
-        Criteria criteria = session.createCriteria(ProjectStageType.class).addOrder(Order.asc("projectStageId"));
+        Criteria criteria = session.createCriteria(ProjectStage.class);
+        criteria.add(Restrictions.eq("project.id", projectId));
+        return criteria.list();
+
+    }
+
+    @Override
+    @Cacheable("project.stageType")
+    public Map<Integer, ProjectStageType> findProjectStageTypes() {
+        Session session = this.sessionFactory.getCurrentSession();
+
+        Criteria criteria = session.createCriteria(ProjectStageType.class).addOrder(Order.asc("projectStageTypeId"));
         List<ProjectStageType> stages = criteria.list();
 
         Map<Integer, ProjectStageType> resultMap = new LinkedHashMap<Integer, ProjectStageType>(stages.size());

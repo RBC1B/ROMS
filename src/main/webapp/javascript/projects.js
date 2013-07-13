@@ -22,6 +22,7 @@
  * THE SOFTWARE.
  */
 $(document).ready(function() {
+    // list view
     roms.common.datatables(
         $('#project-list'),
         {
@@ -36,5 +37,11 @@ $(document).ready(function() {
     );
 
     $(".a-project-status").tooltip();
+
+    // details view
+    $("#project-stages").sortable({
+        items: "> div"
+    });
+    
 
 });

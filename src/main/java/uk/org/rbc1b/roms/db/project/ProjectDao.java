@@ -53,11 +53,21 @@ public interface ProjectDao {
     @Transactional(readOnly = true)
     Project findProject(Integer projectId);
 
+
+    /**
+     * Look up the list of stages associated with the project.
+     * @param projectId project id
+     * @return stages
+     */
+    @PreAuthorize("hasPermission('PROJECT', 'READ')")
+    @Transactional(readOnly = true)
+    List<ProjectStage> findProjectStages(Integer projectId);
+
     /**
      * Look up the ordered map of project stages.
      *
-     * @return project stag, mapped by id
+     * @return project stage, mapped by id
      */
     @Transactional(readOnly = true)
-    Map<Integer, ProjectStageType> findProjectStages();
+    Map<Integer, ProjectStageType> findProjectStageTypes();
 }

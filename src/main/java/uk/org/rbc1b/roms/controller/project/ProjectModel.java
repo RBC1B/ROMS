@@ -24,10 +24,10 @@
 package uk.org.rbc1b.roms.controller.project;
 
 import java.util.Date;
+import java.util.List;
 import uk.org.rbc1b.roms.controller.common.model.EntityModel;
 import uk.org.rbc1b.roms.controller.common.model.PersonModel;
 import uk.org.rbc1b.roms.db.Address;
-import uk.org.rbc1b.roms.db.project.ProjectStageType;
 
 /**
  * Model representing the project.
@@ -48,7 +48,7 @@ public class ProjectModel {
     private String type;
     private String priority;
     private Date requestDate;
-    private ProjectStageType stage;
+    private List<ProjectStageModel> stages;
     private String status;
     private String supportingCongregation;
     private String telephone;
@@ -150,12 +150,12 @@ public class ProjectModel {
         this.requestDate = requestDate;
     }
 
-    public ProjectStageType getStage() {
-        return stage;
+    public List<ProjectStageModel> getStages() {
+        return stages;
     }
 
-    public void setStage(ProjectStageType stage) {
-        this.stage = stage;
+    public void setStages(List<ProjectStageModel> stages) {
+        this.stages = stages;
     }
 
     public String getStatus() {

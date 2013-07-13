@@ -276,6 +276,18 @@ values (1, 3, 'Add shelfs along main wall. Fix the door lock.', NOW(), 1);
 insert into ProjectWorkBrief(ProjectId, WorkFeatureId, Brief, UpdateTime, UpdatedBy)
 values (1, 8, 'Replace slabs at front door', NOW(), 1);
 
+insert into ProjectStage(ProjectId, ProjectStageTypeId, ProjectStageStatusId, CreatedTime,
+StartedTime, CompletedTime, UpdateTime, UpdatedBy)
+values (1, 19, 4, '2013-06-13', '2013-06-15', '2013-06-17', '2013-06-19 11:45:00', 1)
+
+insert into ProjectStage(ProjectId, ProjectStageTypeId, ProjectStageStatusId, CreatedTime,
+StartedTime, CompletedTime, UpdateTime, UpdatedBy)
+values (1, 20, 2, '2013-06-24', '2013-06-25', null, '2013-06-21 17:45:00', 1)
+
+insert into ProjectStage(ProjectId, ProjectStageTypeId, ProjectStageStatusId, CreatedTime,
+StartedTime, CompletedTime, UpdateTime, UpdatedBy)
+values (1, 21, 1, '2013-07-13', null, null, '2013-07-08 11:45:00', 1)
+
 insert into Project(Name,ProjectTypeId,KingdomHallId,Priority,Street,Town,County,Postcode,Telephone,ContactPersonId,RequestDate,VisitDate,EstimateCost,
 				ProjectStatusId,SupportingCongregation,ProjectConstraints,CoordinatorId, UpdateTime, UpdatedBy)
 values ('Brand new hall near Hull', 2, null, null, '73 Industrial Street', 'Hull', null, 'HL12 5FD', '1234 53367', null, null, null, null,

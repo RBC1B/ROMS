@@ -1,5 +1,5 @@
 <%--
-    Author     : oliver
+    Show the project details.
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -19,7 +19,6 @@
                     <dt>Type:</dt><dd>${project.type}</dd>
                     <dt>Status:</dt><dd>${project.status}</dd>
                     <dt>Priority:</dt><dd>${project.priority}</dd>
-                    <dt>Stage:</dt><dd>${project.stage.name}: ${project.stage.description} - ${project.stage.assignedTo}</dd>
                     <dt>Type:</dt><dd>${project.type}</dd>
                     <c:if test="${project.requestDate != null}">
                         <dt>Request Date:</dt><dd><fmt:formatDate value="${project.requestDate}" pattern="yyyy-MM-dd" /></dd>
@@ -102,8 +101,20 @@
                 </dl>
             </div>
             <div class="clearfix"></div>
+
+            <c:choose>
+                <c:when test="${!empty project.stages}">
+                    <div id="project-stages">
+                        <c:forEach var="stage" items="${project.stages}">
+                            <%@ include file="fragments/show-stage.jsp" %>
+                        </c:forEach>
+                    </div>
+                </c:when>
+                <c:otherwise>No stages defined</c:otherwise>
+            </c:choose>
+
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
-        <script type="text/javascript" src="<c:url value='/javascript/volunteer.js' />" ></script>
+        <script type="text/javascript" src="<c:url value='/javascript/projects.js' />" ></script>
     </body>
 </html>
