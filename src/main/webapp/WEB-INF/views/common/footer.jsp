@@ -1,6 +1,6 @@
-<footer class="footer hidden">
+<footer class="footer">
     <hr />
-    <div class="navbar navbar-inverse navbar-fixed-bottom">
+    <div class="navbar navbar-inverse">
         <div class="navbar-inner">
             <div class="row-fluid">
                 <div class="span3">
