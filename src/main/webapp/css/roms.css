@@ -129,7 +129,7 @@ div.dataTables_scrollFoot table {
 }
 /*
  * TableTools styles
- */
+*/
 .table tbody tr.active td,
 .table tbody tr.active th {
     background-color: #08C;
@@ -179,7 +179,7 @@ div.DTTT_print_info p {
 }
 /*
  * FixedColumns styles
- */
+*/
 div.DTFC_LeftHeadWrapper table,
 div.DTFC_LeftFootWrapper table,
 table.DTFC_Cloned tr.even {
@@ -286,7 +286,44 @@ li.first {
     text-transform: uppercase;
     margin-bottom:2px;
 }
-.navbar-inner {
+
+/*****************************************************************************/
+/* Project pages                                                             */
+/*****************************************************************************/
+#project-stages>div {
+    position: relative;
+    margin: 3px 9px;
+    padding: 9px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+#project-stages .icon-plus,
+#project-stages .icon-minus
+{
+    float: left;
+}
+
+#project-stages div.project-stage-type-name {
+    width: 50%;
+    float: left;
+    margin-left: 3px;
+}
+
+#project-stages div.project-stage-status,
+#project-stages div.project-stage-created-date,
+#project-stages div.project-stage-started-date,
+#project-stages div.project-stage-completed-date {
+    width: 10%;
+    float: left;
+    margin-left: 3px;
+}
+
+#project-stages .icon-resize-vertical {
+    float: right;
+}.navbar-inner {
     -webkit-border-radius: 0px!important;
     -moz-border-radius: 0px!important;
     border-radius: 0px!important;
