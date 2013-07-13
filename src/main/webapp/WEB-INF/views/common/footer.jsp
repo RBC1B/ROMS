@@ -1,3 +1,5 @@
+</div><!--- /.container-fluid (page container box --->
+</div><!--- /#wrap (container for sticky footer --->
 <footer class="footer">
     <hr />
     <div class="navbar navbar-inverse">

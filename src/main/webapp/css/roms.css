@@ -1,14 +1,9 @@
+html,
 body {
-    padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-    padding-bottom: 20px;
+    height: 100%;
+    /* The html and body elements cannot have any padding or margin. */
 }
-@media (max-width: 979px) {
-    body {
-        padding-bottom: 0px;/* fixes a bug showing a white line beneath the black footer */
-    }
-}
-
-/*****************************************************************************/
+      /*****************************************************************************/
 /* Sign in form                                                              */
 /*****************************************************************************/
 .form-signin {
@@ -255,12 +250,19 @@ div.DTFC_LeftFootWrapper table {
 /*****************************************************************************/
 /* Footer fancy styling                                                      */
 /*****************************************************************************/
-@media (min-width: 768px) and (max-width: 979px) {
+#wrap {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    /* Negative indent footer by it's height */
+    margin: 0 auto -60px;
+}
+@media (max-width: 767px) {
     .footer {
-        margin-left: -20px;
-        margin-right: -20px;
-        padding-left: 0px;
-        padding-right: 0px;
+        margin-left: -40px;
+        margin-right: -40px;
+        padding-left: 20px;
+        padding-right: 20px;
     }
 }
 ul.footer-nav, #footer-nav {
@@ -283,4 +285,13 @@ ul.footer-nav a:hover {
 li.first {
     text-transform: uppercase;
     margin-bottom:2px;
+}
+.navbar-inner {
+    -webkit-border-radius: 0px!important;
+    -moz-border-radius: 0px!important;
+    border-radius: 0px!important;
+}
+.form-signin {
+    margin-top:60px;
+}
 }
