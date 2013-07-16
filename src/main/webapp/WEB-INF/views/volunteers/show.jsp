@@ -43,59 +43,66 @@
                 </div>
             </div>
             <hr>
-                <c:choose>
-                    <c:when test="${!empty volunteer.assignments}">
-                        <h3>Assignments</h3>
-                        <table class="table table-bordered table-striped table-hover">
-                            <thead>
+            <c:choose>
+                <c:when test="${!empty volunteer.assignments}">
+                    <h3>Assignments</h3>
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Department</th>
+                                <th>Team</th>
+                                <th>Role</th>
+                                <th>Assigned</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${volunteer.assignments}" var="assignment">
                                 <tr>
-                                    <th>#</th>
-                                    <th>Department</th>
-                                    <th>Team</th>
-                                    <th>Role</th>
-                                    <th>Assigned</th>
+                                    <td>${assignment.tradeNumber}</td>
+                                    <td><a href="${assignment.department.uri}">${assignment.department.name}</a></td>
+                                    <td><a href="${assignment.team.uri}">${assignment.team.name}</a></td>
+                                    <td>${assignment.role}</td>
+                                    <td><fmt:formatDate value="${assignment.assignedDate}" pattern="dd MMM yyyy" /></td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach items="${volunteer.assignments}" var="assignment">
-                                    <tr>
-                                        <td>${assignment.tradeNumber}</td>
-                                        <td><a href="${assignment.department.uri}">${assignment.department.name}</a></td>
-                                        <td><a href="${assignment.team.uri}">${assignment.team.name}</a></td>
-                                        <td>${assignment.role}</td>
-                                        <td><fmt:formatDate value="${assignment.assignedDate}" pattern="dd MMM yyyy" /></td>
-                                    </tr>
-                                </c:forEach>
-                            </tbody>
-                        </table>
-                    </c:when>
-                    <c:otherwise>
-                        <br />
-                        <div class="alert alert-block">Volunteer is not assigned to any teams</div>
-                    </c:otherwise>
-                </c:choose>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </c:when>
+                <c:otherwise>
+                    <br />
+                    <div class="alert alert-block">Volunteer is not assigned to any teams</div>
+                </c:otherwise>
+            </c:choose>
             <div class="clearfix"></div>
             <br />
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#personal" data-toggle="tab">Personal</a></li>
-                <li><a href="#spiritual" data-toggle="tab">Spiritual</a></li>
+                <li class="active"><a href="#personal" data-toggle="tab">Details</a></li>
                 <li><a href="#skills" data-toggle="tab">Skills</a></li>
-                <li><a href="#rbc-status" data-toggle="tab">RBC Status</a></li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="personal">
-                    <%@ include file="fragments/show-personal.jsp" %>
-                </div>
-                <div class="tab-pane" id="spiritual">
-                    <%@ include file="fragments/show-spiritual.jsp" %>
+                    <div class="row-fluid">
+                        <div class="span4">
+                            <h3>Personal</h3>
+                            <%@ include file="fragments/show-personal.jsp" %>
+                        </div>
+                        <div class="span4">
+                            <h3>Spiritual</h3>
+                            <%@ include file="fragments/show-spiritual.jsp" %>
+                        </div>
+                        <div class="span4">
+                            <h3>RBC Status</h3>
+                            <%@ include file="fragments/show-rbc-status.jsp" %>   
+                        </div>
+                    </div>
                 </div>
                 <div class="tab-pane" id="skills">
                     <%@ include file="fragments/show-skills.jsp" %>
                 </div>
-                <div class="tab-pane" id="rbc-status">
-                    <%@ include file="fragments/show-rbc-status.jsp" %>
-                </div>
             </div>
+            <div class="clearfix"></div>                
+
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
         <%@ include file="fragments/show-name-edit-modal.jsp" %>
