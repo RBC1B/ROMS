@@ -72,7 +72,6 @@
         <module name="ArrayTrailingComma" />
         <!-- <module name="AvoidInlineConditionals"/> we like these -->
         <module name="CovariantEquals" />
-        <module name="DoubleCheckedLocking" />
         <module name="EmptyStatement" />
         <!-- <module name="EqualsAvoidNull"/> yoda speak it is -->
         <module name="EqualsHashCode" />
