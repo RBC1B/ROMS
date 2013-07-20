@@ -26,47 +26,37 @@ package uk.org.rbc1b.roms.db.project;
 import uk.org.rbc1b.roms.db.DefaultCreateAuditable;
 
 /**
- * Events associated with the project stages.
+ * Events associated with the project stage tasks.
  */
-public class ProjectStageEvent extends DefaultCreateAuditable {
+public class ProjectStageTaskEvent extends DefaultCreateAuditable {
 
-    private Integer projectStageEventId;
-    private ProjectStage projectStage;
-    private Integer projectStageEventTypeId;
-    private Commentator commentator;
+    private Integer projectStageTaskEventId;
+    private ProjectStageTask projectStageTask;
+    private Integer projectStageTaskEventTypeId;
     private String comments;
-    private boolean visible;
 
-    public Integer getProjectStageEventId() {
-        return projectStageEventId;
+    public Integer getProjectStageTaskEventId() {
+        return projectStageTaskEventId;
     }
 
-    public void setProjectStageEventId(Integer projectStageEventId) {
-        this.projectStageEventId = projectStageEventId;
+    public void setProjectStageTaskEventId(Integer projectStageTaskEventId) {
+        this.projectStageTaskEventId = projectStageTaskEventId;
     }
 
-    public ProjectStage getProjectStage() {
-        return projectStage;
+    public ProjectStageTask getProjectStageTask() {
+        return projectStageTask;
     }
 
-    public void setProjectStage(ProjectStage projectStage) {
-        this.projectStage = projectStage;
+    public void setProjectStageTask(ProjectStageTask projectStageTask) {
+        this.projectStageTask = projectStageTask;
     }
 
-    public Integer getProjectStageEventTypeId() {
-        return projectStageEventTypeId;
+    public Integer getProjectStageTaskEventTypeId() {
+        return projectStageTaskEventTypeId;
     }
 
-    public void setProjectStageEventTypeId(Integer projectStageEventTypeId) {
-        this.projectStageEventTypeId = projectStageEventTypeId;
-    }
-
-    public Commentator getCommentator() {
-        return commentator;
-    }
-
-    public void setCommentator(Commentator commentator) {
-        this.commentator = commentator;
+    public void setProjectStageTaskEventTypeId(Integer projectStageTaskEventTypeId) {
+        this.projectStageTaskEventTypeId = projectStageTaskEventTypeId;
     }
 
     public String getComments() {
@@ -77,16 +67,8 @@ public class ProjectStageEvent extends DefaultCreateAuditable {
         this.comments = comments;
     }
 
-    public boolean isVisible() {
-        return visible;
-    }
-
-    public void setVisible(boolean visible) {
-        this.visible = visible;
-    }
-
     @Override
     public String toString() {
-        return "ProjectStageEvent{" + "projectStageEventId=" + projectStageEventId + '}';
+        return "ProjectStageTaskEvent{" + "projectStageTaskEventId=" + projectStageTaskEventId + '}';
     }
 }

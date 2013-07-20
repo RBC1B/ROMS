@@ -23,13 +23,13 @@
  */
 package uk.org.rbc1b.roms.db.project;
 
-import uk.org.rbc1b.roms.db.DefaultAuditable;
+import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 
 /**
  * The work required for a given feature in a project.
  * @author oliver.elder.esq
  */
-public class ProjectWorkBrief extends DefaultAuditable {
+public class ProjectWorkBrief extends DefaultUpdateAuditable {
 
     private Integer projectWorkBriefId;
     private Project project;

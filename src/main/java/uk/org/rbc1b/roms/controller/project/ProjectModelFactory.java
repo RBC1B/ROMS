@@ -23,8 +23,10 @@
  */
 package uk.org.rbc1b.roms.controller.project;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +34,12 @@ import org.springframework.stereotype.Component;
 import uk.org.rbc1b.roms.controller.common.model.EntityModel;
 import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
 import uk.org.rbc1b.roms.controller.kingdomhall.KingdomHallsController;
+import uk.org.rbc1b.roms.db.Person;
+import uk.org.rbc1b.roms.db.PersonDao;
 import uk.org.rbc1b.roms.db.project.Project;
 import uk.org.rbc1b.roms.db.project.ProjectDao;
 import uk.org.rbc1b.roms.db.project.ProjectStage;
+import uk.org.rbc1b.roms.db.project.ProjectStageTask;
 import uk.org.rbc1b.roms.db.project.ProjectStageType;
 import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 
@@ -45,9 +50,11 @@ import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 public class ProjectModelFactory {
 
     private static final String BASE_URI = "/projects/";
+    private static final ProjectStageTaskModelComparator TASK_COMPARATOR = new ProjectStageTaskModelComparator();
     private PersonModelFactory personModelFactory;
     private ReferenceDao referenceDao;
     private ProjectDao projectDao;
+    private PersonDao personDao;
 
     /**
      * Generate the uri used to access the project pages.
@@ -74,10 +81,11 @@ public class ProjectModelFactory {
         model.setCompletedDate(project.getCompletedDate());
 
         if (project.getContactPerson() != null) {
+            Person person = personDao.findPerson(project.getContactPerson().getPersonId());
             EntityModel contactPerson = new EntityModel();
-            contactPerson.setId(project.getContactPerson().getPersonId());
-            contactPerson.setName(project.getContactPerson().formatDisplayName());
-            contactPerson.setUri(personModelFactory.generateUri(project.getContactPerson().getPersonId()));
+            contactPerson.setId(person.getPersonId());
+            contactPerson.setName(person.formatDisplayName());
+            contactPerson.setUri(personModelFactory.generateUri(person.getPersonId()));
 
             model.setContactPerson(contactPerson);
         }
@@ -104,8 +112,16 @@ public class ProjectModelFactory {
         ProjectModel model = new ProjectModel();
         model.setCompletedDate(project.getCompletedDate());
         model.setConstraints(project.getConstraints());
-        model.setContactPerson(personModelFactory.generatePersonModel(project.getContactPerson()));
-        model.setCoordinator(personModelFactory.generatePersonModel(project.getCoordinator()));
+
+        if (project.getContactPerson() != null) {
+            Person person = personDao.findPerson(project.getContactPerson().getPersonId());
+            model.setContactPerson(personModelFactory.generatePersonModel(person));
+        }
+
+        if (project.getCoordinator() != null) {
+            Person person = personDao.findPerson(project.getCoordinator().getPersonId());
+            model.setCoordinator(personModelFactory.generatePersonModel(person));
+        }
         model.setEstimateCost(project.getEstimateCost());
 
         if (project.getKingdomHall() != null) {
@@ -153,9 +169,35 @@ public class ProjectModelFactory {
             model.setStartedTime(stage.getStartedTime());
             model.setCompletedTime(stage.getCompletedTime());
 
+            List<ProjectStageTaskModel> taskModelList = new ArrayList<ProjectStageTaskModel>();
+            for (ProjectStageTask task : stage.getTasks()) {
+                ProjectStageTaskModel taskModel = new ProjectStageTaskModel();
+
+                // we make use of the person dao caching, otherwise we would look these up first
+                // to prevent duplicate lookups.
+                Person person = personDao.findPerson(task.getAssignedVolunteer().getPersonId());
+
+                taskModel.setAssignedVolunteer(personModelFactory.generatePersonModel(person));
+                taskModel.setComments(task.getComments());
+                taskModel.setCompletedTime(task.getCompletedTime());
+                taskModel.setCreatedTime(task.getCreatedTime());
+                taskModel.setName(task.getName());
+                taskModel.setProjectStageTaskId(Integer.SIZE);
+                taskModel.setStartedTime(task.getStartedTime());
+                taskModelList.add(taskModel);
+
+            }
+            Collections.sort(taskModelList, TASK_COMPARATOR);
+            model.setTasks(taskModelList);
+
             modelList.add(model);
         }
         return modelList;
+    }
+
+    @Autowired
+    public void setPersonDao(PersonDao personDao) {
+        this.personDao = personDao;
     }
 
     @Autowired
@@ -171,5 +213,16 @@ public class ProjectModelFactory {
     @Autowired
     public void setReferenceDao(ReferenceDao referenceDao) {
         this.referenceDao = referenceDao;
+    }
+
+    /**
+     * Task comparator, sort by task creation date.
+     */
+    private static class ProjectStageTaskModelComparator implements Comparator<ProjectStageTaskModel>, Serializable {
+
+        @Override
+        public int compare(ProjectStageTaskModel t, ProjectStageTaskModel t1) {
+            return t.getCreatedTime().compareTo(t1.getCreatedTime());
+        }
     }
 }

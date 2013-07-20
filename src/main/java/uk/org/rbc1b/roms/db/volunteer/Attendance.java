@@ -24,7 +24,7 @@
 package uk.org.rbc1b.roms.db.volunteer;
 
 import java.sql.Date;
-import uk.org.rbc1b.roms.db.DefaultAuditable;
+import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.project.Project;
 
@@ -32,7 +32,7 @@ import uk.org.rbc1b.roms.db.project.Project;
  * The invitation of a volunteer for a given date on a project.
  * @author oliver.elder.esq
  */
-public class Attendance extends DefaultAuditable {
+public class Attendance extends DefaultUpdateAuditable {
 
     private Integer attendanceId;
     private Project project;

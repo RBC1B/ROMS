@@ -73,7 +73,17 @@ public interface VolunteerDao {
      */
     @PreAuthorize("hasPermission('VOLUNTEER', 'ADD')")
     @Transactional
-    void saveVolunteer(Volunteer volunteer);
+    void createVolunteer(Volunteer volunteer);
+
+    /**
+     * Update a volunteer.
+     *
+     * @param volunteer volunteer to
+     */
+    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
+    @Transactional
+    void updateVolunteer(Volunteer volunteer);
+
 
     /**
      * Find the volunteer assignments.

@@ -26,19 +26,28 @@ package uk.org.rbc1b.roms.db;
 import java.util.Date;
 
 /**
- * Interface used to defined tables that track who last updated them, and when.
- * @author oliver.elder.esq
+ * Basic implementation of the auditable interface, supporting the auditable properties.
  */
-public interface Auditable {
+public class DefaultCreateAuditable implements CreateAuditable {
 
-    /**
-     * @return timestamp of the last time the row was updated.
-     */
-    Date getUpdateTime();
+    private Date createTime;
+    private Integer createdBy;
 
-    /**
-     * @return user id of the last person to update the row.
-     */
-    Integer getUpdatedBy();
+    @Override
+    public Date getCreateTime() {
+        return createTime;
+    }
 
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    @Override
+    public Integer getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
+    }
 }

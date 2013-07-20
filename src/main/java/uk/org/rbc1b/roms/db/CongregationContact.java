@@ -28,7 +28,7 @@ package uk.org.rbc1b.roms.db;
  *
  * @author oliver.elder.esq
  */
-public class CongregationContact extends DefaultAuditable {
+public class CongregationContact extends DefaultUpdateAuditable {
 
     private Integer congregationContactId;
     private Congregation congregation;

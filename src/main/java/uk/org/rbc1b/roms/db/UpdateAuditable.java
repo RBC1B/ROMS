@@ -21,47 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.db.kingdomhall;
+package uk.org.rbc1b.roms.db;
 
-import uk.org.rbc1b.roms.db.Congregation;
-import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
+import java.util.Date;
 
 /**
- * Congregation that holds the deeds to the hall.
+ * Interface used to defined tables that track who last updated them, and when.
  * @author oliver.elder.esq
  */
-public class TitleHolder extends DefaultUpdateAuditable {
+public interface UpdateAuditable {
 
-    private Integer titleHolderId;
-    private KingdomHall kingdomHall;
-    private Congregation congregation;
+    /**
+     * @return timestamp of the last time the row was updated.
+     */
+    Date getUpdateTime();
 
-    public Congregation getCongregation() {
-        return congregation;
-    }
+    /**
+     * @return user id of the last person to update the row.
+     */
+    Integer getUpdatedBy();
 
-    public void setCongregation(Congregation congregation) {
-        this.congregation = congregation;
-    }
-
-    public KingdomHall getKingdomHall() {
-        return kingdomHall;
-    }
-
-    public void setKingdomHall(KingdomHall kingdomHall) {
-        this.kingdomHall = kingdomHall;
-    }
-
-    public Integer getTitleHolderId() {
-        return titleHolderId;
-    }
-
-    public void setTitleHolderId(Integer titleHolderId) {
-        this.titleHolderId = titleHolderId;
-    }
-
-    @Override
-    public String toString() {
-        return "TitleHolder{" + "titleHolderId=" + titleHolderId + '}';
-    }
 }

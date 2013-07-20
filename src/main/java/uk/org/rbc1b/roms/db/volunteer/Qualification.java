@@ -23,13 +23,13 @@
  */
 package uk.org.rbc1b.roms.db.volunteer;
 
-import uk.org.rbc1b.roms.db.DefaultAuditable;
+import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 
 /**
  * A recognised identifier of a skill.
  * @author ramindursingh
  */
-public class Qualification extends DefaultAuditable {
+public class Qualification extends DefaultUpdateAuditable {
 
     private Integer qualificationId;
     private String name;

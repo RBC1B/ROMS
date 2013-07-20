@@ -26,7 +26,7 @@ package uk.org.rbc1b.roms.db.project;
 import java.util.Date;
 import java.util.Set;
 import uk.org.rbc1b.roms.db.Address;
-import uk.org.rbc1b.roms.db.DefaultAuditable;
+import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 
@@ -35,7 +35,7 @@ import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
  *
  * @author oliver.elder.esq
  */
-public class Project extends DefaultAuditable {
+public class Project extends DefaultUpdateAuditable {
 
     private Address address;
     private String constraints;

@@ -24,13 +24,13 @@
 package uk.org.rbc1b.roms.db.project;
 
 import java.util.Date;
-import uk.org.rbc1b.roms.db.DefaultAuditable;
+import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 
 /**
  * Task involved in completing a project stage.
  */
-public class ProjectStageTask extends DefaultAuditable {
+public class ProjectStageTask extends DefaultUpdateAuditable {
 
     private Integer projectStageTaskId;
     private ProjectStage projectStage;

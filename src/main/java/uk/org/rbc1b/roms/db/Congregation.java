@@ -31,7 +31,7 @@ import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
  * Group of people.
  * @author oliver.elder.esq
  */
-public class Congregation extends DefaultAuditable {
+public class Congregation extends DefaultUpdateAuditable {
 
     private Integer congregationId;
     private String name;

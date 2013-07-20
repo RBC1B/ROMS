@@ -42,7 +42,7 @@ public class AuditInterceptor extends EmptyInterceptor {
     public boolean onFlushDirty(Object entity, Serializable id, Object[] currentState, Object[] previousState, String[] propertyNames, Type[] types) {
         boolean modified = false;
 
-        if (entity instanceof Auditable) {
+        if (entity instanceof UpdateAuditable) {
             for (int i = 0; i < propertyNames.length; i++) {
                 if ("updateTime".equals(propertyNames[i])) {
                     currentState[i] = new Date();
@@ -53,6 +53,19 @@ public class AuditInterceptor extends EmptyInterceptor {
                 }
             }
         }
+
+        if (entity instanceof UpdateAuditable) {
+            for (int i = 0; i < propertyNames.length; i++) {
+                if ("createTime".equals(propertyNames[i])) {
+                    currentState[i] = new Date();
+                    modified = true;
+                } else if ("createdBy".equals(propertyNames[i])) {
+                    currentState[i] = findUserId();
+                    modified = true;
+                }
+            }
+        }
+
         return modified;
     }
 
@@ -60,7 +73,7 @@ public class AuditInterceptor extends EmptyInterceptor {
     public boolean onSave(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
         boolean modified = false;
 
-        if (entity instanceof Auditable) {
+        if (entity instanceof UpdateAuditable) {
             for (int i = 0; i < propertyNames.length; i++) {
                 if ("updateTime".equals(propertyNames[i])) {
                     state[i] = new Date();
@@ -71,6 +84,19 @@ public class AuditInterceptor extends EmptyInterceptor {
                 }
             }
         }
+
+        if (entity instanceof UpdateAuditable) {
+            for (int i = 0; i < propertyNames.length; i++) {
+                if ("createTime".equals(propertyNames[i])) {
+                    state[i] = new Date();
+                    modified = true;
+                } else if ("createdBy".equals(propertyNames[i])) {
+                    state[i] = findUserId();
+                    modified = true;
+                }
+            }
+        }
+
         return modified;
     }
 

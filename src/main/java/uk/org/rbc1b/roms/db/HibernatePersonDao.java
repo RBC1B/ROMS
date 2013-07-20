@@ -32,13 +32,13 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 import uk.org.rbc1b.roms.controller.common.SortDirection;
 
 /**
  * Implements PersonDao.
- *
- * @author rahulsingh
  */
 @Repository
 public class HibernatePersonDao implements PersonDao {
@@ -47,6 +47,7 @@ public class HibernatePersonDao implements PersonDao {
     private SessionFactory sessionFactory;
 
     @Override
+    @Cacheable(value = "person.person", key = "#personId")
     public Person findPerson(Integer personId) {
         return (Person) this.sessionFactory.getCurrentSession().get(Person.class, personId);
     }
@@ -110,12 +111,15 @@ public class HibernatePersonDao implements PersonDao {
     }
 
     @Override
-    public void savePerson(Person person) {
-        if (person.getPersonId() != null) {
-            this.sessionFactory.getCurrentSession().merge(person);
-        } else {
-            this.sessionFactory.getCurrentSession().save(person);
-        }
+    public void createPerson(Person person) {
+        this.sessionFactory.getCurrentSession().save(person);
+    }
+
+    @Override
+    @CacheEvict(value = "person.person", key = "#person.personId")
+    public void updatePerson(Person person) {
+        this.sessionFactory.getCurrentSession().merge(person);
+
     }
 
     public void setSessionFactory(SessionFactory sessionFactory) {

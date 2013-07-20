@@ -24,6 +24,7 @@
 package uk.org.rbc1b.roms.controller.project;
 
 import java.util.Date;
+import java.util.List;
 import uk.org.rbc1b.roms.db.project.ProjectStageType;
 
 /**
@@ -37,6 +38,53 @@ public class ProjectStageModel {
     private Date createdTime;
     private Date startedTime;
     private Date completedTime;
+    private List<ProjectStageTaskModel> tasks;
+
+    /**
+     * @return total number of tasks connected to the stage
+     */
+    public int getTotalTaskCount() {
+        return tasks.size();
+    }
+
+    /**
+     * @return  total number of tasks created but not started
+     */
+    public int getCreatedTaskCount() {
+        int count = 0;
+        for (ProjectStageTaskModel task: tasks) {
+            if (task.getStartedTime() == null) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
+     * @return  total number of tasks started but not completed
+     */
+    public int getStartedTaskCount() {
+        int count = 0;
+        for (ProjectStageTaskModel task: tasks) {
+            if (task.getStartedTime() != null && task.getCompletedTime() == null) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
+     * @return  total number of tasks completed
+     */
+    public int getCompletedTaskCount() {
+        int count = 0;
+        for (ProjectStageTaskModel task: tasks) {
+            if (task.getCompletedTime() != null) {
+                count++;
+            }
+        }
+        return count;
+    }
 
     public Integer getProjectStageId() {
         return projectStageId;
@@ -84,5 +132,13 @@ public class ProjectStageModel {
 
     public void setCompletedTime(Date completedTime) {
         this.completedTime = completedTime;
+    }
+
+    public List<ProjectStageTaskModel> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<ProjectStageTaskModel> tasks) {
+        this.tasks = tasks;
     }
 }

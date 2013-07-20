@@ -76,11 +76,20 @@ public interface PersonDao {
     int findPersonsCount(PersonSearchCriteria searchCriteria);
 
     /**
-     * Save/update the person.
+     * Save the new person.
+     *
+     * @param person person to persist
+     */
+    @PreAuthorize("hasPermission('VOLUNTEER', 'ADD')")
+    @Transactional
+    void createPerson(Person person);
+
+    /**
+     * Update the person.
      *
      * @param person person to persist
      */
     @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     @Transactional
-    void savePerson(Person person);
+    void updatePerson(Person person);
 }

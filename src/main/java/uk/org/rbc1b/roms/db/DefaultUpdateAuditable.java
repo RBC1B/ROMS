@@ -21,47 +21,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.db.kingdomhall;
+package uk.org.rbc1b.roms.db;
 
-import uk.org.rbc1b.roms.db.Congregation;
-import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
- * Congregation that holds the deeds to the hall.
- * @author oliver.elder.esq
+ * Basic implementation of the auditable interface, supporting the auditable properties.
  */
-public class TitleHolder extends DefaultUpdateAuditable {
+public class DefaultUpdateAuditable implements UpdateAuditable, Serializable {
 
-    private Integer titleHolderId;
-    private KingdomHall kingdomHall;
-    private Congregation congregation;
+    private Date updateTime;
+    private Integer updatedBy;
 
-    public Congregation getCongregation() {
-        return congregation;
+    @Override
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
-    public void setCongregation(Congregation congregation) {
-        this.congregation = congregation;
-    }
-
-    public KingdomHall getKingdomHall() {
-        return kingdomHall;
-    }
-
-    public void setKingdomHall(KingdomHall kingdomHall) {
-        this.kingdomHall = kingdomHall;
-    }
-
-    public Integer getTitleHolderId() {
-        return titleHolderId;
-    }
-
-    public void setTitleHolderId(Integer titleHolderId) {
-        this.titleHolderId = titleHolderId;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     @Override
-    public String toString() {
-        return "TitleHolder{" + "titleHolderId=" + titleHolderId + '}';
+    public Integer getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Integer updatedBy) {
+        this.updatedBy = updatedBy;
     }
 }

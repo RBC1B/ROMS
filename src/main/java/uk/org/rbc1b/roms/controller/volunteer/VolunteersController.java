@@ -52,6 +52,7 @@ import uk.org.rbc1b.roms.db.CongregationDao;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.PersonDao;
 import uk.org.rbc1b.roms.db.application.User;
+import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 import uk.org.rbc1b.roms.db.volunteer.Assignment;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
@@ -60,7 +61,6 @@ import uk.org.rbc1b.roms.db.volunteer.VolunteerQualification;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerSearchCriteria;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerSkill;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerTrade;
-import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 
 /**
  *
@@ -267,7 +267,7 @@ public class VolunteersController {
             }
         }
 
-        volunteerDao.saveVolunteer(volunteer);
+        volunteerDao.createVolunteer(volunteer);
 
         return "redirect:" + volunteerModelFactory.generateUri(volunteer.getPersonId());
     }
@@ -389,7 +389,7 @@ public class VolunteersController {
         volunteer.setMiddleName(form.getMiddleName());
         volunteer.setSurname(form.getSurname());
 
-        volunteerDao.saveVolunteer(volunteer);
+        volunteerDao.updateVolunteer(volunteer);
     }
 
     /**
@@ -411,7 +411,7 @@ public class VolunteersController {
 
         volunteer.setComments(comments);
 
-        volunteerDao.saveVolunteer(volunteer);
+        volunteerDao.updateVolunteer(volunteer);
     }
 
     /**
@@ -436,7 +436,7 @@ public class VolunteersController {
         volunteer.setAppointmentId(form.getAppointmentId());
         volunteer.setCongregationId(form.getCongregationId());
 
-        volunteerDao.saveVolunteer(volunteer);
+        volunteerDao.updateVolunteer(volunteer);
 
         return "redirect:" + volunteerModelFactory.generateUri(volunteer.getPersonId()) + "#!spiritual";
 
@@ -492,7 +492,7 @@ public class VolunteersController {
         volunteer.setReliefUKComments(form.getReliefUKComments());
         volunteer.setHhcFormCode(form.getHhcFormCode());
 
-        volunteerDao.saveVolunteer(volunteer);
+        volunteerDao.updateVolunteer(volunteer);
 
         return "redirect:" + volunteerModelFactory.generateUri(volunteer.getPersonId()) + "#!rbc-status";
     }

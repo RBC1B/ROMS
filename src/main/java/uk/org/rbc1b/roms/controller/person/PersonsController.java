@@ -229,7 +229,7 @@ public class PersonsController {
         person.setTelephone(form.getTelephone());
         person.setWorkPhone(form.getWorkPhone());
 
-        personDao.savePerson(person);
+        personDao.updatePerson(person);
 
         return "redirect:" + personModelFactory.generateUri(personId);
     }

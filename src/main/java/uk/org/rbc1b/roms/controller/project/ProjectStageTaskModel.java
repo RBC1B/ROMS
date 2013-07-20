@@ -21,56 +21,54 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.db.project;
+package uk.org.rbc1b.roms.controller.project;
 
 import java.util.Date;
-import java.util.Set;
-import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
+import uk.org.rbc1b.roms.controller.common.model.PersonModel;
 
 /**
- * Project stage defined for a given project. Each project defines one or more stages to be completed to finish the project.
+ * Model the project stage tasks.
  */
-public class ProjectStage extends DefaultUpdateAuditable {
+public class ProjectStageTaskModel {
 
-    private Integer projectStageId;
-    private Project project;
-    private Integer projectStageTypeId;
-    private Integer projectStageStatusId;
+    private Integer projectStageTaskId;
+    private String name;
+    private PersonModel assignedVolunteer;
+    private String comments;
     private Date createdTime;
     private Date startedTime;
     private Date completedTime;
-    private Set<ProjectStageTask> tasks;
 
-    public Integer getProjectStageId() {
-        return projectStageId;
+    public Integer getProjectStageTaskId() {
+        return projectStageTaskId;
     }
 
-    public void setProjectStageId(Integer projectStageId) {
-        this.projectStageId = projectStageId;
+    public void setProjectStageTaskId(Integer projectStageTaskId) {
+        this.projectStageTaskId = projectStageTaskId;
     }
 
-    public Project getProject() {
-        return project;
+    public String getName() {
+        return name;
     }
 
-    public void setProject(Project project) {
-        this.project = project;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Integer getProjectStageTypeId() {
-        return projectStageTypeId;
+    public PersonModel getAssignedVolunteer() {
+        return assignedVolunteer;
     }
 
-    public void setProjectStageTypeId(Integer projectStageTypeId) {
-        this.projectStageTypeId = projectStageTypeId;
+    public void setAssignedVolunteer(PersonModel assignedVolunteer) {
+        this.assignedVolunteer = assignedVolunteer;
     }
 
-    public Integer getProjectStageStatusId() {
-        return projectStageStatusId;
+    public String getComments() {
+        return comments;
     }
 
-    public void setProjectStageStatusId(Integer projectStageStatusId) {
-        this.projectStageStatusId = projectStageStatusId;
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 
     public Date getCreatedTime() {
@@ -95,18 +93,5 @@ public class ProjectStage extends DefaultUpdateAuditable {
 
     public void setCompletedTime(Date completedTime) {
         this.completedTime = completedTime;
-    }
-
-    public Set<ProjectStageTask> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(Set<ProjectStageTask> tasks) {
-        this.tasks = tasks;
-    }
-
-    @Override
-    public String toString() {
-        return "ProjectStage{" + "projectStageId=" + projectStageId + '}';
     }
 }

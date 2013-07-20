@@ -262,36 +262,6 @@ insert into TitleHolder(KingdomHallId, CongregationId, UpdateTime, UpdatedBy) va
 
 insert into CongregationContact(CongregationId, CongregationRoleId, PersonId, UpdateTime, UpdatedBy) values (2, 1, 3, NOW(), 1);
 
-insert into Project(Name,ProjectTypeId,KingdomHallId,Priority,Street,Town,County,Postcode,Telephone,ContactPersonId,RequestDate,VisitDate,EstimateCost,
-				ProjectStatusId,SupportingCongregation,ProjectConstraints,CoordinatorId,UpdateTime, UpdatedBy)
-values ('Slightly scruffy hall spruce', 1, 2, 2, null, null, null, null, null, 2, '2012-09-12', '2012-11-24', '£300 + VAT',
-		2, 'Murmurings of approval all round', 'The cong is reknowned as terrible cooks', 4, NOW(), 1);
-
-insert into ProjectWorkBrief(ProjectId, WorkFeatureId, Brief, UpdateTime, UpdatedBy)
-values (1, 6, 'Fill and pain walls. Replace light fixtures. Move radiator to opposite wall. Replace floor tiles.', NOW(), 1);
-
-insert into ProjectWorkBrief(ProjectId, WorkFeatureId, Brief, UpdateTime, UpdatedBy)
-values (1, 3, 'Add shelfs along main wall. Fix the door lock.', NOW(), 1);
-
-insert into ProjectWorkBrief(ProjectId, WorkFeatureId, Brief, UpdateTime, UpdatedBy)
-values (1, 8, 'Replace slabs at front door', NOW(), 1);
-
-insert into ProjectStage(ProjectId, ProjectStageTypeId, ProjectStageStatusId, CreatedTime,
-StartedTime, CompletedTime, UpdateTime, UpdatedBy)
-values (1, 19, 4, '2013-06-13', '2013-06-15', '2013-06-17', '2013-06-19 11:45:00', 1)
-
-insert into ProjectStage(ProjectId, ProjectStageTypeId, ProjectStageStatusId, CreatedTime,
-StartedTime, CompletedTime, UpdateTime, UpdatedBy)
-values (1, 20, 2, '2013-06-24', '2013-06-25', null, '2013-06-21 17:45:00', 1)
-
-insert into ProjectStage(ProjectId, ProjectStageTypeId, ProjectStageStatusId, CreatedTime,
-StartedTime, CompletedTime, UpdateTime, UpdatedBy)
-values (1, 21, 1, '2013-07-13', null, null, '2013-07-08 11:45:00', 1)
-
-insert into Project(Name,ProjectTypeId,KingdomHallId,Priority,Street,Town,County,Postcode,Telephone,ContactPersonId,RequestDate,VisitDate,EstimateCost,
-				ProjectStatusId,SupportingCongregation,ProjectConstraints,CoordinatorId, UpdateTime, UpdatedBy)
-values ('Brand new hall near Hull', 2, null, null, '73 Industrial Street', 'Hull', null, 'HL12 5FD', '1234 53367', null, null, null, null,
-		1, null, null, null, NOW(), 1);
 
 -- Skills
 insert into Skill(Name, DepartmentId, Description, CategoryId, UpdateTime, UpdatedBy)
@@ -356,20 +326,6 @@ values (5, 4, 1, '... and fast too', null, null, NOW(), 1);
 insert into VolunteerQualification(PersonId, QualificationId, Comments, UpdateTime, UpdatedBy)
 values(5, 1, 'Maths is only ok', NOW(), 1);
 
-insert into Attendance(ProjectId, PersonId, InviteDate, AbleToCome, InvitationConfirmationId, DepartmentId, Attended, UpdateTime, UpdatedBy)
-values(1, 5, '2012-07-23', true, null, 10, true, NOW(), 1);
-
-insert into Attendance(ProjectId, PersonId, InviteDate, AbleToCome, InvitationConfirmationId, DepartmentId, Attended, UpdateTime, UpdatedBy)
-values(1, 5, '2012-07-24', true, null, 10, true, NOW(), 1);
-
-insert into Attendance(ProjectId, PersonId, InviteDate, AbleToCome, InvitationConfirmationId, DepartmentId, Attended, UpdateTime, UpdatedBy)
-values(1, 5, '2012-11-24', null, null, null, null, NOW(), 1);
-
-insert into Attendance(ProjectId, PersonId, InviteDate, AbleToCome, InvitationConfirmationId, DepartmentId, Attended, UpdateTime, UpdatedBy)
-values(1, 5, '2012-11-25', null, null, null, null, NOW(), 1);
-
-
-
 insert into Volunteer(PersonId, RbcStatusId, AppointmentId, FulltimeId, Availability,
 EmergencyContactId, EmergencyContactRelationshipId, Gender, MaritalStatusId, BaptismDate, InterviewDate,
 InterviewerA, InterviewerB, InterviewComments, JoinedDate, FormDate, InterviewStatusId, Oversight, OversightComments,
@@ -384,13 +340,6 @@ update Person set congregationId = 2 where PersonId = 6;
 insert into VolunteerQualification(PersonId, QualificationId, Comments, UpdateTime, UpdatedBy)
 values(6, 2, 'Hand washing is a bit suspect', NOW(), 1);
 
-insert into Attendance(ProjectId, PersonId, InviteDate, AbleToCome, InvitationConfirmationId, DepartmentId, Attended, UpdateTime, UpdatedBy)
-values(1, 6, '2012-07-23', false, 6, 10, false, NOW(), 1);
-
-insert into Attendance(ProjectId, PersonId, InviteDate, AbleToCome, InvitationConfirmationId, DepartmentId, Attended, UpdateTime, UpdatedBy)
-values(1, 6, '2012-07-24', false, 3, 10, false, NOW(), 1);
-
-
 insert into Volunteer(PersonId, RbcStatusId, AppointmentId, FulltimeId, Availability,
 EmergencyContactId, EmergencyContactRelationshipId, Gender, MaritalStatusId, BaptismDate, InterviewDate,
 InterviewerA, InterviewerB, InterviewComments, JoinedDate, FormDate, InterviewStatusId, Oversight, OversightComments,
@@ -401,3 +350,66 @@ values(7, 4, null, 2, 'FFFFFFT',
 false, null, false, null, null, null);
 
 update Person set congregationId = 3 where PersonId = 7;
+
+
+-- projects
+insert into Project(Name,ProjectTypeId,KingdomHallId,Priority,Street,Town,County,Postcode,Telephone,ContactPersonId,RequestDate,VisitDate,EstimateCost,
+				ProjectStatusId,SupportingCongregation,ProjectConstraints,CoordinatorId,UpdateTime, UpdatedBy)
+values ('Slightly scruffy hall spruce', 1, 2, 2, null, null, null, null, null, 2, '2012-09-12', '2012-11-24', '£300 + VAT',
+		2, 'Murmurings of approval all round', 'The cong is reknowned as terrible cooks', 4, NOW(), 1);
+
+insert into ProjectWorkBrief(ProjectId, WorkFeatureId, Brief, UpdateTime, UpdatedBy)
+values (1, 6, 'Fill and pain walls. Replace light fixtures. Move radiator to opposite wall. Replace floor tiles.', NOW(), 1);
+
+insert into ProjectWorkBrief(ProjectId, WorkFeatureId, Brief, UpdateTime, UpdatedBy)
+values (1, 3, 'Add shelfs along main wall. Fix the door lock.', NOW(), 1);
+
+insert into ProjectWorkBrief(ProjectId, WorkFeatureId, Brief, UpdateTime, UpdatedBy)
+values (1, 8, 'Replace slabs at front door', NOW(), 1);
+
+insert into ProjectStage(ProjectId, ProjectStageTypeId, ProjectStageStatusId, CreatedTime,
+StartedTime, CompletedTime, UpdateTime, UpdatedBy)
+values (1, 19, 4, '2013-06-13', '2013-06-15', '2013-06-17', '2013-06-19 11:45:00', 1);
+
+insert into ProjectStage(ProjectId, ProjectStageTypeId, ProjectStageStatusId, CreatedTime,
+StartedTime, CompletedTime, UpdateTime, UpdatedBy)
+values (1, 20, 2, '2013-06-24', '2013-06-25', null, '2013-06-21 17:45:00', 1);
+
+insert into ProjectStage(ProjectId, ProjectStageTypeId, ProjectStageStatusId, CreatedTime,
+StartedTime, CompletedTime, UpdateTime, UpdatedBy)
+values (1, 21, 1, '2013-07-13', null, null, '2013-07-08 11:45:00', 1);
+
+
+insert into Project(Name,ProjectTypeId,KingdomHallId,Priority,Street,Town,County,Postcode,Telephone,ContactPersonId,RequestDate,VisitDate,EstimateCost,
+				ProjectStatusId,SupportingCongregation,ProjectConstraints,CoordinatorId, UpdateTime, UpdatedBy)
+values ('Brand new hall near Hull', 2, null, null, '73 Industrial Street', 'Hull', null, 'HL12 5FD', '1234 53367', null, null, null, null,
+		1, null, null, null, NOW(), 1);
+
+insert into ProjectStageTask (ProjectStageId, Name, AssignedVolunteerId, Comments, CreatedTime,
+StartedTime, CompletedTime, UpdateTime, UpdatedBy)
+values (1, 'Ponder it for a while', 5, 'Fingernail chewing optional', '2013-07-09 11:45:00',
+'2013-07-09 14:23:30', '2013-07-10 08:17:00', '2013-07-10 08:17:00', 7);
+
+insert into ProjectStageTask (ProjectStageId, Name, AssignedVolunteerId, Comments, CreatedTime,
+StartedTime, CompletedTime, UpdateTime, UpdatedBy)
+values (1, 'Ponder it a little bit more', 6, null, '2013-07-11 17:25:48',
+null, null, '2013-07-11 17:25:48', 7);
+
+-- volunteer attendance
+insert into Attendance(ProjectId, PersonId, InviteDate, AbleToCome, InvitationConfirmationId, DepartmentId, Attended, UpdateTime, UpdatedBy)
+values(1, 5, '2012-07-23', true, null, 10, true, NOW(), 1);
+
+insert into Attendance(ProjectId, PersonId, InviteDate, AbleToCome, InvitationConfirmationId, DepartmentId, Attended, UpdateTime, UpdatedBy)
+values(1, 5, '2012-07-24', true, null, 10, true, NOW(), 1);
+
+insert into Attendance(ProjectId, PersonId, InviteDate, AbleToCome, InvitationConfirmationId, DepartmentId, Attended, UpdateTime, UpdatedBy)
+values(1, 5, '2012-11-24', null, null, null, null, NOW(), 1);
+
+insert into Attendance(ProjectId, PersonId, InviteDate, AbleToCome, InvitationConfirmationId, DepartmentId, Attended, UpdateTime, UpdatedBy)
+values(1, 5, '2012-11-25', null, null, null, null, NOW(), 1);
+
+insert into Attendance(ProjectId, PersonId, InviteDate, AbleToCome, InvitationConfirmationId, DepartmentId, Attended, UpdateTime, UpdatedBy)
+values(1, 6, '2012-07-23', false, 6, 10, false, NOW(), 1);
+
+insert into Attendance(ProjectId, PersonId, InviteDate, AbleToCome, InvitationConfirmationId, DepartmentId, Attended, UpdateTime, UpdatedBy)
+values(1, 6, '2012-07-24', false, 3, 10, false, NOW(), 1);

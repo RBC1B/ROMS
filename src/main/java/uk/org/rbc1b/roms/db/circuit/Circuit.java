@@ -23,13 +23,13 @@
  */
 package uk.org.rbc1b.roms.db.circuit;
 
-import uk.org.rbc1b.roms.db.DefaultAuditable;
+import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 import uk.org.rbc1b.roms.db.Person;
 
 /**
  * @author oliver.elder.esq
  */
-public class Circuit extends DefaultAuditable {
+public class Circuit extends DefaultUpdateAuditable {
 
     private String name;
     private Integer circuitId;

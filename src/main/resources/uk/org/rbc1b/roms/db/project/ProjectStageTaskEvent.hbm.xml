@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="uk.org.rbc1b.roms.db.project">
-    <class name="ProjectStageEvent" table="ProjectStageEvent">
-        <id name="projectStageEventId">
+    <class name="ProjectStageTaskEvent" table="ProjectStageTaskEvent">
+        <id name="projectStageTaskEventId">
             <generator class="identity" />
         </id>
-        <many-to-one column="ProjectStageId" name="projectStage" not-null="true" />
-        <property name="projectStageEventTypeId" not-null="true" />
-        <many-to-one column="CommentatorId" name="commentator" />
+        <many-to-one column="ProjectStageTaskId" name="projectStageTask" not-null="true" />
+        <property name="projectStageTaskEventTypeId" not-null="true" />
         <property name="comments" />
-        <property name="visible" />
         <property name="createTime" not-null="true" />
         <property name="createdBy" not-null="true" />
     </class>

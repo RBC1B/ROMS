@@ -399,14 +399,20 @@ create table ProjectStageEventType (
     primary key (ProjectStageEventTypeId)
 )engine=InnoDB;
 
+create table ProjectStageTaskEventType (
+    ProjectStageTaskEventTypeId bigint(20)  auto_increment,
+    Description                 varchar(50),
+    primary key (ProjectStageTaskEventTypeId)
+)engine=InnoDB;
+
 create table ProjectStage (
     ProjectStageId          bigint(20)  auto_increment,
     ProjectId               bigint(20)  not null,
     ProjectStageTypeId      bigint(20)  not null,
     ProjectStageStatusId    bigint(20)  not null,
     CreatedTime             timestamp   not null,
-    StartedTime             timestamp,
-    CompletedTime           timestamp,
+    StartedTime             timestamp   null,
+    CompletedTime           timestamp   null,
     UpdateTime              timestamp   not null,
     UpdatedBy               bigint(20)  not null,
     primary key (ProjectStageId),
@@ -423,8 +429,8 @@ create table ProjectStageTask (
     AssignedVolunteerId bigint(20)  not null,
     Comments            varchar(1000),
     CreatedTime         timestamp   not null,
-    StartedTime         timestamp,
-    CompletedTime       timestamp,
+    StartedTime         timestamp   null,
+    CompletedTime       timestamp   null,
     UpdateTime          timestamp   not null,
     UpdatedBy           bigint(20)  not null,
     primary key (ProjectStageTaskId),
@@ -440,11 +446,26 @@ create table ProjectStageEvent (
     CommentatorId           bigint(20),
     Comments                text,
     Visible                 boolean     default true,
-    Created                 timestamp   not null,
+    CreateTime              timestamp   not null,
+    CreatedBy               bigint(20)  not null,
     primary key (ProjectStageEventId),
     foreign key (ProjectStageId) references ProjectStage(ProjectStageId) on delete cascade,
     foreign key (ProjectStageEventTypeId) references ProjectStageEventType(ProjectStageEventTypeId),
-    foreign key (CommentatorId) references Commentator(CommentatorId) on delete set null
+    foreign key (CommentatorId) references Commentator(CommentatorId) on delete set null,
+    foreign key (CreatedBy) references Person(PersonId)
+)engine=InnoDB;
+
+create table ProjectStageTaskEvent (
+    ProjectStageTaskEventId     bigint(20)  auto_increment,
+    ProjectStageTaskId          bigint(20)  not null,
+    ProjectStageTaskEventTypeId bigint(20)  not null,
+    Comments                    text,
+    CreateTime                  timestamp   not null,
+    CreatedBy                   bigint(20)  not null,
+    primary key (ProjectStageTaskEventId),
+    foreign key (ProjectStageTaskId) references ProjectStageTask(ProjectStageTaskId) on delete cascade,
+    foreign key (ProjectStageTaskEventTypeId) references ProjectStageTaskEventType(ProjectStageTaskEventTypeId),
+    foreign key (CreatedBy) references Person(PersonId)
 )engine=InnoDB;
 
 create table ProjectWorkBrief(
@@ -779,6 +800,20 @@ insert into ProjectStatus (Description) values
     ('Work In Progress'),
     ('Cancelled'),
     ('Completed');
+
+insert into ProjectStageEventType (Description) values
+    ('Started'),
+    ('Completed'),
+    ('Reopened'),
+    ('Cancelled'),
+    ('Notes');
+
+insert into ProjectStageTaskEventType (Description) values
+    ('Started'),
+    ('Completed'),
+    ('Reopened'),
+    ('Cancelled'),
+    ('Notes');
 
 insert into Category (Name, Colour, AppearOnBadge) values
     ('General', 'Blank',false);
