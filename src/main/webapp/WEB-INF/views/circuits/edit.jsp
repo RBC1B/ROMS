@@ -10,7 +10,7 @@
 <html>
     <c:choose>
         <c:when test="${!empty circuitForm.circuitId}">
-            <c:set var="pageTitle" value="Edit Circuit #{circuitForm.name}" />
+            <c:set var="pageTitle" value="Edit Circuit - ${circuitForm.name}" />
         </c:when>
         <c:otherwise>
             <c:set var="pageTitle" value="Create Circuit" />
@@ -20,7 +20,14 @@
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
-            <h1>Circuit</h1>
+            <c:choose>
+                <c:when test="${!empty circuitForm.circuitId}">
+                    <h1>Edit Circuit #${circuitForm.circuitId} </h1>
+                </c:when>
+                <c:otherwise>
+                    <h1>Create New Circuit</h1>
+                </c:otherwise>
+            </c:choose>
             <hr>
             <c:url var="formAction" value="${submitUri}" />
             <form:form commandName="circuitForm" method="${submitMethod}" action="${formAction}">
