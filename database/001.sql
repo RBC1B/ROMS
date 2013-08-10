@@ -422,6 +422,20 @@ create table ProjectStage (
     foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
+create table ProjectStageOrder (
+    ProjectStageOrderId     bigint(20)  auto_increment,
+    ProjectStageId          bigint(20)  not null,
+    PreviousProjectStageId  bigint(20),
+    NextProjectStageId      bigint(20),
+    UpdateTime              timestamp   not null,
+    UpdatedBy               bigint(20)  not null,
+    primary key (ProjectStageOrderId),
+    foreign key (ProjectStageId) references ProjectStage(ProjectStageId),
+    foreign key (PreviousProjectStageId) references ProjectStage(ProjectStageId),
+    foreign key (NextProjectStageId) references ProjectStage(ProjectStageId),
+    foreign key (UpdatedBy) references Person(PersonId)
+)engine=InnoDB;
+
 create table ProjectStageTask (
     ProjectStageTaskId  bigint(20)  auto_increment,
     ProjectStageId      bigint(20)  not null,

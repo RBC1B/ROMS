@@ -379,6 +379,15 @@ insert into ProjectStage(ProjectId, ProjectStageTypeId, ProjectStageStatusId, Cr
 StartedTime, CompletedTime, UpdateTime, UpdatedBy)
 values (1, 21, 1, '2013-07-13', null, null, '2013-07-08 11:45:00', 1);
 
+insert into ProjectStageOrder(ProjectStageId, PreviousProjectStageId, NextProjectStageId, UpdateTime, UpdatedBy)
+values (1, null, 2, '2013-07-08 11:45:00', 1);
+
+insert into ProjectStageOrder(ProjectStageId, PreviousProjectStageId, NextProjectStageId, UpdateTime, UpdatedBy)
+values (2, 1, 3, '2013-07-08 11:45:00', 1);
+
+insert into ProjectStageOrder(ProjectStageId, PreviousProjectStageId, NextProjectStageId, UpdateTime, UpdatedBy)
+values (3, 2, null, '2013-07-08 11:45:00', 1);
+
 
 insert into Project(Name,ProjectTypeId,KingdomHallId,Priority,Street,Town,County,Postcode,Telephone,ContactPersonId,RequestDate,VisitDate,EstimateCost,
 				ProjectStatusId,SupportingCongregation,ProjectConstraints,CoordinatorId, UpdateTime, UpdatedBy)
