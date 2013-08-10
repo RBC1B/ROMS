@@ -28,7 +28,7 @@ THE SOFTWARE.
         <id name="projectStageOrderId">
             <generator class="identity" />
         </id>
-        
+
         <property name="projectId" not-null="true" />
         <property name="projectStageId" not-null="true" />
         <property name="previousProjectStageId"  />

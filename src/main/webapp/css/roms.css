@@ -328,7 +328,7 @@ li.first {
     margin-left: 3px;
 }
 #project-stages div.project-stage-status {
-	width: 10%;
+    width: 10%;
     float: right;
     margin-left: 3px;
 }
@@ -347,8 +347,8 @@ li.first {
     min-width: 85px;
 }
 #project-stages div.project-stage-task-count {
-	float: left;
-	margin-right: 3px;
+    float: left;
+    margin-right: 3px;
 }
 #project-stages .icon-resize-vertical {
     float: right;

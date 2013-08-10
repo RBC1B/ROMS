@@ -206,7 +206,7 @@ $(document).ready(function() {
         // add validation. completely empty rows are allowed (ignored server side)
         // so the field is only required if other fields are populated
         $(".trade-experience-name", $row).rules("add", {
-			required: function() {
+                required: function() {
                 var result = false;
                 $("input", $row).each(function() {
                     if ($(this).val()) {

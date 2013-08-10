@@ -45,9 +45,9 @@ public class ProjectStageOrder extends DefaultUpdateAuditable {
     private Integer nextProjectStageId;
 
     /**
-     * Sort the list of stages using the list of stage orders
+     * Sort the list of stages using the list of stage orders.
      * @param stages stages to sort
-     * @param stageOrders stae orders, defining the stages
+     * @param stageOrders stage orders, defining the stages
      */
     public static void sortProjectStages(List<ProjectStage> stages, List<ProjectStageOrder> stageOrders) {
         ProjectStageComparator comparator = new ProjectStageComparator(stageOrders);
@@ -92,6 +92,12 @@ public class ProjectStageOrder extends DefaultUpdateAuditable {
 
     public void setNextProjectStageId(Integer nextProjectStageId) {
         this.nextProjectStageId = nextProjectStageId;
+    }
+
+    @Override
+    public String toString() {
+        return "ProjectStageOrder#" + projectStageOrderId + ":" + previousProjectStageId + "->" + projectStageId + "->"
+                + nextProjectStageId;
     }
 
     private static class ProjectStageComparator implements Comparator<ProjectStage>, Serializable {
@@ -142,12 +148,6 @@ public class ProjectStageOrder extends DefaultUpdateAuditable {
 
             return index0.compareTo(index1);
         }
-    }
-
-    @Override
-    public String toString() {
-        return "ProjectStageOrder#" + projectStageOrderId + ":" + previousProjectStageId + "->" + projectStageId + "->"
-                + nextProjectStageId;
     }
 
 }

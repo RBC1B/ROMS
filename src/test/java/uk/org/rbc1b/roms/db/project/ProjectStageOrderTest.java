@@ -29,10 +29,10 @@ import java.util.List;
 import org.junit.Test;
 
 /**
- * Test the {@link ProjectStageOrder}
+ * Test the {@link ProjectStageOrder}.
  */
 public class ProjectStageOrderTest {
-
+    // CHECKSTYLE:OFF
     @Test
     public void testOrder() {
 

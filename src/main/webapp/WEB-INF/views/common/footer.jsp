@@ -20,13 +20,13 @@
                         <sec:authorize access="hasPermission('SKILL', 'READ')"><li role="menuitem"><a href="<c:url value="/qualifications" />">Qualifications</a></li></sec:authorize>
                         <sec:authorize access="hasPermission('EXPERIENCE', 'READ')"><li role="menuitem"><a href="<c:url value="/experience" />">Experience</a></li></sec:authorize>
                         <sec:authorize access="hasPermission('SKILL', 'READ')"><li role="menuitem"><a href="<c:url value="/skills" />">Skills</a></li></sec:authorize>
-                        <sec:authorize access="hasPermission('DEPARTMENT', 'READ')"><li><a href="<c:url value="/department" />">Department</a></li></sec:authorize>                
+                        <sec:authorize access="hasPermission('DEPARTMENT', 'READ')"><li><a href="<c:url value="/department" />">Department</a></li></sec:authorize>
                 </div><!-- /span4 -->
                 <div class="span3">
-                    <ul class="footer-nav">                
+                    <ul class="footer-nav">
                         <li class="first">More...</li>
                         <sec:authorize access="hasPermission('PROJECT', 'READ')"><li><a href="<c:url value="/projects" />">Projects</a></li></sec:authorize>
-                        <sec:authorize access="hasPermission('ADMIN', 'READ')"><li><a href="<c:url value="/admin" />">Sys Admin</a></li></sec:authorize>        
+                        <sec:authorize access="hasPermission('ADMIN', 'READ')"><li><a href="<c:url value="/admin" />">Sys Admin</a></li></sec:authorize>
                     </ul>
                 </div><!-- /span4 -->
                 <div class="span3" id="footer-nav">

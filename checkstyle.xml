@@ -12,6 +12,7 @@
     <!-- miscellaneous -->
     <module name="NewlineAtEndOfFile">
         <property name="lineSeparator" value="lf" />
+        <property name="fileExtensions" value="java,xml,jsp" />
     </module>
     <module name="Translation" />
 
@@ -33,8 +34,9 @@
 
 
     <!-- Whitespace -->
-    <module name="FileTabCharacter" />
-
+    <module name="FileTabCharacter" >
+        <property name="fileExtensions" value="java,xml,jsp" />
+    </module>
 
     <module name="TreeWalker">
         <!-- enable the suppression filters -->

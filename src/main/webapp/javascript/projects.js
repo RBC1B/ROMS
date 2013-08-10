@@ -40,7 +40,10 @@ $(document).ready(function() {
 
     // details view
     $("#project-stages").sortable({
-        items: "> div"
+        items: "> div",
+        change: function( event, ui ) {
+            alert(event);
+        }
     });
 
 });

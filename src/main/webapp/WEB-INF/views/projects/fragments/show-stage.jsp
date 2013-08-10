@@ -5,7 +5,7 @@
 <div class="row">
     <div class="icon-plus" ></div>
     <div class="project-stage-type-name">${stage.type.name} </div>
-    
+
     <div class="icon-resize-vertical"></div>
     <div class="project-stage-task-counts">
         <div class="project-stage-task-count a-project-task-count" title=""

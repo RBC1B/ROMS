@@ -93,7 +93,7 @@
                         </div>
                         <div class="span4">
                             <h3>RBC Status</h3>
-                            <%@ include file="fragments/show-rbc-status.jsp" %>   
+                            <%@ include file="fragments/show-rbc-status.jsp" %>
                         </div>
                     </div>
                 </div>
@@ -101,7 +101,7 @@
                     <%@ include file="fragments/show-skills.jsp" %>
                 </div>
             </div>
-            <div class="clearfix"></div>                
+            <div class="clearfix"></div>
 
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
