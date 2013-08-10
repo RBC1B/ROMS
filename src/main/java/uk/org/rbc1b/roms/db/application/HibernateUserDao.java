@@ -36,7 +36,6 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Use hibernate to look up the user information.
- *
  * @author oliver.elder.esq
  */
 @Repository
@@ -51,6 +50,7 @@ public class HibernateUserDao implements UserDao {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(User.class);
         criteria.add(Restrictions.eq("userName", userName));
 
+        @SuppressWarnings("unchecked")
         List<User> users = criteria.list();
         if (users.isEmpty()) {
             return null;
@@ -61,6 +61,7 @@ public class HibernateUserDao implements UserDao {
         criteria = this.sessionFactory.getCurrentSession().createCriteria(ApplicationAccess.class);
         criteria.setFetchMode("application", FetchMode.JOIN);
         criteria.add(Restrictions.eq("person.personId", user.getPersonId()));
+        @SuppressWarnings("unchecked")
         List<ApplicationAccess> access = criteria.list();
 
         user.setApplicationAccess(new HashSet<ApplicationAccess>(access));
@@ -68,6 +69,7 @@ public class HibernateUserDao implements UserDao {
         return user;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<User> findUsers(String userName) {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(User.class);

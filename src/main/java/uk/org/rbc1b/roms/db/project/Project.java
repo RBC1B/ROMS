@@ -32,11 +32,10 @@ import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 
 /**
  * A unit of work to be performed at a given site (kingdom hall or address).
- *
  * @author oliver.elder.esq
  */
 public class Project extends DefaultUpdateAuditable {
-
+    private static final long serialVersionUID = 9175072301683424474L;
     private Address address;
     private String constraints;
     private Date completedDate;

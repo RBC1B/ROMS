@@ -25,11 +25,10 @@ package uk.org.rbc1b.roms.db;
 
 /**
  * Linkage of person to congregation.
- *
  * @author oliver.elder.esq
  */
 public class CongregationContact extends DefaultUpdateAuditable {
-
+    private static final long serialVersionUID = 4754412345307010085L;
     private Integer congregationContactId;
     private Congregation congregation;
     private Integer congregationRoleId;

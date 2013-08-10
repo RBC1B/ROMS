@@ -28,11 +28,10 @@ import uk.org.rbc1b.roms.db.Person;
 
 /**
  * Captures the data entered by the volunteer in their form.
- *
  * @author oliver.elder.esq
  */
 public class VolunteerTrade extends DefaultUpdateAuditable {
-
+    private static final long serialVersionUID = -4191236742163964643L;
     private Integer volunteerTradeId;
     private Person person;
     private String name;

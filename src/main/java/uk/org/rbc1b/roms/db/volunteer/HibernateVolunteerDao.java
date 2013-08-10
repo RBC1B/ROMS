@@ -40,7 +40,6 @@ import org.springframework.stereotype.Repository;
 import uk.org.rbc1b.roms.controller.common.SortDirection;
 
 /**
- *
  * @author rahulsingh
  */
 @Repository
@@ -70,6 +69,7 @@ public class HibernateVolunteerDao implements VolunteerDao {
         return volunteer;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Volunteer> findVolunteers(VolunteerSearchCriteria searchCriteria) {
         Session session = this.sessionFactory.getCurrentSession();
@@ -79,9 +79,8 @@ public class HibernateVolunteerDao implements VolunteerDao {
         criteria.setMaxResults(searchCriteria.getMaxResults());
 
         if (searchCriteria.getSortValue() != null) {
-            criteria.addOrder(searchCriteria.getSortDirection() == SortDirection.ASCENDING
-                    ? Order.asc(searchCriteria.getSortValue())
-                    : Order.desc(searchCriteria.getSortValue()));
+            criteria.addOrder(searchCriteria.getSortDirection() == SortDirection.ASCENDING ? Order.asc(searchCriteria
+                    .getSortValue()) : Order.desc(searchCriteria.getSortValue()));
         }
 
         return criteria.list();
@@ -110,10 +109,8 @@ public class HibernateVolunteerDao implements VolunteerDao {
             String searchValue = "%" + searchCriteria.getSearch() + "%";
 
             criteria.add(Restrictions.or(Restrictions.like("forename", searchValue),
-                    Restrictions.like("middleName", searchValue),
-                    Restrictions.like("surname", searchValue),
-                    Restrictions.like("email", searchValue),
-                    Restrictions.like("congregation.name", searchValue)));
+                    Restrictions.like("middleName", searchValue), Restrictions.like("surname", searchValue),
+                    Restrictions.like("email", searchValue), Restrictions.like("congregation.name", searchValue)));
         }
 
         return criteria;
@@ -132,6 +129,7 @@ public class HibernateVolunteerDao implements VolunteerDao {
 
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Assignment> findAssignments(Integer volunteerId) {
         Session session = this.sessionFactory.getCurrentSession();
@@ -142,6 +140,7 @@ public class HibernateVolunteerDao implements VolunteerDao {
         return criteria.list();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<VolunteerSkill> findSkills(Integer volunteerId) {
         Session session = this.sessionFactory.getCurrentSession();
@@ -152,6 +151,7 @@ public class HibernateVolunteerDao implements VolunteerDao {
         return criteria.list();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<VolunteerQualification> findQualifications(Integer volunteerId) {
         Session session = this.sessionFactory.getCurrentSession();

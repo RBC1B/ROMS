@@ -30,7 +30,7 @@ import java.util.Date;
  * Basic implementation of the auditable interface, supporting the auditable properties.
  */
 public class DefaultUpdateAuditable implements UpdateAuditable, Serializable {
-
+    private static final long serialVersionUID = -5555529547129000510L;
     private Date updateTime;
     private Integer updatedBy;
 

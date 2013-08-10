@@ -28,11 +28,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * Exception thrown when unexpected data table request parameters are provided.
- *
  * @author oliver.elder.esq
  */
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
 public class AjaxDataTableRequestException extends RuntimeException {
+    private static final long serialVersionUID = 9130911158755060479L;
 
     /**
      * @param message exception message

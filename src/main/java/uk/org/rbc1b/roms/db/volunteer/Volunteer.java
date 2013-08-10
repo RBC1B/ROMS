@@ -28,17 +28,16 @@ import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.application.User;
 
 /**
- *
  * @author oliver.elder.esq
  */
 public class Volunteer extends Person {
-
+    private static final long serialVersionUID = -8454242375027482447L;
     private Integer appointmentId;
-    private String availability;   // 7 char string, representing T or F, Monday to Sunday
+    private String availability; // 7 char string, representing T or F, Monday to Sunday
     private Person emergencyContact;
     private Integer emergencyContactRelationshipId;
     private Integer fulltimeId;
-    private String gender;    // M or F
+    private String gender; // M or F
     private Integer maritalStatusId;
     private java.sql.Date baptismDate;
     private java.sql.Date interviewDate;
@@ -69,7 +68,6 @@ public class Volunteer extends Person {
 
     /**
      * Instantiate a volunteer from the person.
-     *
      * @param person underlying person to be extended
      */
     public Volunteer(Person person) {

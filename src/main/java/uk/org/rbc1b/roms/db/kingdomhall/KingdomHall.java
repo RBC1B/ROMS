@@ -29,11 +29,10 @@ import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 
 /**
  * The building.
- *
  * @author oliver.elder.esq
  */
 public class KingdomHall extends DefaultUpdateAuditable {
-
+    private static final long serialVersionUID = 3325033836948932960L;
     private Integer kingdomHallId;
     private String name;
     private Address address;

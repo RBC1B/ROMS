@@ -27,10 +27,13 @@ import java.lang.reflect.Field;
 import uk.org.rbc1b.roms.controller.common.SortDirection;
 
 /**
- * The request parameters made by the DataTables when generating the results using the server side processing. <p>Datatables used ugly hungarian notation for
- * the parameter names, so the setters do not match the getters, which return a sanitised version. <p>The column data props, which we capture to determine the
- * column we are sorting on, pass in the index as part of the name. Nasty. We support up to 10 columns (index 0-9)
- *
+ * The request parameters made by the DataTables when generating the results using the server side processing.
+ * <p>
+ * Datatables used ugly hungarian notation for the parameter names, so the setters do not match the getters, which
+ * return a sanitised version.
+ * <p>
+ * The column data props, which we capture to determine the column we are sorting on, pass in the index as part of the
+ * name. Nasty. We support up to 10 columns (index 0-9)
  * @author oliver.elder.esq
  */
 public class AjaxDataTableRequestData {
@@ -41,20 +44,29 @@ public class AjaxDataTableRequestData {
     private Integer displayLength;
     private Integer displayStart;
     private Integer sortCol0;
+    @SuppressWarnings("unused")
     private String mDataProp0;
+    @SuppressWarnings("unused")
     private String mDataProp1;
+    @SuppressWarnings("unused")
     private String mDataProp2;
+    @SuppressWarnings("unused")
     private String mDataProp3;
+    @SuppressWarnings("unused")
     private String mDataProp4;
+    @SuppressWarnings("unused")
     private String mDataProp5;
+    @SuppressWarnings("unused")
     private String mDataProp6;
+    @SuppressWarnings("unused")
     private String mDataProp7;
+    @SuppressWarnings("unused")
     private String mDataProp8;
+    @SuppressWarnings("unused")
     private String mDataProp9;
 
     /**
      * Get the sort value. This is based on matching the underlying mDataProp value, indexed by the sortCol0
-     *
      * @return sort value
      */
     public String getSortValue() {
@@ -102,7 +114,6 @@ public class AjaxDataTableRequestData {
 
     /**
      * The method name doesn't match the variable to allow us to drop the hungarian notation.
-     *
      * @param sEcho echo
      */
     public void setsEcho(String sEcho) {
@@ -111,7 +122,6 @@ public class AjaxDataTableRequestData {
 
     /**
      * The method name doesn't match the variable to allow us to drop the hungarian notation.
-     *
      * @param sSearch search
      */
     public void setsSearch(String sSearch) {
@@ -120,7 +130,6 @@ public class AjaxDataTableRequestData {
 
     /**
      * The method name doesn't match the variable to allow us to drop the hungarian notation.
-     *
      * @param iDisplayLength number of results
      */
     public void setiDisplayLength(Integer iDisplayLength) {
@@ -129,7 +138,6 @@ public class AjaxDataTableRequestData {
 
     /**
      * The method name doesn't match the variable to allow us to drop the hungarian notation.
-     *
      * @param iDisplayStart start index
      */
     public void setiDisplayStart(Integer iDisplayStart) {
@@ -141,7 +149,6 @@ public class AjaxDataTableRequestData {
     // CSOFF: MethodNameCheck
     /**
      * The method name doesn't match the variable to allow us to drop the hungarian notation.
-     *
      * @param iSortCol_0 sort column
      */
     public void setiSortCol_0(Integer iSortCol_0) {
@@ -150,7 +157,6 @@ public class AjaxDataTableRequestData {
 
     /**
      * The method name doesn't match the variable to allow us to drop the hungarian notation.
-     *
      * @param sSortDir_0 sort direction
      */
     public void setsSortDir_0(SortDir sSortDir_0) {

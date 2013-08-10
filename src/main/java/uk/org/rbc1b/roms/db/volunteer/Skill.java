@@ -31,7 +31,7 @@ import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
  * @author oliver.elder.esq
  */
 public class Skill extends DefaultUpdateAuditable {
-
+    private static final long serialVersionUID = -3203882796160187168L;
     private Integer skillId;
     private String name;
     private Department department;

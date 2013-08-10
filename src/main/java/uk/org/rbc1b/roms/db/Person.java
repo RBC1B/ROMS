@@ -24,12 +24,13 @@
 package uk.org.rbc1b.roms.db;
 
 /**
- * The basic person identifier. <p>This can be extended to volunteers, users, and non RBC-overseers.
- *
+ * The basic person identifier.
+ * <p>
+ * This can be extended to volunteers, users, and non RBC-overseers.
  * @author oliver.elder.esq
  */
 public class Person extends DefaultUpdateAuditable {
-
+    private static final long serialVersionUID = 8345111360587695632L;
     private Integer personId;
     private java.sql.Date birthDate;
     private Integer congregationId;
@@ -49,7 +50,6 @@ public class Person extends DefaultUpdateAuditable {
     public String formatDisplayName() {
         return forename + " " + surname;
     }
-
 
     public Address getAddress() {
         return address;

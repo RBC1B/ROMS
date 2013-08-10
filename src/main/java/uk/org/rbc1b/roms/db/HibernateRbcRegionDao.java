@@ -31,7 +31,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 /**
- *
  * @author ramindursingh
  */
 @Repository
@@ -40,6 +39,7 @@ public class HibernateRbcRegionDao implements RbcRegionDao {
     @Autowired
     private SessionFactory sessionFactory;
 
+    @SuppressWarnings("unchecked")
     @Override
     @Cacheable("rbcregion.rbcregion")
     public List<RbcRegion> findAllRbcRegion() {

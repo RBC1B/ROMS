@@ -30,7 +30,7 @@ import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
  * @author oliver.elder.esq
  */
 public class KingdomHallFeature extends DefaultUpdateAuditable {
-
+    private static final long serialVersionUID = -6662820261133712777L;
     private Integer kingdomHallFeatureId;
     private KingdomHall kingdomHall;
     private HallFeature hallFeature;

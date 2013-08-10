@@ -33,13 +33,14 @@ import uk.org.rbc1b.roms.security.ROMSUserDetails;
 
 /**
  * Hibernate interceptor to add the user id and timestamp to any updates if the table supports it.
- *
  * @author oliver.elder.esq
  */
 public class AuditInterceptor extends EmptyInterceptor {
+    private static final long serialVersionUID = 5012613778658433063L;
 
     @Override
-    public boolean onFlushDirty(Object entity, Serializable id, Object[] currentState, Object[] previousState, String[] propertyNames, Type[] types) {
+    public boolean onFlushDirty(Object entity, Serializable id, Object[] currentState, Object[] previousState,
+            String[] propertyNames, Type[] types) {
         boolean modified = false;
 
         if (entity instanceof UpdateAuditable) {

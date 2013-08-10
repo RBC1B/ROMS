@@ -63,8 +63,6 @@ import uk.org.rbc1b.roms.db.volunteer.VolunteerSkill;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerTrade;
 
 /**
- *
- *
  * @author rahulsingh
  */
 @Controller
@@ -88,7 +86,6 @@ public class VolunteersController {
 
     /**
      * Display a list of volunteers.
-     *
      * @param model mvc model
      * @param searchCriteria search criteria
      * @return view
@@ -103,13 +100,12 @@ public class VolunteersController {
 
     /**
      * Display the list of volunteers.
-     *
      * @param requestData data tables request data
      * @return view
      */
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json")
     @ResponseBody
-    public AjaxDataTableResult showDatatableAjaxVolunteerList(AjaxDataTableRequestData requestData) {
+    public AjaxDataTableResult<VolunteerListModel> showDatatableAjaxVolunteerList(AjaxDataTableRequestData requestData) {
         VolunteerSearchCriteria searchCriteria = new VolunteerSearchCriteria();
         searchCriteria.setSearch(requestData.getSearch());
         searchCriteria.setSortValue(requestData.getSortValue());
@@ -143,14 +139,16 @@ public class VolunteersController {
      * @throws NoSuchRequestHandlingMethodException when no person matching the id is found
      */
     @RequestMapping(value = "{volunteerId}", method = RequestMethod.GET)
-    public String showVolunteer(@PathVariable Integer volunteerId, ModelMap model) throws NoSuchRequestHandlingMethodException {
+    public String showVolunteer(@PathVariable Integer volunteerId, ModelMap model)
+            throws NoSuchRequestHandlingMethodException {
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
         if (volunteer == null) {
             if (personDao.findPerson(volunteerId) != null) {
                 return "redirect:" + personModelFactory.generateUri(volunteerId);
             }
-            throw new NoSuchRequestHandlingMethodException("No volunteer or person with id [" + volunteerId + "]", this.getClass());
+            throw new NoSuchRequestHandlingMethodException("No volunteer or person with id [" + volunteerId + "]",
+                    this.getClass());
         }
 
         List<Assignment> assignments = volunteerDao.findAssignments(volunteerId);
@@ -168,7 +166,6 @@ public class VolunteersController {
 
     /**
      * Display the form to create a new volunteer.
-     *
      * @param model mvc model
      * @return view name
      */
@@ -182,8 +179,9 @@ public class VolunteersController {
     }
 
     /**
-     * Handle the volunteer core details form submission. <p>This handles new volunteer creation only.
-     *
+     * Handle the volunteer core details form submission.
+     * <p>
+     * This handles new volunteer creation only.
      * @param form volunteer form
      * @return redirect url
      */
@@ -274,14 +272,14 @@ public class VolunteersController {
 
     /**
      * Display the form to edit the info under the spiritual tab on the volunteer.
-     *
      * @param volunteerId volunteer id to edit
      * @param model mvc model
      * @return view name
      * @throws NoSuchRequestHandlingMethodException if volunteer is not found
      */
     @RequestMapping(value = "{volunteerId}/spiritual/edit", method = RequestMethod.GET)
-    public String showEditVolunteerSpiritualForm(@PathVariable Integer volunteerId, ModelMap model) throws NoSuchRequestHandlingMethodException {
+    public String showEditVolunteerSpiritualForm(@PathVariable Integer volunteerId, ModelMap model)
+            throws NoSuchRequestHandlingMethodException {
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, EnumSet.noneOf(VolunteerData.class));
         if (volunteer == null) {
@@ -309,14 +307,14 @@ public class VolunteersController {
 
     /**
      * Display the form to edit the info under the rbc status tab on the volunteer.
-     *
      * @param volunteerId volunteer id to edit
      * @param model mvc model
      * @return view name
      * @throws NoSuchRequestHandlingMethodException if volunteer is not found
      */
     @RequestMapping(value = "{volunteerId}/rbc-status/edit", method = RequestMethod.GET)
-    public String showEditVolunteerRbcStatusForm(@PathVariable Integer volunteerId, ModelMap model) throws NoSuchRequestHandlingMethodException {
+    public String showEditVolunteerRbcStatusForm(@PathVariable Integer volunteerId, ModelMap model)
+            throws NoSuchRequestHandlingMethodException {
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, EnumSet.of(VolunteerData.INTERVIEWER));
         if (volunteer == null) {
@@ -369,16 +367,17 @@ public class VolunteersController {
     }
 
     /**
-     * Update the volunteer name. <p>This is expected to be called with an ajax request, so we return a 204 response on success
-     *
+     * Update the volunteer name.
+     * <p>
+     * This is expected to be called with an ajax request, so we return a 204 response on success
      * @param volunteerId volunteer id to edit
      * @param form form data
      * @throws NoSuchRequestHandlingMethodException if volunteer is not found
      */
     @RequestMapping(value = "{volunteerId}/name", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateVolunteerName(@PathVariable Integer volunteerId,
-            @Valid VolunteerNameForm form) throws NoSuchRequestHandlingMethodException {
+    public void updateVolunteerName(@PathVariable Integer volunteerId, @Valid VolunteerNameForm form)
+            throws NoSuchRequestHandlingMethodException {
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
         if (volunteer == null) {
@@ -393,16 +392,17 @@ public class VolunteersController {
     }
 
     /**
-     * Update the volunteer comments. <p>This is expected to be called with an ajax request, so we return a 204 response on success
-     *
+     * Update the volunteer comments.
+     * <p>
+     * This is expected to be called with an ajax request, so we return a 204 response on success
      * @param volunteerId volunteer id to edit
      * @param comments comments to set
      * @throws NoSuchRequestHandlingMethodException if volunteer is not found
      */
     @RequestMapping(value = "{volunteerId}/comments", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateVolunteerComments(@PathVariable Integer volunteerId,
-            @RequestParam("comments") String comments) throws NoSuchRequestHandlingMethodException {
+    public void updateVolunteerComments(@PathVariable Integer volunteerId, @RequestParam("comments") String comments)
+            throws NoSuchRequestHandlingMethodException {
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
         if (volunteer == null) {
@@ -416,15 +416,14 @@ public class VolunteersController {
 
     /**
      * Update the volunteer spiritual information.
-     *
      * @param volunteerId volunteer id to edit
      * @param form form data
      * @return view name (redirect)
      * @throws NoSuchRequestHandlingMethodException if volunteer is not found
      */
     @RequestMapping(value = "{volunteerId}/spiritual", method = RequestMethod.PUT)
-    public String updateVolunteerSpiritual(@PathVariable Integer volunteerId,
-            @Valid VolunteerSpiritualForm form) throws NoSuchRequestHandlingMethodException {
+    public String updateVolunteerSpiritual(@PathVariable Integer volunteerId, @Valid VolunteerSpiritualForm form)
+            throws NoSuchRequestHandlingMethodException {
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
         if (volunteer == null) {
@@ -444,15 +443,14 @@ public class VolunteersController {
 
     /**
      * Update the volunteer RBC status.
-     *
      * @param volunteerId volunteer id to edit
      * @param form form data
      * @return view name (redirect)
      * @throws NoSuchRequestHandlingMethodException if volunteer is not found
      */
     @RequestMapping(value = "{volunteerId}/rbc-status", method = RequestMethod.PUT)
-    public String updateVolunteerRbcStatus(@PathVariable Integer volunteerId,
-            @Valid VolunteerRbcStatusForm form) throws NoSuchRequestHandlingMethodException {
+    public String updateVolunteerRbcStatus(@PathVariable Integer volunteerId, @Valid VolunteerRbcStatusForm form)
+            throws NoSuchRequestHandlingMethodException {
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
         if (volunteer == null) {
@@ -480,9 +478,8 @@ public class VolunteersController {
         volunteer.setInterviewComments(form.getInterviewComments());
         volunteer.setJoinedDate(DataConverterUtil.toSqlDate(form.getJoinedDate()));
         volunteer.setBadgeIssueDate(DataConverterUtil.toSqlDate(form.getBadgeIssueDate()));
-        volunteer.setAvailability(generateAvailability(form.isAvailabilityMonday(),
-                form.isAvailabilityTuesday(), form.isAvailabilityWednesday(),
-                form.isAvailabilityThursday(), form.isAvailabilityFriday(),
+        volunteer.setAvailability(generateAvailability(form.isAvailabilityMonday(), form.isAvailabilityTuesday(),
+                form.isAvailabilityWednesday(), form.isAvailabilityThursday(), form.isAvailabilityFriday(),
                 form.isAvailabilitySaturday(), form.isAvailabilitySunday()));
         volunteer.setOversight(form.isOversight());
         volunteer.setOversightComments(form.getOversightComments());

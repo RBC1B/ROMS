@@ -30,7 +30,7 @@ import uk.org.rbc1b.roms.db.Person;
  * @author oliver.elder.esq
  */
 public class Circuit extends DefaultUpdateAuditable {
-
+    private static final long serialVersionUID = -380470389959120757L;
     private String name;
     private Integer circuitId;
     private Person circuitOverseer;

@@ -32,7 +32,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 /**
- *
  * @author ramindursingh
  */
 @Repository
@@ -53,6 +52,7 @@ public class HibernateCategoryDao implements CategoryDao {
         return (Category) criteria.add(Restrictions.naturalId().set("name", name)).setCacheable(true).uniqueResult();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Category> getAllCategories() {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Category.class);

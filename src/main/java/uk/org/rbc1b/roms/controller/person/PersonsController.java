@@ -52,7 +52,6 @@ import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
 
 /**
  * Control access to the underlying person data.
- *
  * @author oliver
  */
 @Controller
@@ -67,7 +66,6 @@ public class PersonsController {
 
     /**
      * Display the list of persons.
-     *
      * @param model mvc model
      * @param searchCriteria search criteria passed in the form
      * @return view
@@ -88,13 +86,12 @@ public class PersonsController {
 
     /**
      * Display the list of persons.
-     *
      * @param requestData data tables request data
      * @return view
      */
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json")
     @ResponseBody
-    public AjaxDataTableResult showDatatableAjaxPersonList(AjaxDataTableRequestData requestData) {
+    public AjaxDataTableResult<PersonModel> showDatatableAjaxPersonList(AjaxDataTableRequestData requestData) {
 
         PersonSearchCriteria searchCriteria = new PersonSearchCriteria();
         searchCriteria.setSearch(requestData.getSearch());
@@ -128,7 +125,8 @@ public class PersonsController {
      * @throws NoSuchRequestHandlingMethodException when no person matching the id is found
      */
     @RequestMapping(value = "{personId}", method = RequestMethod.GET)
-    public String showPerson(@PathVariable Integer personId, ModelMap model) throws NoSuchRequestHandlingMethodException {
+    public String showPerson(@PathVariable Integer personId, ModelMap model)
+            throws NoSuchRequestHandlingMethodException {
         Person person = fetchPerson(personId);
 
         if (volunteerDao.findVolunteer(person.getPersonId(), null) != null) {
@@ -141,14 +139,14 @@ public class PersonsController {
 
     /**
      * Display the form to create a new person.
-     *
      * @param personId person primary key
      * @param model mvc model
      * @return view name
      * @throws NoSuchRequestHandlingMethodException when no person matching the id is found
      */
     @RequestMapping(value = "{personId}/edit", method = RequestMethod.GET)
-    public String showEditPersonForm(@PathVariable Integer personId, ModelMap model) throws NoSuchRequestHandlingMethodException {
+    public String showEditPersonForm(@PathVariable Integer personId, ModelMap model)
+            throws NoSuchRequestHandlingMethodException {
 
         Person person = fetchPerson(personId);
 
@@ -171,7 +169,6 @@ public class PersonsController {
             form.setCongregationId(congregation.getCongregationId());
             form.setCongregationName(congregation.getName());
         }
-
 
         form.setSurname(person.getSurname());
         form.setForename(person.getForename());
@@ -197,17 +194,18 @@ public class PersonsController {
 
     /**
      * Handle the person edit form submit.
-     *
      * @param personId person primary key
      * @param form populate person form
      * @return view name
      * @throws NoSuchRequestHandlingMethodException when no person matching the id is found
      */
     @RequestMapping(value = "{personId}", method = RequestMethod.POST)
-    public String updatePerson(@PathVariable Integer personId, @Valid PersonForm form) throws NoSuchRequestHandlingMethodException {
+    public String updatePerson(@PathVariable Integer personId, @Valid PersonForm form)
+            throws NoSuchRequestHandlingMethodException {
         Person person = fetchPerson(personId);
 
-        if (form.getStreet() != null || form.getTown() != null || form.getCounty() != null || form.getPostcode() != null) {
+        if (form.getStreet() != null || form.getTown() != null || form.getCounty() != null
+                || form.getPostcode() != null) {
             Address address = new Address();
             address.setCounty(form.getCounty());
             address.setPostcode(form.getPostcode());
@@ -235,9 +233,8 @@ public class PersonsController {
     }
 
     /**
-     * Note: There seems to be a bug in Spring 3.1 that causes the same uri with a different produces attribute throw an "Ambiguous handler methods mapped"
-     * exception.
-     *
+     * Note: There seems to be a bug in Spring 3.1 that causes the same uri with a different produces attribute throw an
+     * "Ambiguous handler methods mapped" exception.
      * @param personId person primary key
      * @return person object
      * @throws NoSuchRequestHandlingMethodException 404 response
@@ -251,8 +248,8 @@ public class PersonsController {
     }
 
     /**
-     * Person search. Pass in a candidate, match this against the user first/last name and return the person object in JSON format
-     *
+     * Person search. Pass in a candidate, match this against the user first/last name and return the person object in
+     * JSON format
      * @param forename person match lookup first name
      * @param surname person match lookup last name
      * @param checkVolunteer if true, confirm whether the person is a volunteer
@@ -261,7 +258,8 @@ public class PersonsController {
     @RequestMapping(value = "search", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public PersonsSearchResponse findPersons(@RequestParam(value = "forename", required = true) String forename,
-            @RequestParam(value = "surname", required = true) String surname, @RequestParam(value = "checkVolunteer") boolean checkVolunteer) {
+            @RequestParam(value = "surname", required = true) String surname,
+            @RequestParam(value = "checkVolunteer") boolean checkVolunteer) {
         List<Person> persons = personDao.findPersons(forename, surname);
 
         // delete the lazy loaded sub collections to prevent the JSON marshaller blowing up

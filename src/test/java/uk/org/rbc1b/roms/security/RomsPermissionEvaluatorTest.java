@@ -23,21 +23,20 @@
  */
 package uk.org.rbc1b.roms.security;
 
+import static org.junit.Assert.assertEquals;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
 /**
- *
  * @author oliver.elder.esq
  */
 public class RomsPermissionEvaluatorTest {
-    //CHECKSTYLE:OFF
+    // CHECKSTYLE:OFF
 
     private RomsPermissionEvaluator evaluator;
     private MockAuthentication authentication;
@@ -73,11 +72,11 @@ public class RomsPermissionEvaluatorTest {
     }
 
     private class MockAuthentication implements Authentication {
-
-        private Map<String, ROMSGrantedAuthority> authorities = new HashMap<String, ROMSGrantedAuthority>();
-        private Integer userId;
-        private String password;
-        private String userName;
+        private static final long serialVersionUID = 1L;
+        private final Map<String, ROMSGrantedAuthority> authorities = new HashMap<String, ROMSGrantedAuthority>();
+        private final Integer userId;
+        private final String password;
+        private final String userName;
 
         private MockAuthentication(Integer userId, String userName, String password) {
             this.userId = userId;
@@ -112,6 +111,8 @@ public class RomsPermissionEvaluatorTest {
         @Override
         public Object getPrincipal() {
             return new ROMSUserDetails() {
+                private static final long serialVersionUID = 1L;
+
                 @Override
                 public ROMSGrantedAuthority findAuthority(String application) {
                     return authorities.get(application);
@@ -172,20 +173,6 @@ public class RomsPermissionEvaluatorTest {
         @Override
         public String getName() {
             return userName;
-        }
-    }
-
-    private class MockGrantedAuthority implements GrantedAuthority {
-
-        private String authority;
-
-        public MockGrantedAuthority(String authority) {
-            this.authority = authority;
-        }
-
-        @Override
-        public String getAuthority() {
-            return this.authority;
         }
     }
 }

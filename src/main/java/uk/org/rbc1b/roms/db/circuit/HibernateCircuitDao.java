@@ -30,7 +30,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 /**
- *
  * @author oliver.elder.esq
  */
 @Repository
@@ -44,11 +43,12 @@ public class HibernateCircuitDao implements CircuitDao {
         return (Circuit) this.sessionFactory.getCurrentSession().get(Circuit.class, circuitId);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Circuit> findCircuits() {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Circuit.class);
 
-        //TODO: support search criteria
+        // TODO: support search criteria
 
         return criteria.list();
     }

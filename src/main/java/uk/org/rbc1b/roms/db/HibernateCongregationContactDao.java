@@ -25,14 +25,13 @@ package uk.org.rbc1b.roms.db;
 
 import java.util.List;
 import org.hibernate.Criteria;
-import org.hibernate.criterion.Restrictions;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 /**
- *
  * @author ramindursingh
  */
 @Repository
@@ -41,6 +40,7 @@ public class HibernateCongregationContactDao implements CongregationContactDao {
     @Autowired
     private SessionFactory sessionFactory;
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Person> findCongregationContacts(Congregation congregation) {
         Session session = this.sessionFactory.getCurrentSession();

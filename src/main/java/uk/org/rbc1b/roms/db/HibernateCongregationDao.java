@@ -34,7 +34,6 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Hibernate implementation of the congregation dao.
- *
  * @author oliver.elder.esq
  */
 @Repository
@@ -43,6 +42,7 @@ public class HibernateCongregationDao implements CongregationDao {
     @Autowired
     private SessionFactory sessionFactory;
 
+    @SuppressWarnings("unchecked")
     @Override
     @Cacheable("congregation.congregationList")
     public List<Congregation> findAllCongregations() {
@@ -56,6 +56,7 @@ public class HibernateCongregationDao implements CongregationDao {
         return (Congregation) this.sessionFactory.getCurrentSession().get(Congregation.class, congregationId);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Congregation> findCongregations(String name) {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Congregation.class);

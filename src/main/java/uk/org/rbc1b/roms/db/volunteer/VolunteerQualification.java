@@ -30,7 +30,7 @@ import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
  * @author oliver.elder.esq
  */
 public class VolunteerQualification extends DefaultUpdateAuditable {
-
+    private static final long serialVersionUID = -7960214728374952774L;
     private Integer volunteerQualificationId;
     private Integer personId;
     private Integer qualificationId;

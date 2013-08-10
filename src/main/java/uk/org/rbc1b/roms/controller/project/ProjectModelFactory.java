@@ -58,7 +58,6 @@ public class ProjectModelFactory {
 
     /**
      * Generate the uri used to access the project pages.
-     *
      * @param projectId optional project id
      * @return uri
      */
@@ -68,14 +67,13 @@ public class ProjectModelFactory {
 
     /**
      * Generate the model used in the project list.
-     *
      * @param project project
      * @param types project types reference data
      * @param statuses project status reference data
      * @return model
      */
-    public ProjectListModel generateProjectListModel(Project project,
-            Map<Integer, String> types, Map<Integer, String> statuses) {
+    public ProjectListModel generateProjectListModel(Project project, Map<Integer, String> types,
+            Map<Integer, String> statuses) {
         ProjectListModel model = new ProjectListModel();
         model.setProjectId(project.getProjectId());
         model.setCompletedDate(project.getCompletedDate());
@@ -100,7 +98,6 @@ public class ProjectModelFactory {
 
     /**
      * Project details model.
-     *
      * @param project project
      * @return model
      */
@@ -146,7 +143,6 @@ public class ProjectModelFactory {
 
     /**
      * Generate the list of project stages.
-     *
      * @param stages stages
      * @return stage model list
      */
@@ -219,6 +215,7 @@ public class ProjectModelFactory {
      * Task comparator, sort by task creation date.
      */
     private static class ProjectStageTaskModelComparator implements Comparator<ProjectStageTaskModel>, Serializable {
+        private static final long serialVersionUID = 5200865793008893390L;
 
         @Override
         public int compare(ProjectStageTaskModel t, ProjectStageTaskModel t1) {

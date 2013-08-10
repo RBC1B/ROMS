@@ -30,7 +30,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 /**
- *
  * @author oliver.elder.esq
  */
 @Repository
@@ -47,6 +46,7 @@ public class HibernateKingdomHallDao implements KingdomHallDao {
     @Override
     public List<KingdomHall> findKingdomHalls() {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(KingdomHall.class);
+        @SuppressWarnings("unchecked")
         List<KingdomHall> halls = criteria.list();
         for (KingdomHall hall : halls) {
             hall.setFeatures(null);
@@ -65,6 +65,7 @@ public class HibernateKingdomHallDao implements KingdomHallDao {
 
     @Override
     public void deleteKingdomHall(KingdomHall kingdomHall) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods, choose
+                                                                       // Tools | Templates.
     }
 }

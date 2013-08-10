@@ -38,7 +38,6 @@ import uk.org.rbc1b.roms.db.application.UserDao;
 
 /**
  * Implement a user details service that allows us to store the user id.
- *
  * @author oliver.elder.esq
  */
 @Service("userDetailsService")
@@ -64,6 +63,8 @@ public class ROMSUserDetailsService implements UserDetailsService {
         }
 
         return new ROMSUserDetails() {
+            private static final long serialVersionUID = -2342863582753427493L;
+
             @Override
             public ROMSGrantedAuthority findAuthority(String application) {
                 return authorityMap.get(application);

@@ -32,7 +32,7 @@ import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
  * @author oliver.elder.esq
  */
 public class Congregation extends DefaultUpdateAuditable {
-
+    private static final long serialVersionUID = -346266378560523630L;
     private Integer congregationId;
     private String name;
     private String number;

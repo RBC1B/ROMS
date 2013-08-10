@@ -27,11 +27,10 @@ import org.springframework.security.core.GrantedAuthority;
 
 /**
  * Granted authority, with specific levels for department and non-department access.
- *
  * @author oliver.elder.esq
  */
 public class ROMSGrantedAuthority implements GrantedAuthority {
-
+    private static final long serialVersionUID = 7170344476765512185L;
     private String application;
     private Integer departmentLevelAccess;
     private Integer nonDepartmentLevelAccess;

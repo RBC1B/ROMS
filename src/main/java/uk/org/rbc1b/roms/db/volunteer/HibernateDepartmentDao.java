@@ -34,7 +34,6 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Hibernate implementation of the department dao.
- *
  * @author oliver.elder.esq
  */
 @Repository
@@ -61,6 +60,7 @@ public class HibernateDepartmentDao implements DepartmentDao {
         return (Department) criteria.add(Restrictions.naturalId().set("name", name)).setCacheable(true).uniqueResult();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     @Cacheable("department.departmentList")
     public List<Department> getAllDepartments() {

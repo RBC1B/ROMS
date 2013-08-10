@@ -30,7 +30,7 @@ import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
  * @author oliver.elder.esq
  */
 public class ProjectWorkBrief extends DefaultUpdateAuditable {
-
+    private static final long serialVersionUID = -4742828414469733445L;
     private Integer projectWorkBriefId;
     private Project project;
     private WorkFeature workFeature;

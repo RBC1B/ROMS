@@ -27,11 +27,10 @@ import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 import uk.org.rbc1b.roms.db.Person;
 
 /**
- *
  * @author oliver.elder.esq
  */
 public class ApplicationAccess extends DefaultUpdateAuditable {
-
+    private static final long serialVersionUID = -6714506443989985762L;
     private Integer applicationAccessId;
     private Person person;
     private Application application;

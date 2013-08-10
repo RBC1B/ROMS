@@ -52,16 +52,18 @@ public class HibernatePersonDao implements PersonDao {
         return (Person) this.sessionFactory.getCurrentSession().get(Person.class, personId);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Person> findPersons(String forename, String surname) {
         Session session = this.sessionFactory.getCurrentSession();
 
-        Criteria criteria = session.createCriteria(Person.class)
-                .add(Restrictions.eq("forename", forename)).add(Restrictions.eq("surname", surname));
+        Criteria criteria = session.createCriteria(Person.class).add(Restrictions.eq("forename", forename))
+                .add(Restrictions.eq("surname", surname));
 
         return criteria.list();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Person> findPersons(PersonSearchCriteria searchCriteria) {
         Session session = this.sessionFactory.getCurrentSession();
@@ -71,9 +73,8 @@ public class HibernatePersonDao implements PersonDao {
         criteria.setMaxResults(searchCriteria.getMaxResults());
 
         if (searchCriteria.getSortValue() != null) {
-            criteria.addOrder(searchCriteria.getSortDirection() == SortDirection.ASCENDING
-                    ? Order.asc(searchCriteria.getSortValue())
-                    : Order.desc(searchCriteria.getSortValue()));
+            criteria.addOrder(searchCriteria.getSortDirection() == SortDirection.ASCENDING ? Order.asc(searchCriteria
+                    .getSortValue()) : Order.desc(searchCriteria.getSortValue()));
         }
 
         return criteria.list();
@@ -101,10 +102,8 @@ public class HibernatePersonDao implements PersonDao {
             String searchValue = "%" + searchCriteria.getSearch() + "%";
 
             criteria.add(Restrictions.or(Restrictions.like("forename", searchValue),
-                    Restrictions.like("middleName", searchValue),
-                    Restrictions.like("surname", searchValue),
-                    Restrictions.like("email", searchValue),
-                    Restrictions.like("congregation.name", searchValue)));
+                    Restrictions.like("middleName", searchValue), Restrictions.like("surname", searchValue),
+                    Restrictions.like("email", searchValue), Restrictions.like("congregation.name", searchValue)));
         }
 
         return criteria;

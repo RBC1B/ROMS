@@ -31,7 +31,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 /**
- *
  * @author Tina
  */
 @Repository
@@ -51,11 +50,12 @@ public class HibernateQualificationDao implements QualificationDao {
         return (Qualification) this.sessionFactory.getCurrentSession().get(Qualification.class, qualificationId);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Qualification> findQualifications() {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Qualification.class);
 
-        //TODO: support search criteria
+        // TODO: support search criteria
 
         return criteria.list();
     }

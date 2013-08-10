@@ -31,7 +31,7 @@ import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
  * @author oliver.elder.esq
  */
 public class TitleHolder extends DefaultUpdateAuditable {
-
+    private static final long serialVersionUID = 4632818885924564868L;
     private Integer titleHolderId;
     private KingdomHall kingdomHall;
     private Congregation congregation;

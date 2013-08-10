@@ -30,7 +30,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 /**
- *
  * @author ramindursingh
  */
 @Repository
@@ -44,11 +43,12 @@ public class HibernateSkillDao implements SkillDao {
         return (Skill) this.sessionFactory.getCurrentSession().get(Skill.class, skillId);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Skill> findSkills() {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Skill.class);
 
-        //TODO: support search criteria
+        // TODO: support search criteria
 
         return criteria.list();
     }

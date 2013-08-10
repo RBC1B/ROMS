@@ -31,7 +31,7 @@ import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
  * @author oliver.elder.esq
  */
 public class Assignment extends DefaultUpdateAuditable {
-
+    private static final long serialVersionUID = -3748152854538626576L;
     private Integer assignmentId;
     private Integer personId;
     private Integer departmentId;

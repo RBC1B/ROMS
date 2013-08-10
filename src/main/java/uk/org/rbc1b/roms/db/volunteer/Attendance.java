@@ -33,7 +33,7 @@ import uk.org.rbc1b.roms.db.project.Project;
  * @author oliver.elder.esq
  */
 public class Attendance extends DefaultUpdateAuditable {
-
+    private static final long serialVersionUID = -6357613333933986660L;
     private Integer attendanceId;
     private Project project;
     private Person person;
