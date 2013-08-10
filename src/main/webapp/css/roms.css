@@ -5,7 +5,7 @@ body {
 }
 .collapse.in {
     height:auto!important;
-    /* fixes a bug which restricts the collapsed .nav to 203px, hiding certain menu options - Ben Read */
+    /* fixes a bug which restricts the collapsed .nav to 203px, hiding certain menu options */
 }
 
 
@@ -36,7 +36,14 @@ body {
     margin-bottom: 15px;
     padding: 7px 9px;
 }
-
+.navbar-inner {
+    -webkit-border-radius: 0px!important;
+    -moz-border-radius: 0px!important;
+    border-radius: 0px!important;
+}
+.form-signin {
+    margin-top:60px;
+}
 /*****************************************************************************/
 /* Form layout                                                               */
 /*****************************************************************************/
@@ -316,31 +323,33 @@ li.first {
 {
     float: left;
 }
-
 #project-stages div.project-stage-type-name {
-    width: 50%;
     float: left;
     margin-left: 3px;
 }
-
-#project-stages div.project-stage-status,
+#project-stages div.project-stage-status {
+	width: 10%;
+    float: right;
+    margin-left: 3px;
+}
 #project-stages div.project-stage-created-date,
 #project-stages div.project-stage-started-date,
-#project-stages div.project-stage-completed-date,
-#project-stages div.project-stage-task-counts {
+#project-stages div.project-stage-completed-date {
     width: 9%;
-    float: left;
+    float: right;
     margin-left: 3px;
+    min-width: 75px;
 }
-
+#project-stages div.project-stage-task-counts {
+    width: 8%;
+    float: right;
+    margin-left: 3px;
+    min-width: 85px;
+}
+#project-stages div.project-stage-task-count {
+	float: left;
+	margin-right: 3px;
+}
 #project-stages .icon-resize-vertical {
     float: right;
-}.navbar-inner {
-    -webkit-border-radius: 0px!important;
-    -moz-border-radius: 0px!important;
-    border-radius: 0px!important;
-}
-.form-signin {
-    margin-top:60px;
-}
 }

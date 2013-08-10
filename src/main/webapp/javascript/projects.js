@@ -36,12 +36,11 @@ $(document).ready(function() {
         }
     );
 
-    $(".a-project-status").tooltip();
+    $(".a-project-status, .a-project-task-count").tooltip();
 
     // details view
     $("#project-stages").sortable({
         items: "> div"
     });
-    
 
 });
