@@ -43,6 +43,6 @@
 <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/jquery.validate.min.js"></script>
 <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="<c:url value='/javascript/mustache.js' />"></script>
+<script type="text/javascript" src="<c:url value='/javascript/thirdparty/mustache-0.7.2.js' />"></script>
 <script type="text/javascript" src="<c:url value='/javascript/common.js' />"></script>
 
