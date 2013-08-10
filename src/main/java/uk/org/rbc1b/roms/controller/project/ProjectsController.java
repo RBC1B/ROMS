@@ -26,20 +26,24 @@ package uk.org.rbc1b.roms.controller.project;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
+import uk.org.rbc1b.roms.controller.common.DataConverterUtil;
 import uk.org.rbc1b.roms.db.project.Project;
 import uk.org.rbc1b.roms.db.project.ProjectDao;
 import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 
 /**
  * Control access to the underlying person data.
- *
  * @author oliver
  */
 @Controller
@@ -52,7 +56,6 @@ public class ProjectsController {
 
     /**
      * Display the list of projects.
-     *
      * @param model mvc model
      * @return view
      */
@@ -79,7 +82,8 @@ public class ProjectsController {
      * @throws NoSuchRequestHandlingMethodException when no project matching the id is found
      */
     @RequestMapping(value = "{projectId}", method = RequestMethod.GET)
-    public String showProject(@PathVariable Integer projectId, ModelMap model) throws NoSuchRequestHandlingMethodException {
+    public String showProject(@PathVariable Integer projectId, ModelMap model)
+            throws NoSuchRequestHandlingMethodException {
 
         Project project = projectDao.findProject(projectId);
         if (project == null) {
@@ -92,6 +96,25 @@ public class ProjectsController {
         model.addAttribute("project", projectModel);
 
         return "projects/show";
+    }
+
+    /**
+     * Reorder the project stages by passing in the new stage id order.
+     * @param projectId project to reorder
+     * @param stageIdValues comma separated list of the stage ids, in the format stage-1, stage-3, stage-17
+     */
+    @RequestMapping(value = "{projectId}/stage-order", method = RequestMethod.PUT, consumes = "application/x-www-form-urlencoded")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void reorderStages(@PathVariable Integer projectId, @RequestParam("stageIdValues") String stageIdValues) {
+
+        String[] stageIdValueArray = StringUtils.split(stageIdValues, ',');
+        List<Integer> stageIds = new ArrayList<Integer>();
+        for (String stageIdValue : stageIdValueArray) {
+            Integer stageId = DataConverterUtil.toInteger(stageIdValue.replaceAll("stage\\-", ""));
+            stageIds.add(stageId);
+        }
+
+        projectDao.updateProjectStageOrder(projectId, stageIds);
     }
 
     @Autowired

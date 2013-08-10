@@ -21,39 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-$(document).ready(function() {
-    // list view
-    roms.common.datatables(
-        $('#project-list'),
-        {
-            "iDisplayLength": 10,
-            "aoColumnDefs": [
-            {
-                'bSortable': false,
-                'aTargets': [ 7 ]
-            }
-            ]
-        }
-    );
+package uk.org.rbc1b.roms.db.common;
 
-    $(".a-project-status, .a-project-task-count").tooltip();
+/**
+ * A cursor pointing to an element in a sequence.
+ * <p>
+ * This is somewhat like an <code>Iterator</code>, except that is is "full": the "current value" can be requested
+ * repeatedly. The value changes only after calling <code>advance()</code>.
+ * <p>
+ * The cursor may be "invalid", in which case calling <code>value</code> will result in an exception.
+ * @param <T> Type of element
+ */
+public interface Cursor<T> {
+    /**
+     * Tests if this cursor is pointing to a valid value.
+     * @return True if value is valid
+     */
+    boolean hasValue();
 
-    // details view
-    $("#project-stages").sortable({
-        items: "> div",
-        update: function( event, ui ) {
-            var stageIds = $(this).sortable('toArray').toString();
-            $.ajax({
-                url: roms.common.relativePath + '/projects/' + $(this).data("project-id") + "/stage-order",
-                type: 'PUT',
-                data:  {
-                    stageIdValues: stageIds
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    alert(xhr.status + ": " + thrownError);
-                }
-            });
-        }
-    });
+    /**
+     * Gets the current value pointed to by the cursor, if any.
+     * @return Current value
+     * @throws IllegalStateException Cursor is not valid
+     */
+    T value() throws IllegalStateException;
 
-});
+    /**
+     * Advance to the next value in the sequence.
+     * <p>
+     * After calling this method, {@link #hasValue} and {@link #value} may return different values.
+     */
+    void advance();
+
+}

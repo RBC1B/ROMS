@@ -23,12 +23,12 @@
  */
 package uk.org.rbc1b.roms.controller.common;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 /**
  * Utility class for data conversions.
- *
  * @author oliver.elder.esq
  */
 public final class DataConverterUtil {
@@ -39,7 +39,6 @@ public final class DataConverterUtil {
 
     /**
      * Convert a java.sql.Date into a joda datetime object.
-     *
      * @param date incoming date
      * @return converted date, or null
      */
@@ -54,7 +53,7 @@ public final class DataConverterUtil {
     /**
      * Convert a joda DateTime object into a java.sql.Date, set at midnight.
      * @param dateTime incoming date time
-     * @return  sql date, or null if not set
+     * @return sql date, or null if not set
      */
     public static java.sql.Date toSqlDate(DateTime dateTime) {
         if (dateTime == null) {
@@ -62,4 +61,22 @@ public final class DataConverterUtil {
         }
         return new java.sql.Date(dateTime.toDateMidnight().getMillis());
     }
+
+    /**
+     * Convert the string to an integer.
+     * @param value string value
+     * @return integer, or null if the value is null or empty
+     */
+    public static Integer toInteger(String value) {
+        String trimmed = StringUtils.trimToNull(value);
+        if (trimmed == null) {
+            return null;
+        }
+        try {
+            return Integer.valueOf(trimmed);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Failed to convert [" + value + "] to an Integer");
+        }
+    }
+
 }

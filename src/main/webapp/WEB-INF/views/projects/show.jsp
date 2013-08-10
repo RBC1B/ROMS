@@ -104,7 +104,7 @@
 
             <c:choose>
                 <c:when test="${!empty project.stages}">
-                    <div id="project-stages">
+                    <div id="project-stages" data-project-id="${project.projectId}">
                         <c:forEach var="stage" items="${project.stages}">
                             <%@ include file="fragments/show-stage.jsp" %>
                         </c:forEach>

@@ -30,14 +30,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Add/edit/delete/update the core project data.
- *
  * @author oliver
  */
 public interface ProjectDao {
 
     /**
      * Look up the list of projects.
-     *
      * @return list of projects
      */
     @PreAuthorize("hasPermission('PROJECT', 'READ')")
@@ -53,7 +51,6 @@ public interface ProjectDao {
     @Transactional(readOnly = true)
     Project findProject(Integer projectId);
 
-
     /**
      * Look up the list of stages associated with the project.
      * @param projectId project id
@@ -65,9 +62,17 @@ public interface ProjectDao {
 
     /**
      * Look up the ordered map of project stages.
-     *
      * @return project stage, mapped by id
      */
     @Transactional(readOnly = true)
     Map<Integer, ProjectStageType> findProjectStageTypes();
+
+    /**
+     * Update the project stage order.
+     * @param projectId project id to update the order for
+     * @param stageIds stage ids
+     */
+    @Transactional
+    void updateProjectStageOrder(Integer projectId, List<Integer> stageIds);
+
 }

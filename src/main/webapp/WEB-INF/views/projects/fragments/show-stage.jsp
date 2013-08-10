@@ -2,9 +2,9 @@
     Show an individual project stage
 --%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<div class="row">
+<div id="stage-${stage.projectStageId}" class="row">
     <div class="icon-plus"></div>
-    <div class="project-stage-type-name">${stage.type.name}</div>
+    <div class="project-stage-type-name">${stage.type.name}: ${stage.type.description}</div>
 
     <div class="icon-resize-vertical"></div>
     <div class="project-stage-task-counts">

@@ -29,6 +29,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import org.apache.commons.lang3.ObjectUtils;
 import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
@@ -52,6 +53,42 @@ public class ProjectStageOrder extends DefaultUpdateAuditable {
     public static void sortProjectStages(List<ProjectStage> stages, List<ProjectStageOrder> stageOrders) {
         ProjectStageComparator comparator = new ProjectStageComparator(stageOrders);
         Collections.sort(stages, comparator);
+    }
+
+    /**
+     * From the list of stage ids, create the list of project stage orders with the previous and next stage ids defined.
+     * @param projectId project id
+     * @param stageIds stage ids
+     * @return list of project stage orders
+     */
+    public static List<ProjectStageOrder> createProjectStageOrders(Integer projectId, List<Integer> stageIds) {
+        List<ProjectStageOrder> projectStageOrders = new ArrayList<ProjectStageOrder>(stageIds.size());
+        Integer previousProjectStageId = null;
+
+        // looping forwards, create the orders with the previous stage id populated
+        for (Integer stageId : stageIds) {
+
+            ProjectStageOrder order = new ProjectStageOrder();
+            order.setProjectId(projectId);
+            order.setProjectStageId(stageId);
+            order.setPreviousProjectStageId(previousProjectStageId);
+
+            projectStageOrders.add(order);
+
+            previousProjectStageId = stageId;
+        }
+
+        // loop backwards, populating the next stage ids
+        Integer nextProjectStageId = null;
+        for (ListIterator<ProjectStageOrder> i = projectStageOrders.listIterator(projectStageOrders.size()); i
+                .hasPrevious();) {
+            ProjectStageOrder projectStageOrder = i.previous();
+            projectStageOrder.setNextProjectStageId(nextProjectStageId);
+
+            nextProjectStageId = projectStageOrder.getProjectStageId();
+        }
+
+        return projectStageOrders;
     }
 
     public Integer getProjectStageOrderId() {

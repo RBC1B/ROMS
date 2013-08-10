@@ -25,6 +25,7 @@ package uk.org.rbc1b.roms.db.project;
 
 import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
 
@@ -34,7 +35,7 @@ import org.junit.Test;
 public class ProjectStageOrderTest {
     // CHECKSTYLE:OFF
     @Test
-    public void testOrder() {
+    public void testSortProjectStages() {
 
         List<ProjectStage> stages = new ArrayList<ProjectStage>();
         stages.add(createStage(100)); // 2nd
@@ -54,6 +55,14 @@ public class ProjectStageOrderTest {
 
         assertEquals("[ProjectStage#102, ProjectStage#100, ProjectStage#104, ProjectStage#101, ProjectStage#103]",
                 stages.toString());
+    }
+
+    @Test
+    public void testCreateProjectStageOrders() {
+        List<ProjectStageOrder> orders = ProjectStageOrder.createProjectStageOrders(1, Arrays.asList(10, 15, 6, 4, 11));
+        assertEquals("[ProjectStageOrder#null:null->10->15, ProjectStageOrder#null:10->15->6, "
+                + "ProjectStageOrder#null:15->6->4, ProjectStageOrder#null:6->4->11, "
+                + "ProjectStageOrder#null:4->11->null]", orders.toString());
     }
 
     private ProjectStage createStage(Integer id) {

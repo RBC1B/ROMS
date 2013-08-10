@@ -23,9 +23,11 @@
  */
 package uk.org.rbc1b.roms.db.project;
 
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.lang3.ObjectUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
@@ -36,6 +38,7 @@ import org.hibernate.sql.JoinType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
+import uk.org.rbc1b.roms.db.common.MergeUtil;
 
 /**
  * Implements ProjectDao.
@@ -89,6 +92,42 @@ public class HibernateProjectDao implements ProjectDao {
         ProjectStageOrder.sortProjectStages(stages, stageOrders);
 
         return stages;
+    }
+
+    @Override
+    public void updateProjectStageOrder(Integer projectId, List<Integer> stageIds) {
+        final Session session = this.sessionFactory.getCurrentSession();
+        List<ProjectStageOrder> incoming = ProjectStageOrder.createProjectStageOrders(projectId, stageIds);
+
+        Criteria criteria = session.createCriteria(ProjectStageOrder.class);
+        criteria.add(Restrictions.eq("projectId", projectId));
+
+        @SuppressWarnings("unchecked")
+        List<ProjectStageOrder> existing = criteria.list();
+
+        MergeUtil.sortAndMerge(existing, incoming, new Comparator<ProjectStageOrder>() {
+            @Override
+            public int compare(ProjectStageOrder o1, ProjectStageOrder o2) {
+                return o1.getProjectStageId().compareTo(o2.getProjectStageId());
+            }
+        }, new MergeUtil.Callback<ProjectStageOrder, ProjectStageOrder>() {
+            @Override
+            public void output(ProjectStageOrder existingOrder, ProjectStageOrder incomingOrder) {
+                if (existingOrder == null) {
+                    session.save(incomingOrder);
+                } else if (incomingOrder == null) {
+                    session.delete(existingOrder);
+                } else if (!ObjectUtils.equals(existingOrder.getPreviousProjectStageId(),
+                        incomingOrder.getPreviousProjectStageId())
+                        || !ObjectUtils.equals(existingOrder.getNextProjectStageId(),
+                                incomingOrder.getNextProjectStageId())) {
+                    existingOrder.setNextProjectStageId(incomingOrder.getNextProjectStageId());
+                    existingOrder.setPreviousProjectStageId(incomingOrder.getPreviousProjectStageId());
+                    session.update(existingOrder);
+                }
+            }
+        });
+
     }
 
     @Override
