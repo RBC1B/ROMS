@@ -28,10 +28,11 @@ import java.util.Set;
 import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 
 /**
- * Project stage defined for a given project. Each project defines one or more stages to be completed to finish the project.
+ * Project stage defined for a given project. Each project defines one or more stages to be completed to finish the
+ * project.
  */
 public class ProjectStage extends DefaultUpdateAuditable {
-
+    private static final long serialVersionUID = 1L;
     private Integer projectStageId;
     private Project project;
     private Integer projectStageTypeId;
@@ -107,6 +108,6 @@ public class ProjectStage extends DefaultUpdateAuditable {
 
     @Override
     public String toString() {
-        return "ProjectStage{" + "projectStageId=" + projectStageId + '}';
+        return "ProjectStage#" + projectStageId;
     }
 }

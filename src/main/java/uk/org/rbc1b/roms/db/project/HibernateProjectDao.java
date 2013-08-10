@@ -39,7 +39,6 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Implements ProjectDao.
- *
  * @author oliver
  */
 @Repository
@@ -48,12 +47,13 @@ public class HibernateProjectDao implements ProjectDao {
     @Autowired
     private SessionFactory sessionFactory;
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Project> findProjects() {
         Session session = this.sessionFactory.getCurrentSession();
 
-        Criteria criteria = session.createCriteria(Project.class)
-                .createAlias("contactPerson", "contactPerson", JoinType.LEFT_OUTER_JOIN);
+        Criteria criteria = session.createCriteria(Project.class).createAlias("contactPerson", "contactPerson",
+                JoinType.LEFT_OUTER_JOIN);
         return criteria.list();
     }
 
@@ -73,11 +73,21 @@ public class HibernateProjectDao implements ProjectDao {
         Session session = this.sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(ProjectStage.class);
         criteria.add(Restrictions.eq("project.id", projectId));
+        @SuppressWarnings("unchecked")
         List<ProjectStage> stages = criteria.list();
 
         for (ProjectStage stage : stages) {
             Hibernate.initialize(stage.getTasks());
         }
+
+        criteria = session.createCriteria(ProjectStageOrder.class);
+        criteria.add(Restrictions.eq("projectId", projectId));
+
+        @SuppressWarnings("unchecked")
+        List<ProjectStageOrder> stageOrders = criteria.list();
+
+        ProjectStageOrder.sortProjectStages(stages, stageOrders);
+
         return stages;
     }
 
@@ -87,6 +97,7 @@ public class HibernateProjectDao implements ProjectDao {
         Session session = this.sessionFactory.getCurrentSession();
 
         Criteria criteria = session.createCriteria(ProjectStageType.class).addOrder(Order.asc("projectStageTypeId"));
+        @SuppressWarnings("unchecked")
         List<ProjectStageType> stages = criteria.list();
 
         Map<Integer, ProjectStageType> resultMap = new LinkedHashMap<Integer, ProjectStageType>(stages.size());
