@@ -69,27 +69,28 @@
                         <form:input path="telephone" maxlength="20" placeholder="Telephone Number" class="span2"/><br />
                         <form:input path="mobile" maxlength="20" placeholder="Mobile Number" class="span2"/>
                     </div>
-                </fieldset>
-                <c:choose>
-                    <c:when test="${circuitForm.forename != null && circuitForm.surname != null}">
-                        <fieldset>
-                            <div class="controls controls-row">
-                                <div class="alert alert-info span9" id="edit-circuit-overseer-person" style="display:none;">
-                                    <p id="co-link">
-                                        <script id="edit-circuit-overseer-person-link" type="text/html" charset="utf-8">
-                                            Click this link if you would like to edit additional fields of the Circuit Overseer
-                                            <a href="<c:url value='/persons/{{personId}}/edit'/>"><b>{{forename}} {{surname}}</b>
-                                        </script>
-                                    </p>
+                    <c:choose>
+                        <c:when test="${circuitForm.forename != null && circuitForm.surname != null}">
+                            <fieldset>
+                                <div class="controls controls-row">
+                                    <div class="alert alert-info span9" id="edit-circuit-overseer-person" style="display:none;">
+                                        <p id="co-link">
+                                            <script id="edit-circuit-overseer-person-link" type="text/html" charset="utf-8">
+                                                Click this link if you would like to edit additional fields of the Circuit Overseer
+                                                <a href="<c:url value='/persons/{{personId}}/edit'/>"><b>{{forename}} {{surname}}</b>
+                                            </script>
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                        </fieldset>
-                    </c:when>
-                </c:choose>
-                <fieldset>
-                    <div class="controls controls-row">
-                        <input type="submit" class="btn btn-primary" />
+                            </fieldset>
+                        </c:when>
+                    </c:choose>
+                    <div class="control-group">
+                        <div class="controls controls-row">
+                            <input type="submit" class="btn btn-primary" />
+                        </div>
                     </div>
+                    <br />
                 </fieldset>
             </div>
         </form:form>
