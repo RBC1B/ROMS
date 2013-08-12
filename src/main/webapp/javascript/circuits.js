@@ -200,13 +200,13 @@ $(document).ready(function() {
             telephone: {
                 required: true,
                 minlength: 9,
-                maxlength: 14,
+                maxlength: 13,
                 phoneNos: true
             },
             mobile: {
                 required: true,
                 minlength: 10,
-                maxlength: 11,
+                maxlength: 13,
                 phoneNos: true
             }
         },
