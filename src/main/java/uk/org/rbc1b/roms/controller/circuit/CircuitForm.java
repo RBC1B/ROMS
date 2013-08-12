@@ -56,9 +56,9 @@ public class CircuitForm {
     private String county;
     @Size(min = 5, max = 9)
     private String postcode;
-    @Size(min = 9, max = 14)
+    @Size(min = 9, max = 13)
     private String telephone;
-    @Size(min = 10, max = 11)
+    @Size(min = 10, max = 13)
     private String mobile;
 
     /**
