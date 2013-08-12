@@ -170,7 +170,7 @@ public class CircuitsController {
 
         circuitDao.createCircuit(circuit);
 
-        return "redirect:/circuits" + circuit.getCircuitId();
+        return "redirect:/circuits/" + circuit.getCircuitId();
     }
 
     /**
@@ -192,7 +192,7 @@ public class CircuitsController {
 
         circuitDao.updateCircuit(circuit);
 
-        return "redirect:/circuits" + circuit.getCircuitId();
+        return "redirect:/circuits/" + circuit.getCircuitId();
     }
 
     private Person createCircuitOverseer(CircuitForm circuitForm) {
