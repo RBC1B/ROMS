@@ -95,35 +95,34 @@
             </div>
         </form:form>
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-    </div>
 
-    <!-- Mustache template for displaying the person link, use of mustaches {{}} -->
-    <script id="circuit-overseer-link-form" type="text/html">
-        {{#existingPersonId}}
-        <p>The name is already linked to <b>{{existingPersonName}}</b></p>
-        <p><a href="#" class="matched-person" data-person-id="{{existingPersonId}}">Leave linked to {{existingPersonName}} (same as ignore)</a></p>
-        <p><a href="#" class="matched-person" data-person-id="">Unlink {{existingPersonName}} (create a new person)</a></p>
-        {{/existingPersonId}}
-        {{#matchedPersons}}
-        <p>Link to an existing person:</p>
-        {{#results}}
-        <a href="#" class="matched-person" data-person-id="{{personId}}">{{forename}} {{surname}}{{#congregationName}}, {{congregationName}}{{/congregationName}}</a>
-        {{/results}}
-        {{/matchedPersons}}
-    </script>
+        <!-- Mustache template for displaying the person link, use of mustaches {{}} -->
+        <script id="circuit-overseer-link-form" type="text/html">
+            {{#existingPersonId}}
+            <p>The name is already linked to <b>{{existingPersonName}}</b></p>
+            <p><a href="#" class="matched-person" data-person-id="{{existingPersonId}}">Leave linked to {{existingPersonName}} (same as ignore)</a></p>
+            <p><a href="#" class="matched-person" data-person-id="">Unlink {{existingPersonName}} (create a new person)</a></p>
+            {{/existingPersonId}}
+            {{#matchedPersons}}
+            <p>Link to an existing person:</p>
+            {{#results}}
+            <a href="#" class="matched-person" data-person-id="{{personId}}">{{forename}} {{surname}}{{#congregationName}}, {{congregationName}}{{/congregationName}}</a>
+            {{/results}}
+            {{/matchedPersons}}
+        </script>
 
-    <div id="circuit-overseer-modal" class="modal hide fade">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h3>Select Matching Person</h3>
-        </div>
-        <div class="modal-body">
+        <div id="circuit-overseer-modal" class="modal hide fade">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3>Select Matching Person</h3>
+            </div>
+            <div class="modal-body">
 
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn" data-dismiss="modal">Ignore</a>
+            </div>
         </div>
-        <div class="modal-footer">
-            <a href="#" class="btn" data-dismiss="modal">Ignore</a>
-        </div>
-    </div>
-    <script type="text/javascript" src="<c:url value='/javascript/circuits.js' />" ></script>
-</body>
+        <script type="text/javascript" src="<c:url value='/javascript/circuits.js' />" ></script>
+    </body>
 </html>
