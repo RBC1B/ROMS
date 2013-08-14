@@ -30,12 +30,13 @@
     <module name="RegexpSingleline">
         <property name="format" value="\s+$" />
         <property name="message" value="Line has trailing spaces." />
+        <property name="fileExtensions" value="java, xml, jsp" />
     </module>
 
 
     <!-- Whitespace -->
     <module name="FileTabCharacter" >
-        <property name="fileExtensions" value="java,xml,jsp" />
+        <property name="fileExtensions" value="java, xml, jsp" />
     </module>
 
     <module name="TreeWalker">
