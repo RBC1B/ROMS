@@ -12,13 +12,8 @@
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
-            <div class="media">
-                <div class="media-body">
-                    <h1 class="media-heading">#${circuit.circuitId}: ${circuit.name}</h1>
-                    <hr>
-                </div>
-            </div>
-            <br />
+            <h1 class="media-heading">#${circuit.circuitId}: ${circuit.name}</h1>
+            <hr />
             <h3>Circuit Overseer's details: </h3>
 
             <c:choose>
