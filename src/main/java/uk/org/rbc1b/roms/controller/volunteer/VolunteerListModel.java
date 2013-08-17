@@ -27,13 +27,11 @@ import uk.org.rbc1b.roms.controller.common.model.EntityModel;
 
 /**
  * Model of summary information for a volunteer, used in the list results.
- *
  * @author oliver.elder.esq
  */
 public class VolunteerListModel {
 
     private EntityModel congregation;
-    private String editUri;
     private String email;
     private String forename;
     private Integer id;
@@ -47,14 +45,6 @@ public class VolunteerListModel {
 
     public void setCongregation(EntityModel congregation) {
         this.congregation = congregation;
-    }
-
-    public String getEditUri() {
-        return editUri;
-    }
-
-    public void setEditUri(String editUri) {
-        this.editUri = editUri;
     }
 
     public String getEmail() {

@@ -33,7 +33,6 @@ import uk.org.rbc1b.roms.db.application.User;
 
 /**
  * Create a person model.
- *
  * @author oliver
  */
 @Component
@@ -44,7 +43,6 @@ public class PersonModelFactory {
 
     /**
      * Generate the uri used to access the person pages.
-     *
      * @param personId optional volunteer id
      * @return uri
      */
@@ -54,7 +52,6 @@ public class PersonModelFactory {
 
     /**
      * Create a person model.
-     *
      * @param person person
      * @return model
      */
@@ -88,7 +85,6 @@ public class PersonModelFactory {
 
     /**
      * Generate the user model. We point the user uri to the person page.
-     *
      * @param user user
      * @return model
      */

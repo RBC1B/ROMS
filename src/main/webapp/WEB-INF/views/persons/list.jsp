@@ -29,7 +29,6 @@
                     </tbody>
                 </table>
             </div>
-
             <p>&nbsp;</p>
             <ul class="breadcrumb">
                 <li><a href="<c:url value="/" />">ROMS</a> <span class="divider">/</span></li>
@@ -37,13 +36,7 @@
             </ul>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
-        <script id="list-action" type="text/html">
-            <ul class="inline list-actions">
-                {{#uri}}<li><a class="btn btn-success" href="{{uriBase}}{{uri}}">View</a></li>{{/uri}}
-                {{#editUri}}<li><a class="list-action" href="{{uriBase}}{{editUri}}">Edit</a></li>{{/editUri}}
-                {{#deleteUri}}<li><a class="list-action" href="{{uriBase}}{{deleteUri}}">Delete</a></li>{{/deleteUri}}
-            </ul>
-        </script>
+        <%@ include file="/WEB-INF/views/common/mustache-list-actions.jsp" %>
         <script type="text/javascript" src="<c:url value='/javascript/persons.js' />" ></script>
     </body>
 </html>

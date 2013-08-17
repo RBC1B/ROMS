@@ -52,7 +52,6 @@ import uk.org.rbc1b.roms.db.volunteer.VolunteerSkill;
 
 /**
  * Generate the volunteer model.
- *
  * @author oliver
  */
 @Component
@@ -80,7 +79,6 @@ public class VolunteerModelFactory {
 
     /**
      * Generate the uri used to access the volunteer pages.
-     *
      * @param volunteerId optional volunteer id
      * @return uri
      */
@@ -90,7 +88,6 @@ public class VolunteerModelFactory {
 
     /**
      * Generate the volunteer model to be used in the summary list.
-     *
      * @param volunteer volunteer
      * @return model
      */
@@ -105,14 +102,12 @@ public class VolunteerModelFactory {
         model.setSurname(volunteer.getSurname());
 
         model.setUri(generateUri(volunteer.getPersonId()));
-        model.setEditUri(generateUri(volunteer.getPersonId()) + "/edit");
 
         return model;
     }
 
     /**
      * Generate the model to be used in the volunteer details view.
-     *
      * @param volunteer volunteer
      * @return model
      */
@@ -149,7 +144,8 @@ public class VolunteerModelFactory {
         model.setBaptismDate(volunteer.getBaptismDate());
         model.setEmergencyContact(personModelFactory.generatePersonModel(volunteer.getEmergencyContact()));
         if (volunteer.getEmergencyContactRelationshipId() != null) {
-            model.setEmergencyContactRelationship(referenceDao.findRelationshipValues().get(volunteer.getEmergencyContactRelationshipId()));
+            model.setEmergencyContactRelationship(referenceDao.findRelationshipValues().get(
+                    volunteer.getEmergencyContactRelationshipId()));
         }
         if (volunteer.getFulltimeId() != null) {
             model.setFulltime(referenceDao.findFulltimeValues().get(volunteer.getFulltimeId()));
@@ -158,7 +154,6 @@ public class VolunteerModelFactory {
 
         // skills
         model.setTrades(volunteer.getTrades().isEmpty() ? null : volunteer.getTrades());
-
 
         // rbs status
         model.setFormDate(volunteer.getFormDate());
@@ -216,7 +211,6 @@ public class VolunteerModelFactory {
 
     /**
      * Generate the models for the volunteer assignments.
-     *
      * @param assignments assignments
      * @return model list
      */
@@ -235,7 +229,6 @@ public class VolunteerModelFactory {
 
     /**
      * Generate the models for the volunteer skills.
-     *
      * @param volunteerSkills list of volunteer skills
      * @return model list
      */
@@ -281,16 +274,17 @@ public class VolunteerModelFactory {
 
     /**
      * Generate the models for the volunteer qualifications.
-     *
      * @param volunteerQualifications list of volunteer qualifications
      * @return model list
      */
-    public List<VolunteerQualificationModel> generateVolunteerQualificationsModel(List<VolunteerQualification> volunteerQualifications) {
+    public List<VolunteerQualificationModel> generateVolunteerQualificationsModel(
+            List<VolunteerQualification> volunteerQualifications) {
         if (CollectionUtils.isEmpty(volunteerQualifications)) {
             return null;
         }
 
-        List<VolunteerQualificationModel> modelList = new ArrayList<VolunteerQualificationModel>(volunteerQualifications.size());
+        List<VolunteerQualificationModel> modelList = new ArrayList<VolunteerQualificationModel>(
+                volunteerQualifications.size());
         for (VolunteerQualification volunteerQualification : volunteerQualifications) {
             VolunteerQualificationModel model = new VolunteerQualificationModel();
 
@@ -299,7 +293,8 @@ public class VolunteerModelFactory {
             model.setAppearOnBadge(true);
             model.setComments(volunteerQualification.getComments());
 
-            Qualification qualification = qualificationDao.findQualification(volunteerQualification.getQualificationId());
+            Qualification qualification = qualificationDao.findQualification(volunteerQualification
+                    .getQualificationId());
             model.setDescription(qualification.getDescription());
 
             EntityModel qualificationModel = new EntityModel();
