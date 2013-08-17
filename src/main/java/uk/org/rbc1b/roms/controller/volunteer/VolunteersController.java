@@ -31,6 +31,7 @@ import java.util.Set;
 import javax.validation.Valid;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.ObjectUtils;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -364,6 +365,55 @@ public class VolunteersController {
         model.addAttribute("submitUri", volunteerModelFactory.generateUri(volunteerId) + "/rbc-status");
 
         return "volunteers/edit-rbc-status";
+    }
+
+    /**
+     * Display the form to edit the info under the personal tab on the volunteer.
+     * @param volunteerId volunteer id to edit
+     * @param model mvc model
+     * @return view name
+     * @throws NoSuchRequestHandlingMethodException if volunteer is not found
+     */
+    @RequestMapping(value = "{volunteerId}/personal/edit", method = RequestMethod.GET)
+    public String showEditVolunteerPersonalForm(@PathVariable Integer volunteerId, ModelMap model)
+            throws NoSuchRequestHandlingMethodException {
+
+        Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, EnumSet.of(VolunteerData.SPOUSE));
+        if (volunteer == null) {
+            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+        }
+
+        VolunteerPersonalForm form = new VolunteerPersonalForm();
+        form.setEmail(volunteer.getEmail());
+        form.setTelephone(volunteer.getTelephone());
+        form.setMobile(volunteer.getMobile());
+        form.setWorkPhone(volunteer.getWorkPhone());
+        if (volunteer.getAddress() != null) {
+            form.setStreet(volunteer.getAddress().getStreet());
+            form.setTown(volunteer.getAddress().getTown());
+            form.setCounty(volunteer.getAddress().getCounty());
+            form.setPostcode(volunteer.getAddress().getPostcode());
+        }
+        form.setGender(volunteer.getGender());
+
+        if (volunteer.getBirthDate() != null) {
+            form.setBirthDate(new DateTime(volunteer.getBirthDate().getTime()));
+        }
+
+        form.setMaritalStatusId(volunteer.getMaritalStatusId());
+        if (volunteer.getSpouse() != null) {
+            form.setSpousePersonId(volunteer.getSpouse().getPersonId());
+            form.setSpouseForename(volunteer.getSpouse().getForename());
+            form.setSpouseSurname(volunteer.getSpouse().getSurname());
+        }
+
+        model.addAttribute("maritalStatusValues", referenceDao.findMaritalStatusValues());
+        model.addAttribute("volunteerPersonal", form);
+        model.addAttribute("forename", volunteer.getForename());
+        model.addAttribute("surname", volunteer.getSurname());
+        model.addAttribute("submitUri", volunteerModelFactory.generateUri(volunteerId) + "/personal");
+
+        return "volunteers/edit-personal";
     }
 
     /**

@@ -1,6 +1,5 @@
 <%--
 Edit form for the volunteer data under the rbc status tab.
-Author: oliver.elder.esq
 --%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -22,7 +21,7 @@ Author: oliver.elder.esq
                     <form:input path="formDate" class="datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
                 </fieldset>
                 <fieldset>
-                    <h3>Interview</h3>
+                    <legend>Interview</legend>
                     <label>Interview date</label>
                     <form:input path="interviewDate" class="datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
                     <label>Interviewer A</label>
@@ -39,7 +38,7 @@ Author: oliver.elder.esq
                     <form:input path="badgeIssueDate" class="datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
                 </fieldset>
                 <fieldset>
-                    <h3>Availability</h3>
+                    <legend>Availability</legend>
                     <a href="#" id="clear-availability">No days</a>|<a href="#" id="set-availability">All days</a>
                     <label class="checkbox">
                         <form:checkbox path="availabilityMonday" class="availability" /> Monday
@@ -64,7 +63,7 @@ Author: oliver.elder.esq
                     </label>
                 </fieldset>
                 <fieldset>
-                    <h3>Oversight</h3>
+                    <legend>Oversight</legend>
                     <label class="checkbox">
                         <form:checkbox path="oversight" /> Recommended
                     </label>
@@ -72,7 +71,7 @@ Author: oliver.elder.esq
                     <form:input path="oversightComments" maxlength="50" />
                 </fieldset>
                 <fieldset>
-                    <h3>Relief - UK</h3>
+                    <legend>Relief - UK</legend>
                     <label class="checkbox">
                         <form:checkbox path="reliefUK" /> Recommended
                     </label>
@@ -80,7 +79,7 @@ Author: oliver.elder.esq
                     <form:input path="reliefUKComments" maxlength="50" />
                 </fieldset>
                 <fieldset>
-                    <h3>Relief - Abroad</h3>
+                    <legend>Relief - Abroad</legend>
                     <label class="checkbox">
                         <form:checkbox path="reliefAbroad" /> Recommended
                     </label>
@@ -88,7 +87,7 @@ Author: oliver.elder.esq
                     <form:input path="reliefAbroadComments" maxlength="50" />
                 </fieldset>
                 <fieldset>
-                    <h3>HHC</h3>
+                    <legend>HHC</legend>
                     <label>Form code</label>
                     <form:input path="hhcFormCode" maxlength="15" />
                 </fieldset>
