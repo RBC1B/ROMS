@@ -21,7 +21,7 @@
                         <h1 class="media-heading">
                             #${volunteer.id}: <span id="volunteer-full-name">${volunteer.forename} ${volunteer.middleName} ${volunteer.surname}</span>
                             <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
-                                <a style="display: none" class="btn btn-primary btn-mini" href="#">Edit</a>
+                                <a class="hide btn btn-primary btn-mini" href="#">Edit</a>
                             </sec:authorize>
                         </h1>
                     </div>
@@ -35,7 +35,7 @@
                             <dd>
                                 <span id="volunteer-comments-content">${volunteer.comments}</span>
                                 <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
-                                    <a style="display: none" class="btn btn-primary btn-mini" href="#">Edit</a>
+                                    <a class="hide btn btn-primary btn-mini" href="#">Edit</a>
                                 </sec:authorize>
                             </dd>
                         </div>

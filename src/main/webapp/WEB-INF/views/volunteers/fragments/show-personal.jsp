@@ -1,8 +1,7 @@
 <%--
 The contents of the personal tab.
-Author: oliver.elder.esq
 --%>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <dl class="dl-horizontal">
     <dt>Email:</dt>
     <dd>
@@ -73,6 +72,10 @@ Author: oliver.elder.esq
 </c:if>
 </dd>
 </dl>
+<sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
+    <a class="btn btn-primary" href="<c:url value='${volunteer.editPersonalUri}' />">Edit</a>
+</sec:authorize>
+
 <h3>Emergency Contact</h3>
 <c:choose>
     <c:when test="${!empty volunteer.emergencyContact}">

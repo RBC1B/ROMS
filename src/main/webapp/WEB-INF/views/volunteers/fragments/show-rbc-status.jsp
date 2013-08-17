@@ -1,7 +1,7 @@
 <%--
 The contents of the rbc status tab.
-Author: oliver.elder.esq
 --%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <dl class="dl-horizontal">
     <dt>Form date:</dt>
     <dd>
