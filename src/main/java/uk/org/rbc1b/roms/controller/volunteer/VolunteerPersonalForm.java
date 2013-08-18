@@ -23,13 +23,15 @@
  */
 package uk.org.rbc1b.roms.controller.volunteer;
 
+import org.hibernate.validator.constraints.Email;
 import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * Form bean used when editing the volunteer person details.
  */
 public class VolunteerPersonalForm {
-
+    @Email
     private String email;
     private String telephone;
     private String mobile;
@@ -39,6 +41,7 @@ public class VolunteerPersonalForm {
     private String county;
     private String postcode;
     private String gender;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private DateTime birthDate;
     private Integer maritalStatusId;
     private Integer spousePersonId;

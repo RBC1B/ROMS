@@ -544,6 +544,55 @@ public class VolunteersController {
         return "redirect:" + volunteerModelFactory.generateUri(volunteer.getPersonId()) + "#!rbc-status";
     }
 
+    /**
+     * Update the volunteer personal information.
+     * @param volunteerId volunteer id to edit
+     * @param form form data
+     * @return view name (redirect)
+     * @throws NoSuchRequestHandlingMethodException if volunteer is not found
+     */
+    @RequestMapping(value = "{volunteerId}/personal", method = RequestMethod.PUT)
+    public String updateVolunteerPersonal(@PathVariable Integer volunteerId, @Valid VolunteerPersonalForm form)
+            throws NoSuchRequestHandlingMethodException {
+
+        Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
+        if (volunteer == null) {
+            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+        }
+
+        Address address = new Address();
+        address.setStreet(form.getStreet());
+        address.setTown(form.getTown());
+        address.setCounty(form.getCounty());
+        address.setPostcode(form.getPostcode());
+
+        volunteer.setAddress(address);
+        volunteer.setBirthDate(DataConverterUtil.toSqlDate(form.getBirthDate()));
+        volunteer.setEmail(form.getEmail());
+        volunteer.setGender(form.getGender());
+        volunteer.setMaritalStatusId(form.getMaritalStatusId());
+        volunteer.setMobile(form.getMobile());
+        volunteer.setTelephone(form.getTelephone());
+        volunteer.setWorkPhone(form.getWorkPhone());
+
+        if (form.getSpousePersonId() != null) {
+            volunteer.setSpouse(personDao.findPerson(form.getSpousePersonId()));
+        } else if (form.getSpouseForename() != null && form.getSpouseSurname() != null) {
+
+            Person spouse = new Person();
+            spouse.setForename(form.getSpouseForename());
+            spouse.setSurname(form.getSpouseSurname());
+
+            personDao.createPerson(spouse);
+
+            volunteer.setSpouse(spouse);
+        }
+
+        volunteerDao.updateVolunteer(volunteer);
+
+        return "redirect:" + volunteerModelFactory.generateUri(volunteer.getPersonId()) + "#!personal";
+    }
+
     private String generateAvailability(boolean... availabilityDays) {
         StringBuilder builder = new StringBuilder(7);
         for (boolean availabilityDay : availabilityDays) {

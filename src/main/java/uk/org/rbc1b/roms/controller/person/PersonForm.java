@@ -25,12 +25,12 @@ package uk.org.rbc1b.roms.controller.person;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.Email;
 import org.joda.time.DateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * From bean used when editing the person.
- *
  * @author oliver
  */
 public class PersonForm {
@@ -54,6 +54,7 @@ public class PersonForm {
     private String telephone;
     private String mobile;
     private String workPhone;
+    @Email
     private String email;
     private String comments;
 
