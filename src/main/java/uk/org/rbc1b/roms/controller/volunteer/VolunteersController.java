@@ -586,6 +586,8 @@ public class VolunteersController {
             personDao.createPerson(spouse);
 
             volunteer.setSpouse(spouse);
+        } else {
+            volunteer.setSpouse(null);
         }
 
         volunteerDao.updateVolunteer(volunteer);

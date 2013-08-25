@@ -256,31 +256,8 @@
             {{/persons}}
             {{/matchedPersons}}
         </script>
-        <div id="volunteer-person-modal" class="modal hide fade">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h3>Select matching person</h3>
-            </div>
-            <div class="modal-body">
-            </div>
-            <div class="modal-footer">
-                <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Ignore</a>
-            </div>
-        </div>
-        <!-- mustache template used to display the emergency contact or spouse person selection form -->
-        <script id="volunteer-person-link-search-form" type="text/html" charset="utf-8">
-            {{#existingPersonId}}
-            <p>The name is already linked to {{existingPersonName}}</p>
-            <p><a href="#" class="matched-person" data-person-id="{{existingPersonId}}">Leave linked to {{existingPersonName}} (same as ignore)</a></p>
-            <p><a href="#" class="matched-person" data-person-id="">Unlink {{existingPersonName}} (create a new person)</a></p>
-            {{/existingPersonId}}
-            {{#matchedPersons}}
-            <p>Link to an existing person:</p>
-            {{#results}}
-            <a href="#" class="matched-person" data-person-id="{{personId}}">{{forename}} {{surname}}{{#congregationName}}, {{congregationName}}{{/congregationName}}</a>
-            {{/results}}
-            {{/matchedPersons}}
-        </script>
+        <%@ include file="/WEB-INF/views/volunteers/fragments/mustache-volunteer-person-link-search-form.jsp" %>
+        <%@ include file="/WEB-INF/views/volunteers/fragments/volunteer-person-modal.jsp" %>
         <script type="text/javascript" src="<c:url value='/javascript/thirdparty/jquery-numeric-1.3.1.js' />" ></script>
         <script type="text/javascript" src="<c:url value='/javascript/volunteers.js' />" ></script>
     </body>

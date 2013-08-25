@@ -26,9 +26,10 @@ $(document).ready(function() {
     // created/edit common
     $(".datepicker").datepicker({
         dateFormat: "dd/mm/yy",
-        changeYear: true
+        changeYear: true,
+        maxDate: "0"
     });
-
+    
     $("#congregationName").typeahead({
         source: roms.common.congregationTypeAheadSource,
         minLength: 2
@@ -47,7 +48,7 @@ $(document).ready(function() {
             populateSpouseFromPerson
         );
     });
-
+    
     $("#emergencyContactSurname").blur(function() {
         matchLinkedPerson(
             $("#emergencyContactForename").val(),
@@ -69,8 +70,8 @@ $(document).ready(function() {
         }
     });
 
-    $("#spouse-linked button.close").click(function() {
-        populateSpouseFromPerson(null, $("#spousePersonId"));
+    $("#spouse-linked a").click(function() {
+        populateSpouseFromPerson(null, null, null, $("#spousePersonId"));
     });
 
     $("#emergency-contact-linked button.close").click(function() {
@@ -367,6 +368,9 @@ $(document).ready(function() {
 
     function matchLinkedPerson(forename, surname, $personId, populateFunction) {
         if(!forename || !surname) {
+            // clear any linked name
+            $personId.data("full-name", "");
+            populateFunction(null, forename, surname, $personId);
             return;
         }
 
@@ -409,7 +413,7 @@ $(document).ready(function() {
 
                 // if they select the person id, set it to the hidden volunteer person id field
                 $("a.matched-person").on("click", function(event){
-                    populateFunction($(this).data("person-id"), $personId);
+                    populateFunction($(this).data("person-id"), forename, surname, $personId);
                     modalElement.modal('hide')
                 });
             }
@@ -418,16 +422,26 @@ $(document).ready(function() {
         $personId.data("full-name", forename + " " + surname);
     }
 
-    function populateSpouseFromPerson(selectedPersonId, $personId) {
+    function populateSpouseFromPerson(selectedPersonId, forename, surname, $personId) {
         if (selectedPersonId) {
+            var template = $("#linked-person-text").html();
+            var data = {};
+            data.forename = forename;
+            data.surname = surname;
+            var html = Mustache.to_html(template, data);
+            $("#spouse-linked-text").html(html);
+            
             $("#spouse-linked").show("fast");
+            $("#spouse-unlinked").hide("fast");
         } else {
             $("#spouse-linked").hide("fast");
+            $("#spouse-unlinked input").val("");
+            $("#spouse-unlinked").show("fast");
         }
         $personId.val(selectedPersonId);
     }
 
-    function populateEmergencyContactFromPerson(selectedPersonId, $personId) {
+    function populateEmergencyContactFromPerson(selectedPersonId, forename, surname, $personId) {
 
         if (selectedPersonId) {
             // disable all the additional fields. include the text that indicates we are
@@ -442,6 +456,10 @@ $(document).ready(function() {
         $personId.val(selectedPersonId);
     }
 
+    // run the spouse display on page load
+    populateSpouseFromPerson($("#spousePersonId").val(), $("#spouseSurname").val(), $("#spouseForename").val(), $("#spousePersonId"))
+    
+    
     // list
     var listActionTemplate = $("#list-action").html();
 
