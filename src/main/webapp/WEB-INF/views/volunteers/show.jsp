@@ -77,28 +77,29 @@
             <div class="clearfix"></div>
             <br />
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#personal" data-toggle="tab">Details</a></li>
+                <li class="active"><a href="#personal" data-toggle="tab">Personal</a></li>
+                <li><a href="#spiritual" data-toggle="tab">Spiritual</a></li>
                 <li><a href="#skills" data-toggle="tab">Skills</a></li>
+                <li><a href="#rbcstatus" data-toggle="tab">RBC Status</a></li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="personal">
                     <div class="row-fluid">
-                        <div class="span4">
-                            <h3>Personal</h3>
-                            <%@ include file="fragments/show-personal.jsp" %>
-                        </div>
-                        <div class="span4">
-                            <h3>Spiritual</h3>
-                            <%@ include file="fragments/show-spiritual.jsp" %>
-                        </div>
-                        <div class="span4">
-                            <h3>RBC Status</h3>
-                            <%@ include file="fragments/show-rbc-status.jsp" %>
-                        </div>
+                        <%@ include file="fragments/show-personal.jsp" %>
+                    </div>
+                </div>
+                <div class="tab-pane" id="spiritual">
+                    <div class="row-fluid">
+                        <%@ include file="fragments/show-spiritual.jsp" %>
                     </div>
                 </div>
                 <div class="tab-pane" id="skills">
                     <%@ include file="fragments/show-skills.jsp" %>
+                </div>
+                <div class="tab-pane" id="rbcstatus">
+                    <div class="row-fluid">
+                        <%@ include file="fragments/show-rbc-status.jsp" %>
+                    </div>
                 </div>
             </div>
             <div class="clearfix"></div>
