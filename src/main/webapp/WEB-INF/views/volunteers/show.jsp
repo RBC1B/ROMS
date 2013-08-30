@@ -41,6 +41,7 @@
                         </div>
                     </dl>
                 </div>
+                <a class="btn btn-primary" href="<c:url value="/volunteers/${volunteer.id}/rbc-${volunteer.id}-badge.pdf"/>">Generate Badge</a>
             </div>
             <hr>
             <c:choose>

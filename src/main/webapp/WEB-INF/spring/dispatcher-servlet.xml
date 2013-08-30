@@ -45,7 +45,13 @@ THE SOFTWARE.
         <property name="prefix" value="/WEB-INF/views/"/>
         <property name="suffix" value=".jsp" />
     </bean>
-
+    
+    <bean class="org.springframework.web.servlet.view.XmlViewResolver">
+        <property name="order" value="2" />
+        <property name="location">
+            <value>/WEB-INF/spring/spring-views.xml</value>
+        </property>
+    </bean>
 
     <!-- replace the mvc:annotation-driven element with the beans below to allow us to
     override the binding initialiser -->

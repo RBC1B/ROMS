@@ -42,6 +42,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.controller.common.DataConverterUtil;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableRequestData;
@@ -87,6 +88,7 @@ public class VolunteersController {
 
     /**
      * Display a list of volunteers.
+     *
      * @param model mvc model
      * @param searchCriteria search criteria
      * @return view
@@ -101,6 +103,7 @@ public class VolunteersController {
 
     /**
      * Display the list of volunteers.
+     *
      * @param requestData data tables request data
      * @return view
      */
@@ -137,7 +140,8 @@ public class VolunteersController {
      * @param volunteerId volunteer primary key
      * @param model model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException when no person matching the id is found
+     * @throws NoSuchRequestHandlingMethodException when no person matching the
+     * id is found
      */
     @RequestMapping(value = "{volunteerId}", method = RequestMethod.GET)
     public String showVolunteer(@PathVariable Integer volunteerId, ModelMap model)
@@ -167,6 +171,7 @@ public class VolunteersController {
 
     /**
      * Display the form to create a new volunteer.
+     *
      * @param model mvc model
      * @return view name
      */
@@ -183,6 +188,7 @@ public class VolunteersController {
      * Handle the volunteer core details form submission.
      * <p>
      * This handles new volunteer creation only.
+     *
      * @param form volunteer form
      * @return redirect url
      */
@@ -272,7 +278,9 @@ public class VolunteersController {
     }
 
     /**
-     * Display the form to edit the info under the spiritual tab on the volunteer.
+     * Display the form to edit the info under the spiritual tab on the
+     * volunteer.
+     *
      * @param volunteerId volunteer id to edit
      * @param model mvc model
      * @return view name
@@ -307,7 +315,9 @@ public class VolunteersController {
     }
 
     /**
-     * Display the form to edit the info under the rbc status tab on the volunteer.
+     * Display the form to edit the info under the rbc status tab on the
+     * volunteer.
+     *
      * @param volunteerId volunteer id to edit
      * @param model mvc model
      * @return view name
@@ -368,7 +378,9 @@ public class VolunteersController {
     }
 
     /**
-     * Display the form to edit the info under the personal tab on the volunteer.
+     * Display the form to edit the info under the personal tab on the
+     * volunteer.
+     *
      * @param volunteerId volunteer id to edit
      * @param model mvc model
      * @return view name
@@ -419,7 +431,9 @@ public class VolunteersController {
     /**
      * Update the volunteer name.
      * <p>
-     * This is expected to be called with an ajax request, so we return a 204 response on success
+     * This is expected to be called with an ajax request, so we return a 204
+     * response on success
+     *
      * @param volunteerId volunteer id to edit
      * @param form form data
      * @throws NoSuchRequestHandlingMethodException if volunteer is not found
@@ -444,7 +458,9 @@ public class VolunteersController {
     /**
      * Update the volunteer comments.
      * <p>
-     * This is expected to be called with an ajax request, so we return a 204 response on success
+     * This is expected to be called with an ajax request, so we return a 204
+     * response on success
+     *
      * @param volunteerId volunteer id to edit
      * @param comments comments to set
      * @throws NoSuchRequestHandlingMethodException if volunteer is not found
@@ -466,6 +482,7 @@ public class VolunteersController {
 
     /**
      * Update the volunteer spiritual information.
+     *
      * @param volunteerId volunteer id to edit
      * @param form form data
      * @return view name (redirect)
@@ -493,6 +510,7 @@ public class VolunteersController {
 
     /**
      * Update the volunteer RBC status.
+     *
      * @param volunteerId volunteer id to edit
      * @param form form data
      * @return view name (redirect)
@@ -546,6 +564,7 @@ public class VolunteersController {
 
     /**
      * Update the volunteer personal information.
+     *
      * @param volunteerId volunteer id to edit
      * @param form form data
      * @return view name (redirect)
@@ -593,6 +612,20 @@ public class VolunteersController {
         volunteerDao.updateVolunteer(volunteer);
 
         return "redirect:" + volunteerModelFactory.generateUri(volunteer.getPersonId()) + "#!personal";
+    }
+
+    /**
+     * Produce the Volunteer Badge PDF.
+     *
+     * @param volunteerId volunteer id of for his/her badge
+     * @return modelAndView of the VolunteerBadgePdfView
+     */
+    @RequestMapping(value = "{volunteerId}/rbc-{volunteerId}-badge.pdf", method = RequestMethod.GET)
+    public ModelAndView produceVolunteerBadgePdf(@PathVariable Integer volunteerId) {
+        ModelAndView modelAndView = new ModelAndView("volunteerBadgePdfView");
+        Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
+        modelAndView.getModelMap().addAttribute("volunteer", volunteer);
+        return modelAndView;
     }
 
     private String generateAvailability(boolean... availabilityDays) {
