@@ -46,11 +46,11 @@
             <hr>
             <c:choose>
                 <c:when test="${!empty volunteer.assignments}">
-                    <h3>Assignments</h3>
+                    <h3>Team Roles</h3>
                     <table class="table table-bordered table-condensed table-striped table-hover">
                         <thead>
                             <tr>
-                                <th>#</th>
+                                <th>Trade No.</th>
                                 <th>Department</th>
                                 <th>Team</th>
                                 <th>Role</th>
