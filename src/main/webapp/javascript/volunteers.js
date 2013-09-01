@@ -34,6 +34,12 @@ $(document).ready(function() {
         source: roms.common.congregationTypeAheadSource,
         minLength: 2
     });
+    
+    // we always clear the congregation id on change.
+    // it will be re-calculated in validation
+    $("#congregationName").change(function() {
+        $("#congregationId").val(null);
+    });
 
     // create
     $("#surname").blur(function() {

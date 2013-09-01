@@ -34,6 +34,12 @@ $(document).ready(function() {
         minLength: 2
     });
 
+    // we always clear the congregation id on change.
+    // it will be re-calculated in validation
+    $("#congregationName").change(function() {
+        $("#congregationId").val(null);
+    });
+    
     $("#person").validate({
         rules: {
             forename: {
