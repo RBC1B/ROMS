@@ -1,8 +1,4 @@
-html,
-body {
-    height: 100%;
-    /* The html and body elements cannot have any padding or margin. */
-}
+
 .collapse.in {
     height:auto!important;
     /* fixes a bug which restricts the collapsed .nav to 203px, hiding certain menu options */
@@ -267,26 +263,7 @@ div.DTFC_LeftFootWrapper table {
 /*****************************************************************************/
 /* Footer fancy styling                                                      */
 /*****************************************************************************/
-#wrap {
-    min-height: 100%;
-    height: auto !important;
-    height: 100%;
-    /* Negative indent footer by it's height */
-    margin: 0 auto -60px;
-}
-@media (max-width: 767px) {
-    .footer {
-        margin-left: -40px;
-        margin-right: -40px;
-        padding-left: 20px;
-        padding-right: 20px;
-    }
-}
-@media (min-width: 979px) {
-        h1 {
-        margin-top: 60px!important;
-    }
-}
+
 ul.footer-nav, #footer-nav {
     margin-top:20px;
     list-style-image: none;

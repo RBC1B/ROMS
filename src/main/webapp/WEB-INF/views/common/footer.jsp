@@ -1,4 +1,3 @@
-</div>  <!-- /wrap -->
 <footer class="footer">
     <hr />
     <div class="navbar navbar-inverse">
