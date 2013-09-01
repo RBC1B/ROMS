@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : error
     Created on : Sep 1, 2013, 10:09:08 AM
     Author     : ramindursingh
@@ -13,7 +13,7 @@
             <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
             <div class="container">
                 <h1>Looks like a problem.</h1>
-                <p>Sorry, but there was a problem loading the page. Please email the 
+                <p>Sorry, but there was a problem loading the page. Please email the
                     support team giving them as much information as possible:</p>
                 <ul>
                     <li>

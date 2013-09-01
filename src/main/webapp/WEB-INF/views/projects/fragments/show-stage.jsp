@@ -39,7 +39,7 @@
     <div class="project-stage-status">${stage.status}</div>
     </div>
     <div class="span2">
-    <div class="project-stage-task-counts"> 
+    <div class="project-stage-task-counts">
         <div class="project-stage-task-count a-project-task-count" title="" data-toggle="tooltip"
             data-original-title="Not started: ${stage.createdTaskCount} of ${stage.totalTaskCount}">
             <span class="badge badge-important">${stage.createdTaskCount}</span>
