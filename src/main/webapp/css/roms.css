@@ -304,48 +304,14 @@ li.first {
 /*****************************************************************************/
 /* Project pages                                                             */
 /*****************************************************************************/
-#project-stages>div {
-    position: relative;
-    margin: 3px 9px;
-    padding: 9px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-}
-#project-stages .icon-plus,
-#project-stages .icon-minus
-{
-    float: left;
-}
-#project-stages div.project-stage-type-name {
-    float: left;
-    margin-left: 3px;
-}
-#project-stages div.project-stage-status {
-    width: 12%;
-    float: right;
-    margin-left: 3px;
-}
-#project-stages div.project-stage-created-date,
+*/#project-stages div.project-stage-created-date,
 #project-stages div.project-stage-started-date,
 #project-stages div.project-stage-completed-date {
-    width: 9%;
-    float: right;
-    margin-left: 3px;
-    min-width: 75px;
+    float: left;
 }
 #project-stages div.project-stage-task-counts {
-    width: 8%;
-    float: right;
-    margin-left: 3px;
-    min-width: 85px;
+    float: left;
 }
 #project-stages div.project-stage-task-count {
     float: left;
-    margin-right: 3px;
-}
-#project-stages .icon-resize-vertical {
-    float: right;
 }
