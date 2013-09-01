@@ -199,7 +199,7 @@ public class PersonsController {
      * @return view name
      * @throws NoSuchRequestHandlingMethodException when no person matching the id is found
      */
-    @RequestMapping(value = "{personId}", method = RequestMethod.POST)
+    @RequestMapping(value = "{personId}", method = RequestMethod.PUT)
     public String updatePerson(@PathVariable Integer personId, @Valid PersonForm form)
             throws NoSuchRequestHandlingMethodException {
         Person person = fetchPerson(personId);

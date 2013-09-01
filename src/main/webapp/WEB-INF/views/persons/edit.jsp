@@ -16,7 +16,7 @@
             <h1>Edit Person</h1>
            <hr>
             <c:url var="formAction" value="${submitUri}" />
-            <form:form commandName="person" method="post" action="${formAction}">
+            <form:form commandName="person" method="PUT" action="${formAction}">
                 <fieldset>
                     <legend>Name</legend>
                     <form:hidden path="personId" />
