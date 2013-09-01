@@ -42,7 +42,7 @@ $(document).ready(function() {
     });
 
     // create
-    $("#surname").blur(function() {
+    $("#surname, #forename").blur(function() {
         matchVolunteerPerson($("#forename").val(), $("#surname").val(), $("#personId"));
     });
 
@@ -258,7 +258,7 @@ $(document).ready(function() {
            // no change in value
            return;
        }
-       this.findVolunteerPerson(forename, surname, $personId, existingPersonName);
+       findVolunteerPerson(forename, surname, $personId, existingPersonName);
 
        $personId.data("full-name", forename + " " + surname);
     }
