@@ -33,7 +33,7 @@ public class Person extends DefaultUpdateAuditable {
     private static final long serialVersionUID = 8345111360587695632L;
     private Integer personId;
     private java.sql.Date birthDate;
-    private Integer congregationId;
+    private Congregation congregation;
     private String forename;
     private String middleName;
     private String surname;
@@ -75,12 +75,12 @@ public class Person extends DefaultUpdateAuditable {
         this.comments = comments;
     }
 
-    public Integer getCongregationId() {
-        return congregationId;
+    public Congregation getCongregation() {
+        return congregation;
     }
 
-    public void setCongregationId(Integer congregationId) {
-        this.congregationId = congregationId;
+    public void setCongregation(Congregation congregation) {
+        this.congregation = congregation;
     }
 
     public String getEmail() {

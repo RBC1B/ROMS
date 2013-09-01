@@ -162,9 +162,9 @@ public class PersonsController {
         }
         form.setComments(person.getComments());
 
-        if (person.getCongregationId() != null) {
+        if (person.getCongregation() != null) {
 
-            Congregation congregation = congregationDao.findCongregation(person.getCongregationId());
+            Congregation congregation = congregationDao.findCongregation(person.getCongregation().getCongregationId());
 
             form.setCongregationId(congregation.getCongregationId());
             form.setCongregationName(congregation.getName());
@@ -218,7 +218,7 @@ public class PersonsController {
 
         person.setBirthDate(DataConverterUtil.toSqlDate(form.getBirthDate()));
         person.setComments(form.getComments());
-        person.setCongregationId(form.getCongregationId());
+        person.setCongregation(congregationDao.findCongregation(form.getCongregationId()));
         person.setEmail(form.getEmail());
         person.setForename(form.getForename());
         person.setMiddleName(form.getMiddleName());
@@ -282,8 +282,8 @@ public class PersonsController {
         result.setPersonId(person.getPersonId());
         result.setBirthDate(person.getBirthDate());
 
-        if (person.getCongregationId() != null) {
-            Congregation congregation = congregationDao.findCongregation(person.getCongregationId());
+        if (person.getCongregation() != null) {
+            Congregation congregation = congregationDao.findCongregation(person.getCongregation().getCongregationId());
 
             result.setCongregationName(congregation.getName());
         }

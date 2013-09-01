@@ -53,6 +53,10 @@ public class HibernateCongregationDao implements CongregationDao {
     @Override
     @Cacheable("congregation.congregation")
     public Congregation findCongregation(Integer congregationId) {
+        if (congregationId == null) {
+            return null;
+        }
+
         return (Congregation) this.sessionFactory.getCurrentSession().get(Congregation.class, congregationId);
     }
 

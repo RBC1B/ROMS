@@ -68,7 +68,9 @@ public class PersonModelFactory {
         model.setAddress(person.getAddress());
         model.setBirthDate(person.getBirthDate());
         model.setComments(person.getComments());
-        model.setCongregation(generateCongregationModel(person.getCongregationId()));
+        if (person.getCongregation() != null) {
+            model.setCongregation(generateCongregationModel(person.getCongregation().getCongregationId()));
+        }
         model.setEmail(person.getEmail());
         model.setForename(person.getForename());
         model.setMiddleName(person.getMiddleName());

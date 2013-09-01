@@ -95,7 +95,9 @@ public class VolunteerModelFactory {
         VolunteerListModel model = new VolunteerListModel();
         model.setId(volunteer.getPersonId());
         model.setUri(generateUri(volunteer.getPersonId()));
-        model.setCongregation(generateCongregationModel(volunteer.getCongregationId()));
+        if (volunteer.getCongregation() != null) {
+            model.setCongregation(generateCongregationModel(volunteer.getCongregation().getCongregationId()));
+        }
         model.setEmail(volunteer.getEmail());
         model.setForename(volunteer.getForename());
         model.setMiddleName(volunteer.getMiddleName());
@@ -120,7 +122,9 @@ public class VolunteerModelFactory {
         model.setAddress(volunteer.getAddress());
         model.setBirthDate(volunteer.getBirthDate());
         model.setComments(volunteer.getComments());
-        model.setCongregation(generateCongregationModel(volunteer.getCongregationId()));
+        if (volunteer.getCongregation() != null) {
+            model.setCongregation(generateCongregationModel(volunteer.getCongregation().getCongregationId()));
+        }
         model.setEmail(volunteer.getEmail());
         model.setForename(volunteer.getForename());
         model.setMiddleName(volunteer.getMiddleName());
