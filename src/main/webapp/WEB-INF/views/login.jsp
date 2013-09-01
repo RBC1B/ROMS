@@ -13,7 +13,8 @@
     <body>
         <div class="container">
             <form class="form-signin" action="<c:url value='j_spring_security_check' />" method="POST">
-                <h2 class="form-signin-heading">ROMS Login</h2>
+                <h2 class="form-signin-heading">Edifice Login</h2>
+                <p>Edifice :- Origin from Latin <b>aedificum</b> from <b><i>aedis 'dwelling' + facere 'make' </i></b></p>
                 <c:if test="${not empty status}"><p class="error">Invalid login details supplied. Please try again</p></c:if>
                 <fieldset>
                     <input type='text' class="input-block-level" name='j_username' value=''>
