@@ -47,7 +47,7 @@
             <c:choose>
                 <c:when test="${!empty volunteer.assignments}">
                     <h3>Assignments</h3>
-                    <table class="table table-bordered table-striped table-hover">
+                    <table class="table table-bordered table-condensed table-striped table-hover">
                         <thead>
                             <tr>
                                 <th>#</th>
