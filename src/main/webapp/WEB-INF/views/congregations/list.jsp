@@ -17,7 +17,7 @@
             <h1>Congregations</h1>
             <hr>
             <div class="entity-list-results">
-                <table class="table table-bordered table-striped table-hover" id="congregation-list">
+                <table class="table table-bordered table-condensed table-striped table-hover" id="congregation-list">
                     <thead>
                         <tr>
                             <th>ID</th>

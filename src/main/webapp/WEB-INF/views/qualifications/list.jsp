@@ -17,7 +17,7 @@
         <div class="container-fluid">
             <h1>Qualifications</h1>
             <hr>
-            <table class="table table-bordered table-striped table-hover" id="qualification-list">
+            <table class="table table-bordered table-condensed table-striped table-hover" id="qualification-list">
                 <thead>
                     <tr>
                         <th>Qualification ID</th>

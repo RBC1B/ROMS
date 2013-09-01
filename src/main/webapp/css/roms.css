@@ -220,7 +220,12 @@ div.DTFC_LeftBodyWrapper tbody tr:first-child td {
 div.DTFC_LeftFootWrapper table {
     border-top: none;
 }
-
+ul.inline.list-actions {
+    margin: 0 0 0 25px!important;
+}
+form#command {
+    margin: 0 0 0px;
+}
 /*****************************************************************************/
 /* List views                                                                */
 /*****************************************************************************/

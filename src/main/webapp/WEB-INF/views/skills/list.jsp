@@ -17,7 +17,7 @@
             <h1>Departmental Skills</h1>
             <hr>
             <div class="entity-list-results">
-                <table class="table table-bordered table-striped table-hover" id="skill-list">
+                <table class="table table-bordered table-condensed table-striped table-hover" id="skill-list">
                     <thead>
                         <tr>
                             <th>Skill ID</th>
