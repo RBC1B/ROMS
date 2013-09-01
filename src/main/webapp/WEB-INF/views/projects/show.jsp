@@ -71,10 +71,10 @@
                         <c:if test="${project.contactPerson.telephone != null}">
                             <dt>Home phone:</dt><dd>${project.contactPerson.telephone}</dd>
                         </c:if>
-                        <c:if test="${project.contactPerson.telephone != null}">
+                        <c:if test="${project.contactPerson.mobile != null}">
                             <dt>Mobile phone:</dt><dd>${project.contactPerson.mobile}</dd>
                         </c:if>
-                        <c:if test="${project.contactPerson.telephone != null}">
+                        <c:if test="${project.contactPerson.workPhone != null}">
                             <dt>Work phone:</dt><dd>${project.contactPerson.workPhone}</dd>
                         </c:if>
                     </c:if>
@@ -91,10 +91,10 @@
                         <c:if test="${project.coordinator.telephone != null}">
                             <dt>Home phone:</dt><dd>${project.coordinator.telephone}</dd>
                         </c:if>
-                        <c:if test="${project.coordinator.telephone != null}">
+                        <c:if test="${project.coordinator.mobile != null}">
                             <dt>Mobile phone:</dt><dd>${project.coordinator.mobile}</dd>
                         </c:if>
-                        <c:if test="${project.coordinator.telephone != null}">
+                        <c:if test="${project.coordinator.workPhone != null}">
                             <dt>Work phone:</dt><dd>${project.coordinator.workPhone}</dd>
                         </c:if>
                     </c:if>

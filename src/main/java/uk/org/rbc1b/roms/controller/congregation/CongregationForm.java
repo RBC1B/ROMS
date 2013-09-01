@@ -28,7 +28,6 @@ import javax.validation.constraints.Size;
 import uk.org.rbc1b.roms.db.Congregation;
 
 /**
- *
  * @author ramindursingh
  */
 public class CongregationForm {
@@ -72,7 +71,6 @@ public class CongregationForm {
 
     /**
      * Constructor with congregation.
-     *
      * @param congregation congregation
      */
     public CongregationForm(Congregation congregation) {
@@ -83,7 +81,7 @@ public class CongregationForm {
         kingdomHall = congregation.getKingdomHall().getName();
         circuitId = congregation.getCircuit().getCircuitId();
         circuit = congregation.getCircuit().getName();
-        rbcRegionId = congregation.getRbcRegion().getRbcRegionId();
+        rbcRegionId = congregation.getRbcRegionId();
         publishers = congregation.getPublishers();
         attendance = congregation.getAttendance();
         funds = congregation.getFunds();

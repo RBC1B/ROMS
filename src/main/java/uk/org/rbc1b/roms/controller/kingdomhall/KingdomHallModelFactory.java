@@ -29,7 +29,6 @@ import uk.org.rbc1b.roms.db.circuit.CircuitDao;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 
 /**
- *
  * @author ramonsingh
  */
 public class KingdomHallModelFactory {
@@ -40,17 +39,15 @@ public class KingdomHallModelFactory {
 
     /**
      * generates a URI for kingdom hall.
-     *
      * @param kingdomHallId the Kingdom Hall Id to set
      * @return String
      */
-    public String generateUri(Integer kingdomHallId) {
+    public static String generateUri(Integer kingdomHallId) {
         return kingdomHallId != null ? BASE_URI + kingdomHallId : BASE_URI;
     }
 
     /**
      * Generates a model for a list of Kingdom Halls.
-     *
      * @param kingdomHall the Kingdom Hall to set
      * @return KingdomHallListModel
      */

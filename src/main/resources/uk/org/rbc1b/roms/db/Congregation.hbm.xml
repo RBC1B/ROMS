@@ -3,43 +3,28 @@
 <hibernate-mapping package="uk.org.rbc1b.roms.db">
     <class name="uk.org.rbc1b.roms.db.Congregation" table="Congregation">
         <id name="congregationId">
-            <generator class="identity"/>
+            <generator class="identity" />
         </id>
-        <property length="50" name="name" unique="true"/>
-        <property length="10" name="number"/>
-        <many-to-one class="uk.org.rbc1b.roms.db.kingdomhall.KingdomHall"
-                     column="KingdomHallId"
-                     lazy="false"
-                     name="kingdomHall"
-                     not-null="false"/>
-        <many-to-one class="uk.org.rbc1b.roms.db.circuit.Circuit"
-                     column="CircuitId"
-                     lazy="false"
-                     name="circuit"
-                     not-null="false"/>
-        <many-to-one class="uk.org.rbc1b.roms.db.RbcRegion"
-                     column="RbcRegionId"
-                     lazy="false"
-                     name="rbcRegion"
-                     not-null="false"/>
-        <many-to-one class="uk.org.rbc1b.roms.db.RbcSubRegion"
-                     column="RbcSubRegionId"
-                     lazy="false"
-                     name="rbcSubRegion"
-                     not-null="false"/>
-        <set name="contacts"
-             lazy="false" >
-            <key column="congregationId"
-                     not-null="true"/>
+        <property length="50" name="name" unique="true" />
+        <property length="10" name="number" />
+        <many-to-one class="uk.org.rbc1b.roms.db.kingdomhall.KingdomHall" column="KingdomHallId" lazy="false"
+            name="kingdomHall" />
+        <many-to-one class="uk.org.rbc1b.roms.db.circuit.Circuit" column="CircuitId" lazy="false" name="circuit" />
+
+        <property name="rbcRegionId" />
+        <property name="rbcSubRegionId" />
+
+        <set name="contacts" lazy="false">
+            <key column="congregationId" not-null="true" />
             <one-to-many class="uk.org.rbc1b.roms.db.CongregationContact" />
         </set>
-        <property length="10" name="publishers"/>
-        <property length="10" name="attendance"/>
-        <property length="50" name="funds"/>
-        <property length="10" name="loans"/>
-        <property length="10" name="monthlyIncome"/>
-        <property length="1000" name="strategy"/>
-        <property name="updateTime"/>
-        <property name="updatedBy"/>
+        <property length="10" name="publishers" />
+        <property length="10" name="attendance" />
+        <property length="50" name="funds" />
+        <property length="10" name="loans" />
+        <property length="10" name="monthlyIncome" />
+        <property length="1000" name="strategy" />
+        <property name="updateTime" />
+        <property name="updatedBy" />
     </class>
 </hibernate-mapping>

@@ -27,7 +27,6 @@ import java.util.Map;
 
 /**
  * Dao used to look up reference information, primarily used in forms.
- *
  * @author oliver.elder.esq
  */
 public interface ReferenceDao {
@@ -96,4 +95,14 @@ public interface ReferenceDao {
      * @return ordered map of project type values
      */
     Map<Integer, String> findProjectStageEventTypeValues();
+
+    /**
+     * @return ordered map of rbc region values
+     */
+    Map<Integer, String> findRbcRegionValues();
+
+    /**
+     * @return ordered map of rbc region values
+     */
+    Map<Integer, String> findRbcSubRegionValues();
 }

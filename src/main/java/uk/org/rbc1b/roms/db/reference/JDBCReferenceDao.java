@@ -36,7 +36,6 @@ import org.springframework.stereotype.Repository;
 
 /**
  * JBDC implementation of reference data dao.
- *
  * @author oliver.elder.esq
  */
 @Repository
@@ -93,7 +92,6 @@ public class JDBCReferenceDao implements ReferenceDao {
                 + "FROM TradeNumber ORDER BY TradeNumberId");
     }
 
-
     @Override
     @Cacheable("reference.ownershipType")
     public Map<Integer, String> findOwnershipTypeValues() {
@@ -111,8 +109,7 @@ public class JDBCReferenceDao implements ReferenceDao {
     @Override
     @Cacheable("reference.assignmentRole")
     public Map<Integer, String> findAssignmentRoleValues() {
-        return findReferenceValues("SELECT RoleId AS id, Description AS value "
-                + "FROM Role ORDER BY RoleId");
+        return findReferenceValues("SELECT RoleId AS id, Description AS value " + "FROM Role ORDER BY RoleId");
     }
 
     @Override
@@ -137,6 +134,18 @@ public class JDBCReferenceDao implements ReferenceDao {
                 + "FROM ProjectStageEventType ORDER BY ProjectStageEventTypeId");
     }
 
+    @Override
+    @Cacheable("reference.rbcRegion")
+    public Map<Integer, String> findRbcRegionValues() {
+        return findReferenceValues("SELECT RbcRegionId AS id, Name AS value " + "FROM RbcRegion ORDER BY RbcRegionId");
+    }
+
+    @Override
+    @Cacheable("reference.rbcSubRegion")
+    public Map<Integer, String> findRbcSubRegionValues() {
+        return findReferenceValues("SELECT RbcSubRegionId AS id, Name AS value "
+                + "FROM RbcSubRegion ORDER BY RbcSubRegionId");
+    }
 
     private Map<Integer, String> findReferenceValues(String sql) {
 

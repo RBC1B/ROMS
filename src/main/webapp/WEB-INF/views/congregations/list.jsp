@@ -20,8 +20,7 @@
                 <table class="table table-bordered table-condensed table-striped table-hover" id="congregation-list">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Congregation</th>
+                            <th>Name</th>
                             <th>Kingdom Hall</th>
                             <th>Circuit</th>
                             <th>Region</th>
@@ -32,22 +31,23 @@
                     <tbody>
                         <c:forEach items="${congregations}" var="congregation">
                             <tr>
-                                <td>${congregation.congregationId}</td>
                                 <td>${congregation.name}</td>
-                                <td>${congregation.kingdomHall.name}</td>
-                                <td>${congregation.circuit.name}</td>
-                                <td>${congregation.rbcRegion.name}</td>
-                                <td>${congregation.rbcSubRegion.name}</td>
+                                <td>
+                                    <c:if test="${not empty congregation.kingdomHall}">
+                                        <a href="<c:url value='${congregation.kingdomHall.uri}'/>">${congregation.kingdomHall.name}</a>
+                                    </c:if>
+                                </td>
+                                <td>
+                                    <c:if test="${not empty congregation.circuit}">
+                                        <a href="<c:url value='${congregation.circuit.uri}'/>">${congregation.circuit.name}</a>
+                                    </c:if>
+                                </td>
+                                <td>${congregation.rbcRegion}</td>
+                                <td>${congregation.rbcSubRegion}</td>
                                 <td>
                                     <ul class="inline list-actions">
-                                        <li><a class="btn btn-success" href="<c:url value="/congregations/${congregation.congregationId}" />">View</a></li>
-                                        <li><a href="<c:url value="/congregations/${congregation.congregationId}/edit" />">Edit</a></li>
-                                        <li>
-                                            <form:form method="DELETE" action="${formAction}">
-                                                <input type="hidden" name="congregatonId" value="${congregation.congregationId}" />
-                                                <input type="submit" value="Delete" class="btn btn-mini" />
-                                            </form:form>
-                                        </li>
+                                        <li><a class="btn btn-success" href="<c:url value="${congregation.uri}" />">View</a></li>
+                                        <li><a href="<c:url value="${congregation.editUri}" />">Edit</a></li>
                                     </ul>
                                 </td>
                             </tr>
@@ -56,7 +56,7 @@
                 </table>
             </div>
             <div class="entity-list-add-new">
-                <a class="btn btn-primary" href="<c:url value="/congregations/new" />">Create new congregation</a>
+                <a class="btn btn-primary" href="<c:url value="${newUri}" />">Create new congregation</a>
             </div>
             <p>&nbsp;</p>
             <ul class="breadcrumb">

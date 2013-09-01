@@ -1,7 +1,5 @@
 <%--
-    Document   : circuit
-    Created on : 01-Jul-2012, 00:06:12
-    Author     : oliver.elder.esq
+    Show the circuit details.
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -14,20 +12,14 @@
         <div class="container-fluid">
             <h1 class="media-heading">#${circuit.circuitId}: ${circuit.name}</h1>
             <hr />
-            <h3>Circuit Overseer's details: </h3>
-
+            <h3>Circuit Overseer</h3>
             <c:choose>
-                <c:when test="${circuit.circuitOverseer != null}">
+                <c:when test="${not empty circuit.circuitOverseer}">
                     <dl class="dl-horizontal">
                         <!-- Show the name using forename and surname -->
                         <dt>Name:</dt>
                         <dd>
-                            <c:choose>
-                                <c:when test="${circuit.circuitOverseer.forename != null && circuit.circuitOverseer.surname != null}">
-                                    <a href="<c:url value="/persons/${circuit.circuitOverseer.personId}"/>">${circuit.circuitOverseer.forename} ${circuit.circuitOverseer.surname}</a>
-                                </c:when>
-                                <c:otherwise>-</c:otherwise>
-                            </c:choose>
+                            <a href="<c:url value="${circuit.circuitOverseer.uri}"/>">${circuit.circuitOverseer.displayName}</a>
                         </dd>
                         <dt>E-mail:</dt>
                         <dd>
@@ -61,7 +53,7 @@
                 <c:otherwise>Not set</c:otherwise>
             </c:choose>
             <div class="entity-list-add-new">
-                <a class="btn btn-primary" href="<c:url value="/circuits/${circuit.circuitId}/edit" />">Edit Circuit</a>
+                <a class="btn btn-primary" href="<c:url value="${circuit.editUri}" />">Edit Circuit</a>
             </div>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>

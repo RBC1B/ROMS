@@ -44,23 +44,13 @@ import uk.org.rbc1b.roms.db.circuit.CircuitDao;
 @Controller
 @RequestMapping("/circuits")
 public class CircuitsController {
-    private static final String BASE_CIRCUIT_URI = "/circuits";
+
     private CircuitDao circuitDao;
     private PersonDao personDao;
-
-    /**
-     * Generate the uri used to access the circuit pages.
-     *
-     * @param circuitId optional circuit id
-     * @return uri
-     */
-    public String generateCircuitUri(Integer circuitId) {
-        return circuitId != null ? BASE_CIRCUIT_URI + "/" + circuitId : BASE_CIRCUIT_URI;
-    }
+    private CircuitModelFactory circuitModelFactory;
 
     /**
      * Display the list of circuits.
-     *
      * @param model mvc model
      * @return view
      */
@@ -74,14 +64,14 @@ public class CircuitsController {
 
     /**
      * Display a specified circuit.
-     *
      * @param circuitId circuit id (primary key)
      * @param model mvc model
      * @return view name
      * @throws NoSuchRequestHandlingMethodException on failure to look up the circuit
      */
     @RequestMapping(value = "{circuitId}", method = RequestMethod.GET)
-    public String showCircuit(@PathVariable Integer circuitId, ModelMap model) throws NoSuchRequestHandlingMethodException {
+    public String showCircuit(@PathVariable Integer circuitId, ModelMap model)
+            throws NoSuchRequestHandlingMethodException {
 
         Circuit circuit = circuitDao.findCircuit(circuitId);
 
@@ -89,21 +79,21 @@ public class CircuitsController {
             throw new NoSuchRequestHandlingMethodException("No circuit #" + circuitId, this.getClass());
         }
 
-        model.addAttribute("circuit", circuit);
+        model.addAttribute("circuit", circuitModelFactory.generateCircuitModel(circuit));
 
         return "circuits/show";
     }
 
     /**
      * Display a specified circuit for editing.
-     *
      * @param circuitId circuit id (primary key)
      * @param model mvc model
      * @return view name
      * @throws NoSuchRequestHandlingMethodException on failure to look up the circuit
      */
     @RequestMapping(value = "{circuitId}/edit", method = RequestMethod.GET)
-    public String showEditCircuitForm(@PathVariable Integer circuitId, ModelMap model) throws NoSuchRequestHandlingMethodException {
+    public String showEditCircuitForm(@PathVariable Integer circuitId, ModelMap model)
+            throws NoSuchRequestHandlingMethodException {
         Circuit circuit = circuitDao.findCircuit(circuitId);
 
         if (circuit == null) {
@@ -127,7 +117,7 @@ public class CircuitsController {
         form.setMobile(circuit.getCircuitOverseer().getMobile());
 
         model.addAttribute("circuitForm", form);
-        model.addAttribute("submitUri", generateCircuitUri(circuitId));
+        model.addAttribute("submitUri", CircuitModelFactory.generateCircuitUri(circuitId));
         model.addAttribute("submitMethod", "PUT");
 
         return "circuits/edit";
@@ -135,7 +125,6 @@ public class CircuitsController {
 
     /**
      * Display the form to create a new circuit.
-     *
      * @param model mvc model
      * @return view name
      */
@@ -144,7 +133,7 @@ public class CircuitsController {
 
         // initialise the form bean
         model.addAttribute("circuitForm", new CircuitForm());
-        model.addAttribute("submitUri", generateCircuitUri(null));
+        model.addAttribute("submitUri", CircuitModelFactory.generateCircuitUri(null));
         model.addAttribute("submitMethod", "POST");
 
         return "circuits/edit";
@@ -152,7 +141,6 @@ public class CircuitsController {
 
     /**
      * Create a new circuit.
-     *
      * @param circuitForm form bean
      * @return view name
      */
@@ -175,7 +163,6 @@ public class CircuitsController {
 
     /**
      * Update a circuit.
-     *
      * @param circuitId existing circuit.
      * @param circuitForm form bean
      * @return view name
@@ -221,19 +208,19 @@ public class CircuitsController {
         return circuitOverseer;
     }
 
-    /**
-     * @param circuitDao circuit dao
-     */
     @Autowired
     public void setCircuitDao(CircuitDao circuitDao) {
         this.circuitDao = circuitDao;
     }
 
-    /**
-     * @param personDao person dao
-     */
     @Autowired
     public void setPersonDao(PersonDao personDao) {
         this.personDao = personDao;
     }
+
+    @Autowired
+    public void setCircuitModelFactory(CircuitModelFactory circuitModelFactory) {
+        this.circuitModelFactory = circuitModelFactory;
+    }
+
 }

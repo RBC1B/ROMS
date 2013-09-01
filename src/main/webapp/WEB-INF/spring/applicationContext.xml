@@ -62,8 +62,6 @@ THE SOFTWARE.
                 <value>uk/org/rbc1b/roms/db/Category.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/Congregation.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/CongregationContact.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/RbcRegion.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/RbcSubRegion.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/Person.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/Updates.hbm.xml</value>
 
@@ -152,6 +150,12 @@ THE SOFTWARE.
                     <property name="name" value="reference.projectStageEventType" />
                 </bean>
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
+                    <property name="name" value="reference.rbcRegion" />
+                </bean>
+                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
+                    <property name="name" value="reference.rbcSubRegion" />
+                </bean>
+                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
                     <property name="name" value="person.person" />
                 </bean>
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
@@ -183,12 +187,6 @@ THE SOFTWARE.
                 </bean>
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
                     <property name="name" value="user.userName" />
-                </bean>
-                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
-                    <property name="name" value="rbcregion.rbcregion" />
-                </bean>
-                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
-                    <property name="name" value="rbcsubregion.rbcsubregion" />
                 </bean>
             </set>
         </property>

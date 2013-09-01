@@ -22,7 +22,20 @@
  * THE SOFTWARE.
  */
 $(document).ready(function() {
-    $('#congregation-list').validate({
+    roms.common.datatables(
+        $('#congregation-list'),
+        {
+            "iDisplayLength": 10,
+            "aoColumnDefs": [
+            {
+                'bSortable': false,
+                'aTargets': [ 5 ]
+            }
+            ]
+        }
+    );
+    
+    $('#congregation').validate({
         rules:{
             name: {
                 minlength: 2,
@@ -31,16 +44,4 @@ $(document).ready(function() {
         },
         errorPlacement: roms.common.validatorErrorPlacement
     });
-    roms.common.datatables(
-        $('#congregation-list'),
-        {
-            "iDisplayLength": 10,
-            "aoColumnDefs": [
-            {
-                'bSortable': false,
-                'aTargets': [ 2 ]
-            }
-            ]
-        }
-        );
 });

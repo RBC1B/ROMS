@@ -38,8 +38,8 @@ public class Congregation extends DefaultUpdateAuditable {
     private String number;
     private KingdomHall kingdomHall;
     private Circuit circuit;
-    private RbcRegion rbcRegion;
-    private RbcSubRegion rbcSubRegion;
+    private Integer rbcRegionId;
+    private Integer rbcSubRegionId;
     private String publishers;
     private String attendance;
     private String funds;
@@ -136,20 +136,20 @@ public class Congregation extends DefaultUpdateAuditable {
         this.publishers = publishers;
     }
 
-    public RbcRegion getRbcRegion() {
-        return rbcRegion;
+    public Integer getRbcRegionId() {
+        return rbcRegionId;
     }
 
-    public void setRbcRegion(RbcRegion rbcRegion) {
-        this.rbcRegion = rbcRegion;
+    public void setRbcRegionId(Integer rbcRegionId) {
+        this.rbcRegionId = rbcRegionId;
     }
 
-    public RbcSubRegion getRbcSubRegion() {
-        return rbcSubRegion;
+    public Integer getRbcSubRegionId() {
+        return rbcSubRegionId;
     }
 
-    public void setRbcSubRegion(RbcSubRegion rbcSubRegion) {
-        this.rbcSubRegion = rbcSubRegion;
+    public void setRbcSubRegionId(Integer rbcSubRegionId) {
+        this.rbcSubRegionId = rbcSubRegionId;
     }
 
     public String getStrategy() {
