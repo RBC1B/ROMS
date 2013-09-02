@@ -58,7 +58,7 @@
             </div>
             <p>&nbsp;</p>
             <ul class="breadcrumb">
-                <li><a href="<c:url value="/" />">ROMS</a> <span class="divider">/</span></li>
+                <li><a href="<c:url value="/" />">Edifice</a> <span class="divider">/</span></li>
                 <li class="active">Skills</li>
             </ul>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
