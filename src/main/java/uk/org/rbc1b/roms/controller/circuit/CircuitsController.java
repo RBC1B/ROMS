@@ -100,7 +100,6 @@ public class CircuitsController {
             throw new NoSuchRequestHandlingMethodException("No circuit #" + circuitId, this.getClass());
         }
         CircuitForm form = new CircuitForm();
-        form.setCircuitId(circuitId);
         form.setName(circuit.getName());
         form.setPersonId(circuit.getCircuitOverseer().getPersonId());
         form.setForename(circuit.getCircuitOverseer().getForename());
@@ -148,9 +147,6 @@ public class CircuitsController {
     public String createCircuit(@Valid CircuitForm circuitForm) {
 
         Circuit circuit = new Circuit();
-        if (circuitForm.getCircuitId() != null) {
-            circuit.setCircuitId(circuitForm.getCircuitId());
-        }
         circuit.setName(circuitForm.getName());
 
         Person circuitOverseer = createCircuitOverseer(circuitForm);

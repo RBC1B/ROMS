@@ -28,12 +28,10 @@ import javax.validation.constraints.Size;
 
 /**
  * Request form bean when creating/editing the circuit.
- *
  * @author oliver.elder.esq
  */
 public class CircuitForm {
 
-    private Integer circuitId;
     @NotNull
     @Size(min = 2, max = 50)
     private String name;
@@ -73,20 +71,6 @@ public class CircuitForm {
      */
     public void setName(String name) {
         this.name = name;
-    }
-
-    /**
-     * @return the circuitId
-     */
-    public Integer getCircuitId() {
-        return circuitId;
-    }
-
-    /**
-     * @param circuitId the circuitId to set
-     */
-    public void setCircuitId(Integer circuitId) {
-        this.circuitId = circuitId;
     }
 
     /**

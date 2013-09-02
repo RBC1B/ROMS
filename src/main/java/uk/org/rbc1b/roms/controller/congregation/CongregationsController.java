@@ -69,7 +69,7 @@ public class CongregationsController {
             modelList.add(congregationModelFactory.generateCongregationListModel(congregation));
         }
         model.addAttribute("congregations", modelList);
-        model.addAttribute("newUri", CongregationModelFactory.generateUri(null) + "new");
+        model.addAttribute("newUri", CongregationModelFactory.generateUri(null) + "/new");
         return "congregations/list";
     }
 
@@ -131,11 +131,13 @@ public class CongregationsController {
         }
 
         CongregationForm form = new CongregationForm(congregation);
-        model.addAttribute("congregation", form);
+        model.addAttribute("congregationForm", form);
         model.addAttribute("kingdomHalls", kingdomHallDao.findKingdomHalls());
         model.addAttribute("circuits", circuitDao.findCircuits());
         model.addAttribute("rbcRegions", referenceDao.findRbcRegionValues());
         model.addAttribute("rbcSubRegions", referenceDao.findRbcSubRegionValues());
+        model.addAttribute("submitUri", CongregationModelFactory.generateUri(congregationId));
+        model.addAttribute("submitMethod", "PUT");
 
         return "congregations/edit";
     }
@@ -147,32 +149,54 @@ public class CongregationsController {
      */
     @RequestMapping(value = "new", method = RequestMethod.GET)
     public String showCreateCongregationForm(ModelMap model) {
-        model.addAttribute("congregation", new CongregationForm());
+        model.addAttribute("congregationForm", new CongregationForm());
         model.addAttribute("kingdomHalls", kingdomHallDao.findKingdomHalls());
         model.addAttribute("circuits", circuitDao.findCircuits());
         model.addAttribute("rbcRegions", referenceDao.findRbcRegionValues());
         model.addAttribute("rbcSubRegions", referenceDao.findRbcSubRegionValues());
-
+        model.addAttribute("submitUri", CongregationModelFactory.generateUri(null));
+        model.addAttribute("submitMethod", "POST");
         return "congregations/edit";
     }
 
     /**
-     * Creates a new congregation.
+     * Updates a congregation.
+     * @param congregationId existing congregation id
      * @param congregationForm congregationForm bean
      * @return view name
      */
-    @RequestMapping(method = RequestMethod.POST)
-    public String createCongregation(@Valid CongregationForm congregationForm) {
+    @RequestMapping(value = "{congregationId}", method = RequestMethod.PUT)
+    public String updateCongregation(@PathVariable Integer congregationId, @Valid CongregationForm congregationForm) {
         Congregation congregation = new Congregation();
-        if (congregationForm.getCongregationId() != null) {
-            congregation.setCongregationId(congregationForm.getCongregationId());
-        }
+        congregation.setAttendance(congregationForm.getAttendance());
+        congregation.setCongregationId(congregationId);
+        congregation.setFunds(congregationForm.getFunds());
+        congregation.setLoans(congregationForm.getLoans());
+        congregation.setMonthlyIncome(congregationForm.getMonthlyIncome());
         congregation.setName(congregationForm.getName());
+        congregation.setNumber(congregationForm.getNumber());
+        congregation.setPublishers(congregationForm.getPublishers());
+        congregation.setRbcRegionId(congregationForm.getRbcRegionId());
+        congregation.setRbcSubRegionId(congregationForm.getRbcSubRegionId());
+        congregation.setStrategy(congregationForm.getStrategy());
 
-        // MORE Work to DO HERE to set the congregation bean
+        // merge in the contacts
+        // congregation.setContacts(contacts);
+
+        if (congregationForm.getCircuitId() == null) {
+            congregation.setCircuit(null);
+        } else {
+            congregation.setCircuit(circuitDao.findCircuit(congregationForm.getCircuitId()));
+        }
+
+        if (congregationForm.getKingdomHallId() == null) {
+            congregation.setKingdomHall(null);
+        } else {
+            congregation.setKingdomHall(kingdomHallDao.findKingdomHall(congregationForm.getKingdomHallId()));
+        }
 
         congregationDao.saveCongregation(congregation);
-        return "redirect:congregations";
+        return "redirect:" + CongregationModelFactory.generateUri(congregationId);
     }
 
     @Autowired
