@@ -38,7 +38,7 @@ $(document).ready(function() {
     
     // show
     var listActionTemplate = $("#list-action").html();
-    
+    var congregationId = $("#congregation-member-congregation").data("congregationId");
     roms.common.datatables(
 	    $('#congregation-member-list'),
 	    {
@@ -46,8 +46,8 @@ $(document).ready(function() {
 	            "bProcessing": true,
 	            "bServerSide": true,
 	            "sAjaxSource": roms.common.relativePath + '/volunteers',
-	            "fnServerParams": function ( aoData ) {
-	        	aoData.push( { "name": "more_data" } );
+	            "fnServerParams": function(aoData) {
+	        	aoData.push({ "name": "congregationId", "value": congregationId });
 	            },
 	            "aoColumns": [
 	                {   "sName": "ID", "mData": "id" },

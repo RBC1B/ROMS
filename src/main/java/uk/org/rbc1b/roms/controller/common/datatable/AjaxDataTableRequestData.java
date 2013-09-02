@@ -37,33 +37,28 @@ import uk.org.rbc1b.roms.controller.common.SortDirection;
  * @author oliver.elder.esq
  */
 public class AjaxDataTableRequestData {
-
+    // special case - to allow us to access these fields when looking up the sort value
+    // in this and child classes, change the visibility. We could make this private and use
+    // the this.getClass().getDeclaredField() method, but child classes have to loop through
+    // super classes to try to find it
+    // CSOFF: VisibilityModifier
+    public String mDataProp0;
+    public String mDataProp1;
+    public String mDataProp2;
+    public String mDataProp3;
+    public String mDataProp4;
+    public String mDataProp5;
+    public String mDataProp6;
+    public String mDataProp7;
+    public String mDataProp8;
+    public String mDataProp9;
+    // CSON: VisibilityModifier
     private String echo;
     private String search;
     private SortDir sortDir;
     private Integer displayLength;
     private Integer displayStart;
     private Integer sortCol0;
-    @SuppressWarnings("unused")
-    private String mDataProp0;
-    @SuppressWarnings("unused")
-    private String mDataProp1;
-    @SuppressWarnings("unused")
-    private String mDataProp2;
-    @SuppressWarnings("unused")
-    private String mDataProp3;
-    @SuppressWarnings("unused")
-    private String mDataProp4;
-    @SuppressWarnings("unused")
-    private String mDataProp5;
-    @SuppressWarnings("unused")
-    private String mDataProp6;
-    @SuppressWarnings("unused")
-    private String mDataProp7;
-    @SuppressWarnings("unused")
-    private String mDataProp8;
-    @SuppressWarnings("unused")
-    private String mDataProp9;
 
     /**
      * Get the sort value. This is based on matching the underlying mDataProp value, indexed by the sortCol0
@@ -71,7 +66,7 @@ public class AjaxDataTableRequestData {
      */
     public String getSortValue() {
         try {
-            Field field = this.getClass().getDeclaredField("mDataProp" + sortCol0);
+            Field field = this.getClass().getField("mDataProp" + sortCol0);
             field.setAccessible(true);
             return (String) field.get(this);
         } catch (IllegalArgumentException ex) {
