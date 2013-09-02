@@ -21,64 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.db.volunteer;
+package uk.org.rbc1b.roms.controller.volunteer;
 
-import uk.org.rbc1b.roms.controller.common.SortDirection;
+import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableRequestData;
 
 /**
- * Criteria used when searching for a person.
- * @author oliver.elder.esq
+ * Extend the base ajax datatable request data with specific parameters.
+ * <p>
+ * These are passed in using the fnServerParams value
  */
-public class VolunteerSearchCriteria {
-
-    private static final int DEFAULT_MAX_RESULTS = 10;
-    private static final int DEFAULT_START_INDEX = 0;
-    private Integer maxResults = DEFAULT_MAX_RESULTS;
-    private String search;
-    private Integer startIndex = DEFAULT_START_INDEX;
-    private SortDirection sortDirection;
-    private String sortValue;
+public class VolunteerAjaxDataTableRequestData extends AjaxDataTableRequestData {
     private Integer congregationId;
-
-    public Integer getMaxResults() {
-        return maxResults;
-    }
-
-    public void setMaxResults(Integer maxResults) {
-        this.maxResults = maxResults;
-    }
-
-    public String getSearch() {
-        return search;
-    }
-
-    public void setSearch(String search) {
-        this.search = search;
-    }
-
-    public Integer getStartIndex() {
-        return startIndex;
-    }
-
-    public void setStartIndex(Integer startIndex) {
-        this.startIndex = startIndex;
-    }
-
-    public SortDirection getSortDirection() {
-        return sortDirection;
-    }
-
-    public void setSortDirection(SortDirection sortDirection) {
-        this.sortDirection = sortDirection;
-    }
-
-    public String getSortValue() {
-        return sortValue;
-    }
-
-    public void setSortValue(String sortValue) {
-        this.sortValue = sortValue;
-    }
 
     public Integer getCongregationId() {
         return congregationId;

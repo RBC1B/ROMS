@@ -45,7 +45,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.controller.common.DataConverterUtil;
-import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableRequestData;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableResult;
 import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
 import uk.org.rbc1b.roms.db.Address;
@@ -107,13 +106,15 @@ public class VolunteersController {
      */
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json")
     @ResponseBody
-    public AjaxDataTableResult<VolunteerListModel> showDatatableAjaxVolunteerList(AjaxDataTableRequestData requestData) {
+    public AjaxDataTableResult<VolunteerListModel> showDatatableAjaxVolunteerList(
+            VolunteerAjaxDataTableRequestData requestData) {
         VolunteerSearchCriteria searchCriteria = new VolunteerSearchCriteria();
         searchCriteria.setSearch(requestData.getSearch());
         searchCriteria.setSortValue(requestData.getSortValue());
         searchCriteria.setSortDirection(requestData.getSortDirection());
         searchCriteria.setStartIndex(requestData.getDisplayStart());
         searchCriteria.setMaxResults(requestData.getDisplayLength());
+        searchCriteria.setCongregationId(requestData.getCongregationId());
 
         AjaxDataTableResult<VolunteerListModel> result = new AjaxDataTableResult<VolunteerListModel>();
         result.setEcho(requestData.getEcho());

@@ -22,6 +22,7 @@
  * THE SOFTWARE.
  */
 $(document).ready(function() {
+    // list
     roms.common.datatables(
         $('#congregation-list'),
         {
@@ -35,6 +36,35 @@ $(document).ready(function() {
         }
     );
     
+    // show
+    var listActionTemplate = $("#list-action").html();
+    
+    roms.common.datatables(
+	    $('#congregation-member-list'),
+	    {
+	            "iDisplayLength": 20,
+	            "bProcessing": true,
+	            "bServerSide": true,
+	            "sAjaxSource": roms.common.relativePath + '/volunteers',
+	            "fnServerParams": function ( aoData ) {
+	        	aoData.push( { "name": "more_data" } );
+	            },
+	            "aoColumns": [
+	                {   "sName": "ID", "mData": "id" },
+	                {   "sName": "forename", "mData": "forename" },
+	                {   "sName": "surname", "mData": "surname" },
+	                {   "sName": "action", "bSortable": false,
+	                    "mData":
+	                        function ( data, type, val ) {
+	                            data.uriBase = roms.common.relativePath;
+	                            return Mustache.to_html(listActionTemplate, data);
+	                        }
+	                }
+	            ]
+	        }
+	    );
+    
+    // edit
     $('#congregation').validate({
         rules:{
             name: {

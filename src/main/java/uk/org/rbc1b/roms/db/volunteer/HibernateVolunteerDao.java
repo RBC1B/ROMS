@@ -113,6 +113,11 @@ public class HibernateVolunteerDao implements VolunteerDao {
                     Restrictions.like("email", searchValue), Restrictions.like("congregation.name", searchValue)));
         }
 
+        if (searchCriteria.getCongregationId() != null) {
+            criteria.add(Restrictions.or(Restrictions.eq("congregation.congregationId",
+                    searchCriteria.getCongregationId())));
+        }
+
         return criteria;
     }
 

@@ -67,6 +67,7 @@
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#contacts" data-toggle="tab">Contacts</a></li>
                 <li><a href="#strategy" data-toggle="tab">Strategy</a></li>
+                <li><a href="#members" data-toggle="tab">Members</a></li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="contacts">
@@ -79,10 +80,15 @@
                         <%@ include file="fragments/show-strategy.jsp" %>
                     </div>
                 </div>
+                <div class="tab-pane" id="members">
+                    <div class="row-fluid">
+                        <%@ include file="fragments/show-members.jsp" %>
+                    </div>
+                </div>
             </div>
             <div class="clearfix"></div>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
-        <script type="text/javascript" src="<c:url value='/javascript/congregation.js' />" ></script>
+        <script type="text/javascript" src="<c:url value='/javascript/congregations.js' />" ></script>
     </body>
 </html>
