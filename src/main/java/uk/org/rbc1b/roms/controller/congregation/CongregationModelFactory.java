@@ -75,7 +75,6 @@ public class CongregationModelFactory {
         populateBaseModel(congregation, model);
 
         model.setAttendance(congregation.getAttendance());
-
         model.setFunds(congregation.getFunds());
         model.setLoans(congregation.getLoans());
         model.setMonthlyIncome(congregation.getMonthlyIncome());
@@ -108,22 +107,22 @@ public class CongregationModelFactory {
         model.setCongregationId(congregation.getCongregationId());
         model.setName(congregation.getName());
 
-        EntityModel kingdomHallModel = new EntityModel();
         if (congregation.getKingdomHall() != null) {
+            EntityModel kingdomHallModel = new EntityModel();
             kingdomHallModel.setId(congregation.getKingdomHall().getKingdomHallId());
             kingdomHallModel.setName(congregation.getKingdomHall().getName());
             kingdomHallModel.setUri(KingdomHallModelFactory.generateUri(congregation.getKingdomHall()
                     .getKingdomHallId()));
+            model.setKingdomHall(kingdomHallModel);
         }
-        model.setKingdomHall(kingdomHallModel);
 
-        EntityModel circuitModel = new EntityModel();
         if (congregation.getCircuit() != null) {
+            EntityModel circuitModel = new EntityModel();
             circuitModel.setId(congregation.getCircuit().getCircuitId());
             circuitModel.setName(congregation.getCircuit().getName());
             circuitModel.setUri(CircuitModelFactory.generateCircuitUri(congregation.getCircuit().getCircuitId()));
+            model.setCircuit(circuitModel);
         }
-        model.setCircuit(circuitModel);
 
         if (congregation.getRbcRegionId() != null) {
             model.setRbcRegion(referenceDao.findRbcRegionValues().get(congregation.getRbcRegionId()));
