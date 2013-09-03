@@ -75,7 +75,7 @@ public class CongregationModelFactory {
     }
 
     /**
-     * Generate the model used in the congregation detailsd view.
+     * Generate the model used in the congregation details view.
      * @param congregation congregation
      * @return model
      */
@@ -100,6 +100,7 @@ public class CongregationModelFactory {
             model.setContacts(contactModels);
         }
 
+        model.setEditUri(generateUri(congregation.getCongregationId()) + "/edit");
         return model;
     }
 

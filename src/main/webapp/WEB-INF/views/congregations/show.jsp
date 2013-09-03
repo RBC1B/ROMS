@@ -86,6 +86,9 @@
                     </div>
                 </div>
             </div>
+            <sec:authorize access="hasPermission('CONG', 'EDIT')">
+                <a href="<c:url value='${congregation.editUri}' />" class="btn btn-primary">Edit Congregation</a>
+            </sec:authorize>
             <div class="clearfix"></div>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
