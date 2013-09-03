@@ -25,7 +25,6 @@ package uk.org.rbc1b.roms.controller.congregation;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import uk.org.rbc1b.roms.db.Congregation;
 
 /**
  * @author ramindursingh
@@ -55,30 +54,16 @@ public class CongregationForm {
     private String monthlyIncome;
     @Size(max = 1000)
     private String strategy;
-
-    /**
-     * Constructors.
-     */
-    public CongregationForm() {
-    }
-
-    /**
-     * Constructor with congregation.
-     * @param congregation congregation
-     */
-    public CongregationForm(Congregation congregation) {
-        name = congregation.getName();
-        number = congregation.getNumber();
-        kingdomHallId = congregation.getKingdomHall().getKingdomHallId();
-        circuitId = congregation.getCircuit().getCircuitId();
-        rbcRegionId = congregation.getRbcRegionId();
-        publishers = congregation.getPublishers();
-        attendance = congregation.getAttendance();
-        funds = congregation.getFunds();
-        loans = congregation.getLoans();
-        monthlyIncome = congregation.getMonthlyIncome();
-        strategy = congregation.getStrategy();
-    }
+    @Size(max = 50)
+    private String coordinatorForename;
+    @Size(max = 50)
+    private String coordinatorSurname;
+    private Integer coordinatorPersonId;
+    @Size(max = 50)
+    private String secretaryForename;
+    @Size(max = 50)
+    private String secretarySurname;
+    private Integer secretaryPersonId;
 
     public String getName() {
         return name;
@@ -142,6 +127,54 @@ public class CongregationForm {
 
     public void setAttendance(String attendance) {
         this.attendance = attendance;
+    }
+
+    public String getCoordinatorForename() {
+        return coordinatorForename;
+    }
+
+    public void setCoordinatorForename(String coordinatorForename) {
+        this.coordinatorForename = coordinatorForename;
+    }
+
+    public String getCoordinatorSurname() {
+        return coordinatorSurname;
+    }
+
+    public void setCoordinatorSurname(String coordinatorSurname) {
+        this.coordinatorSurname = coordinatorSurname;
+    }
+
+    public Integer getCoordinatorPersonId() {
+        return coordinatorPersonId;
+    }
+
+    public void setCoordinatorPersonId(Integer coordinatorPersonId) {
+        this.coordinatorPersonId = coordinatorPersonId;
+    }
+
+    public String getSecretaryForename() {
+        return secretaryForename;
+    }
+
+    public void setSecretaryForename(String secretaryForename) {
+        this.secretaryForename = secretaryForename;
+    }
+
+    public String getSecretarySurname() {
+        return secretarySurname;
+    }
+
+    public void setSecretarySurname(String secretarySurname) {
+        this.secretarySurname = secretarySurname;
+    }
+
+    public Integer getSecretaryPersonId() {
+        return secretaryPersonId;
+    }
+
+    public void setSecretaryPersonId(Integer secretaryPersonId) {
+        this.secretaryPersonId = secretaryPersonId;
     }
 
     public String getFunds() {

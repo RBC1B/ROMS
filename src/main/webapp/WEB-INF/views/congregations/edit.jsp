@@ -61,8 +61,32 @@
             </fieldset>
             <fieldset>
                 <legend>Contacts</legend>
-                <label>CoBE</label>
-                <label>Secretary</label>
+                <div id="coordinator">
+                    <form:hidden path="coordinatorPersonId" />
+                    <div id="coordinator-unlinked" class="hide">
+                        <label for="coordinatorForename">Coordinator forename</label>
+                        <form:input path="coordinatorForename" maxlength="50" />
+                        <label for="coordinatorForename">Coordinator surname</label>
+                        <form:input path="coordinatorSurname" maxlength="50" />
+                    </div>
+                    <div id="coordinator-linked" class="hide">
+                        Coordinator: <span id="coordinator-linked-text"></span>
+                        <a class="btn btn-primary btn-mini" href="#">Unlink</a>
+                    </div>
+                </div>
+                <div id="secretary">
+                    <form:hidden path="secretaryPersonId" />
+                    <div id="secretary-unlinked" class="hide">
+                        <label for="secretaryForename">Secretary forename</label>
+                        <form:input path="secretaryForename" maxlength="50" />
+                        <label for="secretaryForename">Secretary surname</label>
+                        <form:input path="secretarySurname" maxlength="50" />
+                    </div>
+                    <div id="secretary-linked" class="hide">
+                        Secretary: <span id="secretary-linked-text"></span>
+                        <a class="btn btn-primary btn-mini" href="#">Unlink</a>
+                    </div>
+                </div>
             </fieldset>
             <fieldset>
                 <legend>Strategy</legend>
@@ -79,6 +103,8 @@
         </form:form>
         <%@ include file="/WEB-INF/views/common/footer.jsp"%>
     </div>
+    <%@ include file="/WEB-INF/views/common/mustache-person-link-search-form.jsp"%>
+    <%@ include file="/WEB-INF/views/common/person-link-modal.jsp"%>
     <script type="text/javascript" src="<c:url value='/javascript/congregations.js' />"></script>
 </body>
 </html>

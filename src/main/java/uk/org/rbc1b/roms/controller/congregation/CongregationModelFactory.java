@@ -33,6 +33,12 @@ import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
 import uk.org.rbc1b.roms.controller.kingdomhall.KingdomHallModelFactory;
 import uk.org.rbc1b.roms.db.Congregation;
 import uk.org.rbc1b.roms.db.CongregationContact;
+import uk.org.rbc1b.roms.db.Person;
+import uk.org.rbc1b.roms.db.PersonDao;
+import uk.org.rbc1b.roms.db.circuit.Circuit;
+import uk.org.rbc1b.roms.db.circuit.CircuitDao;
+import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
+import uk.org.rbc1b.roms.db.kingdomhall.KingdomHallDao;
 import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 
 /**
@@ -41,7 +47,10 @@ import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 @Component
 public class CongregationModelFactory {
     private static final String BASE_URI = "/congregations";
+    private CircuitDao circuitDao;
+    private PersonDao personDao;
     private ReferenceDao referenceDao;
+    private KingdomHallDao kingdomHallDao;
     private PersonModelFactory personModelFactory;
 
     /**
@@ -98,7 +107,10 @@ public class CongregationModelFactory {
 
         CongregationContactModel model = new CongregationContactModel();
         model.setRole(referenceDao.findCongregationRoleValues().get(contact.getCongregationRoleId()));
-        model.setPerson(personModelFactory.generatePersonModel(contact.getPerson()));
+
+        Person person = personDao.findPerson(contact.getPerson().getPersonId());
+
+        model.setPerson(personModelFactory.generatePersonModel(person));
 
         return model;
     }
@@ -109,18 +121,23 @@ public class CongregationModelFactory {
 
         if (congregation.getKingdomHall() != null) {
             EntityModel kingdomHallModel = new EntityModel();
-            kingdomHallModel.setId(congregation.getKingdomHall().getKingdomHallId());
-            kingdomHallModel.setName(congregation.getKingdomHall().getName());
-            kingdomHallModel.setUri(KingdomHallModelFactory.generateUri(congregation.getKingdomHall()
-                    .getKingdomHallId()));
+
+            KingdomHall kingdomHall = kingdomHallDao.findKingdomHall(congregation.getKingdomHall().getKingdomHallId());
+
+            kingdomHallModel.setId(kingdomHall.getKingdomHallId());
+            kingdomHallModel.setName(kingdomHall.getName());
+            kingdomHallModel.setUri(KingdomHallModelFactory.generateUri(kingdomHall.getKingdomHallId()));
             model.setKingdomHall(kingdomHallModel);
         }
 
         if (congregation.getCircuit() != null) {
             EntityModel circuitModel = new EntityModel();
-            circuitModel.setId(congregation.getCircuit().getCircuitId());
-            circuitModel.setName(congregation.getCircuit().getName());
-            circuitModel.setUri(CircuitModelFactory.generateCircuitUri(congregation.getCircuit().getCircuitId()));
+
+            Circuit circuit = circuitDao.findCircuit(congregation.getCircuit().getCircuitId());
+
+            circuitModel.setId(circuit.getCircuitId());
+            circuitModel.setName(circuit.getName());
+            circuitModel.setUri(CircuitModelFactory.generateCircuitUri(circuit.getCircuitId()));
             model.setCircuit(circuitModel);
         }
 
@@ -134,6 +151,21 @@ public class CongregationModelFactory {
 
         model.setUri(generateUri(congregation.getCongregationId()));
         model.setEditUri(generateUri(congregation.getCongregationId()) + "/edit");
+    }
+
+    @Autowired
+    public void setCircuitDao(CircuitDao circuitDao) {
+        this.circuitDao = circuitDao;
+    }
+
+    @Autowired
+    public void setKingdomHallDao(KingdomHallDao kingdomHallDao) {
+        this.kingdomHallDao = kingdomHallDao;
+    }
+
+    @Autowired
+    public void setPersonDao(PersonDao personDao) {
+        this.personDao = personDao;
     }
 
     @Autowired

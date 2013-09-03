@@ -23,6 +23,7 @@
  */
 package uk.org.rbc1b.roms.db;
 
+import java.util.Iterator;
 import java.util.Set;
 import uk.org.rbc1b.roms.db.circuit.Circuit;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
@@ -47,6 +48,37 @@ public class Congregation extends DefaultUpdateAuditable {
     private String monthlyIncome;
     private String strategy;
     private Set<CongregationContact> contacts;
+
+    /**
+     * Find the contact matching the type.
+     * @param congregationRoleId role id
+     * @return contact
+     */
+    public CongregationContact findContact(Integer congregationRoleId) {
+        for (CongregationContact contact : contacts) {
+            if (contact.getCongregationRoleId().equals(congregationRoleId)) {
+                return contact;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Remove a contact from the collection.
+     * @param congregationRoleId role id
+     * @return true if we remove a contact
+     */
+    public boolean removeContact(Integer congregationRoleId) {
+        for (Iterator<CongregationContact> i = contacts.iterator(); i.hasNext();) {
+            CongregationContact contact = i.next();
+            if (contact.getCongregationRoleId().equals(congregationRoleId)) {
+                i.remove();
+                return true;
+            }
+
+        }
+        return false;
+    }
 
     public String getAttendance() {
         return attendance;

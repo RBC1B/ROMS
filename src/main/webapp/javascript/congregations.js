@@ -74,4 +74,81 @@ $(document).ready(function() {
         },
         errorPlacement: roms.common.validatorErrorPlacement
     });
+    
+    $("#coordinatorSurname").blur(function() {
+	roms.common.matchLinkedPerson(
+            $("#coordinatorForename").val(),
+            $("#coordinatorSurname").val(),
+            $("#coordinatorPersonId"),
+            populateCoordinatorFromPerson
+        );
+    });
+    
+    $("#secretarySurname").blur(function() {
+	roms.common.matchLinkedPerson(
+            $("#secretaryForename").val(),
+            $("#secretarySurname").val(),
+            $("#secretaryPersonId"),
+            populateSecretaryFromPerson
+        );
+    });
+    
+    $("#coordinator-linked a").click(function() {
+	populateCoordinatorFromPerson(null, null, null, $("#coordinatorPersonId"));
+    });
+    
+    $("#secretary-linked a").click(function() {
+	populateSecretaryFromPerson(null, null, null, $("#secretaryPersonId"));
+    });
+    
+    // run the contacts display on page load
+    populateCoordinatorFromPerson(
+        $("#coordinatorPersonId").val(), 
+	$("#coordinatorForename").val(), 
+	$("#coordinatorSurname").val(), 
+	$("#coordinatorPersonId"));
+    populateSecretaryFromPerson(
+        $("#secretaryPersonId").val(), 
+        $("#secretaryForename").val(), 
+        $("#secretarySurname").val(), 
+        $("#secretaryPersonId"));
+    
+    function populateCoordinatorFromPerson(selectedPersonId, forename, surname, $personId) {
+        if (selectedPersonId) {
+            var template = $("#linked-person-text-no-congregation").html();
+            var data = {};
+            data.forename = forename;
+            data.surname = surname;
+            var html = Mustache.to_html(template, data);
+            $("#coordinator-linked-text").html(html);
+            
+            $("#coordinator-linked").show("fast");
+            $("#coordinator-unlinked").hide("fast");
+        } else {
+            $("#coordinator-linked").hide("fast");
+            $("#coordinator-unlinked input").val("");
+            $("#coordinator-unlinked").show("fast");
+        }
+        $personId.val(selectedPersonId);
+    }
+    
+    function populateSecretaryFromPerson(selectedPersonId, forename, surname, $personId) {
+        if (selectedPersonId) {
+            var template = $("#linked-person-text-no-congregation").html();
+            var data = {};
+            data.forename = forename;
+            data.surname = surname;
+            var html = Mustache.to_html(template, data);
+            $("#secretary-linked-text").html(html);
+            
+            $("#secretary-linked").show("fast");
+            $("#secretary-unlinked").hide("fast");
+        } else {
+            $("#secretary-linked").hide("fast");
+            $("#secretary-unlinked input").val("");
+            $("#secretary-unlinked").show("fast");
+        }
+        $personId.val(selectedPersonId);
+    }
+    
 });

@@ -36,7 +36,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.db.Congregation;
+import uk.org.rbc1b.roms.db.CongregationContact;
 import uk.org.rbc1b.roms.db.CongregationDao;
+import uk.org.rbc1b.roms.db.Person;
+import uk.org.rbc1b.roms.db.PersonDao;
 import uk.org.rbc1b.roms.db.circuit.CircuitDao;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHallDao;
 import uk.org.rbc1b.roms.db.reference.ReferenceDao;
@@ -55,6 +58,7 @@ public class CongregationsController {
     private KingdomHallDao kingdomHallDao;
     private CircuitDao circuitDao;
     private ReferenceDao referenceDao;
+    private PersonDao personDao;
 
     /**
      * Displays the list of congregations.
@@ -130,7 +134,37 @@ public class CongregationsController {
             throw new NoSuchRequestHandlingMethodException("No congregation #" + congregationId, this.getClass());
         }
 
-        CongregationForm form = new CongregationForm(congregation);
+        CongregationForm form = new CongregationForm();
+        form.setName(congregation.getName());
+        form.setNumber(congregation.getNumber());
+        form.setKingdomHallId(congregation.getKingdomHall().getKingdomHallId());
+        form.setCircuitId(congregation.getCircuit().getCircuitId());
+        form.setRbcRegionId(congregation.getRbcRegionId());
+        form.setPublishers(congregation.getPublishers());
+        form.setAttendance(congregation.getAttendance());
+        form.setFunds(congregation.getFunds());
+        form.setLoans(congregation.getLoans());
+        form.setMonthlyIncome(congregation.getMonthlyIncome());
+        form.setStrategy(congregation.getStrategy());
+
+        if (congregation.getContacts() != null) {
+            for (CongregationContact contact : congregation.getContacts()) {
+                Person person = personDao.findPerson(contact.getPerson().getPersonId());
+
+                if (contact.getCongregationRoleId() == CongregationContact.COORDINATOR_ROLE) {
+                    form.setCoordinatorForename(person.getForename());
+                    form.setCoordinatorSurname(person.getSurname());
+                    form.setCoordinatorPersonId(person.getPersonId());
+                } else if (contact.getCongregationRoleId() == CongregationContact.SECRETARY_ROLE) {
+                    form.setSecretaryForename(person.getForename());
+                    form.setSecretarySurname(person.getSurname());
+                    form.setSecretaryPersonId(person.getPersonId());
+                } else {
+                    throw new IllegalStateException("Unknown congregation role: " + contact.getCongregationRoleId());
+                }
+            }
+        }
+
         model.addAttribute("congregationForm", form);
         model.addAttribute("kingdomHalls", kingdomHallDao.findKingdomHalls());
         model.addAttribute("circuits", circuitDao.findCircuits());
@@ -160,14 +194,21 @@ public class CongregationsController {
     }
 
     /**
-     * Updates a congregation.
+     * Updates a congregation, creating new {@link Person} instances for newly created congregation contacts if
+     * required.
      * @param congregationId existing congregation id
      * @param congregationForm congregationForm bean
      * @return view name
+     * @throws NoSuchRequestHandlingMethodException on failure to find congregation
      */
     @RequestMapping(value = "{congregationId}", method = RequestMethod.PUT)
-    public String updateCongregation(@PathVariable Integer congregationId, @Valid CongregationForm congregationForm) {
-        Congregation congregation = new Congregation();
+    public String updateCongregation(@PathVariable Integer congregationId, @Valid CongregationForm congregationForm)
+            throws NoSuchRequestHandlingMethodException {
+        Congregation congregation = congregationDao.findCongregation(congregationId);
+        if (congregation == null) {
+            throw new NoSuchRequestHandlingMethodException("No congregation #" + congregationId, this.getClass());
+        }
+
         congregation.setAttendance(congregationForm.getAttendance());
         congregation.setCongregationId(congregationId);
         congregation.setFunds(congregationForm.getFunds());
@@ -180,8 +221,7 @@ public class CongregationsController {
         congregation.setRbcSubRegionId(congregationForm.getRbcSubRegionId());
         congregation.setStrategy(congregationForm.getStrategy());
 
-        // merge in the contacts
-        // congregation.setContacts(contacts);
+        mergeContacts(congregation, congregationForm);
 
         if (congregationForm.getCircuitId() == null) {
             congregation.setCircuit(null);
@@ -195,8 +235,60 @@ public class CongregationsController {
             congregation.setKingdomHall(kingdomHallDao.findKingdomHall(congregationForm.getKingdomHallId()));
         }
 
-        congregationDao.saveCongregation(congregation);
+        congregationDao.updateCongregation(congregation);
         return "redirect:" + CongregationModelFactory.generateUri(congregationId);
+    }
+
+    private void mergeContacts(Congregation congregation, CongregationForm congregationForm) {
+        mergeContact(congregation, CongregationContact.COORDINATOR_ROLE, congregationForm.getCoordinatorPersonId(),
+                congregationForm.getCoordinatorForename(), congregationForm.getCoordinatorSurname());
+        mergeContact(congregation, CongregationContact.SECRETARY_ROLE, congregationForm.getSecretaryPersonId(),
+                congregationForm.getSecretaryForename(), congregationForm.getSecretarySurname());
+    }
+
+    /**
+     * Merge an individual congregation contact.
+     */
+    private void mergeContact(Congregation congregation, Integer roleId, Integer personId, String forename,
+            String surname) {
+        if (personId == null && surname == null) {
+            congregation.removeContact(roleId);
+            return;
+        }
+
+        CongregationContact contact = congregation.findContact(roleId);
+        if (contact == null) {
+            Person person = fetchPerson(congregation, personId, forename, surname);
+            if (person != null) {
+                contact = new CongregationContact();
+                contact.setCongregation(congregation);
+                contact.setCongregationRoleId(roleId);
+                contact.setPerson(person);
+                congregation.getContacts().add(contact);
+            }
+        } else if (!contact.getPerson().getPersonId().equals(personId)) {
+            Person person = fetchPerson(congregation, personId, forename, surname);
+            if (person != null) {
+                contact.setPerson(person);
+            }
+        }
+
+    }
+
+    private Person fetchPerson(Congregation congregation, Integer personId, String forename, String surname) {
+        if (personId != null) {
+            return personDao.findPerson(personId);
+        }
+
+        if (forename != null && surname != null) {
+            Person person = new Person();
+            person.setForename(forename);
+            person.setSurname(surname);
+            person.setCongregation(congregation);
+            personDao.createPerson(person);
+            return person;
+        }
+        return null;
     }
 
     @Autowired
@@ -217,6 +309,11 @@ public class CongregationsController {
     @Autowired
     public void setCircuitDao(CircuitDao circuitDao) {
         this.circuitDao = circuitDao;
+    }
+
+    @Autowired
+    public void setPersonDao(PersonDao personDao) {
+        this.personDao = personDao;
     }
 
     @Autowired

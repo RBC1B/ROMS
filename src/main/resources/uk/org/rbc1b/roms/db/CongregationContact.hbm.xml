@@ -3,20 +3,12 @@
 <hibernate-mapping package="uk.org.rbc1b.roms.db">
     <class name="uk.org.rbc1b.roms.db.CongregationContact" table="CongregationContact">
         <id name="congregationContactId">
-            <generator class="identity"/>
+            <generator class="identity" />
         </id>
-        <many-to-one class="uk.org.rbc1b.roms.db.Congregation"
-            column="CongregationId"
-            lazy="false"
-            name="congregation"/>
+        <many-to-one name="congregation" column="CongregationId" not-null="true" />
         <property name="congregationRoleId" />
-        <many-to-one class="uk.org.rbc1b.roms.db.Person"
-            column="PersonId"
-            lazy="false"
-            unique="true"
-            not-null="false"
-            name="person"/>
-        <property name="updateTime" not-null="true"  />
-        <property name="updatedBy" not-null="true"  />
+        <many-to-one name="person" column="PersonId" not-null="true" />
+        <property name="updateTime" not-null="true" />
+        <property name="updatedBy" not-null="true" />
     </class>
 </hibernate-mapping>

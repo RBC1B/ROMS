@@ -168,9 +168,6 @@ THE SOFTWARE.
                     <property name="name" value="department.department" />
                 </bean>
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
-                    <property name="name" value="department.departmentList" />
-                </bean>
-                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
                     <property name="name" value="skill.skill" />
                 </bean>
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
@@ -181,9 +178,6 @@ THE SOFTWARE.
                 </bean>
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
                     <property name="name" value="congregation.congregation" />
-                </bean>
-                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
-                    <property name="name" value="congregation.congregationList" />
                 </bean>
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
                     <property name="name" value="user.userName" />

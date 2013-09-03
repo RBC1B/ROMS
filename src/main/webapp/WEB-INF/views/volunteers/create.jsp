@@ -256,8 +256,8 @@
             {{/persons}}
             {{/matchedPersons}}
         </script>
-        <%@ include file="/WEB-INF/views/volunteers/fragments/mustache-volunteer-person-link-search-form.jsp" %>
-        <%@ include file="/WEB-INF/views/volunteers/fragments/volunteer-person-modal.jsp" %>
+        <%@ include file="/WEB-INF/views/common/mustache-person-link-search-form.jsp" %>
+        <%@ include file="/WEB-INF/views/common/person-link-modal.jsp" %>
         <script type="text/javascript" src="<c:url value='/javascript/thirdparty/jquery-numeric-1.3.1.js' />" ></script>
         <script type="text/javascript" src="<c:url value='/javascript/volunteers.js' />" ></script>
     </body>

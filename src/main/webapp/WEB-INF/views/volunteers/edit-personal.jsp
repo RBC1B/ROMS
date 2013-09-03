@@ -77,8 +77,8 @@ Edit form for the volunteer data under the personal tab.
         </form:form>
         <%@ include file="/WEB-INF/views/common/footer.jsp"%>
     </div>
-    <%@ include file="/WEB-INF/views/volunteers/fragments/mustache-volunteer-person-link-search-form.jsp"%>
-    <%@ include file="/WEB-INF/views/volunteers/fragments/volunteer-person-modal.jsp"%>
+    <%@ include file="/WEB-INF/views/common/mustache-person-link-search-form.jsp"%>
+    <%@ include file="/WEB-INF/views/common/person-link-modal.jsp"%>
     <script type="text/javascript" src="<c:url value='/javascript/volunteers.js' />"></script>
 </body>
 </html>
