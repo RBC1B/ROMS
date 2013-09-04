@@ -666,6 +666,11 @@ public class VolunteersController {
             }
         }
 
+        // if unpopulated, return null
+        if (form.getSpouseForename() == null || form.getSpouseSurname() == null) {
+            return null;
+        }
+
         // create a new person
         Person spouse = new Person();
         spouse.setForename(form.getSpouseForename());
