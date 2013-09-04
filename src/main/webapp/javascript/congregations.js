@@ -65,11 +65,22 @@ $(document).ready(function() {
 	    );
     
     // edit
-    $('#congregation').validate({
+    $("#number").numeric({ negative : false, decimal: false });
+    
+    $('#congregationForm').validate({
         rules:{
             name: {
                 minlength: 2,
                 required: true
+            },
+            kingdomHallId: {
+        	required: true
+            },
+            circuitId: {
+        	required: true
+            },
+            strategy: {
+        	maxlength: 1000
             }
         },
         errorPlacement: roms.common.validatorErrorPlacement
