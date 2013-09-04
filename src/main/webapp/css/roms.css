@@ -40,6 +40,9 @@
 .form-signin {
     margin-top:60px;
 }
+.form-signin img {
+    margin-bottom:10px;
+}
 .title-quote {
     font-family: Georgia, serif;
     color:#7F7E7E;
