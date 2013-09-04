@@ -34,7 +34,6 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Hibernate implementation of the department dao.
- * @author oliver.elder.esq
  */
 @Repository
 public class HibernateDepartmentDao implements DepartmentDao {
@@ -62,7 +61,6 @@ public class HibernateDepartmentDao implements DepartmentDao {
 
     @SuppressWarnings("unchecked")
     @Override
-    @Cacheable("department.departmentList")
     public List<Department> getAllDepartments() {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Department.class);
         return criteria.addOrder(Order.asc("name")).list();

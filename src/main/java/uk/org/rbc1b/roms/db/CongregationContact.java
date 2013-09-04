@@ -28,6 +28,10 @@ package uk.org.rbc1b.roms.db;
  * @author oliver.elder.esq
  */
 public class CongregationContact extends DefaultUpdateAuditable {
+
+    public static final int COORDINATOR_ROLE = 1;
+    public static final int SECRETARY_ROLE = 2;
+
     private static final long serialVersionUID = 4754412345307010085L;
     private Integer congregationContactId;
     private Congregation congregation;

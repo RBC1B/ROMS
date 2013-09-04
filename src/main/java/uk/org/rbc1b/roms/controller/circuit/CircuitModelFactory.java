@@ -26,6 +26,8 @@ package uk.org.rbc1b.roms.controller.circuit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
+import uk.org.rbc1b.roms.db.Person;
+import uk.org.rbc1b.roms.db.PersonDao;
 import uk.org.rbc1b.roms.db.circuit.Circuit;
 
 /**
@@ -35,6 +37,7 @@ import uk.org.rbc1b.roms.db.circuit.Circuit;
 public class CircuitModelFactory {
     private static final String BASE_CIRCUIT_URI = "/circuits";
     private PersonModelFactory personModelFactory;
+    private PersonDao personDao;
 
     /**
      * Generate the uri used to access the circuit pages.
@@ -54,12 +57,22 @@ public class CircuitModelFactory {
 
         CircuitModel model = new CircuitModel();
         model.setCircuitId(circuit.getCircuitId());
-        model.setCircuitOverseer(personModelFactory.generatePersonModel(circuit.getCircuitOverseer()));
+
+        if (circuit.getCircuitOverseer() != null) {
+            Person person = personDao.findPerson(circuit.getCircuitOverseer().getPersonId());
+            model.setCircuitOverseer(personModelFactory.generatePersonModel(person));
+        }
+
         model.setEditUri(generateCircuitUri(circuit.getCircuitId()) + "/edit");
         model.setName(circuit.getName());
         model.setUri(generateCircuitUri(circuit.getCircuitId()));
 
         return model;
+    }
+
+    @Autowired
+    public void setPersonDao(PersonDao personDao) {
+        this.personDao = personDao;
     }
 
     @Autowired

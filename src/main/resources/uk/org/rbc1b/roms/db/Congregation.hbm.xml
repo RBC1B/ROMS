@@ -7,14 +7,14 @@
         </id>
         <property length="50" name="name" unique="true" />
         <property length="10" name="number" />
-        <many-to-one class="uk.org.rbc1b.roms.db.kingdomhall.KingdomHall" column="KingdomHallId" lazy="false"
+        <many-to-one class="uk.org.rbc1b.roms.db.kingdomhall.KingdomHall" column="KingdomHallId"
             name="kingdomHall" />
-        <many-to-one class="uk.org.rbc1b.roms.db.circuit.Circuit" column="CircuitId" lazy="false" name="circuit" />
+        <many-to-one class="uk.org.rbc1b.roms.db.circuit.Circuit" column="CircuitId" name="circuit" />
 
         <property name="rbcRegionId" />
         <property name="rbcSubRegionId" />
 
-        <set name="contacts" lazy="false">
+        <set name="contacts" lazy="false" inverse="true">
             <key column="congregationId" not-null="true" />
             <one-to-many class="uk.org.rbc1b.roms.db.CongregationContact" />
         </set>

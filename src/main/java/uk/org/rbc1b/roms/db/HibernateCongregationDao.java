@@ -23,18 +23,22 @@
  */
 package uk.org.rbc1b.roms.db;
 
+import java.util.Comparator;
 import java.util.List;
+import org.apache.commons.lang3.ObjectUtils;
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
+import uk.org.rbc1b.roms.db.common.MergeUtil;
 
 /**
  * Hibernate implementation of the congregation dao.
- * @author oliver.elder.esq
  */
 @Repository
 public class HibernateCongregationDao implements CongregationDao {
@@ -44,14 +48,13 @@ public class HibernateCongregationDao implements CongregationDao {
 
     @SuppressWarnings("unchecked")
     @Override
-    @Cacheable("congregation.congregationList")
     public List<Congregation> findAllCongregations() {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Congregation.class);
         return criteria.addOrder(Order.asc("name")).list();
     }
 
     @Override
-    @Cacheable("congregation.congregation")
+    @Cacheable(value = "congregation.congregation", key = "#congregationId")
     public Congregation findCongregation(Integer congregationId) {
         if (congregationId == null) {
             return null;
@@ -68,23 +71,49 @@ public class HibernateCongregationDao implements CongregationDao {
         return criteria.list();
     }
 
+    @CacheEvict(value = "congregation.congregation", key = "#congregation.congregationId")
     @Override
-    public void saveCongregation(Congregation congregation) {
-        if (congregation.getCongregationId() == null) {
-            sessionFactory.getCurrentSession().save(congregation);
-        } else {
-            sessionFactory.getCurrentSession().merge(congregation);
-        }
+    public void updateCongregation(final Congregation congregation) {
+
+        final Session session = this.sessionFactory.getCurrentSession();
+
+        Congregation existing = (Congregation) session.get(Congregation.class, congregation.getCongregationId());
+
+        // merge the contacts
+        MergeUtil.sortAndMerge(existing.getContacts(), congregation.getContacts(),
+                new Comparator<CongregationContact>() {
+                    @Override
+                    public int compare(CongregationContact o1, CongregationContact o2) {
+                        return o1.getCongregationRoleId().compareTo(o2.getCongregationRoleId());
+                    }
+                }, new MergeUtil.Callback<CongregationContact, CongregationContact>() {
+                    @Override
+                    public void output(CongregationContact existingContact, CongregationContact incomingContact) {
+                        if (existingContact == null) {
+                            session.save(incomingContact);
+                        } else if (incomingContact == null) {
+                            session.delete(existingContact);
+                        } else if (!ObjectUtils.equals(existingContact.getPerson().getPersonId(), incomingContact
+                                .getPerson().getPersonId())) {
+                            existingContact.setPerson(incomingContact.getPerson());
+                            session.update(existingContact);
+                        }
+                    }
+                });
+
+        sessionFactory.getCurrentSession().merge(congregation);
     }
 
     @Override
     public void createCongregation(Congregation congregation) {
-        sessionFactory.getCurrentSession().save(congregation);
-    }
+        Session session = this.sessionFactory.getCurrentSession();
 
-    @Override
-    public void deleteCongregation(Congregation congregation) {
-        sessionFactory.getCurrentSession().delete(congregation);
+        session.save(congregation);
+
+        for (CongregationContact contact : congregation.getContacts()) {
+            contact.setCongregation(congregation);
+            session.save(contact);
+        }
     }
 
     public void setSessionFactory(SessionFactory sessionFactory) {

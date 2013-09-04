@@ -47,7 +47,7 @@ $(document).ready(function() {
     });
 
     $("#spouseSurname").blur(function() {
-        matchLinkedPerson(
+	roms.common.matchLinkedPerson(
             $("#spouseForename").val(),
             $("#spouseSurname").val(),
             $("#spousePersonId"),
@@ -56,7 +56,7 @@ $(document).ready(function() {
     });
     
     $("#emergencyContactSurname").blur(function() {
-        matchLinkedPerson(
+	roms.common.matchLinkedPerson(
             $("#emergencyContactForename").val(),
             $("#emergencyContactSurname").val(),
             $("#emergencyContactPersonId"),
@@ -317,8 +317,8 @@ $(document).ready(function() {
                 var template = $("#volunteer-person-search-form").html();
                 var html = Mustache.to_html(template, data);
 
-                $("#volunteer-person-modal .modal-body").html(html)
-                var modalElement = $("#volunteer-person-modal")
+                $("#person-link-modal .modal-body").html(html)
+                var modalElement = $("#person-link-modal")
 
                 modalElement.modal('show')
 
@@ -370,62 +370,6 @@ $(document).ready(function() {
             }
         });
         $personId.val(selectedPersonId);
-    }
-
-    function matchLinkedPerson(forename, surname, $personId, populateFunction) {
-        if(!forename || !surname) {
-            // clear any linked name
-            $personId.data("full-name", "");
-            populateFunction(null, forename, surname, $personId);
-            return;
-        }
-
-        var existingPersonName = $personId.data("full-name");
-        if (existingPersonName == forename + " " + surname) {
-            // no change in value
-            return;
-        }
-        var existingPersonId = $personId.val();
-
-        $.ajax({
-            url: roms.common.relativePath + '/persons/search',
-            contentType: "application/json",
-            dataType: 'json',
-            data:  {
-                forename: forename,
-                surname: surname,
-                checkVolunteer: false
-            },
-            success: function(data) {
-                // no match, and no person linked. We don't show anything
-                if (!data.results && !existingPersonId) {
-                    return;
-                }
-
-                data.existingPersonId = existingPersonId;
-                data.existingPersonName = existingPersonName;
-
-                if (data.results) {
-                    data.matchedPersons = true;
-                }
-
-                var template = $("#volunteer-person-link-search-form").html();
-                var html = Mustache.to_html(template, data);
-
-                $("#volunteer-person-modal .modal-body").html(html)
-                var modalElement = $("#volunteer-person-modal")
-
-                modalElement.modal('show')
-
-                // if they select the person id, set it to the hidden volunteer person id field
-                $("a.matched-person").on("click", function(event){
-                    populateFunction($(this).data("person-id"), forename, surname, $personId);
-                    modalElement.modal('hide')
-                });
-            }
-        });
-
-        $personId.data("full-name", forename + " " + surname);
     }
 
     function populateSpouseFromPerson(selectedPersonId, forename, surname, $personId) {

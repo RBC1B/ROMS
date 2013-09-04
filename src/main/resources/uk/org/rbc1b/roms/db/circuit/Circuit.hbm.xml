@@ -6,7 +6,7 @@
             <generator class="identity"/>
         </id>
         <property length="50" name="name" unique="true"/>
-        <many-to-one cascade="all" class="uk.org.rbc1b.roms.db.Person" column="CircuitOverseerID" lazy="false" name="circuitOverseer"/>
+        <many-to-one cascade="all" class="uk.org.rbc1b.roms.db.Person" column="CircuitOverseerID" name="circuitOverseer"/>
         <property name="updateTime" not-null="true"  />
         <property name="updatedBy" not-null="true"  />
     </class>

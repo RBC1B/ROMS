@@ -29,61 +29,49 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Look up the congregation object instances.
- *
- * @author oliver.elder.esq
  */
 public interface CongregationDao {
 
     /**
      * Get a list of congregations.
-     *
      * @return congregations
      */
+    @PreAuthorize("hasPermission('CONG','READ')")
     @Transactional(readOnly = true)
     List<Congregation> findAllCongregations();
 
     /**
      * Look up the congregation by the primary key.
-     *
      * @param congregationId congregation id
      * @return Congregation, or null if no matching instance
      */
+    @PreAuthorize("hasPermission('CONG','READ')")
     @Transactional(readOnly = true)
     Congregation findCongregation(Integer congregationId);
 
     /**
      * Find the list of congregations matching the partial name.
-     *
      * @param name name
      * @return congregations
      */
+    @PreAuthorize("hasPermission('CONG','READ')")
     @Transactional(readOnly = true)
     List<Congregation> findCongregations(String name);
 
     /**
      * Saves a congregation.
-     *
      * @param congregation to save
      */
-    @PreAuthorize("hasPermission('CONGREGATION','EDIT')")
+    @PreAuthorize("hasPermission('CONG','EDIT')")
     @Transactional
-    void saveCongregation(Congregation congregation);
+    void updateCongregation(Congregation congregation);
 
     /**
      * Creates a new congregation.
-     *
      * @param congregation to create
      */
-    @PreAuthorize("hasPermission('CONGREGATION','ADD')")
+    @PreAuthorize("hasPermission('CONG','ADD')")
     @Transactional
     void createCongregation(Congregation congregation);
 
-    /**
-     * Deletes a congregation.
-     *
-     * @param congregation to delete
-     */
-    @PreAuthorize("hasPermission('CONGREGATION','DELETE')")
-    @Transactional
-    void deleteCongregation(Congregation congregation);
 }

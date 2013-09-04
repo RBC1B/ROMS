@@ -37,6 +37,7 @@ public class CongregationModel extends CongregationListModel {
     private String monthlyIncome;
     private String strategy;
     private List<CongregationContactModel> contacts;
+    private String editUri;
 
     public String getNumber() {
         return number;
@@ -100,6 +101,16 @@ public class CongregationModel extends CongregationListModel {
 
     public void setContacts(List<CongregationContactModel> contacts) {
         this.contacts = contacts;
+    }
+
+    @Override
+    public String getEditUri() {
+        return editUri;
+    }
+
+    @Override
+    public void setEditUri(String editUri) {
+        this.editUri = editUri;
     }
 
 }
