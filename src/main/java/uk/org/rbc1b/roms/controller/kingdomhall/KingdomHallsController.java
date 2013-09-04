@@ -34,7 +34,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.controller.LoggingHandlerExceptionResolver;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableResult;
@@ -44,7 +48,6 @@ import uk.org.rbc1b.roms.db.kingdomhall.KingdomHallDao;
 
 /**
  * Controller for the kingdom hall related pages.
- *
  * @author oliver.elder.esq
  */
 @Controller
@@ -57,7 +60,6 @@ public class KingdomHallsController {
 
     /**
      * Generate the uri used to access the kingdom hall pages.
-     *
      * @param kingdomHallId optional kingdom hall id
      * @return uri
      */
@@ -67,7 +69,6 @@ public class KingdomHallsController {
 
     /**
      * Display the list of kingdom halls.
-     *
      * @param model mvc model
      * @return view
      */
@@ -80,7 +81,6 @@ public class KingdomHallsController {
 
     /**
      * Create a new kingdom hall.
-     *
      * @param kingdomHallForm form bean
      * @return view name
      */
@@ -103,13 +103,13 @@ public class KingdomHallsController {
 
     /**
      * Display the page list of kingdom halls, returning JSON.
-     *
      * @param echoId request identifier returned back to the caller
      * @return view
      */
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json")
     @ResponseBody
-    public AjaxDataTableResult<KingdomHallListModel> showDatatableAjaxKingdomHallList(@RequestParam(value = "sEcho") String echoId) {
+    public AjaxDataTableResult<KingdomHallListModel> showDatatableAjaxKingdomHallList(
+            @RequestParam(value = "sEcho") Integer echoId) {
         AjaxDataTableResult<KingdomHallListModel> result = new AjaxDataTableResult<KingdomHallListModel>();
         result.setRecords(createKingdomHallListModels(kingdomHallDao.findKingdomHalls()));
         result.setTotalDisplayRecords(result.getAaData().size());
@@ -120,15 +120,14 @@ public class KingdomHallsController {
 
     /**
      * Display a specified kingdom hall.
-     *
      * @param kingdomHallId kingdom hall id (primary key)
      * @param model mvc model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException on failure to look up the
-     * kingdom hall
+     * @throws NoSuchRequestHandlingMethodException on failure to look up the kingdom hall
      */
     @RequestMapping(value = "{kingdomHallId}", method = RequestMethod.GET)
-    public String showKingdomHall(@PathVariable Integer kingdomHallId, ModelMap model) throws NoSuchRequestHandlingMethodException {
+    public String showKingdomHall(@PathVariable Integer kingdomHallId, ModelMap model)
+            throws NoSuchRequestHandlingMethodException {
 
         KingdomHall kingdomHall = kingdomHallDao.findKingdomHall(kingdomHallId);
 
@@ -143,7 +142,6 @@ public class KingdomHallsController {
 
     /**
      * Display the form to create a new circuit.
-     *
      * @param model mvc model
      * @return view name
      */
@@ -176,16 +174,13 @@ public class KingdomHallsController {
 
     /**
      * Deletes a Kingdom Hall.
-     *
      * @param request http servlet request
      * @param model spring mvc model
      * @return mvc redirect
-     * @throws NoSuchRequestHandlingMethodException on failure to find the
-     * Kingdom Hall
+     * @throws NoSuchRequestHandlingMethodException on failure to find the Kingdom Hall
      */
     @RequestMapping(method = RequestMethod.DELETE)
-    public String deleteSkill(HttpServletRequest request, ModelMap model)
-            throws NoSuchRequestHandlingMethodException {
+    public String deleteSkill(HttpServletRequest request, ModelMap model) throws NoSuchRequestHandlingMethodException {
         Integer kingdomHallId;
         kingdomHallId = Integer.parseInt(request.getParameter("kingdomHallId"));
         KingdomHall kingdomHall = this.kingdomHallDao.findKingdomHall(kingdomHallId);

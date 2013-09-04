@@ -416,7 +416,7 @@ $(document).ready(function() {
     roms.common.datatables(
         $('#volunteer-list'),
         {
-            "iDisplayLength": 20,
+            "iDisplayLength": 10,
             "bProcessing": true,
             "bServerSide": true,
             "sAjaxSource": roms.common.relativePath + '/volunteers',
@@ -561,21 +561,21 @@ $(document).ready(function() {
     roms.common.datatables(
         $("#volunteer-skills-experience"),
         {
-            "iDisplayLength": 20
+            "iDisplayLength": 10
         }
     );
 
     roms.common.datatables(
         $("#volunteer-skills-skills"),
         {
-            "iDisplayLength": 20
+            "iDisplayLength": 10
         }
     );
 
     roms.common.datatables(
         $("#volunteer-skills-qualifications"),
         {
-            "iDisplayLength": 20
+            "iDisplayLength": 10
         }
     );
 

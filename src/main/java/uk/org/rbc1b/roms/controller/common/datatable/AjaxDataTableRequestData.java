@@ -53,7 +53,7 @@ public class AjaxDataTableRequestData {
     public String mDataProp8;
     public String mDataProp9;
     // CSON: VisibilityModifier
-    private String echo;
+    private Integer echo;
     private String search;
     private SortDir sortDir;
     private Integer displayLength;
@@ -80,7 +80,7 @@ public class AjaxDataTableRequestData {
         }
     }
 
-    public String getEcho() {
+    public Integer getEcho() {
         return echo;
     }
 
@@ -111,7 +111,7 @@ public class AjaxDataTableRequestData {
      * The method name doesn't match the variable to allow us to drop the hungarian notation.
      * @param sEcho echo
      */
-    public void setsEcho(String sEcho) {
+    public void setsEcho(Integer sEcho) {
         this.echo = sEcho;
     }
 

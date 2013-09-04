@@ -85,7 +85,7 @@ $(document).ready(function() {
     roms.common.datatables(
             $('#person-list'),
             {
-                "iDisplayLength": 20,
+                "iDisplayLength": 10,
                 "bProcessing": true,
                 "bServerSide": true,
                 "sAjaxSource": roms.common.relativePath + '/persons',

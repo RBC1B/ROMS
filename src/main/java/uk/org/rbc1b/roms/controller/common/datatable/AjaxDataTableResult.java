@@ -27,14 +27,14 @@ import java.util.List;
 
 /**
  * Wrapper class for DataTable results.
- * <p>The field names are specific to the data table naming
- *
+ * <p>
+ * The field names are specific to the data table naming
  * @author oliver.elder.esq
  * @param <T> list data type
  */
 public class AjaxDataTableResult<T> {
 
-    private String sEcho;
+    private Integer sEcho;
     private List<T> aaData;
     private int iTotalRecords;
     private int iTotalDisplayRecords;
@@ -87,7 +87,7 @@ public class AjaxDataTableResult<T> {
     /**
      * @return unique identifier for request, echoed back to caller
      */
-    public String getsEcho() {
+    public Integer getsEcho() {
         return sEcho;
     }
 
@@ -95,7 +95,7 @@ public class AjaxDataTableResult<T> {
      * The method name doesn't match the variable to allow us to drop the hungarian notation.
      * @param echo unique identifier for request, echoed back to caller
      */
-    public void setEcho(String echo) {
+    public void setEcho(Integer echo) {
         this.sEcho = echo;
     }
 }
