@@ -73,6 +73,9 @@ $(document).ready(function() {
                 minlength: 2,
                 required: true
             },
+            number: {
+        	required: true
+            },
             kingdomHallId: {
         	required: true
             },
