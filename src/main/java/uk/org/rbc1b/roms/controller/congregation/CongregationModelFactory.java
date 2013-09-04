@@ -24,6 +24,7 @@
 package uk.org.rbc1b.roms.controller.congregation;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -97,6 +98,8 @@ public class CongregationModelFactory {
             for (CongregationContact contact : congregation.getContacts()) {
                 contactModels.add(generateContactModel(contact));
             }
+            Collections.sort(contactModels);
+
             model.setContacts(contactModels);
         }
 

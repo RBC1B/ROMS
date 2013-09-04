@@ -28,7 +28,7 @@ import uk.org.rbc1b.roms.controller.common.model.PersonModel;
 /**
  * Model representing the person who is a nominated contact for a given congregation.
  */
-public class CongregationContactModel {
+public class CongregationContactModel implements Comparable<CongregationContactModel> {
     private PersonModel person;
     private String role;
 
@@ -46,6 +46,11 @@ public class CongregationContactModel {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    @Override
+    public int compareTo(CongregationContactModel o) {
+        return role.compareToIgnoreCase(o.getRole());
     }
 
 }
