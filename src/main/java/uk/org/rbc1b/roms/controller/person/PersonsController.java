@@ -24,6 +24,7 @@
 package uk.org.rbc1b.roms.controller.person;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.validation.Valid;
 import org.joda.time.DateTime;
@@ -113,6 +114,8 @@ public class PersonsController {
             }
             result.setRecords(modelList);
             result.setTotalDisplayRecords(modelList.size());
+        } else {
+            result.setRecords(Collections.<PersonModel>emptyList());
         }
 
         return result;

@@ -65,7 +65,9 @@ $(document).ready(function() {
 	    );
     
     // edit
-    $("#number").numeric({ negative : false, decimal: false });
+    if ($("#number").length) {
+	$("#number").numeric({ negative : false, decimal: false });
+    }
     
     $('#congregationForm').validate({
         rules:{

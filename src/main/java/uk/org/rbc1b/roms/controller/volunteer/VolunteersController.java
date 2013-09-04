@@ -24,6 +24,7 @@
 package uk.org.rbc1b.roms.controller.volunteer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
@@ -129,6 +130,8 @@ public class VolunteersController {
             }
             result.setRecords(modelList);
             result.setTotalDisplayRecords(modelList.size());
+        } else {
+            result.setRecords(Collections.<VolunteerListModel>emptyList());
         }
 
         return result;
