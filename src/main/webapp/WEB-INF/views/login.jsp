@@ -13,7 +13,7 @@
     <body>
         <div class="container">
             <form class="form-signin" action="<c:url value='j_spring_security_check' />" method="POST">
-                <img src="/WEB-INF/views/logo-login.png">
+                <img src="http://www.manifold-design.co.uk/antecedents/img/logo-login.png">
                 <p class="title-quote">Edifice :- Origin from Latin <b>aedificum</b> from <b><i>aedis 'dwelling' + facere 'make' </i></b></p>
                 <c:if test="${not empty status}"><p class="error">Invalid login details supplied. Please try again</p></c:if>
                 <fieldset>
