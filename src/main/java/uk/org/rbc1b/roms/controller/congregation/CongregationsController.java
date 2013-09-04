@@ -24,6 +24,7 @@
 package uk.org.rbc1b.roms.controller.congregation;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -209,8 +210,41 @@ public class CongregationsController {
             throw new NoSuchRequestHandlingMethodException("No congregation #" + congregationId, this.getClass());
         }
 
+        populateCongregation(congregationForm, congregation);
+
+        congregationDao.updateCongregation(congregation);
+        return "redirect:" + CongregationModelFactory.generateUri(congregationId);
+    }
+
+    /**
+     * Creates a congregation, creating new {@link Person} instances for newly created congregation contacts if
+     * required.
+     * @param congregationForm congregationForm bean
+     * @return view name
+     */
+    @RequestMapping(method = RequestMethod.POST)
+    public String createCongregation(@Valid CongregationForm congregationForm) {
+        Congregation congregation = new Congregation();
+        congregation.setContacts(new HashSet<CongregationContact>());
+
+        populateCongregation(congregationForm, congregation);
+
+        congregationDao.createCongregation(congregation);
+
+        // make sure all the contact persons are linked to the new congregation
+        for (CongregationContact contact : congregation.getContacts()) {
+            if (contact.getPerson().getCongregation() == null) {
+                Person person = contact.getPerson();
+                person.setCongregation(congregation);
+                personDao.updatePerson(person);
+            }
+        }
+
+        return "redirect:" + CongregationModelFactory.generateUri(congregation.getCongregationId());
+    }
+
+    private void populateCongregation(CongregationForm congregationForm, Congregation congregation) {
         congregation.setAttendance(congregationForm.getAttendance());
-        congregation.setCongregationId(congregationId);
         congregation.setFunds(congregationForm.getFunds());
         congregation.setLoans(congregationForm.getLoans());
         congregation.setMonthlyIncome(congregationForm.getMonthlyIncome());
@@ -234,9 +268,6 @@ public class CongregationsController {
         } else {
             congregation.setKingdomHall(kingdomHallDao.findKingdomHall(congregationForm.getKingdomHallId()));
         }
-
-        congregationDao.updateCongregation(congregation);
-        return "redirect:" + CongregationModelFactory.generateUri(congregationId);
     }
 
     private void mergeContacts(Congregation congregation, CongregationForm congregationForm) {
@@ -284,7 +315,9 @@ public class CongregationsController {
             Person person = new Person();
             person.setForename(forename);
             person.setSurname(surname);
-            person.setCongregation(congregation);
+            if (congregation.getCongregationId() != null) {
+                person.setCongregation(congregation);
+            }
             personDao.createPerson(person);
             return person;
         }

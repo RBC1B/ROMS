@@ -29,7 +29,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Look up the congregation object instances.
- * @author oliver.elder.esq
  */
 public interface CongregationDao {
 

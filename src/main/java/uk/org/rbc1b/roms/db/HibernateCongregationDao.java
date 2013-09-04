@@ -39,7 +39,6 @@ import uk.org.rbc1b.roms.db.common.MergeUtil;
 
 /**
  * Hibernate implementation of the congregation dao.
- * @author oliver.elder.esq
  */
 @Repository
 public class HibernateCongregationDao implements CongregationDao {
@@ -74,7 +73,7 @@ public class HibernateCongregationDao implements CongregationDao {
 
     @CacheEvict(value = "congregation.congregation", key = "#congregation.congregationId")
     @Override
-    public void updateCongregation(Congregation congregation) {
+    public void updateCongregation(final Congregation congregation) {
 
         final Session session = this.sessionFactory.getCurrentSession();
 
@@ -107,7 +106,14 @@ public class HibernateCongregationDao implements CongregationDao {
 
     @Override
     public void createCongregation(Congregation congregation) {
-        sessionFactory.getCurrentSession().save(congregation);
+        Session session = this.sessionFactory.getCurrentSession();
+
+        session.save(congregation);
+
+        for (CongregationContact contact : congregation.getContacts()) {
+            contact.setCongregation(congregation);
+            session.save(contact);
+        }
     }
 
     public void setSessionFactory(SessionFactory sessionFactory) {
