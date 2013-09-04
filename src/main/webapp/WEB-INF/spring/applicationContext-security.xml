@@ -33,6 +33,7 @@ THE SOFTWARE.
     <http pattern="/login" security="none"/>
     <http pattern="/logout" security="none"/>
     <http pattern="/css/**" security="none"/>
+    <http pattern="/images/**" security="none"/>
 
     <http use-expressions="true">
         <intercept-url pattern="/**" access="isAuthenticated()" />
