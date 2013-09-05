@@ -42,9 +42,11 @@
             </div>
             <div class="row-fluid">
               <div class="well span4">
-                
+               <button class="btn btn-info btn-block">Add Widgets</button>                                  
+              </div>
             </div>
+           </div>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-        </div>
+
     </body>
 </html>
