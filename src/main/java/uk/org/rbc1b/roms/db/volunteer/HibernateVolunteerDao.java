@@ -154,6 +154,17 @@ public class HibernateVolunteerDao implements VolunteerDao {
 
     @SuppressWarnings("unchecked")
     @Override
+    public Assignment findPrimaryAssignment(Integer volunteerId) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(Assignment.class);
+        criteria.add(Restrictions.eq("personId", volunteerId));
+        criteria.add(Restrictions.eq("tradeNumberId", 1));
+
+        return (Assignment) criteria.uniqueResult();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
     public List<VolunteerSkill> findSkills(Integer volunteerId) {
         Session session = this.sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(VolunteerSkill.class);

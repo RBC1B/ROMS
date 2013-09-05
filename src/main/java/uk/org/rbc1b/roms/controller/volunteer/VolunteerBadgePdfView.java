@@ -41,15 +41,25 @@ import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.view.document.AbstractPdfView;
+import uk.org.rbc1b.roms.db.volunteer.DepartmentDao;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
+import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
 
 /**
  * View that creates the Volunteer Badge as a pdf.
  *
  * @author rahulsingh
  */
+@Component
 public class VolunteerBadgePdfView extends AbstractPdfView {
+
+    @Autowired
+    private VolunteerDao volunteerDao;
+    @Autowired
+    private DepartmentDao departmentDao;
 
     @Override
     protected void buildPdfDocument(Map<String, Object> model, Document document, PdfWriter writer, HttpServletRequest request, HttpServletResponse response)
@@ -74,7 +84,11 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
         addBarcode(cb, volunteer.getPersonId());
         addVolunteerName(cb, volunteer.getForename() + " " + volunteer.getSurname());
         addRBCRegionTitle(cb, "RBC London and Home Counties");
-        addDepartment(cb, "IT Systems Analyst");
+
+        // Find the volunteer's primary assignment
+        //Assignment primaryAssignment = volunteerDao.findPrimaryAssignment(volunteer.getPersonId());
+        //Department department = departmentDao.findDepartment(primaryAssignment.getDepartmentId());
+        addDepartment(cb, "IT Support");
         addBigRectangle(cb);
         addBadgeTitle(cb, "Kingdom Hall Construction");
     }
@@ -288,5 +302,13 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
         content.setColorFill(Color.BLACK);
         content.showText(department);
         content.endText();
+    }
+
+    public void setVolunteerDao(VolunteerDao volunteerDao) {
+        this.volunteerDao = volunteerDao;
+    }
+
+    public void setDepartmentDao(DepartmentDao departmentDao) {
+        this.departmentDao = departmentDao;
     }
 }
