@@ -38,6 +38,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.view.document.AbstractPdfView;
@@ -65,7 +66,11 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
         Set<String> skills = new HashSet<String>();
         addSkils(cb, skills);
 
-        //addImage(cb, img);
+        ServletContext context = request.getServletContext();
+        String contextPath = context.getRealPath("/");
+        Image img = Image.getInstance(contextPath + "/images/oli-lion.jpg");
+
+        addImage(cb, img);
         addBarcode(cb, volunteer.getPersonId());
         addVolunteerName(cb, volunteer.getForename() + " " + volunteer.getSurname());
         addRBCRegionTitle(cb, "RBC London and Home Counties");
