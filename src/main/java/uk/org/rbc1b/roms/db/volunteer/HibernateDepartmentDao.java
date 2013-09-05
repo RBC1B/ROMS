@@ -68,6 +68,16 @@ public class HibernateDepartmentDao implements DepartmentDao {
 
     @SuppressWarnings("unchecked")
     @Override
+    public List<Department> findChildDepartments(Integer departmentId) {
+
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Department.class);
+        criteria.add(Restrictions.eq("superDepartment.departmentId", departmentId));
+
+        return criteria.list();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
     public List<Assignment> findAssignments(AssignmentSearchCriteria searchCriteria) {
 
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Assignment.class);

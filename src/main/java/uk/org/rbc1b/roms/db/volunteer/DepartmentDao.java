@@ -64,6 +64,14 @@ public interface DepartmentDao {
     List<Department> findDepartments();
 
     /**
+     * Get child departments.
+     * @param departmentId super detpartment id
+     * @return List of departments
+     */
+    @Transactional(readOnly = true)
+    List<Department> findChildDepartments(Integer departmentId);
+
+    /**
      * Find the assignments based on search criteria.
      * @param searchCriteria criteria
      * @return list of matched assignments

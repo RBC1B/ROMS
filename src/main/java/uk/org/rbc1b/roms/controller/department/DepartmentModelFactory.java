@@ -80,6 +80,34 @@ public class DepartmentModelFactory {
         return model;
     }
 
+    /**
+     * Generate the department overview model.
+     * @param department department
+     * @param overseerAssignment details of assigned overseer
+     * @return model
+     */
+    public DepartmentModel generateDepartmentModel(Department department, Assignment overseerAssignment) {
+        DepartmentModel model = new DepartmentModel();
+        model.setDescription(department.getDescription());
+        model.setEditUri(generateUri(department.getDepartmentId()) + "/edit");
+        model.setName(department.getName());
+
+        if (overseerAssignment != null) {
+            Person person = personDao.findPerson(overseerAssignment.getPersonId());
+            model.setOverseer(personModelFactory.generatePersonModel(person));
+        }
+
+        if (department.getSuperDepartment() != null) {
+            EntityModel superDepartment = new EntityModel();
+            superDepartment.setId(department.getSuperDepartment().getDepartmentId());
+            superDepartment.setName(department.getSuperDepartment().getName());
+            superDepartment.setUri(generateUri(department.getSuperDepartment().getDepartmentId()));
+            model.setSuperDepartment(superDepartment);
+        }
+
+        return model;
+    }
+
     @Autowired
     public void setPersonDao(PersonDao personDao) {
         this.personDao = personDao;

@@ -5,12 +5,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <c:set var="pageTitle" value="Circuit" />
+    <c:set var="pageTitle" value="Circuit: ${circuit.name}" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
-            <h1 class="media-heading">#${circuit.circuitId}: ${circuit.name}</h1>
+            <h1>#${circuit.circuitId}: ${circuit.name}</h1>
             <hr />
             <h3>Circuit Overseer</h3>
             <c:choose>

@@ -30,8 +30,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.db.PersonSearchCriteria;
 import uk.org.rbc1b.roms.db.volunteer.Assignment;
 import uk.org.rbc1b.roms.db.volunteer.AssignmentSearchCriteria;
@@ -68,6 +70,42 @@ public class DepartmentsController {
         model.addAttribute("departments", modelList);
 
         return "departments/list";
+    }
+
+    /**
+     * @param departmentId person primary key
+     * @param model model
+     * @return view name
+     * @throws NoSuchRequestHandlingMethodException when no department matching the id is found
+     */
+    @RequestMapping(value = "{departmentId}", method = RequestMethod.GET)
+    public String showDepartment(@PathVariable Integer departmentId, ModelMap model)
+            throws NoSuchRequestHandlingMethodException {
+        Department department = departmentDao.findDepartment(departmentId);
+        if (department == null) {
+            throw new NoSuchRequestHandlingMethodException("No department#" + departmentId, this.getClass());
+        }
+
+        AssignmentSearchCriteria assignmentSearchCriteria = new AssignmentSearchCriteria();
+        assignmentSearchCriteria.setRoleId(OVERSEER_ROLE_ID);
+        assignmentSearchCriteria.setDepartmentId(departmentId);
+        List<Assignment> assignments = departmentDao.findAssignments(assignmentSearchCriteria);
+
+        Assignment overseerAssignment = assignments.isEmpty() ? null : assignments.get(0);
+
+        model.addAttribute("department", departmentModelFactory.generateDepartmentModel(department, overseerAssignment));
+
+        List<Department> childDepartments = departmentDao.findChildDepartments(departmentId);
+        Map<Integer, Assignment> departmentOverseers = fetchDepartmentOverseers();
+        List<DepartmentListModel> childDepartmentModelList = new ArrayList<DepartmentListModel>(childDepartments.size());
+        for (Department childDepartment : childDepartments) {
+            childDepartmentModelList.add(departmentModelFactory.generateDepartmentListModel(childDepartment,
+                    departmentOverseers.get(childDepartment.getDepartmentId())));
+        }
+
+        model.addAttribute("childDepartments", childDepartmentModelList);
+
+        return "departments/show";
     }
 
     private Map<Integer, Assignment> fetchDepartmentOverseers() {
