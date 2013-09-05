@@ -88,6 +88,13 @@ public class HibernateVolunteerDao implements VolunteerDao {
     }
 
     @Override
+    public int findTotalVolunteersCount() {
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Volunteer.class);
+        criteria.setProjection(Projections.rowCount());
+        return ((Long) criteria.uniqueResult()).intValue();
+    }
+
+    @Override
     public int findVolunteersCount(VolunteerSearchCriteria searchCriteria) {
         Session session = this.sessionFactory.getCurrentSession();
         Criteria criteria = createVolunteerSearchCriteria(searchCriteria, session);

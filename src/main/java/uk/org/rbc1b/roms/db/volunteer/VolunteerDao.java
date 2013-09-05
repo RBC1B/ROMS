@@ -30,14 +30,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Look up volunteer information.
- *
  * @author rahulsingh
  */
 public interface VolunteerDao {
 
     /**
      * Find the volunteer with matching id, or null with no match.
-     *
      * @param volunteerId id
      * @param data additional data to populate
      * @return volunteer
@@ -48,7 +46,6 @@ public interface VolunteerDao {
 
     /**
      * Find all matching volunteers.
-     *
      * @param searchCriteria search criteria
      * @return list of matching volunteers
      */
@@ -57,8 +54,14 @@ public interface VolunteerDao {
     List<Volunteer> findVolunteers(VolunteerSearchCriteria searchCriteria);
 
     /**
+     * @return the total number of volunteers
+     */
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
+    @Transactional(readOnly = true)
+    int findTotalVolunteersCount();
+
+    /**
      * Look up the number of volunteers matching the criteria.
-     *
      * @param searchCriteria search criteria
      * @return list of people
      */
@@ -68,7 +71,6 @@ public interface VolunteerDao {
 
     /**
      * Save a volunteer.
-     *
      * @param volunteer volunteer to
      */
     @PreAuthorize("hasPermission('VOLUNTEER', 'ADD')")
@@ -77,17 +79,14 @@ public interface VolunteerDao {
 
     /**
      * Update a volunteer.
-     *
      * @param volunteer volunteer to
      */
     @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     @Transactional
     void updateVolunteer(Volunteer volunteer);
 
-
     /**
      * Find the volunteer assignments.
-     *
      * @param volunteerId id
      * @return list of assignments
      */
@@ -97,7 +96,6 @@ public interface VolunteerDao {
 
     /**
      * Find the volunteer skills.
-     *
      * @param volunteerId id
      * @return list of skills
      */
@@ -107,7 +105,6 @@ public interface VolunteerDao {
 
     /**
      * Find the volunteer qualifications.
-     *
      * @param volunteerId id
      * @return list of qualifications
      */

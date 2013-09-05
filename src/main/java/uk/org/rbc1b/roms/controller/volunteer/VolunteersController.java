@@ -120,16 +120,16 @@ public class VolunteersController {
         AjaxDataTableResult<VolunteerListModel> result = new AjaxDataTableResult<VolunteerListModel>();
         result.setEcho(requestData.getEcho());
 
-        int totalResults = volunteerDao.findVolunteersCount(searchCriteria);
-        result.setTotalRecords(totalResults);
-        if (totalResults > 0) {
+        result.setTotalRecords(volunteerDao.findTotalVolunteersCount());
+        int totalFilteredResults = volunteerDao.findVolunteersCount(searchCriteria);
+        if (totalFilteredResults > 0) {
             List<Volunteer> volunteers = volunteerDao.findVolunteers(searchCriteria);
             List<VolunteerListModel> modelList = new ArrayList<VolunteerListModel>(volunteers.size());
             for (Volunteer volunteer : volunteers) {
                 modelList.add(volunteerModelFactory.generateVolunteerListModel(volunteer));
             }
             result.setRecords(modelList);
-            result.setTotalDisplayRecords(modelList.size());
+            result.setTotalDisplayRecords(totalFilteredResults);
         } else {
             result.setRecords(Collections.<VolunteerListModel>emptyList());
         }

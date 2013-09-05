@@ -104,16 +104,16 @@ public class PersonsController {
         AjaxDataTableResult<PersonModel> result = new AjaxDataTableResult<PersonModel>();
         result.setEcho(requestData.getEcho());
 
-        int totalResults = personDao.findPersonsCount(searchCriteria);
-        result.setTotalRecords(totalResults);
-        if (totalResults > 0) {
+        result.setTotalRecords(personDao.findTotalPersonsCount());
+        int totalFilteredResults = personDao.findPersonsCount(searchCriteria);
+        if (totalFilteredResults > 0) {
             List<Person> persons = personDao.findPersons(searchCriteria);
             List<PersonModel> modelList = new ArrayList<PersonModel>(persons.size());
             for (Person person : persons) {
                 modelList.add(personModelFactory.generatePersonModel(person));
             }
             result.setRecords(modelList);
-            result.setTotalDisplayRecords(modelList.size());
+            result.setTotalDisplayRecords(totalFilteredResults);
         } else {
             result.setRecords(Collections.<PersonModel>emptyList());
         }

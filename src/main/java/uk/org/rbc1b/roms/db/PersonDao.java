@@ -29,14 +29,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Add/edit/delete/update the core person data.
- *
  * @author oliver
  */
 public interface PersonDao {
 
     /**
      * Look up the person by the primary key.
-     *
      * @param personId person id
      * @return Person, or null if no matching instance
      */
@@ -45,8 +43,9 @@ public interface PersonDao {
     Person findPerson(Integer personId);
 
     /**
-     * Look up the list of people matching the criteria. <p>We look for exact match names
-     *
+     * Look up the list of people matching the criteria.
+     * <p>
+     * We look for exact match names
      * @param forename person's first name
      * @param surname person's last name
      * @return list of people
@@ -57,7 +56,6 @@ public interface PersonDao {
 
     /**
      * Look up the list of people matching the criteria. All criteria is optional.
-     *
      * @param searchCriteria search criteria
      * @return list of people
      */
@@ -66,8 +64,14 @@ public interface PersonDao {
     List<Person> findPersons(PersonSearchCriteria searchCriteria);
 
     /**
+     * @return the total number of persons stored in the database
+     */
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
+    @Transactional(readOnly = true)
+    int findTotalPersonsCount();
+
+    /**
      * Look up the number of people matching the criteria.
-     *
      * @param searchCriteria search criteria
      * @return list of people
      */
@@ -77,7 +81,6 @@ public interface PersonDao {
 
     /**
      * Save the new person.
-     *
      * @param person person to persist
      */
     @PreAuthorize("hasPermission('VOLUNTEER', 'ADD')")
@@ -86,7 +89,6 @@ public interface PersonDao {
 
     /**
      * Update the person.
-     *
      * @param person person to persist
      */
     @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
