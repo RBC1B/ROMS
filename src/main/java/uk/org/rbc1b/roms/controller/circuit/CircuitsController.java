@@ -101,20 +101,24 @@ public class CircuitsController {
         }
         CircuitForm form = new CircuitForm();
         form.setName(circuit.getName());
-        form.setPersonId(circuit.getCircuitOverseer().getPersonId());
-        form.setForename(circuit.getCircuitOverseer().getForename());
-        form.setMiddleName(circuit.getCircuitOverseer().getMiddleName());
-        form.setSurname(circuit.getCircuitOverseer().getSurname());
-        form.setEmail(circuit.getCircuitOverseer().getEmail());
-        if (circuit.getCircuitOverseer().getAddress() != null) {
-            form.setStreet(circuit.getCircuitOverseer().getAddress().getStreet());
-            form.setTown(circuit.getCircuitOverseer().getAddress().getTown());
-            form.setCounty(circuit.getCircuitOverseer().getAddress().getCounty());
-            form.setPostcode(circuit.getCircuitOverseer().getAddress().getPostcode());
-        }
-        form.setTelephone(circuit.getCircuitOverseer().getTelephone());
-        form.setMobile(circuit.getCircuitOverseer().getMobile());
 
+        if (circuit.getCircuitOverseer() != null) {
+            Person circuitOverseer = personDao.findPerson(circuit.getCircuitOverseer().getPersonId());
+
+            form.setPersonId(circuitOverseer.getPersonId());
+            form.setForename(circuitOverseer.getForename());
+            form.setMiddleName(circuitOverseer.getMiddleName());
+            form.setSurname(circuitOverseer.getSurname());
+            form.setEmail(circuitOverseer.getEmail());
+            if (circuitOverseer.getAddress() != null) {
+                form.setStreet(circuitOverseer.getAddress().getStreet());
+                form.setTown(circuitOverseer.getAddress().getTown());
+                form.setCounty(circuitOverseer.getAddress().getCounty());
+                form.setPostcode(circuitOverseer.getAddress().getPostcode());
+            }
+            form.setTelephone(circuitOverseer.getTelephone());
+            form.setMobile(circuitOverseer.getMobile());
+        }
         model.addAttribute("circuitForm", form);
         model.addAttribute("submitUri", CircuitModelFactory.generateCircuitUri(circuitId));
         model.addAttribute("submitMethod", "PUT");
