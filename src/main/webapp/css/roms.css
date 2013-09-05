@@ -10,7 +10,9 @@
     padding-top:20px!important;
     color:#25aae1!important;
 }
-
+.navbar ul li ul li a {
+    padding-top:0px!important
+}
 
 
 /*****************************************************************************/
