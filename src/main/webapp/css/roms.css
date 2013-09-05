@@ -1,8 +1,16 @@
 
-.collapse.in {
-    height:auto!important;
-    /* fixes a bug which restricts the collapsed .nav to 203px, hiding certain menu options */
+/*****************************************************************************/
+/* Global Styles for Edifice.                                                */
+/*                                                                           */
+/* PLEASE NOTE: This file is secondary to the Bootstrap CSS file, which      */
+/* is not local and cannot be edited.                                        */
+/*                                                                           */
+/*****************************************************************************/
+.navbar ul li a {
+    padding-top:20px!important;
+    color:#25aae1!important;
 }
+
 
 
 /*****************************************************************************/
