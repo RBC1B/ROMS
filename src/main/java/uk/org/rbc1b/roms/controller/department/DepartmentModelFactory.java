@@ -23,7 +23,14 @@
  */
 package uk.org.rbc1b.roms.controller.department;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import uk.org.rbc1b.roms.controller.common.model.EntityModel;
+import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
+import uk.org.rbc1b.roms.db.Person;
+import uk.org.rbc1b.roms.db.PersonDao;
+import uk.org.rbc1b.roms.db.volunteer.Assignment;
+import uk.org.rbc1b.roms.db.volunteer.Department;
 
 /**
  * Generate models for the departments.
@@ -31,16 +38,56 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class DepartmentModelFactory {
-
-    private static final String BASE_URI = "/departments/";
+    private static final String BASE_URI = "/departments";
+    private PersonDao personDao;
+    private PersonModelFactory personModelFactory;
 
     /**
      * Generate the uri used to access the department pages.
-     *
      * @param departmentId optional department id
      * @return uri
      */
     public String generateUri(Integer departmentId) {
-        return departmentId != null ? BASE_URI + departmentId : BASE_URI;
+        return departmentId != null ? BASE_URI + "/" + departmentId : BASE_URI;
     }
+
+    /**
+     * Generate the model to be used in the department list.
+     * @param department department
+     * @param overseerAssignment details of assigned overseer
+     * @return model
+     */
+    public DepartmentListModel generateDepartmentListModel(Department department, Assignment overseerAssignment) {
+        DepartmentListModel model = new DepartmentListModel();
+        model.setName(department.getName());
+
+        if (department.getSuperDepartment() != null) {
+            EntityModel superDepartment = new EntityModel();
+            superDepartment.setId(department.getSuperDepartment().getDepartmentId());
+            superDepartment.setName(department.getSuperDepartment().getName());
+            superDepartment.setUri(generateUri(department.getSuperDepartment().getDepartmentId()));
+            model.setSuperDepartment(superDepartment);
+        }
+
+        if (overseerAssignment != null) {
+            Person person = personDao.findPerson(overseerAssignment.getPersonId());
+            model.setOverseer(personModelFactory.generatePersonModel(person));
+        }
+
+        model.setUri(generateUri(department.getDepartmentId()));
+        model.setEditUri(generateUri(department.getDepartmentId()) + "/edit");
+
+        return model;
+    }
+
+    @Autowired
+    public void setPersonDao(PersonDao personDao) {
+        this.personDao = personDao;
+    }
+
+    @Autowired
+    public void setPersonModelFactory(PersonModelFactory personModelFactory) {
+        this.personModelFactory = personModelFactory;
+    }
+
 }

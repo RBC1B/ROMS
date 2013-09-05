@@ -6,7 +6,7 @@
             <generator class="identity"/>
         </id>
         <property name="name" length="50" />
-        <many-to-one name="superDepartment" column="SuperDepartmentId" />
+        <many-to-one name="superDepartment" column="SuperDepartmentId" lazy="false" />
         <property name="description" length="50" />
     </class>
 </hibernate-mapping>

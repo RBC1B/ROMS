@@ -117,7 +117,7 @@ public class SkillsController {
             throw new NoSuchRequestHandlingMethodException("No Skill #" + skillId, this.getClass());
         } else {
             SkillForm form = new SkillForm(skill);
-            List<Department> departments = departmentDao.getAllDepartments();
+            List<Department> departments = departmentDao.findDepartments();
             form.setDepartment(skill.getDepartment().getName());
             form.setCategory(skill.getCategory().getName());
             List<Category> categories = categoryDao.getAllCategories();
@@ -139,7 +139,7 @@ public class SkillsController {
 
         // initialise the form bean
         model.addAttribute("skill", new SkillForm());
-        List<Department> departments = departmentDao.getAllDepartments();
+        List<Department> departments = departmentDao.findDepartments();
         List<Category> categories = categoryDao.getAllCategories();
         model.addAttribute("categories", categories);
         model.addAttribute("departments", departments);

@@ -61,9 +61,33 @@ public class HibernateDepartmentDao implements DepartmentDao {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Department> getAllDepartments() {
+    public List<Department> findDepartments() {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Department.class);
         return criteria.addOrder(Order.asc("name")).list();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Assignment> findAssignments(AssignmentSearchCriteria searchCriteria) {
+
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Assignment.class);
+        if (searchCriteria.getDepartmentId() != null) {
+            criteria.add(Restrictions.eq("departmentId", searchCriteria.getDepartmentId()));
+        }
+        if (searchCriteria.getDepartmentId() != null) {
+            criteria.add(Restrictions.eq("personId", searchCriteria.getPersonId()));
+        }
+        if (searchCriteria.getDepartmentId() != null) {
+            criteria.add(Restrictions.eq("roleId", searchCriteria.getRoleId()));
+        }
+        if (searchCriteria.getDepartmentId() != null) {
+            criteria.add(Restrictions.eq("teamId", searchCriteria.getTeamId()));
+        }
+        if (searchCriteria.getDepartmentId() != null) {
+            criteria.add(Restrictions.eq("tradeNumberId", searchCriteria.getTradeNumberId()));
+        }
+
+        return criteria.list();
     }
 
     public void setSessionFactory(SessionFactory sessionFactory) {
