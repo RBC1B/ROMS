@@ -10,7 +10,7 @@
 <html>
     <c:set var="pageTitle" value="Login" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
-    <body>
+    <body class="blueprints">
         <div class="container">
             <form class="form-signin" action="<c:url value='j_spring_security_check' />" method="POST">
                 <img src="<c:url value='/images/logo-login.png' />">

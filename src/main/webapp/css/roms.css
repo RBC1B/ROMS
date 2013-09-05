@@ -11,13 +11,16 @@
     color:#25aae1!important;
 }
 .navbar ul li ul li a {
-    padding-top:0px!important
+    padding-top:0px!important;
 }
 
 
 /*****************************************************************************/
 /* Sign in form                                                              */
 /*****************************************************************************/
+body.blueprints {
+    background-image:url('/images/blueprints.jpg');    
+}
 .form-signin {
     max-width: 300px;
     padding: 19px 29px 29px;

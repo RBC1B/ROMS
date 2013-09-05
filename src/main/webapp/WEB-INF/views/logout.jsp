@@ -12,7 +12,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Edifice Logout</title>
     </head>
-    <body>
+    <body class="blueprints">
     <div class="container">
       <form class="form-signin">
         <h2>Logged out.</h2>
