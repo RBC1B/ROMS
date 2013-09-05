@@ -10,7 +10,7 @@
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
-            <h1>Kingdom Hall: ${kingdomHall.name}</h1>    
+            <h1>Kingdom Hall: ${kingdomHall.name}</h1>
             <hr>
             <h4>Address: </h4>
             ${kingdomHall.address.street}<br />
@@ -21,7 +21,7 @@
             ${kingdomHall.titleHolder.congregation} <br/>
             <h4>Ownership Type</h4>
             ${kingdomHall.ownershipTypeId}
-            
+
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
      <script type="text/javascript" src="<c:url value='/javascript/kingdom-halls.js' />" ></script>
