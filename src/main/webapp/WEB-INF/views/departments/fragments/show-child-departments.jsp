@@ -1,5 +1,5 @@
 <%--
-The contents of the contacts tab.
+The contents of the child departments tab.
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="entity-list-results">

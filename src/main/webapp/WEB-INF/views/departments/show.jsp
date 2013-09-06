@@ -41,7 +41,7 @@
             <div class="tab-content">
                 <div class="tab-pane active" id="overseers">
                     <div class="row-fluid">
-TBD
+                        <%@ include file="fragments/show-department-overseers.jsp" %>
                     </div>
                 </div>
                 <div class="tab-pane" id="assignments">

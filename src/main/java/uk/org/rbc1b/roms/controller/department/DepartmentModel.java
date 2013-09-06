@@ -32,6 +32,7 @@ import uk.org.rbc1b.roms.controller.common.model.PersonModel;
 public class DepartmentModel {
     private String name;
     private PersonModel overseer;
+    private PersonModel assistant;
     private EntityModel superDepartment;
     private String description;
     private String editUri;
@@ -50,6 +51,14 @@ public class DepartmentModel {
 
     public void setOverseer(PersonModel overseer) {
         this.overseer = overseer;
+    }
+
+    public PersonModel getAssistant() {
+        return assistant;
+    }
+
+    public void setAssistant(PersonModel assistant) {
+        this.assistant = assistant;
     }
 
     public EntityModel getSuperDepartment() {

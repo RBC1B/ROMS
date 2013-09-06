@@ -47,6 +47,7 @@ import uk.org.rbc1b.roms.db.volunteer.DepartmentDao;
 @RequestMapping("/departments")
 public class DepartmentsController {
     private static final int OVERSEER_ROLE_ID = 5;
+    private static final int ASSISTANT_ROLE_ID = 1;
     private DepartmentDao departmentDao;
     private DepartmentModelFactory departmentModelFactory;
 
@@ -86,14 +87,11 @@ public class DepartmentsController {
             throw new NoSuchRequestHandlingMethodException("No department#" + departmentId, this.getClass());
         }
 
-        AssignmentSearchCriteria assignmentSearchCriteria = new AssignmentSearchCriteria();
-        assignmentSearchCriteria.setRoleId(OVERSEER_ROLE_ID);
-        assignmentSearchCriteria.setDepartmentId(departmentId);
-        List<Assignment> assignments = departmentDao.findAssignments(assignmentSearchCriteria);
+        Assignment overseerAssignment = findDepartmentAssignment(departmentId, OVERSEER_ROLE_ID);
+        Assignment assistantAssignment = findDepartmentAssignment(departmentId, ASSISTANT_ROLE_ID);
 
-        Assignment overseerAssignment = assignments.isEmpty() ? null : assignments.get(0);
-
-        model.addAttribute("department", departmentModelFactory.generateDepartmentModel(department, overseerAssignment));
+        model.addAttribute("department",
+                departmentModelFactory.generateDepartmentModel(department, overseerAssignment, assistantAssignment));
 
         List<Department> childDepartments = departmentDao.findChildDepartments(departmentId);
         Map<Integer, Assignment> departmentOverseers = fetchDepartmentOverseers();
@@ -106,6 +104,15 @@ public class DepartmentsController {
         model.addAttribute("childDepartments", childDepartmentModelList);
 
         return "departments/show";
+    }
+
+    private Assignment findDepartmentAssignment(Integer departmentId, Integer roleId) {
+        AssignmentSearchCriteria assignmentSearchCriteria = new AssignmentSearchCriteria();
+        assignmentSearchCriteria.setRoleId(roleId);
+        assignmentSearchCriteria.setDepartmentId(departmentId);
+        List<Assignment> assignments = departmentDao.findAssignments(assignmentSearchCriteria);
+
+        return assignments.isEmpty() ? null : assignments.get(0);
     }
 
     private Map<Integer, Assignment> fetchDepartmentOverseers() {

@@ -84,9 +84,11 @@ public class DepartmentModelFactory {
      * Generate the department overview model.
      * @param department department
      * @param overseerAssignment details of assigned overseer
+     * @param assistantAssignment details of the assigned assistant
      * @return model
      */
-    public DepartmentModel generateDepartmentModel(Department department, Assignment overseerAssignment) {
+    public DepartmentModel generateDepartmentModel(Department department, Assignment overseerAssignment,
+            Assignment assistantAssignment) {
         DepartmentModel model = new DepartmentModel();
         model.setDescription(department.getDescription());
         model.setEditUri(generateUri(department.getDepartmentId()) + "/edit");
@@ -95,6 +97,11 @@ public class DepartmentModelFactory {
         if (overseerAssignment != null) {
             Person person = personDao.findPerson(overseerAssignment.getPersonId());
             model.setOverseer(personModelFactory.generatePersonModel(person));
+        }
+
+        if (assistantAssignment != null) {
+            Person person = personDao.findPerson(assistantAssignment.getPersonId());
+            model.setAssistant(personModelFactory.generatePersonModel(person));
         }
 
         if (department.getSuperDepartment() != null) {
