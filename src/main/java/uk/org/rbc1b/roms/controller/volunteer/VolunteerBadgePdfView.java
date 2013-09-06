@@ -42,8 +42,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.view.document.AbstractPdfView;
+import uk.org.rbc1b.roms.db.volunteer.Assignment;
+import uk.org.rbc1b.roms.db.volunteer.Department;
 import uk.org.rbc1b.roms.db.volunteer.DepartmentDao;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
@@ -53,14 +54,21 @@ import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
  *
  * @author rahulsingh
  */
-@Component
 public class VolunteerBadgePdfView extends AbstractPdfView {
 
-    @Autowired
     private VolunteerDao volunteerDao;
-    @Autowired
     private DepartmentDao departmentDao;
 
+    /**
+     * Builds the PDF document.
+     *
+     * @param model model
+     * @param document document
+     * @param writer writer
+     * @param request http request
+     * @param response http response
+     * @throws Exception if not formed
+     */
     @Override
     protected void buildPdfDocument(Map<String, Object> model, Document document, PdfWriter writer, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -86,9 +94,9 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
         addRBCRegionTitle(cb, "RBC London and Home Counties");
 
         // Find the volunteer's primary assignment
-        //Assignment primaryAssignment = volunteerDao.findPrimaryAssignment(volunteer.getPersonId());
-        //Department department = departmentDao.findDepartment(primaryAssignment.getDepartmentId());
-        addDepartment(cb, "IT Support");
+        Assignment primaryAssignment = volunteerDao.findPrimaryAssignment(volunteer.getPersonId());
+        Department department = departmentDao.findDepartment(primaryAssignment.getDepartmentId());
+        addDepartment(cb, department.getName());
         addBigRectangle(cb);
         addBadgeTitle(cb, "Kingdom Hall Construction");
     }
@@ -175,8 +183,6 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
         content.lineTo(90, 539);
         content.closePathStroke();
 
-
-
         // right side
         content.moveTo(180, 635);
         content.lineTo(180, 539);
@@ -244,6 +250,7 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
         content.beginText();
         content.moveText(90, 641);
         BaseFont bf = null;
+
         try {
             bf = BaseFont.createFont();
         } catch (DocumentException ex) {
@@ -290,6 +297,7 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
         content.beginText();
         content.moveText(90, 653);
         BaseFont bf = null;
+
         try {
             bf = BaseFont.createFont();
         } catch (DocumentException ex) {
@@ -304,10 +312,12 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
         content.endText();
     }
 
+    @Autowired
     public void setVolunteerDao(VolunteerDao volunteerDao) {
         this.volunteerDao = volunteerDao;
     }
 
+    @Autowired
     public void setDepartmentDao(DepartmentDao departmentDao) {
         this.departmentDao = departmentDao;
     }

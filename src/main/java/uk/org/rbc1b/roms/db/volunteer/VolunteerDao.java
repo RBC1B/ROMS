@@ -107,7 +107,7 @@ public interface VolunteerDao {
      * @param volunteerId id
      * @return assignment
      */
-    @PreAuthorize("hasPermission('VOLUNTEER, 'READ')")
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional(readOnly = true)
     Assignment findPrimaryAssignment(Integer volunteerId);
 
