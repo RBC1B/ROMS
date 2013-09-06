@@ -60,7 +60,7 @@ public class DepartmentModelFactory {
     public DepartmentListModel generateDepartmentListModel(Department department, Assignment overseerAssignment) {
         DepartmentListModel model = new DepartmentListModel();
         model.setName(department.getName());
-
+        model.setDescription(department.getDescription());
         if (department.getSuperDepartment() != null) {
             EntityModel superDepartment = new EntityModel();
             superDepartment.setId(department.getSuperDepartment().getDepartmentId());

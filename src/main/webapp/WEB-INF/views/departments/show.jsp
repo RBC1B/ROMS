@@ -52,7 +52,7 @@ TBD
                 <c:if test="${!empty childDepartments}">
                     <div class="tab-pane" id="departments">
                         <div class="row-fluid">
-TBD
+                            <%@ include file="fragments/show-child-departments.jsp" %>
                         </div>
                     </div>
                 </c:if>
