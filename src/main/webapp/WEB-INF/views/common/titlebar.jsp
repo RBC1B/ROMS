@@ -9,7 +9,7 @@
             <!-- Everything you want minimised at 940px or less, place within here -->
             <div class="nav-collapse">
                 <ul class="nav">
-                    <li><a href="<c:url value="/" />">Home</a></li>
+                    <li><a href="<c:url value="/" />">Edifice</a></li>
                     <li class="dropdown"><a href="#" class="dropdown-toggle" id="dLabel" role="button"
                         data-toggle="dropdown">Organisation <b class="caret"></b></a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
