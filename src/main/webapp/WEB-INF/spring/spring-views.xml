@@ -32,5 +32,5 @@ THE SOFTWARE.
     <context:component-scan base-package="uk.org.rbc1b.roms.db" />
     <context:annotation-config/>
     <bean id="volunteerBadgePdfView" class="uk.org.rbc1b.roms.controller.volunteer.VolunteerBadgePdfView"></bean>
-    
+
 </beans>

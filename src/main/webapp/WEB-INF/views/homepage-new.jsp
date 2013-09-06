@@ -29,7 +29,7 @@
                   <img src="<c:url value='/images/spend-mockup.png' />">
                 </div>
                 <div class=""span5">
-                  <img src="<c:url value='/images/velocity-mockup.png' />">   
+                  <img src="<c:url value='/images/velocity-mockup.png' />">
                 </div>
             </div>
             <div class="row-fluid">
@@ -37,12 +37,12 @@
                   <img src="<c:url value='/images/calendar-mockup.png' />">
                 </div>
                 <div class=""span3">
-                  <img src="<c:url value='/images/volunteer-mockup.png' />">   
+                  <img src="<c:url value='/images/volunteer-mockup.png' />">
                 </div>
             </div>
             <div class="row-fluid">
               <div class="well span4">
-               <button class="btn btn-info btn-block">Add Widgets</button>                                  
+               <button class="btn btn-info btn-block">Add Widgets</button>
               </div>
             </div>
            </div>
