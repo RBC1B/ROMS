@@ -33,7 +33,18 @@
                                 <td>${skill.name}</td>
                                 <td><a href="<c:url value='${skill.department.uri}' />">${skill.department.name}</a></td>
                                 <td>${skill.description}</td>
-                                <td>${skill.category.name}</td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${skill.category.colour != 'Blank'}">
+                                            <c:set var="categoryColour" value="${skill.category.colour}" />
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:set var="categoryColour" value="white" />
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <div class="skill-category-colour" style="background-color:${categoryColour}"></div>
+                                    ${skill.category.name}
+                                </td>
                                 <td>
                                     <ul class="inline list-actions">
                                         <li><a class="btn btn-success" href="<c:url value="${skill.uri}" />">View</a></li>

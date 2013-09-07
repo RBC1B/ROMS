@@ -281,6 +281,18 @@ form#command {
 .btn-primary a {
     color:#ffffff;
 }
+
+/*****************************************************************************/
+/* Skills                                                                    */
+/*****************************************************************************/
+div.skill-category-colour {
+    height:12px;
+    width:12px;
+    float:left;
+    margin:3px 3px 3px 0;
+    border:1px solid black;
+}
+
 /*****************************************************************************/
 /* Footer fancy styling                                                      */
 /*****************************************************************************/
@@ -320,7 +332,7 @@ li.first {
 /*****************************************************************************/
 /* Project pages                                                             */
 /*****************************************************************************/
-*/#project-stages div.project-stage-created-date,
+#project-stages div.project-stage-created-date,
 #project-stages div.project-stage-started-date,
 #project-stages div.project-stage-completed-date {
     float: left;

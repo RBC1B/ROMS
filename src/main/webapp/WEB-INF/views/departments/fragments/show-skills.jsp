@@ -19,15 +19,33 @@ The contents of the department linked skills.
                     <td><c:if test="${not empty skill.description}">${skill.description}</c:if></td>
                     <c:choose>
                         <c:when test="${not empty skill.category}">
-                            <td>${skill.category.name}</td>
                             <td>
-                            <c:choose>
-                                <c:when test="${skill.category.appearOnBadge}"><span class="icon-ok"></c:when>
-                                <c:otherwise><span class="icon-remove"></c:otherwise>
-                            </c:choose>
+                                <c:choose>
+                                    <c:when test="${skill.category.colour != 'Blank'}">
+                                        <c:set var="categoryColour" value="${skill.category.colour}" />
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:set var="categoryColour" value="white" />
+                                    </c:otherwise>
+                                </c:choose>
+                                <div class="skill-category-colour" style="background-color:${categoryColour}"></div>
+                                ${skill.category.name}
+                            </td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${skill.category.appearOnBadge}">
+                                        <span class="icon-ok">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="icon-remove">
+                                    </c:otherwise>
+                                </c:choose>
                             </td>
                         </c:when>
-                        <c:otherwise><td></td><td><span class="icon-remove"></td></c:otherwise>
+                        <c:otherwise>
+                            <td></td>
+                            <td><span class="icon-remove"></td>
+                        </c:otherwise>
                     </c:choose>
                 </tr>
             </c:forEach>
