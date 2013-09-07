@@ -63,7 +63,6 @@ public class PersonsController {
     private VolunteerDao volunteerDao;
     private CongregationDao congregationDao;
     private PersonModelFactory personModelFactory;
-    private VolunteerModelFactory volunteerModelFactory;
 
     /**
      * Display the list of persons.
@@ -133,7 +132,7 @@ public class PersonsController {
         Person person = fetchPerson(personId);
 
         if (volunteerDao.findVolunteer(person.getPersonId(), null) != null) {
-            return "redirect:" + volunteerModelFactory.generateUri(personId);
+            return "redirect:" + VolunteerModelFactory.generateUri(personId);
         }
         model.addAttribute("person", personModelFactory.generatePersonModel(person));
 
@@ -154,7 +153,7 @@ public class PersonsController {
         Person person = fetchPerson(personId);
 
         if (volunteerDao.findVolunteer(person.getPersonId(), null) != null) {
-            return "redirect:" + volunteerModelFactory.generateUri(personId);
+            return "redirect:" + VolunteerModelFactory.generateUri(personId);
         }
 
         PersonForm form = new PersonForm();
@@ -189,7 +188,7 @@ public class PersonsController {
         form.setWorkPhone(person.getWorkPhone());
 
         model.addAttribute("person", form);
-        model.addAttribute("submitUri", personModelFactory.generateUri(personId));
+        model.addAttribute("submitUri", PersonModelFactory.generateUri(personId));
 
         return "persons/edit";
 
@@ -232,7 +231,7 @@ public class PersonsController {
 
         personDao.updatePerson(person);
 
-        return "redirect:" + personModelFactory.generateUri(personId);
+        return "redirect:" + PersonModelFactory.generateUri(personId);
     }
 
     /**
@@ -325,8 +324,4 @@ public class PersonsController {
         this.volunteerDao = volunteerDao;
     }
 
-    @Autowired
-    public void setVolunteerModelFactory(VolunteerModelFactory volunteerModelFactory) {
-        this.volunteerModelFactory = volunteerModelFactory;
-    }
 }

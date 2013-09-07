@@ -63,13 +63,10 @@ public class VolunteerModelFactory {
     private ReferenceDao referenceDao;
     private PersonModelFactory personModelFactory;
     private AssignmentModelFactory assignmentModelFactory;
-    private SkillModelFactory skillModelFactory;
     private CongregationDao congregationDao;
     private SkillDao skillDao;
     private DepartmentDao departmentDao;
     private QualificationDao qualificationDao;
-    private DepartmentModelFactory departmentModelFactory;
-    private QualificationModelFactory qualificationModelFactory;
 
     static {
         for (int i = 0; i < DAYS_PER_WEEK; i++) {
@@ -82,7 +79,7 @@ public class VolunteerModelFactory {
      * @param volunteerId optional volunteer id
      * @return uri
      */
-    public String generateUri(Integer volunteerId) {
+    public static String generateUri(Integer volunteerId) {
         return volunteerId != null ? BASE_URI + volunteerId : BASE_URI;
     }
 
@@ -255,7 +252,7 @@ public class VolunteerModelFactory {
             EntityModel departmentModel = new EntityModel();
             departmentModel.setName(department.getName());
             departmentModel.setId(department.getDepartmentId());
-            departmentModel.setUri(departmentModelFactory.generateUri(department.getDepartmentId()));
+            departmentModel.setUri(DepartmentModelFactory.generateUri(department.getDepartmentId()));
 
             model.setDepartment(departmentModel);
             model.setDescription(skill.getDescription());
@@ -264,7 +261,7 @@ public class VolunteerModelFactory {
             EntityModel skillModel = new EntityModel();
             skillModel.setName(skill.getName());
             skillModel.setId(skill.getSkillId());
-            skillModel.setUri(skillModelFactory.generateUri(volunteerSkill.getSkillId()));
+            skillModel.setUri(SkillModelFactory.generateUri(volunteerSkill.getSkillId()));
 
             model.setSkill(skillModel);
             model.setTrainingDate(volunteerSkill.getTrainingDate());
@@ -304,7 +301,7 @@ public class VolunteerModelFactory {
             EntityModel qualificationModel = new EntityModel();
             qualificationModel.setId(qualification.getQualificationId());
             qualificationModel.setName(qualification.getName());
-            qualificationModel.setUri(qualificationModelFactory.generateUri(qualification.getQualificationId()));
+            qualificationModel.setUri(QualificationModelFactory.generateUri(qualification.getQualificationId()));
 
             model.setQualification(qualificationModel);
 
@@ -330,11 +327,6 @@ public class VolunteerModelFactory {
     }
 
     @Autowired
-    public void setSkillModelFactory(SkillModelFactory skillModelFactory) {
-        this.skillModelFactory = skillModelFactory;
-    }
-
-    @Autowired
     public void setSkillDao(SkillDao skillDao) {
         this.skillDao = skillDao;
     }
@@ -350,17 +342,8 @@ public class VolunteerModelFactory {
     }
 
     @Autowired
-    public void setDepartmentModelFactory(DepartmentModelFactory departmentModelFactory) {
-        this.departmentModelFactory = departmentModelFactory;
-    }
-
-    @Autowired
     public void setQualificationDao(QualificationDao qualificationDao) {
         this.qualificationDao = qualificationDao;
     }
 
-    @Autowired
-    public void setQualificationModelFactory(QualificationModelFactory qualificationModelFactory) {
-        this.qualificationModelFactory = qualificationModelFactory;
-    }
 }

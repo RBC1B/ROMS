@@ -21,40 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.db;
-
-import org.springframework.transaction.annotation.Transactional;
-import java.util.List;
+package uk.org.rbc1b.roms.db.volunteer;
 
 /**
- *
- * @author ramindursingh
+ * Criteria used when looking up skills.
  */
-public interface CategoryDao {
+public class SkillSearchCriteria {
+    private Integer departmentId;
 
-    /**
-     * Find the category.
-     *
-     * @param categoryId id
-     * @return Category, or null if not found
-     */
-    @Transactional(readOnly = true)
-    Category findCategoryById(Integer categoryId);
+    public Integer getDepartmentId() {
+        return departmentId;
+    }
 
-    /**
-     * Find the category by name.
-     *
-     * @param name category name
-     * @return Category, or null if not found
-     */
-    @Transactional(readOnly = true)
-    Category findCategoryByName(String name);
+    public void setDepartmentId(Integer departmentId) {
+        this.departmentId = departmentId;
+    }
 
-    /**
-     * Get all Category.
-     *
-     * @return List Category
-     */
-    @Transactional(readOnly = true)
-    List<Category> getAllCategories();
 }

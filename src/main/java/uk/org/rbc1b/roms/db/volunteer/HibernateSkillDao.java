@@ -26,7 +26,9 @@ package uk.org.rbc1b.roms.db.volunteer;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -45,10 +47,12 @@ public class HibernateSkillDao implements SkillDao {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Skill> findSkills() {
+    public List<Skill> findSkills(SkillSearchCriteria searchCriteria) {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Skill.class);
 
-        // TODO: support search criteria
+        if (searchCriteria.getDepartmentId() != null) {
+            criteria.add(Restrictions.eq("department.id", searchCriteria.getDepartmentId()));
+        }
 
         return criteria.list();
     }
@@ -70,6 +74,19 @@ public class HibernateSkillDao implements SkillDao {
     @Override
     public void deleteSkill(Skill skill) {
         this.sessionFactory.getCurrentSession().delete(skill);
+    }
+
+    @Override
+    @Cacheable("category.category")
+    public Category findCategory(Integer categoryId) {
+        return (Category) this.sessionFactory.getCurrentSession().get(Category.class, categoryId);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Category> findCategories() {
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Category.class);
+        return criteria.list();
     }
 
     /**

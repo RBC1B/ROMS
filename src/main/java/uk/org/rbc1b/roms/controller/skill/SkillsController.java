@@ -37,15 +37,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.controller.LoggingHandlerExceptionResolver;
-import uk.org.rbc1b.roms.db.Category;
-import uk.org.rbc1b.roms.db.CategoryDao;
-import uk.org.rbc1b.roms.db.volunteer.Department;
 import uk.org.rbc1b.roms.db.volunteer.DepartmentDao;
 import uk.org.rbc1b.roms.db.volunteer.Skill;
 import uk.org.rbc1b.roms.db.volunteer.SkillDao;
+import uk.org.rbc1b.roms.db.volunteer.SkillSearchCriteria;
 
 /**
- *
  * @author ramindursingh
  */
 @Controller
@@ -55,22 +52,22 @@ public class SkillsController {
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggingHandlerExceptionResolver.class);
     private SkillDao skillDao;
     private SkillModelFactory skillModelFactory;
-    private CategoryDao categoryDao;
     private DepartmentDao departmentDao;
 
     /**
      * Display the list of skills.
-     *
      * @param model mvc model
      * @return view
      */
     @RequestMapping(method = RequestMethod.GET)
     public String showSkillList(ModelMap model) {
 
-        List<Skill> skills = skillDao.findSkills();
-        List<SkillListModel> modelList = new ArrayList<SkillListModel>(skills.size());
+        SkillSearchCriteria searchCriteria = new SkillSearchCriteria();
+
+        List<Skill> skills = skillDao.findSkills(searchCriteria);
+        List<SkillModel> modelList = new ArrayList<SkillModel>(skills.size());
         for (Skill skill : skills) {
-            modelList.add(skillModelFactory.generateSkillListModel(skill));
+            modelList.add(skillModelFactory.generateSkillModel(skill));
         }
 
         model.addAttribute("skills", modelList);
@@ -80,12 +77,10 @@ public class SkillsController {
 
     /**
      * Display a specified skill.
-     *
      * @param skillId skill id (primary key)
      * @param model mvc model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException on failure to look up the
-     * skill
+     * @throws NoSuchRequestHandlingMethodException on failure to look up the skill
      */
     @RequestMapping(value = "{skillId}", method = RequestMethod.GET)
     public String showSkill(@PathVariable Integer skillId, ModelMap model) throws NoSuchRequestHandlingMethodException {
@@ -96,14 +91,13 @@ public class SkillsController {
             throw new NoSuchRequestHandlingMethodException("No skill #" + skillId, this.getClass());
         }
 
-        model.addAttribute("skill", skill);
+        model.addAttribute("skill", skillModelFactory.generateSkillModel(skill));
 
         return "skills/show";
     }
 
     /**
      * Displays a skill for editing.
-     *
      * @param skillId skill ID to edit
      * @param model mvc model
      * @return view name
@@ -115,22 +109,22 @@ public class SkillsController {
         Skill skill = this.skillDao.findSkill(skillId);
         if (skill == null) {
             throw new NoSuchRequestHandlingMethodException("No Skill #" + skillId, this.getClass());
-        } else {
-            SkillForm form = new SkillForm(skill);
-            List<Department> departments = departmentDao.findDepartments();
-            form.setDepartment(skill.getDepartment().getName());
-            form.setCategory(skill.getCategory().getName());
-            List<Category> categories = categoryDao.getAllCategories();
-            model.addAttribute("categories", categories);
-            model.addAttribute("departments", departments);
-            model.addAttribute("skill", form);
-            return "skills/edit";
         }
+        SkillForm form = new SkillForm();
+        form.setName(skill.getName());
+        form.setDepartmentId(skill.getDepartment().getDepartmentId());
+        form.setDescription(skill.getDescription());
+        form.setCategoryId(skill.getCategory().getCategoryId());
+
+        model.addAttribute("categories", skillDao.findCategories());
+        model.addAttribute("departments", departmentDao.findDepartments());
+        model.addAttribute("skill", form);
+        return "skills/edit";
+
     }
 
     /**
      * Display the form to create a new skill.
-     *
      * @param model mvc model
      * @return view name
      */
@@ -139,17 +133,14 @@ public class SkillsController {
 
         // initialise the form bean
         model.addAttribute("skill", new SkillForm());
-        List<Department> departments = departmentDao.findDepartments();
-        List<Category> categories = categoryDao.getAllCategories();
-        model.addAttribute("categories", categories);
-        model.addAttribute("departments", departments);
+        model.addAttribute("categories", skillDao.findCategories());
+        model.addAttribute("departments", departmentDao.findDepartments());
 
         return "skills/edit";
     }
 
     /**
      * Create a new skill.
-     *
      * @param skillForm form bean
      * @return view name
      */
@@ -162,8 +153,8 @@ public class SkillsController {
         }
         skill.setName(skillForm.getName());
         skill.setDescription(skillForm.getDescription());
-        skill.setCategory(categoryDao.findCategoryByName(skillForm.getCategory()));
-        skill.setDepartment(departmentDao.findDepartmentByName(skillForm.getDepartment()));
+        skill.setCategory(skillDao.findCategory(skillForm.getCategoryId()));
+        skill.setDepartment(departmentDao.findDepartment(skillForm.getDepartmentId()));
 
         skillDao.saveSkill(skill);
 
@@ -172,16 +163,13 @@ public class SkillsController {
 
     /**
      * Deletes a skill.
-     *
      * @param request http servlet request
      * @param model spring mvc model
      * @return mvc redirect
-     * @throws NoSuchRequestHandlingMethodException on
-     * failure to find the skill
+     * @throws NoSuchRequestHandlingMethodException on failure to find the skill
      */
     @RequestMapping(method = RequestMethod.DELETE)
-    public String deleteSkill(HttpServletRequest request, ModelMap model)
-            throws NoSuchRequestHandlingMethodException {
+    public String deleteSkill(HttpServletRequest request, ModelMap model) throws NoSuchRequestHandlingMethodException {
         Integer skillId;
         skillId = Integer.parseInt(request.getParameter("skillId"));
         Skill skill = this.skillDao.findSkill(skillId);
@@ -203,11 +191,6 @@ public class SkillsController {
     @Autowired
     public void setSkillModelFactory(SkillModelFactory skillModelFactory) {
         this.skillModelFactory = skillModelFactory;
-    }
-
-    @Autowired
-    public void setCategoryDao(CategoryDao categoryDao) {
-        this.categoryDao = categoryDao;
     }
 
     @Autowired

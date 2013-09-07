@@ -20,19 +20,17 @@
             <form:form commandName="skill" method="post" action="${formAction}">
                 <div class="form">
                     <fieldset class="container-fluid">
-                        <p>Skill ID</p>
-                        <form:input path="skillId" readonly="true" placeholder="${skillId}" />
                         <p>Skill Name</p>
                         <form:input path="name" placeholder="Use 'Department - Skill' format" />
                         <p>Description</p>
                         <form:input path="description" placeholder="Description" />
                         <p>Department</p>
-                        <form:select path="department">
-                            <form:options items="${departments}" itemValues="department" />
+                        <form:select path="departmentId">
+                            <form:options items="${departments}" itemValues="department" itemLabel="name" itemValue="departmentId" />
                         </form:select>
                         <p>Category</p>
-                        <form:select path="category">
-                            <form:options items="${categories}" itemValues="category" />
+                        <form:select path="categoryId">
+                            <form:options items="${categories}" itemValues="category" itemLabel="name" itemValue="categoryId" />
                         </form:select>
                     </fieldset>
                 </div>

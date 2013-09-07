@@ -23,7 +23,6 @@
  */
 package uk.org.rbc1b.roms.db.volunteer;
 
-import uk.org.rbc1b.roms.db.Category;
 import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 
 /**

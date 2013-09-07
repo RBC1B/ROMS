@@ -24,20 +24,20 @@
 package uk.org.rbc1b.roms.controller.skill;
 
 import uk.org.rbc1b.roms.controller.common.model.EntityModel;
+import uk.org.rbc1b.roms.controller.skill.category.CategoryModel;
 
 /**
- * Basic skill information used in the skill list results.
- *
- * @author oliver.elder.esq
+ * Basic skill information used in the skill results.
  */
-public class SkillListModel {
+public class SkillModel {
 
     private Integer skillId;
     private String uri;
+    private String editUri;
     private String name;
     private EntityModel department;
     private String description;
-    private EntityModel category;
+    private CategoryModel category;
 
     public Integer getSkillId() {
         return skillId;
@@ -45,6 +45,14 @@ public class SkillListModel {
 
     public void setSkillId(Integer skillId) {
         this.skillId = skillId;
+    }
+
+    public String getEditUri() {
+        return editUri;
+    }
+
+    public void setEditUri(String editUri) {
+        this.editUri = editUri;
     }
 
     public String getUri() {
@@ -82,14 +90,14 @@ public class SkillListModel {
     /**
      * @return the category
      */
-    public EntityModel getCategory() {
+    public CategoryModel getCategory() {
         return category;
     }
 
     /**
      * @param category the category to set
      */
-    public void setCategory(EntityModel category) {
+    public void setCategory(CategoryModel category) {
         this.category = category;
     }
 }

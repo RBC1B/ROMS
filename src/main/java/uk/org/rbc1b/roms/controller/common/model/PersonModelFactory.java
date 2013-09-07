@@ -46,7 +46,7 @@ public class PersonModelFactory {
      * @param personId optional volunteer id
      * @return uri
      */
-    public String generateUri(Integer personId) {
+    public static String generateUri(Integer personId) {
         return personId != null ? BASE_URI + personId : BASE_URI;
     }
 

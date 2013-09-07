@@ -21,28 +21,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-$(document).ready(function() {
-   
-    // list view
-    roms.common.datatables(
-        $('#department-list'),
-        {
-            "iDisplayLength": 10,
-            "aoColumnDefs": [
-            {
-                'bSortable': false,
-                'aTargets': [ 3 ]
-            }
-            ]
-        }
-    );
-    
-    // details view
-    roms.common.datatables(
-	    $('#department-skills-list'),
-	    {
-		"iDisplayLength": 10
-	    }
-    );
-    
-});
+package uk.org.rbc1b.roms.controller.skill.category;
+
+import org.springframework.stereotype.Component;
+import uk.org.rbc1b.roms.db.volunteer.Category;
+
+/**
+ * Access the skill categories.
+ */
+@Component
+public class CategoryModelFactory {
+
+    private static final String BASE_URI = "/skill-categories/";
+
+    /**
+     * Generate the uri used to access the category pages.
+     * @param categoryId optional category id
+     * @return uri
+     */
+    public static String generateUri(Integer categoryId) {
+        return categoryId != null ? BASE_URI + categoryId : BASE_URI;
+    }
+
+    /**
+     * Generate the model representing a skill category.
+     * @param category category
+     * @return model
+     */
+    public CategoryModel generateCategoryModel(Category category) {
+        CategoryModel model = new CategoryModel();
+        model.setCategoryId(category.getCategoryId());
+        model.setName(category.getName());
+        model.setUri(generateUri(category.getCategoryId()));
+        model.setAppearOnBadge(category.isAppearOnBadge());
+        model.setColour(category.getColour());
+        return model;
+    }
+
+}

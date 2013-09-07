@@ -83,7 +83,7 @@ public class ProjectModelFactory {
             EntityModel contactPerson = new EntityModel();
             contactPerson.setId(person.getPersonId());
             contactPerson.setName(person.formatDisplayName());
-            contactPerson.setUri(personModelFactory.generateUri(person.getPersonId()));
+            contactPerson.setUri(PersonModelFactory.generateUri(person.getPersonId()));
 
             model.setContactPerson(contactPerson);
         }

@@ -14,13 +14,12 @@
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
-            <h1>Departmental Skills</h1>
+            <h1>Skills</h1>
             <hr>
             <div class="entity-list-results">
                 <table class="table table-bordered table-condensed table-striped table-hover" id="skill-list">
                     <thead>
                         <tr>
-                            <th>Skill ID</th>
                             <th>Skill Name</th>
                             <th>Department</th>
                             <th>Description</th>
@@ -31,21 +30,14 @@
                     <tbody>
                         <c:forEach items="${skills}" var="skill">
                             <tr>
-                                <td>${skill.skillId}</td>
                                 <td>${skill.name}</td>
-                                <td><a href="${skill.department.uri}">${skill.department.name}</a></td>
+                                <td><a href="<c:url value='${skill.department.uri}' />">${skill.department.name}</a></td>
                                 <td>${skill.description}</td>
                                 <td>${skill.category.name}</td>
                                 <td>
                                     <ul class="inline list-actions">
                                         <li><a class="btn btn-success" href="<c:url value="${skill.uri}" />">View</a></li>
-                                        <li><a class="list-action" href="<c:url value="/skills/${skill.skillId}/edit" />">Edit</a></li>
-                                        <li>
-                                            <form:form method="DELETE" action="${formAction}">
-                                                <input type="hidden" name="skillId" value="${skill.skillId}" />
-                                                <input type="submit" value="Delete" class="btn btn-mini" />
-                                            </form:form>
-                                        </li>
+                                        <li><a class="list-action" href="<c:url value="${skill.editUri}" />">Edit</a></li>
                                     </ul>
                                 </td>
                             </tr>

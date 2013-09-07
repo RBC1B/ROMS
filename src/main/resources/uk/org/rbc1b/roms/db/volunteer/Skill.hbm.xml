@@ -8,13 +8,11 @@
         <property length="50" name="name" unique="true"/>
         <many-to-one class="uk.org.rbc1b.roms.db.volunteer.Department"
                      column="DepartmentId"
-                     lazy="false"
                      name="department">
         </many-to-one>
         <property length="250" name="description"/>
-        <many-to-one class="uk.org.rbc1b.roms.db.Category"
+        <many-to-one class="uk.org.rbc1b.roms.db.volunteer.Category"
                      column="CategoryId"
-                     lazy="false"
                      name="category">
         </many-to-one>
         <property name="updateTime" not-null="true"  />

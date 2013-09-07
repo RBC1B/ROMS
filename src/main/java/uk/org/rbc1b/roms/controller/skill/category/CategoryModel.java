@@ -21,26 +21,56 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.controller.category;
-
-import org.springframework.stereotype.Component;
+package uk.org.rbc1b.roms.controller.skill.category;
 
 /**
- *
- * @author ramindursingh
+ * Model representing a skill category.
  */
-@Component
-public class CategoryModelFactory {
+public class CategoryModel {
+    private String uri;
+    private String name;
+    private Integer categoryId;
+    private String colour;
+    private boolean appearOnBadge;
 
-    private static final String BASE_URI = "/categories/";
-
-    /**
-     * Generate the uri used to access the category pages.
-     *
-     * @param categoryId optional category id
-     * @return uri
-     */
-    public String generateUri(Integer categoryId) {
-        return categoryId != null ? BASE_URI + categoryId : BASE_URI;
+    public String getUri() {
+        return uri;
     }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getColour() {
+        return colour;
+    }
+
+    public void setColour(String colour) {
+        this.colour = colour;
+    }
+
+    public boolean isAppearOnBadge() {
+        return appearOnBadge;
+    }
+
+    public void setAppearOnBadge(boolean appearOnBadge) {
+        this.appearOnBadge = appearOnBadge;
+    }
+
 }

@@ -47,7 +47,7 @@ public class DepartmentModelFactory {
      * @param departmentId optional department id
      * @return uri
      */
-    public String generateUri(Integer departmentId) {
+    public static String generateUri(Integer departmentId) {
         return departmentId != null ? BASE_URI + "/" + departmentId : BASE_URI;
     }
 

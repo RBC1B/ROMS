@@ -28,14 +28,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- *
  * @author ramindursingh
  */
 public interface SkillDao {
 
     /**
      * Find the skill matching the id, or null if no match.
-     *
      * @param skillId id
      * @return skill
      */
@@ -45,16 +43,15 @@ public interface SkillDao {
 
     /**
      * Find all matching skills.
-     *
+     * @param searchCriteria search criteria
      * @return list of matching skills
      */
     @PreAuthorize("hasPermission('SKILL', 'READ')")
     @Transactional(readOnly = true)
-    List<Skill> findSkills();
+    List<Skill> findSkills(SkillSearchCriteria searchCriteria);
 
     /**
      * Save a skill.
-     *
      * @param skill a skill to save
      */
     @PreAuthorize("hasPermission('SKILL','EDIT')")
@@ -63,7 +60,6 @@ public interface SkillDao {
 
     /**
      * Create a new skill.
-     *
      * @param skill new skill to create
      */
     @PreAuthorize("hasPermission('SKILL', 'ADD')")
@@ -72,10 +68,27 @@ public interface SkillDao {
 
     /**
      * Deletes a skill.
-     *
      * @param skill to delete
      */
     @PreAuthorize("hasPermission('SKILL','DELETE')")
     @Transactional
     void deleteSkill(Skill skill);
+
+    /**
+     * Find the category.
+     * @param categoryId id
+     * @return Category, or null if not found
+     */
+    @PreAuthorize("hasPermission('SKILL', 'READ')")
+    @Transactional(readOnly = true)
+    Category findCategory(Integer categoryId);
+
+    /**
+     * Get all Category.
+     * @return List Category
+     */
+    @PreAuthorize("hasPermission('SKILL', 'READ')")
+    @Transactional(readOnly = true)
+    List<Category> findCategories();
+
 }

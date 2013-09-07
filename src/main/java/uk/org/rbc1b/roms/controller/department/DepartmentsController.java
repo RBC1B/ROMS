@@ -34,11 +34,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
+import uk.org.rbc1b.roms.controller.skill.SkillModel;
+import uk.org.rbc1b.roms.controller.skill.SkillModelFactory;
 import uk.org.rbc1b.roms.db.PersonSearchCriteria;
 import uk.org.rbc1b.roms.db.volunteer.Assignment;
 import uk.org.rbc1b.roms.db.volunteer.AssignmentSearchCriteria;
 import uk.org.rbc1b.roms.db.volunteer.Department;
 import uk.org.rbc1b.roms.db.volunteer.DepartmentDao;
+import uk.org.rbc1b.roms.db.volunteer.Skill;
+import uk.org.rbc1b.roms.db.volunteer.SkillDao;
+import uk.org.rbc1b.roms.db.volunteer.SkillSearchCriteria;
 
 /**
  * Control the display and editing of departments.
@@ -50,6 +55,8 @@ public class DepartmentsController {
     private static final int ASSISTANT_ROLE_ID = 1;
     private DepartmentDao departmentDao;
     private DepartmentModelFactory departmentModelFactory;
+    private SkillModelFactory skillModelFactory;
+    private SkillDao skillDao;
 
     /**
      * Display the list of persons.
@@ -103,6 +110,16 @@ public class DepartmentsController {
 
         model.addAttribute("childDepartments", childDepartmentModelList);
 
+        SkillSearchCriteria searchCriteria = new SkillSearchCriteria();
+        searchCriteria.setDepartmentId(departmentId);
+        List<Skill> skills = skillDao.findSkills(searchCriteria);
+
+        List<SkillModel> skillModelList = new ArrayList<SkillModel>();
+        for (Skill skill : skills) {
+            skillModelList.add(skillModelFactory.generateSkillModel(skill));
+        }
+        model.addAttribute("skills", skillModelList);
+
         return "departments/show";
     }
 
@@ -136,6 +153,16 @@ public class DepartmentsController {
     @Autowired
     public void setDepartmentModelFactory(DepartmentModelFactory departmentModelFactory) {
         this.departmentModelFactory = departmentModelFactory;
+    }
+
+    @Autowired
+    public void setSkillDao(SkillDao skillDao) {
+        this.skillDao = skillDao;
+    }
+
+    @Autowired
+    public void setSkillModelFactory(SkillModelFactory skillModelFactory) {
+        this.skillModelFactory = skillModelFactory;
     }
 
 }

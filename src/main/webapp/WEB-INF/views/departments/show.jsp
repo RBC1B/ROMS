@@ -58,7 +58,7 @@ TBD
                 </c:if>
                 <div class="tab-pane" id="skills">
                     <div class="row-fluid">
-TBD
+                        <%@ include file="fragments/show-skills.jsp" %>
                     </div>
                 </div>
             </div>

@@ -21,14 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.db;
+package uk.org.rbc1b.roms.db.volunteer;
 
 /**
- *
  * @author ramindursingh
  */
 public class Category {
-
     private Integer categoryId;
     private String name;
     private String colour;

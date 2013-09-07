@@ -25,71 +25,61 @@ package uk.org.rbc1b.roms.controller.skill;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import uk.org.rbc1b.roms.controller.category.CategoryModelFactory;
 import uk.org.rbc1b.roms.controller.common.model.EntityModel;
 import uk.org.rbc1b.roms.controller.department.DepartmentModelFactory;
-import uk.org.rbc1b.roms.db.Category;
-import uk.org.rbc1b.roms.db.CategoryDao;
+import uk.org.rbc1b.roms.controller.skill.category.CategoryModelFactory;
+import uk.org.rbc1b.roms.db.volunteer.Category;
 import uk.org.rbc1b.roms.db.volunteer.Department;
 import uk.org.rbc1b.roms.db.volunteer.DepartmentDao;
 import uk.org.rbc1b.roms.db.volunteer.Skill;
+import uk.org.rbc1b.roms.db.volunteer.SkillDao;
 
 /**
  * Generate the skills models.
- *
  * @author oliver.elder.esq
  */
 @Component
 public class SkillModelFactory {
 
-    private static final String BASE_URI = "/skills/";
+    private static final String BASE_URI = "/skills";
     private DepartmentDao departmentDao;
-    private DepartmentModelFactory departmentModelFactory;
-    private CategoryDao categoryDao;
     private CategoryModelFactory categoryModelFactory;
+    private SkillDao skillDao;
 
     /**
      * Generate the uri used to access the skill pages.
-     *
      * @param skillId optional skill id
      * @return uri
      */
-    public String generateUri(Integer skillId) {
-        return skillId != null ? BASE_URI + skillId : BASE_URI;
+    public static String generateUri(Integer skillId) {
+        return skillId != null ? BASE_URI + "/" + skillId : BASE_URI;
     }
 
     /**
      * Generate the model used in the skill list view.
-     *
      * @param skill skill
      * @return model
      */
-    public SkillListModel generateSkillListModel(Skill skill) {
-        SkillListModel model = new SkillListModel();
+    public SkillModel generateSkillModel(Skill skill) {
+        SkillModel model = new SkillModel();
         model.setSkillId(skill.getSkillId());
-
 
         Department department = departmentDao.findDepartment(skill.getDepartment().getDepartmentId());
 
         EntityModel departmentModel = new EntityModel();
         departmentModel.setName(department.getName());
         departmentModel.setId(department.getDepartmentId());
-        departmentModel.setUri(departmentModelFactory.generateUri(department.getDepartmentId()));
+        departmentModel.setUri(DepartmentModelFactory.generateUri(department.getDepartmentId()));
 
         model.setDepartment(departmentModel);
         model.setDescription(skill.getDescription());
         model.setName(skill.getName());
         model.setUri(generateUri(skill.getSkillId()));
+        model.setEditUri(generateUri(skill.getSkillId()) + "/edit");
 
-        Category category = categoryDao.findCategoryById(skill.getCategory().getCategoryId());
+        Category category = skillDao.findCategory(skill.getCategory().getCategoryId());
 
-        EntityModel categoryModel = new EntityModel();
-        categoryModel.setId(category.getCategoryId());
-        categoryModel.setName(category.getName());
-        categoryModel.setUri(categoryModelFactory.generateUri(category.getCategoryId()));
-
-        model.setCategory(categoryModel);
-
+        model.setCategory(categoryModelFactory.generateCategoryModel(category));
 
         return model;
     }
@@ -100,17 +90,13 @@ public class SkillModelFactory {
     }
 
     @Autowired
-    public void setDepartmentModelFactory(DepartmentModelFactory departmentModelFactory) {
-        this.departmentModelFactory = departmentModelFactory;
+    public void setSkillDao(SkillDao skillDao) {
+        this.skillDao = skillDao;
     }
 
     @Autowired
-    public void setColourDao(CategoryDao colourDao) {
-        this.categoryDao = colourDao;
+    public void setCategoryModelFactory(CategoryModelFactory categoryModelFactory) {
+        this.categoryModelFactory = categoryModelFactory;
     }
 
-    @Autowired
-    public void setColourModelFactory(CategoryModelFactory colourModelFactory) {
-        this.categoryModelFactory = colourModelFactory;
-    }
 }

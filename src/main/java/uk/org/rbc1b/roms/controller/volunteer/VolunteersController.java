@@ -83,7 +83,6 @@ public class VolunteersController {
     private PersonDao personDao;
     private CongregationDao congregationDao;
     private ReferenceDao referenceDao;
-    private PersonModelFactory personModelFactory;
     private VolunteerModelFactory volunteerModelFactory;
 
     /**
@@ -96,7 +95,7 @@ public class VolunteersController {
     public String showVolunteerList(ModelMap model, VolunteerSearchCriteria searchCriteria) {
 
         model.addAttribute("volunteers", volunteerDao.findVolunteers(searchCriteria));
-        model.addAttribute("newUri", volunteerModelFactory.generateUri(null) + "new");
+        model.addAttribute("newUri", VolunteerModelFactory.generateUri(null) + "new");
         return "volunteers/list";
     }
 
@@ -151,7 +150,7 @@ public class VolunteersController {
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
         if (volunteer == null) {
             if (personDao.findPerson(volunteerId) != null) {
-                return "redirect:" + personModelFactory.generateUri(volunteerId);
+                return "redirect:" + PersonModelFactory.generateUri(volunteerId);
             }
             throw new NoSuchRequestHandlingMethodException("No volunteer or person with id [" + volunteerId + "]",
                     this.getClass());
@@ -276,7 +275,7 @@ public class VolunteersController {
 
         volunteerDao.createVolunteer(volunteer);
 
-        return "redirect:" + volunteerModelFactory.generateUri(volunteer.getPersonId());
+        return "redirect:" + VolunteerModelFactory.generateUri(volunteer.getPersonId());
     }
 
     /**
@@ -313,7 +312,7 @@ public class VolunteersController {
         model.addAttribute("surname", volunteer.getSurname());
         model.addAttribute("fulltimeValues", referenceDao.findFulltimeValues());
         model.addAttribute("appointmentValues", referenceDao.findAppointmentValues());
-        model.addAttribute("submitUri", volunteerModelFactory.generateUri(volunteerId) + "/spiritual");
+        model.addAttribute("submitUri", VolunteerModelFactory.generateUri(volunteerId) + "/spiritual");
         return "volunteers/edit-spiritual";
     }
 
@@ -373,7 +372,7 @@ public class VolunteersController {
         model.addAttribute("volunteerRbcStatus", form);
         model.addAttribute("forename", volunteer.getForename());
         model.addAttribute("surname", volunteer.getSurname());
-        model.addAttribute("submitUri", volunteerModelFactory.generateUri(volunteerId) + "/rbc-status");
+        model.addAttribute("submitUri", VolunteerModelFactory.generateUri(volunteerId) + "/rbc-status");
 
         return "volunteers/edit-rbc-status";
     }
@@ -422,7 +421,7 @@ public class VolunteersController {
         model.addAttribute("volunteerPersonal", form);
         model.addAttribute("forename", volunteer.getForename());
         model.addAttribute("surname", volunteer.getSurname());
-        model.addAttribute("submitUri", volunteerModelFactory.generateUri(volunteerId) + "/personal");
+        model.addAttribute("submitUri", VolunteerModelFactory.generateUri(volunteerId) + "/personal");
 
         return "volunteers/edit-personal";
     }
@@ -503,7 +502,7 @@ public class VolunteersController {
 
         volunteerDao.updateVolunteer(volunteer);
 
-        return "redirect:" + volunteerModelFactory.generateUri(volunteer.getPersonId()) + "#!spiritual";
+        return "redirect:" + VolunteerModelFactory.generateUri(volunteer.getPersonId()) + "#!spiritual";
 
     }
 
@@ -557,7 +556,7 @@ public class VolunteersController {
 
         volunteerDao.updateVolunteer(volunteer);
 
-        return "redirect:" + volunteerModelFactory.generateUri(volunteer.getPersonId()) + "#!rbc-status";
+        return "redirect:" + VolunteerModelFactory.generateUri(volunteer.getPersonId()) + "#!rbc-status";
     }
 
     /**
@@ -608,7 +607,7 @@ public class VolunteersController {
 
         volunteerDao.updateVolunteer(volunteer);
 
-        return "redirect:" + volunteerModelFactory.generateUri(volunteer.getPersonId()) + "#!personal";
+        return "redirect:" + VolunteerModelFactory.generateUri(volunteer.getPersonId()) + "#!personal";
     }
 
     /**
@@ -689,11 +688,6 @@ public class VolunteersController {
     @Autowired
     public void setPersonDao(PersonDao personDao) {
         this.personDao = personDao;
-    }
-
-    @Autowired
-    public void setPersonModelFactory(PersonModelFactory personModelFactory) {
-        this.personModelFactory = personModelFactory;
     }
 
     @Autowired
