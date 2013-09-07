@@ -94,17 +94,20 @@ public class PersonsController {
     public AjaxDataTableResult<PersonModel> showDatatableAjaxPersonList(AjaxDataTableRequestData requestData) {
 
         PersonSearchCriteria searchCriteria = new PersonSearchCriteria();
-        searchCriteria.setSearch(requestData.getSearch());
-        searchCriteria.setSortValue(requestData.getSortValue());
-        searchCriteria.setSortDirection(requestData.getSortDirection());
-        searchCriteria.setStartIndex(requestData.getDisplayStart());
-        searchCriteria.setMaxResults(requestData.getDisplayLength());
+        requestData.populateSearchCriteria(searchCriteria);
 
         AjaxDataTableResult<PersonModel> result = new AjaxDataTableResult<PersonModel>();
         result.setEcho(requestData.getEcho());
 
-        result.setTotalRecords(personDao.findTotalPersonsCount());
         int totalFilteredResults = personDao.findPersonsCount(searchCriteria);
+        if (searchCriteria.isFiltered()) {
+            PersonSearchCriteria noFilterCriteria = searchCriteria.clone();
+            noFilterCriteria.clearFilter();
+            result.setTotalRecords(personDao.findPersonsCount(searchCriteria));
+        } else {
+            result.setTotalRecords(totalFilteredResults);
+        }
+
         if (totalFilteredResults > 0) {
             List<Person> persons = personDao.findPersons(searchCriteria);
             List<PersonModel> modelList = new ArrayList<PersonModel>(persons.size());

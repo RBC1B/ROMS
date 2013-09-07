@@ -39,7 +39,6 @@ import uk.org.rbc1b.roms.controller.skill.SkillModelFactory;
 import uk.org.rbc1b.roms.db.Congregation;
 import uk.org.rbc1b.roms.db.CongregationDao;
 import uk.org.rbc1b.roms.db.reference.ReferenceDao;
-import uk.org.rbc1b.roms.db.volunteer.Assignment;
 import uk.org.rbc1b.roms.db.volunteer.Department;
 import uk.org.rbc1b.roms.db.volunteer.DepartmentDao;
 import uk.org.rbc1b.roms.db.volunteer.Qualification;
@@ -62,7 +61,6 @@ public class VolunteerModelFactory {
     private static final Map<Integer, Boolean> NO_AVAILABILITY = new HashMap<Integer, Boolean>();
     private ReferenceDao referenceDao;
     private PersonModelFactory personModelFactory;
-    private AssignmentModelFactory assignmentModelFactory;
     private CongregationDao congregationDao;
     private SkillDao skillDao;
     private DepartmentDao departmentDao;
@@ -211,24 +209,6 @@ public class VolunteerModelFactory {
     }
 
     /**
-     * Generate the models for the volunteer assignments.
-     * @param assignments assignments
-     * @return model list
-     */
-    public List<AssignmentModel> generateAssignments(List<Assignment> assignments) {
-        if (CollectionUtils.isEmpty(assignments)) {
-            return null;
-        }
-
-        List<AssignmentModel> modelList = new ArrayList<AssignmentModel>(assignments.size());
-        for (Assignment assignment : assignments) {
-            modelList.add(assignmentModelFactory.generateAssignmentModel(assignment));
-        }
-
-        return modelList;
-    }
-
-    /**
      * Generate the models for the volunteer skills.
      * @param volunteerSkills list of volunteer skills
      * @return model list
@@ -319,11 +299,6 @@ public class VolunteerModelFactory {
     @Autowired
     public void setReferenceDao(ReferenceDao referenceDao) {
         this.referenceDao = referenceDao;
-    }
-
-    @Autowired
-    public void setAssignmentModelFactory(AssignmentModelFactory assignmentModelFactory) {
-        this.assignmentModelFactory = assignmentModelFactory;
     }
 
     @Autowired

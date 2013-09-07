@@ -30,6 +30,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.validation.Valid;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.joda.time.DateTime;
@@ -84,6 +85,7 @@ public class VolunteersController {
     private CongregationDao congregationDao;
     private ReferenceDao referenceDao;
     private VolunteerModelFactory volunteerModelFactory;
+    private AssignmentModelFactory assignmentModelFactory;
 
     /**
      * Display a list of volunteers.
@@ -109,18 +111,21 @@ public class VolunteersController {
     public AjaxDataTableResult<VolunteerListModel> showDatatableAjaxVolunteerList(
             VolunteerAjaxDataTableRequestData requestData) {
         VolunteerSearchCriteria searchCriteria = new VolunteerSearchCriteria();
-        searchCriteria.setSearch(requestData.getSearch());
-        searchCriteria.setSortValue(requestData.getSortValue());
-        searchCriteria.setSortDirection(requestData.getSortDirection());
-        searchCriteria.setStartIndex(requestData.getDisplayStart());
-        searchCriteria.setMaxResults(requestData.getDisplayLength());
+        requestData.populateSearchCriteria(searchCriteria);
         searchCriteria.setCongregationId(requestData.getCongregationId());
 
         AjaxDataTableResult<VolunteerListModel> result = new AjaxDataTableResult<VolunteerListModel>();
         result.setEcho(requestData.getEcho());
 
-        result.setTotalRecords(volunteerDao.findTotalVolunteersCount());
         int totalFilteredResults = volunteerDao.findVolunteersCount(searchCriteria);
+        if (searchCriteria.isFiltered()) {
+            VolunteerSearchCriteria noFilterCriteria = searchCriteria.clone();
+            noFilterCriteria.clearFilter();
+            result.setTotalRecords(volunteerDao.findVolunteersCount(searchCriteria));
+        } else {
+            result.setTotalRecords(totalFilteredResults);
+        }
+
         if (totalFilteredResults > 0) {
             List<Volunteer> volunteers = volunteerDao.findVolunteers(searchCriteria);
             List<VolunteerListModel> modelList = new ArrayList<VolunteerListModel>(volunteers.size());
@@ -160,13 +165,30 @@ public class VolunteersController {
         List<VolunteerSkill> skills = volunteerDao.findSkills(volunteerId);
         List<VolunteerQualification> qualifications = volunteerDao.findQualifications(volunteerId);
 
-        VolunteerModel volunteerModel = volunteerModelFactory.generateVolunteerModel(volunteer);
-        volunteerModel.setAssignments(volunteerModelFactory.generateAssignments(assignments));
-        volunteerModel.setSkills(volunteerModelFactory.generateVolunteerSkillsModel(skills));
-        volunteerModel.setQualifications(volunteerModelFactory.generateVolunteerQualificationsModel(qualifications));
-        model.addAttribute("volunteer", volunteerModel);
+        model.addAttribute("volunteer", volunteerModelFactory.generateVolunteerModel(volunteer));
+        model.addAttribute("assignments", generateAssignments(assignments));
+        model.addAttribute("skills", volunteerModelFactory.generateVolunteerSkillsModel(skills));
+        model.addAttribute("qualifications", volunteerModelFactory.generateVolunteerQualificationsModel(qualifications));
 
         return "volunteers/show";
+    }
+
+    /**
+     * Generate the models for the volunteer assignments.
+     * @param assignments assignments
+     * @return model list
+     */
+    private List<AssignmentModel> generateAssignments(List<Assignment> assignments) {
+        if (CollectionUtils.isEmpty(assignments)) {
+            return null;
+        }
+
+        List<AssignmentModel> modelList = new ArrayList<AssignmentModel>(assignments.size());
+        for (Assignment assignment : assignments) {
+            modelList.add(assignmentModelFactory.generateAssignmentModel(assignment));
+        }
+
+        return modelList;
     }
 
     /**
@@ -703,6 +725,11 @@ public class VolunteersController {
     @Autowired
     public void setVolunteerDao(VolunteerDao volunteerDao) {
         this.volunteerDao = volunteerDao;
+    }
+
+    @Autowired
+    public void setAssignmentModelFactory(AssignmentModelFactory assignmentModelFactory) {
+        this.assignmentModelFactory = assignmentModelFactory;
     }
 
     @Autowired

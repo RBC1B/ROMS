@@ -27,10 +27,13 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
+import uk.org.rbc1b.roms.controller.common.SortDirection;
 
 /**
  * Hibernate implementation of the department dao.
@@ -80,6 +83,68 @@ public class HibernateDepartmentDao implements DepartmentDao {
     @Override
     public List<Assignment> findAssignments(AssignmentSearchCriteria searchCriteria) {
 
+        Criteria criteria = createAssigmentsSearchCriteria(searchCriteria);
+
+        if (searchCriteria.getStartIndex() != null && searchCriteria.getMaxResults() != null) {
+            criteria.setFirstResult(searchCriteria.getStartIndex());
+            criteria.setMaxResults(searchCriteria.getMaxResults());
+        }
+
+        if (searchCriteria.getSearch() != null) {
+            criteria.createAlias("person", "person", JoinType.LEFT_OUTER_JOIN);
+            criteria.createAlias("person.congregation", "congregation", JoinType.LEFT_OUTER_JOIN);
+            criteria.createAlias("team", "team", JoinType.LEFT_OUTER_JOIN);
+
+            String searchValue = "%" + searchCriteria.getSearch() + "%";
+
+            criteria.add(Restrictions.or(Restrictions.like("person.forename", searchValue),
+                    Restrictions.like("person.surname", searchValue),
+                    Restrictions.like("congregation.name", searchValue),
+                    Restrictions.like("team.description", searchValue)));
+        }
+
+        if (searchCriteria.getSortValue() != null) {
+            // we may need to join into the values of the sort column
+            if (searchCriteria.getSearch() == null) {
+                if (searchCriteria.getSortValue().startsWith("person")) {
+                    criteria.createAlias("person", "person", JoinType.LEFT_OUTER_JOIN);
+                }
+
+                if (searchCriteria.getSortValue().startsWith("congregation")) {
+                    criteria.createAlias("person.congregation", "congregation", JoinType.LEFT_OUTER_JOIN);
+                }
+
+                if (searchCriteria.getSortValue().startsWith("team")) {
+                    criteria.createAlias("team", "team", JoinType.LEFT_OUTER_JOIN);
+                }
+            }
+
+            String sortValue = searchCriteria.getSortValue();
+            if (sortValue.equals("team.name")) {
+                sortValue = "team.description";
+            } else if (sortValue.equals("tradeNumber")) {
+                sortValue = "tradeNumberId";
+            } else if (sortValue.equals("role")) {
+                sortValue = "roleId";
+            }
+
+            criteria.addOrder(searchCriteria.getSortDirection() == SortDirection.ASCENDING ? Order.asc(sortValue)
+                    : Order.desc(sortValue));
+        }
+
+        return criteria.list();
+    }
+
+    @Override
+    public int findAssignmentsCount(AssignmentSearchCriteria searchCriteria) {
+        Criteria criteria = createAssigmentsSearchCriteria(searchCriteria);
+
+        criteria.setProjection(Projections.rowCount());
+        return ((Long) criteria.uniqueResult()).intValue();
+
+    }
+
+    private Criteria createAssigmentsSearchCriteria(AssignmentSearchCriteria searchCriteria) {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Assignment.class);
         if (searchCriteria.getDepartmentId() != null) {
             criteria.add(Restrictions.eq("departmentId", searchCriteria.getDepartmentId()));
@@ -96,8 +161,7 @@ public class HibernateDepartmentDao implements DepartmentDao {
         if (searchCriteria.getTradeNumberId() != null) {
             criteria.add(Restrictions.eq("tradeNumberId", searchCriteria.getTradeNumberId()));
         }
-
-        return criteria.list();
+        return criteria;
     }
 
     public void setSessionFactory(SessionFactory sessionFactory) {

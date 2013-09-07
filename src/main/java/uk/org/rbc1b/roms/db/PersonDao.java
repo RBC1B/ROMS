@@ -64,13 +64,6 @@ public interface PersonDao {
     List<Person> findPersons(PersonSearchCriteria searchCriteria);
 
     /**
-     * @return the total number of persons stored in the database
-     */
-    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
-    @Transactional(readOnly = true)
-    int findTotalPersonsCount();
-
-    /**
      * Look up the number of people matching the criteria.
      * @param searchCriteria search criteria
      * @return list of people

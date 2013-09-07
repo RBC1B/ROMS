@@ -81,13 +81,6 @@ public class HibernatePersonDao implements PersonDao {
     }
 
     @Override
-    public int findTotalPersonsCount() {
-        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Person.class);
-        criteria.setProjection(Projections.rowCount());
-        return ((Long) criteria.uniqueResult()).intValue();
-    }
-
-    @Override
     public int findPersonsCount(PersonSearchCriteria searchCriteria) {
         Session session = this.sessionFactory.getCurrentSession();
         Criteria criteria = createPersonSearchCriteria(searchCriteria, session);

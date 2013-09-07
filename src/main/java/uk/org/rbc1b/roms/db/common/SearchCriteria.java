@@ -21,24 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.db;
+package uk.org.rbc1b.roms.db.common;
 
-import uk.org.rbc1b.roms.db.common.AbstractSearchCriteria;
+import uk.org.rbc1b.roms.controller.common.SortDirection;
 
 /**
- * Criteria used when searching for a person.
- * @author oliver.elder.esq
+ * Criteria used for search requests.
  */
-public class PersonSearchCriteria extends AbstractSearchCriteria {
-    // no additional criteria required.
+public interface SearchCriteria {
 
-    @Override
-    public PersonSearchCriteria clone() {
-        try {
-            // no deep cloning required
-            return (PersonSearchCriteria) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new IllegalStateException("Failed to clone object");
-        }
-    }
+    /**
+     * @param maxResults max results to display in the results
+     */
+    void setMaxResults(Integer maxResults);
+
+    /**
+     * @param search filter
+     */
+    void setSearch(String search);
+
+    /**
+     * @param startIndex first result index
+     */
+    void setStartIndex(Integer startIndex);
+
+    /**
+     * @param sortDirection sort direction
+     */
+    void setSortDirection(SortDirection sortDirection);
+
+    /**
+     * @param sortValue sort key
+     */
+    void setSortValue(String sortValue);
 }

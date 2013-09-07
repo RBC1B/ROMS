@@ -46,7 +46,7 @@
                 </div>
                 <div class="tab-pane" id="assignments">
                     <div class="row-fluid">
-TBD
+                        <%@ include file="fragments/show-assignments.jsp" %>
                     </div>
                 </div>
                 <c:if test="${!empty childDepartments}">

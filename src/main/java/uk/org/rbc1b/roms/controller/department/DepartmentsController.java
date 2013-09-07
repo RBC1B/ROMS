@@ -24,6 +24,7 @@
 package uk.org.rbc1b.roms.controller.department;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,10 +34,14 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
+import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableRequestData;
+import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableResult;
 import uk.org.rbc1b.roms.controller.skill.SkillModel;
 import uk.org.rbc1b.roms.controller.skill.SkillModelFactory;
-import uk.org.rbc1b.roms.db.PersonSearchCriteria;
+import uk.org.rbc1b.roms.controller.volunteer.AssignmentModel;
+import uk.org.rbc1b.roms.controller.volunteer.AssignmentModelFactory;
 import uk.org.rbc1b.roms.db.volunteer.Assignment;
 import uk.org.rbc1b.roms.db.volunteer.AssignmentSearchCriteria;
 import uk.org.rbc1b.roms.db.volunteer.Department;
@@ -55,17 +60,17 @@ public class DepartmentsController {
     private static final int ASSISTANT_ROLE_ID = 1;
     private DepartmentDao departmentDao;
     private DepartmentModelFactory departmentModelFactory;
+    private AssignmentModelFactory assignmentModelFactory;
     private SkillModelFactory skillModelFactory;
     private SkillDao skillDao;
 
     /**
      * Display the list of persons.
      * @param model mvc model
-     * @param searchCriteria search criteria passed in the form
      * @return view
      */
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=text/html")
-    public String showDepartmentList(ModelMap model, PersonSearchCriteria searchCriteria) {
+    public String showDepartmentList(ModelMap model) {
 
         List<Department> departments = departmentDao.findDepartments();
         Map<Integer, Assignment> departmentOverseers = fetchDepartmentOverseers();
@@ -127,6 +132,8 @@ public class DepartmentsController {
         AssignmentSearchCriteria assignmentSearchCriteria = new AssignmentSearchCriteria();
         assignmentSearchCriteria.setRoleId(roleId);
         assignmentSearchCriteria.setDepartmentId(departmentId);
+        assignmentSearchCriteria.setMaxResults(1);
+
         List<Assignment> assignments = departmentDao.findAssignments(assignmentSearchCriteria);
 
         return assignments.isEmpty() ? null : assignments.get(0);
@@ -135,6 +142,7 @@ public class DepartmentsController {
     private Map<Integer, Assignment> fetchDepartmentOverseers() {
         AssignmentSearchCriteria assignmentSearchCriteria = new AssignmentSearchCriteria();
         assignmentSearchCriteria.setRoleId(OVERSEER_ROLE_ID);
+        assignmentSearchCriteria.setMaxResults(null); // no limit to the results
 
         List<Assignment> assignments = departmentDao.findAssignments(assignmentSearchCriteria);
 
@@ -143,6 +151,48 @@ public class DepartmentsController {
             overseerMap.put(assignment.getDepartmentId(), assignment);
         }
         return overseerMap;
+    }
+
+    /**
+     * Display the list of department assignments.
+     * @param departmentId department id
+     * @param requestData data tables request data
+     * @return view
+     */
+    @RequestMapping(value = "{departmentId}/assignments", method = RequestMethod.GET, headers = "Accept=application/json")
+    @ResponseBody
+    public AjaxDataTableResult<AssignmentModel> showDatatableAjaxAssignmentList(@PathVariable Integer departmentId,
+            AjaxDataTableRequestData requestData) {
+        AssignmentSearchCriteria searchCriteria = new AssignmentSearchCriteria();
+        requestData.populateSearchCriteria(searchCriteria);
+        searchCriteria.setDepartmentId(departmentId);
+
+        AjaxDataTableResult<AssignmentModel> result = new AjaxDataTableResult<AssignmentModel>();
+        result.setEcho(requestData.getEcho());
+
+        int totalFilteredResults = departmentDao.findAssignmentsCount(searchCriteria);
+        if (searchCriteria.isFiltered()) {
+            AssignmentSearchCriteria noFilterCriteria = searchCriteria.clone();
+            noFilterCriteria.clearFilter();
+            result.setTotalRecords(departmentDao.findAssignmentsCount(searchCriteria));
+        } else {
+            result.setTotalRecords(totalFilteredResults);
+        }
+
+        if (totalFilteredResults > 0) {
+            List<Assignment> assignments = departmentDao.findAssignments(searchCriteria);
+            List<AssignmentModel> modelList = new ArrayList<AssignmentModel>(assignments.size());
+            for (Assignment assignment : assignments) {
+                modelList.add(assignmentModelFactory.generateAssignmentModel(assignment));
+            }
+            result.setRecords(modelList);
+            result.setTotalDisplayRecords(totalFilteredResults);
+        } else {
+            result.setRecords(Collections.<AssignmentModel>emptyList());
+        }
+
+        return result;
+
     }
 
     @Autowired
@@ -163,6 +213,11 @@ public class DepartmentsController {
     @Autowired
     public void setSkillModelFactory(SkillModelFactory skillModelFactory) {
         this.skillModelFactory = skillModelFactory;
+    }
+
+    @Autowired
+    public void setAssignmentModelFactory(AssignmentModelFactory assignmentModelFactory) {
+        this.assignmentModelFactory = assignmentModelFactory;
     }
 
 }

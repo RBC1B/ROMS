@@ -25,6 +25,7 @@ package uk.org.rbc1b.roms.controller.common.datatable;
 
 import java.lang.reflect.Field;
 import uk.org.rbc1b.roms.controller.common.SortDirection;
+import uk.org.rbc1b.roms.db.common.SearchCriteria;
 
 /**
  * The request parameters made by the DataTables when generating the results using the server side processing.
@@ -59,6 +60,18 @@ public class AjaxDataTableRequestData {
     private Integer displayLength;
     private Integer displayStart;
     private Integer sortCol0;
+
+    /**
+     * Populate the search criteria from this search request data.
+     * @param searchCriteria search criteria to populate
+     */
+    public void populateSearchCriteria(SearchCriteria searchCriteria) {
+        searchCriteria.setSearch(search);
+        searchCriteria.setSortValue(getSortValue());
+        searchCriteria.setSortDirection(getSortDirection());
+        searchCriteria.setStartIndex(displayStart);
+        searchCriteria.setMaxResults(displayLength);
+    }
 
     /**
      * Get the sort value. This is based on matching the underlying mDataProp value, indexed by the sortCol0

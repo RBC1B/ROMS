@@ -30,12 +30,21 @@ import uk.org.rbc1b.roms.controller.common.model.PersonModel;
  * Overview model for the department details.
  */
 public class DepartmentModel {
+    private Integer departmentId;
     private String name;
     private PersonModel overseer;
     private PersonModel assistant;
     private EntityModel superDepartment;
     private String description;
     private String editUri;
+
+    public Integer getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Integer departmentId) {
+        this.departmentId = departmentId;
+    }
 
     public String getName() {
         return name;

@@ -78,4 +78,13 @@ public interface DepartmentDao {
      */
     @Transactional(readOnly = true)
     List<Assignment> findAssignments(AssignmentSearchCriteria searchCriteria);
+
+    /**
+     * Find the count of assignments based on search criteria.
+     * @param searchCriteria criteria
+     * @return list of matched assignments
+     */
+    @Transactional(readOnly = true)
+    int findAssignmentsCount(AssignmentSearchCriteria searchCriteria);
+
 }

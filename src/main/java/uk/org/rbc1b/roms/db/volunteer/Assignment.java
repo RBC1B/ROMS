@@ -25,6 +25,7 @@ package uk.org.rbc1b.roms.db.volunteer;
 
 import java.sql.Date;
 import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
+import uk.org.rbc1b.roms.db.Person;
 
 /**
  * The volunteers role within a team/department.
@@ -33,12 +34,12 @@ import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 public class Assignment extends DefaultUpdateAuditable {
     private static final long serialVersionUID = -3748152854538626576L;
     private Integer assignmentId;
-    private Integer personId;
+    private Person person;
     private Integer departmentId;
     private Integer roleId;
     private Date assignedDate;
     private Integer tradeNumberId;
-    private Integer teamId;
+    private Team team;
 
     public Date getAssignedDate() {
         return assignedDate;
@@ -64,12 +65,12 @@ public class Assignment extends DefaultUpdateAuditable {
         this.departmentId = departmentId;
     }
 
-    public Integer getPersonId() {
-        return personId;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setPersonId(Integer personId) {
-        this.personId = personId;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     public Integer getRoleId() {
@@ -80,12 +81,12 @@ public class Assignment extends DefaultUpdateAuditable {
         this.roleId = roleId;
     }
 
-    public Integer getTeamId() {
-        return teamId;
+    public Team getTeam() {
+        return team;
     }
 
-    public void setTeamId(Integer teamId) {
-        this.teamId = teamId;
+    public void setTeam(Team team) {
+        this.team = team;
     }
 
     public Integer getTradeNumberId() {

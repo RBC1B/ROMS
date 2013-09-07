@@ -48,7 +48,7 @@
                 </tbody>
             </table>
             <div id="new-qualification">
-                <a class="btn btn-primary" href="qualifications/new" />Create new qualification</a>
+                <a class="btn btn-primary" href="<c:url value="qualifications/new" />" />Create new qualification</a>
             </div>
 
             <p>&nbsp;</p>

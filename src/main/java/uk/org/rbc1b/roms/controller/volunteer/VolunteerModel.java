@@ -24,7 +24,6 @@
 package uk.org.rbc1b.roms.controller.volunteer;
 
 import java.sql.Date;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import uk.org.rbc1b.roms.controller.common.model.EntityModel;
@@ -33,7 +32,6 @@ import uk.org.rbc1b.roms.db.volunteer.VolunteerTrade;
 
 /**
  * Model of volunteer details.
- *
  * @author oliver
  */
 public class VolunteerModel extends PersonModel {
@@ -63,9 +61,6 @@ public class VolunteerModel extends PersonModel {
     private boolean reliefUK;
     private String reliefUKComments;
     private String hhcFormCode;
-    private List<AssignmentModel> assignments;
-    private List<VolunteerSkillModel> skills;
-    private List<VolunteerQualificationModel> qualifications;
     private String editNameUri;
     private String editCommentsUri;
     private String editSpiritualUri;
@@ -74,7 +69,6 @@ public class VolunteerModel extends PersonModel {
 
     /**
      * Determine if the volunteer is available on a given day of the week.
-     *
      * @param dayOfWeek day of week, based on the Calendar DAY_OF_WEEK values
      * @return true if marked as available
      */
@@ -283,30 +277,6 @@ public class VolunteerModel extends PersonModel {
 
     public void setHhcFormCode(String hhcFormCode) {
         this.hhcFormCode = hhcFormCode;
-    }
-
-    public List<AssignmentModel> getAssignments() {
-        return assignments;
-    }
-
-    public void setAssignments(List<AssignmentModel> assignments) {
-        this.assignments = assignments;
-    }
-
-    public List<VolunteerSkillModel> getSkills() {
-        return skills;
-    }
-
-    public void setSkills(List<VolunteerSkillModel> skills) {
-        this.skills = skills;
-    }
-
-    public List<VolunteerQualificationModel> getQualifications() {
-        return qualifications;
-    }
-
-    public void setQualifications(List<VolunteerQualificationModel> qualifications) {
-        this.qualifications = qualifications;
     }
 
     public String getEditNameUri() {

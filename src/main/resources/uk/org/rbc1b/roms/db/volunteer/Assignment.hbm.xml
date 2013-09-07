@@ -5,12 +5,13 @@
         <id name="assignmentId" >
             <generator class="identity"/>
         </id>
-        <property name="personId" />
+
+        <many-to-one name="person" column="PersonId" not-null="true" />
         <property name="departmentId" />
         <property name="roleId" />
         <property name="assignedDate" />
         <property name="tradeNumberId" />
-        <property name="teamId" />
+        <many-to-one name="team" column="TeamId" />
         <property name="updateTime" not-null="true"  />
         <property name="updatedBy" not-null="true"  />
     </class>

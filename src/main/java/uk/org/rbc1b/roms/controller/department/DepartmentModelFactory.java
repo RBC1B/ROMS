@@ -70,7 +70,7 @@ public class DepartmentModelFactory {
         }
 
         if (overseerAssignment != null) {
-            Person person = personDao.findPerson(overseerAssignment.getPersonId());
+            Person person = personDao.findPerson(overseerAssignment.getPerson().getPersonId());
             model.setOverseer(personModelFactory.generatePersonModel(person));
         }
 
@@ -90,17 +90,18 @@ public class DepartmentModelFactory {
     public DepartmentModel generateDepartmentModel(Department department, Assignment overseerAssignment,
             Assignment assistantAssignment) {
         DepartmentModel model = new DepartmentModel();
+        model.setDepartmentId(department.getDepartmentId());
         model.setDescription(department.getDescription());
         model.setEditUri(generateUri(department.getDepartmentId()) + "/edit");
         model.setName(department.getName());
 
         if (overseerAssignment != null) {
-            Person person = personDao.findPerson(overseerAssignment.getPersonId());
+            Person person = personDao.findPerson(overseerAssignment.getPerson().getPersonId());
             model.setOverseer(personModelFactory.generatePersonModel(person));
         }
 
         if (assistantAssignment != null) {
-            Person person = personDao.findPerson(assistantAssignment.getPersonId());
+            Person person = personDao.findPerson(assistantAssignment.getPerson().getPersonId());
             model.setAssistant(personModelFactory.generatePersonModel(person));
         }
 

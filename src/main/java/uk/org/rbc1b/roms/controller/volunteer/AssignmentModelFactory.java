@@ -26,17 +26,18 @@ package uk.org.rbc1b.roms.controller.volunteer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.org.rbc1b.roms.controller.common.model.EntityModel;
+import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
+import uk.org.rbc1b.roms.db.PersonDao;
+import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 import uk.org.rbc1b.roms.db.volunteer.Assignment;
 import uk.org.rbc1b.roms.db.volunteer.Department;
 import uk.org.rbc1b.roms.db.volunteer.DepartmentDao;
 import uk.org.rbc1b.roms.db.volunteer.Team;
-import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 
 /**
  * Factory class to create the assignment model.
- *
  * @author oliver.elder.esq
-*/
+ */
 @Component
 public class AssignmentModelFactory {
 
@@ -44,10 +45,11 @@ public class AssignmentModelFactory {
     private static final String BASE_DEPARTMENTS_URI = "/departments/";
     private ReferenceDao referenceDao;
     private DepartmentDao departmentDao;
+    private PersonModelFactory personModelFactory;
+    private PersonDao personDao;
 
     /**
      * Generate the uri used to access the team pages.
-     *
      * @param teamId optional team id
      * @return uri
      */
@@ -57,7 +59,6 @@ public class AssignmentModelFactory {
 
     /**
      * Generate the uri used to access the department pages.
-     *
      * @param departmentId optional department id
      * @return uri
      */
@@ -67,7 +68,6 @@ public class AssignmentModelFactory {
 
     /**
      * Create the assignment model.
-     *
      * @param assignment assignment
      * @return model
      */
@@ -77,8 +77,12 @@ public class AssignmentModelFactory {
         model.setAssignedDate(assignment.getAssignedDate());
         model.setDepartment(createDepartmentModel(departmentDao.findDepartment(assignment.getDepartmentId())));
         model.setId(assignment.getAssignmentId());
+        model.setPerson(personModelFactory.generatePersonModel(personDao.findPerson(assignment.getPerson()
+                .getPersonId())));
         model.setRole(referenceDao.findAssignmentRoleValues().get(assignment.getRoleId()));
-        model.setTeam(createTeamModel(departmentDao.findTeam(assignment.getTeamId())));
+        if (assignment.getTeam() != null) {
+            model.setTeam(createTeamModel(departmentDao.findTeam(assignment.getTeam().getTeamId())));
+        }
         model.setTradeNumber(referenceDao.findTradeNumbers().get(assignment.getTradeNumberId()));
 
         return model;
@@ -109,4 +113,15 @@ public class AssignmentModelFactory {
     public void setDepartmentDao(DepartmentDao departmentDao) {
         this.departmentDao = departmentDao;
     }
+
+    @Autowired
+    public void setPersonDao(PersonDao personDao) {
+        this.personDao = personDao;
+    }
+
+    @Autowired
+    public void setPersonModelFactory(PersonModelFactory personModelFactory) {
+        this.personModelFactory = personModelFactory;
+    }
+
 }

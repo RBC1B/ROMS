@@ -46,7 +46,7 @@
             <a class="btn btn-primary" href="<c:url value="/volunteers/${volunteer.id}/rbc-${volunteer.id}-badge.pdf"/>">Generate Badge</a>
             <hr>
             <c:choose>
-                <c:when test="${!empty volunteer.assignments}">
+                <c:when test="${!empty assignments}">
                     <h3>Team Roles</h3>
                     <table class="table table-bordered table-condensed table-striped table-hover">
                         <thead>
@@ -59,11 +59,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach items="${volunteer.assignments}" var="assignment">
+                            <c:forEach items="${assignments}" var="assignment">
                                 <tr>
                                     <td>${assignment.tradeNumber}</td>
-                                    <td><a href="${assignment.department.uri}">${assignment.department.name}</a></td>
-                                    <td><a href="${assignment.team.uri}">${assignment.team.name}</a></td>
+                                    <td><a href="<c:url value="${assignment.department.uri}" />">${assignment.department.name}</a></td>
+                                    <td><a href="<c:url value="${assignment.team.uri}" />">${assignment.team.name}</a></td>
                                     <td>${assignment.role}</td>
                                     <td><fmt:formatDate value="${assignment.assignedDate}" pattern="dd MMM yyyy" /></td>
                                 </tr>

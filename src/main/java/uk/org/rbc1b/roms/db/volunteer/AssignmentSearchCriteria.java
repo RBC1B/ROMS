@@ -23,15 +23,27 @@
  */
 package uk.org.rbc1b.roms.db.volunteer;
 
+import uk.org.rbc1b.roms.db.common.AbstractSearchCriteria;
+
 /**
  * Criteria used when searching the assignments.
  */
-public class AssignmentSearchCriteria {
+public class AssignmentSearchCriteria extends AbstractSearchCriteria {
     private Integer roleId;
     private Integer departmentId;
     private Integer teamId;
     private Integer personId;
     private Integer tradeNumberId;
+
+    @Override
+    public AssignmentSearchCriteria clone() {
+        try {
+            // no deep cloning required
+            return (AssignmentSearchCriteria) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new IllegalStateException("Failed to clone object");
+        }
+    }
 
     public Integer getRoleId() {
         return roleId;

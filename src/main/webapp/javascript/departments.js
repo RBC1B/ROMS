@@ -44,5 +44,23 @@ $(document).ready(function() {
 		"iDisplayLength": 10
 	    }
     );
-    
+   
+    roms.common.datatables(
+	    $('#department-assignment-list'),
+	    {
+		"iDisplayLength": 10,
+		"bProcessing": true,
+		"bServerSide": true,
+		"sAjaxSource": roms.common.relativePath + '/departments/' + $('#department-assignment-list').data("departmentId") + "/assignments",
+		"aoColumns": [
+		              {   "sName": "person.forename", "mData": "person.forename" },
+		              {   "sName": "person.surname", "mData": "person.surname" },
+		              {   "sName": "person.congregation.name", "mData": "person.congregation.name", "sDefaultContent": "" },
+		              {   "sName": "team.name", "mData": "team.name" },
+		              {   "sName": "role", "mData": "role" },
+		              {   "sName": "tradeNumber", "mData": "tradeNumber" },
+		              {   "sName": "assignedDate", "mData": "assignedDate" }
+	            ]
+	        }
+	    );
 });

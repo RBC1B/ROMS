@@ -34,7 +34,7 @@ $(document).ready(function() {
         source: roms.common.congregationTypeAheadSource,
         minLength: 2
     });
-    
+
     // we always clear the congregation id on change.
     // it will be re-calculated in validation
     $("#congregationName").change(function() {
@@ -87,21 +87,21 @@ $(document).ready(function() {
     // when adding a trades row, clone the last one, clear the values
     // and at it after that row
     $("#trades-row-add").click(function() {
-       var $lastTradesRow = $(".trades-row").last();
-       var $clonedTradesRow = $lastTradesRow.clone();
-       var lastIndex = $lastTradesRow.data("index");
-       var nextIndex = lastIndex + 1;
-       $clonedTradesRow.data("index", nextIndex);
-       $clonedTradesRow.find("input").each(function() {
-           $(this).val('');
-           var name = $(this).prop("name");
-           name = name.replace('[' + lastIndex + ']', '[' + nextIndex + ']');
-           $(this).prop("name", name);
-       })
-       $clonedTradesRow.hide();
-       $clonedTradesRow.insertAfter($lastTradesRow);
-       initialiseTradeRow($clonedTradesRow);
-       $clonedTradesRow.slideDown(500);
+        var $lastTradesRow = $(".trades-row").last();
+        var $clonedTradesRow = $lastTradesRow.clone();
+        var lastIndex = $lastTradesRow.data("index");
+        var nextIndex = lastIndex + 1;
+        $clonedTradesRow.data("index", nextIndex);
+        $clonedTradesRow.find("input").each(function() {
+            $(this).val('');
+            var name = $(this).prop("name");
+            name = name.replace('[' + lastIndex + ']', '[' + nextIndex + ']');
+            $(this).prop("name", name);
+        })
+        $clonedTradesRow.hide();
+        $clonedTradesRow.insertAfter($lastTradesRow);
+        initialiseTradeRow($clonedTradesRow);
+        $clonedTradesRow.slideDown(500);
     });
 
     $("#volunteer").validate({

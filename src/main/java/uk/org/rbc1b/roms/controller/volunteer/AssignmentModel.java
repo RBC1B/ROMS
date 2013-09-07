@@ -25,16 +25,17 @@ package uk.org.rbc1b.roms.controller.volunteer;
 
 import java.sql.Date;
 import uk.org.rbc1b.roms.controller.common.model.EntityModel;
+import uk.org.rbc1b.roms.controller.common.model.PersonModel;
 
 /**
  * Model of a volunteer assignment.
- *
  * @author oliver.elder.esq
  */
 public class AssignmentModel {
 
     private Integer id;
     private EntityModel department;
+    private PersonModel person;
     private String role;
     private Date assignedDate;
     private String tradeNumber;
@@ -54,6 +55,14 @@ public class AssignmentModel {
 
     public void setDepartment(EntityModel department) {
         this.department = department;
+    }
+
+    public PersonModel getPerson() {
+        return person;
+    }
+
+    public void setPerson(PersonModel person) {
+        this.person = person;
     }
 
     public String getRole() {

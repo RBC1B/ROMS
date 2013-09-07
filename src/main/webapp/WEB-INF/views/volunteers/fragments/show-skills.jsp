@@ -4,7 +4,7 @@ Author: oliver.elder.esq
 --%>
 <h3>Skills</h3>
 <c:choose>
-    <c:when test="${!empty volunteer.skills}">
+    <c:when test="${!empty skills}">
         <table id="volunteer-skills-skills" class="table table-bordered table-condensed table-striped table-hover">
             <thead>
                 <tr>
@@ -18,10 +18,10 @@ Author: oliver.elder.esq
                 </tr>
             </thead>
             <tbody>
-            <c:forEach items="${volunteer.skills}" var="skill">
+            <c:forEach items="${skills}" var="skill">
                 <tr>
-                    <td><span class="a-skill-description" data-original-title="${skill.description}"><a href="${skill.skill.uri}">${skill.skill.name}</a></span></td>
-                    <td><a href="${skill.department.uri}">${skill.department.name}</a></td>
+                    <td><span class="a-skill-description" data-original-title="${skill.description}"><a href="<c:url value="${skill.skill.uri}" />">${skill.skill.name}</a></span></td>
+                    <td><a href="<c:url value="${skill.department.uri}" />">${skill.department.name}</a></td>
                     <td>${skill.level}</td>
                     <td>
                 <c:choose>
@@ -51,7 +51,7 @@ Author: oliver.elder.esq
 
 <h3>Qualifications</h3>
 <c:choose>
-    <c:when test="${!empty volunteer.qualifications}">
+    <c:when test="${!empty qualifications}">
         <table id="volunteer-skills-qualifications" class="table table-bordered table-condensed table-striped table-hover">
             <thead>
                 <tr>
@@ -61,9 +61,13 @@ Author: oliver.elder.esq
                 </tr>
             </thead>
             <tbody>
-            <c:forEach items="${volunteer.qualifications}" var="qualification">
+            <c:forEach items="${qualifications}" var="qualification">
                 <tr>
-                    <td><span class="a-qualification-description" data-original-title="${qualification.description}"><a href="${qualification.qualification.uri}">${qualification.qualification.name}</a></span></td>
+                    <td>
+                        <span class="a-qualification-description" data-original-title="${qualification.description}">
+                            <a href="<c:url value="${qualification.qualification.uri}" />">${qualification.qualification.name}</a>
+                        </span>
+                    </td>
                     <td>${qualification.comments}</td>
                     <td>
                 <c:choose>
