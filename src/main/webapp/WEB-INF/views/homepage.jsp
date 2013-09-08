@@ -15,38 +15,46 @@
             <h1>Dashboard</h1>
             <hr>
             <div class="row-fluid">
-                <div class="alert alert-error">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>WARNING!</strong> By using Edifice, you agree to the <a href="#">Terms Of Use</a>. Please see the <a href="#">Help section</a> if you're having problems.
-                </div>
-                <div class="alert">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>ALERT!</strong> Some of your Volunteers have updated their details. <a href="#">View report &gt;</a>
-                </div>
-            </div>
-            <div class="row-fluid">
-                <div class="span5">
-                  <img src="<c:url value='/images/spend-mockup.png' />">
-                </div>
-                <div class=""span5">
-                  <img src="<c:url value='/images/velocity-mockup.png' />">
-                </div>
-            </div>
-            <div class="row-fluid">
-                <div class="span6">
-                  <img src="<c:url value='/images/calendar-mockup.png' />">
-                </div>
-                <div class=""span3">
-                  <img src="<c:url value='/images/volunteer-mockup.png' />">
-                </div>
+              <div class="well span4">
+                <h3>Organisations</h3>
+                <ul class="nav nav-tabs nav-stacked">
+                    <li>Congregation</li>
+                    <li>Circuit</li>
+                </ul>
+              </div>
+              <div class="well span4">
+                <h3>Kingdom Hall</h3>
+                <ul class="nav nav-tabs nav-stacked">
+                    <li>List Of Kingdom Halls</li>
+                        <a href="">Details of Kingdom Halls ></a></p>
+                </ul>
+              </div>
+              <div class="well span4">
+                <h3>Projects</h3>
+                <ul class="nav nav-tabs nav-stacked">
+                    <li>Project Coordination</li>
+                    <li>Project Design</li>
+                    <li>Upcoming Projects</li>
+                </ul>
+              </div>
             </div>
             <div class="row-fluid">
               <div class="well span4">
-               <button class="btn btn-info btn-block">Add Widgets</button>
+                <h3>Volunteers</h3>
+                <ul class="nav nav-tabs nav-stacked">
+                    <li>Contact Details</li>
+                    <li>Skills & Training</li>
+                    <li>Gate List</li>
+                </ul>
+              </div>
+              <div class="well span4">
+                <h3>My Profile</h3>
+                <ul class="nav nav-tabs nav-stacked">
+                    <li>Ramindur</li>
+                </ul>
               </div>
             </div>
-           </div>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-
+        </div>
     </body>
 </html>
