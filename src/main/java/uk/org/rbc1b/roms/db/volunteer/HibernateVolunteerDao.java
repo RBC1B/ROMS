@@ -30,8 +30,10 @@ import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,13 +95,6 @@ public class HibernateVolunteerDao implements VolunteerDao {
     }
 
     @Override
-    public int findTotalVolunteersCount() {
-        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Volunteer.class);
-        criteria.setProjection(Projections.rowCount());
-        return ((Long) criteria.uniqueResult()).intValue();
-    }
-
-    @Override
     public int findVolunteersCount(VolunteerSearchCriteria searchCriteria) {
         Session session = this.sessionFactory.getCurrentSession();
         Criteria criteria = createVolunteerSearchCriteria(searchCriteria, session);
@@ -128,6 +123,14 @@ public class HibernateVolunteerDao implements VolunteerDao {
         if (searchCriteria.getCongregationId() != null) {
             criteria.add(Restrictions.or(Restrictions.eq("congregation.congregationId",
                     searchCriteria.getCongregationId())));
+        }
+
+        if (searchCriteria.getSkillId() != null) {
+            DetachedCriteria skillCriteria = DetachedCriteria.forClass(VolunteerSkill.class);
+            skillCriteria.add(Restrictions.eq("skillId", searchCriteria.getSkillId()));
+            skillCriteria.setProjection(Projections.property("personId"));
+
+            criteria.add(Property.forName("personId").in(skillCriteria));
         }
 
         return criteria;

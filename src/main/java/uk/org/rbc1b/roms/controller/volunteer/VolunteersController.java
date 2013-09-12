@@ -59,11 +59,11 @@ import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao.VolunteerData;
+import uk.org.rbc1b.roms.db.volunteer.VolunteerSearchCriteria;
 import uk.org.rbc1b.roms.db.volunteer.department.Assignment;
 import uk.org.rbc1b.roms.db.volunteer.qualification.VolunteerQualification;
 import uk.org.rbc1b.roms.db.volunteer.skill.VolunteerSkill;
 import uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTrade;
-import uk.org.rbc1b.roms.db.volunteer.VolunteerSearchCriteria;
 
 /**
  * @author rahulsingh
@@ -113,6 +113,7 @@ public class VolunteersController {
         VolunteerSearchCriteria searchCriteria = new VolunteerSearchCriteria();
         requestData.populateSearchCriteria(searchCriteria);
         searchCriteria.setCongregationId(requestData.getCongregationId());
+        searchCriteria.setSkillId(requestData.getSkillId());
 
         AjaxDataTableResult<VolunteerListModel> result = new AjaxDataTableResult<VolunteerListModel>();
         result.setEcho(requestData.getEcho());
@@ -639,7 +640,8 @@ public class VolunteersController {
      * @return modelAndView of the VolunteerBadgePdfView
      */
     @RequestMapping(value = "{volunteerId}/rbc-{volunteerBadgeId}-badge.pdf", method = RequestMethod.GET)
-    public ModelAndView produceVolunteerBadgePdf(@PathVariable Integer volunteerId, @PathVariable Integer volunteerBadgeId) {
+    public ModelAndView produceVolunteerBadgePdf(@PathVariable Integer volunteerId,
+            @PathVariable Integer volunteerBadgeId) {
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
         if (volunteerId.equals(volunteerBadgeId)) {
             ModelAndView modelAndView = new ModelAndView("volunteerBadgePdfView");

@@ -59,13 +59,6 @@ public interface VolunteerDao {
     List<Volunteer> findVolunteers(VolunteerSearchCriteria searchCriteria);
 
     /**
-     * @return the total number of volunteers
-     */
-    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
-    @Transactional(readOnly = true)
-    int findTotalVolunteersCount();
-
-    /**
      * Look up the number of volunteers matching the criteria.
      * @param searchCriteria search criteria
      * @return list of people

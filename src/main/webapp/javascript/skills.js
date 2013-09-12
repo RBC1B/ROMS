@@ -22,6 +22,8 @@
  * THE SOFTWARE.
  */
 $(document).ready(function() {
+    
+    // edit
     $('#skill-list').validate({
         rules:{
             name: {
@@ -39,6 +41,39 @@ $(document).ready(function() {
         },
         errorPlacement: roms.common.validatorErrorPlacement
     });
+    
+    // details
+    // list
+    var listVolunteersActionTemplate = $("#read-only-list-action").html();
+    var skillId = $("#skills-volunteer-list").data("skillId");
+    roms.common.datatables(
+        $('#skills-volunteer-list'),
+        {
+            "iDisplayLength": 10,
+            "bProcessing": true,
+            "bServerSide": true,
+            "sAjaxSource": roms.common.relativePath + '/volunteers',
+            "fnServerParams": function(aoData) {
+                aoData.push({ "name": "skillId", "value": skillId });
+            },
+            "aoColumns": [
+                {   "sName": "ID", "mData": "id" },
+                {   "sName": "forename", "mData": "forename" },
+                {   "sName": "surname", "mData": "surname" },
+                {   "sName": "congregation", "mData": "congregation.name", "sDefaultContent": "" },
+                {   "sName": "action", "bSortable": false,
+                    "mData":
+                        function ( data, type, val ) {
+                            data.uriBase = roms.common.relativePath;
+                            return Mustache.to_html(listVolunteersActionTemplate, data);
+                        }
+                }
+            ]
+        }
+    );
+
+    
+    // list
     roms.common.datatables(
         $('#skill-list'),
         {

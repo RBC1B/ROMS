@@ -32,6 +32,7 @@ import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableRequestData;
  */
 public class VolunteerAjaxDataTableRequestData extends AjaxDataTableRequestData {
     private Integer congregationId;
+    private Integer skillId;
 
     public Integer getCongregationId() {
         return congregationId;
@@ -39,6 +40,14 @@ public class VolunteerAjaxDataTableRequestData extends AjaxDataTableRequestData 
 
     public void setCongregationId(Integer congregationId) {
         this.congregationId = congregationId;
+    }
+
+    public Integer getSkillId() {
+        return skillId;
+    }
+
+    public void setSkillId(Integer skillId) {
+        this.skillId = skillId;
     }
 
 }

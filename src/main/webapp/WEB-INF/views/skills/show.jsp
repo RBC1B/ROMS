@@ -56,8 +56,36 @@
             </dd>
         </dl>
         <div class="clearfix"></div>
+        <br />
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#volunteers" data-toggle="tab">Volunteers</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="volunteers">
+                <div class="row-fluid">
+                    <div class="entity-list-results">
+                        <table class="table table-bordered table-condensed table-striped table-hover" id="skills-volunteer-list" data-skill-id="${skill.skillId}">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Congregation</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <tfoot>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
         <%@ include file="/WEB-INF/views/common/footer.jsp"%>
     </div>
+    <%@ include file="/WEB-INF/views/common/mustache-list-actions.jsp" %>
     <script type="text/javascript" src="<c:url value='/javascript/skills.js' />"></script>
 </body>
 </html>

@@ -26,7 +26,7 @@
                             <th>Years</th>
                             <th>Action</th>
                         </tr>
-                    <thead/>
+                    </thead>
                     <tbody>
                     </tbody>
                     <tfoot>
