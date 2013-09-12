@@ -682,4 +682,13 @@ $(document).ready(function() {
         });
         return false;
     });
+    
+    // volunteers experience list
+    roms.common.datatables(
+        $("#volunteer-experience-list"),
+        {
+            "iDisplayLength": 10
+        }
+    );
+    
 });

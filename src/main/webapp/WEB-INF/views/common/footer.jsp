@@ -27,8 +27,8 @@
                         <sec:authorize access="hasPermission('SKILL', 'READ')">
                             <li role="menuitem"><a href="<c:url value="/qualifications" />">Qualifications</a></li>
                         </sec:authorize>
-                        <sec:authorize access="hasPermission('EXPERIENCE', 'READ')">
-                            <li role="menuitem"><a href="<c:url value="/experience" />">Experience</a></li>
+                        <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
+                            <li role="menuitem"><a href="<c:url value="/volunteer-experience" />">Experience</a></li>
                         </sec:authorize>
                         <sec:authorize access="hasPermission('SKILL', 'READ')">
                             <li role="menuitem"><a href="<c:url value="/skills" />">Skills</a></li>
@@ -44,7 +44,7 @@
                         <sec:authorize access="hasPermission('PROJECT', 'READ')">
                             <li><a href="<c:url value="/projects" />">Projects</a></li>
                         </sec:authorize>
-                        <sec:authorize access="hasPermission('ADMIN', 'READ')">
+                        <sec:authorize access="hasPermission('DATABASE', 'READ')">
                             <li><a href="<c:url value="/admin" />">Sys Admin</a></li>
                         </sec:authorize>
                     </ul>
