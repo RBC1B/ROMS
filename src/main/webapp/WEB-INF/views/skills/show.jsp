@@ -55,6 +55,9 @@
                 </c:choose>
             </dd>
         </dl>
+        <sec:authorize access="hasPermission('SKILL', 'EDIT')">
+            <a href="<c:url value='${skill.editUri}' />" class="btn btn-primary">Edit Skill</a>
+        </sec:authorize>
         <div class="clearfix"></div>
         <br />
         <ul class="nav nav-tabs">

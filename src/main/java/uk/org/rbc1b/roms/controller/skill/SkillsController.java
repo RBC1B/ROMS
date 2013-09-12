@@ -71,7 +71,7 @@ public class SkillsController {
         }
 
         model.addAttribute("skills", modelList);
-
+        model.addAttribute("newUri", SkillModelFactory.generateUri(null) + "/new");
         return "skills/list";
     }
 
@@ -118,7 +118,9 @@ public class SkillsController {
 
         model.addAttribute("categories", skillDao.findSkillCategories());
         model.addAttribute("departments", departmentDao.findDepartments());
-        model.addAttribute("skill", form);
+        model.addAttribute("skillForm", form);
+        model.addAttribute("submitUri", SkillModelFactory.generateUri(skillId));
+        model.addAttribute("submitMethod", "PUT");
         return "skills/edit";
 
     }
@@ -132,10 +134,11 @@ public class SkillsController {
     public String showCreateSkillForm(ModelMap model) {
 
         // initialise the form bean
-        model.addAttribute("skill", new SkillForm());
+        model.addAttribute("skillForm", new SkillForm());
         model.addAttribute("categories", skillDao.findSkillCategories());
         model.addAttribute("departments", departmentDao.findDepartments());
-
+        model.addAttribute("submitUri", SkillModelFactory.generateUri(null));
+        model.addAttribute("submitMethod", "POST");
         return "skills/edit";
     }
 
@@ -156,9 +159,35 @@ public class SkillsController {
         skill.setCategory(skillDao.findSkillCategory(skillForm.getSkillCategoryId()));
         skill.setDepartment(departmentDao.findDepartment(skillForm.getDepartmentId()));
 
-        skillDao.saveSkill(skill);
+        skillDao.createSkill(skill);
 
-        return "redirect:skills";
+        return "redirect:" + SkillModelFactory.generateUri(skill.getSkillId());
+    }
+
+    /**
+     * Update an existing skill.
+     * @param skillId existing skill id
+     * @param skillForm form bean
+     * @return view name
+     * @throws NoSuchRequestHandlingMethodException on failure to find the skill
+     */
+    @RequestMapping(value = "{skillId}", method = RequestMethod.PUT)
+    public String updateSkill(@PathVariable Integer skillId, @Valid SkillForm skillForm)
+            throws NoSuchRequestHandlingMethodException {
+
+        Skill skill = this.skillDao.findSkill(skillId);
+        if (skill == null) {
+            throw new NoSuchRequestHandlingMethodException("No Skill #" + skillId, this.getClass());
+        }
+
+        skill.setName(skillForm.getName());
+        skill.setDescription(skillForm.getDescription());
+        skill.setCategory(skillDao.findSkillCategory(skillForm.getSkillCategoryId()));
+        skill.setDepartment(departmentDao.findDepartment(skillForm.getDepartmentId()));
+
+        skillDao.updateSkill(skill);
+
+        return "redirect:" + SkillModelFactory.generateUri(skill.getSkillId());
     }
 
     /**

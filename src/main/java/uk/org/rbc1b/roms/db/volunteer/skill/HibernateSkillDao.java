@@ -58,12 +58,8 @@ public class HibernateSkillDao implements SkillDao {
     }
 
     @Override
-    public void saveSkill(Skill skill) {
-        if (skill.getSkillId() == null) {
-            this.sessionFactory.getCurrentSession().save(skill);
-        } else {
-            this.sessionFactory.getCurrentSession().merge(skill);
-        }
+    public void updateSkill(Skill skill) {
+        this.sessionFactory.getCurrentSession().merge(skill);
     }
 
     @Override

@@ -56,7 +56,7 @@ public interface SkillDao {
      */
     @PreAuthorize("hasPermission('SKILL','EDIT')")
     @Transactional
-    void saveSkill(Skill skill);
+    void updateSkill(Skill skill);
 
     /**
      * Create a new skill.

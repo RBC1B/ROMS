@@ -56,9 +56,11 @@
                     </tbody>
                 </table>
             </div>
-            <div class="entity-list-add-new">
-                <a class="btn btn-primary" href="<c:url value="/skills/new" />">Create new departmental skills</a>
-            </div>
+            <sec:authorize access="hasPermission('SKILL', 'ADD')">
+                <div class="entity-list-add-new">
+                    <a class="btn btn-primary" href="<c:url value="${newUri}" />">Create new departmental skills</a>
+                </div>
+            </sec:authorize>
             <p>&nbsp;</p>
             <ul class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a> <span class="divider">/</span></li>

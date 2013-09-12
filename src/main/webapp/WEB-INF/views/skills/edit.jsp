@@ -9,26 +9,40 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <c:set var="pageTitle" value="Edit New or Existing Skill" />
+    <c:choose>
+        <c:when test="${!empty skillForm.name}">
+            <c:set var="pageTitle" value="Edit Skill" />
+        </c:when>
+        <c:otherwise>
+            <c:set var="pageTitle" value="Create Skill" />
+        </c:otherwise>
+    </c:choose>
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
-            <h1>Qualification</h1>
+            <c:choose>
+                <c:when test="${!empty skillForm.name}">
+                    <h1>Edit Skill</h1>
+                </c:when>
+                <c:otherwise>
+                    <h1>Create New Skill</h1>
+                </c:otherwise>
+            </c:choose>
             <hr>
-            <c:url var="formAction" value="/skills" />
-            <form:form commandName="skill" method="post" action="${formAction}">
+            <c:url var="formAction" value="${submitUri}" />
+            <form:form commandName="skillForm" method="${submitMethod}" action="${formAction}">
                 <div class="form">
                     <fieldset class="container-fluid">
-                        <p>Skill Name</p>
-                        <form:input path="name" placeholder="Use 'Department - Skill' format" />
-                        <p>Description</p>
-                        <form:input path="description" placeholder="Description" />
-                        <p>Department</p>
+                        <label>Skill Name</label>
+                        <form:input path="name" maxlength="50" />
+                        <label>Description</label>
+                        <form:textarea path="description" />
+                        <label>Department</label>
                         <form:select path="departmentId">
                             <form:options items="${departments}" itemValues="department" itemLabel="name" itemValue="departmentId" />
                         </form:select>
-                        <p>Category</p>
+                        <label>Category</label>
                         <form:select path="skillCategoryId">
                             <form:options items="${categories}" itemValues="category" itemLabel="name" itemValue="skillCategoryId" />
                         </form:select>
@@ -38,6 +52,6 @@
             </form:form>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
-        <script type="text/javascript" src="<c:url value='/javascript/skill.js' />" ></script>
+        <script type="text/javascript" src="<c:url value='/javascript/skills.js' />" ></script>
     </body>
 </html>

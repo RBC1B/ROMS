@@ -24,26 +24,26 @@
 $(document).ready(function() {
     
     // edit
-    $('#skill-list').validate({
+    $('#skillForm').validate({
         rules:{
             name: {
                 minlength: 2,
                 required: true
             },
             department: {
-                minlength: 2,
                 required: true
             },
             category: {
-                minlength: 2,
                 required:true
+            },
+            description: {
+                maxlength: 250
             }
         },
         errorPlacement: roms.common.validatorErrorPlacement
     });
     
     // details
-    // list
     var listVolunteersActionTemplate = $("#read-only-list-action").html();
     var skillId = $("#skills-volunteer-list").data("skillId");
     roms.common.datatables(
@@ -85,5 +85,5 @@ $(document).ready(function() {
             }
             ]
         }
-        );
+    );
 });
