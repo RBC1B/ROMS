@@ -36,7 +36,7 @@ public class Assignment extends DefaultUpdateAuditable {
     private Integer assignmentId;
     private Person person;
     private Integer departmentId;
-    private Integer roleId;
+    private AssignmentRole role;
     private Date assignedDate;
     private Integer tradeNumberId;
     private Team team;
@@ -73,12 +73,12 @@ public class Assignment extends DefaultUpdateAuditable {
         this.person = person;
     }
 
-    public Integer getRoleId() {
-        return roleId;
+    public AssignmentRole getRole() {
+        return role;
     }
 
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
+    public void setRole(AssignmentRole role) {
+        this.role = role;
     }
 
     public Team getTeam() {

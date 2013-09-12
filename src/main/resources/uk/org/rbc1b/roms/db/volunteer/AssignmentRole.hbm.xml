@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping  package="uk.org.rbc1b.roms.db.volunteer">
-    <class name="TradeNumber" table="TradeNumber">
-        <id name="tradeNumberId" >
+    <class name="AssignmentRole" table="AssignmentRole">
+        <id name="assignmentRoleId" >
             <generator class="identity"/>
         </id>
-        <property name="description" length="50" />
+        <property name="name" not-null="true" />
     </class>
 </hibernate-mapping>

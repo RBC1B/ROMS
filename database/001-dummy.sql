@@ -307,10 +307,10 @@ values (5, "Juggling", "Balls and skittles. Only once tried to do chainsaws", 1,
 -- update the person cong now. Can before because of the relationships between person, circuit and congregation
 update Person set CongregationId = 1 where PersonId = 5;
 
-insert into Assignment(PersonId, DepartmentId, RoleId, AssignedDate, TradeNumberId, TeamId, UpdateTime, UpdatedBy)
+insert into Assignment(PersonId, DepartmentId, AssignmentRoleId, AssignedDate, TradeNumberId, TeamId, UpdateTime, UpdatedBy)
 values(5, 10, 5, '2010-04-11', 1, 1, NOW(), 1);
 
-insert into Assignment(PersonId, DepartmentId, RoleId, AssignedDate, TradeNumberId, TeamId, UpdateTime, UpdatedBy)
+insert into Assignment(PersonId, DepartmentId, AssignmentRoleId, AssignedDate, TradeNumberId, TeamId, UpdateTime, UpdatedBy)
 values(5, 51, 1, '2011-03-16', 2, 1, NOW(), 1);
 
 

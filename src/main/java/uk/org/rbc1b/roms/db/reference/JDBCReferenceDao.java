@@ -46,49 +46,47 @@ public class JDBCReferenceDao implements ReferenceDao {
     @Override
     @Cacheable("reference.appointment")
     public Map<Integer, String> findAppointmentValues() {
-        return findReferenceValues("SELECT AppointmentId AS id, Description AS value "
+        return findReferenceValues("SELECT AppointmentId AS id, Name AS value "
                 + "FROM Appointment ORDER BY AppointmentId");
     }
 
     @Override
     @Cacheable("reference.maritalStatus")
     public Map<Integer, String> findMaritalStatusValues() {
-        return findReferenceValues("SELECT MaritalStatusId AS id, Description AS value "
+        return findReferenceValues("SELECT MaritalStatusId AS id, Name AS value "
                 + "FROM MaritalStatus ORDER BY MaritalStatusId");
     }
 
     @Override
     @Cacheable("reference.rbcStatus")
     public Map<Integer, String> findRBCStatusValues() {
-        return findReferenceValues("SELECT RbcStatusId AS id, Description AS value "
-                + "FROM RbcStatus ORDER BY RbcStatusId");
+        return findReferenceValues("SELECT RbcStatusId AS id, Name AS value " + "FROM RbcStatus ORDER BY RbcStatusId");
     }
 
     @Override
     @Cacheable("reference.interviewStatus")
     public Map<Integer, String> findInterviewStatusValues() {
-        return findReferenceValues("SELECT InterviewStatusId AS id, Description AS value "
+        return findReferenceValues("SELECT InterviewStatusId AS id, Name AS value "
                 + "FROM InterviewStatus ORDER BY InterviewStatusId");
     }
 
     @Override
     @Cacheable("reference.fulltime")
     public Map<Integer, String> findFulltimeValues() {
-        return findReferenceValues("SELECT FulltimeId AS id, Description AS value "
-                + "FROM Fulltime ORDER BY FulltimeId");
+        return findReferenceValues("SELECT FulltimeId AS id, Name AS value " + "FROM Fulltime ORDER BY FulltimeId");
     }
 
     @Override
     @Cacheable("reference.relationship")
     public Map<Integer, String> findRelationshipValues() {
-        return findReferenceValues("SELECT RelationshipId AS id, Description AS value "
+        return findReferenceValues("SELECT RelationshipId AS id, Name AS value "
                 + "FROM Relationship ORDER BY RelationshipId");
     }
 
     @Override
     @Cacheable("reference.tradeNumber")
     public Map<Integer, String> findTradeNumbers() {
-        return findReferenceValues("SELECT TradeNumberId AS id, Description AS value "
+        return findReferenceValues("SELECT TradeNumberId AS id, Name AS value "
                 + "FROM TradeNumber ORDER BY TradeNumberId");
     }
 
@@ -102,20 +100,21 @@ public class JDBCReferenceDao implements ReferenceDao {
     @Override
     @Cacheable("reference.congregationRole")
     public Map<Integer, String> findCongregationRoleValues() {
-        return findReferenceValues("SELECT CongregationRoleId AS id, Description AS value "
+        return findReferenceValues("SELECT CongregationRoleId AS id, Name AS value "
                 + "FROM CongregationRole ORDER BY CongregationRoleId");
     }
 
     @Override
     @Cacheable("reference.assignmentRole")
     public Map<Integer, String> findAssignmentRoleValues() {
-        return findReferenceValues("SELECT RoleId AS id, Description AS value " + "FROM Role ORDER BY RoleId");
+        return findReferenceValues("SELECT AssignmentRoleId AS id, Name AS value "
+                + "FROM AssignmentRole ORDER BY AssignmentRoleId");
     }
 
     @Override
     @Cacheable("reference.projectType")
     public Map<Integer, String> findProjectTypeValues() {
-        return findReferenceValues("SELECT ProjectTypeId AS id, Description AS value "
+        return findReferenceValues("SELECT ProjectTypeId AS id, Name AS value "
                 + "FROM ProjectType ORDER BY ProjectTypeId");
 
     }
@@ -123,14 +122,14 @@ public class JDBCReferenceDao implements ReferenceDao {
     @Override
     @Cacheable("reference.projectStatus")
     public Map<Integer, String> findProjectStatusValues() {
-        return findReferenceValues("SELECT ProjectStatusId AS id, Description AS value "
+        return findReferenceValues("SELECT ProjectStatusId AS id, Name AS value "
                 + "FROM ProjectStatus ORDER BY ProjectStatusId");
     }
 
     @Override
     @Cacheable("reference.projectStageEventType")
     public Map<Integer, String> findProjectStageEventTypeValues() {
-        return findReferenceValues("SELECT ProjectStageEventTypeId AS id, Description AS value "
+        return findReferenceValues("SELECT ProjectStageEventTypeId AS id, Name AS value "
                 + "FROM ProjectStageEventType ORDER BY ProjectStageEventTypeId");
     }
 

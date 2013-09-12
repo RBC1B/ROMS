@@ -24,13 +24,12 @@
 package uk.org.rbc1b.roms.db.volunteer;
 
 /**
- *
- * @author oliver.elder.esq
+ * Department team.
  */
 public class Team {
 
     private Integer teamId;
-    private String description;
+    private String name;
 
     public Integer getTeamId() {
         return teamId;
@@ -40,12 +39,12 @@ public class Team {
         this.teamId = teamId;
     }
 
-    public String getDescription() {
-        return description;
+    public String getName() {
+        return name;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

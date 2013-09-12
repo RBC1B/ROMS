@@ -87,6 +87,7 @@ THE SOFTWARE.
                 <value>uk/org/rbc1b/roms/db/project/WorkFeature.hbm.xml</value>
 
                 <value>uk/org/rbc1b/roms/db/volunteer/Assignment.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/volunteer/AssignmentRole.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/Attendance.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/Category.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/Department.hbm.xml</value>
@@ -94,7 +95,6 @@ THE SOFTWARE.
                 <value>uk/org/rbc1b/roms/db/volunteer/Qualification.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/Skill.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/Team.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/volunteer/TradeNumber.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/VolunteerQualification.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/VolunteerSkill.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/VolunteerTrade.hbm.xml</value>

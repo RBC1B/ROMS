@@ -141,7 +141,7 @@ alter table Person add
 
 create table CongregationRole(
     CongregationRoleId  bigint(20)  auto_increment,
-    Description         varchar(50) not null    unique,
+    Name                varchar(50) not null    unique,
     primary key (CongregationRoleId)
 )engine=InnoDB;
 
@@ -174,7 +174,7 @@ create table TitleHolder(
 
 create table InterviewStatus(
     InterviewStatusId   bigint(20)  auto_increment,
-    Description         varchar(50) not null    unique,
+    Name                varchar(50) not null    unique,
     primary key (InterviewStatusId)
 )engine=InnoDB;
 
@@ -189,31 +189,31 @@ create table Department(
 
 create table RbcStatus(
     RbcStatusId     bigint(20)      auto_increment,
-    Description     varchar (15)    not null    unique,
+    Name            varchar (15)    not null    unique,
     primary key (RbcStatusId)
 )engine=InnoDB;
 
 create table Appointment(
     AppointmentId   bigint(20)  auto_increment,
-    Description     varchar(25) not null    unique,
+    Name            varchar(25) not null    unique,
     primary key (AppointmentId)
 )engine=InnoDB;
 
 create table Fulltime(
     FulltimeId  bigint(20)  auto_increment,
-    Description varchar(25) not null    unique,
+    Name        varchar(25) not null    unique,
     primary key (FulltimeId)
 )engine=InnoDB;
 
 create table Relationship(
     RelationshipId  bigint(20)  auto_increment,
-    Description     varchar(50) not null    unique,
+    Name            varchar(50) not null    unique,
     primary key (RelationshipId)
 )engine=InnoDB;
 
 create table MaritalStatus(
     MaritalStatusId bigint(20)  auto_increment,
-    Description     varchar(50) not null    unique,
+    Name            varchar(50) not null    unique,
     primary key (MaritalStatusId)
 )engine=InnoDB;
 
@@ -285,38 +285,38 @@ create table ApplicationAccess(
     foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
-create table Role(
-    RoleId      bigint(20)  auto_increment,
-    Description varchar(50) not null    unique,
-    primary key (RoleId)
+create table AssignmentRole(
+    AssignmentRoleId    bigint(20)  auto_increment,
+    Name                varchar(50) not null    unique,
+    primary key (AssignmentRoleId)
 )engine=InnoDB;
 
 create table TradeNumber(
     TradeNumberId   bigint(20)  auto_increment,
-    Description     varchar(50) not null    unique,
+    Name            varchar(50) not null    unique,
     primary key (TradeNumberId)
 )engine=InnoDB;
 
 create table Team(
     TeamId      bigint(20)  auto_increment,
-    Description varchar(50) not null    unique,
+    Name        varchar(50) not null    unique,
     primary key (TeamId)
 )engine=InnoDB;
 
 create table Assignment(
-    AssignmentId    bigint(20)  auto_increment,
-    PersonId        bigint(20)  not null,
-    DepartmentId    bigint(20)  not null,
-    RoleId          bigint(20)  not null,
-    AssignedDate    date        not null,
-    TradeNumberId   bigint(20)  not null,
-    TeamId          bigint(20)  not null,
-    UpdateTime      timestamp   not null,
-    UpdatedBy       bigint(20)  not null,
+    AssignmentId        bigint(20)  auto_increment,
+    PersonId            bigint(20)  not null,
+    DepartmentId        bigint(20)  not null,
+    AssignmentRoleId    bigint(20)  not null,
+    AssignedDate        date        not null,
+    TradeNumberId       bigint(20)  not null,
+    TeamId              bigint(20)  not null,
+    UpdateTime          timestamp   not null,
+    UpdatedBy           bigint(20)  not null,
     primary key (AssignmentId),
     foreign key (PersonId) references Person(PersonId) on delete cascade,
     foreign key (DepartmentId) references Department(DepartmentId) on delete cascade,
-    foreign key (RoleId) references Role(RoleId),
+    foreign key (AssignmentRoleId) references AssignmentRole(AssignmentRoleId),
     foreign key (TradeNumberId) references TradeNumber(TradeNumberId),
     foreign key (TeamId) references Team(TeamId),
     foreign key (UpdatedBy) references Person(PersonId)
@@ -324,7 +324,7 @@ create table Assignment(
 
 create table ProjectType(
     ProjectTypeId   bigint(20)  auto_increment,
-    Description     varchar(25) not null    unique,
+    Name     varchar(25) not null    unique,
     primary key (ProjectTypeId)
 )engine=InnoDB;
 
@@ -343,13 +343,13 @@ create table Commentator(
 
 create table WorkFeature(
     WorkFeatureId   bigint(20)  auto_increment,
-    Description     varchar(50) not null    unique,
+    Name     varchar(50) not null    unique,
     primary key (WorkFeatureId)
 )engine=InnoDB;
 
 create table ProjectStatus(
     ProjectStatusId bigint(20)  auto_increment,
-    Description     varchar(50) not null    unique,
+    Name     varchar(50) not null    unique,
     primary key (ProjectStatusId)
 )engine=InnoDB;
 
@@ -395,13 +395,13 @@ create table ProjectStageType (
 
 create table ProjectStageEventType (
     ProjectStageEventTypeId bigint(20)  auto_increment,
-    Description             varchar(50),
+    Name             varchar(50),
     primary key (ProjectStageEventTypeId)
 )engine=InnoDB;
 
 create table ProjectStageTaskEventType (
     ProjectStageTaskEventTypeId bigint(20)  auto_increment,
-    Description                 varchar(50),
+    Name                    varchar(50),
     primary key (ProjectStageTaskEventTypeId)
 )engine=InnoDB;
 
@@ -625,11 +625,11 @@ insert into RbcSubRegion(Name) values
     ('North'),
     ('South');
 
-insert into CongregationRole(Description) values
+insert into CongregationRole(Name) values
     ('CoBE'),
     ('Secretary');
 
-insert into InterviewStatus (Description) values
+insert into InterviewStatus (Name) values
     ('Invite Due'),
     ('Invited'),
     ('No-Show'),
@@ -692,22 +692,22 @@ insert into Department (Name, SuperDepartmentId, Description) values
     ('Land Search','49',''),
     ('Planning Policy','49','');
 
-insert into RbcStatus (Description) values
+insert into RbcStatus (Name) values
     ('Active'),
     ('Do Not Use'),
     ('Inactive'),
     ('Pending'),
     ('Reassign');
 
-insert into Appointment (Description) values
+insert into Appointment (Name) values
     ('Elder'),
     ('Ministerial Servant');
 
-insert into Fulltime (Description) values
+insert into Fulltime (Name) values
     ('Bethel'),
     ('Regular Pioneer');
 
-insert into Relationship(Description) values
+insert into Relationship(Name) values
     ('Elder'),
     ('Family'),
     ('Father'),
@@ -717,7 +717,7 @@ insert into Relationship(Description) values
     ('Wife'),
     ('Other');
 
-insert into MaritalStatus(Description) values
+insert into MaritalStatus(Name) values
     ('Divorced'),
     ('Married'),
     ('Other'),
@@ -725,7 +725,7 @@ insert into MaritalStatus(Description) values
     ('Single'),
     ('Widowed');
 
-insert into Role(Description) values
+insert into AssignmentRole(Name) values
     ('Assistant'),
     ('Administration'),
     ('Department Safety Advisor'),
@@ -735,12 +735,12 @@ insert into Role(Description) values
     ('Trainer'),
     ('Volunteer');
 
-insert into TradeNumber(Description) values
+insert into TradeNumber(Name) values
     ('1st Trade'),
     ('2nd Trade'),
     ('3rd Trade');
 
-insert into Team(Description) values
+insert into Team(Name) values
     ('A'),
     ('B');
 
@@ -771,7 +771,7 @@ insert into ProjectStageType(Name, Description, AssignedTo, WorkNotes) values
     ('21','Complete S-85','Chairman','Complete S-85 and send to Branch.'),
     ('999','Close Project','Chairman','Close project after all project work has been completed.');
 
-insert into ProjectType (Description) values
+insert into ProjectType (Name) values
     ('Minor Work'),
     ('New Build'),
     ('Rebuild'),
@@ -800,7 +800,7 @@ insert into Commentator (DepartmentId) values
     ('51'),
     ('52');
 
-insert into WorkFeature (Description) values
+insert into WorkFeature (Name) values
     ('Design'),
     ('Main Hall'),
     ('Library'),
@@ -811,20 +811,20 @@ insert into WorkFeature (Description) values
     ('Car Park'),
     ('Landscape');
 
-insert into ProjectStatus (Description) values
+insert into ProjectStatus (Name) values
     ('On Hold'),
     ('Work In Progress'),
     ('Cancelled'),
     ('Completed');
 
-insert into ProjectStageEventType (Description) values
+insert into ProjectStageEventType (Name) values
     ('Started'),
     ('Completed'),
     ('Reopened'),
     ('Cancelled'),
     ('Notes');
 
-insert into ProjectStageTaskEventType (Description) values
+insert into ProjectStageTaskEventType (Name) values
     ('Started'),
     ('Completed'),
     ('Reopened'),

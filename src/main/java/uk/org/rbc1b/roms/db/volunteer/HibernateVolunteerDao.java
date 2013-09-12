@@ -146,7 +146,7 @@ public class HibernateVolunteerDao implements VolunteerDao {
     public List<Assignment> findAssignments(Integer volunteerId) {
         Session session = this.sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(Assignment.class);
-        criteria.add(Restrictions.eq("personId", volunteerId));
+        criteria.add(Restrictions.eq("person.personId", volunteerId));
         criteria.addOrder(Order.asc("tradeNumberId"));
 
         return criteria.list();

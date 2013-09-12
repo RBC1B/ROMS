@@ -100,8 +100,8 @@ public class HibernateDepartmentDao implements DepartmentDao {
 
             criteria.add(Restrictions.or(Restrictions.like("person.forename", searchValue),
                     Restrictions.like("person.surname", searchValue),
-                    Restrictions.like("congregation.name", searchValue),
-                    Restrictions.like("team.description", searchValue), Restrictions.like("role.name", searchValue)));
+                    Restrictions.like("congregation.name", searchValue), Restrictions.like("team.name", searchValue),
+                    Restrictions.like("role.name", searchValue)));
         }
 
         if (searchCriteria.getSortValue() != null) {
@@ -125,9 +125,7 @@ public class HibernateDepartmentDao implements DepartmentDao {
             }
 
             String sortValue = searchCriteria.getSortValue();
-            if (sortValue.equals("team.name")) {
-                sortValue = "team.description";
-            } else if (sortValue.equals("tradeNumber")) {
+            if (sortValue.equals("tradeNumber")) {
                 sortValue = "tradeNumberId";
             } else if (sortValue.equals("role")) {
                 sortValue = "role.name";

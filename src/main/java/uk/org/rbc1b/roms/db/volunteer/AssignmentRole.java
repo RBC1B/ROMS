@@ -24,32 +24,26 @@
 package uk.org.rbc1b.roms.db.volunteer;
 
 /**
- *
- * @author oliver.elder.esq
+ * Name of the role the volunteer is in in their assignment.
  */
-public class TradeNumber {
+public class AssignmentRole {
+    private Integer assignmentRoleId;
+    private String name;
 
-    private Integer tradeNumberId;
-    private String description;
-
-    public Integer getTradeNumberId() {
-        return tradeNumberId;
+    public Integer getAssignmentRoleId() {
+        return assignmentRoleId;
     }
 
-    public void setTradeNumberId(Integer tradeNumberId) {
-        this.tradeNumberId = tradeNumberId;
+    public void setAssignmentRoleId(Integer assignmentRoleId) {
+        this.assignmentRoleId = assignmentRoleId;
     }
 
-    public String getDescription() {
-        return description;
+    public String getName() {
+        return name;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return "TradeNumber{" + "tradeNumberId=" + tradeNumberId + '}';
-    }
 }

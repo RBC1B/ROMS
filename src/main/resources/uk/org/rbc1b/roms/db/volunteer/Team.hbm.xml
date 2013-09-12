@@ -5,6 +5,6 @@
         <id name="teamId" >
             <generator class="identity"/>
         </id>
-        <property name="description" length="50" />
+        <property name="name" length="50" />
     </class>
 </hibernate-mapping>
