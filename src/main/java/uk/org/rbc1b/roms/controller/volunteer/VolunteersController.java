@@ -613,14 +613,19 @@ public class VolunteersController {
     /**
      * Produce the Volunteer Badge PDF.
      * @param volunteerId volunteer id of for his/her badge
+     * @param volunteerBadgeId volunteer badge id
      * @return modelAndView of the VolunteerBadgePdfView
      */
-    @RequestMapping(value = "{volunteerId}/rbc-{volunteerId}-badge.pdf", method = RequestMethod.GET)
-    public ModelAndView produceVolunteerBadgePdf(@PathVariable Integer volunteerId) {
-        ModelAndView modelAndView = new ModelAndView("volunteerBadgePdfView");
+    @RequestMapping(value = "{volunteerId}/rbc-{volunteerBadgeId}-badge.pdf", method = RequestMethod.GET)
+    public ModelAndView produceVolunteerBadgePdf(@PathVariable Integer volunteerId, @PathVariable Integer volunteerBadgeId) {
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
-        modelAndView.getModelMap().addAttribute("volunteer", volunteer);
-        return modelAndView;
+        if (volunteerId.equals(volunteerBadgeId)) {
+            ModelAndView modelAndView = new ModelAndView("volunteerBadgePdfView");
+            modelAndView.getModelMap().addAttribute("volunteer", volunteer);
+            return modelAndView;
+        } else {
+            return new ModelAndView("redirect:" + VolunteerModelFactory.generateUri(volunteer.getPersonId()));
+        }
     }
 
     private String generateAvailability(boolean... availabilityDays) {
