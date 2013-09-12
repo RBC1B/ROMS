@@ -26,11 +26,14 @@ package uk.org.rbc1b.roms.db.kingdomhall;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 /**
- * @author oliver.elder.esq
+ * Interact with the Kingdom Hall entities.
  */
 @Repository
 public class HibernateKingdomHallDao implements KingdomHallDao {
@@ -39,6 +42,7 @@ public class HibernateKingdomHallDao implements KingdomHallDao {
     private SessionFactory sessionFactory;
 
     @Override
+    @Cacheable(value = "kingdomHall.kingdomHall", key = "#kingdomHallId")
     public KingdomHall findKingdomHall(Integer kingdomHallId) {
         return (KingdomHall) this.sessionFactory.getCurrentSession().get(KingdomHall.class, kingdomHallId);
     }
@@ -54,9 +58,24 @@ public class HibernateKingdomHallDao implements KingdomHallDao {
         return halls;
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<KingdomHall> findKingdomHalls(String name) {
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(KingdomHall.class);
+        criteria.add(Restrictions.like("name", "%" + name + "%"));
+        return criteria.list();
+    }
+
     @Override
     public void createKingdomHall(KingdomHall kingdomHall) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    @CacheEvict(value = "kingdomHall.kingdomHall", key = "#kingdomHall.kingdomHallId")
+    public void updateKingdomHall(KingdomHall kingdomHall) {
+        throw new UnsupportedOperationException("Not supported yet.");
+
     }
 
     public void setSessionFactory(SessionFactory sessionFactory) {
@@ -64,8 +83,8 @@ public class HibernateKingdomHallDao implements KingdomHallDao {
     }
 
     @Override
+    @CacheEvict(value = "kingdomHall.kingdomHall", key = "#kingdomHall.kingdomHallId")
     public void deleteKingdomHall(KingdomHall kingdomHall) {
-        throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods, choose
-                                                                       // Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

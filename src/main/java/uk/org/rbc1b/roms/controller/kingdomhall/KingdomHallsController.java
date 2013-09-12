@@ -80,6 +80,30 @@ public class KingdomHallsController {
     }
 
     /**
+     * Search for a kingdom by name.
+     * @param name partial name match
+     * @return list of matching kingdom halls
+     */
+    @RequestMapping(value = "search", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public KingdomHallSearchResponse findCongregations(@RequestParam(value = "name", required = true) String name) {
+        List<KingdomHall> kingdomHalls = kingdomHallDao.findKingdomHalls(name);
+
+        KingdomHallSearchResponse response = new KingdomHallSearchResponse();
+        if (!kingdomHalls.isEmpty()) {
+            List<KingdomHallSearchResult> results = new ArrayList<KingdomHallSearchResult>();
+            for (KingdomHall kingdomHall : kingdomHalls) {
+                KingdomHallSearchResult result = new KingdomHallSearchResult();
+                result.setId(kingdomHall.getKingdomHallId());
+                result.setName(kingdomHall.getName());
+                results.add(result);
+            }
+            response.setResults(results);
+        }
+        return response;
+    }
+
+    /**
      * Create a new kingdom hall.
      * @param kingdomHallForm form bean
      * @return view name

@@ -42,6 +42,7 @@ import uk.org.rbc1b.roms.db.CongregationDao;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.PersonDao;
 import uk.org.rbc1b.roms.db.circuit.CircuitDao;
+import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHallDao;
 import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 
@@ -138,7 +139,11 @@ public class CongregationsController {
         CongregationForm form = new CongregationForm();
         form.setName(congregation.getName());
         form.setNumber(congregation.getNumber());
-        form.setKingdomHallId(congregation.getKingdomHall().getKingdomHallId());
+
+        KingdomHall kingdomHall = kingdomHallDao.findKingdomHall(congregation.getKingdomHall().getKingdomHallId());
+
+        form.setKingdomHallId(kingdomHall.getKingdomHallId());
+        form.setKingdomHallName(kingdomHall.getName());
         form.setCircuitId(congregation.getCircuit().getCircuitId());
         form.setRbcRegionId(congregation.getRbcRegionId());
         form.setPublishers(congregation.getPublishers());
@@ -167,7 +172,6 @@ public class CongregationsController {
         }
 
         model.addAttribute("congregationForm", form);
-        model.addAttribute("kingdomHalls", kingdomHallDao.findKingdomHalls());
         model.addAttribute("circuits", circuitDao.findCircuits());
         model.addAttribute("rbcRegions", referenceDao.findRbcRegionValues());
         model.addAttribute("rbcSubRegions", referenceDao.findRbcSubRegionValues());

@@ -69,6 +69,17 @@ $(document).ready(function() {
 	$("#number").numeric({ negative : false, decimal: false });
     }
     
+    $("#kingdomHallName").typeahead({
+        source: roms.common.kingdomHallTypeAheadSource,
+        minLength: 2
+    });
+
+    // we always clear the kingdom hall id on change.
+    // it will be re-calculated in validation
+    $("#kingdomHallName").change(function() {
+        $("#kingdomHallId").val(null);
+    });
+    
     $('#congregationForm').validate({
         rules:{
             name: {
@@ -76,16 +87,36 @@ $(document).ready(function() {
                 required: true
             },
             number: {
-        	required: true
+                required: true
             },
-            kingdomHallId: {
-        	required: true
+            kingdomHallName: {
+                required: true,
+                remote: {
+                    // check for an exact match. Populate the kingdom hall id
+                    url: roms.common.relativePath + "/kingdom-halls/search",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: {
+                        name: function() {
+                            return $("#kingdomHallName").val();
+                        }
+                    },
+                    dataFilter: function(rawData) {
+                        var data = JSON.parse(rawData)
+                        if (data.results && data.results[0].name == $("#kingdomHallName").val()) {
+                            $("#kingdomHallId").val(data.results[0].id);
+                            return true;
+
+                        }
+                        return false;
+                    }
+                }
             },
             circuitId: {
-        	required: true
+                required: true
             },
             strategy: {
-        	maxlength: 1000
+                maxlength: 1000
             }
         },
         errorPlacement: roms.common.validatorErrorPlacement

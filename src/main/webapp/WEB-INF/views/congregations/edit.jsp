@@ -35,10 +35,8 @@
                 <label>Number</label>
                 <form:input path="number" />
                 <label>Kingdom hall</label>
-                <form:select path="kingdomHallId">
-                    <form:option value="" />
-                    <form:options items="${kingdomHalls}" itemValue="kingdomHallId" itemLabel="name" />
-                </form:select>
+                <form:input path="kingdomHallName" autocomplete="off" />
+                <form:hidden path="kingdomHallId" />
                 <label>Circuit</label>
                 <form:select path="circuitId">
                     <form:option value="" />

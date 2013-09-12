@@ -78,6 +78,26 @@ roms.common.userTypeAheadSource = function(query, process) {
     });
 }
 
+roms.common.kingdomHallTypeAheadSource = function(query, process) {
+    $.ajax({
+        url: roms.common.relativePath + "/kingdom-halls/search",
+        contentType: "application/json",
+        dataType: "json",
+        data:  {
+            name: query
+        },
+        success: function(data) {
+            var results = [];
+            if(data.results) {
+                $.each(data.results, function() {
+                    results.push(this.name);
+                });
+            }
+            return process(results);
+        }
+    });
+}
+
 /**
  * Match a person to a given forename and surname (exact match).
  * This assumes we have the person-link-search-form and person-link-modal elements on the page

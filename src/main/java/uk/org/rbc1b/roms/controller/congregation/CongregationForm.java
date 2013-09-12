@@ -39,6 +39,7 @@ public class CongregationForm {
     private String number;
     @NotNull
     private Integer kingdomHallId;
+    private String kingdomHallName;
     @NotNull
     private Integer circuitId;
     private Integer rbcRegionId;
@@ -88,6 +89,14 @@ public class CongregationForm {
 
     public void setKingdomHallId(Integer kingdomHallId) {
         this.kingdomHallId = kingdomHallId;
+    }
+
+    public String getKingdomHallName() {
+        return kingdomHallName;
+    }
+
+    public void setKingdomHallName(String kingdomHallName) {
+        this.kingdomHallName = kingdomHallName;
     }
 
     public Integer getCircuitId() {
