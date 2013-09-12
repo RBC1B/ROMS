@@ -15,6 +15,7 @@ The contents of the department assignments tab.
                 <th>Role</th>
                 <th>Trade No.</th>
                 <th>Assigned</th>
+                <th>Action</th>
             </tr>
         <thead />
         <tbody>

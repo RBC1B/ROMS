@@ -68,6 +68,7 @@
             <div class="clearfix"></div>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
+        <%@ include file="/WEB-INF/views/common/mustache-list-actions.jsp" %>
         <script type="text/javascript" src="<c:url value='/javascript/departments.js' />" ></script>
     </body>
 </html>

@@ -45,6 +45,7 @@ $(document).ready(function() {
 	    }
     );
    
+    var assignmentListActionTemplate = $("#read-only-list-action").html();
     roms.common.datatables(
 	    $('#department-assignment-list'),
 	    {
@@ -59,7 +60,14 @@ $(document).ready(function() {
 		              {   "sName": "team.name", "mData": "team.name" },
 		              {   "sName": "role", "mData": "role" },
 		              {   "sName": "tradeNumber", "mData": "tradeNumber" },
-		              {   "sName": "assignedDate", "mData": "assignedDate" }
+		              {   "sName": "assignedDate", "mData": "assignedDate" },
+		              {   "sName": "action", "bSortable": false,
+		                  "mData":
+		                      function ( data, type, val ) {
+		                          data.person.uriBase = roms.common.relativePath;
+		                          return Mustache.to_html(assignmentListActionTemplate, data.person);
+		                      }
+		              }
 	            ]
 	        }
 	    );
