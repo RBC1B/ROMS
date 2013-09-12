@@ -32,8 +32,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
-import uk.org.rbc1b.roms.db.volunteer.Qualification;
-import uk.org.rbc1b.roms.db.volunteer.QualificationDao;
+import uk.org.rbc1b.roms.db.volunteer.qualification.Qualification;
+import uk.org.rbc1b.roms.db.volunteer.qualification.QualificationDao;
 
 /**
  * Qualification types which may be applied to a volunteer.

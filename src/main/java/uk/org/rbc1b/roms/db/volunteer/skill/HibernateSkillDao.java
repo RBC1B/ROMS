@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.db.volunteer;
+package uk.org.rbc1b.roms.db.volunteer.skill;
 
 import java.util.List;
 import org.hibernate.Criteria;
@@ -77,15 +77,15 @@ public class HibernateSkillDao implements SkillDao {
     }
 
     @Override
-    @Cacheable("category.category")
-    public Category findCategory(Integer categoryId) {
-        return (Category) this.sessionFactory.getCurrentSession().get(Category.class, categoryId);
+    @Cacheable("skillCategory.skillCategory")
+    public SkillCategory findSkillCategory(Integer skillCategoryId) {
+        return (SkillCategory) this.sessionFactory.getCurrentSession().get(SkillCategory.class, skillCategoryId);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Category> findCategories() {
-        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Category.class);
+    public List<SkillCategory> findSkillCategories() {
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(SkillCategory.class);
         return criteria.list();
     }
 

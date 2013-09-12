@@ -28,11 +28,11 @@ import org.springframework.stereotype.Component;
 import uk.org.rbc1b.roms.controller.common.model.EntityModel;
 import uk.org.rbc1b.roms.controller.department.DepartmentModelFactory;
 import uk.org.rbc1b.roms.controller.skill.category.CategoryModelFactory;
-import uk.org.rbc1b.roms.db.volunteer.Category;
-import uk.org.rbc1b.roms.db.volunteer.Department;
-import uk.org.rbc1b.roms.db.volunteer.DepartmentDao;
-import uk.org.rbc1b.roms.db.volunteer.Skill;
-import uk.org.rbc1b.roms.db.volunteer.SkillDao;
+import uk.org.rbc1b.roms.db.volunteer.department.Department;
+import uk.org.rbc1b.roms.db.volunteer.department.DepartmentDao;
+import uk.org.rbc1b.roms.db.volunteer.skill.Skill;
+import uk.org.rbc1b.roms.db.volunteer.skill.SkillCategory;
+import uk.org.rbc1b.roms.db.volunteer.skill.SkillDao;
 
 /**
  * Generate the skills models.
@@ -77,7 +77,7 @@ public class SkillModelFactory {
         model.setUri(generateUri(skill.getSkillId()));
         model.setEditUri(generateUri(skill.getSkillId()) + "/edit");
 
-        Category category = skillDao.findCategory(skill.getCategory().getCategoryId());
+        SkillCategory category = skillDao.findSkillCategory(skill.getCategory().getSkillCategoryId());
 
         model.setCategory(categoryModelFactory.generateCategoryModel(category));
 

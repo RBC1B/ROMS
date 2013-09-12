@@ -24,7 +24,7 @@
 package uk.org.rbc1b.roms.controller.skill.category;
 
 import org.springframework.stereotype.Component;
-import uk.org.rbc1b.roms.db.volunteer.Category;
+import uk.org.rbc1b.roms.db.volunteer.skill.SkillCategory;
 
 /**
  * Access the skill categories.
@@ -36,11 +36,11 @@ public class CategoryModelFactory {
 
     /**
      * Generate the uri used to access the category pages.
-     * @param categoryId optional category id
+     * @param skillCategoryId optional category id
      * @return uri
      */
-    public static String generateUri(Integer categoryId) {
-        return categoryId != null ? BASE_URI + categoryId : BASE_URI;
+    public static String generateUri(Integer skillCategoryId) {
+        return skillCategoryId != null ? BASE_URI + skillCategoryId : BASE_URI;
     }
 
     /**
@@ -48,11 +48,11 @@ public class CategoryModelFactory {
      * @param category category
      * @return model
      */
-    public CategoryModel generateCategoryModel(Category category) {
-        CategoryModel model = new CategoryModel();
-        model.setCategoryId(category.getCategoryId());
+    public SkillCategoryModel generateCategoryModel(SkillCategory category) {
+        SkillCategoryModel model = new SkillCategoryModel();
+        model.setSkillCategoryId(category.getSkillCategoryId());
         model.setName(category.getName());
-        model.setUri(generateUri(category.getCategoryId()));
+        model.setUri(generateUri(category.getSkillCategoryId()));
         model.setAppearOnBadge(category.isAppearOnBadge());
         model.setColour(category.getColour());
         return model;

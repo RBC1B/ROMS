@@ -26,6 +26,7 @@ package uk.org.rbc1b.roms.db.volunteer;
 import java.util.Set;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.application.User;
+import uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTrade;
 
 /**
  * @author oliver.elder.esq

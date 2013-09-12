@@ -38,7 +38,7 @@ public class SkillForm {
     private Integer departmentId;
     @Size(max = 250)
     private String description;
-    private Integer categoryId;
+    private Integer skillCategoryId;
 
     /**
      * @return the skillId
@@ -96,18 +96,12 @@ public class SkillForm {
         this.description = description;
     }
 
-    /**
-     * @return the categoryId
-     */
-    public Integer getCategoryId() {
-        return categoryId;
+    public Integer getSkillCategoryId() {
+        return skillCategoryId;
     }
 
-    /**
-     * @param categoryId the categoryId to set
-     */
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
+    public void setSkillCategoryId(Integer skillCategoryId) {
+        this.skillCategoryId = skillCategoryId;
     }
 
 }

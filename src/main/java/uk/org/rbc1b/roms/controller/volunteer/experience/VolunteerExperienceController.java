@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableRequestData;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableResult;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
-import uk.org.rbc1b.roms.db.volunteer.VolunteerTrade;
-import uk.org.rbc1b.roms.db.volunteer.VolunteerTradeSearchCriteria;
+import uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTrade;
+import uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTradeSearchCriteria;
 
 /**
  * Control the display of the volunteer trades (experience) list.

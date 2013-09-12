@@ -27,7 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
 import uk.org.rbc1b.roms.db.PersonDao;
-import uk.org.rbc1b.roms.db.volunteer.VolunteerTrade;
+import uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTrade;
 
 /**
  * Generate the volunteer trade model.

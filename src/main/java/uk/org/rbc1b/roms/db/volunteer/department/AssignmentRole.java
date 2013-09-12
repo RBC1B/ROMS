@@ -21,23 +21,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.db.volunteer;
-
-import uk.org.rbc1b.roms.db.common.AbstractSearchCriteria;
+package uk.org.rbc1b.roms.db.volunteer.department;
 
 /**
- * Criteria used when searching for a volunteer trade.
+ * Name of the role the volunteer is in in their assignment.
  */
-public class VolunteerTradeSearchCriteria extends AbstractSearchCriteria {
-    // no additional criteria required.
+public class AssignmentRole {
+    private Integer assignmentRoleId;
+    private String name;
 
-    @Override
-    public VolunteerTradeSearchCriteria clone() {
-        try {
-            // no deep cloning required
-            return (VolunteerTradeSearchCriteria) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new IllegalStateException("Failed to clone object");
-        }
+    public Integer getAssignmentRoleId() {
+        return assignmentRoleId;
     }
+
+    public void setAssignmentRoleId(Integer assignmentRoleId) {
+        this.assignmentRoleId = assignmentRoleId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
 }

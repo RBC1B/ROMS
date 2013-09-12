@@ -39,15 +39,15 @@ import uk.org.rbc1b.roms.controller.skill.SkillModelFactory;
 import uk.org.rbc1b.roms.db.Congregation;
 import uk.org.rbc1b.roms.db.CongregationDao;
 import uk.org.rbc1b.roms.db.reference.ReferenceDao;
-import uk.org.rbc1b.roms.db.volunteer.Department;
-import uk.org.rbc1b.roms.db.volunteer.DepartmentDao;
-import uk.org.rbc1b.roms.db.volunteer.Qualification;
-import uk.org.rbc1b.roms.db.volunteer.QualificationDao;
-import uk.org.rbc1b.roms.db.volunteer.Skill;
-import uk.org.rbc1b.roms.db.volunteer.SkillDao;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
-import uk.org.rbc1b.roms.db.volunteer.VolunteerQualification;
-import uk.org.rbc1b.roms.db.volunteer.VolunteerSkill;
+import uk.org.rbc1b.roms.db.volunteer.department.Department;
+import uk.org.rbc1b.roms.db.volunteer.department.DepartmentDao;
+import uk.org.rbc1b.roms.db.volunteer.qualification.Qualification;
+import uk.org.rbc1b.roms.db.volunteer.qualification.QualificationDao;
+import uk.org.rbc1b.roms.db.volunteer.qualification.VolunteerQualification;
+import uk.org.rbc1b.roms.db.volunteer.skill.Skill;
+import uk.org.rbc1b.roms.db.volunteer.skill.SkillDao;
+import uk.org.rbc1b.roms.db.volunteer.skill.VolunteerSkill;
 
 /**
  * Generate the volunteer model.

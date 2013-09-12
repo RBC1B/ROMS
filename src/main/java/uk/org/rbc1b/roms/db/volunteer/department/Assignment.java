@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.db.volunteer;
+package uk.org.rbc1b.roms.db.volunteer.department;
 
 import java.sql.Date;
 import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;

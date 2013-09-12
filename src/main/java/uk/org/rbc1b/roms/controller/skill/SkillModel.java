@@ -24,7 +24,7 @@
 package uk.org.rbc1b.roms.controller.skill;
 
 import uk.org.rbc1b.roms.controller.common.model.EntityModel;
-import uk.org.rbc1b.roms.controller.skill.category.CategoryModel;
+import uk.org.rbc1b.roms.controller.skill.category.SkillCategoryModel;
 
 /**
  * Basic skill information used in the skill results.
@@ -37,7 +37,7 @@ public class SkillModel {
     private String name;
     private EntityModel department;
     private String description;
-    private CategoryModel category;
+    private SkillCategoryModel category;
 
     public Integer getSkillId() {
         return skillId;
@@ -90,14 +90,14 @@ public class SkillModel {
     /**
      * @return the category
      */
-    public CategoryModel getCategory() {
+    public SkillCategoryModel getCategory() {
         return category;
     }
 
     /**
      * @param category the category to set
      */
-    public void setCategory(CategoryModel category) {
+    public void setCategory(SkillCategoryModel category) {
         this.category = category;
     }
 }

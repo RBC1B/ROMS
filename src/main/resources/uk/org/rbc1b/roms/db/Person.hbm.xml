@@ -54,7 +54,7 @@
 
         <set name="trades" inverse="true" cascade="all-delete-orphan">
             <key column="personId" />
-            <one-to-many class="uk.org.rbc1b.roms.db.volunteer.VolunteerTrade" />
+            <one-to-many class="uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTrade" />
         </set>
     </joined-subclass>
 </hibernate-mapping>

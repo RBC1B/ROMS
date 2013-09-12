@@ -42,13 +42,13 @@ import uk.org.rbc1b.roms.controller.skill.SkillModel;
 import uk.org.rbc1b.roms.controller.skill.SkillModelFactory;
 import uk.org.rbc1b.roms.controller.volunteer.AssignmentModel;
 import uk.org.rbc1b.roms.controller.volunteer.AssignmentModelFactory;
-import uk.org.rbc1b.roms.db.volunteer.Assignment;
-import uk.org.rbc1b.roms.db.volunteer.AssignmentSearchCriteria;
-import uk.org.rbc1b.roms.db.volunteer.Department;
-import uk.org.rbc1b.roms.db.volunteer.DepartmentDao;
-import uk.org.rbc1b.roms.db.volunteer.Skill;
-import uk.org.rbc1b.roms.db.volunteer.SkillDao;
-import uk.org.rbc1b.roms.db.volunteer.SkillSearchCriteria;
+import uk.org.rbc1b.roms.db.volunteer.department.Assignment;
+import uk.org.rbc1b.roms.db.volunteer.department.AssignmentSearchCriteria;
+import uk.org.rbc1b.roms.db.volunteer.department.Department;
+import uk.org.rbc1b.roms.db.volunteer.department.DepartmentDao;
+import uk.org.rbc1b.roms.db.volunteer.skill.Skill;
+import uk.org.rbc1b.roms.db.volunteer.skill.SkillDao;
+import uk.org.rbc1b.roms.db.volunteer.skill.SkillSearchCriteria;
 
 /**
  * Control the display and editing of departments.

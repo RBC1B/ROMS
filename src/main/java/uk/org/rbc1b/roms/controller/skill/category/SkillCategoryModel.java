@@ -21,37 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.db.volunteer;
-
-import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
-import uk.org.rbc1b.roms.db.Person;
+package uk.org.rbc1b.roms.controller.skill.category;
 
 /**
- * Captures the data entered by the volunteer in their form.
- * @author oliver.elder.esq
+ * Model representing a skill category.
  */
-public class VolunteerTrade extends DefaultUpdateAuditable {
-    private static final long serialVersionUID = -4191236742163964643L;
-    private Integer volunteerTradeId;
-    private Person person;
+public class SkillCategoryModel {
+    private String uri;
     private String name;
-    private String experienceDescription;
-    private Integer experienceYears;
+    private Integer skillCategoryId;
+    private String colour;
+    private boolean appearOnBadge;
 
-    public Integer getVolunteerTradeId() {
-        return volunteerTradeId;
+    public Integer getSkillCategoryId() {
+        return skillCategoryId;
     }
 
-    public void setVolunteerTradeId(Integer volunteerTradeId) {
-        this.volunteerTradeId = volunteerTradeId;
+    public void setSkillCategoryId(Integer skillCategoryId) {
+        this.skillCategoryId = skillCategoryId;
     }
 
-    public Person getPerson() {
-        return person;
+    public String getUri() {
+        return uri;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 
     public String getName() {
@@ -62,19 +57,20 @@ public class VolunteerTrade extends DefaultUpdateAuditable {
         this.name = name;
     }
 
-    public String getExperienceDescription() {
-        return experienceDescription;
+    public String getColour() {
+        return colour;
     }
 
-    public void setExperienceDescription(String experienceDescription) {
-        this.experienceDescription = experienceDescription;
+    public void setColour(String colour) {
+        this.colour = colour;
     }
 
-    public Integer getExperienceYears() {
-        return experienceYears;
+    public boolean isAppearOnBadge() {
+        return appearOnBadge;
     }
 
-    public void setExperienceYears(Integer experienceYears) {
-        this.experienceYears = experienceYears;
+    public void setAppearOnBadge(boolean appearOnBadge) {
+        this.appearOnBadge = appearOnBadge;
     }
+
 }

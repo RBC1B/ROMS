@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<hibernate-mapping  package="uk.org.rbc1b.roms.db.volunteer">
-    <class name="uk.org.rbc1b.roms.db.volunteer.Category" table="Category">
-        <id name="categoryId">
+<hibernate-mapping  package="uk.org.rbc1b.roms.db.volunteer.skill">
+    <class name="uk.org.rbc1b.roms.db.volunteer.skill.SkillCategory" table="SkillCategory">
+        <id name="skillCategoryId">
             <generator class="identity"/>
         </id>
         <property length="50" name="name" unique="true"/>

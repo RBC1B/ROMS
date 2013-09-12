@@ -29,8 +29,8 @@
                             <form:options items="${departments}" itemValues="department" itemLabel="name" itemValue="departmentId" />
                         </form:select>
                         <p>Category</p>
-                        <form:select path="categoryId">
-                            <form:options items="${categories}" itemValues="category" itemLabel="name" itemValue="categoryId" />
+                        <form:select path="skillCategoryId">
+                            <form:options items="${categories}" itemValues="category" itemLabel="name" itemValue="skillCategoryId" />
                         </form:select>
                     </fieldset>
                 </div>

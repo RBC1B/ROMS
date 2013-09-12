@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.db.volunteer;
+package uk.org.rbc1b.roms.db.volunteer.department;
 
 import java.util.List;
 import org.hibernate.Criteria;

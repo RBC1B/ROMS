@@ -21,7 +21,7 @@ The contents of the department linked skills.
                         <c:when test="${not empty skill.category}">
                             <td>
                                 <c:choose>
-                                    <c:when test="${skill.category.colour != 'Blank'}">
+                                    <c:when test="${!empty skill.category.colour}">
                                         <c:set var="categoryColour" value="${skill.category.colour}" />
                                     </c:when>
                                     <c:otherwise>

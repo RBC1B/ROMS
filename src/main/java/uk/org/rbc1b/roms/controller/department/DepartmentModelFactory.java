@@ -29,8 +29,8 @@ import uk.org.rbc1b.roms.controller.common.model.EntityModel;
 import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.PersonDao;
-import uk.org.rbc1b.roms.db.volunteer.Assignment;
-import uk.org.rbc1b.roms.db.volunteer.Department;
+import uk.org.rbc1b.roms.db.volunteer.department.Assignment;
+import uk.org.rbc1b.roms.db.volunteer.department.Department;
 
 /**
  * Generate models for the departments.

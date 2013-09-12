@@ -28,7 +28,7 @@ import java.util.Map;
 import java.util.Set;
 import uk.org.rbc1b.roms.controller.common.model.EntityModel;
 import uk.org.rbc1b.roms.controller.common.model.PersonModel;
-import uk.org.rbc1b.roms.db.volunteer.VolunteerTrade;
+import uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTrade;
 
 /**
  * Model of volunteer details.

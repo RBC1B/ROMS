@@ -21,9 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.db.volunteer;
+package uk.org.rbc1b.roms.db.volunteer.skill;
 
 import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
+import uk.org.rbc1b.roms.db.volunteer.department.Department;
 
 /**
  * A capability that may be owned by a volunteer, and required on a project.
@@ -35,7 +36,7 @@ public class Skill extends DefaultUpdateAuditable {
     private String name;
     private Department department;
     private String description;
-    private Category category;
+    private SkillCategory category;
 
     /**
      * @return the skillId
@@ -96,14 +97,14 @@ public class Skill extends DefaultUpdateAuditable {
     /**
      * @return the category
      */
-    public Category getCategory() {
+    public SkillCategory getCategory() {
         return category;
     }
 
     /**
      * @param category the category to set
      */
-    public void setCategory(Category category) {
+    public void setCategory(SkillCategory category) {
         this.category = category;
     }
 

@@ -38,6 +38,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Repository;
 import uk.org.rbc1b.roms.controller.common.SortDirection;
+import uk.org.rbc1b.roms.db.volunteer.department.Assignment;
+import uk.org.rbc1b.roms.db.volunteer.qualification.VolunteerQualification;
+import uk.org.rbc1b.roms.db.volunteer.skill.VolunteerSkill;
+import uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTrade;
+import uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTradeSearchCriteria;
 
 /**
  * @author rahulsingh

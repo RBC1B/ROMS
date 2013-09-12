@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<hibernate-mapping package="uk.org.rbc1b.roms.db.volunteer">
+<hibernate-mapping package="uk.org.rbc1b.roms.db.volunteer.skill">
     <class name="Skill" table="Skill">
         <id name="skillId">
             <generator class="identity"/>
         </id>
         <property length="50" name="name" unique="true"/>
-        <many-to-one class="uk.org.rbc1b.roms.db.volunteer.Department"
+        <many-to-one class="uk.org.rbc1b.roms.db.volunteer.department.Department"
                      column="DepartmentId"
                      name="department">
         </many-to-one>
         <property length="250" name="description"/>
-        <many-to-one class="uk.org.rbc1b.roms.db.volunteer.Category"
-                     column="CategoryId"
+        <many-to-one class="uk.org.rbc1b.roms.db.volunteer.skill.SkillCategory"
+                     column="SkillCategoryId"
                      name="category">
         </many-to-one>
         <property name="updateTime" not-null="true"  />

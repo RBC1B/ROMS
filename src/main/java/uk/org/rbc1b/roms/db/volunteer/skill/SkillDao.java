@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.db.volunteer;
+package uk.org.rbc1b.roms.db.volunteer.skill;
 
 import java.util.List;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -76,12 +76,12 @@ public interface SkillDao {
 
     /**
      * Find the category.
-     * @param categoryId id
+     * @param skillCategoryId id
      * @return Category, or null if not found
      */
     @PreAuthorize("hasPermission('SKILL', 'READ')")
     @Transactional(readOnly = true)
-    Category findCategory(Integer categoryId);
+    SkillCategory findSkillCategory(Integer skillCategoryId);
 
     /**
      * Get all Category.
@@ -89,6 +89,6 @@ public interface SkillDao {
      */
     @PreAuthorize("hasPermission('SKILL', 'READ')")
     @Transactional(readOnly = true)
-    List<Category> findCategories();
+    List<SkillCategory> findSkillCategories();
 
 }

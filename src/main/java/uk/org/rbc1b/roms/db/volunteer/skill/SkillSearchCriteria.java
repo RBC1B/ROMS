@@ -21,56 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.controller.skill.category;
+package uk.org.rbc1b.roms.db.volunteer.skill;
 
 /**
- * Model representing a skill category.
+ * Criteria used when looking up skills.
  */
-public class CategoryModel {
-    private String uri;
-    private String name;
-    private Integer categoryId;
-    private String colour;
-    private boolean appearOnBadge;
+public class SkillSearchCriteria {
+    private Integer departmentId;
 
-    public String getUri() {
-        return uri;
+    public Integer getDepartmentId() {
+        return departmentId;
     }
 
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public String getColour() {
-        return colour;
-    }
-
-    public void setColour(String colour) {
-        this.colour = colour;
-    }
-
-    public boolean isAppearOnBadge() {
-        return appearOnBadge;
-    }
-
-    public void setAppearOnBadge(boolean appearOnBadge) {
-        this.appearOnBadge = appearOnBadge;
+    public void setDepartmentId(Integer departmentId) {
+        this.departmentId = departmentId;
     }
 
 }

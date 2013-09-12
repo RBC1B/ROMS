@@ -89,11 +89,11 @@ THE SOFTWARE.
                 <value>uk/org/rbc1b/roms/db/volunteer/Assignment.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/AssignmentRole.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/Attendance.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/volunteer/Category.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/Department.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/InvitationConfirmation.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/Qualification.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/Skill.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/volunteer/SkillCategory.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/Team.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/VolunteerQualification.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/VolunteerSkill.hbm.xml</value>
@@ -171,7 +171,7 @@ THE SOFTWARE.
                     <property name="name" value="skill.skill" />
                 </bean>
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
-                    <property name="name" value="category.category" />
+                    <property name="name" value="skillCategory.skillCategory" />
                 </bean>
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
                     <property name="name" value="qualification.qualification" />

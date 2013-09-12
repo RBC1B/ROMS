@@ -37,10 +37,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.controller.LoggingHandlerExceptionResolver;
-import uk.org.rbc1b.roms.db.volunteer.DepartmentDao;
-import uk.org.rbc1b.roms.db.volunteer.Skill;
-import uk.org.rbc1b.roms.db.volunteer.SkillDao;
-import uk.org.rbc1b.roms.db.volunteer.SkillSearchCriteria;
+import uk.org.rbc1b.roms.db.volunteer.department.DepartmentDao;
+import uk.org.rbc1b.roms.db.volunteer.skill.Skill;
+import uk.org.rbc1b.roms.db.volunteer.skill.SkillDao;
+import uk.org.rbc1b.roms.db.volunteer.skill.SkillSearchCriteria;
 
 /**
  * @author ramindursingh
@@ -114,9 +114,9 @@ public class SkillsController {
         form.setName(skill.getName());
         form.setDepartmentId(skill.getDepartment().getDepartmentId());
         form.setDescription(skill.getDescription());
-        form.setCategoryId(skill.getCategory().getCategoryId());
+        form.setSkillCategoryId(skill.getCategory().getSkillCategoryId());
 
-        model.addAttribute("categories", skillDao.findCategories());
+        model.addAttribute("categories", skillDao.findSkillCategories());
         model.addAttribute("departments", departmentDao.findDepartments());
         model.addAttribute("skill", form);
         return "skills/edit";
@@ -133,7 +133,7 @@ public class SkillsController {
 
         // initialise the form bean
         model.addAttribute("skill", new SkillForm());
-        model.addAttribute("categories", skillDao.findCategories());
+        model.addAttribute("categories", skillDao.findSkillCategories());
         model.addAttribute("departments", departmentDao.findDepartments());
 
         return "skills/edit";
@@ -153,7 +153,7 @@ public class SkillsController {
         }
         skill.setName(skillForm.getName());
         skill.setDescription(skillForm.getDescription());
-        skill.setCategory(skillDao.findCategory(skillForm.getCategoryId()));
+        skill.setCategory(skillDao.findSkillCategory(skillForm.getSkillCategoryId()));
         skill.setDepartment(departmentDao.findDepartment(skillForm.getDepartmentId()));
 
         skillDao.saveSkill(skill);

@@ -21,75 +21,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.db.volunteer;
+package uk.org.rbc1b.roms.db.volunteer.department;
 
 /**
- * @author ramindursingh
+ * Department team.
  */
-public class Category {
-    private Integer categoryId;
+public class Team {
+
+    private Integer teamId;
     private String name;
-    private String colour;
-    private boolean appearOnBadge;
 
-    /**
-     * @return the categoryId
-     */
-    public Integer getCategoryId() {
-        return categoryId;
+    public Integer getTeamId() {
+        return teamId;
     }
 
-    /**
-     * @param categoryId the categoryId to set
-     */
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
+    public void setTeamId(Integer teamId) {
+        this.teamId = teamId;
     }
 
-    /**
-     * @return the name
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * @param name the name to set
-     */
     public void setName(String name) {
         this.name = name;
     }
 
-    /**
-     * @return the colour
-     */
-    public String getColour() {
-        return colour;
-    }
-
-    /**
-     * @param colour the colour to set
-     */
-    public void setColour(String colour) {
-        this.colour = colour;
-    }
-
-    /**
-     * @return the appearOnBadge
-     */
-    public boolean isAppearOnBadge() {
-        return appearOnBadge;
-    }
-
-    /**
-     * @param appearOnBadge the appearOnBadge to set
-     */
-    public void setAppearOnBadge(boolean appearOnBadge) {
-        this.appearOnBadge = appearOnBadge;
-    }
-
     @Override
     public String toString() {
-        return name;
+        return "Team{" + "teamId=" + teamId + '}';
     }
 }

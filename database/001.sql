@@ -542,12 +542,12 @@ create table VolunteerQualification(
     foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
-create table Category(
-    CategoryId bigint(20) auto_increment,
-    Name varchar(50) not null unique,
-    Colour varchar(20),
-    AppearOnBadge boolean default false,
-    primary key (CategoryId)
+create table SkillCategory(
+    SkillCategoryId bigint(20) auto_increment,
+    Name            varchar(50) not null unique,
+    Colour          varchar(20),
+    AppearOnBadge   boolean default false,
+    primary key (SkillCategoryId)
 )engine=InnoDB;
 
 create table Skill(
@@ -555,12 +555,12 @@ create table Skill(
     Name            varchar(50) not null    unique,
     DepartmentId    bigint(20),
     Description     varchar(250),
-    CategoryId      bigint(20) default null,
+    SkillCategoryId bigint(20) default null,
     UpdateTime      timestamp   not null,
     UpdatedBy       bigint(20)  not null,
     primary key (SkillId),
     foreign key (DepartmentId) references Department(DepartmentId) on delete set null,
-    foreign key (CategoryId) references Category(CategoryId) on delete set null,
+    foreign key (SkillCategoryId) references SkillCategory(SkillCategoryId) on delete set null,
     foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
@@ -831,5 +831,5 @@ insert into ProjectStageTaskEventType (Name) values
     ('Cancelled'),
     ('Notes');
 
-insert into Category (Name, Colour, AppearOnBadge) values
-    ('General', 'Blank',false);
+insert into SkillCategory (Name, Colour, AppearOnBadge) values
+    ('General', null, false);

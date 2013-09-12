@@ -27,6 +27,7 @@ import java.sql.Date;
 import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.project.Project;
+import uk.org.rbc1b.roms.db.volunteer.department.Department;
 
 /**
  * The invitation of a volunteer for a given date on a project.

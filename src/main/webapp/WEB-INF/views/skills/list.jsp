@@ -35,7 +35,7 @@
                                 <td>${skill.description}</td>
                                 <td>
                                     <c:choose>
-                                        <c:when test="${skill.category.colour != 'Blank'}">
+                                        <c:when test="${!empty skill.category.colour}">
                                             <c:set var="categoryColour" value="${skill.category.colour}" />
                                         </c:when>
                                         <c:otherwise>

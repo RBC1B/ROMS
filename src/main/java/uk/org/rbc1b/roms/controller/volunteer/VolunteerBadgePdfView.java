@@ -43,11 +43,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.view.document.AbstractPdfView;
-import uk.org.rbc1b.roms.db.volunteer.Assignment;
-import uk.org.rbc1b.roms.db.volunteer.Department;
-import uk.org.rbc1b.roms.db.volunteer.DepartmentDao;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
+import uk.org.rbc1b.roms.db.volunteer.department.Assignment;
+import uk.org.rbc1b.roms.db.volunteer.department.Department;
+import uk.org.rbc1b.roms.db.volunteer.department.DepartmentDao;
 
 /**
  * View that creates the Volunteer Badge as a pdf.

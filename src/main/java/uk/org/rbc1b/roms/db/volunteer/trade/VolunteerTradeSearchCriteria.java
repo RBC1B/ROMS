@@ -21,37 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.db.project;
+package uk.org.rbc1b.roms.db.volunteer.trade;
 
-import uk.org.rbc1b.roms.db.volunteer.department.Department;
+import uk.org.rbc1b.roms.db.common.AbstractSearchCriteria;
 
 /**
- *
- * @author oliver.elder.esq
+ * Criteria used when searching for a volunteer trade.
  */
-public class Commentator {
-
-    private Integer commentatorId;
-    private Department department;
-
-    public Integer getCommentatorId() {
-        return commentatorId;
-    }
-
-    public void setCommentatorId(Integer commentatorId) {
-        this.commentatorId = commentatorId;
-    }
-
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
+public class VolunteerTradeSearchCriteria extends AbstractSearchCriteria {
+    // no additional criteria required.
 
     @Override
-    public String toString() {
-        return "Commentator{" + "commentatorId=" + commentatorId + '}';
+    public VolunteerTradeSearchCriteria clone() {
+        try {
+            // no deep cloning required
+            return (VolunteerTradeSearchCriteria) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new IllegalStateException("Failed to clone object");
+        }
     }
 }

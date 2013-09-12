@@ -27,6 +27,11 @@ import java.util.List;
 import java.util.Set;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
+import uk.org.rbc1b.roms.db.volunteer.department.Assignment;
+import uk.org.rbc1b.roms.db.volunteer.qualification.VolunteerQualification;
+import uk.org.rbc1b.roms.db.volunteer.skill.VolunteerSkill;
+import uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTrade;
+import uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTradeSearchCriteria;
 
 /**
  * Look up volunteer information.

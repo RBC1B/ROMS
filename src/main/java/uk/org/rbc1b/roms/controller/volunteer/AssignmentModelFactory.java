@@ -29,10 +29,10 @@ import uk.org.rbc1b.roms.controller.common.model.EntityModel;
 import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
 import uk.org.rbc1b.roms.db.PersonDao;
 import uk.org.rbc1b.roms.db.reference.ReferenceDao;
-import uk.org.rbc1b.roms.db.volunteer.Assignment;
-import uk.org.rbc1b.roms.db.volunteer.Department;
-import uk.org.rbc1b.roms.db.volunteer.DepartmentDao;
-import uk.org.rbc1b.roms.db.volunteer.Team;
+import uk.org.rbc1b.roms.db.volunteer.department.Assignment;
+import uk.org.rbc1b.roms.db.volunteer.department.Department;
+import uk.org.rbc1b.roms.db.volunteer.department.DepartmentDao;
+import uk.org.rbc1b.roms.db.volunteer.department.Team;
 
 /**
  * Factory class to create the assignment model.

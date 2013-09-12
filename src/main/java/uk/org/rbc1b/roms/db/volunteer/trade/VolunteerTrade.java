@@ -21,21 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.db.volunteer;
+package uk.org.rbc1b.roms.db.volunteer.trade;
+
+import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
+import uk.org.rbc1b.roms.db.Person;
 
 /**
- * Name of the role the volunteer is in in their assignment.
+ * Captures the data entered by the volunteer in their form.
+ * @author oliver.elder.esq
  */
-public class AssignmentRole {
-    private Integer assignmentRoleId;
+public class VolunteerTrade extends DefaultUpdateAuditable {
+    private static final long serialVersionUID = -4191236742163964643L;
+    private Integer volunteerTradeId;
+    private Person person;
     private String name;
+    private String experienceDescription;
+    private Integer experienceYears;
 
-    public Integer getAssignmentRoleId() {
-        return assignmentRoleId;
+    public Integer getVolunteerTradeId() {
+        return volunteerTradeId;
     }
 
-    public void setAssignmentRoleId(Integer assignmentRoleId) {
-        this.assignmentRoleId = assignmentRoleId;
+    public void setVolunteerTradeId(Integer volunteerTradeId) {
+        this.volunteerTradeId = volunteerTradeId;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     public String getName() {
@@ -46,4 +62,19 @@ public class AssignmentRole {
         this.name = name;
     }
 
+    public String getExperienceDescription() {
+        return experienceDescription;
+    }
+
+    public void setExperienceDescription(String experienceDescription) {
+        this.experienceDescription = experienceDescription;
+    }
+
+    public Integer getExperienceYears() {
+        return experienceYears;
+    }
+
+    public void setExperienceYears(Integer experienceYears) {
+        this.experienceYears = experienceYears;
+    }
 }

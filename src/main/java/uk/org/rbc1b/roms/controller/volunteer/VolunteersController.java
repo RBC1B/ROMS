@@ -56,14 +56,14 @@ import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.PersonDao;
 import uk.org.rbc1b.roms.db.application.User;
 import uk.org.rbc1b.roms.db.reference.ReferenceDao;
-import uk.org.rbc1b.roms.db.volunteer.Assignment;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao.VolunteerData;
-import uk.org.rbc1b.roms.db.volunteer.VolunteerQualification;
+import uk.org.rbc1b.roms.db.volunteer.department.Assignment;
+import uk.org.rbc1b.roms.db.volunteer.qualification.VolunteerQualification;
+import uk.org.rbc1b.roms.db.volunteer.skill.VolunteerSkill;
+import uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTrade;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerSearchCriteria;
-import uk.org.rbc1b.roms.db.volunteer.VolunteerSkill;
-import uk.org.rbc1b.roms.db.volunteer.VolunteerTrade;
 
 /**
  * @author rahulsingh

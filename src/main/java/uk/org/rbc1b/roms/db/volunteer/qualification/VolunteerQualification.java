@@ -21,53 +21,55 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.db.volunteer;
+package uk.org.rbc1b.roms.db.volunteer.qualification;
+
+import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 
 /**
- *
+ * A qualification owned by a volunteer.
  * @author oliver.elder.esq
  */
-public class Department {
+public class VolunteerQualification extends DefaultUpdateAuditable {
+    private static final long serialVersionUID = -7960214728374952774L;
+    private Integer volunteerQualificationId;
+    private Integer personId;
+    private Integer qualificationId;
+    private String comments;
 
-    private Integer departmentId;
-    private String name;
-    private Department superDepartment;
-    private String description;
-
-    public Integer getDepartmentId() {
-        return departmentId;
+    public String getComments() {
+        return comments;
     }
 
-    public void setDepartmentId(Integer departmentId) {
-        this.departmentId = departmentId;
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 
-    public String getDescription() {
-        return description;
+    public Integer getPersonId() {
+        return personId;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setPersonId(Integer personId) {
+        this.personId = personId;
     }
 
-    public String getName() {
-        return name;
+    public Integer getQualificationId() {
+        return qualificationId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setQualificationId(Integer qualificationId) {
+        this.qualificationId = qualificationId;
     }
 
-    public Department getSuperDepartment() {
-        return superDepartment;
+    public Integer getVolunteerQualificationId() {
+        return volunteerQualificationId;
     }
 
-    public void setSuperDepartment(Department superDepartment) {
-        this.superDepartment = superDepartment;
+    public void setVolunteerQualificationId(Integer volunteerQualificationId) {
+        this.volunteerQualificationId = volunteerQualificationId;
     }
 
     @Override
     public String toString() {
-        return name;
+        return "VolunteerQualification{" + "volunteerQualificationId=" + volunteerQualificationId + '}';
     }
 }

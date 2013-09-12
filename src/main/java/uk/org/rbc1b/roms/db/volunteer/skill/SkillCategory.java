@@ -21,22 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.db.volunteer;
+package uk.org.rbc1b.roms.db.volunteer.skill;
 
 /**
- * Department team.
+ * @author ramindursingh
  */
-public class Team {
-
-    private Integer teamId;
+public class SkillCategory {
+    private Integer skillCategoryId;
     private String name;
+    private String colour;
+    private boolean appearOnBadge;
 
-    public Integer getTeamId() {
-        return teamId;
+    public Integer getSkillCategoryId() {
+        return skillCategoryId;
     }
 
-    public void setTeamId(Integer teamId) {
-        this.teamId = teamId;
+    public void setSkillCategoryId(Integer skillCategoryId) {
+        this.skillCategoryId = skillCategoryId;
     }
 
     public String getName() {
@@ -47,8 +48,24 @@ public class Team {
         this.name = name;
     }
 
+    public String getColour() {
+        return colour;
+    }
+
+    public void setColour(String colour) {
+        this.colour = colour;
+    }
+
+    public boolean isAppearOnBadge() {
+        return appearOnBadge;
+    }
+
+    public void setAppearOnBadge(boolean appearOnBadge) {
+        this.appearOnBadge = appearOnBadge;
+    }
+
     @Override
     public String toString() {
-        return "Team{" + "teamId=" + teamId + '}';
+        return name;
     }
 }
