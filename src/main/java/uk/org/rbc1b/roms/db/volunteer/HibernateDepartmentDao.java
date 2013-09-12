@@ -94,13 +94,14 @@ public class HibernateDepartmentDao implements DepartmentDao {
             criteria.createAlias("person", "person", JoinType.LEFT_OUTER_JOIN);
             criteria.createAlias("person.congregation", "congregation", JoinType.LEFT_OUTER_JOIN);
             criteria.createAlias("team", "team", JoinType.LEFT_OUTER_JOIN);
+            criteria.createAlias("role", "role", JoinType.LEFT_OUTER_JOIN);
 
             String searchValue = "%" + searchCriteria.getSearch() + "%";
 
             criteria.add(Restrictions.or(Restrictions.like("person.forename", searchValue),
                     Restrictions.like("person.surname", searchValue),
                     Restrictions.like("congregation.name", searchValue),
-                    Restrictions.like("team.description", searchValue)));
+                    Restrictions.like("team.description", searchValue), Restrictions.like("role.name", searchValue)));
         }
 
         if (searchCriteria.getSortValue() != null) {
@@ -117,6 +118,10 @@ public class HibernateDepartmentDao implements DepartmentDao {
                 if (searchCriteria.getSortValue().startsWith("team")) {
                     criteria.createAlias("team", "team", JoinType.LEFT_OUTER_JOIN);
                 }
+
+                if (searchCriteria.getSortValue().equals("role")) {
+                    criteria.createAlias("role", "role", JoinType.LEFT_OUTER_JOIN);
+                }
             }
 
             String sortValue = searchCriteria.getSortValue();
@@ -125,7 +130,7 @@ public class HibernateDepartmentDao implements DepartmentDao {
             } else if (sortValue.equals("tradeNumber")) {
                 sortValue = "tradeNumberId";
             } else if (sortValue.equals("role")) {
-                sortValue = "roleId";
+                sortValue = "role.name";
             }
 
             criteria.addOrder(searchCriteria.getSortDirection() == SortDirection.ASCENDING ? Order.asc(sortValue)
@@ -153,7 +158,7 @@ public class HibernateDepartmentDao implements DepartmentDao {
             criteria.add(Restrictions.eq("personId", searchCriteria.getPersonId()));
         }
         if (searchCriteria.getRoleId() != null) {
-            criteria.add(Restrictions.eq("roleId", searchCriteria.getRoleId()));
+            criteria.add(Restrictions.eq("role.assignmentRoleId", searchCriteria.getRoleId()));
         }
         if (searchCriteria.getTeamId() != null) {
             criteria.add(Restrictions.eq("teamId", searchCriteria.getTeamId()));
