@@ -65,7 +65,7 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
     private SkillDao skillDao;
 
     /**
-     * Builds the PDF document.
+     * Builds the PDF document of the badge.
      *
      * @param model model
      * @param document document
