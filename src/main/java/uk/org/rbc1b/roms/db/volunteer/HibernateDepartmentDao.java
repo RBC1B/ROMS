@@ -90,20 +90,6 @@ public class HibernateDepartmentDao implements DepartmentDao {
             criteria.setMaxResults(searchCriteria.getMaxResults());
         }
 
-        if (searchCriteria.getSearch() != null) {
-            criteria.createAlias("person", "person", JoinType.LEFT_OUTER_JOIN);
-            criteria.createAlias("person.congregation", "congregation", JoinType.LEFT_OUTER_JOIN);
-            criteria.createAlias("team", "team", JoinType.LEFT_OUTER_JOIN);
-            criteria.createAlias("role", "role", JoinType.LEFT_OUTER_JOIN);
-
-            String searchValue = "%" + searchCriteria.getSearch() + "%";
-
-            criteria.add(Restrictions.or(Restrictions.like("person.forename", searchValue),
-                    Restrictions.like("person.surname", searchValue),
-                    Restrictions.like("congregation.name", searchValue), Restrictions.like("team.name", searchValue),
-                    Restrictions.like("role.name", searchValue)));
-        }
-
         if (searchCriteria.getSortValue() != null) {
             // we may need to join into the values of the sort column
             if (searchCriteria.getSearch() == null) {
@@ -166,6 +152,21 @@ public class HibernateDepartmentDao implements DepartmentDao {
         if (searchCriteria.getTradeNumberId() != null) {
             criteria.add(Restrictions.eq("tradeNumberId", searchCriteria.getTradeNumberId()));
         }
+
+        if (searchCriteria.getSearch() != null) {
+            criteria.createAlias("person", "person", JoinType.LEFT_OUTER_JOIN);
+            criteria.createAlias("person.congregation", "congregation", JoinType.LEFT_OUTER_JOIN);
+            criteria.createAlias("team", "team", JoinType.LEFT_OUTER_JOIN);
+            criteria.createAlias("role", "role", JoinType.LEFT_OUTER_JOIN);
+
+            String searchValue = "%" + searchCriteria.getSearch() + "%";
+
+            criteria.add(Restrictions.or(Restrictions.like("person.forename", searchValue),
+                    Restrictions.like("person.surname", searchValue),
+                    Restrictions.like("congregation.name", searchValue), Restrictions.like("team.name", searchValue),
+                    Restrictions.like("role.name", searchValue)));
+        }
+
         return criteria;
     }
 

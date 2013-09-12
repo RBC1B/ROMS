@@ -30,14 +30,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Look up volunteer information.
- *
  * @author rahulsingh
  */
 public interface VolunteerDao {
 
     /**
      * Find the volunteer with matching id, or null with no match.
-     *
      * @param volunteerId id
      * @param data additional data to populate
      * @return volunteer
@@ -48,7 +46,6 @@ public interface VolunteerDao {
 
     /**
      * Find all matching volunteers.
-     *
      * @param searchCriteria search criteria
      * @return list of matching volunteers
      */
@@ -65,7 +62,6 @@ public interface VolunteerDao {
 
     /**
      * Look up the number of volunteers matching the criteria.
-     *
      * @param searchCriteria search criteria
      * @return list of people
      */
@@ -75,7 +71,6 @@ public interface VolunteerDao {
 
     /**
      * Save a volunteer.
-     *
      * @param volunteer volunteer to
      */
     @PreAuthorize("hasPermission('VOLUNTEER', 'ADD')")
@@ -84,7 +79,6 @@ public interface VolunteerDao {
 
     /**
      * Update a volunteer.
-     *
      * @param volunteer volunteer to
      */
     @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
@@ -93,7 +87,6 @@ public interface VolunteerDao {
 
     /**
      * Find the volunteer assignments.
-     *
      * @param volunteerId id
      * @return list of assignments
      */
@@ -103,7 +96,6 @@ public interface VolunteerDao {
 
     /**
      * Find the first or primary assignment of a volunteer.
-     *
      * @param volunteerId id
      * @return assignment
      */
@@ -113,7 +105,6 @@ public interface VolunteerDao {
 
     /**
      * Find the volunteer skills.
-     *
      * @param volunteerId id
      * @return list of skills
      */
@@ -123,13 +114,30 @@ public interface VolunteerDao {
 
     /**
      * Find the volunteer qualifications.
-     *
      * @param volunteerId id
      * @return list of qualifications
      */
     @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional(readOnly = true)
     List<VolunteerQualification> findQualifications(Integer volunteerId);
+
+    /**
+     * Look up the list of volunteer trades matching the criteria. All criteria are optional.
+     * @param searchCriteria search criteria
+     * @return list of people
+     */
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
+    @Transactional(readOnly = true)
+    List<VolunteerTrade> findVolunteerTrades(VolunteerTradeSearchCriteria searchCriteria);
+
+    /**
+     * Look up the number of volunteer trades matching the criteria.
+     * @param searchCriteria search criteria
+     * @return list of people
+     */
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
+    @Transactional(readOnly = true)
+    int findVolunteerTradesCount(VolunteerTradeSearchCriteria searchCriteria);
 
     /**
      * Additional data to pull in when generating the volunteer details.

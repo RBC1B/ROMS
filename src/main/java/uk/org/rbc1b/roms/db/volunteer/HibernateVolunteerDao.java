@@ -183,6 +183,73 @@ public class HibernateVolunteerDao implements VolunteerDao {
         return criteria.list();
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<VolunteerTrade> findVolunteerTrades(VolunteerTradeSearchCriteria searchCriteria) {
+
+        Session session = this.sessionFactory.getCurrentSession();
+        Criteria criteria = createVolunteerTradeSearchCriteria(searchCriteria, session);
+
+        if (searchCriteria.getStartIndex() != null && searchCriteria.getMaxResults() != null) {
+            criteria.setFirstResult(searchCriteria.getStartIndex());
+            criteria.setMaxResults(searchCriteria.getMaxResults());
+        }
+
+        if (searchCriteria.getSortValue() != null) {
+            // we may need to join into the values of the sort column
+            if (searchCriteria.getSearch() == null) {
+                if (searchCriteria.getSortValue().startsWith("person")) {
+                    criteria.createAlias("person", "person", JoinType.LEFT_OUTER_JOIN);
+                }
+
+                if (searchCriteria.getSortValue().startsWith("person.congregation")) {
+                    criteria.createAlias("person.congregation", "congregation", JoinType.LEFT_OUTER_JOIN);
+                }
+            }
+
+            String sortValue = searchCriteria.getSortValue();
+            if (sortValue.equals("person.congregation.name")) {
+                sortValue = "congregation.name";
+            }
+
+            criteria.addOrder(searchCriteria.getSortDirection() == SortDirection.ASCENDING ? Order.asc(sortValue)
+                    : Order.desc(sortValue));
+        }
+
+        return criteria.list();
+    }
+
+    @Override
+    public int findVolunteerTradesCount(VolunteerTradeSearchCriteria searchCriteria) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Criteria criteria = createVolunteerTradeSearchCriteria(searchCriteria, session);
+
+        criteria.setProjection(Projections.rowCount());
+
+        return ((Long) criteria.uniqueResult()).intValue();
+    }
+
+    private Criteria createVolunteerTradeSearchCriteria(VolunteerTradeSearchCriteria searchCriteria, Session session) {
+
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(VolunteerTrade.class);
+
+        if (searchCriteria.getSearch() != null) {
+            criteria.createAlias("person", "person", JoinType.LEFT_OUTER_JOIN);
+            criteria.createAlias("person.congregation", "congregation", JoinType.LEFT_OUTER_JOIN);
+
+            String searchValue = "%" + searchCriteria.getSearch() + "%";
+
+            criteria.add(Restrictions.or(Restrictions.like("name", searchValue),
+                    Restrictions.like("experienceDescription", searchValue),
+                    Restrictions.like("person.forename", searchValue),
+                    Restrictions.like("person.surname", searchValue),
+                    Restrictions.like("congregation.name", searchValue)));
+        }
+
+        return criteria;
+
+    }
+
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }

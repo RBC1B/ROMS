@@ -684,10 +684,29 @@ $(document).ready(function() {
     });
     
     // volunteers experience list
+    var volunteerExperienceListActionTemplate = $("#read-only-list-action").html();
     roms.common.datatables(
         $("#volunteer-experience-list"),
         {
-            "iDisplayLength": 10
+            "iDisplayLength": 10,
+            "bProcessing": true,
+            "bServerSide": true,
+            "sAjaxSource": roms.common.relativePath + '/volunteer-experience',
+            "aoColumns": [
+                {   "sName": "person.forename", "mData": "person.forename" },
+                {   "sName": "person.surname", "mData": "person.surname" },
+                {   "sName": "person.congregation", "mData": "person.congregation.name", "sDefaultContent": "" },
+                {   "sName": "name", "mData": "name", "sDefaultContent": "" },
+                {   "sName": "experienceDescription", "mData": "experienceDescription", "sDefaultContent": "" },
+                {   "sName": "experienceYears", "mData": "experienceYears", "sDefaultContent": "" },
+                {   "sName": "action", "bSortable": false,
+                    "mData":
+                        function ( data, type, val ) {
+                            data.person.uriBase = roms.common.relativePath;
+                            return Mustache.to_html(volunteerExperienceListActionTemplate, data.person);
+                        }
+                }
+            ]            
         }
     );
     

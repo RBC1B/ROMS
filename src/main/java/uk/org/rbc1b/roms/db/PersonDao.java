@@ -55,7 +55,7 @@ public interface PersonDao {
     List<Person> findPersons(String forename, String surname);
 
     /**
-     * Look up the list of people matching the criteria. All criteria is optional.
+     * Look up the list of people matching the criteria. All criteria are optional.
      * @param searchCriteria search criteria
      * @return list of people
      */
