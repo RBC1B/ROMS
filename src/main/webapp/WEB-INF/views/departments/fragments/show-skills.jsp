@@ -37,14 +37,14 @@ The contents of the department linked skills.
                                         <span class="icon-ok">
                                     </c:when>
                                     <c:otherwise>
-                                        <span class="icon-remove">
+                                        <span class="icon-remove"></span>
                                     </c:otherwise>
                                 </c:choose>
                             </td>
                         </c:when>
                         <c:otherwise>
                             <td></td>
-                            <td><span class="icon-remove"></td>
+                            <td><span class="icon-remove"></span></td>
                         </c:otherwise>
                     </c:choose>
                 </tr>

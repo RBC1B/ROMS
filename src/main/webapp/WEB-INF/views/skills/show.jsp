@@ -1,43 +1,63 @@
 <%--
-    Document   : show
-    Created on : Jun 4, 2013, 8:49:12 AM
-    Author     : ramindursingh
+    Display the skill details.
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-    "http://www.w3.org/TR/html4/loose.dtd">
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
 <html>
-    <c:set var="pageTitle" value="Skill: ${skill.name}" />
-    <%@ include file="/WEB-INF/views/common/header.jsp" %>
-    <body>
-        <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="container-fluid">
-            <h1>Skills</h1>
-            <hr>
-            <fieldset class="container-fluid">
-                <p>Skill ID</p>
-                <p>${skill.skillId}</p>
-                <p>Skill</p>
-                <p>${skill.name}</p>
-                <p>Description</p>
-                <p>${skill.description}</p>
-                <p>Department</p>
-                <p>${skill.department.name}</p>
-                <p>Category</p>
-                <p>${skill.category.name}</p>
-                <p>Does it appear on ID badge?</p>
-                <p>${skill.category.appearOnBadge}</p>
-                <p>If appears on badge, in what colour</p>
-                <p>${skill.category.colour}</p>
-            </fieldset>
-            <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-        </div>
-        <script type="text/javascript" src="<c:url value='/javascript/skills.js' />" >
-        </script>
-    </body>
+<c:set var="pageTitle" value="Skill: ${skill.name}" />
+<%@ include file="/WEB-INF/views/common/header.jsp"%>
+<body>
+    <%@ include file="/WEB-INF/views/common/titlebar.jsp"%>
+    <div class="container-fluid">
+        <h1>Skill: ${skill.name}</h1>
+        <hr>
+        <dl class="dl-horizontal">
+            <dt>Description:</dt>
+            <dd>
+                <c:choose>
+                    <c:when test="${!empty skill.description}">${skill.description}</c:when>
+                    <c:otherwise>-</c:otherwise>
+                </c:choose>
+            </dd>
+            <dt>Department</dt>
+            <dd>
+                <a href="<c:url value='${skill.department.uri}' />">${skill.department.name}</a>
+            </dd>
+            <dt>Category:</dt>
+            <dd>
+                <c:choose>
+                    <c:when test="${!empty skill.category}">
+                        <c:choose>
+                            <c:when test="${!empty skill.category.colour}">
+                                <c:set var="categoryColour" value="${skill.category.colour}" />
+                            </c:when>
+                            <c:otherwise>
+                                <c:set var="categoryColour" value="white" />
+                            </c:otherwise>
+                        </c:choose>
+                        <div class="skill-category-colour" style="background-color:${categoryColour}"></div>
+                        ${skill.category.name}
+                    </c:when>
+                    <c:otherwise>-</c:otherwise>
+                </c:choose>
+            </dd>
+            <dt>Appear on badge?:</dt>
+            <dd>
+                <c:choose>
+                    <c:when test="${!empty skill.category && skill.category.appearOnBadge}">
+                        <span class="icon-ok"></span>
+                    </c:when>
+                    <c:otherwise>
+                        <span class="icon-remove"></span>
+                    </c:otherwise>
+                </c:choose>
+            </dd>
+        </dl>
+        <div class="clearfix"></div>
+        <%@ include file="/WEB-INF/views/common/footer.jsp"%>
+    </div>
+    <script type="text/javascript" src="<c:url value='/javascript/skills.js' />"></script>
+</body>
 </html>
