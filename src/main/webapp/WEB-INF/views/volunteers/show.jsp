@@ -43,7 +43,14 @@
                 </div>
             </div>
             <br />
-            <a class="btn btn-primary" href="<c:url value="/volunteers/${volunteer.id}/rbc-${volunteer.id}-badge.pdf"/>">Generate Badge</a>
+            <c:choose>
+                <c:when test="${!empty assignments}">
+                    <a class="btn btn-primary" href="<c:url value="/volunteers/${volunteer.id}/rbc-${volunteer.id}-badge.pdf"/>">Generate Badge</a>
+                </c:when>
+                <c:otherwise>
+                    <button class="btn" type="button" id="disabled-badge-button">Generate Badge</button><br />
+                </c:otherwise>
+            </c:choose>
             <hr>
             <c:choose>
                 <c:when test="${!empty assignments}">

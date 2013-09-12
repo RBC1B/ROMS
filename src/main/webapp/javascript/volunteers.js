@@ -683,6 +683,13 @@ $(document).ready(function() {
         return false;
     });
     
+    $("#disabled-badge-button").popover({
+        placement: 'right',
+        trigger: 'hover',
+        title: "Badge Generation - Not Possible",
+        content: "A badge cannot be generated for this volunteer until he/she recieves an assignment"
+    });
+    
     // volunteers experience list
     var volunteerExperienceListActionTemplate = $("#read-only-list-action").html();
     roms.common.datatables(
