@@ -111,7 +111,7 @@ public class HibernateDepartmentDao implements DepartmentDao {
                     criteria.createAlias("person", "person", JoinType.LEFT_OUTER_JOIN);
                 }
 
-                if (searchCriteria.getSortValue().startsWith("congregation")) {
+                if (searchCriteria.getSortValue().startsWith("person.congregation")) {
                     criteria.createAlias("person.congregation", "congregation", JoinType.LEFT_OUTER_JOIN);
                 }
 
@@ -125,7 +125,9 @@ public class HibernateDepartmentDao implements DepartmentDao {
             }
 
             String sortValue = searchCriteria.getSortValue();
-            if (sortValue.equals("tradeNumber")) {
+            if (sortValue.equals("person.congregation.name")) {
+                sortValue = "congregation.name";
+            } else if (sortValue.equals("tradeNumber")) {
                 sortValue = "tradeNumberId";
             } else if (sortValue.equals("role")) {
                 sortValue = "role.name";
