@@ -45,6 +45,7 @@ import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableResult;
 import uk.org.rbc1b.roms.db.Address;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHallDao;
+import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 
 /**
  * Controller for the kingdom hall related pages.
@@ -57,6 +58,7 @@ public class KingdomHallsController {
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggingHandlerExceptionResolver.class);
     private static final String BASE_URI = "/kingdom-halls/";
     private KingdomHallDao kingdomHallDao;
+    private ReferenceDao referenceDao;
 
     /**
      * Generate the uri used to access the kingdom hall pages.
@@ -161,6 +163,7 @@ public class KingdomHallsController {
 
         model.addAttribute("kingdomHall", kingdomHall);
         model.addAttribute("congregations", kingdomHallDao.findCongregations(kingdomHallId));
+        model.addAttribute("ownershipType", referenceDao.findOwnershipTypeValues().get(kingdomHall.getKingdomHallId()));
 
         return "kingdom-halls/show";
     }
@@ -222,5 +225,10 @@ public class KingdomHallsController {
     @Autowired
     public void setKingdomHallDao(KingdomHallDao kingdomHallDao) {
         this.kingdomHallDao = kingdomHallDao;
+    }
+
+    @Autowired
+    public void setReferenceDao(ReferenceDao referenceDao) {
+        this.referenceDao = referenceDao;
     }
 }

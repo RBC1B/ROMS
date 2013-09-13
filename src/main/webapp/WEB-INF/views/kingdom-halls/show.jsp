@@ -37,12 +37,16 @@
                         <c:otherwise><i>No congregations meet at this Hall</i></c:otherwise>
                     </c:choose>
                 </dd>
+                <dt>Title Holder:</dt>
+                <dd>
+                    <c:choose>
+                        <c:when test="${!empty kingdomHall.titleHolder}">
+                            ${kingdomHall.titleHolder.congregation.name}
+                        </c:when>
+                        <c:otherwise>-</c:otherwise>
+                    </c:choose>
+                </dd>
             </dl>
-            <h3>Title Holder</h3>
-            ${kingdomHall.titleHolder.congregation} <br/>
-            <h4>Ownership Type</h4>
-            ${kingdomHall.ownershipTypeId}
-
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
      <script type="text/javascript" src="<c:url value='/javascript/kingdom-halls.js' />" ></script>
