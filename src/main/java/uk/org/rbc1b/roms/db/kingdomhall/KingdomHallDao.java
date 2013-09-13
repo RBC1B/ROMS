@@ -26,6 +26,7 @@ package uk.org.rbc1b.roms.db.kingdomhall;
 import java.util.List;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
+import uk.org.rbc1b.roms.db.Congregation;
 
 /**
  * Look up Kingdom Hall information.
@@ -58,6 +59,15 @@ public interface KingdomHallDao {
     @PreAuthorize("hasPermission('KINGDOMHALL','READ')")
     @Transactional(readOnly = true)
     List<KingdomHall> findKingdomHalls(String name);
+
+    /**
+     * Find the list of congregations that meet at a Kingdom Hall.
+     * @param kingdomHallId id of the Kingdom Hall
+     * @return congregations
+     */
+    @PreAuthorize("hasPermission('KINGDOMHALL','READ')")
+    @Transactional(readOnly = true)
+    List<Congregation> findCongregations(Integer kingdomHallId);
 
     /**
      * Create a new kingdom hall.

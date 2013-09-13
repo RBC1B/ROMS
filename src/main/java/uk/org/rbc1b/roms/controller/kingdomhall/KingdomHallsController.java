@@ -80,7 +80,7 @@ public class KingdomHallsController {
     }
 
     /**
-     * Search for a kingdom by name.
+     * Search for a kingdom hall by name.
      * @param name partial name match
      * @return list of matching kingdom halls
      */
@@ -160,6 +160,7 @@ public class KingdomHallsController {
         }
 
         model.addAttribute("kingdomHall", kingdomHall);
+        model.addAttribute("congregations", kingdomHallDao.findCongregations(kingdomHallId));
 
         return "kingdom-halls/show";
     }
@@ -204,7 +205,7 @@ public class KingdomHallsController {
      * @throws NoSuchRequestHandlingMethodException on failure to find the Kingdom Hall
      */
     @RequestMapping(method = RequestMethod.DELETE)
-    public String deleteSkill(HttpServletRequest request, ModelMap model) throws NoSuchRequestHandlingMethodException {
+    public String deleteKingdomHall(HttpServletRequest request, ModelMap model) throws NoSuchRequestHandlingMethodException {
         Integer kingdomHallId;
         kingdomHallId = Integer.parseInt(request.getParameter("kingdomHallId"));
         KingdomHall kingdomHall = this.kingdomHallDao.findKingdomHall(kingdomHallId);
@@ -213,7 +214,7 @@ public class KingdomHallsController {
         } else {
             this.kingdomHallDao.deleteKingdomHall(kingdomHall);
 
-            LOGGER.error("Deleted Skill:" + kingdomHallId);
+            LOGGER.error("Deleted Kingdom Hall:" + kingdomHallId);
             return "redirect:/kingdom-halls";
         }
     }

@@ -31,6 +31,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
+import uk.org.rbc1b.roms.db.Congregation;
 
 /**
  * Interact with the Kingdom Hall entities.
@@ -63,6 +64,14 @@ public class HibernateKingdomHallDao implements KingdomHallDao {
     public List<KingdomHall> findKingdomHalls(String name) {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(KingdomHall.class);
         criteria.add(Restrictions.like("name", "%" + name + "%"));
+        return criteria.list();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Congregation> findCongregations(Integer kingdomHallId) {
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Congregation.class);
+        criteria.add(Restrictions.eq("kingdomHall.kingdomHallId", kingdomHallId));
         return criteria.list();
     }
 
