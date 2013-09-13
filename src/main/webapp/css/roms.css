@@ -332,14 +332,13 @@ li.first {
 /*****************************************************************************/
 /* Project pages                                                             */
 /*****************************************************************************/
-#project-stages div.project-stage-created-date,
-#project-stages div.project-stage-started-date,
-#project-stages div.project-stage-completed-date {
-    float: left;
-}
 #project-stages div.project-stage-task-counts {
     float: left;
 }
 #project-stages div.project-stage-task-count {
     float: left;
+}
+.icon-span {
+    width: 16px!important;
+    
 }

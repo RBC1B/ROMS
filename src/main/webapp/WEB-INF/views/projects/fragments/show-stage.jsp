@@ -2,14 +2,14 @@
     Show an individual project stage
 --%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<div id="stage-${stage.projectStageId}" class="well">
-    <div class="span1">
-    <div class="icon-plus"></div>
+<div id="stage-${stage.projectStageId}" class="container-fluid well">
+    <div class="span1 icon-span">
+    <span class="icon-plus"></span>
     </div>
     <div class="span3">
     <div class="project-stage-type-name">${stage.type.name}: ${stage.type.description}</div>
     </div>
-    <div class="span4">
+    <div class="span1">
     <div class="project-stage-created-date">
         <c:choose>
             <c:when test="${!empty stage.createdTime}">
@@ -18,6 +18,8 @@
             <c:otherwise>&nbsp;</c:otherwise>
         </c:choose>
     </div>
+    </div>
+            <div class="span1">
     <div class="project-stage-started-date">
         <c:choose>
             <c:when test="${!empty stage.startedTime}">
@@ -26,6 +28,8 @@
             <c:otherwise>&nbsp;</c:otherwise>
         </c:choose>
     </div>
+            </div>
+            <div class="span1">
             <div class="project-stage-completed-date">
         <c:choose>
             <c:when test="${!empty stage.completedTime}">
@@ -54,7 +58,7 @@
         </div>
     </div>
     </div>
-    <div class="span1">
+    <div class="span1 icon-span">
     <span class="icon-resize-vertical"></span>
     </div>
 </div>
