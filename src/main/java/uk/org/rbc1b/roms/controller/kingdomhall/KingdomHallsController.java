@@ -42,7 +42,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.controller.LoggingHandlerExceptionResolver;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableResult;
+import uk.org.rbc1b.roms.controller.congregation.CongregationModelFactory;
 import uk.org.rbc1b.roms.db.Address;
+import uk.org.rbc1b.roms.db.CongregationDao;
+import uk.org.rbc1b.roms.db.CongregationSearchCriteria;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHallDao;
 import uk.org.rbc1b.roms.db.reference.ReferenceDao;
@@ -56,18 +59,10 @@ import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 public class KingdomHallsController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggingHandlerExceptionResolver.class);
-    private static final String BASE_URI = "/kingdom-halls/";
     private KingdomHallDao kingdomHallDao;
     private ReferenceDao referenceDao;
-
-    /**
-     * Generate the uri used to access the kingdom hall pages.
-     * @param kingdomHallId optional kingdom hall id
-     * @return uri
-     */
-    public static String generateUri(Integer kingdomHallId) {
-        return kingdomHallId != null ? BASE_URI + kingdomHallId : BASE_URI;
-    }
+    private CongregationDao congregationDao;
+    private CongregationModelFactory congregationModelFactory;
 
     /**
      * Display the list of kingdom halls.
@@ -124,7 +119,7 @@ public class KingdomHallsController {
         kingdomHall.setAddress(address);
         kingdomHall.setName(kingdomHallForm.getName());
 
-        return "redirect:/kingdom-hall";
+        return "redirect:" + KingdomHallModelFactory.generateUri(kingdomHall.getKingdomHallId());
     }
 
     /**
@@ -162,7 +157,12 @@ public class KingdomHallsController {
         }
 
         model.addAttribute("kingdomHall", kingdomHall);
-        model.addAttribute("congregations", kingdomHallDao.findCongregations(kingdomHallId));
+
+        CongregationSearchCriteria congregationSearchCriteria = new CongregationSearchCriteria();
+        congregationSearchCriteria.setKingdomHallId(kingdomHallId);
+
+        model.addAttribute("congregations", congregationModelFactory.generateCongregationListModels(congregationDao
+                .findCongregations(congregationSearchCriteria)));
         model.addAttribute("ownershipType", referenceDao.findOwnershipTypeValues().get(kingdomHall.getKingdomHallId()));
 
         return "kingdom-halls/show";
@@ -192,8 +192,8 @@ public class KingdomHallsController {
             model.setName(hall.getName());
             model.setPostCode(hall.getAddress().getPostcode());
             model.setTown(hall.getAddress().getTown());
-            model.setUri(generateUri(hall.getKingdomHallId()));
-            model.setEditUri(generateUri(hall.getKingdomHallId()) + "/edit");
+            model.setUri(KingdomHallModelFactory.generateUri(hall.getKingdomHallId()));
+            model.setEditUri(KingdomHallModelFactory.generateUri(hall.getKingdomHallId()) + "/edit");
 
             modelList.add(model);
         }
@@ -208,7 +208,8 @@ public class KingdomHallsController {
      * @throws NoSuchRequestHandlingMethodException on failure to find the Kingdom Hall
      */
     @RequestMapping(method = RequestMethod.DELETE)
-    public String deleteKingdomHall(HttpServletRequest request, ModelMap model) throws NoSuchRequestHandlingMethodException {
+    public String deleteKingdomHall(HttpServletRequest request, ModelMap model)
+            throws NoSuchRequestHandlingMethodException {
         Integer kingdomHallId;
         kingdomHallId = Integer.parseInt(request.getParameter("kingdomHallId"));
         KingdomHall kingdomHall = this.kingdomHallDao.findKingdomHall(kingdomHallId);
@@ -220,6 +221,16 @@ public class KingdomHallsController {
             LOGGER.error("Deleted Kingdom Hall:" + kingdomHallId);
             return "redirect:/kingdom-halls";
         }
+    }
+
+    @Autowired
+    public void setCongregationDao(CongregationDao congregationDao) {
+        this.congregationDao = congregationDao;
+    }
+
+    @Autowired
+    public void setCongregationModelFactory(CongregationModelFactory congregationModelFactory) {
+        this.congregationModelFactory = congregationModelFactory;
     }
 
     @Autowired

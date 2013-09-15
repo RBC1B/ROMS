@@ -69,11 +69,10 @@ public class CongregationsController {
      */
     @RequestMapping(method = RequestMethod.GET)
     public String showCongregationList(ModelMap model) {
-        List<Congregation> congregations = congregationDao.findAllCongregations();
-        List<CongregationListModel> modelList = new ArrayList<CongregationListModel>(congregations.size());
-        for (Congregation congregation : congregations) {
-            modelList.add(congregationModelFactory.generateCongregationListModel(congregation));
-        }
+
+        List<CongregationListModel> modelList = congregationModelFactory.generateCongregationListModels(congregationDao
+                .findAllCongregations());
+
         model.addAttribute("congregations", modelList);
         model.addAttribute("newUri", CongregationModelFactory.generateUri(null) + "/new");
         return "congregations/list";

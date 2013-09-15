@@ -33,7 +33,7 @@ import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
  */
 public class KingdomHallModelFactory {
 
-    private static final String BASE_URI = "/kingdomhall/";
+    private static final String BASE_URI = "/kingdom-halls";
     private CircuitDao circuitDao;
     private CongregationDao congregationDao;
 
@@ -43,7 +43,7 @@ public class KingdomHallModelFactory {
      * @return String
      */
     public static String generateUri(Integer kingdomHallId) {
-        return kingdomHallId != null ? BASE_URI + kingdomHallId : BASE_URI;
+        return kingdomHallId != null ? BASE_URI + "/" + kingdomHallId : BASE_URI;
     }
 
     /**

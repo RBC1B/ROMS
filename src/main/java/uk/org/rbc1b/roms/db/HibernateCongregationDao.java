@@ -71,6 +71,18 @@ public class HibernateCongregationDao implements CongregationDao {
         return criteria.list();
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Congregation> findCongregations(CongregationSearchCriteria searchCriteria) {
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Congregation.class);
+
+        if (searchCriteria.getKingdomHallId() != null) {
+
+            criteria.add(Restrictions.eq("kingdomHall.kingdomHallId", searchCriteria.getKingdomHallId()));
+        }
+        return criteria.list();
+    }
+
     @CacheEvict(value = "congregation.congregation", key = "#congregation.congregationId")
     @Override
     public void updateCongregation(final Congregation congregation) {

@@ -76,6 +76,19 @@ public class CongregationModelFactory {
     }
 
     /**
+     * Generate the list of models used in the congregation list view.
+     * @param congregations congregation list
+     * @return model list
+     */
+    public List<CongregationListModel> generateCongregationListModels(List<Congregation> congregations) {
+        List<CongregationListModel> models = new ArrayList<CongregationListModel>(congregations.size());
+        for (Congregation congregation : congregations) {
+            models.add(generateCongregationListModel(congregation));
+        }
+        return models;
+    }
+
+    /**
      * Generate the model used in the congregation details view.
      * @param congregation congregation
      * @return model

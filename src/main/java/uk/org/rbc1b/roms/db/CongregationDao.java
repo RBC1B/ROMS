@@ -59,6 +59,15 @@ public interface CongregationDao {
     List<Congregation> findCongregations(String name);
 
     /**
+     * Find the list of congregations matching the criteria.
+     * @param searchCriteria search criteria
+     * @return congregations
+     */
+    @PreAuthorize("hasPermission('CONG','READ')")
+    @Transactional(readOnly = true)
+    List<Congregation> findCongregations(CongregationSearchCriteria searchCriteria);
+
+    /**
      * Saves a congregation.
      * @param congregation to save
      */

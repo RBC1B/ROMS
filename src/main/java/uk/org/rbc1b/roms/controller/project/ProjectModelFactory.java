@@ -33,7 +33,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.org.rbc1b.roms.controller.common.model.EntityModel;
 import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
-import uk.org.rbc1b.roms.controller.kingdomhall.KingdomHallsController;
+import uk.org.rbc1b.roms.controller.kingdomhall.KingdomHallModelFactory;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.PersonDao;
 import uk.org.rbc1b.roms.db.project.Project;
@@ -125,7 +125,7 @@ public class ProjectModelFactory {
             EntityModel kingdomHallModel = new EntityModel();
             kingdomHallModel.setId(project.getKingdomHall().getKingdomHallId());
             kingdomHallModel.setName(project.getKingdomHall().getName());
-            kingdomHallModel.setUri(KingdomHallsController.generateUri(project.getKingdomHall().getKingdomHallId()));
+            kingdomHallModel.setUri(KingdomHallModelFactory.generateUri(project.getKingdomHall().getKingdomHallId()));
             model.setKingdomHall(kingdomHallModel);
         }
         model.setName(project.getName());
