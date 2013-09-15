@@ -104,6 +104,9 @@ $(document).ready(function() {
         $clonedTradesRow.slideDown(500);
     });
 
+    $.validator.addMethod("phoneNumber", roms.common.validatorPhoneNumber, "Please enter a valid phone number");
+    $.validator.addMethod("mobilePhoneNumber", roms.common.validatorMobilePhoneNumber, "Please enter a valid mobile phone number");
+    
     $("#volunteer").validate({
         rules: {
             forename: {
@@ -138,6 +141,16 @@ $(document).ready(function() {
             email: {
                 required: true,
                 email: true
+            },
+            telephone: {
+                phoneNumber: true
+            },
+            mobile: {
+                phoneNumber: true,
+                mobilePhoneNumber: true
+            },
+            workphone: {
+                phoneNumber: true
             },
             maritalStatusId: {
                 required: true
@@ -442,6 +455,47 @@ $(document).ready(function() {
         minLength: 2
     });
 
+    $("#volunteerPersonal").validate({
+        rules: {
+            birthDate: {
+                required: true
+            },
+            street: {
+                minlength: 2,
+                required: true
+            },
+            town: {
+                minlength: 2,
+                required: true
+            },
+            postcode: {
+                minlength: 2,
+                required: true
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            telephone: {
+                phoneNumber: true
+            },
+            mobile: {
+                phoneNumber: true,
+                mobilePhoneNumber: true
+            },
+            workphone: {
+                phoneNumber: true
+            },
+            maritalStatusId: {
+                required: true
+            }
+        },
+        submitHandler: function(form) {
+            form.submit();
+        },
+        errorPlacement: roms.common.validatorErrorPlacement
+    });
+    
     $("#volunteerSpiritual").validate({
         rules: {
             baptismDate: {

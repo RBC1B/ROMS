@@ -40,6 +40,9 @@ $(document).ready(function() {
         $("#congregationId").val(null);
     });
     
+    $.validator.addMethod("phoneNumber", roms.common.validatorPhoneNumber, "Please enter a valid phone number");
+    $.validator.addMethod("mobilePhoneNumber", roms.common.validatorMobilePhoneNumber, "Please enter a valid mobile phone number");
+    
     $("#person").validate({
         rules: {
             forename: {
@@ -74,6 +77,16 @@ $(document).ready(function() {
                         return false;
                     }
                 }
+            },
+            telephone: {
+                phoneNumber: true
+            },
+            mobile: {
+                phoneNumber: true,
+                mobilePhoneNumber: true
+            },
+            workphone: {
+                phoneNumber: true
             }
         },
         errorPlacement: roms.common.validatorErrorPlacement

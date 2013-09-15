@@ -159,12 +159,8 @@ $(document).ready(function() {
         }
     }
 
-    // need a custom validation rule for validating phone numbers
-    $.validator.addMethod("phoneNos", function(value, element) {
-            return /^\d+$/.test(value.replace(/[()\s+-]/g, ''));
-        },
-        "Please enter numbers or spaces only"
-    );
+    $.validator.addMethod("phoneNumber", roms.common.validatorPhoneNumber, "Please enter a valid phone number");
+    $.validator.addMethod("mobilePhoneNumber", roms.common.validatorMobilePhoneNumber, "Please enter a valid mobile phone number");
 
     $("#circuitForm").validate({
         rules: {
@@ -199,15 +195,11 @@ $(document).ready(function() {
             },
             telephone: {
                 required: true,
-                minlength: 9,
-                maxlength: 13,
-                phoneNos: true
+                phoneNumber: true
             },
             mobile: {
-                required: true,
-                minlength: 10,
-                maxlength: 13,
-                phoneNos: true
+                phoneNumber: true,
+                mobilePhoneNumber: true
             }
         },
         errorPlacement: roms.common.validatorErrorPlacement

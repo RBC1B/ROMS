@@ -122,6 +122,7 @@
                 <a href="#" class="btn" data-dismiss="modal">Ignore</a>
             </div>
         </div>
+        <script type="text/javascript" src="<c:url value='/javascript/thirdparty/phoneformat-574.js' />" ></script>
         <script type="text/javascript" src="<c:url value='/javascript/circuits.js' />" ></script>
     </body>
 </html>

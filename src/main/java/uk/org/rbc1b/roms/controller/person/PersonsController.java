@@ -223,7 +223,11 @@ public class PersonsController {
 
         person.setBirthDate(DataConverterUtil.toSqlDate(form.getBirthDate()));
         person.setComments(form.getComments());
-        person.setCongregation(congregationDao.findCongregation(form.getCongregationId()));
+        if (form.getCongregationId() != null) {
+            person.setCongregation(congregationDao.findCongregation(form.getCongregationId()));
+        } else {
+            person.setCongregation(null);
+        }
         person.setEmail(form.getEmail());
         person.setForename(form.getForename());
         person.setMiddleName(form.getMiddleName());

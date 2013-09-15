@@ -29,6 +29,36 @@ if (!roms.common) {
     roms.common = {};
 };
 
+roms.common.validatorPhoneNumber = function(value, element) {
+    if (this.optional(element)) {
+        return true;
+    } else {
+        try {
+            var phone = cleanPhone(value);
+            var phoneUtil = i18n.phonenumbers.PhoneNumberUtil.getInstance();
+            var number = phoneUtil.parseAndKeepRawInput(phone, "GB");
+            return phoneUtil.isValidNumber(number);
+        } catch (exception) {
+            return false;
+        }
+    }
+};
+
+roms.common.validatorMobilePhoneNumber = function(value, element) {
+    if (this.optional(element)) {
+        return true;
+    } else {
+        try {
+            var phone = cleanPhone(value);
+            var phoneUtil = i18n.phonenumbers.PhoneNumberUtil.getInstance();
+            var number = phoneUtil.parseAndKeepRawInput(phone, "GB");
+            return phoneUtil.getNumberType(number) == 1;
+        } catch (exception) {
+            return false;
+        }
+    }
+};
+
 roms.common.validatorErrorPlacement = function(error, element) {
     var $container = element.closest(".error-container");
     if ($container.length > 0) {
