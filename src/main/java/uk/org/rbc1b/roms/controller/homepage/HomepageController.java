@@ -44,4 +44,14 @@ public class HomepageController {
     public String showHomepage() {
         return "homepage";
     }
+
+    /**
+     * Display the favicon.
+     *
+     * @return the image
+     */
+    @RequestMapping(value = "**/favicon.ico", method = RequestMethod.GET)
+    public String favicon() {
+        return "forward:/images/fav.ico";
+    }
 }
