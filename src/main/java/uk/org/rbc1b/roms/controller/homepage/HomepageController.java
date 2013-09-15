@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- *
  * @author oliver.elder.esq
  */
 @Controller
@@ -37,7 +36,6 @@ public class HomepageController {
 
     /**
      * Display the home page.
-     *
      * @return view name
      */
     @RequestMapping(method = RequestMethod.GET)
@@ -45,13 +43,4 @@ public class HomepageController {
         return "homepage";
     }
 
-    /**
-     * Display the favicon.
-     *
-     * @return the image
-     */
-    @RequestMapping(value = "**/favicon.ico", method = RequestMethod.GET)
-    public String favicon() {
-        return "forward:/images/fav.ico";
-    }
 }
