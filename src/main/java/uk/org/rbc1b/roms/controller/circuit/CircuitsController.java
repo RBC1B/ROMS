@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
+import uk.org.rbc1b.roms.controller.common.PhoneNumberFormatter;
 import uk.org.rbc1b.roms.db.Address;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.PersonDao;
@@ -202,8 +203,8 @@ public class CircuitsController {
         address.setPostcode(circuitForm.getPostcode());
         circuitOverseer.setAddress(address);
 
-        circuitOverseer.setTelephone(circuitForm.getTelephone());
-        circuitOverseer.setMobile(circuitForm.getMobile());
+        circuitOverseer.setTelephone(PhoneNumberFormatter.format(circuitForm.getTelephone()));
+        circuitOverseer.setMobile(PhoneNumberFormatter.format(circuitForm.getMobile()));
 
         return circuitOverseer;
     }

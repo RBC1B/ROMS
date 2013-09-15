@@ -38,6 +38,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.controller.common.DataConverterUtil;
+import uk.org.rbc1b.roms.controller.common.PhoneNumberFormatter;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableRequestData;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableResult;
 import uk.org.rbc1b.roms.controller.common.model.PersonModel;
@@ -231,10 +232,10 @@ public class PersonsController {
         person.setEmail(form.getEmail());
         person.setForename(form.getForename());
         person.setMiddleName(form.getMiddleName());
-        person.setMobile(form.getMobile());
+        person.setMobile(PhoneNumberFormatter.format(form.getMobile()));
         person.setSurname(form.getSurname());
-        person.setTelephone(form.getTelephone());
-        person.setWorkPhone(form.getWorkPhone());
+        person.setTelephone(PhoneNumberFormatter.format(form.getTelephone()));
+        person.setWorkPhone(PhoneNumberFormatter.format(form.getWorkPhone()));
 
         personDao.updatePerson(person);
 

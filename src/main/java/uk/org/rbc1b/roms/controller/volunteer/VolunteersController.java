@@ -47,6 +47,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.controller.common.DataConverterUtil;
+import uk.org.rbc1b.roms.controller.common.PhoneNumberFormatter;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableResult;
 import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
 import uk.org.rbc1b.roms.db.Address;
@@ -253,9 +254,9 @@ public class VolunteersController {
         volunteer.setFormDate(DataConverterUtil.toSqlDate(form.getFormDate()));
         volunteer.setMiddleName(form.getMiddleName());
         volunteer.setSurname(form.getSurname());
-        volunteer.setMobile(form.getMobile());
-        volunteer.setTelephone(form.getTelephone());
-        volunteer.setWorkPhone(form.getWorkPhone());
+        volunteer.setMobile(PhoneNumberFormatter.format(form.getMobile()));
+        volunteer.setTelephone(PhoneNumberFormatter.format(form.getTelephone()));
+        volunteer.setWorkPhone(PhoneNumberFormatter.format(form.getWorkPhone()));
         volunteer.setBaptismDate(DataConverterUtil.toSqlDate(form.getBaptismDate()));
 
         if (form.isElder()) {
@@ -609,9 +610,9 @@ public class VolunteersController {
         volunteer.setEmail(form.getEmail());
         volunteer.setGender(form.getGender());
         volunteer.setMaritalStatusId(form.getMaritalStatusId());
-        volunteer.setMobile(form.getMobile());
-        volunteer.setTelephone(form.getTelephone());
-        volunteer.setWorkPhone(form.getWorkPhone());
+        volunteer.setMobile(PhoneNumberFormatter.format(form.getMobile()));
+        volunteer.setTelephone(PhoneNumberFormatter.format(form.getTelephone()));
+        volunteer.setWorkPhone(PhoneNumberFormatter.format(form.getWorkPhone()));
 
         if (form.getSpousePersonId() != null) {
             volunteer.setSpouse(personDao.findPerson(form.getSpousePersonId()));
@@ -676,8 +677,8 @@ public class VolunteersController {
 
         emergencyContact.setForename(form.getEmergencyContactForename());
         emergencyContact.setSurname(form.getEmergencyContactSurname());
-        emergencyContact.setTelephone(form.getEmergencyContactTelephone());
-        emergencyContact.setMobile(form.getEmergencyContactMobile());
+        emergencyContact.setTelephone(PhoneNumberFormatter.format(form.getEmergencyContactTelephone()));
+        emergencyContact.setMobile(PhoneNumberFormatter.format(form.getEmergencyContactMobile()));
 
         return emergencyContact;
 
