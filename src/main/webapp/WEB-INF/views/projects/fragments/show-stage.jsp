@@ -4,8 +4,8 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <div id="stage-${stage.projectStageId}" class="container-fluid well">
     <div class="row-fluid">
-        <div class="span1 icon-span">
-            <span class="icon-plus"></span>
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne"><div class="span1 icon-span">
+            <span class="icon-plus"></span>                </a>
         </div>
         <div class="span4">
             <div class="project-stage-type-name">${stage.type.name}: ${stage.type.description}</div>
@@ -63,4 +63,17 @@
             <span class="icon-resize-vertical"></span>
         </div>
     </div>
+
+
+    <div class="accordion" id="accordion2">
+        <div class="accordion-group">
+            <div id="collapseOne" class="accordion-body collapse in">
+                <div class="accordion-inner">
+                    Accordion can be persuaded to work if we replace the #collapseOne with a unique identifier for each fragment (that doesn't also kick out bootstrap.js)
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </div>
