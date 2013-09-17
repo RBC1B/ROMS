@@ -87,9 +87,11 @@ public class VolunteersController {
     private ReferenceDao referenceDao;
     private VolunteerModelFactory volunteerModelFactory;
     private AssignmentModelFactory assignmentModelFactory;
+    private VolunteerBadgePdfModelFactory volunteerBadgePdfModelFactory;
 
     /**
      * Display a list of volunteers.
+     *
      * @param model mvc model
      * @param searchCriteria search criteria
      * @return view
@@ -104,6 +106,7 @@ public class VolunteersController {
 
     /**
      * Display the list of volunteers.
+     *
      * @param requestData data tables request data
      * @return view
      */
@@ -148,7 +151,8 @@ public class VolunteersController {
      * @param volunteerId volunteer primary key
      * @param model model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException when no person matching the id is found
+     * @throws NoSuchRequestHandlingMethodException when no person matching the
+     * id is found
      */
     @RequestMapping(value = "{volunteerId}", method = RequestMethod.GET)
     public String showVolunteer(@PathVariable Integer volunteerId, ModelMap model)
@@ -177,6 +181,7 @@ public class VolunteersController {
 
     /**
      * Generate the models for the volunteer assignments.
+     *
      * @param assignments assignments
      * @return model list
      */
@@ -195,6 +200,7 @@ public class VolunteersController {
 
     /**
      * Display the form to create a new volunteer.
+     *
      * @param model mvc model
      * @return view name
      */
@@ -211,6 +217,7 @@ public class VolunteersController {
      * Handle the volunteer core details form submission.
      * <p>
      * This handles new volunteer creation only.
+     *
      * @param form volunteer form
      * @return redirect url
      */
@@ -303,7 +310,9 @@ public class VolunteersController {
     }
 
     /**
-     * Display the form to edit the info under the spiritual tab on the volunteer.
+     * Display the form to edit the info under the spiritual tab on the
+     * volunteer.
+     *
      * @param volunteerId volunteer id to edit
      * @param model mvc model
      * @return view name
@@ -341,7 +350,9 @@ public class VolunteersController {
     }
 
     /**
-     * Display the form to edit the info under the rbc status tab on the volunteer.
+     * Display the form to edit the info under the rbc status tab on the
+     * volunteer.
+     *
      * @param volunteerId volunteer id to edit
      * @param model mvc model
      * @return view name
@@ -402,7 +413,9 @@ public class VolunteersController {
     }
 
     /**
-     * Display the form to edit the info under the personal tab on the volunteer.
+     * Display the form to edit the info under the personal tab on the
+     * volunteer.
+     *
      * @param volunteerId volunteer id to edit
      * @param model mvc model
      * @return view name
@@ -453,7 +466,9 @@ public class VolunteersController {
     /**
      * Update the volunteer name.
      * <p>
-     * This is expected to be called with an ajax request, so we return a 204 response on success
+     * This is expected to be called with an ajax request, so we return a 204
+     * response on success
+     *
      * @param volunteerId volunteer id to edit
      * @param form form data
      * @throws NoSuchRequestHandlingMethodException if volunteer is not found
@@ -478,7 +493,9 @@ public class VolunteersController {
     /**
      * Update the volunteer comments.
      * <p>
-     * This is expected to be called with an ajax request, so we return a 204 response on success
+     * This is expected to be called with an ajax request, so we return a 204
+     * response on success
+     *
      * @param volunteerId volunteer id to edit
      * @param comments comments to set
      * @throws NoSuchRequestHandlingMethodException if volunteer is not found
@@ -500,6 +517,7 @@ public class VolunteersController {
 
     /**
      * Update the volunteer spiritual information.
+     *
      * @param volunteerId volunteer id to edit
      * @param form form data
      * @return view name (redirect)
@@ -532,6 +550,7 @@ public class VolunteersController {
 
     /**
      * Update the volunteer RBC status.
+     *
      * @param volunteerId volunteer id to edit
      * @param form form data
      * @return view name (redirect)
@@ -585,6 +604,7 @@ public class VolunteersController {
 
     /**
      * Update the volunteer personal information.
+     *
      * @param volunteerId volunteer id to edit
      * @param form form data
      * @return view name (redirect)
@@ -636,6 +656,7 @@ public class VolunteersController {
 
     /**
      * Produce the Volunteer Badge PDF.
+     *
      * @param volunteerId volunteer id of for his/her badge
      * @param volunteerBadgeId volunteer badge id
      * @return modelAndView of the VolunteerBadgePdfView
@@ -646,7 +667,14 @@ public class VolunteersController {
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
         if (volunteerId.equals(volunteerBadgeId)) {
             ModelAndView modelAndView = new ModelAndView("volunteerBadgePdfView");
+
+            String assignment = volunteerBadgePdfModelFactory.generatePrimaryAssignment(volunteer);
+            Set<String> skillsSet = volunteerBadgePdfModelFactory.generateSkillsSet(volunteer);
+
             modelAndView.getModelMap().addAttribute("volunteer", volunteer);
+            modelAndView.getModelMap().addAttribute("skillsSet", skillsSet);
+            modelAndView.getModelMap().addAttribute("assignment", assignment);
+
             return modelAndView;
         } else {
             return new ModelAndView("redirect:" + VolunteerModelFactory.generateUri(volunteer.getPersonId()));
@@ -738,5 +766,10 @@ public class VolunteersController {
     @Autowired
     public void setVolunteerModelFactory(VolunteerModelFactory volunteerModelFactory) {
         this.volunteerModelFactory = volunteerModelFactory;
+    }
+
+    @Autowired
+    public void setVolunteerBadgePdfModelFactory(VolunteerBadgePdfModelFactory volunteerBadgePdfModelFactory) {
+        this.volunteerBadgePdfModelFactory = volunteerBadgePdfModelFactory;
     }
 }

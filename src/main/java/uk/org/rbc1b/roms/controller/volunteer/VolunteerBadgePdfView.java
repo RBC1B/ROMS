@@ -33,8 +33,6 @@ import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfWriter;
 import java.awt.Color;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
@@ -42,16 +40,8 @@ import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.view.document.AbstractPdfView;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
-import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
-import uk.org.rbc1b.roms.db.volunteer.department.Assignment;
-import uk.org.rbc1b.roms.db.volunteer.department.Department;
-import uk.org.rbc1b.roms.db.volunteer.department.DepartmentDao;
-import uk.org.rbc1b.roms.db.volunteer.skill.Skill;
-import uk.org.rbc1b.roms.db.volunteer.skill.SkillDao;
-import uk.org.rbc1b.roms.db.volunteer.skill.VolunteerSkill;
 
 /**
  * View that creates the Volunteer Badge as a pdf.
@@ -59,10 +49,6 @@ import uk.org.rbc1b.roms.db.volunteer.skill.VolunteerSkill;
  * @author rahulsingh
  */
 public class VolunteerBadgePdfView extends AbstractPdfView {
-
-    private VolunteerDao volunteerDao;
-    private DepartmentDao departmentDao;
-    private SkillDao skillDao;
 
     /**
      * Builds the PDF document of the badge.
@@ -78,6 +64,8 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
     protected void buildPdfDocument(Map<String, Object> model, Document document, PdfWriter writer, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Volunteer volunteer = (Volunteer) model.get("volunteer");
+        Set<String> skillsSet = (Set<String>) model.get("skillsSet");
+        String assignment = (String) model.get("assignment");
         document.open();
 
         document.setPageSize(PageSize.ID_1);
@@ -86,16 +74,7 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
 
         addBand(cb, Color.RED);
         addSkillsTable(cb);
-        Set<String> skillsSet = new HashSet<String>();
-        List<VolunteerSkill> volunteerSkills = volunteerDao.findSkills(volunteer.getPersonId());
-        if (!volunteerSkills.isEmpty()) {
-            for (VolunteerSkill volunteerSkill : volunteerSkills) {
-                Skill skill = skillDao.findSkill(volunteerSkill.getSkillId());
-                if (skillsSet.size() < 8) {
-                    skillsSet.add(skill.getName());
-                }
-            }
-        }
+
         addSkils(cb, skillsSet);
 
         ServletContext context = request.getServletContext();
@@ -107,10 +86,7 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
         addVolunteerName(cb, volunteer.getForename() + " " + volunteer.getSurname());
         addRBCRegionTitle(cb, "RBC London and Home Counties");
 
-        // Find the volunteer's primary assignment
-        Assignment primaryAssignment = volunteerDao.findPrimaryAssignment(volunteer.getPersonId());
-        Department department = departmentDao.findDepartment(primaryAssignment.getDepartmentId());
-        addDepartment(cb, department.getName());
+        addDepartment(cb, assignment);
         addBigRectangle(cb);
         addBadgeTitle(cb, "Kingdom Hall Construction");
     }
@@ -324,20 +300,5 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
         content.setColorFill(Color.BLACK);
         content.showText(department);
         content.endText();
-    }
-
-    @Autowired
-    public void setVolunteerDao(VolunteerDao volunteerDao) {
-        this.volunteerDao = volunteerDao;
-    }
-
-    @Autowired
-    public void setDepartmentDao(DepartmentDao departmentDao) {
-        this.departmentDao = departmentDao;
-    }
-
-    @Autowired
-    public void setSkillDao(SkillDao skillDao) {
-        this.skillDao = skillDao;
     }
 }
