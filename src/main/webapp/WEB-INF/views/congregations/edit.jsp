@@ -31,9 +31,9 @@
         <form:form commandName="congregationForm" method="${submitMethod}" action="${formAction}">
             <fieldset>
                 <label>Congregation name</label>
-                <form:input path="name" />
+                <form:input path="name" maxlength="50" />
                 <label>Number</label>
-                <form:input path="number" />
+                <form:input path="number" maxlength="10" />
                 <label>Kingdom hall</label>
                 <form:input path="kingdomHallName" autocomplete="off" />
                 <form:hidden path="kingdomHallId" />
@@ -53,9 +53,9 @@
                     <form:options items="${rbcSubRegions}" />
                 </form:select>
                 <label>Publishers</label>
-                <form:input path="publishers" />
+                <form:input path="publishers" maxlength="10" />
                 <label>Attendance</label>
-                <form:input path="attendance" />
+                <form:input path="attendance" maxlength="10" />
             </fieldset>
             <fieldset>
                 <legend>Contacts</legend>
@@ -89,11 +89,11 @@
             <fieldset>
                 <legend>Strategy</legend>
                 <label>Funds</label>
-                <form:input path="funds" />
+                <form:input path="funds" maxlength="50" />
                 <label>Loans</label>
-                <form:input path="loans" />
+                <form:input path="loans" maxlength="10" />
                 <label>Monthly income</label>
-                <form:input path="monthlyIncome" />
+                <form:input path="monthlyIncome" maxlength="10" />
                 <label>Strategy</label>
                 <form:textarea path="strategy" />
             </fieldset>
