@@ -52,6 +52,7 @@ import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 
 /**
  * Controller for the kingdom hall related pages.
+ *
  * @author oliver.elder.esq
  */
 @Controller
@@ -66,6 +67,7 @@ public class KingdomHallsController {
 
     /**
      * Display the list of kingdom halls.
+     *
      * @param model mvc model
      * @return view
      */
@@ -77,74 +79,13 @@ public class KingdomHallsController {
     }
 
     /**
-     * Search for a kingdom hall by name.
-     * @param name partial name match
-     * @return list of matching kingdom halls
-     */
-    @RequestMapping(value = "search", method = RequestMethod.GET, produces = "application/json")
-    @ResponseBody
-    public KingdomHallSearchResponse findCongregations(@RequestParam(value = "name", required = true) String name) {
-        List<KingdomHall> kingdomHalls = kingdomHallDao.findKingdomHalls(name);
-
-        KingdomHallSearchResponse response = new KingdomHallSearchResponse();
-        if (!kingdomHalls.isEmpty()) {
-            List<KingdomHallSearchResult> results = new ArrayList<KingdomHallSearchResult>();
-            for (KingdomHall kingdomHall : kingdomHalls) {
-                KingdomHallSearchResult result = new KingdomHallSearchResult();
-                result.setId(kingdomHall.getKingdomHallId());
-                result.setName(kingdomHall.getName());
-                results.add(result);
-            }
-            response.setResults(results);
-        }
-        return response;
-    }
-
-    /**
-     * Create a new kingdom hall.
-     * @param kingdomHallForm form bean
-     * @return view name
-     */
-    @RequestMapping(method = RequestMethod.POST)
-    public String createKingdomHall(@Valid KingdomHallForm kingdomHallForm) {
-        KingdomHall kingdomHall = new KingdomHall();
-        if (kingdomHallForm.getKingdomHallId() != null) {
-            kingdomHall.setKingdomHallId(kingdomHallForm.getKingdomHallId());
-        }
-        Address address = new Address();
-        address.setCounty(kingdomHallForm.getCounty());
-        address.setPostcode(kingdomHallForm.getPostcode());
-        address.setStreet(kingdomHallForm.getStreet());
-        address.setTown(kingdomHallForm.getTown());
-        kingdomHall.setAddress(address);
-        kingdomHall.setName(kingdomHallForm.getName());
-
-        return "redirect:" + KingdomHallModelFactory.generateUri(kingdomHall.getKingdomHallId());
-    }
-
-    /**
-     * Display the page list of kingdom halls, returning JSON.
-     * @param echoId request identifier returned back to the caller
-     * @return view
-     */
-    @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json")
-    @ResponseBody
-    public AjaxDataTableResult<KingdomHallListModel> showDatatableAjaxKingdomHallList(
-            @RequestParam(value = "sEcho") Integer echoId) {
-        AjaxDataTableResult<KingdomHallListModel> result = new AjaxDataTableResult<KingdomHallListModel>();
-        result.setRecords(createKingdomHallListModels(kingdomHallDao.findKingdomHalls()));
-        result.setTotalDisplayRecords(result.getAaData().size());
-        result.setTotalRecords(result.getAaData().size());
-        result.setEcho(echoId);
-        return result;
-    }
-
-    /**
      * Display a specified kingdom hall.
+     *
      * @param kingdomHallId kingdom hall id (primary key)
      * @param model mvc model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException on failure to look up the kingdom hall
+     * @throws NoSuchRequestHandlingMethodException on failure to look up the
+     * kingdom hall
      */
     @RequestMapping(value = "{kingdomHallId}", method = RequestMethod.GET)
     public String showKingdomHall(@PathVariable Integer kingdomHallId, ModelMap model)
@@ -169,7 +110,46 @@ public class KingdomHallsController {
     }
 
     /**
+     * Show the Kingdom Hall Edit form.
+     *
+     * @param kingdomHallId kingdomHallId
+     * @param model mvc model
+     * @return view name
+     * @throws NoSuchRequestHandlingMethodException if kingdom hall is not found
+     */
+    @RequestMapping(value = "{kingdomHallId}/edit", method = RequestMethod.GET)
+    public String showEditKingdomHallForm(@PathVariable Integer kingdomHallId, ModelMap model)
+            throws NoSuchRequestHandlingMethodException {
+        KingdomHall kingdomHall = kingdomHallDao.findKingdomHall(kingdomHallId);
+
+        if (kingdomHall == null) {
+            throw new NoSuchRequestHandlingMethodException("No kingdom hall #" + kingdomHallId, this.getClass());
+        }
+
+        KingdomHallForm kingdomHallForm = new KingdomHallForm();
+        kingdomHallForm.setKingdomHallId(kingdomHall.getKingdomHallId());
+        kingdomHallForm.setName(kingdomHall.getName());
+
+        if (kingdomHall.getAddress() != null) {
+            kingdomHallForm.setStreet(kingdomHall.getAddress().getStreet());
+            kingdomHallForm.setTown(kingdomHall.getAddress().getTown());
+            kingdomHallForm.setCounty(kingdomHall.getAddress().getCounty());
+            kingdomHallForm.setPostcode(kingdomHall.getAddress().getPostcode());
+        }
+
+        kingdomHallForm.setOwnershipTypeId(kingdomHall.getOwnershipTypeId());
+        kingdomHallForm.setDrawings(kingdomHall.getDrawings());
+        kingdomHallForm.setTitleHolderCongregationId(kingdomHall.getTitleHolder().getCongregation().getCongregationId());
+
+
+
+        return "kingdom-halls/edit";
+
+    }
+
+    /**
      * Display the form to create a new circuit.
+     *
      * @param model mvc model
      * @return view name
      */
@@ -179,6 +159,72 @@ public class KingdomHallsController {
         model.addAttribute("kingdomHall", new KingdomHallForm());
 
         return "kingdom-halls/edit";
+    }
+
+    /**
+     * Search for a kingdom hall by name.
+     *
+     * @param name partial name match
+     * @return list of matching kingdom halls
+     */
+    @RequestMapping(value = "search", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public KingdomHallSearchResponse findCongregations(@RequestParam(value = "name", required = true) String name) {
+        List<KingdomHall> kingdomHalls = kingdomHallDao.findKingdomHalls(name);
+
+        KingdomHallSearchResponse response = new KingdomHallSearchResponse();
+        if (!kingdomHalls.isEmpty()) {
+            List<KingdomHallSearchResult> results = new ArrayList<KingdomHallSearchResult>();
+            for (KingdomHall kingdomHall : kingdomHalls) {
+                KingdomHallSearchResult result = new KingdomHallSearchResult();
+                result.setId(kingdomHall.getKingdomHallId());
+                result.setName(kingdomHall.getName());
+                results.add(result);
+            }
+            response.setResults(results);
+        }
+        return response;
+    }
+
+    /**
+     * Create a new kingdom hall.
+     *
+     * @param kingdomHallForm form bean
+     * @return view name
+     */
+    @RequestMapping(method = RequestMethod.POST)
+    public String createKingdomHall(@Valid KingdomHallForm kingdomHallForm) {
+        KingdomHall kingdomHall = new KingdomHall();
+        if (kingdomHallForm.getKingdomHallId() != null) {
+            kingdomHall.setKingdomHallId(kingdomHallForm.getKingdomHallId());
+        }
+        Address address = new Address();
+        address.setCounty(kingdomHallForm.getCounty());
+        address.setPostcode(kingdomHallForm.getPostcode());
+        address.setStreet(kingdomHallForm.getStreet());
+        address.setTown(kingdomHallForm.getTown());
+        kingdomHall.setAddress(address);
+        kingdomHall.setName(kingdomHallForm.getName());
+
+        return "redirect:" + KingdomHallModelFactory.generateUri(kingdomHall.getKingdomHallId());
+    }
+
+    /**
+     * Display the page list of kingdom halls, returning JSON.
+     *
+     * @param echoId request identifier returned back to the caller
+     * @return view
+     */
+    @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json")
+    @ResponseBody
+    public AjaxDataTableResult<KingdomHallListModel> showDatatableAjaxKingdomHallList(
+            @RequestParam(value = "sEcho") Integer echoId) {
+        AjaxDataTableResult<KingdomHallListModel> result = new AjaxDataTableResult<KingdomHallListModel>();
+        result.setRecords(createKingdomHallListModels(kingdomHallDao.findKingdomHalls()));
+        result.setTotalDisplayRecords(result.getAaData().size());
+        result.setTotalRecords(result.getAaData().size());
+        result.setEcho(echoId);
+        return result;
     }
 
     private List<KingdomHallListModel> createKingdomHallListModels(List<KingdomHall> halls) {
@@ -202,10 +248,12 @@ public class KingdomHallsController {
 
     /**
      * Deletes a Kingdom Hall.
+     *
      * @param request http servlet request
      * @param model spring mvc model
      * @return mvc redirect
-     * @throws NoSuchRequestHandlingMethodException on failure to find the Kingdom Hall
+     * @throws NoSuchRequestHandlingMethodException on failure to find the
+     * Kingdom Hall
      */
     @RequestMapping(method = RequestMethod.DELETE)
     public String deleteKingdomHall(HttpServletRequest request, ModelMap model)
