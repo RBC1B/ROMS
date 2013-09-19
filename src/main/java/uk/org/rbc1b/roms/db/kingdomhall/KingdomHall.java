@@ -29,9 +29,11 @@ import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 
 /**
  * The building.
+ *
  * @author oliver.elder.esq
  */
 public class KingdomHall extends DefaultUpdateAuditable {
+
     private static final long serialVersionUID = 3325033836948932960L;
     private Integer kingdomHallId;
     private String name;
@@ -39,7 +41,6 @@ public class KingdomHall extends DefaultUpdateAuditable {
     private Integer ownershipTypeId;
     private String drawings;
     private Set<KingdomHallFeature> features;
-    private TitleHolder titleHolder;
 
     public Address getAddress() {
         return address;
@@ -81,19 +82,6 @@ public class KingdomHall extends DefaultUpdateAuditable {
         this.features = features;
     }
 
-    public TitleHolder getTitleHolder() {
-        return titleHolder;
-    }
-
-    public void setTitleHolder(TitleHolder titleHolder) {
-        this.titleHolder = titleHolder;
-    }
-
-    @Override
-    public String toString() {
-        return "KingdomHall{" + "kingdomHallId=" + kingdomHallId + '}';
-    }
-
     /**
      * @return the ownershipTypeId
      */
@@ -106,5 +94,10 @@ public class KingdomHall extends DefaultUpdateAuditable {
      */
     public void setOwnershipTypeId(Integer ownershipTypeId) {
         this.ownershipTypeId = ownershipTypeId;
+    }
+
+    @Override
+    public String toString() {
+        return "KingdomHall{" + "kingdomHallId=" + kingdomHallId + '}';
     }
 }

@@ -139,7 +139,7 @@ public class KingdomHallsController {
 
         kingdomHallForm.setOwnershipTypeId(kingdomHall.getOwnershipTypeId());
         kingdomHallForm.setDrawings(kingdomHall.getDrawings());
-        kingdomHallForm.setTitleHolderCongregationId(kingdomHall.getTitleHolder().getCongregation().getCongregationId());
+        // kingdomHallForm.setTitleHolderCongregationId(kingdomHall.getTitleHolder().getCongregation().getCongregationId());
 
 
 

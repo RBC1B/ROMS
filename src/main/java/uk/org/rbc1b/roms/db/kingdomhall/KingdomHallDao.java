@@ -29,12 +29,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Look up Kingdom Hall information.
+ *
  * @author oliver.elder.esq
  */
 public interface KingdomHallDao {
 
     /**
      * Find the kingdom hall matching the name, or null if no match.
+     *
      * @param kingdomHallId kingdom hall id
      * @return kingdom hall
      */
@@ -44,6 +46,7 @@ public interface KingdomHallDao {
 
     /**
      * Find all matching KingdomHalls.
+     *
      * @return list of matching kingdom halls
      */
     @PreAuthorize("hasPermission('KINGDOMHALL', 'READ')")
@@ -52,6 +55,7 @@ public interface KingdomHallDao {
 
     /**
      * Find the list of kingdom halls matching the partial name.
+     *
      * @param name name
      * @return kingdom halls
      */
@@ -61,6 +65,7 @@ public interface KingdomHallDao {
 
     /**
      * Create a new kingdom hall.
+     *
      * @param kingdomHall new kingdom hall to create
      */
     @PreAuthorize("hasPermission('KINGDOMHALL', 'ADD')")
@@ -69,6 +74,7 @@ public interface KingdomHallDao {
 
     /**
      * Update a kingdom hall.
+     *
      * @param kingdomHall new kingdom hall to create
      */
     @PreAuthorize("hasPermission('KINGDOMHALL', 'EDIT')")
@@ -77,9 +83,20 @@ public interface KingdomHallDao {
 
     /**
      * Deletes a Kingdom Hall.
+     *
      * @param kingdomHall to delete
      */
     @PreAuthorize("hasPermission('KINGDOMHALL','DELETE')")
     @Transactional
     void deleteKingdomHall(KingdomHall kingdomHall);
+
+    /**
+     * Finds the title holder of a Kingdom Hall.
+     *
+     * @param kingdomHallId kingdom hall id
+     * @return title holder
+     */
+    @PreAuthorize("hasPermission('KINGDOMHALL','READ')")
+    @Transactional(readOnly = true)
+    TitleHolder findTitleHolder(Integer kingdomHallId);
 }

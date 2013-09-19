@@ -78,13 +78,21 @@ public class HibernateKingdomHallDao implements KingdomHallDao {
 
     }
 
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
     @Override
     @CacheEvict(value = "kingdomHall.kingdomHall", key = "#kingdomHall.kingdomHallId")
     public void deleteKingdomHall(KingdomHall kingdomHall) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public TitleHolder findTitleHolder(Integer kingdomHallId) {
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(TitleHolder.class);
+        criteria.add(Restrictions.eq("kingdomHall.kingdomHallId", kingdomHallId));
+        return (TitleHolder) criteria.uniqueResult();
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 }
