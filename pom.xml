@@ -22,8 +22,8 @@
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.springversion>3.1.2.RELEASE</project.springversion>
+        <project.hibernateversion>4.2.5.Final</project.hibernateversion>
     </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -155,12 +155,17 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>4.2.2.Final</version>
+            <version>${project.hibernateversion}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>4.2.2.Final</version>
+            <version>${project.hibernateversion}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-envers</artifactId>
+            <version>${project.hibernateversion}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
