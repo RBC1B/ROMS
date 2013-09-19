@@ -142,7 +142,6 @@ public class KingdomHallsController {
         // kingdomHallForm.setTitleHolderCongregationId(kingdomHall.getTitleHolder().getCongregation().getCongregationId());
 
 
-
         return "kingdom-halls/edit";
 
     }

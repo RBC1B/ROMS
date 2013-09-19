@@ -14,7 +14,7 @@
         </component>
         <property name="ownershipTypeId" />
         <property name="drawings" length="50"  />
-        <!-- TODO: <many-to-one name="titleHolder" column="" /> -->
+        <!--TO DO:<many-to-one cascade="all" class="uk.org.rbc1b.roms.db.kingdomhall.TitleHolder" column="TitleHolderId" name="titleHolder" /> -->
         <set name="features" inverse="true" cascade="all-delete-orphan">
             <key column="KingdomHallId" />
             <one-to-many class="uk.org.rbc1b.roms.db.kingdomhall.KingdomHallFeature" />
