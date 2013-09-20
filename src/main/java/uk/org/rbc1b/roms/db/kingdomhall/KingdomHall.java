@@ -24,6 +24,7 @@
 package uk.org.rbc1b.roms.db.kingdomhall;
 
 import java.util.Set;
+import org.hibernate.envers.Audited;
 import uk.org.rbc1b.roms.db.Address;
 import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 
@@ -32,6 +33,7 @@ import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
  *
  * @author oliver.elder.esq
  */
+@Audited
 public class KingdomHall extends DefaultUpdateAuditable {
 
     private static final long serialVersionUID = 3325033836948932960L;

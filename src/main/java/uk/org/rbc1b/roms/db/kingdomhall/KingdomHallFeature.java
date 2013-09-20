@@ -23,12 +23,15 @@
  */
 package uk.org.rbc1b.roms.db.kingdomhall;
 
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
 import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 
 /**
  * An aspect of a kingdom hall, e.g. car park, that may need fixing one day.
  * @author oliver.elder.esq
  */
+@Audited
 public class KingdomHallFeature extends DefaultUpdateAuditable {
     private static final long serialVersionUID = -6662820261133712777L;
     private Integer kingdomHallFeatureId;
@@ -44,10 +47,12 @@ public class KingdomHallFeature extends DefaultUpdateAuditable {
         this.comments = comments;
     }
 
+    @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
     public HallFeature getHallFeature() {
         return hallFeature;
     }
 
+    @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
     public void setHallFeature(HallFeature hallFeature) {
         this.hallFeature = hallFeature;
     }

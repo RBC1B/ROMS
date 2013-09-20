@@ -25,6 +25,7 @@ package uk.org.rbc1b.roms.db;
 
 import java.util.Iterator;
 import java.util.Set;
+import org.hibernate.envers.Audited;
 import uk.org.rbc1b.roms.db.circuit.Circuit;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 
@@ -32,6 +33,7 @@ import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
  * Group of people.
  * @author oliver.elder.esq
  */
+@Audited
 public class Congregation extends DefaultUpdateAuditable {
     private static final long serialVersionUID = -346266378560523630L;
     private Integer congregationId;

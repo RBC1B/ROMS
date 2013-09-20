@@ -24,12 +24,14 @@
 package uk.org.rbc1b.roms.db.volunteer.skill;
 
 import java.sql.Date;
+import org.hibernate.envers.Audited;
 import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 
 /**
  * The skill owned by a volunteer. The Level indicates the competence.
  * @author oliver.elder.esq
  */
+@Audited
 public class VolunteerSkill extends DefaultUpdateAuditable {
     private static final long serialVersionUID = 8822648154764522140L;
     private Integer volunteerSkillId;

@@ -24,12 +24,14 @@
 package uk.org.rbc1b.roms.db.project;
 
 import java.util.Date;
+import org.hibernate.envers.Audited;
 import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 
 /**
  * Task involved in completing a project stage.
  */
+@Audited
 public class ProjectStageTask extends DefaultUpdateAuditable {
     private static final long serialVersionUID = -2121305669657847928L;
     private Integer projectStageTaskId;

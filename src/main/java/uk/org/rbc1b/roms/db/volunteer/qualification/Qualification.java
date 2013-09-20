@@ -23,12 +23,14 @@
  */
 package uk.org.rbc1b.roms.db.volunteer.qualification;
 
+import org.hibernate.envers.Audited;
 import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 
 /**
  * A recognised identifier of a skill.
  * @author ramindursingh
  */
+@Audited
 public class Qualification extends DefaultUpdateAuditable {
     private static final long serialVersionUID = -8865224379020933503L;
     private Integer qualificationId;

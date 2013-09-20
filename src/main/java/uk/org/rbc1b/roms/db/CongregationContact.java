@@ -23,10 +23,13 @@
  */
 package uk.org.rbc1b.roms.db;
 
+import org.hibernate.envers.Audited;
+
 /**
  * Linkage of person to congregation.
  * @author oliver.elder.esq
  */
+@Audited
 public class CongregationContact extends DefaultUpdateAuditable {
 
     public static final int COORDINATOR_ROLE = 1;

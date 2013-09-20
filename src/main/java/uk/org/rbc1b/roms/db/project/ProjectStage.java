@@ -25,12 +25,14 @@ package uk.org.rbc1b.roms.db.project;
 
 import java.util.Date;
 import java.util.Set;
+import org.hibernate.envers.Audited;
 import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 
 /**
  * Project stage defined for a given project. Each project defines one or more stages to be completed to finish the
  * project.
  */
+@Audited
 public class ProjectStage extends DefaultUpdateAuditable {
     private static final long serialVersionUID = 1L;
     private Integer projectStageId;

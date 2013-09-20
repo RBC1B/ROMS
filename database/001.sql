@@ -7,12 +7,11 @@ GRANT ALL ON ROMS.* TO rbcadmin;
 use ROMS;
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
-create table Application(
-    ApplicationId   bigint(20)  auto_increment,
-    Name            varchar(30) not null    unique, -- display name
-    Code            varchar(12) not null    unique, -- used in backend as an identifier
-    Comments        varchar(250),
-    primary key (ApplicationId)
+-- Hibernate Envers revision information. We use the default naming throughout. 
+create table REVINFO (
+    REV         bigint  auto_increment,
+    REVTSTMP    bigint,
+    primary key (REV)
 )engine=InnoDB;
 
 -- create the person. We don't create the foreign key to the congregation until the table is created
@@ -38,12 +37,72 @@ create table Person(
     foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
+create table Person_AUD(
+    PersonId        bigint(20)  not null,
+    REV             int         not null,
+    REVTYPE         tinyint,
+    Forename        varchar(50) not null,
+    MiddleName      varchar(50),
+    Surname         varchar(50) not null,
+    Street          varchar(50),
+    Town            varchar(50),
+    County          varchar(50),
+    Postcode        varchar(10),
+    Telephone       varchar(15),
+    Mobile          varchar(15),
+    WorkPhone       varchar(15),
+    Email           varchar(50),
+    Comments        varchar(250),
+    CongregationId  bigint(20),
+    BirthDate       date,
+    UpdateTime      timestamp   not null,
+    UpdatedBy       bigint(20)  not null,
+    primary key (PersonId, REV)
+)engine=InnoDB;
+
+create table Application(
+    ApplicationId   bigint(20)  auto_increment,
+    Name            varchar(30) not null    unique, -- display name
+    Code            varchar(12) not null    unique, -- used in backend as an identifier
+    Comments        varchar(250),
+    UpdateTime      timestamp   not null,
+    UpdatedBy       bigint(20)  not null,
+    primary key (ApplicationId),
+    foreign key (UpdatedBy) references Person(PersonId)
+)engine=InnoDB;
+
+create table Application_AUD (
+    ApplicationId   bigint(20),
+    REV             int         not null,
+    REVTYPE         tinyint,
+    Name            varchar(30) not null,
+    Code            varchar(12) not null,
+    Comments        varchar(250),
+    UpdateTime      timestamp   not null,
+    UpdatedBy       bigint(20)  not null,
+    primary key (ApplicationId, REV)    
+)engine=InnoDB;
+
 create table User(
     PersonId    bigint(20),
     UserName    varchar(50) not null    unique,
     Password    varchar(50) not null,
+    UpdateTime      timestamp   not null,
+    UpdatedBy       bigint(20)  not null,
     primary key (PersonId),
-    constraint foreign key (PersonId) references Person(PersonId) on delete cascade
+    foreign key (PersonId) references Person(PersonId) on delete cascade,
+    foreign key (UpdatedBy) references Person(PersonId)
+)engine=InnoDB;
+
+create table User_AUD(
+    PersonId    bigint(20),
+    REV         int         not null,
+    REVTYPE     tinyint,
+    UserName    varchar(50) not null,
+    Password    varchar(50) not null,
+    UpdateTime      timestamp   not null,
+    UpdatedBy       bigint(20)  not null,
+    primary key (PersonId, REV)
 )engine=InnoDB;
 
 create table Circuit(
@@ -55,6 +114,17 @@ create table Circuit(
     primary key (CircuitId),
     foreign key (CircuitOverseerId) references Person(PersonId),
     foreign key (UpdatedBy) references Person(PersonId)
+)engine=InnoDB;
+
+create table Circuit_AUD(
+    CircuitId           bigint(20),
+    REV                 int         not null,
+    REVTYPE             tinyint,
+    Name                varchar(50)     not null,
+    CircuitOverseerId   bigint(20),
+    UpdateTime      timestamp   not null,
+    UpdatedBy       bigint(20)  not null,
+    primary key (CircuitId, REV)
 )engine=InnoDB;
 
 create table OwnershipType(
@@ -85,6 +155,22 @@ create table KingdomHall(
     foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
+create table KingdomHall_AUD (
+    KingdomHallId   bigint(20),
+    REV             int         not null,
+    REVTYPE         tinyint,
+    Name            varchar(50) not null,
+    Street          varchar(50) not null,
+    Town            varchar(50) not null,
+    County          varchar(50),
+    Postcode        varchar(10) not null,
+    OwnershipTypeId bigint(20),
+    Drawings        varchar(50),
+    UpdateTime      timestamp   not null,
+    UpdatedBy       bigint(20)  not null,
+    primary key (KingdomHallId, REV)
+)engine=InnoDB;
+
 create table KingdomHallFeature(
     KingdomHallFeatureId    bigint(20)  auto_increment,
     KingdomHallId           bigint(20)  not null,
@@ -97,6 +183,18 @@ create table KingdomHallFeature(
     foreign key (KingdomHallId) references KingdomHall(KingdomHallId) on delete cascade,
     foreign key (HallFeatureId) references HallFeature(HallFeatureId) on delete cascade,
     foreign key (UpdatedBy) references Person(PersonId)
+)engine=InnoDB;
+
+create table KingdomHallFeature_AUD(
+    KingdomHallFeatureId    bigint(20),
+    REV                     int         not null,
+    REVTYPE                 tinyint,
+    KingdomHallId           bigint(20)  not null,
+    HallFeatureId           bigint(20)  not null,
+    Comments                varchar(250),
+    UpdateTime              timestamp   not null,
+    UpdatedBy               bigint(20)  not null,
+    primary key (KingdomHallFeatureId, REV)
 )engine=InnoDB;
 
 create table RbcRegion(
@@ -135,6 +233,27 @@ create table Congregation(
     foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
+create table Congregation_AUD(
+    CongregationId  bigint(20)  not null,
+    REV             int         not null,
+    REVTYPE         tinyint,
+    Name            varchar(50) not null,
+    Number          varchar(10) not null,
+    KingdomHallId   bigint(20),
+    CircuitId       bigint(20)  not null,
+    RbcRegionId     bigint(20),
+    RbcSubRegionId  bigint(20),
+    Publishers      varchar(10),
+    Attendance      varchar(10),
+    Funds           varchar(50),
+    Loans           varchar(10),
+    MonthlyIncome   varchar(10),
+    Strategy        varchar (1000),
+    UpdateTime      timestamp   not null,
+    UpdatedBy       bigint(20)  not null,
+    primary key (CongregationId, REV)
+)engine=InnoDB;
+
 -- we can now add the foeign key to the person congregation id
 alter table Person add
     constraint foreign key (CongregationId) references Congregation(CongregationId) on delete set null;
@@ -160,6 +279,18 @@ create table CongregationContact(
     foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
+create table CongregationContact_AUD(
+    CongregationContactId   bigint(20),
+    REV                     int         not null,
+    REVTYPE                 tinyint,
+    CongregationId          bigint(20)  not null,
+    CongregationRoleId      bigint(20)  not null,
+    PersonId                bigint(20)  not null,
+    UpdateTime              timestamp   not null,
+    UpdatedBy               bigint(20)  not null,
+    primary key (CongregationContactId, REV)
+)engine=InnoDB;
+
 create table TitleHolder(
     TitleHolderId   bigint(20)  auto_increment,
     KingdomHallId   bigint(20)  not null    unique,
@@ -170,6 +301,17 @@ create table TitleHolder(
     foreign key (KingdomHallId) references KingdomHall(KingdomHallId) on delete cascade,
     foreign key (CongregationId) references Congregation(CongregationId) on delete cascade,
     foreign key (UpdatedBy) references Person(PersonId)
+)engine=InnoDB;
+
+create table TitleHolder_AUD(
+    TitleHolderId   bigint(20),
+    REV             int         not null,
+    REVTYPE         tinyint,
+    KingdomHallId   bigint(20)  not null,
+    CongregationId  bigint(20)  not null,
+    UpdateTime      timestamp   not null,
+    UpdatedBy       bigint(20)  not null,
+    primary key (TitleHolderId, REV)
 )engine=InnoDB;
 
 create table InterviewStatus(
@@ -183,8 +325,23 @@ create table Department(
     Name                varchar(50) not null    unique,
     SuperDepartmentId   bigint(20),
     Description         varchar(50),
+    UpdateTime          timestamp   not null,
+    UpdatedBy           bigint(20)  not null,
     primary key (DepartmentId),
-    constraint foreign key (SuperDepartmentId) references Department(DepartmentId) on delete set null
+    foreign key (SuperDepartmentId) references Department(DepartmentId) on delete set null,
+    foreign key (UpdatedBy) references Person(PersonId)
+)engine=InnoDB;
+
+create table Department_AUD(
+    DepartmentId        bigint(20),
+    REV                 int         not null,
+    REVTYPE             tinyint,
+    Name                varchar(50) not null,
+    SuperDepartmentId   bigint(20),
+    Description         varchar(50),
+    UpdateTime          timestamp   not null,
+    UpdatedBy           bigint(20)  not null,
+    primary key (DepartmentId, REV)
 )engine=InnoDB;
 
 create table RbcStatus(
@@ -257,17 +414,62 @@ create table Volunteer(
     foreign key (InterviewStatusId) references InterviewStatus(InterviewStatusId)
 )engine=InnoDB;
 
+create table Volunteer_AUD (
+    PersonId            bigint(20)  not null,
+    REV                 int         not null,
+    REVTYPE             tinyint,
+    RbcStatusId         bigint(20)  not null,
+    AppointmentId       bigint(20),
+    FulltimeId          bigint(20),
+    Availability        varchar(7),
+    EmergencyContactId  bigint(20),
+    EmergencyContactRelationshipId bigint(20),
+    Gender              varchar(1)  not null,
+    MaritalStatusId     bigint(20),
+    SpousePersonId      bigint(20),
+    BaptismDate         date,
+    InterviewDate       date,
+    InterviewerA        bigint(20),
+    InterviewerB        bigint(20),
+    InterviewComments   varchar(150),
+    JoinedDate          date,
+    FormDate            date,
+    InterviewStatusId   bigint(20)  not null,
+    Oversight           boolean     not null,
+    OversightComments   varchar(50),
+    ReliefUK            boolean     not null,
+    ReliefUKComments    varchar(50),
+    ReliefAbroad        boolean     not null,
+    ReliefAbroadComments varchar(50),
+    HHCFormCode         varchar(15),
+    BadgeIssueDate      date,
+    primary key(PersonId, REV)
+)engine=InnoDB;
+
 create table VolunteerTrade (
     VolunteerTradeId        bigint(20)      auto_increment,
     PersonId                bigint(20),
     Name                    varchar(250)    not null,
     ExperienceDescription   text,
     ExperienceYears         integer,
-    UpdateTime          timestamp   not null,
-    UpdatedBy           bigint(20)  not null,
+    UpdateTime              timestamp   not null,
+    UpdatedBy               bigint(20)  not null,
     primary key (VolunteerTradeId),
     constraint foreign key (PersonId) references Person(PersonId) on delete cascade,
     foreign key (UpdatedBy) references Person(PersonId)
+)engine=InnoDB;
+
+create table VolunteerTrade_AUD (
+    VolunteerTradeId        bigint(20),
+    REV                     int         not null,
+    REVTYPE                 tinyint,
+    PersonId                bigint(20),
+    Name                    varchar(250)    not null,
+    ExperienceDescription   text,
+    ExperienceYears         integer,
+    UpdateTime              timestamp   not null,
+    UpdatedBy               bigint(20)  not null,
+    primary key (VolunteerTradeId, REV)
 )engine=InnoDB;
 
 create table ApplicationAccess(
@@ -283,6 +485,19 @@ create table ApplicationAccess(
     constraint foreign key (PersonId) references Person(PersonId) on delete cascade,
     constraint foreign key (ApplicationId) references Application(ApplicationId) on delete cascade,
     foreign key (UpdatedBy) references Person(PersonId)
+)engine=InnoDB;
+
+create table ApplicationAccess_AUD(
+    ApplicationAccessId bigint(20),
+    REV                 int         not null,
+    REVTYPE             tinyint,
+    PersonId            bigint(20)  not null,
+    ApplicationId       bigint(20),
+    DepartmentAccess    integer     not null,
+    NonDepartmentAccess integer     not null,
+    UpdateTime          timestamp   not null,
+    UpdatedBy           bigint(20)  not null,
+    primary key (ApplicationAccessId, REV)
 )engine=InnoDB;
 
 create table AssignmentRole(
@@ -322,6 +537,21 @@ create table Assignment(
     foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
+create table Assignment_AUD(
+    AssignmentId        bigint(20),
+    REV                 int         not null,
+    REVTYPE             tinyint,
+    PersonId            bigint(20)  not null,
+    DepartmentId        bigint(20)  not null,
+    AssignmentRoleId    bigint(20)  not null,
+    AssignedDate        date        not null,
+    TradeNumberId       bigint(20)  not null,
+    TeamId              bigint(20)  not null,
+    UpdateTime          timestamp   not null,
+    UpdatedBy           bigint(20)  not null,
+    primary key (AssignmentId, REV)
+)engine=InnoDB;
+
 create table ProjectType(
     ProjectTypeId   bigint(20)  auto_increment,
     Name     varchar(25) not null    unique,
@@ -337,8 +567,21 @@ create table InvitationConfirmation(
 create table Commentator(
     CommentatorId   bigint(20)  auto_increment,
     DepartmentId    bigint(20)  not null    unique,
+    UpdateTime      timestamp   not null,
+    UpdatedBy       bigint(20)  not null,
     primary key (CommentatorId),
-    constraint foreign key (DepartmentId) references Department(DepartmentId)
+    constraint foreign key (DepartmentId) references Department(DepartmentId),
+    foreign key (UpdatedBy) references Person(PersonId)
+)engine=InnoDB;
+
+create table Commentator_AUD (
+    CommentatorId   bigint(20),
+    REV             int         not null,
+    REVTYPE         tinyint,
+    DepartmentId    bigint(20)  not null,
+    UpdateTime      timestamp   not null,
+    UpdatedBy       bigint(20)  not null,
+    primary key (CommentatorId, REV)
 )engine=InnoDB;
 
 create table WorkFeature(
@@ -384,13 +627,56 @@ create table Project(
     foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
+create table Project_AUD (
+    ProjectId       bigint(20),
+    REV             int         not null,
+    REVTYPE         tinyint,
+    Name            varchar(50) not null,
+    ProjectTypeId   bigint(20)  not null,
+    KingdomHallId   bigint(20),
+    Priority        varchar(50),
+    Street          varchar (80),
+    Town            varchar(50),
+    County          varchar(50),
+    Postcode        varchar(10),
+    Telephone       varchar(20),
+    ContactPersonId bigint(20),
+    RequestDate     date,
+    VisitDate       date,
+    EstimateCost    varchar(50),
+    ProjectStatusId bigint(20)  not null,
+    SupportingCongregation varchar(250),
+    ProjectConstraints text,
+    CoordinatorId   bigint(20),
+    CompletedDate   date,
+    UpdateTime      timestamp   not null,
+    UpdatedBy       bigint(20)  not null,
+    primary key (ProjectId, REV)
+)engine=InnoDB;
+
 create table ProjectStageType (
     ProjectStageTypeId  bigint(20)  auto_increment,
     Name                varchar(5)  not null    unique,
     Description         varchar(50),
-    AssignedTo      varchar(500),
-    WorkNotes       varchar(1000),
-    primary key (ProjectStageTypeId)
+    AssignedTo          varchar(500),
+    WorkNotes           varchar(1000),
+    UpdateTime          timestamp   not null,
+    UpdatedBy           bigint(20)  not null,
+    primary key (ProjectStageTypeId),
+    foreign key (UpdatedBy) references Person(PersonId)
+)engine=InnoDB;
+
+create table ProjectStageType_AUD (
+    ProjectStageTypeId  bigint(20),
+    REV                 int         not null,
+    REVTYPE             tinyint,
+    Name                varchar(5)  not null,
+    Description         varchar(50),
+    AssignedTo          varchar(500),
+    WorkNotes           varchar(1000),
+    UpdateTime          timestamp   not null,
+    UpdatedBy           bigint(20)  not null,
+    primary key (ProjectStageTypeId, REV)
 )engine=InnoDB;
 
 create table ProjectStageEventType (
@@ -422,6 +708,21 @@ create table ProjectStage (
     foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
+create table ProjectStage_AUD (
+    ProjectStageId          bigint(20),
+    REV                     int         not null,
+    REVTYPE                 tinyint,
+    ProjectId               bigint(20)  not null,
+    ProjectStageTypeId      bigint(20)  not null,
+    ProjectStageStatusId    bigint(20)  not null,
+    CreatedTime             timestamp   not null,
+    StartedTime             timestamp   null,
+    CompletedTime           timestamp   null,
+    UpdateTime              timestamp   not null,
+    UpdatedBy               bigint(20)  not null,
+    primary key (ProjectStageId, REV)
+)engine=InnoDB;
+
 create table ProjectStageOrder (
     ProjectStageOrderId     bigint(20)  auto_increment,
     ProjectId               bigint(20)  not null,
@@ -436,6 +737,19 @@ create table ProjectStageOrder (
     foreign key (PreviousProjectStageId) references ProjectStage(ProjectStageId),
     foreign key (NextProjectStageId) references ProjectStage(ProjectStageId),
     foreign key (UpdatedBy) references Person(PersonId)
+)engine=InnoDB;
+
+create table ProjectStageOrder_AUD (
+    ProjectStageOrderId     bigint(20),
+    REV                     int         not null,
+    REVTYPE                 tinyint,
+    ProjectId               bigint(20)  not null,
+    ProjectStageId          bigint(20)  not null,
+    PreviousProjectStageId  bigint(20),
+    NextProjectStageId      bigint(20),
+    UpdateTime              timestamp   not null,
+    UpdatedBy               bigint(20)  not null,
+    primary key (ProjectStageOrderId, REV)
 )engine=InnoDB;
 
 create table ProjectStageTask (
@@ -453,6 +767,22 @@ create table ProjectStageTask (
     foreign key (ProjectStageId) references ProjectStage(ProjectStageId),
     foreign key (AssignedVolunteerId) references Volunteer(PersonId),
     foreign key (UpdatedBy) references Person(PersonId)
+)engine=InnoDB;
+
+create table ProjectStageTask_AUD (
+    ProjectStageTaskId  bigint(20),
+    REV                 int         not null,
+    REVTYPE             tinyint,
+    ProjectStageId      bigint(20)  not null,
+    Name                varchar(250),
+    AssignedVolunteerId bigint(20)  not null,
+    Comments            varchar(1000),
+    CreatedTime         timestamp   not null,
+    StartedTime         timestamp   null,
+    CompletedTime       timestamp   null,
+    UpdateTime          timestamp   not null,
+    UpdatedBy           bigint(20)  not null,
+    primary key (ProjectStageTaskId, REV)
 )engine=InnoDB;
 
 create table ProjectStageEvent (
@@ -484,6 +814,7 @@ create table ProjectStageTaskEvent (
     foreign key (CreatedBy) references Person(PersonId)
 )engine=InnoDB;
 
+
 create table ProjectWorkBrief(
     ProjectWorkBriefId  bigint(20)  auto_increment,
     ProjectId           bigint(20)  not null,
@@ -496,6 +827,18 @@ create table ProjectWorkBrief(
     foreign key (ProjectId) references Project(ProjectId) on delete cascade,
     foreign key (WorkFeatureId) references WorkFeature(WorkFeatureId),
     foreign key (UpdatedBy) references Person(PersonId)
+)engine=InnoDB;
+
+create table ProjectWorkBrief_AUD(
+    ProjectWorkBriefId  bigint(20),
+    REV                 int         not null,
+    REVTYPE             tinyint,
+    ProjectId           bigint(20)  not null,
+    WorkFeatureId       bigint(20)  not null,
+    Brief               text,
+    UpdateTime          timestamp   not null,
+    UpdatedBy           bigint(20)  not null,
+    primary key (ProjectWorkBriefId, REV)
 )engine=InnoDB;
 
 create table Attendance(
@@ -518,6 +861,22 @@ create table Attendance(
     foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
+create table Attendance_AUD (
+    AttendanceId    bigint(20),
+    REV             int         not null,
+    REVTYPE         tinyint,
+    ProjectId       bigint(20)  not null,
+    PersonId        bigint(20)  not null,
+    InviteDate      date        not null,
+    AbleToCome      boolean,
+    InvitationConfirmationId    bigint(20),
+    DepartmentId    bigint(20),
+    Attended        boolean,
+    UpdateTime      timestamp   not null,
+    UpdatedBy       bigint(20)  not null,
+    primary key (AttendanceId, REV)
+)engine=InnoDB;
+
 create table Qualification(
     QualificationId bigint(20)  auto_increment,
     Name            varchar(50) not null    unique,
@@ -528,13 +887,24 @@ create table Qualification(
     foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
+create table Qualification_AUD (
+    QualificationId bigint(20),
+    REV             int         not null,
+    REVTYPE         tinyint,
+    Name            varchar(50) not null    unique,
+    Description     varchar(150),
+    UpdateTime      timestamp   not null,
+    UpdatedBy       bigint(20)  not null,
+    primary key (QualificationId, REV)
+)engine=InnoDB;
+
 create table VolunteerQualification(
     VolunteerQualificationId    bigint(20)  auto_increment,
     PersonId                    bigint(20)  not null,
     QualificationId             bigint(20)  not null,
     Comments                    varchar(100),
-    UpdateTime      timestamp   not null,
-    UpdatedBy       bigint(20)  not null,
+    UpdateTime                  timestamp   not null,
+    UpdatedBy                   bigint(20)  not null,
     primary key (VolunteerQualificationId),
     unique (PersonId, QualificationId),
     foreign key (PersonId) references Person(PersonId) on delete cascade,
@@ -542,12 +912,39 @@ create table VolunteerQualification(
     foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
+create table VolunteerQualification_AUD(
+    VolunteerQualificationId    bigint(20),
+    REV                         int         not null,
+    REVTYPE                     tinyint,
+    PersonId                    bigint(20)  not null,
+    QualificationId             bigint(20)  not null,
+    Comments                    varchar(100),
+    UpdateTime                  timestamp   not null,
+    UpdatedBy                   bigint(20)  not null,
+    primary key (VolunteerQualificationId, REV)
+)engine=InnoDB;
+
 create table SkillCategory(
     SkillCategoryId bigint(20) auto_increment,
     Name            varchar(50) not null unique,
     Colour          varchar(20),
     AppearOnBadge   boolean default false,
-    primary key (SkillCategoryId)
+    UpdateTime      timestamp   not null,
+    UpdatedBy       bigint(20)  not null,
+    primary key (SkillCategoryId),
+    foreign key (UpdatedBy) references Person(PersonId)
+)engine=InnoDB;
+
+create table SkillCategory_AUD(
+    SkillCategoryId bigint(20),
+    REV             int         not null,
+    REVTYPE         tinyint,
+    Name            varchar(50) not null,
+    Colour          varchar(20),
+    AppearOnBadge   boolean,
+    UpdateTime      timestamp   not null,
+    UpdatedBy       bigint(20)  not null,
+    primary key (SkillCategoryId, REV)
 )engine=InnoDB;
 
 create table Skill(
@@ -562,6 +959,19 @@ create table Skill(
     foreign key (DepartmentId) references Department(DepartmentId) on delete set null,
     foreign key (SkillCategoryId) references SkillCategory(SkillCategoryId) on delete set null,
     foreign key (UpdatedBy) references Person(PersonId)
+)engine=InnoDB;
+
+create table Skill_AUD(
+    SkillId         bigint(20),
+    REV             int         not null,
+    REVTYPE         tinyint,
+    Name            varchar(50) not null    unique,
+    DepartmentId    bigint(20),
+    Description     varchar(250),
+    SkillCategoryId bigint(20) default null,
+    UpdateTime      timestamp   not null,
+    UpdatedBy       bigint(20)  not null,
+    primary key (SkillId, REV)
 )engine=InnoDB;
 
 create table VolunteerSkill(
@@ -581,6 +991,21 @@ create table VolunteerSkill(
     foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
+create table VolunteerSkill_AUD (
+    VolunteerSkillId    bigint(20),
+    REV                 int         not null,
+    REVTYPE             tinyint,
+    PersonId            bigint(20)  not null,
+    SkillId             bigint(20)  not null,
+    Level               integer     not null,
+    Comments            varchar(250),
+    TrainingDate        date,
+    TrainingResults     varchar(15),
+    UpdateTime          timestamp   not null,
+    UpdatedBy           bigint(20)  not null,
+    primary key (VolunteerSkillId, REV)
+)engine=InnoDB;
+
 create table Updates(
     UpdatesId           bigint(20)  auto_increment,
     UpdatedTable        varchar(50) not null,
@@ -591,16 +1016,20 @@ create table Updates(
     foreign key (PersonId) references Person(PersonId) on delete set null
 )engine=InnoDB;
 
-insert into Application (Name, Code, Comments) values
-    ('Attendance & Invitations', 'ATTENDANCE', 'Mangaging project invites and gates list'),
-    ('Circuit', 'CIRCUIT', 'Managing Circuits in RBC region'),
-    ('Congregation', 'CONG', 'Managing Congregations in RBC region'),
-    ('Database', 'DATABASE', 'Managing database and definitions'),
-    ('Kingdom Halls', 'KINGDOMHALL', 'Managing Kingdom Halls in RBC region'),
-    ('Projects', 'PROJECT', 'Managing Projects'),
-    ('Skills', 'SKILL', 'Managing volunteer\'s skills and qualifications'),
-    ('User', 'USER', 'Managing User access'),
-    ('Volunteers', 'VOLUNTEER', 'Managing Volunteers');
+-- create the base system user
+insert into Person(Forename, Surname, UpdateTime, UpdatedBy)
+values ('System', '-', NOW(), 1);
+
+insert into Application (Name, Code, Comments, UpdateTime, UpdatedBy) values
+    ('Attendance & Invitations', 'ATTENDANCE', 'Mangaging project invites and gates list', NOW(), 1),
+    ('Circuit', 'CIRCUIT', 'Managing Circuits in RBC region', NOW(), 1),
+    ('Congregation', 'CONG', 'Managing Congregations in RBC region', NOW(), 1),
+    ('Database', 'DATABASE', 'Managing database and definitions', NOW(), 1),
+    ('Kingdom Halls', 'KINGDOMHALL', 'Managing Kingdom Halls in RBC region', NOW(), 1),
+    ('Projects', 'PROJECT', 'Managing Projects', NOW(), 1),
+    ('Skills', 'SKILL', 'Managing volunteer\'s skills and qualifications', NOW(), 1),
+    ('User', 'USER', 'Managing User access', NOW(), 1),
+    ('Volunteers', 'VOLUNTEER', 'Managing Volunteers', NOW(), 1);
 
 insert into OwnershipType (Name) values
     ('Freehold'),
@@ -636,61 +1065,61 @@ insert into InterviewStatus (Name) values
     ('Re-Invite'),
     ('Completed');
 
-insert into Department (DepartmentId, Name, Description) values
-    ('1','RBC','RBC Committee and assistants'),
-    ('2','Chairman','RBC Chairman\'s office'),
-    ('3','Construction','RBC Construction'),
-    ('4','Construction Support','RBC Construction Support'),
-    ('5','Personal','RBC Personal'),
-    ('6','Project Development','RBC Project Development');
-insert into Department (Name, SuperDepartmentId, Description) values
-    ('Project Coordination','2','Project Coordinators'),
-    ('Alarms','3',''),
-    ('Block Paving','3',''),
-    ('Bricklaying','3',''),
-    ('Carpentry','3',''),
-    ('Carpeting','3',''),
-    ('Ceiling','3',''),
-    ('Decorating','3',''),
-    ('Electrical','3',''),
-    ('Electrical Testing','3',''),
-    ('Ground Works','3',''),
-    ('Insulation','3',''),
-    ('Internal Finishes','3',''),
-    ('Landscaping','3',''),
-    ('Maintenance Inspection','3',''),
-    ('Plasterboard','3',''),
-    ('Plastering','3',''),
-    ('Plumbing','3',''),
-    ('Roof Trusses','3',''),
-    ('Roofing','3',''),
-    ('Sound','3',''),
-    ('Tiling','3',''),
-    ('Ventilation','3',''),
-    ('Wall Panelling','3',''),
-    ('Accounts','4',''),
-    ('Audit','4',''),
-    ('Equipment','4',''),
-    ('Food Service','4',''),
-    ('IT Support','4',''),
-    ('Installation','4',''),
-    ('Materials','4',''),
-    ('On Site Services','4',''),
-    ('Purchasing','4',''),
-    ('Quality Control','4',''),
-    ('Scaffolding','4',''),
-    ('Admin','5',''),
-    ('First Aid','5',''),
-    ('Safety','5',''),
-    ('Training','5',''),
-    ('Volunteer Service','5',''),
-    ('Design','6',''),
-    ('Legel','6',''),
-    ('Real Estate','6','');
-insert into Department (Name, SuperDepartmentId, Description) values
-    ('Land Acquisition and Sale','49',''),
-    ('Land Search','49',''),
-    ('Planning Policy','49','');
+insert into Department (DepartmentId, Name, Description, UpdateTime, UpdatedBy) values
+    ('1','RBC','RBC Committee and assistants', NOW(), 1),
+    ('2','Chairman','RBC Chairman\'s office', NOW(), 1),
+    ('3','Construction','RBC Construction', NOW(), 1),
+    ('4','Construction Support','RBC Construction Support', NOW(), 1),
+    ('5','Personal','RBC Personal', NOW(), 1),
+    ('6','Project Development','RBC Project Development', NOW(), 1);
+insert into Department (Name, SuperDepartmentId, Description, UpdateTime, UpdatedBy) values
+    ('Project Coordination','2','Project Coordinators', NOW(), 1),
+    ('Alarms','3','', NOW(), 1),
+    ('Block Paving','3','', NOW(), 1),
+    ('Bricklaying','3','', NOW(), 1),
+    ('Carpentry','3','', NOW(), 1),
+    ('Carpeting','3','', NOW(), 1),
+    ('Ceiling','3','', NOW(), 1),
+    ('Decorating','3','', NOW(), 1),
+    ('Electrical','3','', NOW(), 1),
+    ('Electrical Testing','3','', NOW(), 1),
+    ('Ground Works','3','', NOW(), 1),
+    ('Insulation','3','', NOW(), 1),
+    ('Internal Finishes','3','', NOW(), 1),
+    ('Landscaping','3','', NOW(), 1),
+    ('Maintenance Inspection','3','', NOW(), 1),
+    ('Plasterboard','3','', NOW(), 1),
+    ('Plastering','3','', NOW(), 1),
+    ('Plumbing','3','', NOW(), 1),
+    ('Roof Trusses','3','', NOW(), 1),
+    ('Roofing','3','', NOW(), 1),
+    ('Sound','3','', NOW(), 1),
+    ('Tiling','3','', NOW(), 1),
+    ('Ventilation','3','', NOW(), 1),
+    ('Wall Panelling','3','', NOW(), 1),
+    ('Accounts','4','', NOW(), 1),
+    ('Audit','4','', NOW(), 1),
+    ('Equipment','4','', NOW(), 1),
+    ('Food Service','4','', NOW(), 1),
+    ('IT Support','4','', NOW(), 1),
+    ('Installation','4','', NOW(), 1),
+    ('Materials','4','', NOW(), 1),
+    ('On Site Services','4','', NOW(), 1),
+    ('Purchasing','4','', NOW(), 1),
+    ('Quality Control','4','', NOW(), 1),
+    ('Scaffolding','4','', NOW(), 1),
+    ('Admin','5','', NOW(), 1),
+    ('First Aid','5','', NOW(), 1),
+    ('Safety','5','', NOW(), 1),
+    ('Training','5','', NOW(), 1),
+    ('Volunteer Service','5','', NOW(), 1),
+    ('Design','6','', NOW(), 1),
+    ('Legel','6','', NOW(), 1),
+    ('Real Estate','6','', NOW(), 1);
+insert into Department (Name, SuperDepartmentId, Description, UpdateTime, UpdatedBy) values
+    ('Land Acquisition and Sale','49','', NOW(), 1),
+    ('Land Search','49','', NOW(), 1),
+    ('Planning Policy','49','', NOW(), 1);
 
 insert into RbcStatus (Name) values
     ('Active'),
@@ -745,31 +1174,31 @@ insert into Team(Name) values
     ('B');
 
 
-insert into ProjectStageType(Name, Description, AssignedTo, WorkNotes) values
-    ('0','Land Search','Project Development','Land Search.'),
-    ('1','Assess Project Viability','Chairman','Assess project viability.'),
-    ('002a','Viability Design','Project Development','Following necessary site visits provide initial concept designs, site layouts. More than one design option may be required.'),
-    ('002b','Viability Costings','Construction Support','Provide estimated costs for project including all options to be presented to congregations.'),
-    ('3','Visit Congregation','Chairman','Meet with all congregation elders, present design options & costs. Agree scope of works (SOW).'),
-    ('4','Signed Scope Of Works (SOW)','Chairman','Ensure a scope of works is signed by all congregation elders.'),
-    ('5','S-83','Construction Support','S83 to be signed by congregations and retained in RBC files. Only needed if a loan required.'),
-    ('6','Detailed Design Work','Project Development','Prepare detailed drawings based upon agreed SOW. Prepare planning application drawings if required.'),
-    ('7','Design And Access Statement','Project Development - Design','Prepare design & Access statement.'),
-    ('8','RBC Review of Draft Plan','Chairman','Review drawings and plans with RBC and approve or request alterations.'),
-    ('9','Congregation Approval of Drawings','Chairman','Project Co-Ordinator to contact Congregation and inform Chairman/PD of decision.'),
-    ('10','Planning Application and Approval','Project Development - Design','Submit plans to local authority for approval. Fees to be paid by congregation direct.'),
-    ('11','S84 - Loan Application and Resolution','Construction Support','Congregation need to complete and sign S84 together with congregation resolutions. S84 then to be forwarded to branch for approval.'),
-    ('12','Bank Account and VAT Application','Construction Support','Open a bank account for projects over £10,000. VAT registration required for all new or rebuilds.'),
-    ('13','Foundation Design and Selection','Project Development - Design','Complete foundation design and specification.'),
-    ('14','Building Regulation Approval','Project Development','Prepare and submit drawings for building regulation approval.'),
-    ('15','Material List','Construction Support','Prepare detailed materials list.'),
-    ('16','S-124 - List of Major Cost Elements','Construction Support','Complete S-124.'),
-    ('17','Construction Planning','Chairman','Agree construction date and inform congregation.'),
-    ('18','Construction Kick-Off Meeting','Chairman','Project Coordinator to organise kick off meeting 4-6 weeks prior to build. Meetings for construction support, trade overseers, basic site safety meetings and food safety training.'),
-    ('19','Construction','Construction','Carry out work in line with SOW.'),
-    ('20','Project Documentation','Construction Support','Ensure all relevant documentation retained and help in congregation H&S file. All local authority approvals, instruction manuals.'),
-    ('21','Complete S-85','Chairman','Complete S-85 and send to Branch.'),
-    ('999','Close Project','Chairman','Close project after all project work has been completed.');
+insert into ProjectStageType(Name, Description, AssignedTo, WorkNotes, UpdateTime, UpdatedBy) values
+    ('0','Land Search','Project Development','Land Search.', NOW(), 1),
+    ('1','Assess Project Viability','Chairman','Assess project viability.', NOW(), 1),
+    ('002a','Viability Design','Project Development','Following necessary site visits provide initial concept designs, site layouts. More than one design option may be required.', NOW(), 1),
+    ('002b','Viability Costings','Construction Support','Provide estimated costs for project including all options to be presented to congregations.', NOW(), 1),
+    ('3','Visit Congregation','Chairman','Meet with all congregation elders, present design options & costs. Agree scope of works (SOW).', NOW(), 1),
+    ('4','Signed Scope Of Works (SOW)','Chairman','Ensure a scope of works is signed by all congregation elders.', NOW(), 1),
+    ('5','S-83','Construction Support','S83 to be signed by congregations and retained in RBC files. Only needed if a loan required.', NOW(), 1),
+    ('6','Detailed Design Work','Project Development','Prepare detailed drawings based upon agreed SOW. Prepare planning application drawings if required.', NOW(), 1),
+    ('7','Design And Access Statement','Project Development - Design','Prepare design & Access statement.', NOW(), 1),
+    ('8','RBC Review of Draft Plan','Chairman','Review drawings and plans with RBC and approve or request alterations.', NOW(), 1),
+    ('9','Congregation Approval of Drawings','Chairman','Project Co-Ordinator to contact Congregation and inform Chairman/PD of decision.', NOW(), 1),
+    ('10','Planning Application and Approval','Project Development - Design','Submit plans to local authority for approval. Fees to be paid by congregation direct.', NOW(), 1),
+    ('11','S84 - Loan Application and Resolution','Construction Support','Congregation need to complete and sign S84 together with congregation resolutions. S84 then to be forwarded to branch for approval.', NOW(), 1),
+    ('12','Bank Account and VAT Application','Construction Support','Open a bank account for projects over £10,000. VAT registration required for all new or rebuilds.', NOW(), 1),
+    ('13','Foundation Design and Selection','Project Development - Design','Complete foundation design and specification.', NOW(), 1),
+    ('14','Building Regulation Approval','Project Development','Prepare and submit drawings for building regulation approval.', NOW(), 1),
+    ('15','Material List','Construction Support','Prepare detailed materials list.', NOW(), 1),
+    ('16','S-124 - List of Major Cost Elements','Construction Support','Complete S-124.', NOW(), 1),
+    ('17','Construction Planning','Chairman','Agree construction date and inform congregation.', NOW(), 1),
+    ('18','Construction Kick-Off Meeting','Chairman','Project Coordinator to organise kick off meeting 4-6 weeks prior to build. Meetings for construction support, trade overseers, basic site safety meetings and food safety training.', NOW(), 1),
+    ('19','Construction','Construction','Carry out work in line with SOW.', NOW(), 1),
+    ('20','Project Documentation','Construction Support','Ensure all relevant documentation retained and help in congregation H&S file. All local authority approvals, instruction manuals.', NOW(), 1),
+    ('21','Complete S-85','Chairman','Complete S-85 and send to Branch.', NOW(), 1),
+    ('999','Close Project','Chairman','Close project after all project work has been completed.', NOW(), 1);
 
 insert into ProjectType (Name) values
     ('Minor Work'),
@@ -785,20 +1214,20 @@ insert into InvitationConfirmation (Description) values
     ('Uncontactable'),
     ('Work');
 
-insert into Commentator (DepartmentId) values
-    ('1'),
-    ('2'),
-    ('3'),
-    ('4'),
-    ('5'),
-    ('6'),
-    ('7'),
-    ('47'),
-    ('48'),
-    ('49'),
-    ('50'),
-    ('51'),
-    ('52');
+insert into Commentator (DepartmentId, UpdateTime, UpdatedBy) values
+    ('1', NOW(), 1),
+    ('2', NOW(), 1),
+    ('3', NOW(), 1),
+    ('4', NOW(), 1),
+    ('5', NOW(), 1),
+    ('6', NOW(), 1),
+    ('7', NOW(), 1),
+    ('47', NOW(), 1),
+    ('48', NOW(), 1),
+    ('49', NOW(), 1),
+    ('50', NOW(), 1),
+    ('51', NOW(), 1),
+    ('52', NOW(), 1);
 
 insert into WorkFeature (Name) values
     ('Design'),
@@ -831,5 +1260,5 @@ insert into ProjectStageTaskEventType (Name) values
     ('Cancelled'),
     ('Notes');
 
-insert into SkillCategory (Name, Colour, AppearOnBadge) values
-    ('General', null, false);
+insert into SkillCategory (Name, Colour, AppearOnBadge, UpdateTime, UpdatedBy) values
+    ('General', null, false, NOW(), 1);

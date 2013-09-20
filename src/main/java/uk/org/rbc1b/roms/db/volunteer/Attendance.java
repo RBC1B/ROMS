@@ -24,6 +24,8 @@
 package uk.org.rbc1b.roms.db.volunteer;
 
 import java.sql.Date;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
 import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.project.Project;
@@ -76,10 +78,12 @@ public class Attendance extends DefaultUpdateAuditable {
         this.department = department;
     }
 
+    @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
     public InvitationConfirmation getInvitationConfirmation() {
         return invitationConfirmation;
     }
 
+    @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
     public void setInvitationConfirmation(InvitationConfirmation invitationConfirmation) {
         this.invitationConfirmation = invitationConfirmation;
     }

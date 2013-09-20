@@ -23,6 +23,7 @@
  */
 package uk.org.rbc1b.roms.db.volunteer.skill;
 
+import org.hibernate.envers.Audited;
 import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 import uk.org.rbc1b.roms.db.volunteer.department.Department;
 
@@ -30,6 +31,7 @@ import uk.org.rbc1b.roms.db.volunteer.department.Department;
  * A capability that may be owned by a volunteer, and required on a project.
  * @author oliver.elder.esq
  */
+@Audited
 public class Skill extends DefaultUpdateAuditable {
     private static final long serialVersionUID = -3203882796160187168L;
     private Integer skillId;

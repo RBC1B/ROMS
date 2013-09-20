@@ -23,6 +23,7 @@
  */
 package uk.org.rbc1b.roms.db.kingdomhall;
 
+import org.hibernate.envers.Audited;
 import uk.org.rbc1b.roms.db.Congregation;
 import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 
@@ -30,6 +31,7 @@ import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
  * Congregation that holds the deeds to the hall.
  * @author oliver.elder.esq
  */
+@Audited
 public class TitleHolder extends DefaultUpdateAuditable {
     private static final long serialVersionUID = 4632818885924564868L;
     private Integer titleHolderId;

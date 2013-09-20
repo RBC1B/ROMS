@@ -23,12 +23,15 @@
  */
 package uk.org.rbc1b.roms.db;
 
+import org.hibernate.envers.Audited;
+
 /**
  * The basic person identifier.
  * <p>
  * This can be extended to volunteers, users, and non RBC-overseers.
  * @author oliver.elder.esq
  */
+@Audited
 public class Person extends DefaultUpdateAuditable {
     private static final long serialVersionUID = 8345111360587695632L;
     private Integer personId;

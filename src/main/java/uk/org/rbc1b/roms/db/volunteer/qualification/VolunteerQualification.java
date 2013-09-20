@@ -23,12 +23,14 @@
  */
 package uk.org.rbc1b.roms.db.volunteer.qualification;
 
+import org.hibernate.envers.Audited;
 import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 
 /**
  * A qualification owned by a volunteer.
  * @author oliver.elder.esq
  */
+@Audited
 public class VolunteerQualification extends DefaultUpdateAuditable {
     private static final long serialVersionUID = -7960214728374952774L;
     private Integer volunteerQualificationId;

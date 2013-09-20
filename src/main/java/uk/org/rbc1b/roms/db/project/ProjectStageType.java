@@ -23,12 +23,16 @@
  */
 package uk.org.rbc1b.roms.db.project;
 
+import org.hibernate.envers.Audited;
+import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
+
 /**
  *
  * @author oliver.elder.esq
  */
-public class ProjectStageType {
-
+@Audited
+public class ProjectStageType extends DefaultUpdateAuditable {
+    private static final long serialVersionUID = -6508389468219935691L;
     private Integer projectStageTypeId;
     private String name;
     private String description;

@@ -32,11 +32,13 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import org.apache.commons.lang3.ObjectUtils;
+import org.hibernate.envers.Audited;
 import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 
 /**
  * Store the ordering of the project stages. This is user for a linked list implementation.
  */
+@Audited
 public class ProjectStageOrder extends DefaultUpdateAuditable {
     private static final long serialVersionUID = 1L;
     private Integer projectStageOrderId;

@@ -23,12 +23,14 @@
  */
 package uk.org.rbc1b.roms.db.circuit;
 
+import org.hibernate.envers.Audited;
 import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 import uk.org.rbc1b.roms.db.Person;
 
 /**
  * @author oliver.elder.esq
  */
+@Audited
 public class Circuit extends DefaultUpdateAuditable {
     private static final long serialVersionUID = -380470389959120757L;
     private String name;

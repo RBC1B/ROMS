@@ -24,6 +24,8 @@
 package uk.org.rbc1b.roms.db.volunteer.department;
 
 import java.sql.Date;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
 import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 import uk.org.rbc1b.roms.db.Person;
 
@@ -31,6 +33,7 @@ import uk.org.rbc1b.roms.db.Person;
  * The volunteers role within a team/department.
  * @author oliver.elder.esq
  */
+@Audited
 public class Assignment extends DefaultUpdateAuditable {
     private static final long serialVersionUID = -3748152854538626576L;
     private Integer assignmentId;
@@ -73,18 +76,22 @@ public class Assignment extends DefaultUpdateAuditable {
         this.person = person;
     }
 
+    @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
     public AssignmentRole getRole() {
         return role;
     }
 
+    @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
     public void setRole(AssignmentRole role) {
         this.role = role;
     }
 
+    @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
     public Team getTeam() {
         return team;
     }
 
+    @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
     public void setTeam(Team team) {
         this.team = team;
     }

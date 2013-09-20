@@ -23,14 +23,17 @@
  */
 package uk.org.rbc1b.roms.db.project;
 
+import org.hibernate.envers.Audited;
+import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 import uk.org.rbc1b.roms.db.volunteer.department.Department;
 
 /**
  *
  * @author oliver.elder.esq
  */
-public class Commentator {
-
+@Audited
+public class Commentator extends DefaultUpdateAuditable {
+    private static final long serialVersionUID = 5002905678394026063L;
     private Integer commentatorId;
     private Department department;
 

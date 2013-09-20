@@ -23,12 +23,15 @@
  */
 package uk.org.rbc1b.roms.db.project;
 
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
 import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 
 /**
  * The work required for a given feature in a project.
  * @author oliver.elder.esq
  */
+@Audited
 public class ProjectWorkBrief extends DefaultUpdateAuditable {
     private static final long serialVersionUID = -4742828414469733445L;
     private Integer projectWorkBriefId;
@@ -60,10 +63,12 @@ public class ProjectWorkBrief extends DefaultUpdateAuditable {
         this.projectWorkBriefId = projectWorkBriefId;
     }
 
+    @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
     public WorkFeature getWorkFeature() {
         return workFeature;
     }
 
+    @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
     public void setWorkFeature(WorkFeature workFeature) {
         this.workFeature = workFeature;
     }

@@ -23,10 +23,15 @@
  */
 package uk.org.rbc1b.roms.db.volunteer.skill;
 
+import org.hibernate.envers.Audited;
+import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
+
 /**
  * @author ramindursingh
  */
-public class SkillCategory {
+@Audited
+public class SkillCategory extends DefaultUpdateAuditable {
+    private static final long serialVersionUID = -1733787944477712949L;
     private Integer skillCategoryId;
     private String name;
     private String colour;

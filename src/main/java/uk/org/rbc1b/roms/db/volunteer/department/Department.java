@@ -23,10 +23,13 @@
  */
 package uk.org.rbc1b.roms.db.volunteer.department;
 
+import org.hibernate.envers.Audited;
+
 /**
  *
  * @author oliver.elder.esq
  */
+@Audited
 public class Department {
 
     private Integer departmentId;

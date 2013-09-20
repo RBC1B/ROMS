@@ -55,7 +55,7 @@ public class AuditInterceptor extends EmptyInterceptor {
             }
         }
 
-        if (entity instanceof UpdateAuditable) {
+        if (entity instanceof CreateAuditable) {
             for (int i = 0; i < propertyNames.length; i++) {
                 if ("createTime".equals(propertyNames[i])) {
                     currentState[i] = new Date();
@@ -86,7 +86,7 @@ public class AuditInterceptor extends EmptyInterceptor {
             }
         }
 
-        if (entity instanceof UpdateAuditable) {
+        if (entity instanceof CreateAuditable) {
             for (int i = 0; i < propertyNames.length; i++) {
                 if ("createTime".equals(propertyNames[i])) {
                     state[i] = new Date();

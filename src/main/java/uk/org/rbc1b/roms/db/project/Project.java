@@ -25,6 +25,7 @@ package uk.org.rbc1b.roms.db.project;
 
 import java.util.Date;
 import java.util.Set;
+import org.hibernate.envers.Audited;
 import uk.org.rbc1b.roms.db.Address;
 import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 import uk.org.rbc1b.roms.db.Person;
@@ -34,6 +35,7 @@ import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
  * A unit of work to be performed at a given site (kingdom hall or address).
  * @author oliver.elder.esq
  */
+@Audited
 public class Project extends DefaultUpdateAuditable {
     private static final long serialVersionUID = 9175072301683424474L;
     private Address address;

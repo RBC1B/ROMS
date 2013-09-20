@@ -23,6 +23,7 @@
  */
 package uk.org.rbc1b.roms.db.volunteer.department;
 
+
 /**
  * Department team.
  */

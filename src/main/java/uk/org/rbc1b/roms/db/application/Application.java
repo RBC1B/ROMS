@@ -23,13 +23,15 @@
  */
 package uk.org.rbc1b.roms.db.application;
 
+import org.hibernate.envers.Audited;
+import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
+
 /**
  * Mapping of the sections of the webapp, e.g. Volunteers. <p>Each section is called an application.
- *
- * @author oliver.elder.esq
  */
-public class Application {
-
+@Audited
+public class Application extends DefaultUpdateAuditable {
+    private static final long serialVersionUID = 4467728714182984908L;
     private Integer applicationId;
     private String name;
     private String code;

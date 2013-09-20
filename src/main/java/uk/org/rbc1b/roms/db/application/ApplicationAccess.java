@@ -23,12 +23,14 @@
  */
 package uk.org.rbc1b.roms.db.application;
 
+import org.hibernate.envers.Audited;
 import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 import uk.org.rbc1b.roms.db.Person;
 
 /**
  * @author oliver.elder.esq
  */
+@Audited
 public class ApplicationAccess extends DefaultUpdateAuditable {
     private static final long serialVersionUID = -6714506443989985762L;
     private Integer applicationAccessId;

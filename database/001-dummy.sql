@@ -20,7 +20,8 @@ delete from Volunteer;
 delete from Skill;
 delete from Qualification;
 delete from User;
-delete from Person;
+-- delete all persons apart from the pre-defined system user
+delete from Person where PersonId > 1;
 
 -- reset the auto-increments
 alter table Attendance AUTO_INCREMENT=1;
@@ -69,20 +70,20 @@ insert into Person(Forename, Surname, Comments, BirthDate, UpdateTime, UpdatedBy
 values ('Ken', 'Whereheis', 'Unlikely to show up volunteer', '1978-11-14', NOW(), 1);
 
 
-insert into User(PersonId, UserName, Password)
-values (1, 'RaminderSingh', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3');
+insert into User(PersonId, UserName, Password, UpdateTime, UpdatedBy)
+values (1, 'RaminderSingh', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3', NOW(), 1);
 
-insert into User(PersonId, UserName, Password)
-values (2, 'AddOnly', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3');
+insert into User(PersonId, UserName, Password, UpdateTime, UpdatedBy)
+values (2, 'AddOnly', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3', NOW(), 1);
 
-insert into User(PersonId, UserName, Password)
-values (3, 'EditOnly', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3');
+insert into User(PersonId, UserName, Password, UpdateTime, UpdatedBy)
+values (3, 'EditOnly', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3', NOW(), 1);
 
-insert into User(PersonId, UserName, Password)
-values (4, 'ReadOnly', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3');
+insert into User(PersonId, UserName, Password, UpdateTime, UpdatedBy)
+values (4, 'ReadOnly', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3', NOW(), 1);
 
-insert into User(PersonId, UserName, Password)
-values (5, 'NoPermissions', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3');
+insert into User(PersonId, UserName, Password, UpdateTime, UpdatedBy)
+values (5, 'NoPermissions', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3', NOW(), 1);
 
 -- RaminderSingh full access (DELETE)
 -- Attendance & Invitations

@@ -23,6 +23,7 @@
  */
 package uk.org.rbc1b.roms.db.volunteer.trade;
 
+import org.hibernate.envers.Audited;
 import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 import uk.org.rbc1b.roms.db.Person;
 
@@ -30,6 +31,7 @@ import uk.org.rbc1b.roms.db.Person;
  * Captures the data entered by the volunteer in their form.
  * @author oliver.elder.esq
  */
+@Audited
 public class VolunteerTrade extends DefaultUpdateAuditable {
     private static final long serialVersionUID = -4191236742163964643L;
     private Integer volunteerTradeId;

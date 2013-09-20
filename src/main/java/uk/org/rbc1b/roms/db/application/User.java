@@ -24,13 +24,16 @@
 package uk.org.rbc1b.roms.db.application;
 
 import java.util.Set;
+import org.hibernate.envers.Audited;
+import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 
 /**
  *
  * @author oliver.elder.esq
  */
-public class User {
-
+@Audited
+public class User extends DefaultUpdateAuditable {
+    private static final long serialVersionUID = 1679723249032731035L;
     private Set<ApplicationAccess> applicationAccess;
     private Integer personId;
     private String userName;
