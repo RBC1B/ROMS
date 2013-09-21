@@ -23,20 +23,24 @@
  */
 package uk.org.rbc1b.roms.db.kingdomhall;
 
+import java.io.Serializable;
+import java.util.Date;
 import org.hibernate.envers.Audited;
 import uk.org.rbc1b.roms.db.Congregation;
-import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
+import uk.org.rbc1b.roms.db.UpdateAuditable;
 
 /**
  * Congregation that holds the deeds to the hall.
  * @author oliver.elder.esq
  */
 @Audited
-public class TitleHolder extends DefaultUpdateAuditable {
+public class TitleHolder implements UpdateAuditable, Serializable {
     private static final long serialVersionUID = 4632818885924564868L;
     private Integer titleHolderId;
     private KingdomHall kingdomHall;
     private Congregation congregation;
+    private Date updateTime;
+    private Integer updatedBy;
 
     public Congregation getCongregation() {
         return congregation;
@@ -60,6 +64,24 @@ public class TitleHolder extends DefaultUpdateAuditable {
 
     public void setTitleHolderId(Integer titleHolderId) {
         this.titleHolderId = titleHolderId;
+    }
+
+    @Override
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    @Override
+    public Integer getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Integer updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     @Override

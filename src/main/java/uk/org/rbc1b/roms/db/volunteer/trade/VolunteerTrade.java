@@ -23,22 +23,26 @@
  */
 package uk.org.rbc1b.roms.db.volunteer.trade;
 
+import java.io.Serializable;
+import java.util.Date;
 import org.hibernate.envers.Audited;
-import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 import uk.org.rbc1b.roms.db.Person;
+import uk.org.rbc1b.roms.db.UpdateAuditable;
 
 /**
  * Captures the data entered by the volunteer in their form.
  * @author oliver.elder.esq
  */
 @Audited
-public class VolunteerTrade extends DefaultUpdateAuditable {
+public class VolunteerTrade implements UpdateAuditable, Serializable {
     private static final long serialVersionUID = -4191236742163964643L;
     private Integer volunteerTradeId;
     private Person person;
     private String name;
     private String experienceDescription;
     private Integer experienceYears;
+    private Date updateTime;
+    private Integer updatedBy;
 
     public Integer getVolunteerTradeId() {
         return volunteerTradeId;
@@ -78,5 +82,23 @@ public class VolunteerTrade extends DefaultUpdateAuditable {
 
     public void setExperienceYears(Integer experienceYears) {
         this.experienceYears = experienceYears;
+    }
+
+    @Override
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    @Override
+    public Integer getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Integer updatedBy) {
+        this.updatedBy = updatedBy;
     }
 }

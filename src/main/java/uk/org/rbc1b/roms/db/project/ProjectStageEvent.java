@@ -23,19 +23,23 @@
  */
 package uk.org.rbc1b.roms.db.project;
 
-import uk.org.rbc1b.roms.db.DefaultCreateAuditable;
+import java.io.Serializable;
+import java.util.Date;
+import uk.org.rbc1b.roms.db.CreateAuditable;
 
 /**
  * Events associated with the project stages.
  */
-public class ProjectStageEvent extends DefaultCreateAuditable {
-
+public class ProjectStageEvent implements CreateAuditable, Serializable {
+    private static final long serialVersionUID = 4947689666475610021L;
     private Integer projectStageEventId;
     private ProjectStage projectStage;
     private Integer projectStageEventTypeId;
     private Commentator commentator;
     private String comments;
     private boolean visible;
+    private Date createTime;
+    private Integer createdBy;
 
     public Integer getProjectStageEventId() {
         return projectStageEventId;
@@ -83,6 +87,24 @@ public class ProjectStageEvent extends DefaultCreateAuditable {
 
     public void setVisible(boolean visible) {
         this.visible = visible;
+    }
+
+    @Override
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    @Override
+    public Integer getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
     }
 
     @Override

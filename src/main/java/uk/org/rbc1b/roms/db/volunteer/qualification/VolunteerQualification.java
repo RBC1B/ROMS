@@ -23,20 +23,24 @@
  */
 package uk.org.rbc1b.roms.db.volunteer.qualification;
 
+import java.io.Serializable;
+import java.util.Date;
 import org.hibernate.envers.Audited;
-import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
+import uk.org.rbc1b.roms.db.UpdateAuditable;
 
 /**
  * A qualification owned by a volunteer.
  * @author oliver.elder.esq
  */
 @Audited
-public class VolunteerQualification extends DefaultUpdateAuditable {
+public class VolunteerQualification implements UpdateAuditable, Serializable {
     private static final long serialVersionUID = -7960214728374952774L;
     private Integer volunteerQualificationId;
     private Integer personId;
     private Integer qualificationId;
     private String comments;
+    private Date updateTime;
+    private Integer updatedBy;
 
     public String getComments() {
         return comments;
@@ -68,6 +72,24 @@ public class VolunteerQualification extends DefaultUpdateAuditable {
 
     public void setVolunteerQualificationId(Integer volunteerQualificationId) {
         this.volunteerQualificationId = volunteerQualificationId;
+    }
+
+    @Override
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    @Override
+    public Integer getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Integer updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     @Override

@@ -23,15 +23,17 @@
  */
 package uk.org.rbc1b.roms.db.application;
 
+import java.io.Serializable;
+import java.util.Date;
 import org.hibernate.envers.Audited;
-import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 import uk.org.rbc1b.roms.db.Person;
+import uk.org.rbc1b.roms.db.UpdateAuditable;
 
 /**
  * @author oliver.elder.esq
  */
 @Audited
-public class ApplicationAccess extends DefaultUpdateAuditable {
+public class ApplicationAccess implements UpdateAuditable, Serializable {
     private static final long serialVersionUID = -6714506443989985762L;
     private Integer applicationAccessId;
     private Person person;
@@ -39,6 +41,8 @@ public class ApplicationAccess extends DefaultUpdateAuditable {
     private Integer departmentAccess;
     private Integer nonDepartmentAccess;
     private String name;
+    private Date updateTime;
+    private Integer updatedBy;
 
     public Integer getApplicationAccessId() {
         return applicationAccessId;
@@ -86,6 +90,24 @@ public class ApplicationAccess extends DefaultUpdateAuditable {
 
     public void setPerson(Person person) {
         this.person = person;
+    }
+
+    @Override
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    @Override
+    public Integer getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Integer updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     @Override

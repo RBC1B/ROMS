@@ -23,18 +23,19 @@
  */
 package uk.org.rbc1b.roms.db.volunteer.department;
 
+import java.io.Serializable;
 import java.sql.Date;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.RelationTargetAuditMode;
-import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 import uk.org.rbc1b.roms.db.Person;
+import uk.org.rbc1b.roms.db.UpdateAuditable;
 
 /**
  * The volunteers role within a team/department.
  * @author oliver.elder.esq
  */
 @Audited
-public class Assignment extends DefaultUpdateAuditable {
+public class Assignment implements UpdateAuditable, Serializable {
     private static final long serialVersionUID = -3748152854538626576L;
     private Integer assignmentId;
     private Person person;
@@ -43,6 +44,8 @@ public class Assignment extends DefaultUpdateAuditable {
     private Date assignedDate;
     private Integer tradeNumberId;
     private Team team;
+    private Date updateTime;
+    private Integer updatedBy;
 
     public Date getAssignedDate() {
         return assignedDate;
@@ -102,6 +105,24 @@ public class Assignment extends DefaultUpdateAuditable {
 
     public void setTradeNumberId(Integer tradeNumberId) {
         this.tradeNumberId = tradeNumberId;
+    }
+
+    @Override
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    @Override
+    public Integer getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Integer updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     @Override

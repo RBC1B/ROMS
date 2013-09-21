@@ -23,21 +23,25 @@
  */
 package uk.org.rbc1b.roms.db.kingdomhall;
 
+import java.io.Serializable;
+import java.util.Date;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.RelationTargetAuditMode;
-import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
+import uk.org.rbc1b.roms.db.UpdateAuditable;
 
 /**
  * An aspect of a kingdom hall, e.g. car park, that may need fixing one day.
  * @author oliver.elder.esq
  */
 @Audited
-public class KingdomHallFeature extends DefaultUpdateAuditable {
+public class KingdomHallFeature implements UpdateAuditable, Serializable {
     private static final long serialVersionUID = -6662820261133712777L;
     private Integer kingdomHallFeatureId;
     private KingdomHall kingdomHall;
     private HallFeature hallFeature;
     private String comments;
+    private Date updateTime;
+    private Integer updatedBy;
 
     public String getComments() {
         return comments;
@@ -71,6 +75,24 @@ public class KingdomHallFeature extends DefaultUpdateAuditable {
 
     public void setKingdomHallFeatureId(Integer kingdomHallFeatureId) {
         this.kingdomHallFeatureId = kingdomHallFeatureId;
+    }
+
+    @Override
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    @Override
+    public Integer getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Integer updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     @Override

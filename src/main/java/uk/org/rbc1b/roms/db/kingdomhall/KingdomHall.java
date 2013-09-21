@@ -23,10 +23,12 @@
  */
 package uk.org.rbc1b.roms.db.kingdomhall;
 
+import java.io.Serializable;
+import java.util.Date;
 import java.util.Set;
 import org.hibernate.envers.Audited;
 import uk.org.rbc1b.roms.db.Address;
-import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
+import uk.org.rbc1b.roms.db.UpdateAuditable;
 
 /**
  * The building.
@@ -34,7 +36,7 @@ import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
  * @author oliver.elder.esq
  */
 @Audited
-public class KingdomHall extends DefaultUpdateAuditable {
+public class KingdomHall implements UpdateAuditable, Serializable {
 
     private static final long serialVersionUID = 3325033836948932960L;
     private Integer kingdomHallId;
@@ -43,6 +45,8 @@ public class KingdomHall extends DefaultUpdateAuditable {
     private Integer ownershipTypeId;
     private String drawings;
     private Set<KingdomHallFeature> features;
+    private Date updateTime;
+    private Integer updatedBy;
 
     public Address getAddress() {
         return address;
@@ -96,6 +100,24 @@ public class KingdomHall extends DefaultUpdateAuditable {
      */
     public void setOwnershipTypeId(Integer ownershipTypeId) {
         this.ownershipTypeId = ownershipTypeId;
+    }
+
+    @Override
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    @Override
+    public Integer getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Integer updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     @Override

@@ -23,19 +23,23 @@
  */
 package uk.org.rbc1b.roms.db.application;
 
+import java.io.Serializable;
+import java.util.Date;
 import org.hibernate.envers.Audited;
-import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
+import uk.org.rbc1b.roms.db.UpdateAuditable;
 
 /**
  * Mapping of the sections of the webapp, e.g. Volunteers. <p>Each section is called an application.
  */
 @Audited
-public class Application extends DefaultUpdateAuditable {
+public class Application implements UpdateAuditable, Serializable {
     private static final long serialVersionUID = 4467728714182984908L;
     private Integer applicationId;
     private String name;
     private String code;
     private String comments;
+    private Date updateTime;
+    private Integer updatedBy;
 
     public Integer getApplicationId() {
         return applicationId;
@@ -67,6 +71,24 @@ public class Application extends DefaultUpdateAuditable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    @Override
+    public Integer getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Integer updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     @Override

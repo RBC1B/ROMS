@@ -23,8 +23,10 @@
  */
 package uk.org.rbc1b.roms.db.project;
 
+import java.io.Serializable;
+import java.util.Date;
 import org.hibernate.envers.Audited;
-import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
+import uk.org.rbc1b.roms.db.UpdateAuditable;
 import uk.org.rbc1b.roms.db.volunteer.department.Department;
 
 /**
@@ -32,10 +34,12 @@ import uk.org.rbc1b.roms.db.volunteer.department.Department;
  * @author oliver.elder.esq
  */
 @Audited
-public class Commentator extends DefaultUpdateAuditable {
+public class Commentator implements UpdateAuditable, Serializable {
     private static final long serialVersionUID = 5002905678394026063L;
     private Integer commentatorId;
     private Department department;
+    private Date updateTime;
+    private Integer updatedBy;
 
     public Integer getCommentatorId() {
         return commentatorId;
@@ -51,6 +55,24 @@ public class Commentator extends DefaultUpdateAuditable {
 
     public void setDepartment(Department department) {
         this.department = department;
+    }
+
+    @Override
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    @Override
+    public Integer getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Integer updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     @Override

@@ -23,16 +23,17 @@
  */
 package uk.org.rbc1b.roms.db.volunteer.skill;
 
+import java.io.Serializable;
 import java.sql.Date;
 import org.hibernate.envers.Audited;
-import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
+import uk.org.rbc1b.roms.db.UpdateAuditable;
 
 /**
  * The skill owned by a volunteer. The Level indicates the competence.
  * @author oliver.elder.esq
  */
 @Audited
-public class VolunteerSkill extends DefaultUpdateAuditable {
+public class VolunteerSkill implements UpdateAuditable, Serializable {
     private static final long serialVersionUID = 8822648154764522140L;
     private Integer volunteerSkillId;
     private Integer personId;
@@ -41,6 +42,8 @@ public class VolunteerSkill extends DefaultUpdateAuditable {
     private String comments;
     private Date trainingDate;
     private String trainingResults;
+    private Date updateTime;
+    private Integer updatedBy;
 
     public Date getTrainingDate() {
         return trainingDate;
@@ -96,6 +99,24 @@ public class VolunteerSkill extends DefaultUpdateAuditable {
 
     public void setVolunteerSkillId(Integer volunteerSkillId) {
         this.volunteerSkillId = volunteerSkillId;
+    }
+
+    @Override
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    @Override
+    public Integer getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Integer updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     @Override

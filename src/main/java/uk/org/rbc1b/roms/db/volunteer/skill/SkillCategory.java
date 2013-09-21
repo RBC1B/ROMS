@@ -23,19 +23,23 @@
  */
 package uk.org.rbc1b.roms.db.volunteer.skill;
 
+import java.io.Serializable;
+import java.util.Date;
 import org.hibernate.envers.Audited;
-import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
+import uk.org.rbc1b.roms.db.UpdateAuditable;
 
 /**
  * @author ramindursingh
  */
 @Audited
-public class SkillCategory extends DefaultUpdateAuditable {
+public class SkillCategory implements UpdateAuditable, Serializable {
     private static final long serialVersionUID = -1733787944477712949L;
     private Integer skillCategoryId;
     private String name;
     private String colour;
     private boolean appearOnBadge;
+    private Date updateTime;
+    private Integer updatedBy;
 
     public Integer getSkillCategoryId() {
         return skillCategoryId;
@@ -67,6 +71,24 @@ public class SkillCategory extends DefaultUpdateAuditable {
 
     public void setAppearOnBadge(boolean appearOnBadge) {
         this.appearOnBadge = appearOnBadge;
+    }
+
+    @Override
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    @Override
+    public Integer getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Integer updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     @Override

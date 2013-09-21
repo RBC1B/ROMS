@@ -23,21 +23,25 @@
  */
 package uk.org.rbc1b.roms.db.project;
 
+import java.io.Serializable;
+import java.util.Date;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.RelationTargetAuditMode;
-import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
+import uk.org.rbc1b.roms.db.UpdateAuditable;
 
 /**
  * The work required for a given feature in a project.
  * @author oliver.elder.esq
  */
 @Audited
-public class ProjectWorkBrief extends DefaultUpdateAuditable {
+public class ProjectWorkBrief implements UpdateAuditable, Serializable {
     private static final long serialVersionUID = -4742828414469733445L;
     private Integer projectWorkBriefId;
     private Project project;
     private WorkFeature workFeature;
     private String brief;
+    private Date updateTime;
+    private Integer updatedBy;
 
     public String getBrief() {
         return brief;
@@ -71,6 +75,24 @@ public class ProjectWorkBrief extends DefaultUpdateAuditable {
     @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
     public void setWorkFeature(WorkFeature workFeature) {
         this.workFeature = workFeature;
+    }
+
+    @Override
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    @Override
+    public Integer getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Integer updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     @Override

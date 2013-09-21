@@ -23,6 +23,8 @@
  */
 package uk.org.rbc1b.roms.db;
 
+import java.io.Serializable;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 import org.hibernate.envers.Audited;
@@ -34,7 +36,7 @@ import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
  * @author oliver.elder.esq
  */
 @Audited
-public class Congregation extends DefaultUpdateAuditable {
+public class Congregation implements UpdateAuditable, Serializable {
     private static final long serialVersionUID = -346266378560523630L;
     private Integer congregationId;
     private String name;
@@ -50,6 +52,8 @@ public class Congregation extends DefaultUpdateAuditable {
     private String monthlyIncome;
     private String strategy;
     private Set<CongregationContact> contacts;
+    private Date updateTime;
+    private Integer updatedBy;
 
     /**
      * Find the contact matching the type.
@@ -192,6 +196,24 @@ public class Congregation extends DefaultUpdateAuditable {
 
     public void setStrategy(String strategy) {
         this.strategy = strategy;
+    }
+
+    @Override
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    @Override
+    public Integer getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Integer updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     @Override

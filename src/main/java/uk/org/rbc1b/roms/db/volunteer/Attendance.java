@@ -23,11 +23,12 @@
  */
 package uk.org.rbc1b.roms.db.volunteer;
 
+import java.io.Serializable;
 import java.sql.Date;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.RelationTargetAuditMode;
-import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 import uk.org.rbc1b.roms.db.Person;
+import uk.org.rbc1b.roms.db.UpdateAuditable;
 import uk.org.rbc1b.roms.db.project.Project;
 import uk.org.rbc1b.roms.db.volunteer.department.Department;
 
@@ -35,7 +36,7 @@ import uk.org.rbc1b.roms.db.volunteer.department.Department;
  * The invitation of a volunteer for a given date on a project.
  * @author oliver.elder.esq
  */
-public class Attendance extends DefaultUpdateAuditable {
+public class Attendance implements UpdateAuditable, Serializable {
     private static final long serialVersionUID = -6357613333933986660L;
     private Integer attendanceId;
     private Project project;
@@ -45,6 +46,8 @@ public class Attendance extends DefaultUpdateAuditable {
     private InvitationConfirmation invitationConfirmation;
     private Department department;
     private boolean attended;
+    private Date updateTime;
+    private Integer updatedBy;
 
     public boolean isAbleToCome() {
         return ableToCome;
@@ -110,6 +113,24 @@ public class Attendance extends DefaultUpdateAuditable {
 
     public void setProject(Project project) {
         this.project = project;
+    }
+
+    @Override
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    @Override
+    public Integer getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Integer updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     @Override

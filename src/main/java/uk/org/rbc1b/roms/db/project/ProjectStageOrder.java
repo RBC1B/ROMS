@@ -27,25 +27,28 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import org.apache.commons.lang3.ObjectUtils;
 import org.hibernate.envers.Audited;
-import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
+import uk.org.rbc1b.roms.db.UpdateAuditable;
 
 /**
  * Store the ordering of the project stages. This is user for a linked list implementation.
  */
 @Audited
-public class ProjectStageOrder extends DefaultUpdateAuditable {
+public class ProjectStageOrder implements UpdateAuditable, Serializable {
     private static final long serialVersionUID = 1L;
     private Integer projectStageOrderId;
     private Integer projectId;
     private Integer projectStageId;
     private Integer previousProjectStageId;
     private Integer nextProjectStageId;
+    private Date updateTime;
+    private Integer updatedBy;
 
     /**
      * Sort the list of stages using the list of stage orders.
@@ -131,6 +134,24 @@ public class ProjectStageOrder extends DefaultUpdateAuditable {
 
     public void setNextProjectStageId(Integer nextProjectStageId) {
         this.nextProjectStageId = nextProjectStageId;
+    }
+
+    @Override
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    @Override
+    public Integer getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Integer updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     @Override

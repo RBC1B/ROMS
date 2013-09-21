@@ -23,6 +23,8 @@
  */
 package uk.org.rbc1b.roms.db;
 
+import java.io.Serializable;
+import java.util.Date;
 import org.hibernate.envers.Audited;
 
 /**
@@ -30,7 +32,7 @@ import org.hibernate.envers.Audited;
  * @author oliver.elder.esq
  */
 @Audited
-public class CongregationContact extends DefaultUpdateAuditable {
+public class CongregationContact implements UpdateAuditable, Serializable {
 
     public static final int COORDINATOR_ROLE = 1;
     public static final int SECRETARY_ROLE = 2;
@@ -40,6 +42,8 @@ public class CongregationContact extends DefaultUpdateAuditable {
     private Congregation congregation;
     private Integer congregationRoleId;
     private Person person;
+    private Date updateTime;
+    private Integer updatedBy;
 
     public Congregation getCongregation() {
         return congregation;
@@ -71,6 +75,24 @@ public class CongregationContact extends DefaultUpdateAuditable {
 
     public void setPerson(Person person) {
         this.person = person;
+    }
+
+    @Override
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    @Override
+    public Integer getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Integer updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     @Override

@@ -23,8 +23,10 @@
  */
 package uk.org.rbc1b.roms.db.volunteer.skill;
 
+import java.io.Serializable;
+import java.util.Date;
 import org.hibernate.envers.Audited;
-import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
+import uk.org.rbc1b.roms.db.UpdateAuditable;
 import uk.org.rbc1b.roms.db.volunteer.department.Department;
 
 /**
@@ -32,13 +34,15 @@ import uk.org.rbc1b.roms.db.volunteer.department.Department;
  * @author oliver.elder.esq
  */
 @Audited
-public class Skill extends DefaultUpdateAuditable {
+public class Skill implements UpdateAuditable, Serializable {
     private static final long serialVersionUID = -3203882796160187168L;
     private Integer skillId;
     private String name;
     private Department department;
     private String description;
     private SkillCategory category;
+    private Date updateTime;
+    private Integer updatedBy;
 
     /**
      * @return the skillId
@@ -108,6 +112,24 @@ public class Skill extends DefaultUpdateAuditable {
      */
     public void setCategory(SkillCategory category) {
         this.category = category;
+    }
+
+    @Override
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    @Override
+    public Integer getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Integer updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     @Override

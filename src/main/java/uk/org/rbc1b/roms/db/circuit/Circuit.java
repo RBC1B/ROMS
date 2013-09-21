@@ -23,19 +23,23 @@
  */
 package uk.org.rbc1b.roms.db.circuit;
 
+import java.io.Serializable;
+import java.util.Date;
 import org.hibernate.envers.Audited;
-import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 import uk.org.rbc1b.roms.db.Person;
+import uk.org.rbc1b.roms.db.UpdateAuditable;
 
 /**
  * @author oliver.elder.esq
  */
 @Audited
-public class Circuit extends DefaultUpdateAuditable {
+public class Circuit implements UpdateAuditable, Serializable {
     private static final long serialVersionUID = -380470389959120757L;
     private String name;
     private Integer circuitId;
     private Person circuitOverseer;
+    private Date updateTime;
+    private Integer updatedBy;
 
     public Integer getCircuitId() {
         return circuitId;
@@ -59,6 +63,24 @@ public class Circuit extends DefaultUpdateAuditable {
 
     public void setCircuitOverseer(Person circuitOverseer) {
         this.circuitOverseer = circuitOverseer;
+    }
+
+    @Override
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    @Override
+    public Integer getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Integer updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     @Override

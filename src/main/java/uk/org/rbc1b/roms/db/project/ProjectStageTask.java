@@ -23,16 +23,17 @@
  */
 package uk.org.rbc1b.roms.db.project;
 
+import java.io.Serializable;
 import java.util.Date;
 import org.hibernate.envers.Audited;
-import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
+import uk.org.rbc1b.roms.db.UpdateAuditable;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 
 /**
  * Task involved in completing a project stage.
  */
 @Audited
-public class ProjectStageTask extends DefaultUpdateAuditable {
+public class ProjectStageTask implements UpdateAuditable, Serializable {
     private static final long serialVersionUID = -2121305669657847928L;
     private Integer projectStageTaskId;
     private ProjectStage projectStage;
@@ -42,6 +43,8 @@ public class ProjectStageTask extends DefaultUpdateAuditable {
     private Date createdTime;
     private Date startedTime;
     private Date completedTime;
+    private Date updateTime;
+    private Integer updatedBy;
 
     public Integer getProjectStageTaskId() {
         return projectStageTaskId;
@@ -105,6 +108,24 @@ public class ProjectStageTask extends DefaultUpdateAuditable {
 
     public void setCompletedTime(Date completedTime) {
         this.completedTime = completedTime;
+    }
+
+    @Override
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    @Override
+    public Integer getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Integer updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     @Override

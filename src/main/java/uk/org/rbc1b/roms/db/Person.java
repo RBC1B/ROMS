@@ -23,6 +23,8 @@
  */
 package uk.org.rbc1b.roms.db;
 
+import java.io.Serializable;
+import java.util.Date;
 import org.hibernate.envers.Audited;
 
 /**
@@ -32,7 +34,7 @@ import org.hibernate.envers.Audited;
  * @author oliver.elder.esq
  */
 @Audited
-public class Person extends DefaultUpdateAuditable {
+public class Person implements UpdateAuditable, Serializable {
     private static final long serialVersionUID = 8345111360587695632L;
     private Integer personId;
     private java.sql.Date birthDate;
@@ -46,6 +48,8 @@ public class Person extends DefaultUpdateAuditable {
     private String workPhone;
     private String email;
     private String comments;
+    private Date updateTime;
+    private Integer updatedBy;
 
     /**
      * @return the person display name - "forename surname"
@@ -148,6 +152,24 @@ public class Person extends DefaultUpdateAuditable {
 
     public void setWorkPhone(String workPhone) {
         this.workPhone = workPhone;
+    }
+
+    @Override
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    @Override
+    public Integer getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Integer updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     @Override

@@ -23,12 +23,13 @@
  */
 package uk.org.rbc1b.roms.db.project;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 import org.hibernate.envers.Audited;
 import uk.org.rbc1b.roms.db.Address;
-import uk.org.rbc1b.roms.db.DefaultUpdateAuditable;
 import uk.org.rbc1b.roms.db.Person;
+import uk.org.rbc1b.roms.db.UpdateAuditable;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 
 /**
@@ -36,7 +37,7 @@ import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
  * @author oliver.elder.esq
  */
 @Audited
-public class Project extends DefaultUpdateAuditable {
+public class Project implements UpdateAuditable, Serializable {
     private static final long serialVersionUID = 9175072301683424474L;
     private Address address;
     private String constraints;
@@ -56,6 +57,8 @@ public class Project extends DefaultUpdateAuditable {
     private String telephone;
     private Date visitDate;
     private Set<ProjectWorkBrief> workBriefs;
+    private Date updateTime;
+    private Integer updatedBy;
 
     public Address getAddress() {
         return address;
@@ -199,6 +202,24 @@ public class Project extends DefaultUpdateAuditable {
 
     public void setWorkBriefs(Set<ProjectWorkBrief> workBriefs) {
         this.workBriefs = workBriefs;
+    }
+
+    @Override
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    @Override
+    public Integer getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Integer updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     @Override
