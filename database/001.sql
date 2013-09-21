@@ -7,7 +7,6 @@ GRANT ALL ON ROMS.* TO rbcadmin;
 use ROMS;
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
--- Hibernate Envers revision information. We use the default naming throughout. 
 create table REVINFO (
     REV         bigint  auto_increment,
     REVTSTMP    bigint,
@@ -891,7 +890,7 @@ create table Qualification_AUD (
     QualificationId bigint(20),
     REV             int         not null,
     REVTYPE         tinyint,
-    Name            varchar(50) not null    unique,
+    Name            varchar(50) not null,
     Description     varchar(150),
     UpdateTime      timestamp   not null,
     UpdatedBy       bigint(20)  not null,
