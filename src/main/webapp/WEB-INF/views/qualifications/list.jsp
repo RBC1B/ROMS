@@ -20,8 +20,7 @@
             <table class="table table-bordered table-condensed table-striped table-hover" id="qualification-list">
                 <thead>
                     <tr>
-                        <th>Qualification ID</th>
-                        <th>Qualification</th>
+                        <th>Name</th>
                         <th>Description</th>
                         <th>Action</th>
                     </tr>
@@ -29,11 +28,11 @@
                 <tbody>
                     <c:forEach items="${qualifications}" var="qualification">
                         <tr>
-                            <td>${qualification.qualificationId}</td>
                             <td>${qualification.name}</td>
                             <td>${qualification.description}</td>
                             <td>
                                 <ul class="inline list-actions">
+                                    <li><a class="btn btn-success" href="<c:url value="${qualification.uri}" />">View</a></li>
                                     <li><a class="list-action" href="<c:url value="/qualifications/${qualification.qualificationId}/edit" />">Edit</a></li>
                                     <li>
                                         <form:form method="DELETE" action="${formAction}">

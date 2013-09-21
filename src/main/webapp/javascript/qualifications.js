@@ -36,6 +36,7 @@ $(document).ready(function() {
         errorPlacement: roms.common.validatorErrorPlacement
     });
 
+    // list
     roms.common.datatables(
         $('#qualification-list'),
         {
@@ -49,4 +50,33 @@ $(document).ready(function() {
         }
         );
 
+    // show
+    var listActionTemplate = $("#list-action").html();
+    var qualificationId = $("#qualification-volunteer-qualification").data("qualificationId");
+    roms.common.datatables(
+        $('#qualification-volunteer-list'),
+        {
+                "iDisplayLength": 20,
+                "bProcessing": true,
+                "bServerSide": true,
+                "sAjaxSource": roms.common.relativePath + '/volunteers',
+                "fnServerParams": function(aoData) {
+                aoData.push({ "name": "qualificationId", "value": qualificationId });
+                },
+                "aoColumns": [
+                    {   "sName": "ID", "mData": "id" },
+                    {   "sName": "forename", "mData": "forename" },
+                    {   "sName": "surname", "mData": "surname" },
+                    {   "sName": "action", "bSortable": false,
+                        "mData":
+                            function ( data, type, val ) {
+                                data.uriBase = roms.common.relativePath;
+                                return Mustache.to_html(listActionTemplate, data);
+                            }
+                    }
+                ]
+            }
+        );
+
+    
 });

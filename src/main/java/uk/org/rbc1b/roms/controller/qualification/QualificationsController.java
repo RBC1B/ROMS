@@ -23,6 +23,8 @@
  */
 package uk.org.rbc1b.roms.controller.qualification;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +47,7 @@ import uk.org.rbc1b.roms.db.volunteer.qualification.QualificationDao;
 public class QualificationsController {
 
     private QualificationDao qualificationDao;
+    private QualificationModelFactory qualificationModelFactory;
 
     /**
      * Display a list of qualifications.
@@ -55,9 +58,34 @@ public class QualificationsController {
     @RequestMapping(method = RequestMethod.GET)
     public String showQualificationList(ModelMap model) {
 
-        model.addAttribute("qualifications", qualificationDao.findQualifications());
+        List<Qualification> qualifications = qualificationDao.findQualifications();
+
+        List<QualificationModel> modelList = new ArrayList<QualificationModel>();
+        for (Qualification qualification : qualifications) {
+            modelList.add(qualificationModelFactory.generateQualificationModel(qualification));
+        }
+
+        model.addAttribute("qualifications", modelList);
 
         return "qualifications/list";
+    }
+
+    /**
+     * Displays a qualification.
+     * @param qualificationId qualification Id (primary key)
+     * @param model mvc
+     * @return view name
+     * @throws NoSuchRequestHandlingMethodException on failure to look up the qualification
+     */
+    @RequestMapping(value = "{qualificationId}", method = RequestMethod.GET)
+    public String showQualification(@PathVariable Integer qualificationId, ModelMap model)
+            throws NoSuchRequestHandlingMethodException {
+        Qualification qualification = qualificationDao.findQualification(qualificationId);
+        if (qualification == null) {
+            throw new NoSuchRequestHandlingMethodException("No qualification #" + qualificationId, this.getClass());
+        }
+        model.addAttribute("qualification", qualificationModelFactory.generateQualificationModel(qualification));
+        return "qualifications/show";
     }
 
     /**
@@ -75,15 +103,16 @@ public class QualificationsController {
         Qualification qualification = this.qualificationDao.findQualification(qualificationId);
         if (qualification == null) {
             throw new NoSuchRequestHandlingMethodException("No qualification #" + qualificationId, this.getClass());
-        } else {
-            QualificationForm form = new QualificationForm();
-            form.setQualificationId(qualificationId);
-            form.setName(qualification.getName());
-            form.setDescription(qualification.getDescription());
-            model.addAttribute("qualification", form);
-
-            return "qualifications/edit";
         }
+
+        QualificationForm form = new QualificationForm();
+        form.setQualificationId(qualificationId);
+        form.setName(qualification.getName());
+        form.setDescription(qualification.getDescription());
+        model.addAttribute("qualification", form);
+
+        return "qualifications/edit";
+
     }
 
     /**
@@ -136,19 +165,22 @@ public class QualificationsController {
         qualificationId = Integer.parseInt(request.getParameter("qualificationId"));
         Qualification qualification = qualificationDao.findQualification(qualificationId);
         if (qualification == null) {
-            throw new NoSuchRequestHandlingMethodException("No Qualification with id #" + qualificationId, this.getClass());
+            throw new NoSuchRequestHandlingMethodException("No Qualification with id #" + qualificationId,
+                    this.getClass());
         } else {
             qualificationDao.deleteQualification(qualification);
         }
         return "redirect:/qualifications";
     }
 
-    /**
-     *
-     * @param qualificationDao qualification DAO
-     */
     @Autowired
     public void setQualificationDao(QualificationDao qualificationDao) {
         this.qualificationDao = qualificationDao;
     }
+
+    @Autowired
+    public void setQualificationModelFactory(QualificationModelFactory qualificationModelFactory) {
+        this.qualificationModelFactory = qualificationModelFactory;
+    }
+
 }

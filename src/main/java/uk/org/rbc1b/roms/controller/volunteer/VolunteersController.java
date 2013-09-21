@@ -118,6 +118,7 @@ public class VolunteersController {
         requestData.populateSearchCriteria(searchCriteria);
         searchCriteria.setCongregationId(requestData.getCongregationId());
         searchCriteria.setSkillId(requestData.getSkillId());
+        searchCriteria.setQualificationId(requestData.getQualificationId());
 
         AjaxDataTableResult<VolunteerListModel> result = new AjaxDataTableResult<VolunteerListModel>();
         result.setEcho(requestData.getEcho());

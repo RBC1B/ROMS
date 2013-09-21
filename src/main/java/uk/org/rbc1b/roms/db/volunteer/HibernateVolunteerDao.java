@@ -133,6 +133,14 @@ public class HibernateVolunteerDao implements VolunteerDao {
             criteria.add(Property.forName("personId").in(skillCriteria));
         }
 
+        if (searchCriteria.getQualificationId() != null) {
+            DetachedCriteria qualificationCriteria = DetachedCriteria.forClass(VolunteerQualification.class);
+            qualificationCriteria.add(Restrictions.eq("qualificationId", searchCriteria.getQualificationId()));
+            qualificationCriteria.setProjection(Projections.property("personId"));
+
+            criteria.add(Property.forName("personId").in(qualificationCriteria));
+        }
+
         return criteria;
     }
 

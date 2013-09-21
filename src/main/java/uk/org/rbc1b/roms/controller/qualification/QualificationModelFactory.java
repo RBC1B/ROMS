@@ -23,18 +23,16 @@
  */
 package uk.org.rbc1b.roms.controller.qualification;
 
+import org.springframework.stereotype.Component;
+import uk.org.rbc1b.roms.db.volunteer.qualification.Qualification;
+
 /**
  * Generate the qualifications models.
- * <p>
- * THis is currently a final class, pending the creation of the qualification model.
  */
-public final class QualificationModelFactory {
+@Component
+public class QualificationModelFactory {
 
     private static final String BASE_URI = "/qualifications/";
-
-    private QualificationModelFactory() {
-        // do nothing.
-    }
 
     /**
      * Generate the uri used to access the qualification pages.
@@ -43,6 +41,20 @@ public final class QualificationModelFactory {
      */
     public static String generateUri(Integer qualificationId) {
         return qualificationId != null ? BASE_URI + qualificationId : BASE_URI;
+    }
+
+    /**
+     * Create the model.
+     * @param qualification qualification
+     * @return model
+     */
+    public QualificationModel generateQualificationModel(Qualification qualification) {
+        QualificationModel model = new QualificationModel();
+        model.setDescription(qualification.getDescription());
+        model.setName(qualification.getName());
+        model.setQualificationId(qualification.getQualificationId());
+        model.setUri(generateUri(qualification.getQualificationId()));
+        return model;
     }
 
 }

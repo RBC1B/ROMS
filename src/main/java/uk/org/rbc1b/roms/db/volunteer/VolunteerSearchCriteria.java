@@ -32,6 +32,7 @@ import uk.org.rbc1b.roms.db.common.AbstractSearchCriteria;
 public class VolunteerSearchCriteria extends AbstractSearchCriteria {
     private Integer congregationId;
     private Integer skillId;
+    private Integer qualificationId;
 
     @Override
     public VolunteerSearchCriteria clone() {
@@ -49,6 +50,14 @@ public class VolunteerSearchCriteria extends AbstractSearchCriteria {
 
     public void setCongregationId(Integer congregationId) {
         this.congregationId = congregationId;
+    }
+
+    public Integer getQualificationId() {
+        return qualificationId;
+    }
+
+    public void setQualificationId(Integer qualificationId) {
+        this.qualificationId = qualificationId;
     }
 
     public Integer getSkillId() {

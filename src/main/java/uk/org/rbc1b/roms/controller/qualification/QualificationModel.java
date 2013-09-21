@@ -21,27 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.controller.volunteer;
-
-import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableRequestData;
+package uk.org.rbc1b.roms.controller.qualification;
 
 /**
- * Extend the base ajax datatable request data with specific parameters.
- * <p>
- * These are passed in using the fnServerParams value
+ * Model representing a qualification.
  */
-public class VolunteerAjaxDataTableRequestData extends AjaxDataTableRequestData {
-    private Integer congregationId;
-    private Integer skillId;
+public class QualificationModel {
     private Integer qualificationId;
-
-    public Integer getCongregationId() {
-        return congregationId;
-    }
-
-    public void setCongregationId(Integer congregationId) {
-        this.congregationId = congregationId;
-    }
+    private String name;
+    private String description;
+    private String uri;
 
     public Integer getQualificationId() {
         return qualificationId;
@@ -51,12 +40,28 @@ public class VolunteerAjaxDataTableRequestData extends AjaxDataTableRequestData 
         this.qualificationId = qualificationId;
     }
 
-    public Integer getSkillId() {
-        return skillId;
+    public String getName() {
+        return name;
     }
 
-    public void setSkillId(Integer skillId) {
-        this.skillId = skillId;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 
 }
