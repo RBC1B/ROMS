@@ -48,7 +48,11 @@
                     </div>
                 </div>
             </div>
-        <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+            <sec:authorize access="hasPermission('SKILL', 'EDIT')">
+                <a href="<c:url value='${qualification.editUri}' />" class="btn btn-primary">Edit Qualification</a>
+            </sec:authorize>
+            <div class="clearfix"></div>
+            <%@ include file="/WEB-INF/views/common/footer.jsp" %>
        </div>
        <%@ include file="/WEB-INF/views/common/mustache-list-actions.jsp" %>
      <script type="text/javascript" src="<c:url value='/javascript/qualifications.js' />" ></script>

@@ -31,6 +31,7 @@ public class QualificationModel {
     private String name;
     private String description;
     private String uri;
+    private String editUri;
 
     public Integer getQualificationId() {
         return qualificationId;
@@ -62,6 +63,14 @@ public class QualificationModel {
 
     public void setUri(String uri) {
         this.uri = uri;
+    }
+
+    public String getEditUri() {
+        return editUri;
+    }
+
+    public void setEditUri(String editUri) {
+        this.editUri = editUri;
     }
 
 }

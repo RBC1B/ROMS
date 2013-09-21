@@ -22,7 +22,8 @@
  * THE SOFTWARE.
  */
 $(document).ready(function() {
-    $("#qualification-list").validate({
+    // edit
+    $("#qualificationForm").validate({
         rules: {
             name: {
                 minlength: 2,
@@ -30,7 +31,7 @@ $(document).ready(function() {
             },
             description: {
                 minlength: 2,
-                required: true
+                maxlength: 150
             }
         },
         errorPlacement: roms.common.validatorErrorPlacement
@@ -77,6 +78,5 @@ $(document).ready(function() {
                 ]
             }
         );
-
     
 });

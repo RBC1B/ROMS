@@ -27,6 +27,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
@@ -40,12 +41,7 @@ public class HibernateQualificationDao implements QualificationDao {
     private SessionFactory sessionFactory;
 
     @Override
-    public Qualification findQualification(final String name) {
-        return (Qualification) this.sessionFactory.getCurrentSession().get(Qualification.class, name);
-    }
-
-    @Override
-    @Cacheable("qualification.qualification")
+    @Cacheable(value = "qualification.qualification", key = "#qualificationId")
     public Qualification findQualification(final Integer qualificationId) {
         return (Qualification) this.sessionFactory.getCurrentSession().get(Qualification.class, qualificationId);
     }
@@ -60,18 +56,15 @@ public class HibernateQualificationDao implements QualificationDao {
         return criteria.list();
     }
 
+    @CacheEvict(value = "qualification.qualification", key = "#qualification.qualificationId")
     @Override
-    public void saveQualification(Qualification qualification) {
-        if (qualification.getQualificationId() == null) {
-            this.sessionFactory.getCurrentSession().save(qualification);
-        } else {
-            this.sessionFactory.getCurrentSession().merge(qualification);
-        }
+    public void updateQualification(Qualification qualification) {
+        this.sessionFactory.getCurrentSession().merge(qualification);
     }
 
     @Override
-    public void deleteQualification(Qualification qualification) {
-        this.sessionFactory.getCurrentSession().delete(qualification);
+    public void createQualification(Qualification qualification) {
+        this.sessionFactory.getCurrentSession().save(qualification);
     }
 
     public void setSessionFactory(SessionFactory sessionFactory) {

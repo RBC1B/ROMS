@@ -25,7 +25,6 @@ package uk.org.rbc1b.roms.controller.qualification;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -66,7 +65,7 @@ public class QualificationsController {
         }
 
         model.addAttribute("qualifications", modelList);
-
+        model.addAttribute("newUri", QualificationModelFactory.generateUri(null) + "/new");
         return "qualifications/list";
     }
 
@@ -94,8 +93,7 @@ public class QualificationsController {
      * @param qualificationId qualification ID
      * @param model mvc model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException on failure to find the
-     * qualification
+     * @throws NoSuchRequestHandlingMethodException on failure to find the qualification
      */
     @RequestMapping(value = "{qualificationId}/edit", method = RequestMethod.GET)
     public String showEditQualificationForm(@PathVariable Integer qualificationId, ModelMap model)
@@ -106,10 +104,11 @@ public class QualificationsController {
         }
 
         QualificationForm form = new QualificationForm();
-        form.setQualificationId(qualificationId);
         form.setName(qualification.getName());
         form.setDescription(qualification.getDescription());
-        model.addAttribute("qualification", form);
+        model.addAttribute("qualificationForm", form);
+        model.addAttribute("submitUri", QualificationModelFactory.generateUri(qualificationId));
+        model.addAttribute("submitMethod", "PUT");
 
         return "qualifications/edit";
 
@@ -124,13 +123,37 @@ public class QualificationsController {
     @RequestMapping(value = "new", method = RequestMethod.GET)
     public String showCreateQualificationForm(ModelMap model) {
 
-        model.addAttribute("qualification", new QualificationForm());
-
+        model.addAttribute("qualificationForm", new QualificationForm());
+        model.addAttribute("submitUri", QualificationModelFactory.generateUri(null));
+        model.addAttribute("submitMethod", "POST");
         return "qualifications/edit";
     }
 
     /**
-     * Saves a changed qualification or creates a new qualification.
+     * Updates an existing qualification.
+     * @param qualificationId qualification to update
+     * @param qualificationForm form bean
+     * @return mvc redirect to qualification page
+     * @throws NoSuchRequestHandlingMethodException on failure to find the qualification
+     */
+    @RequestMapping(value = "{qualificationId}", method = RequestMethod.PUT)
+    public String updateQualification(@PathVariable Integer qualificationId, @Valid QualificationForm qualificationForm)
+            throws NoSuchRequestHandlingMethodException {
+
+        Qualification qualification = this.qualificationDao.findQualification(qualificationId);
+        if (qualification == null) {
+            throw new NoSuchRequestHandlingMethodException("No qualification #" + qualificationId, this.getClass());
+        }
+
+        qualification.setName(qualificationForm.getName());
+        qualification.setDescription(qualificationForm.getDescription());
+        qualificationDao.updateQualification(qualification);
+
+        return "redirect:" + QualificationModelFactory.generateUri(qualificationId);
+    }
+
+    /**
+     * Create a new qualification.
      *
      * @param qualificationForm form bean
      * @return mvc redirect
@@ -139,38 +162,11 @@ public class QualificationsController {
     public String createQualification(@Valid QualificationForm qualificationForm) {
 
         Qualification qualification = new Qualification();
-        if (qualificationForm.getQualificationId() != null) {
-            qualification.setQualificationId(qualificationForm.getQualificationId());
-        }
         qualification.setName(qualificationForm.getName());
         qualification.setDescription(qualificationForm.getDescription());
-        qualificationDao.saveQualification(qualification);
+        qualificationDao.createQualification(qualification);
 
-        return "redirect:/qualifications";
-    }
-
-    /**
-     * Delete a qualification.
-     *
-     * @param request http servlet request
-     * @param model spring mvc model
-     * @return mvc redirect
-     * @throws NoSuchRequestHandlingMethodException on failure to find the
-     * qualification
-     */
-    @RequestMapping(method = RequestMethod.DELETE)
-    public String deleteQualification(HttpServletRequest request, ModelMap model)
-            throws NoSuchRequestHandlingMethodException {
-        Integer qualificationId;
-        qualificationId = Integer.parseInt(request.getParameter("qualificationId"));
-        Qualification qualification = qualificationDao.findQualification(qualificationId);
-        if (qualification == null) {
-            throw new NoSuchRequestHandlingMethodException("No Qualification with id #" + qualificationId,
-                    this.getClass());
-        } else {
-            qualificationDao.deleteQualification(qualification);
-        }
-        return "redirect:/qualifications";
+        return "redirect:" + QualificationModelFactory.generateUri(qualification.getQualificationId());
     }
 
     @Autowired

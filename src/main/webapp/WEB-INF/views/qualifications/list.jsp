@@ -33,13 +33,7 @@
                             <td>
                                 <ul class="inline list-actions">
                                     <li><a class="btn btn-success" href="<c:url value="${qualification.uri}" />">View</a></li>
-                                    <li><a class="list-action" href="<c:url value="/qualifications/${qualification.qualificationId}/edit" />">Edit</a></li>
-                                    <li>
-                                        <form:form method="DELETE" action="${formAction}">
-                                            <input type="hidden" name="qualificationId" value="${qualification.qualificationId}" />
-                                            <input type="submit" value="Delete" class="btn btn-primary" />
-                                        </form:form>
-                                    </li>
+                                    <li><a class="list-action" href="<c:url value="${qualification.editUri}" />">Edit</a></li>
                                 </ul>
                             </td>
                         </tr>
@@ -47,7 +41,7 @@
                 </tbody>
             </table>
             <div id="new-qualification">
-                <a class="btn btn-primary" href="<c:url value="qualifications/new" />" />Create new qualification</a>
+                <a class="btn btn-primary" href="<c:url value="${newUri}" />" />Create new qualification</a>
             </div>
 
             <p>&nbsp;</p>

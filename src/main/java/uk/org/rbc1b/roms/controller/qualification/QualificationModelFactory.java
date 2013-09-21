@@ -32,7 +32,7 @@ import uk.org.rbc1b.roms.db.volunteer.qualification.Qualification;
 @Component
 public class QualificationModelFactory {
 
-    private static final String BASE_URI = "/qualifications/";
+    private static final String BASE_URI = "/qualifications";
 
     /**
      * Generate the uri used to access the qualification pages.
@@ -40,7 +40,7 @@ public class QualificationModelFactory {
      * @return uri
      */
     public static String generateUri(Integer qualificationId) {
-        return qualificationId != null ? BASE_URI + qualificationId : BASE_URI;
+        return qualificationId != null ? BASE_URI + "/" + qualificationId : BASE_URI;
     }
 
     /**
@@ -54,6 +54,7 @@ public class QualificationModelFactory {
         model.setName(qualification.getName());
         model.setQualificationId(qualification.getQualificationId());
         model.setUri(generateUri(qualification.getQualificationId()));
+        model.setEditUri(generateUri(qualification.getQualificationId()) + "/edit");
         return model;
     }
 

@@ -35,16 +35,6 @@ import org.springframework.transaction.annotation.Transactional;
 public interface QualificationDao {
 
     /**
-     * Find the qualification matching the name, or null if no match.
-     *
-     * @param name qualification name
-     * @return qualification
-     */
-    @PreAuthorize("hasPermission('SKILL', 'READ')")
-    @Transactional(readOnly = true)
-    Qualification findQualification(String name);
-
-    /**
      * Find the qualification matching id, or null if no match found.
      *
      * @param qualificationId qualification id
@@ -65,21 +55,21 @@ public interface QualificationDao {
     List<Qualification> findQualifications();
 
     /**
-     * Save a qualification.
+     * Update an existing qualification.
      *
      * @param qualification a qualification to save
      */
     @PreAuthorize("hasPermission('SKILL','EDIT')")
     @Transactional
-    void saveQualification(Qualification qualification);
-
+    void updateQualification(Qualification qualification);
 
     /**
-     * Deletes a qualification.
+     * Create a new qualification.
      *
-     * @param qualification to delete
+     * @param qualification a qualification to save
      */
-    @PreAuthorize("hasPermission('SKILL', 'DELETE')")
+    @PreAuthorize("hasPermission('SKILL','ADD')")
     @Transactional
-    void deleteQualification(Qualification qualification);
+    void createQualification(Qualification qualification);
+
 }
