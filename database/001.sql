@@ -1260,4 +1260,4 @@ insert into ProjectStageTaskEventType (Name) values
     ('Notes');
 
 insert into SkillCategory (Name, Colour, AppearOnBadge, UpdateTime, UpdatedBy) values
-    ('General', null, false, NOW(), 1);
+    ('General', null, true, NOW(), 1);

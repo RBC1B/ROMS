@@ -34,6 +34,7 @@ import uk.org.rbc1b.roms.db.volunteer.department.Assignment;
 import uk.org.rbc1b.roms.db.volunteer.department.Department;
 import uk.org.rbc1b.roms.db.volunteer.department.DepartmentDao;
 import uk.org.rbc1b.roms.db.volunteer.skill.Skill;
+import uk.org.rbc1b.roms.db.volunteer.skill.SkillCategory;
 import uk.org.rbc1b.roms.db.volunteer.skill.SkillDao;
 import uk.org.rbc1b.roms.db.volunteer.skill.VolunteerSkill;
 
@@ -62,7 +63,10 @@ public class VolunteerBadgePdfModelFactory {
             for (VolunteerSkill volunteerSkill : volunteerSkills) {
                 Skill skill = skillDao.findSkill(volunteerSkill.getSkillId());
                 if (skillsSet.size() < 8) {
-                    skillsSet.add(skill.getName());
+                    SkillCategory skillCategory = skillDao.findSkillCategory(skill.getCategory().getSkillCategoryId());
+                    if (skillCategory.isAppearOnBadge()) {
+                        skillsSet.add(skill.getName());
+                    }
                 }
             }
         }
