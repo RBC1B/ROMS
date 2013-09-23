@@ -28,7 +28,6 @@ import com.lowagie.text.Image;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfWriter;
-import java.awt.Color;
 import java.util.Map;
 import java.util.Set;
 import javax.servlet.ServletContext;
@@ -58,6 +57,7 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
     protected void buildPdfDocument(Map<String, Object> model, Document document, PdfWriter writer, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Volunteer volunteer = (Volunteer) model.get("volunteer");
+        String colourBand = (String) model.get("colourBand");
         Set<String> skillsSet = (Set<String>) model.get("skillsSet");
         String assignment = (String) model.get("assignment");
         document.open();
@@ -66,7 +66,7 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
 
         PdfContentByte cb = writer.getDirectContent();
 
-        VolunteerBadgePdfUtils.addBand(cb, Color.RED);
+        VolunteerBadgePdfUtils.addBand(cb, colourBand);
         VolunteerBadgePdfUtils.addSkillsTable(cb);
 
         VolunteerBadgePdfUtils.addSkils(cb, skillsSet);

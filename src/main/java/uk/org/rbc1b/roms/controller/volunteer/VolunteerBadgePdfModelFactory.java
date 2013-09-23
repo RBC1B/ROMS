@@ -57,12 +57,11 @@ public class VolunteerBadgePdfModelFactory {
      * @return Set
      */
     public Set<String> generateSkillsSet(Volunteer volunteer) {
+        Set<Skill> skills = findVolunteerSkills(volunteer.getPersonId());
         Set<String> skillsSet = new HashSet<String>();
-        List<VolunteerSkill> volunteerSkills = volunteerDao.findSkills(volunteer.getPersonId());
-        if (!volunteerSkills.isEmpty()) {
-            for (VolunteerSkill volunteerSkill : volunteerSkills) {
-                Skill skill = skillDao.findSkill(volunteerSkill.getSkillId());
-                if (skillsSet.size() < 8) {
+        if (!skills.isEmpty()) {
+            for (Skill skill : skills) {
+                if (skills.size() < 8) {
                     SkillCategory skillCategory = skillDao.findSkillCategory(skill.getCategory().getSkillCategoryId());
                     if (skillCategory.isAppearOnBadge()) {
                         skillsSet.add(skill.getName());
@@ -71,6 +70,26 @@ public class VolunteerBadgePdfModelFactory {
             }
         }
         return skillsSet;
+    }
+
+    /**
+     * Generate the colour band of the badge depending on the volunteer's
+     * skills.
+     *
+     * @param volunteer volunteer
+     * @return String colour
+     */
+    public String generateColourBand(Volunteer volunteer) {
+        Set<Skill> skills = findVolunteerSkills(volunteer.getPersonId());
+        if (!skills.isEmpty()) {
+            for (Skill skill : skills) {
+                SkillCategory skillCategory = skillDao.findSkillCategory(skill.getCategory().getSkillCategoryId());
+                if (skillCategory.getColour().equals("RED")) {
+                    return "RED";
+                }
+            }
+        }
+        return null;
     }
 
     /**
@@ -83,6 +102,24 @@ public class VolunteerBadgePdfModelFactory {
         Assignment primaryAssignment = volunteerDao.findPrimaryAssignment(volunteer.getPersonId());
         Department department = departmentDao.findDepartment(primaryAssignment.getDepartmentId());
         return department.getName();
+    }
+
+    /**
+     * Helper method to return a set of skills.
+     *
+     * @param personId volunteer id
+     * @return set of skills
+     */
+    private Set<Skill> findVolunteerSkills(Integer personId) {
+        Set<Skill> skills = new HashSet<Skill>();
+        List<VolunteerSkill> volunteerSkills = volunteerDao.findSkills(personId);
+        if (!volunteerSkills.isEmpty()) {
+            for (VolunteerSkill volunteerSkill : volunteerSkills) {
+                Skill skill = skillDao.findSkill(volunteerSkill.getSkillId());
+                skills.add(skill);
+            }
+        }
+        return skills;
     }
 
     @Autowired

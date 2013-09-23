@@ -671,8 +671,10 @@ public class VolunteersController {
 
             String assignment = volunteerBadgePdfModelFactory.generatePrimaryAssignment(volunteer);
             Set<String> skillsSet = volunteerBadgePdfModelFactory.generateSkillsSet(volunteer);
+            String colourBand = volunteerBadgePdfModelFactory.generateColourBand(volunteer);
 
             modelAndView.getModelMap().addAttribute("volunteer", volunteer);
+            modelAndView.getModelMap().addAttribute("colourBand", colourBand);
             modelAndView.getModelMap().addAttribute("skillsSet", skillsSet);
             modelAndView.getModelMap().addAttribute("assignment", assignment);
 

@@ -50,11 +50,15 @@ public final class VolunteerBadgePdfUtils {
      * sites. Red means he is allowed to be in high-risk areas.
      *
      * @param content to added to the pdf
-     * @param color of the volunteer's badge
+     * @param colourBand of the volunteer's badge
      */
-    public static void addBand(PdfContentByte content, Color color) {
+    public static void addBand(PdfContentByte content, String colourBand) {
         content.roundRectangle(80, 700, 250, 7, 2.5f);
-        content.setColorFill(Color.RED);
+        if (colourBand.equals("RED")) {
+            content.setColorFill(Color.RED);
+        } else if (colourBand.equals("GREEN")) {
+            content.setColorFill(Color.GREEN);
+        }
         content.fill();
     }
 
