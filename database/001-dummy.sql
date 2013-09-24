@@ -266,7 +266,7 @@ insert into CongregationContact(CongregationId, CongregationRoleId, PersonId, Up
 
 -- Skills
 insert into Skill(Name, DepartmentId, Description, SkillCategoryId, UpdateTime, UpdatedBy)
-values('Compo mixing' , 10,  'Smart enough not to stick his hands in the mix', 1, NOW(), 1);
+values('Compo mixing' , 10,  'Smart enough not to stick his hands in the mix', 2, NOW(), 1);
 
 insert into Skill(Name, DepartmentId, Description, SkillCategoryId, UpdateTime, UpdatedBy)
 values('Wheel barrow handling' , 10,  null, 1, NOW(), 1);

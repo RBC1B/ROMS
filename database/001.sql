@@ -1261,3 +1261,6 @@ insert into ProjectStageTaskEventType (Name) values
 
 insert into SkillCategory (Name, Colour, AppearOnBadge, UpdateTime, UpdatedBy) values
     ('General', 'RED', true, NOW(), 1);
+
+insert into SkillCategory (Name, Colour, AppearOnBadge, UpdateTime, UpdatedBy) values
+    ('Other', null, false, NOW(), 1)
