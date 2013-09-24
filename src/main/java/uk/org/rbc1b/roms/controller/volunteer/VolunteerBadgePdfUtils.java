@@ -54,10 +54,14 @@ public final class VolunteerBadgePdfUtils {
      */
     public static void addBand(PdfContentByte content, String colourBand) {
         content.roundRectangle(80, 700, 250, 7, 2.5f);
-        if (colourBand.equals("RED")) {
-            content.setColorFill(Color.RED);
-        } else if (colourBand.equals("GREEN")) {
-            content.setColorFill(Color.GREEN);
+        if (colourBand != null) {
+            if (colourBand.equals("RED")) {
+                content.setColorFill(Color.RED);
+            } else if (colourBand.equals("GREEN")) {
+                content.setColorFill(Color.GREEN);
+            }
+        } else {
+            content.setColorFill(Color.DARK_GRAY);
         }
         content.fill();
     }

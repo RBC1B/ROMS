@@ -314,6 +314,8 @@ values(5, 10, 5, '2010-04-11', 1, 1, NOW(), 1);
 insert into Assignment(PersonId, DepartmentId, AssignmentRoleId, AssignedDate, TradeNumberId, TeamId, UpdateTime, UpdatedBy)
 values(5, 51, 1, '2011-03-16', 2, 1, NOW(), 1);
 
+insert into Assignment(PersonId, DepartmentId, AssignmentRoleId, AssignedDate, TradeNumberId, TeamId, UpdateTime, UpdatedBy)
+values(6, 22, 8, '2006-04-04', 1, 1, NOW(), 1);
 
 insert into VolunteerSkill(PersonId, SkillId, Level, Comments, TrainingDate, TrainingResults, UpdateTime, UpdatedBy)
 values (5, 1, 1, null, null, null, NOW(), 1);
