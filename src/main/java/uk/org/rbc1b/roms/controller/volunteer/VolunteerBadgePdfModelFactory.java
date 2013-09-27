@@ -81,15 +81,18 @@ public class VolunteerBadgePdfModelFactory {
      */
     public String generateColourBand(Volunteer volunteer) {
         Set<Skill> skills = findVolunteerSkills(volunteer.getPersonId());
+        String otherColour = null;
         if (!skills.isEmpty()) {
             for (Skill skill : skills) {
                 SkillCategory skillCategory = skillDao.findSkillCategory(skill.getCategory().getSkillCategoryId());
                 if (skillCategory.getColour().equals("RED")) {
                     return "RED";
+                } else if (skillCategory.getColour().equals("GREEN")) {
+                    otherColour = "GREEN";
                 }
             }
         }
-        return null;
+        return otherColour;
     }
 
     /**

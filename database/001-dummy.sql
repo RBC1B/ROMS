@@ -326,6 +326,9 @@ values (5, 2, 2, null, '2010-05-09', 'No problems', NOW(), 1);
 insert into VolunteerSkill(PersonId, SkillId, Level, Comments, TrainingDate, TrainingResults, UpdateTime, UpdatedBy)
 values (5, 4, 1, '... and fast too', null, null, NOW(), 1);
 
+insert into VolunteerSkill(PersonId, SkillId, Level, Comments, TrainingDate, TrainingResults, UpdateTime, UpdatedBy)
+values (6, 1, 1, null, null, null, NOW(), 1);
+
 insert into VolunteerQualification(PersonId, QualificationId, Comments, UpdateTime, UpdatedBy)
 values(5, 1, 'Maths is only ok', NOW(), 1);
 

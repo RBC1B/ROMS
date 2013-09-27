@@ -1263,4 +1263,4 @@ insert into SkillCategory (Name, Colour, AppearOnBadge, UpdateTime, UpdatedBy) v
     ('General', 'RED', true, NOW(), 1);
 
 insert into SkillCategory (Name, Colour, AppearOnBadge, UpdateTime, UpdatedBy) values
-    ('Other', null, false, NOW(), 1)
+    ('Other', 'GREEN', false, NOW(), 1);
