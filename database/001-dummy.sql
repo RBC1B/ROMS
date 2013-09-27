@@ -257,9 +257,13 @@ values('Grimsby', '13550', null, 2, null, null, null, null, null, null, null, nu
 -- Title Holders
 -- There is possibly a question over the constraint that prevents a cong. being the title
 -- holder for multiple halls. This may happen during a sale/purchase, or if we keep old halls on record
-insert into TitleHolder(KingdomHallId, CongregationId, UpdateTime, UpdatedBy) values (2, 1, NOW(), 1);
+insert into TitleHolder(CongregationId, UpdateTime, UpdatedBy) values (1, NOW(), 1);
 
-insert into TitleHolder(KingdomHallId, CongregationId, UpdateTime, UpdatedBy) values (3, 2, NOW(), 1);
+update KingdomHall set TitleHolderId = 1 where KingdomHallId = 2;
+
+insert into TitleHolder(CongregationId, UpdateTime, UpdatedBy) values (2, NOW(), 1);
+
+update KingdomHall set TitleHolderId = 2 where KingdomHallId = 3;
 
 insert into CongregationContact(CongregationId, CongregationRoleId, PersonId, UpdateTime, UpdatedBy) values (2, 1, 3, NOW(), 1);
 

@@ -146,6 +146,7 @@ create table KingdomHall(
     County          varchar(50),
     Postcode        varchar(10) not null,
     OwnershipTypeId bigint(20),
+    TitleHolderId   bigint(20),
     Drawings        varchar(50),
     UpdateTime      timestamp   not null,
     UpdatedBy       bigint(20)  not null,
@@ -164,6 +165,7 @@ create table KingdomHall_AUD (
     County          varchar(50),
     Postcode        varchar(10) not null,
     OwnershipTypeId bigint(20),
+    TitleHolderId   bigint(20),
     Drawings        varchar(50),
     UpdateTime      timestamp   not null,
     UpdatedBy       bigint(20)  not null,
@@ -292,21 +294,22 @@ create table CongregationContact_AUD(
 
 create table TitleHolder(
     TitleHolderId   bigint(20)  auto_increment,
-    KingdomHallId   bigint(20)  not null    unique,
     CongregationId  bigint(20)  not null    unique,
     UpdateTime              timestamp   not null,
     UpdatedBy               bigint(20)  not null,
     primary key (TitleHolderId),
-    foreign key (KingdomHallId) references KingdomHall(KingdomHallId) on delete cascade,
     foreign key (CongregationId) references Congregation(CongregationId) on delete cascade,
     foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
+
+-- we can now add the foeign key to the kingdom hall title holder id
+alter table KingdomHall add
+    constraint foreign key (TitleHolderId) references TitleHolder(TitleHolderId) on delete set null;
 
 create table TitleHolder_AUD(
     TitleHolderId   bigint(20),
     REV             int         not null,
     REVTYPE         tinyint,
-    KingdomHallId   bigint(20)  not null,
     CongregationId  bigint(20)  not null,
     UpdateTime      timestamp   not null,
     UpdatedBy       bigint(20)  not null,

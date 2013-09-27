@@ -44,6 +44,7 @@ public class KingdomHall implements UpdateAuditable, Serializable {
     private Address address;
     private Integer ownershipTypeId;
     private String drawings;
+    private TitleHolder titleHolder;
     private Set<KingdomHallFeature> features;
     private Date updateTime;
     private Integer updatedBy;
@@ -88,16 +89,10 @@ public class KingdomHall implements UpdateAuditable, Serializable {
         this.features = features;
     }
 
-    /**
-     * @return the ownershipTypeId
-     */
     public Integer getOwnershipTypeId() {
         return ownershipTypeId;
     }
 
-    /**
-     * @param ownershipTypeId the ownershipTypeId to set
-     */
     public void setOwnershipTypeId(Integer ownershipTypeId) {
         this.ownershipTypeId = ownershipTypeId;
     }
@@ -118,6 +113,14 @@ public class KingdomHall implements UpdateAuditable, Serializable {
 
     public void setUpdatedBy(Integer updatedBy) {
         this.updatedBy = updatedBy;
+    }
+
+    public TitleHolder getTitleHolder() {
+        return titleHolder;
+    }
+
+    public void setTitleHolder(TitleHolder titleHolder) {
+        this.titleHolder = titleHolder;
     }
 
     @Override

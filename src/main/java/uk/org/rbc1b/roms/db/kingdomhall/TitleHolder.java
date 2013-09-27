@@ -31,13 +31,14 @@ import uk.org.rbc1b.roms.db.UpdateAuditable;
 
 /**
  * Congregation that holds the deeds to the hall.
+ *
  * @author oliver.elder.esq
  */
 @Audited
 public class TitleHolder implements UpdateAuditable, Serializable {
+
     private static final long serialVersionUID = 4632818885924564868L;
     private Integer titleHolderId;
-    private KingdomHall kingdomHall;
     private Congregation congregation;
     private Date updateTime;
     private Integer updatedBy;
@@ -48,14 +49,6 @@ public class TitleHolder implements UpdateAuditable, Serializable {
 
     public void setCongregation(Congregation congregation) {
         this.congregation = congregation;
-    }
-
-    public KingdomHall getKingdomHall() {
-        return kingdomHall;
-    }
-
-    public void setKingdomHall(KingdomHall kingdomHall) {
-        this.kingdomHall = kingdomHall;
     }
 
     public Integer getTitleHolderId() {
