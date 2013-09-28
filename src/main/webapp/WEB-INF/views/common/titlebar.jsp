@@ -5,11 +5,10 @@
     <div class="navbar-inner">
         <div class="container-fluid">
             <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">MENU</a>
-            <a class="brand" href="<c:url value="/" />"><img src="<c:url value='/images/logo-brand.png' />" alt="edifice" width="29" height="30"></a>
+            <a class="brand" href="<c:url value="/" />"><img src="<c:url value='/images/logo-brand.png' />" alt="edifice"></a>
             <!-- Everything you want minimised at 940px or less, place within here -->
             <div class="nav-collapse">
                 <ul class="nav">
-                    <li><a href="<c:url value="/" />">Edifice</a></li>
                     <li class="dropdown"><a href="#" class="dropdown-toggle" id="dLabel" role="button"
                         data-toggle="dropdown">Organisation <b class="caret"></b></a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
