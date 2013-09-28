@@ -73,7 +73,6 @@ THE SOFTWARE.
                 <value>uk/org/rbc1b/roms/db/kingdomhall/HallFeature.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/kingdomhall/KingdomHall.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/kingdomhall/KingdomHallFeature.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/kingdomhall/TitleHolder.hbm.xml</value>
 
                 <value>uk/org/rbc1b/roms/db/project/Commentator.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/project/Project.hbm.xml</value>
