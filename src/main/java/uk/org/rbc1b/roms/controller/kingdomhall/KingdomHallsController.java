@@ -44,6 +44,7 @@ import uk.org.rbc1b.roms.controller.LoggingHandlerExceptionResolver;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableResult;
 import uk.org.rbc1b.roms.controller.congregation.CongregationModelFactory;
 import uk.org.rbc1b.roms.db.Address;
+import uk.org.rbc1b.roms.db.Congregation;
 import uk.org.rbc1b.roms.db.CongregationDao;
 import uk.org.rbc1b.roms.db.CongregationSearchCriteria;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
@@ -100,8 +101,12 @@ public class KingdomHallsController {
 
         model.addAttribute("kingdomHall", kingdomHall);
 
-        TitleHolder titleHolder = kingdomHallDao.findTitleHolder(kingdomHall.getTitleHolder().getTitleHolderId());
-        model.addAttribute("titleHolder", titleHolder);
+        if (kingdomHall.getTitleHolder() != null) {
+            TitleHolder titleHolder = kingdomHallDao.findTitleHolder(kingdomHall.getTitleHolder().getTitleHolderId());
+
+            Congregation titleHoldingCongregation = congregationDao.findCongregation(titleHolder.getCongregation().getCongregationId());
+            model.addAttribute("titleHoldingCongregation", titleHoldingCongregation);
+        }
 
         CongregationSearchCriteria congregationSearchCriteria = new CongregationSearchCriteria();
         congregationSearchCriteria.setKingdomHallId(kingdomHallId);
