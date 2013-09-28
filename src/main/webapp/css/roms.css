@@ -295,6 +295,23 @@ div.skill-category-colour {
     border:1px solid black;
 }
 
+
+/*****************************************************************************/
+/* Date Picker CSSing (not a Bootstrap standard                              */
+/*****************************************************************************/
+.ui-datepicker {
+    background-color:#e5e5e5;
+    padding:5px;
+}
+.ui-datepicker-calendar td, .ui-datepicker-calendar th, .ui-datepicker a {
+    padding:2px;
+}
+
+.ui-datepicker-year {
+    width:100%
+}
+
+
 /*****************************************************************************/
 /* Footer fancy styling                                                      */
 /*****************************************************************************/
