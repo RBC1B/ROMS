@@ -89,14 +89,4 @@ public interface KingdomHallDao {
     @PreAuthorize("hasPermission('KINGDOMHALL','DELETE')")
     @Transactional
     void deleteKingdomHall(KingdomHall kingdomHall);
-
-    /**
-     * Finds the title holder of a Kingdom Hall.
-     *
-     * @param kingdomHallId kingdom hall id
-     * @return title holder
-     */
-    @PreAuthorize("hasPermission('KINGDOMHALL','READ')")
-    @Transactional(readOnly = true)
-    TitleHolder findTitleHolder(Integer kingdomHallId);
 }

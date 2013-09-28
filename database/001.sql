@@ -259,6 +259,10 @@ create table Congregation_AUD(
 alter table Person add
     constraint foreign key (CongregationId) references Congregation(CongregationId) on delete set null;
 
+-- we can now add the foeign key to the kingdom hall title holder congregation id
+alter table KingdomHall add
+    constraint foreign key (TitleHolderId) references Congregation(CongregationId) on delete set null;
+
 create table CongregationRole(
     CongregationRoleId  bigint(20)  auto_increment,
     Name                varchar(50) not null    unique,
@@ -290,30 +294,6 @@ create table CongregationContact_AUD(
     UpdateTime              timestamp   not null,
     UpdatedBy               bigint(20)  not null,
     primary key (CongregationContactId, REV)
-)engine=InnoDB;
-
-create table TitleHolder(
-    TitleHolderId   bigint(20)  auto_increment,
-    CongregationId  bigint(20)  not null    unique,
-    UpdateTime              timestamp   not null,
-    UpdatedBy               bigint(20)  not null,
-    primary key (TitleHolderId),
-    foreign key (CongregationId) references Congregation(CongregationId) on delete cascade,
-    foreign key (UpdatedBy) references Person(PersonId)
-)engine=InnoDB;
-
--- we can now add the foeign key to the kingdom hall title holder id
-alter table KingdomHall add
-    constraint foreign key (TitleHolderId) references TitleHolder(TitleHolderId) on delete set null;
-
-create table TitleHolder_AUD(
-    TitleHolderId   bigint(20),
-    REV             int         not null,
-    REVTYPE         tinyint,
-    CongregationId  bigint(20)  not null,
-    UpdateTime      timestamp   not null,
-    UpdatedBy       bigint(20)  not null,
-    primary key (TitleHolderId, REV)
 )engine=InnoDB;
 
 create table InterviewStatus(

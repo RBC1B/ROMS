@@ -84,14 +84,6 @@ public class HibernateKingdomHallDao implements KingdomHallDao {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public TitleHolder findTitleHolder(Integer titleHolderId) {
-        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(TitleHolder.class);
-        criteria.add(Restrictions.eq("titleHolderId", titleHolderId));
-        return (TitleHolder) criteria.uniqueResult();
-    }
-
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }

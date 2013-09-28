@@ -6,7 +6,6 @@ delete from Attendance;
 delete from ProjectStageEvent;
 delete from ProjectWorkBrief;
 delete from Project;
-delete from TitleHolder;
 delete from Congregation;
 delete from CongregationContact;
 delete from Circuit;
@@ -28,7 +27,6 @@ alter table Attendance AUTO_INCREMENT=1;
 alter table ProjectStageEvent AUTO_INCREMENT=1;
 alter table ProjectWorkBrief AUTO_INCREMENT=1;
 alter table Project AUTO_INCREMENT=1;
-alter table TitleHolder AUTO_INCREMENT=1;
 alter table Congregation AUTO_INCREMENT=1;
 alter table CongregationContact AUTO_INCREMENT=1;
 alter table Circuit AUTO_INCREMENT=1;
@@ -257,16 +255,11 @@ values('Grimsby', '13550', null, 2, null, null, null, null, null, null, null, nu
 -- Title Holders
 -- There is possibly a question over the constraint that prevents a cong. being the title
 -- holder for multiple halls. This may happen during a sale/purchase, or if we keep old halls on record
-insert into TitleHolder(CongregationId, UpdateTime, UpdatedBy) values (1, NOW(), 1);
-
 update KingdomHall set TitleHolderId = 1 where KingdomHallId = 2;
-
-insert into TitleHolder(CongregationId, UpdateTime, UpdatedBy) values (2, NOW(), 1);
 
 update KingdomHall set TitleHolderId = 2 where KingdomHallId = 3;
 
 insert into CongregationContact(CongregationId, CongregationRoleId, PersonId, UpdateTime, UpdatedBy) values (2, 1, 3, NOW(), 1);
-
 
 -- Skills
 insert into Skill(Name, DepartmentId, Description, SkillCategoryId, UpdateTime, UpdatedBy)

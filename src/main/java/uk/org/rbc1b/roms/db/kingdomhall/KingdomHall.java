@@ -28,6 +28,7 @@ import java.util.Date;
 import java.util.Set;
 import org.hibernate.envers.Audited;
 import uk.org.rbc1b.roms.db.Address;
+import uk.org.rbc1b.roms.db.Congregation;
 import uk.org.rbc1b.roms.db.UpdateAuditable;
 
 /**
@@ -44,7 +45,7 @@ public class KingdomHall implements UpdateAuditable, Serializable {
     private Address address;
     private Integer ownershipTypeId;
     private String drawings;
-    private TitleHolder titleHolder;
+    private Congregation titleHolder;
     private Set<KingdomHallFeature> features;
     private Date updateTime;
     private Integer updatedBy;
@@ -115,11 +116,11 @@ public class KingdomHall implements UpdateAuditable, Serializable {
         this.updatedBy = updatedBy;
     }
 
-    public TitleHolder getTitleHolder() {
+    public Congregation getTitleHolder() {
         return titleHolder;
     }
 
-    public void setTitleHolder(TitleHolder titleHolder) {
+    public void setTitleHolder(Congregation titleHolder) {
         this.titleHolder = titleHolder;
     }
 
