@@ -86,9 +86,9 @@ public class HibernateKingdomHallDao implements KingdomHallDao {
 
     @SuppressWarnings("unchecked")
     @Override
-    public TitleHolder findTitleHolder(Integer kingdomHallId) {
+    public TitleHolder findTitleHolder(Integer titleHolderId) {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(TitleHolder.class);
-        criteria.add(Restrictions.eq("kingdomHall.kingdomHallId", kingdomHallId));
+        criteria.add(Restrictions.eq("titleHolderId", titleHolderId));
         return (TitleHolder) criteria.uniqueResult();
     }
 

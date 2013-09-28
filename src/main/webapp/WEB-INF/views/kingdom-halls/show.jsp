@@ -40,8 +40,8 @@
                 <dt>Title Holder:</dt>
                 <dd>
                     <c:choose>
-                        <c:when test="${!empty kingdomHall.titleHolder}">
-                            ${kingdomHall.titleHolder.congregation.name}
+                        <c:when test="${!empty titleHolder}">
+                            ${titleHolder.congregation.name}
                         </c:when>
                         <c:otherwise>-</c:otherwise>
                     </c:choose>

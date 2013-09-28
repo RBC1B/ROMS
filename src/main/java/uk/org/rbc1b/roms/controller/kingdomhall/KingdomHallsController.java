@@ -48,6 +48,7 @@ import uk.org.rbc1b.roms.db.CongregationDao;
 import uk.org.rbc1b.roms.db.CongregationSearchCriteria;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHallDao;
+import uk.org.rbc1b.roms.db.kingdomhall.TitleHolder;
 import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 
 /**
@@ -98,6 +99,9 @@ public class KingdomHallsController {
         }
 
         model.addAttribute("kingdomHall", kingdomHall);
+
+        TitleHolder titleHolder = kingdomHallDao.findTitleHolder(kingdomHall.getTitleHolder().getTitleHolderId());
+        model.addAttribute("titleHolder", titleHolder);
 
         CongregationSearchCriteria congregationSearchCriteria = new CongregationSearchCriteria();
         congregationSearchCriteria.setKingdomHallId(kingdomHallId);
