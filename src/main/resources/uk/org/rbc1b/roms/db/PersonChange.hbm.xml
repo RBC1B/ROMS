@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping  package="uk.org.rbc1b.roms.db">
+    <class name="PersonChange" table="PersonChange">
+        <id name="personChangeId" >
+            <generator class="identity"/>
+        </id>
+        <property name="personId" not-null="true"/>
+        <property name="oldForename" length="50" />
+        <property name="oldMiddleName" length="50" />
+        <property name="oldSurname" length="50" />
+        <component name="oldAddress">
+            <property name="street" length="50" column="OldStreet" />
+            <property name="town" length="50" column="OldTown" />
+            <property name="county" length="50" column="OldCounty" />
+            <property name="postcode" length="10" column="OldPostcode" />
+        </component>
+        <property name="oldTelephone" length="15" />
+        <property name="oldMobile" length="15" />
+        <property name="oldWorkPhone" length="15" />
+        <property name="oldEmail" length="50" />
+        <property name="newForename" length="50" />
+        <property name="newMiddleName" length="50" />
+        <property name="newSurname" length="50" />
+        <component name="newAddress">
+            <property name="street" length="50" column="NewStreet" />
+            <property name="town" length="50" column="NewTown" />
+            <property name="county" length="50" column="NewCounty" />
+            <property name="postcode" length="10" column="NewPostcode" />
+        </component>
+        <property name="newTelephone" length="15" />
+        <property name="newMobile" length="15" />
+        <property name="newWorkPhone" length="15" />
+        <property name="newEmail" length="50" />
+        <property name="comment" length="150" />
+        <property name="changeDate" not-null="true"  />
+        <property name="formUpdated" not-null="true" />
+    </class>
+</hibernate-mapping>

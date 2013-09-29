@@ -62,6 +62,7 @@ THE SOFTWARE.
                 <value>uk/org/rbc1b/roms/db/Congregation.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/CongregationContact.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/Person.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/PersonChange.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/Updates.hbm.xml</value>
 
                 <value>uk/org/rbc1b/roms/db/application/Application.hbm.xml</value>
