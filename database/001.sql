@@ -59,6 +59,38 @@ create table Person_AUD(
     primary key (PersonId, REV)
 )engine=InnoDB;
 
+create table PersonChange(
+    PersonChangeId  bigint(20) not null auto_increment,
+    PersonId        bigint(20) not null,
+    OldForeName     varchar(50),
+    OldMiddleName   varchar(50),
+    OldSurname      varchar(50),
+    OldStreet       varchar(50),
+    OldTown         varchar(50),
+    OldCounty       varchar(50),
+    OldPostcode     varchar(10),
+    OldTelephone    varchar(15),
+    OldMobile       varchar(15),
+    OldWorkPhone    varchar(15),
+    OldEmail        varchar(50),
+    NewForeName     varchar(50),
+    NewMiddleName   varchar(50),
+    NewSurname      varchar(50),
+    NewStreet       varchar(50),
+    NewTown         varchar(50),
+    NewCounty       varchar(50),
+    NewPostcode     varchar(10),
+    NewTelephone    varchar(15),
+    NewMobile       varchar(15),
+    NewWorkPhone    varchar(15),
+    NewEmail        varchar(50),
+    Comment         varchar(150),
+    ChangeDate      timestamp not null,
+    FormUpdated     boolean default false,
+    primary key (PersonChangeId),
+    foreign key (PersonId) references Person(PersonId)
+)engine=InnoDB;
+
 create table Application(
     ApplicationId   bigint(20)  auto_increment,
     Name            varchar(30) not null    unique, -- display name
