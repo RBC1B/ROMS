@@ -28,6 +28,9 @@ li a:hover, li a:focus {
     background-color:#25aae1;
     color: #fff;
 }
+.btn a:hover, .btn a:focus {
+    color: #fff!important;
+}
 .well-edifice {
     margin: 10px;
 }

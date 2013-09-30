@@ -22,7 +22,7 @@
                 <fieldset>
                     <input type='password' class="input-block-level" name='j_password'/>
                 </fieldset>
-                <input name="submit" class="btn btn-large btn-primary" type="submit" value="Login"/>
+                <input name="submit" class="btn btn-large btn-edifice" type="submit" value="Login"/>
             </form>
         </div>
     </body>
