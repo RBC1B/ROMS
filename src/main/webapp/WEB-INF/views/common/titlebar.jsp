@@ -1,14 +1,14 @@
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!-- data attribute is used to determine the relative paths for ajax requests -->
 <div id="relative-path" data-relative-path="<c:url value="/" />"></div>
-<div class="navbar navbar-inverse navbar-static-top" id="navbar">
-    <div class="navbar-inner">
-        <div class="container-fluid">
-            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">MENU</a>
-            <a class="brand" href="<c:url value="/" />"><img src="<c:url value='/images/logo-brand.png' />" alt="edifice"></a>
+<nav class="navbar navbar-inverse navbar-static-top" role="navbar">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">MENU
+            <span class="sr-only">Toggle navigation</span>
+            </button>
+            <a class="navbar-brand" href="<c:url value="/" />"><img src="<c:url value='/images/logo-brand.png' />" alt="edifice"></a>
             <!-- Everything you want minimised at 940px or less, place within here -->
-            <div class="nav-collapse">
-                <ul class="nav">
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
                     <li class="dropdown"><a href="#" class="dropdown-toggle" id="dLabel" role="button"
                         data-toggle="dropdown">Organisation <b class="caret"></b></a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
@@ -62,12 +62,11 @@
                         <li><a href="<c:url value="/admin" />">Sys Admin</a></li>
                     </sec:authorize>
                 </ul>
-                <p class="pull-right">
-                    <a class="btn btn-info" href="#"><i class="icon-question-sign icon-white"></i>&nbsp;Help</a> &nbsp;
-                    <a class="btn btn-danger" href="<c:url value="/j_spring_security_logout" />">Logout</a> &nbsp;
-                </p>
-            </div>
+                <form class="navbar-form navbar-right">
+                    <button type="button" class="btn btn-edifice"><a href="#"><i class="glyphicon glyphicon-question-sign"></i>&nbsp;Help</a></button> &nbsp;
+                    <button type="button" class="btn btn-danger"><a href="<c:url value="/j_spring_security_logout" />"><i class="glyphicon glyphicon-off"></i>&nbsp;Logout</a></button> &nbsp;
+                </form>
             <!-- Everything between parenthesis will be minimised at 940px or less -->
-        </div>
-    </div>
-</div>
+            </div>
+
+</nav>
