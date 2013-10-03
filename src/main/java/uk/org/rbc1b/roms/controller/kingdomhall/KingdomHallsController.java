@@ -75,6 +75,7 @@ public class KingdomHallsController {
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=text/html")
     public String showKingdomHallList(ModelMap model) {
         model.addAttribute("kingdomHalls", createKingdomHallListModels(kingdomHallDao.findKingdomHalls()));
+        model.addAttribute("newUri", KingdomHallModelFactory.generateUri(null) + "/new");
 
         return "kingdom-halls/list";
     }
@@ -110,7 +111,7 @@ public class KingdomHallsController {
 
         model.addAttribute("congregations", congregationModelFactory.generateCongregationListModels(congregationDao
                 .findCongregations(congregationSearchCriteria)));
-        model.addAttribute("ownershipType", referenceDao.findOwnershipTypeValues().get(kingdomHall.getKingdomHallId()));
+        model.addAttribute("ownershipType", referenceDao.findOwnershipTypeValues().get(kingdomHall.getOwnershipTypeId()));
 
         return "kingdom-halls/show";
     }
@@ -147,10 +148,15 @@ public class KingdomHallsController {
         kingdomHallForm.setDrawings(kingdomHall.getDrawings());
 
         if (kingdomHall.getTitleHolder() != null) {
-            kingdomHallForm.setTitleHolderCongregationId(kingdomHall.getTitleHolder().getCongregationId());
+            Congregation titleHoldingCongregation = congregationDao.findCongregation(kingdomHall.getTitleHolder().getCongregationId());
+            kingdomHallForm.setTitleHolderCongregationId(titleHoldingCongregation.getCongregationId());
+            kingdomHallForm.setTitleHolderCongregationName(titleHoldingCongregation.getName());
         }
 
         model.addAttribute("kingdomHallForm", kingdomHallForm);
+        model.addAttribute("submitUri", KingdomHallModelFactory.generateUri(kingdomHallId));
+        model.addAttribute("ownershipValues", referenceDao.findOwnershipTypeValues());
+        model.addAttribute("submitMethod", "PUT");
 
         return "kingdom-halls/edit";
 

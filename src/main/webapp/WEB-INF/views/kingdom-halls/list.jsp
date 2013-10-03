@@ -11,7 +11,7 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="container-fluid">
+        <div class="container">
             <h1>Kingdom Halls</h1>
             <hr>
             <div class="entity-list-results">
