@@ -145,8 +145,12 @@ public class KingdomHallsController {
 
         kingdomHallForm.setOwnershipTypeId(kingdomHall.getOwnershipTypeId());
         kingdomHallForm.setDrawings(kingdomHall.getDrawings());
-        // kingdomHallForm.setTitleHolderCongregationId(kingdomHall.getTitleHolder().getCongregation().getCongregationId());
 
+        if (kingdomHall.getTitleHolder() != null) {
+            kingdomHallForm.setTitleHolderCongregationId(kingdomHall.getTitleHolder().getCongregationId());
+        }
+
+        model.addAttribute("kingdomHallForm", kingdomHallForm);
 
         return "kingdom-halls/edit";
 

@@ -24,8 +24,8 @@ Author     : oliver.elder.esq
             <h1>Kingdom Hall</h1>
             <hr>
             <c:url var="formAction" value="/kingdom-halls/edit" />
-            <form:form commandName="kingdomHall" method="post" action="${formAction}">
-                <input class="input-append" id="disabledInput" type="text" placeholder="Kingdom Hall ID" disabled><br>
+            <form:form commandName="kingdomHallForm" method="post" action="${formAction}">
+                <form:input path=""
                 <form:label path="*"><form:input path="*" placeholder="Kingdom Hall Name" /></form:label>
                 <form:label path="*"><form:input path="*" placeholder="Kingdom Hall Street" /></form:label>
                 <form:label path="*"><form:input path="*" placeholder="Kingdom Hall Town" /></form:label>
