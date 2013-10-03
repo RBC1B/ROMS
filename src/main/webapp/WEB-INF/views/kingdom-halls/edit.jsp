@@ -16,19 +16,22 @@ Author     : oliver.elder.esq
             <c:set var="pageTitle" value="Create Kingdom Hall" />
         </c:otherwise>
     </c:choose>
-    <c:set var="pageTitle" value="Create/Edit Kingdom Hall" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container">
-            <h1>Kingdom Hall</h1>
+            <c:choose>
+                <c:when test="${!empty kingdomHallForm.kingdomHallId}">
+                    <h1>Edit Kingdom Hall - ${kingdomHallForm.name}</h1>
+                </c:when>
+                <c:otherwise>
+                    <h1>Create New Kingdom Hall</h1>
+                </c:otherwise>
+            </c:choose>
             <hr>
-            <c:url var="formAction" value="/kingdom-halls/edit" />
-            <form:form commandName="kingdomHallForm" method="post" action="${formAction}">
-                <div class="control-group">
-                    <label>Id:</label>
-                    <form:input path="kingdomHallId" placeholder="Kingdom Hall Id" readonly="true"/><br />
-                </div>
+            <c:url var="formAction" value="${submitUri}" />
+            <form:form commandName="kingdomHallForm" method="${submitMethod}" action="${formAction}">
+                <form:hidden path="kingdomHallId" />
                 <div class="control-group">
                     <label for="name">Name:</label>
                     <form:input path="name" placeholder="Kingdom Hall Name" /><br />

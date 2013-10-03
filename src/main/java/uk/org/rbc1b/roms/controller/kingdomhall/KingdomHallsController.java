@@ -155,6 +155,7 @@ public class KingdomHallsController {
         model.addAttribute("kingdomHallForm", kingdomHallForm);
         model.addAttribute("submitUri", KingdomHallModelFactory.generateUri(kingdomHallId));
         model.addAttribute("ownershipValues", referenceDao.findOwnershipTypeValues());
+        model.addAttribute("submitMethod", "PUT");
 
         return "kingdom-halls/edit";
 
