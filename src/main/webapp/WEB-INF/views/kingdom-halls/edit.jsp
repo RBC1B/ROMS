@@ -25,13 +25,36 @@ Author     : oliver.elder.esq
             <hr>
             <c:url var="formAction" value="/kingdom-halls/edit" />
             <form:form commandName="kingdomHallForm" method="post" action="${formAction}">
-                <form:input path="kingdomHallId" placeholder="Kingdom Hall Id" readonly="true"/>
-                <form:label path="*"><form:input path="*" placeholder="Kingdom Hall Name" /></form:label>
-                <form:label path="*"><form:input path="*" placeholder="Kingdom Hall Street" /></form:label>
-                <form:label path="*"><form:input path="*" placeholder="Kingdom Hall Town" /></form:label>
-                <form:label path="*"><form:input path="*" placeholder="Kingdom Hall County" /></form:label>
-                <form:label path="*"><form:input path="*" placeholder="Kingdom Hall Postcode" /></form:label>
-                <form:input path="*" type="text" name="*" placeholder="Title Holder" value="" id="searchinput" data-provide="typeahead" data-source="congregation.Name" maxlength="30" autocomplete="on"  /><br>
+                <div class="control-group">
+                    <label>Id:</label>
+                    <form:input path="kingdomHallId" placeholder="Kingdom Hall Id" readonly="true"/><br />
+                </div>
+                <div class="control-group">
+                    <label for="name">Name:</label>
+                    <form:input path="name" placeholder="Kingdom Hall Name" /><br />
+                </div>
+                <div class="control-group">
+                    <label for="street">Street:</label>
+                    <form:input path="street" placeholder="Kingdom Hall Street" /><br/>
+                    <label for="town">Town:</label>
+                    <form:input path="town" placeholder="Kingdom Hall Town" /><br />
+                    <label for="county">County:</label>
+                    <form:input path="county" placeholder="Kingdom Hall County" /><br />
+                    <label for="postcode">Postcode:</label>
+                    <form:input path="postcode" placeholder="Kingdom Hall Postcode" /><br/>
+                </div>
+                <div class="control-group">
+                    <label for="ownershipTypeId">Ownership Type:</label>
+                    <form:select path="ownershipTypeId">
+                        <form:option value="" label="None" />
+                        <form:options items="${ownershipValues}" />
+                    </form:select><br />
+                </div>
+                <div class="control-group">
+                    <form:hidden path="titleHolderCongregationId" />
+                    <label for="titleHolderCongregationName">Title Holding Congregation:</label>
+                    <form:input path="titleHolderCongregationName" type="text" name="titleHolderCongregationName" placeholder="Title Holder" value="" id="searchinput" data-provide="typeahead" data-source="congregation.Name" maxlength="30" autocomplete="on" /><br>
+                </div>
                 <input type="submit" class="btn btn-primary"/>
             </form:form>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>

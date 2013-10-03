@@ -39,7 +39,7 @@ public class KingdomHallForm {
     private Integer ownershipTypeId;
     private String drawings;
     private Integer titleHolderCongregationId;
-    private String titleHodlerCongregationName;
+    private String titleHolderCongregationName;
 
     public String getCounty() {
         return county;
@@ -113,11 +113,11 @@ public class KingdomHallForm {
         this.titleHolderCongregationId = titleHolderCongregationId;
     }
 
-    public String getTitleHodlerCongregationName() {
-        return titleHodlerCongregationName;
+    public String getTitleHolderCongregationName() {
+        return titleHolderCongregationName;
     }
 
-    public void setTitleHodlerCongregationName(String titleHodlerCongregationName) {
-        this.titleHodlerCongregationName = titleHodlerCongregationName;
+    public void setTitleHolderCongregationName(String titleHolderCongregationName) {
+        this.titleHolderCongregationName = titleHolderCongregationName;
     }
 }
