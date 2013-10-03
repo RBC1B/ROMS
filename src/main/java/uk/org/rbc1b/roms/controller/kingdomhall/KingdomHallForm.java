@@ -39,6 +39,7 @@ public class KingdomHallForm {
     private Integer ownershipTypeId;
     private String drawings;
     private Integer titleHolderCongregationId;
+    private String titleHodlerCongregationName;
 
     public String getCounty() {
         return county;
@@ -88,45 +89,35 @@ public class KingdomHallForm {
         this.town = town;
     }
 
-    /**
-     * @return the ownershipTypeId
-     */
     public Integer getOwnershipTypeId() {
         return ownershipTypeId;
     }
 
-    /**
-     * @param ownershipTypeId the ownershipTypeId to set
-     */
     public void setOwnershipTypeId(Integer ownershipTypeId) {
         this.ownershipTypeId = ownershipTypeId;
     }
 
-    /**
-     * @return the drawings
-     */
     public String getDrawings() {
         return drawings;
     }
 
-    /**
-     * @param drawings the drawings to set
-     */
     public void setDrawings(String drawings) {
         this.drawings = drawings;
     }
 
-    /**
-     * @return the titleHolderCongregationId
-     */
     public Integer getTitleHolderCongregationId() {
         return titleHolderCongregationId;
     }
 
-    /**
-     * @param titleHolderCongregationId the titleHolderCongregationId to set
-     */
     public void setTitleHolderCongregationId(Integer titleHolderCongregationId) {
         this.titleHolderCongregationId = titleHolderCongregationId;
+    }
+
+    public String getTitleHodlerCongregationName() {
+        return titleHodlerCongregationName;
+    }
+
+    public void setTitleHodlerCongregationName(String titleHodlerCongregationName) {
+        this.titleHodlerCongregationName = titleHodlerCongregationName;
     }
 }
