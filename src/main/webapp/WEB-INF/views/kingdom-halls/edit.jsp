@@ -20,12 +20,12 @@ Author     : oliver.elder.esq
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="container-fluid">
+        <div class="container">
             <h1>Kingdom Hall</h1>
             <hr>
             <c:url var="formAction" value="/kingdom-halls/edit" />
             <form:form commandName="kingdomHallForm" method="post" action="${formAction}">
-                <form:input path=""
+                <form:input path="kingdomHallId" placeholder="Kingdom Hall Id" readonly="true"/>
                 <form:label path="*"><form:input path="*" placeholder="Kingdom Hall Name" /></form:label>
                 <form:label path="*"><form:input path="*" placeholder="Kingdom Hall Street" /></form:label>
                 <form:label path="*"><form:input path="*" placeholder="Kingdom Hall Town" /></form:label>
