@@ -75,6 +75,7 @@ public class KingdomHallsController {
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=text/html")
     public String showKingdomHallList(ModelMap model) {
         model.addAttribute("kingdomHalls", createKingdomHallListModels(kingdomHallDao.findKingdomHalls()));
+        model.addAttribute("newUri", KingdomHallModelFactory.generateUri(null) + "/new");
 
         return "kingdom-halls/list";
     }

@@ -31,7 +31,7 @@ Author     : oliver.elder.esq
             <hr>
             <c:url var="formAction" value="${submitUri}" />
             <form:form commandName="kingdomHallForm" method="${submitMethod}" action="${formAction}">
-                <form:hidden path="kingdomHallId" />
+                    <form:hidden path="kingdomHallId" />
                 <div class="control-group">
                     <label for="name">Name:</label>
                     <form:input path="name" placeholder="Kingdom Hall Name" /><br />
