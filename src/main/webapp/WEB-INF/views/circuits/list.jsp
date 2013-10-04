@@ -12,7 +12,7 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="container-fluid">
+        <div class="container">
             <h1>Circuits</h1>
             <hr>
             <div class="entity-list-results">
@@ -30,7 +30,7 @@
                                 <td>${circuit.circuitId}</td>
                                 <td>${circuit.name}</td>
                                 <td>
-                                    <ul class="inline list-actions">
+                                    <ul class="list-inline">
                                         <li><a class="btn btn-success" href="<c:url value="/circuits/${circuit.circuitId}" />">View</a></li>
                                         <li><a class="list-action" href="<c:url value="/circuits/${circuit.circuitId}/edit" />">Edit</a></li>
                                     </ul>
