@@ -7,32 +7,31 @@
 /*                                                                           */
 /*****************************************************************************/
 
-/* First, some necessary resets to override Bootstrap's standard branding     */
+/* First, some necessary resets to override Bootstrap's standard branding    */
 
 body {
     padding: 0 20px;
     min-height: 100%!important;
 }
-a {
-    color:#fff;
-}
-li a {
-    color:#25aae1;
+.nav li a, .navbar li a {
+    color:#25aae1!important;
 }
 li a:hover, li a:focus {
     color:#ddd!important;
+}
+.inline {
+    list-style-type: none!important;
 }
 
 /* Now some styling for additional classes created for use throughout the site */
 
 .btn-edifice {
     background-color:#25aae1;
-    color: #fff;
 }
 .btn a:hover, .btn a:focus {
     color: #fff!important;
 }
- .btn-success a {
+.btn-success, .btn-edifice a, .btn-danger a {
     color:#fff!important;
 }
 .well-edifice {
@@ -45,7 +44,7 @@ li a:hover, li a:focus {
     border-bottom: 0; /* needs to be removed if nav-tabs are not used on dashboard. Don't know who is working on this BR 21/9/13 */
 }
 .media:first-child {
-margin-top: 15px!important;/* bit of a messy fix this one if you ask me BR 30/9/13 */
+    margin-top: 15px!important;/* bit of a messy fix this one if you ask me BR 30/9/13 */
 }
 
 
