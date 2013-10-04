@@ -10,7 +10,7 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="container-fluid">
+        <div class="container">
             <h1>Projects</h1>
             <hr>
             <table class="table table-bordered table-condensed table-striped table-hover" id="project-list">
@@ -37,7 +37,7 @@
                             <td><fmt:formatDate value="${project.completedDate}" pattern="yyyy-MM-dd" /></td>
                             <td><c:if test="${not empty project.contactPerson}"><a href="<c:url value='${project.contactPerson.uri}'/>">${project.contactPerson.name}</a></c:if></td>
                             <td>
-                                <ul class="inline list-actions">
+                                <ul class="list-inline">
                                     <li><a class="btn btn-success" href="<c:url value="${project.uri}" />">View</a></li>
                                 </ul>
                             </td>
