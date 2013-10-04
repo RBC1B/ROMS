@@ -14,7 +14,7 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="container-fluid">
+        <div class="container">
             <h1>Person Information Changes/Updates</h1>
             <hr>
             <div class="entity-list-results">
@@ -36,7 +36,7 @@
                                 <td>${personChange.forename}</td>
                                 <td>${personChange.email}</td>
                                 <td>
-                                    <ul class="inline list-actions">
+                                    <ul class="list-inline">
                                         <li><a class="list-action" href="<c:url value="${personChange.editUri}" />">Paper Work Updated</a></li>
                                     </ul>
                                 </td>
