@@ -31,7 +31,7 @@
                                 <td>${kingdomHall.town}</td>
                                 <td>${kingdomHall.postCode}</td>
                                 <td>
-                                    <ul class="inline list-actions">
+                                    <ul class="list-inline">
                                         <li><a class="btn btn-success" href="<c:url value="${kingdomHall.uri}" />">View</a></li>
                                         <li><a class="list-action" href="<c:url value="${kingdomHall.editUri}" />">Edit</a></li>
                                         <li><a class="list-action" href="delete">Delete</a></li>
