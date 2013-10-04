@@ -41,6 +41,7 @@
                 <li class="active">Volunteers</li>
             </ul>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+            <script type="text/javascript" src="<c:url value='/javascript/thirdparty/typeahead.min.js' />" ></script>
         </div>
         <%@ include file="/WEB-INF/views/common/mustache-list-actions.jsp" %>
         <script type="text/javascript" src="<c:url value='/javascript/volunteers.js' />" ></script>
