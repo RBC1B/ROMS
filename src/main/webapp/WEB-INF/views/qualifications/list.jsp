@@ -14,7 +14,7 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="container-fluid">
+        <div class="container">
             <h1>Qualifications</h1>
             <hr>
             <table class="table table-bordered table-condensed table-striped table-hover" id="qualification-list">
@@ -31,7 +31,7 @@
                             <td>${qualification.name}</td>
                             <td>${qualification.description}</td>
                             <td>
-                                <ul class="inline list-actions">
+                                <ul class="list-inline">
                                     <li><a class="btn btn-success" href="<c:url value="${qualification.uri}" />">View</a></li>
                                     <li><a class="list-action" href="<c:url value="${qualification.editUri}" />">Edit</a></li>
                                 </ul>
