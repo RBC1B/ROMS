@@ -85,21 +85,18 @@ public class CongregationsController {
      */
     @RequestMapping(value = "search", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public CongregationSearchResponse findCongregations(@RequestParam(value = "name", required = true) String name) {
+    public List<CongregationSearchResult> findCongregations(@RequestParam(value = "name", required = true) String name) {
         List<Congregation> congregations = congregationDao.findCongregations(name);
-
-        CongregationSearchResponse response = new CongregationSearchResponse();
+        List<CongregationSearchResult> results = new ArrayList<CongregationSearchResult>();
         if (!congregations.isEmpty()) {
-            List<CongregationSearchResult> results = new ArrayList<CongregationSearchResult>();
             for (Congregation congregation : congregations) {
                 CongregationSearchResult result = new CongregationSearchResult();
                 result.setId(congregation.getCongregationId());
                 result.setName(congregation.getName());
                 results.add(result);
             }
-            response.setResults(results);
         }
-        return response;
+        return results;
     }
 
     /**

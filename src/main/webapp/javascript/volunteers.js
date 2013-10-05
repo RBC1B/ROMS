@@ -31,8 +31,8 @@ $(document).ready(function() {
     });
     
     $("#congregationName").typeahead({
-        source: roms.common.congregationTypeAheadSource,
-        minLength: 2
+        remote: roms.common.relativePath + '/congregations/search?name=%QUERY',
+        valueKey: 'name'
     });
 
     // we always clear the congregation id on change.
@@ -451,8 +451,8 @@ $(document).ready(function() {
 
     // edit
     $(".user").typeahead({
-        source: roms.common.userTypeAheadSource,
-        minLength: 2
+        remote: roms.common.relativePath + '/users/search?name=%QUERY',
+        valueKey: 'userName'
     });
 
     $("#volunteerPersonal").validate({

@@ -30,8 +30,8 @@ $(document).ready(function() {
     });
 
     $("#congregationName").typeahead({
-        source: roms.common.congregationTypeAheadSource,
-        minLength: 2
+        remote: roms.common.relativePath + '/congregations/search?name=%QUERY',
+        valueKey: 'name'
     });
 
     // we always clear the congregation id on change.

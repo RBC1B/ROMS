@@ -267,21 +267,17 @@ public class PersonsController {
      */
     @RequestMapping(value = "search", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public PersonsSearchResponse findPersons(@RequestParam(value = "forename", required = true) String forename,
+    public List<PersonSearchResult> findPersons(@RequestParam(value = "forename", required = true) String forename,
             @RequestParam(value = "surname", required = true) String surname,
             @RequestParam(value = "checkVolunteer") boolean checkVolunteer) {
         List<Person> persons = personDao.findPersons(forename, surname);
-
-        // delete the lazy loaded sub collections to prevent the JSON marshaller blowing up
-        PersonsSearchResponse response = new PersonsSearchResponse();
+        List<PersonSearchResult> results = new ArrayList<PersonSearchResult>();
         if (!persons.isEmpty()) {
-            List<PersonSearchResult> results = new ArrayList<PersonSearchResult>(persons.size());
             for (Person person : persons) {
                 results.add(generatePersonSearchResult(person, checkVolunteer));
             }
-            response.setResults(results);
         }
-        return response;
+        return results;
     }
 
     private PersonSearchResult generatePersonSearchResult(Person person, boolean checkVolunteer) {

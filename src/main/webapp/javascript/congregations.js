@@ -66,12 +66,12 @@ $(document).ready(function() {
     
     // edit
     if ($("#number").length) {
-	$("#number").numeric({ negative : false, decimal: false });
+        $("#number").numeric({ negative : false, decimal: false });
     }
     
     $("#kingdomHallName").typeahead({
-        source: roms.common.kingdomHallTypeAheadSource,
-        minLength: 2
+        remote: roms.common.relativePath + '/kingdom-halls/search?name=%QUERY',
+        valueKey: 'name'
     });
 
     // we always clear the kingdom hall id on change.

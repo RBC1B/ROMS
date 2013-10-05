@@ -102,7 +102,8 @@ public class KingdomHallsController {
         model.addAttribute("kingdomHall", kingdomHall);
 
         if (kingdomHall.getTitleHolder() != null) {
-            Congregation titleHolder = congregationDao.findCongregation(kingdomHall.getTitleHolder().getCongregationId());
+            Congregation titleHolder = congregationDao.findCongregation(kingdomHall.getTitleHolder()
+                    .getCongregationId());
             model.addAttribute("titleHolder", titleHolder);
         }
 
@@ -111,7 +112,8 @@ public class KingdomHallsController {
 
         model.addAttribute("congregations", congregationModelFactory.generateCongregationListModels(congregationDao
                 .findCongregations(congregationSearchCriteria)));
-        model.addAttribute("ownershipType", referenceDao.findOwnershipTypeValues().get(kingdomHall.getOwnershipTypeId()));
+        model.addAttribute("ownershipType", referenceDao.findOwnershipTypeValues()
+                .get(kingdomHall.getOwnershipTypeId()));
 
         return "kingdom-halls/show";
     }
@@ -148,7 +150,8 @@ public class KingdomHallsController {
         kingdomHallForm.setDrawings(kingdomHall.getDrawings());
 
         if (kingdomHall.getTitleHolder() != null) {
-            Congregation titleHoldingCongregation = congregationDao.findCongregation(kingdomHall.getTitleHolder().getCongregationId());
+            Congregation titleHoldingCongregation = congregationDao.findCongregation(kingdomHall.getTitleHolder()
+                    .getCongregationId());
             kingdomHallForm.setTitleHolderCongregationId(titleHoldingCongregation.getCongregationId());
             kingdomHallForm.setTitleHolderCongregationName(titleHoldingCongregation.getName());
         }
@@ -184,21 +187,20 @@ public class KingdomHallsController {
      */
     @RequestMapping(value = "search", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public KingdomHallSearchResponse findCongregations(@RequestParam(value = "name", required = true) String name) {
+    public List<KingdomHallSearchResult> findCongregations(@RequestParam(value = "name", required = true) String name) {
         List<KingdomHall> kingdomHalls = kingdomHallDao.findKingdomHalls(name);
 
-        KingdomHallSearchResponse response = new KingdomHallSearchResponse();
+        List<KingdomHallSearchResult> results = new ArrayList<KingdomHallSearchResult>();
         if (!kingdomHalls.isEmpty()) {
-            List<KingdomHallSearchResult> results = new ArrayList<KingdomHallSearchResult>();
+
             for (KingdomHall kingdomHall : kingdomHalls) {
                 KingdomHallSearchResult result = new KingdomHallSearchResult();
                 result.setId(kingdomHall.getKingdomHallId());
                 result.setName(kingdomHall.getName());
                 results.add(result);
             }
-            response.setResults(results);
         }
-        return response;
+        return results;
     }
 
     /**

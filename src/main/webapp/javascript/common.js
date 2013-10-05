@@ -68,65 +68,6 @@ roms.common.validatorErrorPlacement = function(error, element) {
     }
 };
 
-roms.common.congregationTypeAheadSource = function(query, process) {
-    $.ajax({
-        url: roms.common.relativePath + "/congregations/search",
-        contentType: "application/json",
-        dataType: "json",
-        data:  {
-            name: query
-        },
-        success: function(data) {
-            var results = [];
-            if(data.results) {
-                $.each(data.results, function() {
-                    results.push(this.name);
-                });
-            }
-            return process(results);
-        }
-    });
-}
-
-roms.common.userTypeAheadSource = function(query, process) {
-    $.ajax({
-        url: roms.common.relativePath + "/users/search",
-        contentType: "application/json",
-        dataType: "json",
-        data:  {
-            name: query
-        },
-        success: function(data) {
-            var results = [];
-            if(data.results) {
-                $.each(data.results, function() {
-                    results.push(this.userName);
-                });
-            }
-            return process(results);
-        }
-    });
-}
-
-roms.common.kingdomHallTypeAheadSource = function(query, process) {
-    $.ajax({
-        url: roms.common.relativePath + "/kingdom-halls/search",
-        contentType: "application/json",
-        dataType: "json",
-        data:  {
-            name: query
-        },
-        success: function(data) {
-            var results = [];
-            if(data.results) {
-                $.each(data.results, function() {
-                    results.push(this.name);
-                });
-            }
-            return process(results);
-        }
-    });
-}
 
 /**
  * Match a person to a given forename and surname (exact match).

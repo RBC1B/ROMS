@@ -53,22 +53,20 @@ public class UsersController {
      */
     @RequestMapping(value = "search", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public UsersSearchResponse findUsers(@RequestParam(value = "name", required = true) String name) {
+    public List<UserSearchResult> findUsers(@RequestParam(value = "name", required = true) String name) {
         List<User> users = userDao.findUsers(name);
-
-        UsersSearchResponse response = new UsersSearchResponse();
+        List<UserSearchResult> results = new ArrayList<UserSearchResult>(users.size());
         if (!users.isEmpty()) {
-            List<UserSearchResult> results = new ArrayList<UserSearchResult>(users.size());
+
             for (User user : users) {
                 UserSearchResult result = new UserSearchResult();
                 result.setPersonId(user.getPersonId());
                 result.setUserName(user.getUserName());
                 results.add(result);
             }
-            response.setResults(results);
         }
 
-        return response;
+        return results;
     }
 
     @Autowired
