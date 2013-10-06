@@ -39,7 +39,7 @@ import uk.org.rbc1b.roms.db.PersonDao;
 import uk.org.rbc1b.roms.db.project.Project;
 import uk.org.rbc1b.roms.db.project.ProjectDao;
 import uk.org.rbc1b.roms.db.project.ProjectStage;
-import uk.org.rbc1b.roms.db.project.ProjectStageTask;
+import uk.org.rbc1b.roms.db.project.ProjectStageActivity;
 import uk.org.rbc1b.roms.db.project.ProjectStageType;
 import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 
@@ -166,21 +166,21 @@ public class ProjectModelFactory {
             model.setCompletedTime(stage.getCompletedTime());
 
             List<ProjectStageTaskModel> taskModelList = new ArrayList<ProjectStageTaskModel>();
-            for (ProjectStageTask task : stage.getTasks()) {
+            for (ProjectStageActivity activity : stage.getActivities()) {
                 ProjectStageTaskModel taskModel = new ProjectStageTaskModel();
 
                 // we make use of the person dao caching, otherwise we would look these up first
                 // to prevent duplicate lookups.
-                Person person = personDao.findPerson(task.getAssignedVolunteer().getPersonId());
-
-                taskModel.setAssignedVolunteer(personModelFactory.generatePersonModel(person));
-                taskModel.setComments(task.getComments());
-                taskModel.setCompletedTime(task.getCompletedTime());
-                taskModel.setCreatedTime(task.getCreatedTime());
-                taskModel.setName(task.getName());
-                taskModel.setProjectStageTaskId(Integer.SIZE);
-                taskModel.setStartedTime(task.getStartedTime());
-                taskModelList.add(taskModel);
+                // Person person = personDao.findPerson(task.getAssignedVolunteer().getPersonId());
+                //
+                // taskModel.setAssignedVolunteer(personModelFactory.generatePersonModel(person));
+                // taskModel.setComments(task.getComments());
+                // taskModel.setCompletedTime(task.getCompletedTime());
+                // taskModel.setCreatedTime(task.getCreatedTime());
+                // taskModel.setName(task.getName());
+                // taskModel.setProjectStageTaskId(Integer.SIZE);
+                // taskModel.setStartedTime(task.getStartedTime());
+                // taskModelList.add(taskModel);
 
             }
             Collections.sort(taskModelList, TASK_COMPARATOR);

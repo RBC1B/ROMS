@@ -3,7 +3,10 @@ use ROMS;
 
 -- clean up all existing data
 delete from Attendance;
+delete from ProjectStageOrder;
 delete from ProjectStageEvent;
+delete from ProjectStageActivity;
+delete from ProjectStage;
 delete from ProjectWorkBrief;
 delete from Project;
 delete from Congregation;
@@ -24,7 +27,10 @@ delete from Person where PersonId > 1;
 
 -- reset the auto-increments
 alter table Attendance AUTO_INCREMENT=1;
+alter table ProjectStageOrder AUTO_INCREMENT=1;
 alter table ProjectStageEvent AUTO_INCREMENT=1;
+alter table ProjectStageActivity AUTO_INCREMENT=1;
+alter table ProjectStage AUTO_INCREMENT=1;
 alter table ProjectWorkBrief AUTO_INCREMENT=1;
 alter table Project AUTO_INCREMENT=1;
 alter table Congregation AUTO_INCREMENT=1;
@@ -201,37 +207,37 @@ insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepa
 values (4, 9, 1, 1, NOW(), 1);
 
 -- Kingdom Halls
-insert into KingdomHall(Name, Street, Town, County, Postcode, OwnershipTypeId, Drawings, UpdateTime, UpdatedBy)
+insert into KingdomHall(Name, Street, Town, County, Postcode, KingdomHallOwnershipTypeId, Drawings, UpdateTime, UpdatedBy)
 values ('Spangly new hall', 'Nice Street', 'Sunnytown', 'Angus', 'DD2 8FE', 1, 'None', NOW(), 1);
-insert into KingdomHall(Name, Street, Town, County, Postcode, OwnershipTypeId, Drawings, UpdateTime, UpdatedBy)
+insert into KingdomHall(Name, Street, Town, County, Postcode, KingdomHallOwnershipTypeId, Drawings, UpdateTime, UpdatedBy)
 values ('Slightly scruffy hall', 'Pleasant Street', 'Grimsby', 'Southshire', 'AB1 2EF', 2, 'Detailed, old', NOW(), 1);
-insert into KingdomHall(Name, Street, Town, County, Postcode, OwnershipTypeId, Drawings, UpdateTime, UpdatedBy)
+insert into KingdomHall(Name, Street, Town, County, Postcode, KingdomHallOwnershipTypeId, Drawings, UpdateTime, UpdatedBy)
 values ('Ripe For Demolition', 'Rundown Street', 'Hull', 'Nowhere', 'ZZ10 4RG', 3, 'Destroyed mysteriously', NOW(), 1);
 
 -- Kingdom Hall Features
 insert into KingdomHallFeature(KingdomHallId, HallFeatureId, Comments, UpdateTime, UpdatedBy)
-values (1, 1, "Block paved, spare blocks piled up behind hall", NOW(), 1);
+values (1, 1, 'Block paved, spare blocks piled up behind hall', NOW(), 1);
 
 insert into KingdomHallFeature(KingdomHallId, HallFeatureId, Comments, UpdateTime, UpdatedBy)
-values (1, 2, "Smells new. Some people don't like the colour of the curtains", NOW(), 1);
+values (1, 2, 'Smells new. Some people don\'t like the colour of the curtains', NOW(), 1);
 
 insert into KingdomHallFeature(KingdomHallId, HallFeatureId, Comments, UpdateTime, UpdatedBy)
-values (1, 3, "Compact and bijou", NOW(), 1);
+values (1, 3, 'Compact and bijou', NOW(), 1);
 
 insert into KingdomHallFeature(KingdomHallId, HallFeatureId, Comments, UpdateTime, UpdatedBy)
-values (1, 4, "Sound system not yet wired in", NOW(), 1);
+values (1, 4, 'Sound system not yet wired in', NOW(), 1);
 
 insert into KingdomHallFeature(KingdomHallId, HallFeatureId, Comments, UpdateTime, UpdatedBy)
-values (1, 5, "Unisex toilets.", NOW(), 1);
+values (1, 5, 'Unisex toilets.', NOW(), 1);
 
 insert into KingdomHallFeature(KingdomHallId, HallFeatureId, Comments, UpdateTime, UpdatedBy)
-values (1, 6, "Brickwork a bit dodgy. Very nice otherwise", NOW(), 1);
+values (1, 6, 'Brickwork a bit dodgy. Very nice otherwise', NOW(), 1);
 
 insert into KingdomHallFeature(KingdomHallId, HallFeatureId, Comments, UpdateTime, UpdatedBy)
-values (1, 7, "Red tiles (local building requirement). Lots of silicon.", NOW(), 1);
+values (1, 7, 'Red tiles (local building requirement). Lots of silicon.', NOW(), 1);
 
 insert into KingdomHallFeature(KingdomHallId, HallFeatureId, Comments, UpdateTime, UpdatedBy)
-values (1, 8, "100 seats in brown. No seats with arm rests.", NOW(), 1);
+values (1, 8, '100 seats in brown. No seats with arm rests.', NOW(), 1);
 
 
 -- Circuits
@@ -391,21 +397,27 @@ values (1, 2, 1, 3, '2013-07-08 11:45:00', 1);
 insert into ProjectStageOrder(ProjectId, ProjectStageId, PreviousProjectStageId, NextProjectStageId, UpdateTime, UpdatedBy)
 values (1, 3, 2, null, '2013-07-08 11:45:00', 1);
 
+insert into ProjectStageActivity(ProjectStageId, ProjectStageActivityTypeId, AssignedVolunteerId, Comments, UpdateTime, UpdatedBy)
+values(1, 1, 5, 'Should be straight forward', '2013-07-08 11:45:00', 1);
 
-insert into Project(Name,ProjectTypeId,KingdomHallId,Priority,Street,Town,County,Postcode,Telephone,ContactPersonId,RequestDate,VisitDate,EstimateCost,
-				ProjectStatusId,SupportingCongregation,ProjectConstraints,CoordinatorId, UpdateTime, UpdatedBy)
-values ('Brand new hall near Hull', 2, null, null, '73 Industrial Street', 'Hull', null, 'HL12 5FD', '1234 53367', null, null, null, null,
-		1, null, null, null, NOW(), 1);
+insert into ProjectStageActivity(ProjectStageId, ProjectStageActivityTypeId, AssignedVolunteerId, Comments, UpdateTime, UpdatedBy)
+values(1, 2, 5, 'Gonna be tricky!', '2013-07-08 11:46:00', 1);
 
-insert into ProjectStageTask (ProjectStageId, Name, AssignedVolunteerId, Comments, CreatedTime,
+insert into ProjectStageActivityTask (ProjectStageActivityId, Name, AssignedVolunteerId, Comments, CreatedTime,
 StartedTime, CompletedTime, UpdateTime, UpdatedBy)
 values (1, 'Ponder it for a while', 5, 'Fingernail chewing optional', '2013-07-09 11:45:00',
-'2013-07-09 14:23:30', '2013-07-10 08:17:00', '2013-07-10 08:17:00', 7);
+'2013-07-09 14:23:30', '2013-07-10 08:17:00', '2013-07-10 08:17:00', 1);
 
-insert into ProjectStageTask (ProjectStageId, Name, AssignedVolunteerId, Comments, CreatedTime,
+insert into ProjectStageActivityTask (ProjectStageActivityId, Name, AssignedVolunteerId, Comments, CreatedTime,
 StartedTime, CompletedTime, UpdateTime, UpdatedBy)
 values (1, 'Ponder it a little bit more', 6, null, '2013-07-11 17:25:48',
-null, null, '2013-07-11 17:25:48', 7);
+null, null, '2013-07-11 17:25:48', 1);
+
+
+insert into Project(Name,ProjectTypeId,KingdomHallId,Priority,Street,Town,County,Postcode,Telephone,ContactPersonId,RequestDate,VisitDate,EstimateCost,
+                ProjectStatusId,SupportingCongregation,ProjectConstraints,CoordinatorId, UpdateTime, UpdatedBy)
+values ('Brand new hall near Hull', 2, null, null, '73 Industrial Street', 'Hull', null, 'HL12 5FD', '1234 53367', null, null, null, null,
+        1, null, null, null, NOW(), 1);
 
 -- volunteer attendance
 insert into Attendance(ProjectId, PersonId, InviteDate, AbleToCome, InvitationConfirmationId, DepartmentId, Attended, UpdateTime, UpdatedBy)

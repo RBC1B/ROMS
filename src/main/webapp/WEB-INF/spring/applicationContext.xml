@@ -63,7 +63,6 @@ THE SOFTWARE.
                 <value>uk/org/rbc1b/roms/db/CongregationContact.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/Person.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/PersonChange.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/Updates.hbm.xml</value>
 
                 <value>uk/org/rbc1b/roms/db/application/Application.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/application/ApplicationAccess.hbm.xml</value>
@@ -75,14 +74,17 @@ THE SOFTWARE.
                 <value>uk/org/rbc1b/roms/db/kingdomhall/KingdomHall.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/kingdomhall/KingdomHallFeature.hbm.xml</value>
 
-                <value>uk/org/rbc1b/roms/db/project/Commentator.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/project/Project.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/project/ProjectStage.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/project/ProjectStageActivity.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/project/ProjectStageActivityEvent.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/project/ProjectStageActivityTask.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/project/ProjectStageActivityTaskEvent.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/project/ProjectStageActivityType.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/project/ProjectStageEvent.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/project/ProjectStageOrder.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/project/ProjectStageTask.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/project/ProjectStageTaskEvent.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/project/ProjectStageType.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/project/ProjectStageTypeActivityType.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/project/ProjectWorkBrief.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/project/WorkFeature.hbm.xml</value>
 
@@ -132,7 +134,7 @@ THE SOFTWARE.
                     <property name="name" value="reference.tradeNumber" />
                 </bean>
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
-                    <property name="name" value="reference.ownershipType" />
+                    <property name="name" value="reference.kingdomHallOwnershipType" />
                 </bean>
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
                     <property name="name" value="reference.congregationRole" />

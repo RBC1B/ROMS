@@ -112,8 +112,8 @@ public class KingdomHallsController {
 
         model.addAttribute("congregations", congregationModelFactory.generateCongregationListModels(congregationDao
                 .findCongregations(congregationSearchCriteria)));
-        model.addAttribute("ownershipType", referenceDao.findOwnershipTypeValues()
-                .get(kingdomHall.getOwnershipTypeId()));
+        model.addAttribute("ownershipType",
+                referenceDao.findKingdomHallOwnershipTypeValues().get(kingdomHall.getOwnershipTypeId()));
 
         return "kingdom-halls/show";
     }
@@ -158,7 +158,7 @@ public class KingdomHallsController {
 
         model.addAttribute("kingdomHallForm", kingdomHallForm);
         model.addAttribute("submitUri", KingdomHallModelFactory.generateUri(kingdomHallId));
-        model.addAttribute("ownershipValues", referenceDao.findOwnershipTypeValues());
+        model.addAttribute("ownershipValues", referenceDao.findKingdomHallOwnershipTypeValues());
         model.addAttribute("submitMethod", "PUT");
 
         return "kingdom-halls/edit";

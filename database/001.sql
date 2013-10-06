@@ -59,6 +59,7 @@ create table Person_AUD(
     primary key (PersonId, REV)
 )engine=InnoDB;
 
+-- track person details change requests
 create table PersonChange(
     PersonChangeId  bigint(20) not null auto_increment,
     PersonId        bigint(20) not null,
@@ -91,6 +92,7 @@ create table PersonChange(
     foreign key (PersonId) references Person(PersonId)
 )engine=InnoDB;
 
+-- application is a sub-section of the web-application
 create table Application(
     ApplicationId   bigint(20)  auto_increment,
     Name            varchar(30) not null    unique, -- display name
@@ -114,6 +116,7 @@ create table Application_AUD (
     primary key (ApplicationId, REV)    
 )engine=InnoDB;
 
+-- registered webapp user
 create table User(
     PersonId    bigint(20),
     UserName    varchar(50) not null    unique,
@@ -136,6 +139,7 @@ create table User_AUD(
     primary key (PersonId, REV)
 )engine=InnoDB;
 
+-- collection of congregations
 create table Circuit(
     CircuitId           bigint(20)      auto_increment,
     Name                varchar(50)     not null    unique,
@@ -158,10 +162,11 @@ create table Circuit_AUD(
     primary key (CircuitId, REV)
 )engine=InnoDB;
 
-create table OwnershipType(
-    OwnershipTypeId     bigint(20)  not null    auto_increment,
-    Name                varchar(50) not null    unique,
-    primary key (OwnershipTypeId)
+
+create table KingdomHallOwnershipType(
+    KingdomHallOwnershipTypeId  bigint(20)  not null    auto_increment,
+    Name                        varchar(50) not null    unique,
+    primary key (KingdomHallOwnershipTypeId)
 )engine=InnoDB;
 
 create table HallFeature(
@@ -171,39 +176,40 @@ create table HallFeature(
 )engine=InnoDB;
 
 create table KingdomHall(
-    KingdomHallId   bigint(20)  auto_increment,
-    Name            varchar(50) not null unique,
-    Street          varchar(50) not null,
-    Town            varchar(50) not null,
-    County          varchar(50),
-    Postcode        varchar(10) not null,
-    OwnershipTypeId bigint(20),
-    TitleHolderId   bigint(20),
-    Drawings        varchar(50),
-    UpdateTime      timestamp   not null,
-    UpdatedBy       bigint(20)  not null,
+    KingdomHallId               bigint(20)  auto_increment,
+    Name                        varchar(50) not null unique,
+    Street                      varchar(50) not null,
+    Town                        varchar(50) not null,
+    County                      varchar(50),
+    Postcode                    varchar(10) not null,
+    KingdomHallOwnershipTypeId  bigint(20),
+    TitleHolderId               bigint(20),
+    Drawings                    varchar(50),
+    UpdateTime                  timestamp   not null,
+    UpdatedBy                   bigint(20)  not null,
     primary key (KingdomHallId),
-    foreign key (OwnershipTypeId) references OwnershipType(OwnershipTypeId),
+    foreign key (KingdomHallOwnershipTypeId) references KingdomHallOwnershipType(KingdomHallOwnershipTypeId),
     foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
 create table KingdomHall_AUD (
-    KingdomHallId   bigint(20),
-    REV             int         not null,
-    REVTYPE         tinyint,
-    Name            varchar(50) not null,
-    Street          varchar(50) not null,
-    Town            varchar(50) not null,
-    County          varchar(50),
-    Postcode        varchar(10) not null,
-    OwnershipTypeId bigint(20),
-    TitleHolderId   bigint(20),
-    Drawings        varchar(50),
-    UpdateTime      timestamp   not null,
-    UpdatedBy       bigint(20)  not null,
+    KingdomHallId               bigint(20),
+    REV                         int not null,
+    REVTYPE                     tinyint,
+    Name                        varchar(50) not null,
+    Street                      varchar(50) not null,
+    Town                        varchar(50) not null,
+    County                      varchar(50),
+    Postcode                    varchar(10) not null,
+    KingdomHallOwnershipTypeId  bigint(20),
+    TitleHolderId               bigint(20),
+    Drawings                    varchar(50),
+    UpdateTime                  timestamp   not null,
+    UpdatedBy                   bigint(20)  not null,
     primary key (KingdomHallId, REV)
 )engine=InnoDB;
 
+-- a part of the kingdom hall, e.g. Car Park
 create table KingdomHallFeature(
     KingdomHallFeatureId    bigint(20)  auto_increment,
     KingdomHallId           bigint(20)  not null,
@@ -334,6 +340,7 @@ create table InterviewStatus(
     primary key (InterviewStatusId)
 )engine=InnoDB;
 
+-- RBC department
 create table Department(
     DepartmentId        bigint(20)  auto_increment,
     Name                varchar(50) not null    unique,
@@ -364,6 +371,7 @@ create table RbcStatus(
     primary key (RbcStatusId)
 )engine=InnoDB;
 
+-- Person appointment, e.g. ministerial servant
 create table Appointment(
     AppointmentId   bigint(20)  auto_increment,
     Name            varchar(25) not null    unique,
@@ -376,6 +384,7 @@ create table Fulltime(
     primary key (FulltimeId)
 )engine=InnoDB;
 
+-- emergency contact relationship
 create table Relationship(
     RelationshipId  bigint(20)  auto_increment,
     Name            varchar(50) not null    unique,
@@ -460,6 +469,7 @@ create table Volunteer_AUD (
     primary key(PersonId, REV)
 )engine=InnoDB;
 
+-- volunteer experience, entered on application form
 create table VolunteerTrade (
     VolunteerTradeId        bigint(20)      auto_increment,
     PersonId                bigint(20),
@@ -486,6 +496,7 @@ create table VolunteerTrade_AUD (
     primary key (VolunteerTradeId, REV)
 )engine=InnoDB;
 
+-- permission levels for the application, based on their department
 create table ApplicationAccess(
     ApplicationAccessId bigint(20)  auto_increment,
     PersonId            bigint(20)  not null,
@@ -520,6 +531,7 @@ create table AssignmentRole(
     primary key (AssignmentRoleId)
 )engine=InnoDB;
 
+-- maps assignment priority of the volunteer to the department
 create table TradeNumber(
     TradeNumberId   bigint(20)  auto_increment,
     Name            varchar(50) not null    unique,
@@ -576,26 +588,6 @@ create table InvitationConfirmation(
     InvitationConfirmationId    bigint(20)  auto_increment,
     Description                 varchar(25) not null    unique,
     primary key (InvitationConfirmationId)
-)engine=InnoDB;
-
-create table Commentator(
-    CommentatorId   bigint(20)  auto_increment,
-    DepartmentId    bigint(20)  not null    unique,
-    UpdateTime      timestamp   not null,
-    UpdatedBy       bigint(20)  not null,
-    primary key (CommentatorId),
-    constraint foreign key (DepartmentId) references Department(DepartmentId),
-    foreign key (UpdatedBy) references Person(PersonId)
-)engine=InnoDB;
-
-create table Commentator_AUD (
-    CommentatorId   bigint(20),
-    REV             int         not null,
-    REVTYPE         tinyint,
-    DepartmentId    bigint(20)  not null,
-    UpdateTime      timestamp   not null,
-    UpdatedBy       bigint(20)  not null,
-    primary key (CommentatorId, REV)
 )engine=InnoDB;
 
 create table WorkFeature(
@@ -693,16 +685,97 @@ create table ProjectStageType_AUD (
     primary key (ProjectStageTypeId, REV)
 )engine=InnoDB;
 
+-- mapping of stage types linked to a project type
+-- when a new project is created, stages and stage activities are created
+create table ProjectTypeStageType (
+    ProjectTypeStageTypeId      bigint(20)  auto_increment,
+    ProjectTypeId               bigint(20) not null,
+    ProjectStageTypeId          bigint(20) not null,
+    UpdateTime                  timestamp   not null,
+    UpdatedBy                   bigint(20)  not null,
+    primary key (ProjectTypeStageTypeId),
+    unique (ProjectTypeId, ProjectStageTypeId),
+    foreign key (UpdatedBy) references Person(PersonId)
+)engine=InnoDB;
+
+create table ProjectTypeStageType_AUD (
+    ProjectTypeStageTypeId      bigint(20),
+    REV                         int         not null,
+    REVTYPE                     tinyint,
+    ProjectTypeId               bigint(20) not null,
+    ProjectStageTypeId          bigint(20) not null,
+    UpdateTime                  timestamp   not null,
+    UpdatedBy                   bigint(20)  not null,
+    primary key (ProjectTypeStageTypeId, REV)
+)engine=InnoDB;
+
+create table ProjectStageActivityType (
+    ProjectStageActivityTypeId   bigint(20)  auto_increment,
+    Name                        varchar(5)  not null    unique,
+    Description                 varchar(50),
+    AssignedTo                  varchar(500),
+    WorkNotes                   varchar(1000),
+    UpdateTime                  timestamp   not null,
+    UpdatedBy                   bigint(20)  not null,
+    primary key (ProjectStageActivityTypeId),
+    foreign key (UpdatedBy) references Person(PersonId)
+)engine=InnoDB;
+
+create table ProjectStageActivityType_AUD (
+    ProjectStageActivityTypeId  bigint(20),
+    REV                         int         not null,
+    REVTYPE                     tinyint,
+    Name                        varchar(5)  not null,
+    Description                 varchar(50),
+    AssignedTo                  varchar(500),
+    WorkNotes                   varchar(1000),
+    UpdateTime                  timestamp   not null,
+    UpdatedBy                   bigint(20)  not null,
+    primary key (ProjectStageActivityTypeId, REV)
+)engine=InnoDB;
+
+-- mapping of activity types linked to a stage type
+-- when a new project is created, stages and stage activities are created
+create table ProjectStageTypeActivityType (
+    ProjectStageTypeActivityTypeId  bigint(20)  auto_increment,
+    ProjectStageTypeId              bigint(20)  not null,
+    ProjectStageActivityTypeId      bigint(20)  not null,
+    UpdateTime                      timestamp   not null,
+    UpdatedBy                       bigint(20)  not null,
+    primary key (ProjectStageTypeActivityTypeId),
+    foreign key (ProjectStageTypeId) references ProjectStageType(ProjectStageTypeId),
+    foreign key (ProjectStageActivityTypeId) references ProjectStageActivityType(ProjectStageActivityTypeId),
+    unique (ProjectStageTypeId, ProjectStageActivityTypeId),
+    foreign key (UpdatedBy) references Person(PersonId)
+)engine=InnoDB;
+
+create table ProjectStageTypeActivityType_AUD (
+    ProjectStageTypeActivityTypeId  bigint(20),
+    REV                             int         not null,
+    REVTYPE                         tinyint,
+    ProjectStageTypeId              bigint(20),
+    ProjectStageActivityTypeId      bigint(20),
+    UpdateTime                      timestamp   not null,
+    UpdatedBy                       bigint(20)  not null,
+    primary key (ProjectStageTypeActivityTypeId, REV)
+)engine=InnoDB;
+
 create table ProjectStageEventType (
     ProjectStageEventTypeId bigint(20)  auto_increment,
-    Name             varchar(50),
+    Name                    varchar(50),
     primary key (ProjectStageEventTypeId)
 )engine=InnoDB;
 
-create table ProjectStageTaskEventType (
-    ProjectStageTaskEventTypeId bigint(20)  auto_increment,
-    Name                    varchar(50),
-    primary key (ProjectStageTaskEventTypeId)
+create table ProjectStageActivityEventType (
+    ProjectStageActivityEventTypeId bigint(20)  auto_increment,
+    Name                            varchar(50),
+    primary key (ProjectStageActivityEventTypeId)
+)engine=InnoDB;
+
+create table ProjectStageActivityTaskEventType (
+    ProjectStageActivityTaskEventTypeId  bigint(20)  auto_increment,
+    Name                            varchar(50),
+    primary key (ProjectStageActivityTaskEventTypeId)
 )engine=InnoDB;
 
 create table ProjectStage (
@@ -719,7 +792,7 @@ create table ProjectStage (
     foreign key (ProjectId) references Project(ProjectId),
     foreign key (ProjectStageTypeId) references ProjectStageType(ProjectStageTypeId),
     foreign key (ProjectStageStatusId) references ProjectStatus(ProjectStatusId),
-    foreign key (UpdatedBy) references Person(PersonId)
+    foreign key (UpdatedBy) references User(PersonId)
 )engine=InnoDB;
 
 create table ProjectStage_AUD (
@@ -750,7 +823,7 @@ create table ProjectStageOrder (
     foreign key (ProjectStageId) references ProjectStage(ProjectStageId),
     foreign key (PreviousProjectStageId) references ProjectStage(ProjectStageId),
     foreign key (NextProjectStageId) references ProjectStage(ProjectStageId),
-    foreign key (UpdatedBy) references Person(PersonId)
+    foreign key (UpdatedBy) references User(PersonId)
 )engine=InnoDB;
 
 create table ProjectStageOrder_AUD (
@@ -766,66 +839,110 @@ create table ProjectStageOrder_AUD (
     primary key (ProjectStageOrderId, REV)
 )engine=InnoDB;
 
-create table ProjectStageTask (
-    ProjectStageTaskId  bigint(20)  auto_increment,
-    ProjectStageId      bigint(20)  not null,
-    Name                varchar(250),
-    AssignedVolunteerId bigint(20)  not null,
-    Comments            varchar(1000),
-    CreatedTime         timestamp   not null,
-    StartedTime         timestamp   null,
-    CompletedTime       timestamp   null,
-    UpdateTime          timestamp   not null,
-    UpdatedBy           bigint(20)  not null,
-    primary key (ProjectStageTaskId),
+create table ProjectStageActivity (
+    ProjectStageActivityId      bigint(20)  auto_increment,
+    ProjectStageActivityTypeId  bigint(20)  not null,
+    ProjectStageId              bigint(20)  not null,
+    AssignedVolunteerId         bigint(20)  not null,
+    Comments                    varchar(1000),
+    CreatedTime                 timestamp   not null,
+    StartedTime                 timestamp   null,
+    CompletedTime               timestamp   null,
+    UpdateTime                  timestamp   not null,
+    UpdatedBy                   bigint(20)  not null,
+    primary key (ProjectStageActivityId),
+    foreign key (ProjectStageActivityTypeId) references ProjectStageActivityType(ProjectStageActivityTypeId),
     foreign key (ProjectStageId) references ProjectStage(ProjectStageId),
     foreign key (AssignedVolunteerId) references Volunteer(PersonId),
-    foreign key (UpdatedBy) references Person(PersonId)
+    foreign key (UpdatedBy) references User(PersonId)
 )engine=InnoDB;
 
-create table ProjectStageTask_AUD (
-    ProjectStageTaskId  bigint(20),
-    REV                 int         not null,
-    REVTYPE             tinyint,
-    ProjectStageId      bigint(20)  not null,
-    Name                varchar(250),
-    AssignedVolunteerId bigint(20)  not null,
-    Comments            varchar(1000),
-    CreatedTime         timestamp   not null,
-    StartedTime         timestamp   null,
-    CompletedTime       timestamp   null,
-    UpdateTime          timestamp   not null,
-    UpdatedBy           bigint(20)  not null,
-    primary key (ProjectStageTaskId, REV)
+create table ProjectStageActivity_AUD (
+    ProjectStageActivityId      bigint(20)  auto_increment,
+    REV                         int         not null,
+    REVTYPE                     tinyint,
+    ProjectStageActivityTypeId  bigint(20)  not null,
+    ProjectStageId              bigint(20)  not null,
+    AssignedVolunteerId         bigint(20)  not null,
+    Comments                    varchar(1000),
+    CreatedTime                 timestamp   not null,
+    StartedTime                 timestamp   null,
+    CompletedTime               timestamp   null,
+    UpdateTime                  timestamp   not null,
+    UpdatedBy                   bigint(20)  not null,
+    primary key (ProjectStageActivityId, REV)
+)engine=InnoDB;
+
+create table ProjectStageActivityTask (
+    ProjectStageActivityTaskId  bigint(20)  auto_increment,
+    ProjectStageActivityId      bigint(20)  not null,
+    Name                        varchar(250),
+    AssignedVolunteerId         bigint(20)  not null,
+    Comments                    varchar(1000),
+    CreatedTime                 timestamp   not null,
+    StartedTime                 timestamp   null,
+    CompletedTime               timestamp   null,
+    UpdateTime                  timestamp   not null,
+    UpdatedBy                   bigint(20)  not null,
+    primary key (ProjectStageActivityTaskId),
+    foreign key (ProjectStageActivityId) references ProjectStageActivity(ProjectStageActivityId),
+    foreign key (AssignedVolunteerId) references Volunteer(PersonId),
+    foreign key (UpdatedBy) references User(PersonId)
+)engine=InnoDB;
+
+create table ProjectStageActivityTask_AUD (
+    ProjectStageActivityTaskId  bigint(20),
+    REV                         int         not null,
+    REVTYPE                     tinyint,
+    ProjectStageId              bigint(20)  not null,
+    Name                        varchar(250),
+    AssignedVolunteerId         bigint(20)  not null,
+    Comments                    varchar(1000),
+    CreatedTime                 timestamp   not null,
+    StartedTime                 timestamp   null,
+    CompletedTime               timestamp   null,
+    UpdateTime                  timestamp   not null,
+    UpdatedBy                   bigint(20)  not null,
+    primary key (ProjectStageActivityTaskId, REV)
 )engine=InnoDB;
 
 create table ProjectStageEvent (
     ProjectStageEventId     bigint(20)  auto_increment,
     ProjectStageId          bigint(20)  not null,
     ProjectStageEventTypeId bigint(20)  not null,
-    CommentatorId           bigint(20),
     Comments                text,
-    Visible                 boolean     default true,
     CreateTime              timestamp   not null,
     CreatedBy               bigint(20)  not null,
     primary key (ProjectStageEventId),
     foreign key (ProjectStageId) references ProjectStage(ProjectStageId) on delete cascade,
     foreign key (ProjectStageEventTypeId) references ProjectStageEventType(ProjectStageEventTypeId),
-    foreign key (CommentatorId) references Commentator(CommentatorId) on delete set null,
-    foreign key (CreatedBy) references Person(PersonId)
+    foreign key (CreatedBy) references User(PersonId)
 )engine=InnoDB;
 
-create table ProjectStageTaskEvent (
-    ProjectStageTaskEventId     bigint(20)  auto_increment,
-    ProjectStageTaskId          bigint(20)  not null,
-    ProjectStageTaskEventTypeId bigint(20)  not null,
-    Comments                    text,
-    CreateTime                  timestamp   not null,
-    CreatedBy                   bigint(20)  not null,
-    primary key (ProjectStageTaskEventId),
-    foreign key (ProjectStageTaskId) references ProjectStageTask(ProjectStageTaskId) on delete cascade,
-    foreign key (ProjectStageTaskEventTypeId) references ProjectStageTaskEventType(ProjectStageTaskEventTypeId),
-    foreign key (CreatedBy) references Person(PersonId)
+create table ProjectStageActivityEvent (
+    ProjectStageActivityEventId         bigint(20)  auto_increment,
+    ProjectStageActivityId              bigint(20)  not null,
+    ProjectStageActivityEventTypeId     bigint(20)  not null,
+    Comments                            text,
+    CreateTime                          timestamp   not null,
+    CreatedBy                           bigint(20)  not null,
+    primary key (ProjectStageActivityEventId),
+    foreign key (ProjectStageActivityId) references ProjectStageActivity(ProjectStageActivityId) on delete cascade,
+    foreign key (ProjectStageActivityEventTypeId) references ProjectStageActivityEventType(ProjectStageActivityEventTypeId),
+    foreign key (CreatedBy) references User(PersonId)
+)engine=InnoDB;
+
+create table ProjectStageActivityTaskEvent (
+    ProjectStageActivityTaskEventId     bigint(20)  auto_increment,
+    ProjectStageActivityTaskId          bigint(20)  not null,
+    ProjectStageActivityTaskEventTypeId bigint(20)  not null,
+    Comments                            text,
+    CreateTime                          timestamp   not null,
+    CreatedBy                           bigint(20)  not null,
+    primary key (ProjectStageActivityTaskEventId),
+    foreign key (ProjectStageActivityTaskId) references ProjectStageActivityTask(ProjectStageActivityTaskId) on delete cascade,
+    foreign key (ProjectStageActivityTaskEventTypeId) references ProjectStageActivityTaskEventType(ProjectStageActivityTaskEventTypeId),
+    foreign key (CreatedBy) references User(PersonId)
 )engine=InnoDB;
 
 
@@ -1020,19 +1137,13 @@ create table VolunteerSkill_AUD (
     primary key (VolunteerSkillId, REV)
 )engine=InnoDB;
 
-create table Updates(
-    UpdatesId           bigint(20)  auto_increment,
-    UpdatedTable        varchar(50) not null,
-    PersonId            bigint(20),
-    UpdateInformation   text,
-    UpdateTime          timestamp   not null,
-    primary key (UpdatesId),
-    foreign key (PersonId) references Person(PersonId) on delete set null
-)engine=InnoDB;
-
--- create the base system user
+-- create the base system user. The password is unhashed, so they can't log in
+-- this is only used to set up the initial data
 insert into Person(Forename, Surname, UpdateTime, UpdatedBy)
 values ('System', '-', NOW(), 1);
+
+insert into User(PersonId, UserName, Password, UpdateTime, UpdatedBy)
+values (1, 'System', 'INVALID', NOW(), 1);
 
 insert into Application (Name, Code, Comments, UpdateTime, UpdatedBy) values
     ('Attendance & Invitations', 'ATTENDANCE', 'Mangaging project invites and gates list', NOW(), 1),
@@ -1045,7 +1156,7 @@ insert into Application (Name, Code, Comments, UpdateTime, UpdatedBy) values
     ('User', 'USER', 'Managing User access', NOW(), 1),
     ('Volunteers', 'VOLUNTEER', 'Managing Volunteers', NOW(), 1);
 
-insert into OwnershipType (Name) values
+insert into KingdomHallOwnershipType (Name) values
     ('Freehold'),
     ('Leasehold'),
     ('Rented');
@@ -1187,6 +1298,11 @@ insert into Team(Name) values
     ('A'),
     ('B');
 
+insert into ProjectType (Name) values
+    ('Minor Work'),
+    ('New Build'),
+    ('Rebuild'),
+    ('Refurbishment');
 
 insert into ProjectStageType(Name, Description, AssignedTo, WorkNotes, UpdateTime, UpdatedBy) values
     ('0','Land Search','Project Development','Land Search.', NOW(), 1),
@@ -1214,12 +1330,17 @@ insert into ProjectStageType(Name, Description, AssignedTo, WorkNotes, UpdateTim
     ('21','Complete S-85','Chairman','Complete S-85 and send to Branch.', NOW(), 1),
     ('999','Close Project','Chairman','Close project after all project work has been completed.', NOW(), 1);
 
-insert into ProjectType (Name) values
-    ('Minor Work'),
-    ('New Build'),
-    ('Rebuild'),
-    ('Refurbishment');
+insert into ProjectTypeStageType (ProjectTypeId, ProjectStageTypeId, UpdateTime, UpdatedBy) values
+    (1, 1, NOW(), 1);
+    
+insert into ProjectStageActivityType (Name, Description, AssignedTo, WorkNotes, UpdateTime, UpdatedBy) values
+    ('0-a', 'Council website search', 'Project Development', 'yadda yadda', NOW(), 1);
+insert into ProjectStageActivityType (Name, Description, AssignedTo, WorkNotes, UpdateTime, UpdatedBy) values
+    ('0-b', 'Speak to some farmers', 'Project Development', 'Get aff my land!', NOW(), 1);    
 
+insert into ProjectStageTypeActivityType (ProjectStageTypeId, ProjectStageActivityTypeId, UpdateTime, UpdatedBy) values
+    (1, 1, NOW(), 1);    
+    
 insert into InvitationConfirmation (Description) values
     ('Assembly/Convention'),
     ('Circuit Visit'),
@@ -1227,21 +1348,6 @@ insert into InvitationConfirmation (Description) values
     ('Other'),
     ('Uncontactable'),
     ('Work');
-
-insert into Commentator (DepartmentId, UpdateTime, UpdatedBy) values
-    ('1', NOW(), 1),
-    ('2', NOW(), 1),
-    ('3', NOW(), 1),
-    ('4', NOW(), 1),
-    ('5', NOW(), 1),
-    ('6', NOW(), 1),
-    ('7', NOW(), 1),
-    ('47', NOW(), 1),
-    ('48', NOW(), 1),
-    ('49', NOW(), 1),
-    ('50', NOW(), 1),
-    ('51', NOW(), 1),
-    ('52', NOW(), 1);
 
 insert into WorkFeature (Name) values
     ('Design'),
@@ -1267,7 +1373,14 @@ insert into ProjectStageEventType (Name) values
     ('Cancelled'),
     ('Notes');
 
-insert into ProjectStageTaskEventType (Name) values
+insert into ProjectStageActivityEventType (Name) values
+    ('Started'),
+    ('Completed'),
+    ('Reopened'),
+    ('Cancelled'),
+    ('Notes');
+    
+insert into ProjectStageActivityTaskEventType (Name) values
     ('Started'),
     ('Completed'),
     ('Reopened'),

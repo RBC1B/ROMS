@@ -28,39 +28,40 @@ import java.util.Date;
 import uk.org.rbc1b.roms.db.CreateAuditable;
 
 /**
- * Events associated with the project stages.
+ * Events associated with the project stage activity tasks.
  */
-public class ProjectStageEvent implements CreateAuditable, Serializable {
-    private static final long serialVersionUID = 4947689666475610021L;
-    private Integer projectStageEventId;
-    private ProjectStage projectStage;
-    private Integer projectStageEventTypeId;
+public class ProjectStageActivityTaskEvent implements CreateAuditable, Serializable {
+
+    private static final long serialVersionUID = -8934557962915966912L;
+    private Integer projectStageActivityTaskEventId;
+    private ProjectStageActivityTask projectStageActivityTask;
+    private Integer projectStageActivityTaskEventTypeId;
     private String comments;
     private Date createTime;
     private Integer createdBy;
 
-    public Integer getProjectStageEventId() {
-        return projectStageEventId;
+    public Integer getProjectStageActivityTaskEventId() {
+        return projectStageActivityTaskEventId;
     }
 
-    public void setProjectStageEventId(Integer projectStageEventId) {
-        this.projectStageEventId = projectStageEventId;
+    public void setProjectStageActivityTaskEventId(Integer projectStageActivityTaskEventId) {
+        this.projectStageActivityTaskEventId = projectStageActivityTaskEventId;
     }
 
-    public ProjectStage getProjectStage() {
-        return projectStage;
+    public ProjectStageActivityTask getProjectStageActivityTask() {
+        return projectStageActivityTask;
     }
 
-    public void setProjectStage(ProjectStage projectStage) {
-        this.projectStage = projectStage;
+    public void setProjectStageActivityTask(ProjectStageActivityTask projectStageActivityTask) {
+        this.projectStageActivityTask = projectStageActivityTask;
     }
 
-    public Integer getProjectStageEventTypeId() {
-        return projectStageEventTypeId;
+    public Integer getProjectStageActivityTaskEventTypeId() {
+        return projectStageActivityTaskEventTypeId;
     }
 
-    public void setProjectStageEventTypeId(Integer projectStageEventTypeId) {
-        this.projectStageEventTypeId = projectStageEventTypeId;
+    public void setProjectStageActivityTaskEventTypeId(Integer projectStageActivityTaskEventTypeId) {
+        this.projectStageActivityTaskEventTypeId = projectStageActivityTaskEventTypeId;
     }
 
     public String getComments() {
@@ -91,6 +92,6 @@ public class ProjectStageEvent implements CreateAuditable, Serializable {
 
     @Override
     public String toString() {
-        return "ProjectStageEvent{" + "projectStageEventId=" + projectStageEventId + '}';
+        return "ProjectStageTaskEvent{" + "projectStageActivityTaskEventId=" + projectStageActivityTaskEventId + '}';
     }
 }

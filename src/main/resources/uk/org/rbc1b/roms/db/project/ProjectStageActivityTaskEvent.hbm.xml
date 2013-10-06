@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="uk.org.rbc1b.roms.db.project">
-    <class name="ProjectStageTaskEvent" table="ProjectStageTaskEvent">
-        <id name="projectStageTaskEventId">
+    <class name="ProjectStageActivityTaskEvent" table="ProjectStageActivityTaskEvent">
+        <id name="projectStageActivityTaskEventId">
             <generator class="identity" />
         </id>
-        <many-to-one column="ProjectStageTaskId" name="projectStageTask" not-null="true" />
-        <property name="projectStageTaskEventTypeId" not-null="true" />
+        <many-to-one column="ProjectStageActivityTaskId" name="projectStageActivityTask" not-null="true" />
+        <property name="projectStageActivityTaskEventTypeId" not-null="true" />
         <property name="comments" />
         <property name="createTime" not-null="true" />
         <property name="createdBy" not-null="true" />

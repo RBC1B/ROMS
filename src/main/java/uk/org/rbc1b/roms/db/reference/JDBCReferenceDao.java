@@ -91,10 +91,10 @@ public class JDBCReferenceDao implements ReferenceDao {
     }
 
     @Override
-    @Cacheable("reference.ownershipType")
-    public Map<Integer, String> findOwnershipTypeValues() {
-        return findReferenceValues("SELECT OwnershipTypeId AS id, Name AS value "
-                + "FROM OwnershipType ORDER BY OwnershipTypeId");
+    @Cacheable("reference.kingdomHallOwnershipType")
+    public Map<Integer, String> findKingdomHallOwnershipTypeValues() {
+        return findReferenceValues("SELECT KingdomHallOwnershipTypeId AS id, Name AS value "
+                + "FROM KingdomHallOwnershipType ORDER BY KingdomHallOwnershipTypeId");
     }
 
     @Override

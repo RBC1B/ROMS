@@ -69,7 +69,7 @@ public interface ReferenceDao {
     /**
      * @return ordered map of hall ownership type values
      */
-    Map<Integer, String> findOwnershipTypeValues();
+    Map<Integer, String> findKingdomHallOwnershipTypeValues();
 
     /**
      * @return ordered map of congregation role type values

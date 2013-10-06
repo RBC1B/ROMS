@@ -25,58 +25,65 @@ package uk.org.rbc1b.roms.db.project;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 import org.hibernate.envers.Audited;
 import uk.org.rbc1b.roms.db.UpdateAuditable;
+import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 
 /**
- * Project stage defined for a given project. Each project defines one or more stages to be completed to finish the
- * project.
+ * Task involved in completing a project stage activity.
  */
 @Audited
-public class ProjectStage implements UpdateAuditable, Serializable {
-    private static final long serialVersionUID = 1L;
-    private Integer projectStageId;
-    private Project project;
-    private Integer projectStageTypeId;
-    private Integer projectStageStatusId;
+public class ProjectStageActivityTask implements UpdateAuditable, Serializable {
+    private static final long serialVersionUID = -2121305669657847928L;
+    private Integer projectStageActivityTaskId;
+    private ProjectStageActivity projectStageActivity;
+    private String name;
+    private Volunteer assignedVolunteer;
+    private String comments;
     private Date createdTime;
     private Date startedTime;
     private Date completedTime;
-    private Set<ProjectStageActivity> activities;
     private Date updateTime;
     private Integer updatedBy;
 
-    public Integer getProjectStageId() {
-        return projectStageId;
+    public Integer getProjectStageActivityTaskId() {
+        return projectStageActivityTaskId;
     }
 
-    public void setProjectStageId(Integer projectStageId) {
-        this.projectStageId = projectStageId;
+    public void setProjectStageActivityTaskId(Integer projectStageActivityTaskId) {
+        this.projectStageActivityTaskId = projectStageActivityTaskId;
     }
 
-    public Project getProject() {
-        return project;
+    public ProjectStageActivity getProjectStageActivity() {
+        return projectStageActivity;
     }
 
-    public void setProject(Project project) {
-        this.project = project;
+    public void setProjectStageActivity(ProjectStageActivity projectStageActivity) {
+        this.projectStageActivity = projectStageActivity;
     }
 
-    public Integer getProjectStageTypeId() {
-        return projectStageTypeId;
+    public String getName() {
+        return name;
     }
 
-    public void setProjectStageTypeId(Integer projectStageTypeId) {
-        this.projectStageTypeId = projectStageTypeId;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Integer getProjectStageStatusId() {
-        return projectStageStatusId;
+    public Volunteer getAssignedVolunteer() {
+        return assignedVolunteer;
     }
 
-    public void setProjectStageStatusId(Integer projectStageStatusId) {
-        this.projectStageStatusId = projectStageStatusId;
+    public void setAssignedVolunteer(Volunteer assignedVolunteer) {
+        this.assignedVolunteer = assignedVolunteer;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 
     public Date getCreatedTime() {
@@ -103,14 +110,6 @@ public class ProjectStage implements UpdateAuditable, Serializable {
         this.completedTime = completedTime;
     }
 
-    public Set<ProjectStageActivity> getActivities() {
-        return activities;
-    }
-
-    public void setActivities(Set<ProjectStageActivity> activities) {
-        this.activities = activities;
-    }
-
     @Override
     public Date getUpdateTime() {
         return updateTime;
@@ -131,6 +130,7 @@ public class ProjectStage implements UpdateAuditable, Serializable {
 
     @Override
     public String toString() {
-        return "ProjectStage#" + projectStageId;
+        return "ProjectStageActivityTask{" + "projectStageActivityTaskId=" + projectStageActivityTaskId + ", name="
+                + name + '}';
     }
 }

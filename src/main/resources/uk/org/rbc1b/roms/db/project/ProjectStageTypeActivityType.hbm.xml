@@ -24,21 +24,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -->
 <hibernate-mapping package="uk.org.rbc1b.roms.db.project">
-    <class name="ProjectStage" table="ProjectStage">
-        <id name="projectStageId">
+    <class name="ProjectStageTypeActivityType" table="ProjectStageTypeActivityType">
+        <id name="ProjectStageTypeActivityTypeId">
             <generator class="identity" />
         </id>
-        <many-to-one name="project" column="ProjectId" not-null="true" />
-        <property name="projectStageTypeId" not-null="true" />
-        <property name="projectStageStatusId" not-null="true" />
-        <property name="createdTime" not-null="true" />
-        <property name="startedTime" />
-        <property name="completedTime" />
 
-        <set name="activities" inverse="true" cascade="all-delete-orphan">
-            <key column="ProjectStageId" />
-            <one-to-many class="uk.org.rbc1b.roms.db.project.ProjectStageActivity" />
-        </set>
+        <property name="ProjectStageTypeId"  not-null="true" />
+        <property name="ProjectStageActivityTypeId"  not-null="true" />
 
         <property name="updateTime" not-null="true" />
         <property name="updatedBy" not-null="true" />

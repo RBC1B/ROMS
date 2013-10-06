@@ -80,7 +80,7 @@ public class HibernateProjectDao implements ProjectDao {
         List<ProjectStage> stages = criteria.list();
 
         for (ProjectStage stage : stages) {
-            Hibernate.initialize(stage.getTasks());
+            Hibernate.initialize(stage.getActivities());
         }
 
         criteria = session.createCriteria(ProjectStageOrder.class);

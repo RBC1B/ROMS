@@ -30,14 +30,14 @@ import uk.org.rbc1b.roms.db.UpdateAuditable;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 
 /**
- * Task involved in completing a project stage.
+ * Activity involved in completing a project stage.
  */
 @Audited
-public class ProjectStageTask implements UpdateAuditable, Serializable {
+public class ProjectStageActivity implements UpdateAuditable, Serializable {
     private static final long serialVersionUID = -2121305669657847928L;
-    private Integer projectStageTaskId;
+    private Integer projectStageActivityId;
+    private ProjectStageActivityType projectStageActivityType;
     private ProjectStage projectStage;
-    private String name;
     private Volunteer assignedVolunteer;
     private String comments;
     private Date createdTime;
@@ -46,12 +46,20 @@ public class ProjectStageTask implements UpdateAuditable, Serializable {
     private Date updateTime;
     private Integer updatedBy;
 
-    public Integer getProjectStageTaskId() {
-        return projectStageTaskId;
+    public Integer getProjectStageActivityId() {
+        return projectStageActivityId;
     }
 
-    public void setProjectStageTaskId(Integer projectStageTaskId) {
-        this.projectStageTaskId = projectStageTaskId;
+    public void setProjectStageActivityId(Integer projectStageActivityId) {
+        this.projectStageActivityId = projectStageActivityId;
+    }
+
+    public ProjectStageActivityType getProjectStageActivityType() {
+        return projectStageActivityType;
+    }
+
+    public void setProjectStageActivityType(ProjectStageActivityType projectStageActivityType) {
+        this.projectStageActivityType = projectStageActivityType;
     }
 
     public ProjectStage getProjectStage() {
@@ -60,14 +68,6 @@ public class ProjectStageTask implements UpdateAuditable, Serializable {
 
     public void setProjectStage(ProjectStage projectStage) {
         this.projectStage = projectStage;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Volunteer getAssignedVolunteer() {
@@ -130,6 +130,6 @@ public class ProjectStageTask implements UpdateAuditable, Serializable {
 
     @Override
     public String toString() {
-        return "ProjectStageTask{" + "projectStageTaskId=" + projectStageTaskId + ", name=" + name + '}';
+        return "ProjectStageActivity{" + "projectStageActivityId=" + projectStageActivityId + '}';
     }
 }

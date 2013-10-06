@@ -27,34 +27,42 @@ import java.io.Serializable;
 import java.util.Date;
 import org.hibernate.envers.Audited;
 import uk.org.rbc1b.roms.db.UpdateAuditable;
-import uk.org.rbc1b.roms.db.volunteer.department.Department;
 
 /**
- *
- * @author oliver.elder.esq
+ * Mapping of the project stage to the default activity types included.
  */
 @Audited
-public class Commentator implements UpdateAuditable, Serializable {
-    private static final long serialVersionUID = 5002905678394026063L;
-    private Integer commentatorId;
-    private Department department;
+public class ProjectStageTypeActivityType implements UpdateAuditable, Serializable {
+    private static final long serialVersionUID = 1L;
+
+    private Integer projectStageTypeActivityTypeId;
+    private Integer projectStageTypeId;
+    private Integer projectStageActivityTypeId;
     private Date updateTime;
     private Integer updatedBy;
 
-    public Integer getCommentatorId() {
-        return commentatorId;
+    public Integer getProjectStageTypeActivityTypeId() {
+        return projectStageTypeActivityTypeId;
     }
 
-    public void setCommentatorId(Integer commentatorId) {
-        this.commentatorId = commentatorId;
+    public void setProjectStageTypeActivityTypeId(Integer projectStageTypeActivityTypeId) {
+        this.projectStageTypeActivityTypeId = projectStageTypeActivityTypeId;
     }
 
-    public Department getDepartment() {
-        return department;
+    public Integer getProjectStageTypeId() {
+        return projectStageTypeId;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void setProjectStageTypeId(Integer projectStageTypeId) {
+        this.projectStageTypeId = projectStageTypeId;
+    }
+
+    public Integer getProjectStageActivityTypeId() {
+        return projectStageActivityTypeId;
+    }
+
+    public void setProjectStageActivityTypeId(Integer projectStageActivityTypeId) {
+        this.projectStageActivityTypeId = projectStageActivityTypeId;
     }
 
     @Override
@@ -75,8 +83,4 @@ public class Commentator implements UpdateAuditable, Serializable {
         this.updatedBy = updatedBy;
     }
 
-    @Override
-    public String toString() {
-        return "Commentator{" + "commentatorId=" + commentatorId + '}';
-    }
 }
