@@ -56,6 +56,11 @@ public class ProjectStageOrder implements UpdateAuditable, Serializable {
      * @param stageOrders stage orders, defining the stages
      */
     public static void sortProjectStages(List<ProjectStage> stages, List<ProjectStageOrder> stageOrders) {
+
+        if (stages.isEmpty()) {
+            return;
+        }
+
         ProjectStageComparator comparator = new ProjectStageComparator(stageOrders);
         Collections.sort(stages, comparator);
     }
