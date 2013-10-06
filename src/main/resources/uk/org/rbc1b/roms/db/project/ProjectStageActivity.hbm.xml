@@ -36,6 +36,8 @@ THE SOFTWARE.
         <property name="createdTime" not-null="true" />
         <property name="startedTime" />
         <property name="completedTime" />
+        <property name="projectedStart" />
+        <property name="projectedCompletion" />
 
         <property name="updateTime" not-null="true" />
         <property name="updatedBy" not-null="true" />

@@ -43,6 +43,8 @@ public class ProjectStage implements UpdateAuditable, Serializable {
     private Date createdTime;
     private Date startedTime;
     private Date completedTime;
+    private java.sql.Date projectedStart;
+    private java.sql.Date projectedCompletion;
     private Set<ProjectStageActivity> activities;
     private Date updateTime;
     private Integer updatedBy;
@@ -101,6 +103,22 @@ public class ProjectStage implements UpdateAuditable, Serializable {
 
     public void setCompletedTime(Date completedTime) {
         this.completedTime = completedTime;
+    }
+
+    public java.sql.Date getProjectedStart() {
+        return projectedStart;
+    }
+
+    public void setProjectedStart(java.sql.Date projectedStart) {
+        this.projectedStart = projectedStart;
+    }
+
+    public java.sql.Date getProjectedCompletion() {
+        return projectedCompletion;
+    }
+
+    public void setProjectedCompletion(java.sql.Date projectedCompletion) {
+        this.projectedCompletion = projectedCompletion;
     }
 
     public Set<ProjectStageActivity> getActivities() {
