@@ -92,9 +92,19 @@ public interface ReferenceDao {
     Map<Integer, String> findProjectStatusValues();
 
     /**
-     * @return ordered map of project type values
+     * @return ordered map of project stage event values
      */
     Map<Integer, String> findProjectStageEventTypeValues();
+
+    /**
+     * @return ordered map of project stage activity type values
+     */
+    Map<Integer, String> findProjectStageActivityEventTypeValues();
+
+    /**
+     * @return ordered map of project stage activity task type values
+     */
+    Map<Integer, String> findProjectStageActivityTaskEventTypeValues();
 
     /**
      * @return ordered map of rbc region values

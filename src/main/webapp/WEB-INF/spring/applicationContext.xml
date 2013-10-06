@@ -152,6 +152,12 @@ THE SOFTWARE.
                     <property name="name" value="reference.projectStageEventType" />
                 </bean>
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
+                    <property name="name" value="reference.projectStageActivityEventType" />
+                </bean>
+                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
+                    <property name="name" value="reference.projectStageActivityTaskEventType" />
+                </bean>
+                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
                     <property name="name" value="reference.rbcRegion" />
                 </bean>
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
