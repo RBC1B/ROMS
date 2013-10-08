@@ -13,7 +13,6 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="container-fluid">
             <h1>Congregations</h1>
             <hr>
             <div class="entity-list-results">
@@ -57,7 +56,7 @@
             </div>
             <sec:authorize access="hasPermission('CONG', 'ADD')">
                 <div class="entity-list-add-new">
-                    <a class="btn btn-primary" href="<c:url value="${newUri}" />">Create new congregation</a>
+                    <a class="btn btn-edifice" href="<c:url value="${newUri}" />">Create new congregation</a>
                 </div>
             </sec:authorize>
             <p>&nbsp;</p>
@@ -66,7 +65,6 @@
                 <li class="active">Congregations</li>
             </ul>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-        </div>
         <script type="text/javascript" src="<c:url value='/javascript/congregations.js' />" ></script>
     </body>
 </html>

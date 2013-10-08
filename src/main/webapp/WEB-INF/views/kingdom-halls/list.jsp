@@ -1,5 +1,5 @@
 <%--
-    Document   : kingdomhallShow
+    Document   : kingdomhallList
     Created on : 30-Jun-2012, 13:19:18
     Author     : oliver.elder.esq
 --%>
@@ -11,7 +11,6 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="container">
             <h1>Kingdom Halls</h1>
             <hr>
             <div class="entity-list-results">
@@ -43,7 +42,7 @@
                 </table>
             </div>
             <div class="entity-list-add-new">
-                <a class="btn btn-primary" href="<c:url value="${newUri}" />">Create new kingdom hall</a>
+                <a class="btn btn-edifice" href="<c:url value="${newUri}" />">Create new kingdom hall</a>
             </div>
             <p>&nbsp;</p>
             <ul class="breadcrumb">
@@ -51,7 +50,6 @@
                 <li class="active">Kingdom Halls</li>
             </ul>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-        </div>
         <script type="text/javascript" src="<c:url value='/javascript/kingdom-halls.js' />" ></script>
     </body>
 </html>

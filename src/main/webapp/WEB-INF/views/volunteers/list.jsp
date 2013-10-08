@@ -1,5 +1,5 @@
 <%--
-    Document   : list
+    Document   : VolunteersList
     Created on : 20-Sep-2012, 11:33:13
     Author     : rahulsingh
 --%>
@@ -12,7 +12,6 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="container-fluid">
             <h1>Volunteers</h1>
             <hr>
             <div class="entity-list-results">
@@ -33,7 +32,7 @@
                 </table>
             </div>
             <div class="entity-list-add-new">
-                <a class="btn btn-primary" href="<c:url value="${newUri}" />">Create new Volunteer</a>
+                <a class="btn btn-edifice" href="<c:url value="${newUri}" />">Create new Volunteer</a>
             </div>
             <p>&nbsp;</p>
             <ul class="breadcrumb">
@@ -41,7 +40,6 @@
                 <li class="active">Volunteers</li>
             </ul>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-        </div>
         <%@ include file="/WEB-INF/views/common/mustache-list-actions.jsp" %>
         <script type="text/javascript" src="<c:url value='/javascript/volunteers.js' />" ></script>
     </body>

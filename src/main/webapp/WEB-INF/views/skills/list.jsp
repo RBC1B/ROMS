@@ -1,5 +1,5 @@
 <%--
-    Document   : skills
+    Document   : skillsList
     Created on : 25 Jan 2013
     Author     : ramindur.singh
 --%>
@@ -13,7 +13,6 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="container-fluid">
             <h1>Skills</h1>
             <hr>
             <div class="entity-list-results">
@@ -58,7 +57,7 @@
             </div>
             <sec:authorize access="hasPermission('SKILL', 'ADD')">
                 <div class="entity-list-add-new">
-                    <a class="btn btn-primary" href="<c:url value="${newUri}" />">Create new departmental skills</a>
+                    <a class="btn btn-edifice" href="<c:url value="${newUri}" />">Create new departmental skills</a>
                 </div>
             </sec:authorize>
             <p>&nbsp;</p>
@@ -67,7 +66,6 @@
                 <li class="active">Skills</li>
             </ul>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-        </div>
         <script type="text/javascript" src="<c:url value='/javascript/skills.js' />" ></script>
     </body>
 </html>

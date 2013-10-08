@@ -1,5 +1,5 @@
 <%--
-    Document   : list
+    Document   : PeopleList
     Created on : 20-Sep-2012, 11:33:13
     Author     : rahulsingh
 --%>
@@ -12,7 +12,6 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="container">
             <h1>People</h1>
             <hr>
             <div class="entity-list-results">
@@ -35,7 +34,6 @@
                 <li class="active">Persons</li>
             </ul>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-        </div>
         <%@ include file="/WEB-INF/views/common/mustache-list-actions.jsp" %>
         <script type="text/javascript" src="<c:url value='/javascript/persons.js' />" ></script>
     </body>

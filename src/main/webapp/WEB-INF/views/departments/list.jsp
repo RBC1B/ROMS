@@ -1,5 +1,7 @@
 <%--
-  List the departments.
+    Document   : DepartmentlList
+    Created on : 30-Jun-2012, 13:19:18
+    Author     : oliver.elder.esq
 --%>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -10,7 +12,6 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="container-fluid">
             <h1>Departments</h1>
             <hr>
             <div class="entity-list-results">
@@ -53,7 +54,6 @@
                 <li class="active">Departments</li>
             </ul>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-        </div>
         <script type="text/javascript" src="<c:url value='/javascript/departments.js' />" ></script>
     </body>
 </html>

@@ -12,7 +12,6 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="container">
             <h1>Circuits</h1>
             <hr>
             <div class="entity-list-results">
@@ -41,7 +40,7 @@
                 </table>
             </div>
             <div class="entity-list-add-new">
-                <a class="btn btn-primary" href="<c:url value="/circuits/new" />">Create new circuit</a>
+                <a class="btn btn-edifice" href="<c:url value="/circuits/new" />">Create new circuit</a>
             </div>
             <p>&nbsp;</p>
             <ul class="breadcrumb">
@@ -49,7 +48,6 @@
                 <li class="active">Circuits</li>
             </ul>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-        </div>
         <script type="text/javascript" src="<c:url value='/javascript/circuits.js' />" ></script>
     </body>
 </html>
