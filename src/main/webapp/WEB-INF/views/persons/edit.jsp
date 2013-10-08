@@ -68,6 +68,15 @@
                     <input type="submit" class="btn btn-primary"/>
                 </div>
             </form:form>
+            
+            <ol class="breadcrumb">
+                <li><a href="<c:url value="/" />">Edifice</a></li>
+                <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
+                  <li><a href="<c:url value="/persons" />">Persons</a></li>
+                </sec:authorize>
+                <li class="active">Edit</li>
+            </ol>
+            
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
         <script type="text/javascript" src="<c:url value='/javascript/thirdparty/phoneformat-574.js' />" ></script>

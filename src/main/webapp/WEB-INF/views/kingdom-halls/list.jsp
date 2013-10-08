@@ -45,10 +45,10 @@
                 <a class="btn btn-edifice" href="<c:url value="${newUri}" />">Create new kingdom hall</a>
             </div>
             <p>&nbsp;</p>
-            <ul class="breadcrumb">
-                <li><a href="<c:url value="/" />">Edifice</a> <span class="divider">/</span></li>
+            <ol class="breadcrumb">
+                <li><a href="<c:url value="/" />">Edifice</a></li>
                 <li class="active">Kingdom Halls</li>
-            </ul>
+            </ol>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         <script type="text/javascript" src="<c:url value='/javascript/kingdom-halls.js' />" ></script>
     </body>

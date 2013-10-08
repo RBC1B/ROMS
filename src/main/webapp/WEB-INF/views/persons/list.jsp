@@ -29,10 +29,10 @@
                 </table>
             </div>
             <p>&nbsp;</p>
-            <ul class="breadcrumb">
-                <li><a href="<c:url value="/" />">Edifice</a> <span class="divider">/</span></li>
+            <ol class="breadcrumb">
+                <li><a href="<c:url value="/" />">Edifice</a></li>
                 <li class="active">Persons</li>
-            </ul>
+            </ol>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         <%@ include file="/WEB-INF/views/common/mustache-list-actions.jsp" %>
         <script type="text/javascript" src="<c:url value='/javascript/persons.js' />" ></script>

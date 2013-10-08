@@ -52,6 +52,15 @@
                 <a href="<c:url value='${qualification.editUri}' />" class="btn btn-edifice">Edit Qualification</a>
             </sec:authorize>
             <div class="clearfix"></div>
+            
+            <ol class="breadcrumb">
+                <li><a href="<c:url value="/" />">Edifice</a></li>
+                <sec:authorize access="hasPermission('SKILL', 'READ')">
+                  <li role="menuitem"><a href="<c:url value="/qualifications" />">Qualifications</a></li>
+                </sec:authorize>
+                <li class="active">${qualification.name}</li>
+            </ol>            
+            
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
        </div>
        <%@ include file="/WEB-INF/views/common/mustache-list-actions.jsp" %>

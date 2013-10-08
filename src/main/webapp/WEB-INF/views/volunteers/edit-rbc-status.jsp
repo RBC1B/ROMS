@@ -95,6 +95,15 @@ Edit form for the volunteer data under the rbc status tab.
                     <button type="submit" class="btn">Submit</button>
                 </fieldset>
             </form:form>
+            
+            <ol class="breadcrumb">
+                <li><a href="<c:url value="/" />">Edifice</a></li>
+                <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
+                  <li><a href="<c:url value="/volunteers" />">Volunteers</a></li>
+                </sec:authorize>
+                <li class="active">#${volunteer.id}: ${volunteer.displayName} Edit RBC Status</li>
+            </ol>           
+            
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
         <script type="text/javascript" src="<c:url value='/javascript/thirdparty/jquery-numeric-1.3.1.js' />" ></script>

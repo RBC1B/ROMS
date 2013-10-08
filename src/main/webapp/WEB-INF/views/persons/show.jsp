@@ -91,6 +91,14 @@
                 <a href="<c:url value='${person.editUri}' />" class="btn btn-edifice">Edit Person</a>
             </sec:authorize>
 
+            <ol class="breadcrumb">
+                <li><a href="<c:url value="/" />">Edifice</a></li>
+                <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
+                  <li><a href="<c:url value="/persons" />">Persons</a></li>
+                </sec:authorize>
+                <li class="active">#${person.id}: ${person.displayName}</li>
+            </ol>                
+                
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
         <script type="text/javascript" src="<c:url value='/javascript/persons.js' />" ></script>

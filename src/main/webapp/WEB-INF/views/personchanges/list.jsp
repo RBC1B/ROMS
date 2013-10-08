@@ -46,10 +46,10 @@
                 </table>
             </div>
             <p>&nbsp;</p>
-            <ul class="breadcrumb">
+            <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a> <span class="divider">/</span></li>
                 <li class="active">Person Information Change</li>
-            </ul>
+            </ol>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
         <script type="text/javascript" src="<c:url value='/javascript/personChange.js' />" ></script>

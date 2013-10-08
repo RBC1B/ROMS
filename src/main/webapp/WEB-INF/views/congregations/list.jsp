@@ -60,10 +60,10 @@
                 </div>
             </sec:authorize>
             <p>&nbsp;</p>
-            <ul class="breadcrumb">
-                <li><a href="<c:url value="/" />">Edifice</a> <span class="divider">/</span></li>
+            <ol class="breadcrumb">
+                <li><a href="<c:url value="/" />">Edifice</a></li>
                 <li class="active">Congregations</li>
-            </ul>
+            </ol>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         <script type="text/javascript" src="<c:url value='/javascript/congregations.js' />" ></script>
     </body>

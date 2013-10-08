@@ -55,6 +55,15 @@
             <div class="entity-list-add-new">
                 <a class="btn btn-edifice" href="<c:url value="${circuit.editUri}" />">Edit Circuit</a>
             </div>
+            
+            <ol class="breadcrumb">
+                <li><a href="<c:url value="/" />">Edifice</a></li>
+                <sec:authorize access="hasPermission('CIRCUIT', 'READ')">
+                   <li><a href="<c:url value="/circuits" />">Circuits</a></li>
+                </sec:authorize>
+                <li class="active">#${circuit.circuitId}: ${circuit.name}</li>
+            </ol> 
+            
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
         <script type="text/javascript" src="<c:url value='/javascript/circuits.js' />" ></script>
