@@ -10,7 +10,6 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="container">
             <h1>Projects</h1>
             <hr>
             <table class="table table-bordered table-condensed table-striped table-hover" id="project-list">
@@ -52,6 +51,5 @@
             </ul>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
             <script type="text/javascript" src="<c:url value='/javascript/projects.js' />" ></script>
-        </div>
     </body>
 </html>
