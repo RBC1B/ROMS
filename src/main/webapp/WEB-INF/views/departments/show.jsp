@@ -63,7 +63,7 @@
                 </div>
             </div>
             <sec:authorize access="hasPermission('PROJECT', 'EDIT')">
-                <a href="<c:url value='${department.editUri}' />" class="btn btn-primary">Edit Department</a>
+                <a href="<c:url value='${department.editUri}' />" class="btn btn-edifice">Edit Department</a>
             </sec:authorize>
             <div class="clearfix"></div>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>

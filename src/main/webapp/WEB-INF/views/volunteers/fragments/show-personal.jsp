@@ -73,7 +73,7 @@ The contents of the personal tab.
 </dd>
 </dl>
 <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
-    <a class="btn btn-primary" href="<c:url value='${volunteer.editPersonalUri}' />">Edit</a>
+    <a class="btn btn-edifice" href="<c:url value='${volunteer.editPersonalUri}' />">Edit</a>
 </sec:authorize>
 
 <h3>Emergency Contact</h3>

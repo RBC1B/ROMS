@@ -53,7 +53,7 @@
                 <c:otherwise>Not set</c:otherwise>
             </c:choose>
             <div class="entity-list-add-new">
-                <a class="btn btn-primary" href="<c:url value="${circuit.editUri}" />">Edit Circuit</a>
+                <a class="btn btn-edifice" href="<c:url value="${circuit.editUri}" />">Edit Circuit</a>
             </div>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>

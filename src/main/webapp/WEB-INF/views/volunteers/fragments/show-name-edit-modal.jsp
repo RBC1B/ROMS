@@ -22,7 +22,7 @@ Author: oliver.elder.esq
         </div>
         <div class="modal-footer">
             <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-            <button type="submit" class="btn btn-primary">Save changes</button>
+            <button type="submit" class="btn btn-edifice">Save changes</button>
         </div>
     </form>
 </div>

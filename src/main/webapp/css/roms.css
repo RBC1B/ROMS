@@ -13,7 +13,7 @@ body {
     padding: 0 20px;
     min-height: 100%!important;
 }
-.nav li a, .navbar li a {
+a, .nav li a, .navbar li a {
     color:#25aae1!important;
 }
 li a:hover, li a:focus {

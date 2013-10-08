@@ -34,7 +34,7 @@ Author: oliver.elder.esq
                     </form:select>
                 </fieldset>
                 <fieldset>
-                    <button type="submit" class="btn">Submit</button>
+                    <button type="submit" class="btn btn-success">Submit</button>
                 </fieldset>
             </form:form>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>

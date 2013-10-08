@@ -12,7 +12,7 @@
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
             <div class="media">
-                <img src="<c:url value='/images/oli-lion.jpg' />" class="media-object img-polaroid pull-left" alt="volunteer image" />
+                <img src="<c:url value='/images/oli-lion.jpg' />" class="media-object img-thumbnail pull-left" alt="volunteer image" />
                 <div class="media-body">
                     <div id="volunteer-name" class="a-edit-hover"
                          data-forename="${volunteer.forename}"
@@ -45,7 +45,7 @@
             <br />
             <c:choose>
                 <c:when test="${!empty assignments}">
-                    <a class="btn btn-primary" href="<c:url value="/volunteers/${volunteer.id}/rbc-${volunteer.id}-badge.pdf"/>">Generate Badge</a>
+                    <a class="btn btn-edifice" href="<c:url value="/volunteers/${volunteer.id}/rbc-${volunteer.id}-badge.pdf"/>">Generate Badge</a>
                 </c:when>
                 <c:otherwise>
                     <button class="btn" type="button" id="disabled-badge-button">Generate Badge</button><br />

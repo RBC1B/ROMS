@@ -72,7 +72,7 @@ Edit form for the volunteer data under the personal tab.
                 </div>
             </fieldset>
             <fieldset>
-                <button type="submit" class="btn">Submit</button>
+                <button type="submit" class="btn btn-success">Submit</button>
             </fieldset>
         </form:form>
         <%@ include file="/WEB-INF/views/common/footer.jsp"%>

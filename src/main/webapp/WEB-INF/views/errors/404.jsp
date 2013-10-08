@@ -9,7 +9,6 @@
     <c:set var="pageTitle" value="404" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
-        <div class="container">
             <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
             <div class="container">
                 <h1>We seem to have misplaced that one.</h1>
@@ -23,6 +22,5 @@
                 <hr/>
               </div>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-        </div>
     </body>
 </html>
