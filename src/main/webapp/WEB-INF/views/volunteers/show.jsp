@@ -112,7 +112,13 @@
                 </div>
             </div>
             <div class="clearfix"></div>
-
+            <ol class="breadcrumb">
+                <li><a href="<c:url value="/" />">Edifice</a></li>
+                <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
+                  <li><a href="<c:url value="/volunteers" />">Volunteers</a></li>
+                </sec:authorize>
+                <li class="active">#${volunteer.id}: ${volunteer.displayName}</li>
+            </ol>            
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
         <%@ include file="fragments/show-name-edit-modal.jsp" %>

@@ -22,7 +22,9 @@ li a:hover, li a:focus {
 .inline {
     list-style-type: none!important;
 }
-
+.breadcrumb {
+    margin-top:10px;
+}
 /* Now some styling for additional classes created for use throughout the site */
 
 .btn-edifice {

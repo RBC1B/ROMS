@@ -93,6 +93,15 @@
                 </fieldset>
             </div>
         </form:form>
+            
+            <ol class="breadcrumb">
+                <li><a href="<c:url value="/" />">Edifice</a></li>
+                <sec:authorize access="hasPermission('CIRCUIT', 'READ')">
+                   <li><a href="<c:url value="/circuits" />">Circuits</a></li>
+                </sec:authorize>
+                <li class="active">Edit</li>
+            </ol>            
+            
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 
         <!-- Mustache template for displaying the person link, use of mustaches {{}} -->
@@ -121,7 +130,8 @@
             <div class="modal-footer">
                 <a href="#" class="btn" data-dismiss="modal">Ignore</a>
             </div>
-        </div>
+        </div>  
+        
         <script type="text/javascript" src="<c:url value='/javascript/thirdparty/phoneformat-574.js' />" ></script>
         <script type="text/javascript" src="<c:url value='/javascript/circuits.js' />" ></script>
     </body>

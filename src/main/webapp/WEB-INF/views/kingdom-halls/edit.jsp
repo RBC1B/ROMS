@@ -60,6 +60,15 @@ Author     : oliver.elder.esq
                 </div>
                 <input type="submit" class="btn btn-primary"/>
             </form:form>
+                
+            <ol class="breadcrumb">
+                <li><a href="<c:url value="/" />">Edifice</a></li>
+                <sec:authorize access="hasPermission('KINGDOMHALL', 'READ')">
+                  <li role="menuitem"><a href="<c:url value="/kingdom-halls" />">Kingdom Halls</a></li>
+                </sec:authorize>
+                  <li class="active">Edit</li>
+            </ol>                
+                
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
         <script type="text/javascript" src="<c:url value='/javascript/kingdom-halls.js' />" ></script>

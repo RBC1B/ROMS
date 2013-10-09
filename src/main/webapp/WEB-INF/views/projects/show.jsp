@@ -112,7 +112,15 @@
                 </c:when>
                 <c:otherwise>No stages defined</c:otherwise>
             </c:choose>
-
+                
+            <ol class="breadcrumb">
+                <li><a href="<c:url value="/" />">Edifice</a></li>
+                <sec:authorize access="hasPermission('PROJECT', 'READ')">
+                  <li><a href="<c:url value="/projects" />">Projects</a></li>
+                </sec:authorize>
+                <li>#${project.projectId}: ${project.name}</li>
+            </ol>
+                
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
         <script type="text/javascript" src="<c:url value='/javascript/projects.js' />" ></script>

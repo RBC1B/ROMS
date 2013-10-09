@@ -45,10 +45,10 @@
                 </tbody>
             </table>
             <p>&nbsp;</p>
-            <ul class="breadcrumb">
-                <li><a href="<c:url value="/" />">Edifice</a> <span class="divider">/</span></li>
+            <ol class="breadcrumb">
+                <li><a href="<c:url value="/" />">Edifice</a></li>
                 <li class="active">Projects</li>
-            </ul>
+            </ol>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
             <script type="text/javascript" src="<c:url value='/javascript/projects.js' />" ></script>
     </body>
