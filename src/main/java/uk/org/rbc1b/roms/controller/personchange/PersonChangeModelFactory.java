@@ -23,6 +23,7 @@
  */
 package uk.org.rbc1b.roms.controller.personchange;
 
+import org.springframework.stereotype.Component;
 import uk.org.rbc1b.roms.db.PersonChange;
 
 /**
@@ -30,6 +31,7 @@ import uk.org.rbc1b.roms.db.PersonChange;
  *
  * @author ramindursingh
  */
+@Component
 public class PersonChangeModelFactory {
 
     private static final String BASE_URI = "/personchanges";
@@ -52,6 +54,33 @@ public class PersonChangeModelFactory {
      */
     public PersonChangeModel generatePersonChangeModel(PersonChange personChange) {
         PersonChangeModel model = new PersonChangeModel();
+        model.setPersonChangeId(personChange.getPersonChangeId());
+        model.setPersonId(personChange.getPersonId());
+
+        model.setOldForename(personChange.getOldForename());
+        model.setOldSurname(personChange.getOldSurname());
+        model.setOldStreet(personChange.getOldAddress().getStreet());
+        model.setOldTown(personChange.getOldAddress().getTown());
+        model.setOldCounty(personChange.getOldAddress().getCounty());
+        model.setOldPostcode(personChange.getOldAddress().getPostcode());
+        model.setOldEmail(personChange.getOldEmail());
+        model.setOldMobile(personChange.getOldMobile());
+        model.setOldTelephone(personChange.getOldTelephone());
+        model.setOldWorkPhone(personChange.getOldWorkPhone());
+
+        model.setNewForename(personChange.getNewForename());
+        model.setNewSurname(personChange.getNewSurname());
+        model.setNewStreet(personChange.getNewAddress().getStreet());
+        model.setNewTown(personChange.getNewAddress().getTown());
+        model.setNewCounty(personChange.getNewAddress().getCounty());
+        model.setNewPostcode(personChange.getNewAddress().getPostcode());
+        model.setNewEmail(personChange.getNewEmail());
+        model.setNewMobile(personChange.getNewMobile());
+        model.setNewTelephone(personChange.getNewTelephone());
+        model.setNewWorkPhone(personChange.getNewWorkPhone());
+
+        model.setUpdateUri(generatorUri(personChange.getPersonChangeId()) + "/update");
+
         return model;
     }
 }

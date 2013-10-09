@@ -27,7 +27,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.*;
 import uk.org.rbc1b.roms.db.*;
 import org.springframework.ui.ModelMap;
+import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Control access to PersonChange table.
@@ -39,6 +41,7 @@ import java.util.List;
 public class PersonChangeController {
 
     private PersonChangeDao personChangeDao;
+    private PersonChangeModelFactory personChangeModelFactory;
 
     /**
      * Display the list of changes made to person table.
@@ -48,7 +51,32 @@ public class PersonChangeController {
      */
     @RequestMapping(method = RequestMethod.GET)
     public String showPersonChangeList(ModelMap model) {
-        List<PersonChange> personchanges = personChangeDao.findPersonChangeNotUpdated();
-        return "personchanges/list";
+        List<PersonChange> personChanges = personChangeDao.findPersonChangeNotUpdated();
+        List<PersonChangeModel> modelList = new ArrayList<PersonChangeModel>();
+
+        if (personChanges == null || personChanges.isEmpty()) {
+            return "personchanges/list";
+        } else {
+            for (PersonChange personChange : personChanges) {
+                modelList.add(personChangeModelFactory.generatePersonChangeModel(personChange));
+            }
+            model.addAttribute("personchanges", modelList);
+
+            return "personchanges/list";
+        }
+
+    }
+
+    /**
+     * @param personChangeDao the personChangeDao to set
+     */
+    @Autowired
+    public void setPersonChangeDao(PersonChangeDao personChangeDao) {
+        this.personChangeDao = personChangeDao;
+    }
+
+    @Autowired
+    public void setPersonChangeModelFactory(PersonChangeModelFactory personChangeModelFactory) {
+        this.personChangeModelFactory = personChangeModelFactory;
     }
 }

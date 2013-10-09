@@ -25,6 +25,7 @@ package uk.org.rbc1b.roms.db;
 
 import java.util.List;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Add/update/search PersonChange table.
@@ -40,6 +41,7 @@ public interface PersonChangeDao {
      * @return PersonChange, or null
      */
     @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
+    @Transactional
     PersonChange findPersonChange(Integer personChangeId);
 
     /**
@@ -49,15 +51,26 @@ public interface PersonChangeDao {
      * @return list of person changes
      */
     @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
+    @Transactional
     List<PersonChange> findPersonChanges(Integer personId);
 
     /**
      * Look up the changes for which the paper work have not been updated.
      *
-     * @return lit of personchange
+     * @return list of personchange
      */
     @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
+    @Transactional
     List<PersonChange> findPersonChangeNotUpdated();
+
+    /**
+     * Find all changes.
+     *
+     * @return list of person changes
+     */
+    @PreAuthorize("hasPermission('VOLUNTEER','READ')")
+    @Transactional
+    List<PersonChange> findPersonChange();
 
     /**
      * Update the PersonChange when the paperwork has been updated.
@@ -65,5 +78,26 @@ public interface PersonChangeDao {
      * @param personChange to update
      */
     @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
+    @Transactional
     void updatePersonChange(PersonChange personChange);
+
+    /**
+     * Save the PersonChange date.
+     *
+     * @param personChange to save
+     */
+    @PreAuthorize("hasPermission('VOLUNTEER','EDIT')")
+    @Transactional
+    void savePersonChange(PersonChange personChange);
+
+    /**
+     * Gets the old person.
+     *
+     * @param personId the person to find
+     * @param oldPerson to clear from cache
+     * @return Person old person
+     */
+    @PreAuthorize("hasPermission('VOLUNTEER','READ')")
+    @Transactional
+    Person getOldPerson(Integer personId, Person oldPerson);
 }

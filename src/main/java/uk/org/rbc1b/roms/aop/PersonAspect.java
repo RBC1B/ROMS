@@ -26,10 +26,12 @@ package uk.org.rbc1b.roms.aop;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import uk.org.rbc1b.roms.db.Person;
+import org.springframework.beans.factory.annotation.Autowired;
+import uk.org.rbc1b.roms.db.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.org.rbc1b.roms.controller.LoggingHandlerExceptionResolver;
+import java.sql.Date;
 
 /**
  *
@@ -39,6 +41,7 @@ import uk.org.rbc1b.roms.controller.LoggingHandlerExceptionResolver;
 public class PersonAspect {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggingHandlerExceptionResolver.class);
+    private PersonChangeDao personChangeDao;
 
     /**
      * Pointcut definition for Person table.
@@ -57,7 +60,35 @@ public class PersonAspect {
      */
     @Before("personChange(person)")
     public void capturePersonChange(Person person) {
-        // Still to do lots here...
         LOGGER.error("Captured updatePerson. ID:" + person.getPersonId() + "; Name:" + person.getForename() + " " + person.getSurname() + ".");
+        Person oldPerson = this.personChangeDao.getOldPerson(person.getPersonId(), person);
+        PersonChange personChange = new PersonChange();
+        personChange.setPersonId(person.getPersonId());
+        personChange.setNewForename(person.getForename());
+        personChange.setNewSurname(person.getSurname());
+        personChange.setNewAddress(person.getAddress());
+        personChange.setNewEmail(person.getEmail());
+        personChange.setNewTelephone(person.getTelephone());
+        personChange.setNewMobile(person.getMobile());
+        personChange.setNewWorkPhone(person.getWorkPhone());
+        personChange.setOldForename(oldPerson.getForename());
+        personChange.setOldSurname(oldPerson.getSurname());
+        personChange.setOldAddress(oldPerson.getAddress());
+        personChange.setOldEmail(oldPerson.getEmail());
+        personChange.setOldTelephone(oldPerson.getTelephone());
+        personChange.setOldMobile(oldPerson.getMobile());
+        personChange.setOldWorkPhone(oldPerson.getWorkPhone());
+        java.util.Calendar calendar = java.util.Calendar.getInstance();
+        personChange.setChangeDate(new Date(calendar.getTimeInMillis()));
+        personChange.setFormUpdated(false);
+        this.personChangeDao.savePersonChange(personChange);
+    }
+
+    /**
+     * @param personChangeDao the personChangeDao to set
+     */
+    @Autowired
+    public void setPersonChangeDao(PersonChangeDao personChangeDao) {
+        this.personChangeDao = personChangeDao;
     }
 }

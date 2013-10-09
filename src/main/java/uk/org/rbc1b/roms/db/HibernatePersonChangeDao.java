@@ -39,7 +39,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class HibernatePersonChangeDao implements PersonChangeDao {
 
-    @Autowired
     private SessionFactory sessionFactory;
 
     @SuppressWarnings("unchecked")
@@ -66,13 +65,39 @@ public class HibernatePersonChangeDao implements PersonChangeDao {
 
     @SuppressWarnings("unchecked")
     @Override
+    public List<PersonChange> findPersonChange() {
+        Session session = this.sessionFactory.getCurrentSession();
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(PersonChange.class);
+        return criteria.list();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
     public void updatePersonChange(PersonChange personChange) {
         this.sessionFactory.getCurrentSession().merge(personChange);
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public void savePersonChange(PersonChange personChange) {
+        this.sessionFactory.getCurrentSession().save(personChange);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Person getOldPerson(Integer personId, Person person) {
+        Session session = this.sessionFactory.openSession();
+        session.evict(person);
+        Person oldPerson = (Person) session.get(Person.class, personId);
+        session.close();
+        return oldPerson;
+    }
+
     /**
+     *
      * @param sessionFactory the sessionFactory to set
      */
+    @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }

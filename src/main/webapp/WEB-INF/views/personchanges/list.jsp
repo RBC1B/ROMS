@@ -24,20 +24,120 @@
                             <th>Person ID</th>
                             <th>Surname</th>
                             <th>Forename</th>
+                            <th>Address</th>
                             <th>Email</th>
+                            <th>Mobile</th>
+                            <th>Telephone</th>
+                            <th>Work Phone</th>
                             <th>Forms Updated</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach items="${personChanges}" var="personChange">
+                        <c:forEach items="${personchanges}" var="personchange">
                             <tr>
-                                <td>${personChange.personChangeId}</td>
-                                <td>${personChange.surname}</a></td>
-                                <td>${personChange.forename}</td>
-                                <td>${personChange.email}</td>
+                                <td>
+                                    ${personchange.personId}
+                                </td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test = "${personchange.oldSurname eq personchange.newSurname}">
+                                            ${personchange.oldSurname}
+                                        </c:when>
+                                        <c:otherwise>
+                                            <font color="red">${personchange.newSurname}</font>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test = "${personchange.oldForename eq personchange.newForename}">
+                                            ${personchange.oldForename}
+                                        </c:when>
+                                        <c:otherwise>
+                                            <font color="red">${personchange.newForename}</font>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test = "${personchange.oldStreet eq personchange.newStreet}">
+                                            ${personchange.oldStreet}
+                                        </c:when>
+                                        <c:otherwise>
+                                            <font color="red">${personchange.newStreet}</font>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <br />
+                                    <c:choose>
+                                        <c:when test = "${personchange.oldTown eq personchange.newTown}">
+                                            ${personchange.oldTown}
+                                        </c:when>
+                                        <c:otherwise>
+                                            <font color="red">${personchange.newTown}</font>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <br />
+                                    <c:choose>
+                                        <c:when test = "${personchange.oldCounty eq personchange.newCounty}">
+                                            ${personchange.oldCounty}
+                                        </c:when>
+                                        <c:otherwise>
+                                            <font color="red">${personchange.newCounty}</font>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <br />
+                                    <c:choose>
+                                        <c:when test = "${personchange.oldPostcode eq personchange.newPostcode}">
+                                            ${personchange.oldPostcode}
+                                        </c:when>
+                                        <c:otherwise>
+                                            <font color="red">${personchange.newPostcode}</font>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test = "${personchange.oldEmail eq personchange.newEmail}">
+                                            ${personchange.oldEmail}
+                                        </c:when>
+                                        <c:otherwise>
+                                            <font color="red">${personchange.newEmail}</font>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test = "${personchange.oldMobile eq personchange.newMobile}">
+                                            ${personchange.oldMobile}
+                                        </c:when>
+                                        <c:otherwise>
+                                            <font color="red">${personchange.newMobile}</font>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test = "${personchange.oldTelephone eq personchange.newTelephone}">
+                                            ${personchange.oldTelephone}
+                                        </c:when>
+                                        <c:otherwise>
+                                            <font color="red">${personchange.newTelephone}</font>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test = "${personchange.oldWorkPhone eq personchange.newWorkPhone}">
+                                            ${personchange.oldWorkPhone}
+                                        </c:when>
+                                        <c:otherwise>
+                                            <font color="red">${personchange.newWorkPhone}</font>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
                                 <td>
                                     <ul class="list-inline">
-                                        <li><a class="list-action" href="<c:url value="${personChange.editUri}" />">Paper Work Updated</a></li>
+                                        <li><a class="list-action" href="<c:url value="${personchange.updateUri}" />">Paper Work Updated</a></li>
                                     </ul>
                                 </td>
                             </tr>

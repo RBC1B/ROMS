@@ -30,15 +30,28 @@ package uk.org.rbc1b.roms.controller.personchange;
 public class PersonChangeModel {
 
     private Integer personChangeId;
-    private String surname;
-    private String forename;
-    private String street;
-    private String town;
-    private String county;
-    private String postcode;
-    private String telephone;
-    private String mobile;
-    private String email;
+    private Integer personId;
+    private String oldSurname;
+    private String oldForename;
+    private String oldStreet;
+    private String oldTown;
+    private String oldCounty;
+    private String oldPostcode;
+    private String oldTelephone;
+    private String oldWorkPhone;
+    private String oldMobile;
+    private String oldEmail;
+    private String newSurname;
+    private String newForename;
+    private String newStreet;
+    private String newTown;
+    private String newCounty;
+    private String newPostcode;
+    private String newTelephone;
+    private String newWorkPhone;
+    private String newMobile;
+    private String newEmail;
+    private String updateUri;
 
     /**
      * @return the personChangeId
@@ -55,128 +68,310 @@ public class PersonChangeModel {
     }
 
     /**
-     * @return the surname
+     * @return the personId
      */
-    public String getSurname() {
-        return surname;
+    public Integer getPersonId() {
+        return personId;
     }
 
     /**
-     * @param surname the surname to set
+     * @param personId the personId to set
      */
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setPersonId(Integer personId) {
+        this.personId = personId;
     }
 
     /**
-     * @return the forename
+     * @return the oldSurname
      */
-    public String getForename() {
-        return forename;
+    public String getOldSurname() {
+        return oldSurname;
     }
 
     /**
-     * @param forename the forename to set
+     * @param oldSurname the oldSurname to set
      */
-    public void setForename(String forename) {
-        this.forename = forename;
+    public void setOldSurname(String oldSurname) {
+        this.oldSurname = oldSurname;
     }
 
     /**
-     * @return the street
+     * @return the oldForename
      */
-    public String getStreet() {
-        return street;
+    public String getOldForename() {
+        return oldForename;
     }
 
     /**
-     * @param street the street to set
+     * @param oldForename the oldForename to set
      */
-    public void setStreet(String street) {
-        this.street = street;
+    public void setOldForename(String oldForename) {
+        this.oldForename = oldForename;
     }
 
     /**
-     * @return the town
+     * @return the oldStreet
      */
-    public String getTown() {
-        return town;
+    public String getOldStreet() {
+        return oldStreet;
     }
 
     /**
-     * @param town the town to set
+     * @param oldStreet the oldStreet to set
      */
-    public void setTown(String town) {
-        this.town = town;
+    public void setOldStreet(String oldStreet) {
+        this.oldStreet = oldStreet;
     }
 
     /**
-     * @return the county
+     * @return the oldTown
      */
-    public String getCounty() {
-        return county;
+    public String getOldTown() {
+        return oldTown;
     }
 
     /**
-     * @param county the county to set
+     * @param oldTown the oldTown to set
      */
-    public void setCounty(String county) {
-        this.county = county;
+    public void setOldTown(String oldTown) {
+        this.oldTown = oldTown;
     }
 
     /**
-     * @return the postcode
+     * @return the oldCounty
      */
-    public String getPostcode() {
-        return postcode;
+    public String getOldCounty() {
+        return oldCounty;
     }
 
     /**
-     * @param postcode the postcode to set
+     * @param oldCounty the oldCounty to set
      */
-    public void setPostcode(String postcode) {
-        this.postcode = postcode;
+    public void setOldCounty(String oldCounty) {
+        this.oldCounty = oldCounty;
     }
 
     /**
-     * @return the telephone
+     * @return the oldPostcode
      */
-    public String getTelephone() {
-        return telephone;
+    public String getOldPostcode() {
+        return oldPostcode;
     }
 
     /**
-     * @param telephone the telephone to set
+     * @param oldPostcode the oldPostcode to set
      */
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
+    public void setOldPostcode(String oldPostcode) {
+        this.oldPostcode = oldPostcode;
     }
 
     /**
-     * @return the mobile
+     * @return the oldTelephone
      */
-    public String getMobile() {
-        return mobile;
+    public String getOldTelephone() {
+        return oldTelephone;
     }
 
     /**
-     * @param mobile the mobile to set
+     * @param oldTelephone the oldTelephone to set
      */
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setOldTelephone(String oldTelephone) {
+        this.oldTelephone = oldTelephone;
     }
 
     /**
-     * @return the email
+     * @return the oldWorkPhone
      */
-    public String getEmail() {
-        return email;
+    public String getOldWorkPhone() {
+        return oldWorkPhone;
     }
 
     /**
-     * @param email the email to set
+     * @param oldWorkPhone the oldWorkPhone to set
      */
-    public void setEmail(String email) {
-        this.email = email;
+    public void setOldWorkPhone(String oldWorkPhone) {
+        this.oldWorkPhone = oldWorkPhone;
+    }
+
+    /**
+     * @return the oldMobile
+     */
+    public String getOldMobile() {
+        return oldMobile;
+    }
+
+    /**
+     * @param oldMobile the oldMobile to set
+     */
+    public void setOldMobile(String oldMobile) {
+        this.oldMobile = oldMobile;
+    }
+
+    /**
+     * @return the oldEmail
+     */
+    public String getOldEmail() {
+        return oldEmail;
+    }
+
+    /**
+     * @param oldEmail the oldEmail to set
+     */
+    public void setOldEmail(String oldEmail) {
+        this.oldEmail = oldEmail;
+    }
+
+    /**
+     * @return the newSurname
+     */
+    public String getNewSurname() {
+        return newSurname;
+    }
+
+    /**
+     * @param newSurname the newSurname to set
+     */
+    public void setNewSurname(String newSurname) {
+        this.newSurname = newSurname;
+    }
+
+    /**
+     * @return the newForename
+     */
+    public String getNewForename() {
+        return newForename;
+    }
+
+    /**
+     * @param newForename the newForename to set
+     */
+    public void setNewForename(String newForename) {
+        this.newForename = newForename;
+    }
+
+    /**
+     * @return the newStreet
+     */
+    public String getNewStreet() {
+        return newStreet;
+    }
+
+    /**
+     * @param newStreet the newStreet to set
+     */
+    public void setNewStreet(String newStreet) {
+        this.newStreet = newStreet;
+    }
+
+    /**
+     * @return the newTown
+     */
+    public String getNewTown() {
+        return newTown;
+    }
+
+    /**
+     * @param newTown the newTown to set
+     */
+    public void setNewTown(String newTown) {
+        this.newTown = newTown;
+    }
+
+    /**
+     * @return the newCounty
+     */
+    public String getNewCounty() {
+        return newCounty;
+    }
+
+    /**
+     * @param newCounty the newCounty to set
+     */
+    public void setNewCounty(String newCounty) {
+        this.newCounty = newCounty;
+    }
+
+    /**
+     * @return the newPostcode
+     */
+    public String getNewPostcode() {
+        return newPostcode;
+    }
+
+    /**
+     * @param newPostcode the newPostcode to set
+     */
+    public void setNewPostcode(String newPostcode) {
+        this.newPostcode = newPostcode;
+    }
+
+    /**
+     * @return the newTelephone
+     */
+    public String getNewTelephone() {
+        return newTelephone;
+    }
+
+    /**
+     * @param newTelephone the newTelephone to set
+     */
+    public void setNewTelephone(String newTelephone) {
+        this.newTelephone = newTelephone;
+    }
+
+    /**
+     * @return the newWorkPhone
+     */
+    public String getNewWorkPhone() {
+        return newWorkPhone;
+    }
+
+    /**
+     * @param newWorkPhone the newWorkPhone to set
+     */
+    public void setNewWorkPhone(String newWorkPhone) {
+        this.newWorkPhone = newWorkPhone;
+    }
+
+    /**
+     * @return the newMobile
+     */
+    public String getNewMobile() {
+        return newMobile;
+    }
+
+    /**
+     * @param newMobile the newMobile to set
+     */
+    public void setNewMobile(String newMobile) {
+        this.newMobile = newMobile;
+    }
+
+    /**
+     * @return the newEmail
+     */
+    public String getNewEmail() {
+        return newEmail;
+    }
+
+    /**
+     * @param newEmail the newEmail to set
+     */
+    public void setNewEmail(String newEmail) {
+        this.newEmail = newEmail;
+    }
+
+    /**
+     * @return the updateUri
+     */
+    public String getUpdateUri() {
+        return updateUri;
+    }
+
+    /**
+     * @param updateUri the updateUri to set
+     */
+    public void setUpdateUri(String updateUri) {
+        this.updateUri = updateUri;
     }
 }
