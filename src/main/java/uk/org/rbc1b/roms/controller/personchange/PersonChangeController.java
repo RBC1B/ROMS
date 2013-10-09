@@ -23,13 +23,17 @@
  */
 package uk.org.rbc1b.roms.controller.personchange;
 
-import org.springframework.web.bind.annotation.*;
-import org.springframework.stereotype.*;
-import uk.org.rbc1b.roms.db.*;
+import org.springframework.stereotype.Controller;
+import uk.org.rbc1b.roms.db.PersonChangeDao;
+import uk.org.rbc1b.roms.db.PersonChange;
 import org.springframework.ui.ModelMap;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 
 /**
  * Control access to PersonChange table.
@@ -65,6 +69,26 @@ public class PersonChangeController {
             return "personchanges/list";
         }
 
+    }
+
+    /**
+     * Updates a personChange by setting the updated form to true.
+     *
+     * @param personChangeId the row to update
+     * @return redirect to the list page
+     * @throws NoSuchRequestHandlingMethodException on failure to find the row
+     */
+    @RequestMapping(value = "{personChangeId}/update", method = RequestMethod.GET)
+    public String updatePersonChange(@PathVariable Integer personChangeId)
+            throws NoSuchRequestHandlingMethodException {
+        PersonChange personChange = personChangeDao.findPersonChange(personChangeId);
+        if (personChange != null) {
+            personChange.setFormUpdated(true);
+            personChangeDao.updatePersonChange(personChange);
+        } else {
+            throw new NoSuchRequestHandlingMethodException("No personChange #" + personChangeId, this.getClass());
+        }
+        return "redirect:/personchanges";
     }
 
     /**

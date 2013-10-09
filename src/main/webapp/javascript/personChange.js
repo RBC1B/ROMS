@@ -22,35 +22,6 @@
  * THE SOFTWARE.
  */
 $(document).ready(function() {
-    $.validator.addMethod("phoneNumber", roms.common.validatorPhoneNumber, "Please enter a valid phone number");
-    $.validator.addMethod("mobilePhoneNumber", roms.common.validatorMobilePhoneNumber, "Please enter a valid mobile phone number");
-    $("#personchange").validate({
-        rules: {
-            forename: {
-                minlength: 2,
-                required: true
-            },
-            surname: {
-                minlength: 2,
-                required: true
-            },
-            email: {
-                email: true
-            },
-            telephone: {
-                phoneNumber: true
-            },
-            mobile: {
-                phoneNumber: true,
-                mobilePhoneNumber: true
-            },
-            workphone: {
-                phoneNumber: true
-            }
-        },
-        errorPlacement: roms.common.validatorErrorPlacement
-    });
-
     // list
     var listActionTemplate = $("#list-action").html();
 
@@ -60,7 +31,6 @@ $(document).ready(function() {
                 "iDisplayLength": 10,
                 "bProcessing": true,
                 "bServerSide": true,
-                "sAjaxSource": roms.common.relativePath + '/personchange',
                 "aoColumns": [
                     {"sName": "forename", "mData": "forename"},
                     {"sName": "surname", "mData": "surname"},
