@@ -62,6 +62,7 @@ public class KingdomHallsController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggingHandlerExceptionResolver.class);
     private KingdomHallDao kingdomHallDao;
+    private KingdomHallModelFactory kingdomHallModelFactory;
     private ReferenceDao referenceDao;
     private CongregationDao congregationDao;
     private CongregationModelFactory congregationModelFactory;
@@ -74,7 +75,8 @@ public class KingdomHallsController {
      */
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=text/html")
     public String showKingdomHallList(ModelMap model) {
-        model.addAttribute("kingdomHalls", createKingdomHallListModels(kingdomHallDao.findKingdomHalls()));
+        model.addAttribute("kingdomHalls", kingdomHallModelFactory.generateKingdomHallListModels(kingdomHallDao
+                .findKingdomHalls()));
         model.addAttribute("newUri", KingdomHallModelFactory.generateUri(null) + "/new");
 
         return "kingdom-halls/list";
@@ -152,8 +154,10 @@ public class KingdomHallsController {
         if (kingdomHall.getTitleHolder() != null) {
             Congregation titleHoldingCongregation = congregationDao.findCongregation(kingdomHall.getTitleHolder()
                     .getCongregationId());
-            kingdomHallModel.setTitleHolderCongregationId(titleHoldingCongregation.getCongregationId());
-            kingdomHallModel.setTitleHolderCongregationName(titleHoldingCongregation.getName());
+            /**
+             * kingdomHallModel.setTitleHolderCongregationId(titleHoldingCongregation.getCongregationId());
+             * kingdomHallModel.setTitleHolderCongregationName(titleHoldingCongregation.getName());
+             */
         }
 
         model.addAttribute("kingdomHallForm", kingdomHallModel);
@@ -253,7 +257,7 @@ public class KingdomHallsController {
             KingdomHallListModel model = new KingdomHallListModel();
             model.setKingdomHallId(hall.getKingdomHallId());
             model.setName(hall.getName());
-            model.setPostCode(hall.getAddress().getPostcode());
+            model.setPostcode(hall.getAddress().getPostcode());
             model.setTown(hall.getAddress().getTown());
             model.setUri(KingdomHallModelFactory.generateUri(hall.getKingdomHallId()));
             model.setEditUri(KingdomHallModelFactory.generateUri(hall.getKingdomHallId()) + "/edit");
@@ -306,5 +310,10 @@ public class KingdomHallsController {
     @Autowired
     public void setReferenceDao(ReferenceDao referenceDao) {
         this.referenceDao = referenceDao;
+    }
+
+    @Autowired
+    public void setKingdomHallModelFactory(KingdomHallModelFactory kingdomHallModelFactory) {
+        this.kingdomHallModelFactory = kingdomHallModelFactory;
     }
 }

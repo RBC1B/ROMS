@@ -23,49 +23,10 @@
  */
 package uk.org.rbc1b.roms.controller.kingdomhall;
 
-import uk.org.rbc1b.roms.controller.common.model.EntityModel;
-
 /**
- * Model representing congregation details create.
+ * Kingdom Hall form bean for creating/editing a kingdom hall.
  *
- * @author oliver.elder.esq
+ * @author rahulsingh
  */
-public class KingdomHallModel extends KingdomHallListModel {
-
-    private String county;
-    private Integer ownershipTypeId;
-    private String drawings;
-    private EntityModel titleHoldingCongregation;
-
-    public String getCounty() {
-        return county;
-    }
-
-    public void setCounty(String county) {
-        this.county = county;
-    }
-
-    public Integer getOwnershipTypeId() {
-        return ownershipTypeId;
-    }
-
-    public void setOwnershipTypeId(Integer ownershipTypeId) {
-        this.ownershipTypeId = ownershipTypeId;
-    }
-
-    public String getDrawings() {
-        return drawings;
-    }
-
-    public void setDrawings(String drawings) {
-        this.drawings = drawings;
-    }
-
-    public EntityModel getTitleHoldingCongregation() {
-        return titleHoldingCongregation;
-    }
-
-    public void setTitleHoldingCongregation(EntityModel titleHoldingCongregation) {
-        this.titleHoldingCongregation = titleHoldingCongregation;
-    }
+public class KingdomHallForm {
 }

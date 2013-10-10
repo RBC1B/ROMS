@@ -18,6 +18,7 @@
                     <thead>
                         <tr>
                             <th>Name</th>
+                            <th>Street</th>
                             <th>Town</th>
                             <th>Post Code</th>
                             <th>Action</th>
@@ -27,8 +28,9 @@
                         <c:forEach items="${kingdomHalls}" var="kingdomHall">
                             <tr>
                                 <td>${kingdomHall.name}</td>
+                                <td>${kingdomHall.street}</td>
                                 <td>${kingdomHall.town}</td>
-                                <td>${kingdomHall.postCode}</td>
+                                <td>${kingdomHall.postcode}</td>
                                 <td>
                                     <ul class="list-inline">
                                         <li><a class="btn btn-success" href="<c:url value="${kingdomHall.uri}" />">View</a></li>

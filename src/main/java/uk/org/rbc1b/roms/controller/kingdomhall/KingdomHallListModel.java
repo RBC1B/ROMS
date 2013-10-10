@@ -33,8 +33,9 @@ public class KingdomHallListModel {
     private String editUri;
     private Integer kingdomHallId;
     private String name;
+    private String street;
     private String town;
-    private String postCode;
+    private String postcode;
     private String uri;
 
     public String getEditUri() {
@@ -61,12 +62,12 @@ public class KingdomHallListModel {
         this.name = name;
     }
 
-    public String getPostCode() {
-        return postCode;
+    public String getPostcode() {
+        return postcode;
     }
 
-    public void setPostCode(String postCode) {
-        this.postCode = postCode;
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
     }
 
     public String getTown() {
@@ -83,5 +84,13 @@ public class KingdomHallListModel {
 
     public void setUri(String uri) {
         this.uri = uri;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
     }
 }
