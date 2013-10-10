@@ -20,6 +20,8 @@
                             <address>
                                 <c:if test="${!empty kingdomHall.address.street}">${kingdomHall.address.street}<br /></c:if>
                                 <c:if test="${!empty kingdomHall.address.town}">${kingdomHall.address.town}<br /></c:if>
+                                <c:if test="${!empty kingdomHall.address.county}">${kingdomHall.address.county}<br /></c:if>
+                                <c:if test="${!empty kingdomHall.address.postcode}">${kingdomHall.address.postcode}<br /></c:if>
                             </address>
                         </dd>
                     </c:when>
