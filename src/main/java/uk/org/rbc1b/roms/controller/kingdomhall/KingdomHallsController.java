@@ -135,28 +135,28 @@ public class KingdomHallsController {
             throw new NoSuchRequestHandlingMethodException("No kingdom hall #" + kingdomHallId, this.getClass());
         }
 
-        KingdomHallForm kingdomHallForm = new KingdomHallForm();
-        kingdomHallForm.setKingdomHallId(kingdomHall.getKingdomHallId());
-        kingdomHallForm.setName(kingdomHall.getName());
+        KingdomHallModel kingdomHallModel = new KingdomHallModel();
+        kingdomHallModel.setKingdomHallId(kingdomHall.getKingdomHallId());
+        kingdomHallModel.setName(kingdomHall.getName());
 
         if (kingdomHall.getAddress() != null) {
-            kingdomHallForm.setStreet(kingdomHall.getAddress().getStreet());
-            kingdomHallForm.setTown(kingdomHall.getAddress().getTown());
-            kingdomHallForm.setCounty(kingdomHall.getAddress().getCounty());
-            kingdomHallForm.setPostcode(kingdomHall.getAddress().getPostcode());
+            kingdomHallModel.setStreet(kingdomHall.getAddress().getStreet());
+            kingdomHallModel.setTown(kingdomHall.getAddress().getTown());
+            kingdomHallModel.setCounty(kingdomHall.getAddress().getCounty());
+            kingdomHallModel.setPostcode(kingdomHall.getAddress().getPostcode());
         }
 
-        kingdomHallForm.setOwnershipTypeId(kingdomHall.getOwnershipTypeId());
-        kingdomHallForm.setDrawings(kingdomHall.getDrawings());
+        kingdomHallModel.setOwnershipTypeId(kingdomHall.getOwnershipTypeId());
+        kingdomHallModel.setDrawings(kingdomHall.getDrawings());
 
         if (kingdomHall.getTitleHolder() != null) {
             Congregation titleHoldingCongregation = congregationDao.findCongregation(kingdomHall.getTitleHolder()
                     .getCongregationId());
-            kingdomHallForm.setTitleHolderCongregationId(titleHoldingCongregation.getCongregationId());
-            kingdomHallForm.setTitleHolderCongregationName(titleHoldingCongregation.getName());
+            kingdomHallModel.setTitleHolderCongregationId(titleHoldingCongregation.getCongregationId());
+            kingdomHallModel.setTitleHolderCongregationName(titleHoldingCongregation.getName());
         }
 
-        model.addAttribute("kingdomHallForm", kingdomHallForm);
+        model.addAttribute("kingdomHallForm", kingdomHallModel);
         model.addAttribute("submitUri", KingdomHallModelFactory.generateUri(kingdomHallId));
         model.addAttribute("ownershipValues", referenceDao.findKingdomHallOwnershipTypeValues());
         model.addAttribute("submitMethod", "PUT");
@@ -174,7 +174,7 @@ public class KingdomHallsController {
     @RequestMapping(value = "new", method = RequestMethod.GET)
     public String showCreateKingdomHallForm(ModelMap model) {
         // initialise the form bean
-        model.addAttribute("kingdomHall", new KingdomHallForm());
+        model.addAttribute("kingdomHall", new KingdomHallModel());
 
         return "kingdom-halls/edit";
     }
@@ -210,7 +210,7 @@ public class KingdomHallsController {
      * @return view name
      */
     @RequestMapping(method = RequestMethod.POST)
-    public String createKingdomHall(@Valid KingdomHallForm kingdomHallForm) {
+    public String createKingdomHall(@Valid KingdomHallModel kingdomHallForm) {
         KingdomHall kingdomHall = new KingdomHall();
         if (kingdomHallForm.getKingdomHallId() != null) {
             kingdomHall.setKingdomHallId(kingdomHallForm.getKingdomHallId());

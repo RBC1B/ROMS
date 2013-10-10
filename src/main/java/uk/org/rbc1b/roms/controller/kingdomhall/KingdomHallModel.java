@@ -28,7 +28,7 @@ package uk.org.rbc1b.roms.controller.kingdomhall;
  *
  * @author oliver.elder.esq
  */
-public class KingdomHallForm {
+public class KingdomHallModel {
 
     private Integer kingdomHallId;
     private String name;
