@@ -30,7 +30,9 @@
                     <c:choose>
                         <c:when test="${!empty congregations}">
                             <c:forEach items="${congregations}" var="congregation" varStatus="loop">
+                                <a href="<c:url value="/congregations/${congregation.congregationId}" />">
                                 ${congregation.name}
+                                </a>
                                 ${!loop.last ? ', ' : ''}
                             </c:forEach>
                         </c:when>
@@ -41,7 +43,9 @@
                 <dd>
                     <c:choose>
                         <c:when test="${!empty titleHolder}">
+                            <a href="<c:url value="/congregations/${congregation.congregationId}" />">
                             ${titleHolder.name}
+                            </a>
                         </c:when>
                         <c:otherwise>-</c:otherwise>
                     </c:choose>
