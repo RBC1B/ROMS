@@ -34,7 +34,7 @@ import uk.org.rbc1b.roms.db.PersonChange;
 @Component
 public class PersonChangeModelFactory {
 
-    private static final String BASE_URI = "/personchanges";
+    private static final String BASE_URI = "/person-changes";
 
     /**
      * Generates the uri used to update the table.
@@ -59,10 +59,12 @@ public class PersonChangeModelFactory {
 
         model.setOldForename(personChange.getOldForename());
         model.setOldSurname(personChange.getOldSurname());
-        model.setOldStreet(personChange.getOldAddress().getStreet());
-        model.setOldTown(personChange.getOldAddress().getTown());
-        model.setOldCounty(personChange.getOldAddress().getCounty());
-        model.setOldPostcode(personChange.getOldAddress().getPostcode());
+        if (personChange.getOldAddress() != null) {
+            model.setOldStreet(personChange.getOldAddress().getStreet());
+            model.setOldTown(personChange.getOldAddress().getTown());
+            model.setOldCounty(personChange.getOldAddress().getCounty());
+            model.setOldPostcode(personChange.getOldAddress().getPostcode());
+        }
         model.setOldEmail(personChange.getOldEmail());
         model.setOldMobile(personChange.getOldMobile());
         model.setOldTelephone(personChange.getOldTelephone());
@@ -70,16 +72,18 @@ public class PersonChangeModelFactory {
 
         model.setNewForename(personChange.getNewForename());
         model.setNewSurname(personChange.getNewSurname());
-        model.setNewStreet(personChange.getNewAddress().getStreet());
-        model.setNewTown(personChange.getNewAddress().getTown());
-        model.setNewCounty(personChange.getNewAddress().getCounty());
-        model.setNewPostcode(personChange.getNewAddress().getPostcode());
+        if (personChange.getNewAddress() != null) {
+            model.setNewStreet(personChange.getNewAddress().getStreet());
+            model.setNewTown(personChange.getNewAddress().getTown());
+            model.setNewCounty(personChange.getNewAddress().getCounty());
+            model.setNewPostcode(personChange.getNewAddress().getPostcode());
+        }
         model.setNewEmail(personChange.getNewEmail());
         model.setNewMobile(personChange.getNewMobile());
         model.setNewTelephone(personChange.getNewTelephone());
         model.setNewWorkPhone(personChange.getNewWorkPhone());
 
-        model.setUpdateUri(generatorUri(personChange.getPersonChangeId()) + "/update");
+        model.setUpdateUri(generatorUri(personChange.getPersonChangeId()));
 
         return model;
     }

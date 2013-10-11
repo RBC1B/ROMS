@@ -38,11 +38,10 @@ import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMeth
 /**
  * Control access to PersonChange table.
  *
- * @author ramindursingh
  */
 @Controller
-@RequestMapping("/personchanges")
-public class PersonChangeController {
+@RequestMapping("/person-changes")
+public class PersonChangesController {
 
     private PersonChangeDao personChangeDao;
     private PersonChangeModelFactory personChangeModelFactory;
@@ -56,44 +55,34 @@ public class PersonChangeController {
     @RequestMapping(method = RequestMethod.GET)
     public String showPersonChangeList(ModelMap model) {
         List<PersonChange> personChanges = personChangeDao.findPersonChangeNotUpdated();
-        List<PersonChangeModel> modelList = new ArrayList<PersonChangeModel>();
 
-        if (personChanges == null || personChanges.isEmpty()) {
-            return "personchanges/list";
-        } else {
+        if (!personChanges.isEmpty()) {
+            List<PersonChangeModel> modelList = new ArrayList<PersonChangeModel>();
             for (PersonChange personChange : personChanges) {
                 modelList.add(personChangeModelFactory.generatePersonChangeModel(personChange));
             }
             model.addAttribute("personchanges", modelList);
-
-            return "personchanges/list";
         }
-
+        return "person-changes/list";
     }
 
     /**
      * Updates a personChange by setting the updated form to true.
      *
      * @param personChangeId the row to update
-     * @return redirect to the list page
      * @throws NoSuchRequestHandlingMethodException on failure to find the row
      */
-    @RequestMapping(value = "{personChangeId}/update", method = RequestMethod.GET)
-    public String updatePersonChange(@PathVariable Integer personChangeId)
+    @RequestMapping(value = "{personChangeId}", method = RequestMethod.PUT)
+    public void updatePersonChange(@PathVariable Integer personChangeId)
             throws NoSuchRequestHandlingMethodException {
         PersonChange personChange = personChangeDao.findPersonChange(personChangeId);
-        if (personChange != null) {
-            personChange.setFormUpdated(true);
-            personChangeDao.updatePersonChange(personChange);
-        } else {
+        if (personChange == null) {
             throw new NoSuchRequestHandlingMethodException("No personChange #" + personChangeId, this.getClass());
         }
-        return "redirect:/personchanges";
+        personChange.setFormUpdated(true);
+        personChangeDao.updatePersonChange(personChange);
     }
 
-    /**
-     * @param personChangeDao the personChangeDao to set
-     */
     @Autowired
     public void setPersonChangeDao(PersonChangeDao personChangeDao) {
         this.personChangeDao = personChangeDao;

@@ -23,11 +23,15 @@
  */
 package uk.org.rbc1b.roms.aop;
 
-import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
-import uk.org.rbc1b.roms.db.*;
+import uk.org.rbc1b.roms.db.Person;
+import uk.org.rbc1b.roms.db.PersonDao;
+import uk.org.rbc1b.roms.db.PersonChange;
+import uk.org.rbc1b.roms.db.PersonChangeDao;
+import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.org.rbc1b.roms.controller.LoggingHandlerExceptionResolver;
@@ -35,12 +39,12 @@ import java.sql.Date;
 
 /**
  *
- * @author ramindursingh
  */
 @Aspect
 public class PersonAspect {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggingHandlerExceptionResolver.class);
+    private PersonDao personDao;
     private PersonChangeDao personChangeDao;
 
     /**
@@ -53,6 +57,15 @@ public class PersonAspect {
     }
 
     /**
+     * Pointcut definition for Volunteer update as it extends Person.
+     *
+     * @param volunteer the volunteer to capture
+     */
+    @Pointcut("execution(* uk.org.rbc1b.roms.db.volunteer.VolunteerDao.updateVolunteer(..)) && args(volunteer,..)")
+    public void volunteerChange(Volunteer volunteer) {
+    }
+
+    /**
      * Captures updates to Person table.
      *
      * @param person the person to save
@@ -60,6 +73,35 @@ public class PersonAspect {
      */
     @Before("personChange(person)")
     public void capturePersonChange(Person person) {
+        this.saveChangesToPerson(person);
+    }
+
+    /**
+     * Captures updates to Person table through volunteer update.
+     *
+     * @param volunteer the volunteer to save
+     */
+    @Before("volunteerChange(volunteer)")
+    public void captureVolunteerChange(Volunteer volunteer) {
+        Person person = new Person();
+        person.setPersonId(volunteer.getPersonId());
+        person.setForename(volunteer.getForename());
+        person.setMiddleName(volunteer.getMiddleName());
+        person.setSurname(volunteer.getSurname());
+        person.setAddress(volunteer.getAddress());
+        person.setEmail(volunteer.getEmail());
+        person.setMobile(volunteer.getMobile());
+        person.setTelephone(volunteer.getTelephone());
+        person.setWorkPhone(volunteer.getWorkPhone());
+        this.saveChangesToPerson(person);
+    }
+
+    /**
+     * Saves a row in the PersonChange table.
+     *
+     * @param person the person to save to personChange table
+     */
+    public void saveChangesToPerson(Person person) {
         LOGGER.error("Captured updatePerson. ID:" + person.getPersonId() + "; Name:" + person.getForename() + " " + person.getSurname() + ".");
         Person oldPerson = this.personChangeDao.getOldPerson(person.getPersonId(), person);
         PersonChange personChange = new PersonChange();
@@ -84,11 +126,13 @@ public class PersonAspect {
         this.personChangeDao.savePersonChange(personChange);
     }
 
-    /**
-     * @param personChangeDao the personChangeDao to set
-     */
     @Autowired
     public void setPersonChangeDao(PersonChangeDao personChangeDao) {
         this.personChangeDao = personChangeDao;
+    }
+
+    @Autowired
+    public void setPersonDao(PersonDao personDao) {
+        this.personDao = personDao;
     }
 }

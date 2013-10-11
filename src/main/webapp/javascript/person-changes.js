@@ -23,27 +23,29 @@
  */
 $(document).ready(function() {
     // list
-    var listActionTemplate = $("#list-action").html();
-
     roms.common.datatables(
             $('#personchange-list'),
             {
                 "iDisplayLength": 10,
-                "bProcessing": true,
-                "bServerSide": true,
-                "aoColumns": [
-                    {"sName": "forename", "mData": "forename"},
-                    {"sName": "surname", "mData": "surname"},
-                    {"sName": "action", "bSortable": false,
-                        "mData":
-                                function(data, type, val) {
-                                    data.uriBase = roms.common.relativePath;
-                                    return Mustache.to_html(listActionTemplate, data);
-                                }
+                "aoColumnDefs": [
+                    {
+                        'bSortable': false,
+                        'aTargets': [8]
                     }
                 ]
             }
     );
-
+        $(".update-paperwork").click(function(){
+            var updateUrl = $(this).children().attr("data-update-url")
+            $.ajax({
+                url: roms.common.relativePath + updateUrl,
+                type: 'PUT',
+                complete: function(){
+                    $(document).ajaxStop(function(){
+                        window.location.reload();
+                    });
+                }
+            });
+        });
 });
 
