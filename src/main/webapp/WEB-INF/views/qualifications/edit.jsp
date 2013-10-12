@@ -17,7 +17,6 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="container-fluid">
             <c:choose>
                 <c:when test="${!empty qualificationForm.name}">
                     <h1>Edit Qualification</h1>
@@ -47,7 +46,6 @@
             </ol>
                 
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-        </div>
         <script type="text/javascript" src="<c:url value='/javascript/qualifications.js' />" ></script>
     </body>
 </html>

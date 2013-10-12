@@ -19,7 +19,6 @@ Author     : oliver.elder.esq
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="container">
             <c:choose>
                 <c:when test="${!empty kingdomHallForm.kingdomHallId}">
                     <h1>Edit Kingdom Hall - ${kingdomHallForm.name}</h1>
@@ -70,7 +69,6 @@ Author     : oliver.elder.esq
             </ol>                
                 
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-        </div>
         <script type="text/javascript" src="<c:url value='/javascript/kingdom-halls.js' />" ></script>
     </body>
 </html>

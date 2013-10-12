@@ -20,7 +20,6 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="container-fluid">
             <c:choose>
                 <c:when test="${!empty skillForm.name}">
                     <h1>Edit Skill</h1>
@@ -61,7 +60,6 @@
             </ol>                
      
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-        </div>
         <script type="text/javascript" src="<c:url value='/javascript/skills.js' />" ></script>
     </body>
 </html>

@@ -14,7 +14,6 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="container">
             <h1>Person Information Changes/Updates</h1>
             <hr>
             <div class="entity-list-results">
@@ -151,7 +150,6 @@
                 <li class="active">Person Information Change</li>
             </ol>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-        </div>
         <script type="text/javascript" src="<c:url value='/javascript/person-changes.js' />" ></script>
     </body>
 </html>

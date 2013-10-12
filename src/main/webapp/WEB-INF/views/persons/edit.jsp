@@ -12,7 +12,6 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="container-fluid">
             <h1>Edit Person</h1>
            <hr>
             <c:url var="formAction" value="${submitUri}" />
@@ -78,7 +77,6 @@
             </ol>
             
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-        </div>
         <script type="text/javascript" src="<c:url value='/javascript/thirdparty/phoneformat-574.js' />" ></script>
         <script type="text/javascript" src="<c:url value='/javascript/persons.js' />" ></script>
     </body>

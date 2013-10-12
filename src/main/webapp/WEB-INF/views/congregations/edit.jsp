@@ -17,7 +17,6 @@
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 <body>
     <%@ include file="/WEB-INF/views/common/titlebar.jsp"%>
-    <div class="container-fluid">
         <c:choose>
             <c:when test="${!empty congregationForm.name}">
                 <h1>Edit Congregation</h1>
@@ -109,7 +108,6 @@
             </ol>            
             
         <%@ include file="/WEB-INF/views/common/footer.jsp"%>
-    </div>
     <%@ include file="/WEB-INF/views/common/mustache-person-link-search-form.jsp"%>
     <%@ include file="/WEB-INF/views/common/person-link-modal.jsp"%>
     <script type="text/javascript" src="<c:url value='/javascript/thirdparty/jquery-numeric-1.3.1.js' />" ></script>

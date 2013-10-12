@@ -19,7 +19,6 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="container-fluid">
             <c:choose>
                 <c:when test="${!empty circuitForm.name}">
                     <h1>Edit Circuit</h1>
@@ -86,12 +85,11 @@
                     </c:choose>
                     <div class="control-group">
                         <div class="controls controls-row">
-                            <input type="submit" class="btn btn-primary" />
+                            <input type="submit" class="btn btn-edifice" />
                         </div>
                     </div>
                     <br />
                 </fieldset>
-            </div>
         </form:form>
             
             <ol class="breadcrumb">

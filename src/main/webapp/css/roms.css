@@ -25,6 +25,15 @@ li a:hover, li a:focus {
 .breadcrumb {
     margin-top:10px;
 }
+legend {
+    border-bottom:0;
+}
+input {
+    border-radius:4px;
+    border:1px solid #999999!important;
+    padding:4px;
+    margin:4px;
+}
 /* Now some styling for additional classes created for use throughout the site */
 
 .btn-edifice {
@@ -417,14 +426,47 @@ li.first {
 /*****************************************************************************/
 /* Project pages                                                             */
 /*****************************************************************************/
-#project-stages div.project-stage-task-counts {
-    float: left;
-}
-#project-stages div.project-stage-task-count {
+div.project-stage-task-count {
     float: left;
 }
 .icon-span {
     width: 16px!important;  
+}
+.badge-important {
+  background-color: #b94a48;
+}
+.badge-important[href] {
+  background-color: #953b39;
+}
+.badge-warning {
+  background-color: #f89406;
+}
+.badge-warning[href] {
+  background-color: #c67605;
+}
+.badge-success {
+  background-color: #468847;
+}
+.badge-success[href] {
+  background-color: #356635;
+}
+.badge-info {
+  background-color: #3a87ad;
+}
+.badge-info[href] {
+  background-color: #2d6987;
+}
+.badge-inverse {
+  background-color: #333333;
+}
+.badge-inverse[href] {
+  background-color: #1a1a1a;
+}
+.drag-move {
+    padding:4px 10px 6px;
+    border-radius: 4px;
+    background-color:#25aae1;
+    color:#fff!important;
 }
 /*****************************************************************************/
 /* Person Change/Update page                                                 */
