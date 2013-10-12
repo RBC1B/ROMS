@@ -4,7 +4,7 @@
     <div class="navbar navbar-inverse">
         <div class="navbar-inner">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-xs-4">
                     <ul class="footer-nav">
                         <li class="first">Organisation</li>
                         <sec:authorize access="hasPermission('CIRCUIT', 'READ')">
@@ -18,7 +18,7 @@
                         </sec:authorize>
                     </ul>
                 </div>
-                <div class="col-md-4">
+                <div class="col-xs-4">
                     <ul class="footer-nav">
                         <li class="first">People</li>
                         <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
@@ -41,7 +41,7 @@
                         </sec:authorize>
                     </ul>
                 </div>
-                <div class="col-md-4">
+                <div class="col-xs-4">
                     <ul class="footer-nav">
                         <li class="first">More...</li>
                         <sec:authorize access="hasPermission('PROJECT', 'READ')">
@@ -53,7 +53,7 @@
                     </ul>
                 </div>
             </div>
-                <div class="col-md-12" id="footer-nav">
+                <div class="col-xs-12" id="footer-nav">
                     <!-- So users on smaller screens don't have to scroll all the way back to the top -->
                     <btn class="btn btn-edifice pull-right" id="back-to-top"> <a href="#navbar"><i class="glyphicon glyphicon-circle-arrow-up"></i>&nbsp;Back to Top</a></btn>
                 </div>

@@ -38,7 +38,8 @@ li a:hover, li a:focus {
     color:#fff!important;
 }
 .well-edifice {
-    margin: 10px;
+    /*margin: 5px;*/
+    padding: 5px;   /*padding around wells so that they don't look stuck together when they are ordered in columns. Used for dashboard. 09/10/13 Yoshi*/
 }
 .well h3 {
     margin-top:0;
