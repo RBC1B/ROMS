@@ -35,17 +35,18 @@ $(document).ready(function() {
                 ]
             }
     );
-        $(".update-paperwork").click(function(){
-            var updateUrl = $(this).children().attr("data-update-url")
-            $.ajax({
-                url: roms.common.relativePath + updateUrl,
-                type: 'PUT',
-                complete: function(){
-                    $(document).ajaxStop(function(){
-                        window.location.reload();
-                    });
-                }
-            });
+
+    $(".update-paperwork").click(function(){
+        var updateUrl = $("a", $(this)).data("update-url");
+        $.ajax({
+            url: updateUrl,
+            type: 'PUT',
+            complete: function(){
+                $(document).ajaxStop(function(){
+                    window.location.reload();
+                });
+            }
         });
+    });
 });
 

@@ -22,6 +22,7 @@ delete from Volunteer;
 delete from Skill;
 delete from Qualification;
 delete from User;
+delete from PersonChange;
 -- delete all persons apart from the pre-defined system user
 delete from Person where PersonId > 1;
 
@@ -44,6 +45,7 @@ alter table Skill AUTO_INCREMENT=1;
 alter table Qualification AUTO_INCREMENT=1;
 alter table VolunteerSkill AUTO_INCREMENT=1;
 alter table VolunteerQualification AUTO_INCREMENT=1;
+alter table PersonChange AUTO_INCREMENT=1;
 alter table Person AUTO_INCREMENT=1;
 
 insert into Person(Forename, Surname, Street, Comments, UpdateTime, UpdatedBy)
@@ -437,3 +439,14 @@ values(1, 6, '2012-07-23', false, 6, 10, false, NOW(), 1);
 
 insert into Attendance(ProjectId, PersonId, InviteDate, AbleToCome, InvitationConfirmationId, DepartmentId, Attended, UpdateTime, UpdatedBy)
 values(1, 6, '2012-07-24', false, 3, 10, false, NOW(), 1);
+
+insert into PersonChange(PersonId, OldForeName, OldMiddleName, OldSurname, OldStreet, OldTown, OldCounty, OldPostcode, OldTelephone, OldMobile, OldWorkPhone, OldEmail, 
+                                   NewForeName, NewMiddleName, NewSurname, NewStreet, NewTown, NewCounty, NewPostcode, NewTelephone, NewMobile, NewWorkPhone, NewEmail,
+                                   Comment, ChangeDate, FormUpdated)
+values(3, 'OldBilly','OldAlfred', 'OldBonzo', '29 OldAcacia Road', 'OldEricsville', 'OldYorkshire', 'O01 7DU', '01904 551550', '07855 841311', '01904 551551', 'old.billy.bonzo@gmail.com',
+          'NewBilly','NewAlfred', 'NewBonzo', '29 NewAcacia Road', 'NewEricsville', 'NewYorkshire', 'N01 7DU', '11904 551550', '17855 841311', '11904 551551', 'new.billy.bonzo@gmail.com',
+          'Old to new', '2013-07-24', false);
+insert into PersonChange(PersonId, ChangeDate, FormUpdated)
+values(3, '2013-07-25', false);
+insert into PersonChange(PersonId, ChangeDate, FormUpdated)
+values(3, '2013-07-26', true);
