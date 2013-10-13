@@ -35,8 +35,6 @@
                     <fieldset class="container-fluid">
                         <label>Skill Name</label>
                         <form:input path="name" maxlength="50" />
-                        <label>Description</label>
-                        <form:textarea path="description" />
                         <label>Department</label>
                         <form:select path="departmentId">
                             <form:options items="${departments}" itemValues="department" itemLabel="name" itemValue="departmentId" />
@@ -45,9 +43,11 @@
                         <form:select path="skillCategoryId">
                             <form:options items="${categories}" itemValues="category" itemLabel="name" itemValue="skillCategoryId" />
                         </form:select>
+                        <label>Description</label>
+                        <form:textarea path="description" rows="4" cols="50"/>
                     </fieldset>
                 </div>
-                <input type="submit" class="btn btn-primary" />
+                <input type="submit" class="btn btn-edifice" />
             </form:form>
                 
 

@@ -32,7 +32,7 @@
                     <label>Qualification name</label>
                     <form:input path="name" maxlength="50" />
                     <label>Description</label>
-                    <form:textarea path="description" />
+                    <form:textarea path="description" rows="4" cols="50" />
                 </fieldset>
                 <input type="submit" class="btn btn-primary" />
             </form:form>

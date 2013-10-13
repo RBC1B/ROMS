@@ -33,13 +33,13 @@
                 <fieldset>
                     <legend>Circuit Details</legend>
                     <label>Circuit Name</label>
-                    <form:input path="name" maxlength="50" placeholder="Circuit Name" class="span2"/><br />
+                    <form:input path="name" maxlength="50" placeholder="Circuit Name"/>
                 </fieldset>
                 <br />
                 <fieldset>
                     <legend>Circuit Overseer Details</legend>
                     <div class="controls controls-row">
-                        <div id="circuit-overseer-linked" class="controls alert span9" style="display:none;">
+                        <div id="circuit-overseer-linked" class="controls alert" style="display:none;">
                             <button type="button" class="close">Unlink</button>
                             Linked to an existing person in the database
                         </div>
@@ -47,25 +47,25 @@
                     <form:hidden path="personId" />
                     <div class="control-group">
                         <label>Name Details:</label>
-                        <form:input path="forename" maxlength="50" placeholder="First Name" class="span2"/><br />
-                        <form:input path="middleName" maxlength="50" placeholder="Middle Name" class="span2"/><br />
-                        <form:input path="surname" maxlength="50" placeholder="Surname" class="span2"/><br />
+                        <form:input path="forename" maxlength="50" placeholder="First Name"/>
+                        <form:input path="middleName" maxlength="50" placeholder="Middle Name" />
+                        <form:input path="surname" maxlength="50" placeholder="Surname"/>
                     </div>
                     <div class="control-group">
                         <label>Email:</label>
-                        <form:input path="email" maxlength="50" placeholder="E-mail" class="span3"/><br />
+                        <form:input path="email" maxlength="50" placeholder="E-mail"/>
                     </div>
                     <div class="control-group">
                         <label>Address:</label>
-                        <form:input path="street" maxlength="70" placeholder="Street" class="span3"/><br />
-                        <form:input path="town" maxlength="30" placeholder="Town" class="span2"/><br />
-                        <form:input path="county" maxlength="50" placeholder="County" class="span2"/><br />
-                        <form:input path="postcode" maxlength="10" placeholder="Postcode" class="span2"/><br />
+                        <form:input path="street" maxlength="70" placeholder="Street"/>
+                        <form:input path="town" maxlength="30" placeholder="Town"/>
+                        <form:input path="county" maxlength="50" placeholder="County"/>
+                        <form:input path="postcode" maxlength="10" placeholder="Postcode"/>
                     </div>
                     <div class="control-group">
                         <label>Phones:</label>
-                        <form:input path="telephone" maxlength="20" placeholder="Telephone Number" class="span2"/><br />
-                        <form:input path="mobile" maxlength="20" placeholder="Mobile Number" class="span2"/>
+                        <form:input path="telephone" maxlength="20" placeholder="Telephone Number"/>
+                        <form:input path="mobile" maxlength="20" placeholder="Mobile Number"/>
                     </div>
                     <c:choose>
                         <c:when test="${circuitForm.forename != null && circuitForm.surname != null}">
