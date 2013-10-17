@@ -76,7 +76,7 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
         addBand(cb, colourBand);
         addSkillsTable(cb);
 
-        addSkils(cb, skillsSet);
+        addSkills(cb, skillsSet);
 
         ServletContext context = request.getServletContext();
         String contextPath = context.getRealPath("/");
@@ -84,7 +84,7 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
 
         addImage(cb, img);
         addBarcode(cb, volunteer.getPersonId());
-        addVolunteerName(cb, volunteer.getForename() + " " + volunteer.getSurname());
+        addVolunteerName(cb, volunteer.formatDisplayName());
         addRBCRegionTitle(cb, "RBC London and Home Counties");
 
         addDepartment(cb, assignment);
@@ -187,7 +187,7 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
      * @param content to be added
      * @param skills set of volunteer skills
      */
-    private static void addSkils(PdfContentByte content, Set<String> skills) throws DocumentException, IOException {
+    private static void addSkills(PdfContentByte content, Set<String> skills) throws DocumentException, IOException {
         int y = 0;
         for (String skill : skills) {
             content.beginText();

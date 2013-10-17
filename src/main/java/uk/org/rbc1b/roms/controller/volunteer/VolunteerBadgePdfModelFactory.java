@@ -102,13 +102,12 @@ public class VolunteerBadgePdfModelFactory {
     public Set<String> generateSkillsSet(Volunteer volunteer) {
         Set<Skill> skills = findVolunteerSkills(volunteer.getPersonId());
         Set<String> skillsSet = new HashSet<String>();
-        if (!skills.isEmpty()) {
-            for (Skill skill : skills) {
-                if (skills.size() < 8) {
-                    SkillCategory skillCategory = skillDao.findSkillCategory(skill.getCategory().getSkillCategoryId());
-                    if (skillCategory.isAppearOnBadge()) {
-                        skillsSet.add(skill.getName());
-                    }
+        for (Skill skill : skills) {
+            SkillCategory skillCategory = skillDao.findSkillCategory(skill.getCategory().getSkillCategoryId());
+            if (skillCategory.isAppearOnBadge()) {
+                skillsSet.add(skill.getName());
+                if (skillsSet.size() == 8) {
+                    break;
                 }
             }
         }
@@ -125,14 +124,12 @@ public class VolunteerBadgePdfModelFactory {
     public String generateColourBand(Volunteer volunteer) {
         Set<Skill> skills = findVolunteerSkills(volunteer.getPersonId());
         String otherColour = null;
-        if (!skills.isEmpty()) {
-            for (Skill skill : skills) {
-                SkillCategory skillCategory = skillDao.findSkillCategory(skill.getCategory().getSkillCategoryId());
-                if (skillCategory.getColour().equals("RED")) {
-                    return "RED";
-                } else if (skillCategory.getColour().equals("GREEN")) {
-                    otherColour = "GREEN";
-                }
+        for (Skill skill : skills) {
+            SkillCategory skillCategory = skillDao.findSkillCategory(skill.getCategory().getSkillCategoryId());
+            if (skillCategory.getColour().equals("RED")) {
+                return "RED";
+            } else if (skillCategory.getColour().equals("GREEN")) {
+                otherColour = "GREEN";
             }
         }
         return otherColour;
