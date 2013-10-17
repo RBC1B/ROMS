@@ -177,6 +177,8 @@ public class VolunteersController {
         model.addAttribute("skills", volunteerModelFactory.generateVolunteerSkillsModel(skills));
         model.addAttribute("qualifications", volunteerModelFactory.generateVolunteerQualificationsModel(qualifications));
         model.addAttribute("badgeUri", VolunteerBadgePdfModelFactory.generateUri(volunteerId));
+        model.addAttribute("badgePopupTitle", volunteerBadgePdfModelFactory.generatePopupTitle());
+        model.addAttribute("badgePopupContent", volunteerBadgePdfModelFactory.generatePopupContent(volunteer));
 
         return "volunteers/show";
     }

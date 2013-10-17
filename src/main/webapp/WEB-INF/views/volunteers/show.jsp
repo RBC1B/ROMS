@@ -48,7 +48,7 @@
                     <a class="btn btn-edifice" href="<c:url value="${badgeUri}"/>">Generate Badge</a>
                 </c:when>
                 <c:otherwise>
-                    <button class="btn" type="button" id="disabled-badge-button">Generate Badge</button><br />
+                    <button class="btn" type="button" data-content="${badgePopupContent}" data-title="${badgePopupTitle}" id="disabled-badge-button">Generate Badge</button><br />
                 </c:otherwise>
             </c:choose>
             <hr>
@@ -114,9 +114,9 @@
             <div class="clearfix"></div>
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
-                <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
-                  <li><a href="<c:url value="/volunteers" />">Volunteers</a></li>
-                </sec:authorize>
+                    <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
+                    <li><a href="<c:url value="/volunteers" />">Volunteers</a></li>
+                    </sec:authorize>
                 <li class="active">#${volunteer.id}: ${volunteer.displayName}</li>
             </ol>            
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>

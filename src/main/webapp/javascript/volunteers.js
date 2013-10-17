@@ -740,8 +740,8 @@ $(document).ready(function() {
     $("#disabled-badge-button").popover({
         placement: 'right',
         trigger: 'hover',
-        title: "Badge Generation - Not Possible",
-        content: "A badge cannot be generated for this volunteer until he/she recieves an assignment"
+        title: $(this).data("title"),
+        content: $(this).data("content")
     });
     
     // volunteers experience list
