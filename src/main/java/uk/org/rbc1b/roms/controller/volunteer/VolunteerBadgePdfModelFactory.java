@@ -46,9 +46,23 @@ import uk.org.rbc1b.roms.db.volunteer.skill.VolunteerSkill;
 @Component
 public class VolunteerBadgePdfModelFactory {
 
+    private static final String BASE_URI = "/volunteers/";
+    private static final String MIDDLE_URI = "/rbc-";
+    private static final String END_URI = "-badge.pdf";
     private VolunteerDao volunteerDao;
     private DepartmentDao departmentDao;
     private SkillDao skillDao;
+
+    /**
+     * Generate the badge uri for a volunteer.
+     *
+     * @param volunteerId id of the volunteer
+     * @return String uri
+     */
+    public static String generateUri(Integer volunteerId) {
+        return volunteerId != null ? BASE_URI + volunteerId + MIDDLE_URI + volunteerId
+                + END_URI : BASE_URI + volunteerId;
+    }
 
     /**
      * Generate a Set of skills for a volunteer to appear on the badge.

@@ -176,6 +176,7 @@ public class VolunteersController {
         model.addAttribute("assignments", generateAssignments(assignments));
         model.addAttribute("skills", volunteerModelFactory.generateVolunteerSkillsModel(skills));
         model.addAttribute("qualifications", volunteerModelFactory.generateVolunteerQualificationsModel(qualifications));
+        model.addAttribute("badgeUri", VolunteerBadgePdfModelFactory.generateUri(volunteerId));
 
         return "volunteers/show";
     }
@@ -680,7 +681,7 @@ public class VolunteersController {
 
             return modelAndView;
         } else {
-            return new ModelAndView("redirect:" + VolunteerModelFactory.generateUri(volunteer.getPersonId()));
+            return new ModelAndView("redirect:" + VolunteerBadgePdfModelFactory.generateUri(volunteerId));
         }
     }
 
