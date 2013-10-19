@@ -31,7 +31,7 @@ import uk.org.rbc1b.roms.controller.common.model.PersonModel;
  */
 public class ProjectStageActivityTaskModel {
 
-    private Integer projectStageActivityTaskId;
+    private Integer id;
     private String name;
     private PersonModel assignedVolunteer;
     private String comments;
@@ -40,12 +40,12 @@ public class ProjectStageActivityTaskModel {
     private Date completedTime;
     private String status;
 
-    public Integer getProjectStageActivityTaskId() {
-        return projectStageActivityTaskId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setProjectStageActivityTaskId(Integer projectStageActivityTaskId) {
-        this.projectStageActivityTaskId = projectStageActivityTaskId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {

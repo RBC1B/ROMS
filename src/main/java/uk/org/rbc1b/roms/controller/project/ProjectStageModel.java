@@ -32,7 +32,7 @@ import uk.org.rbc1b.roms.db.project.ProjectStageType;
  */
 public class ProjectStageModel {
     private List<ProjectStageActivityModel> activities;
-    private Integer projectStageId;
+    private Integer id;
     private ProjectStageType type;
     private String status;
     private Date createdTime;
@@ -93,12 +93,12 @@ public class ProjectStageModel {
         this.activities = activities;
     }
 
-    public Integer getProjectStageId() {
-        return projectStageId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setProjectStageId(Integer projectStageId) {
-        this.projectStageId = projectStageId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public ProjectStageType getType() {

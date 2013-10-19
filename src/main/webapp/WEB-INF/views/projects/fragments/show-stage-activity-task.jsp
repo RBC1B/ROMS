@@ -2,7 +2,7 @@
     Show an individual project stage activity tasks
 --%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<div id="stage-${stage.projectStageId}-activity-${activity.projectStageActivityId}-task-${task.projectStageActivityTaskId}" class="panel panel-default">
+<div id="stage-${stage.id}-activity-${activity.id}-task-${task.id}" class="panel panel-default">
     <div class="panel-heading">
         <div class="project-stage-type-name col-sm-4"><h4>${task.name}</h4></div>
         <div class="project-stage-status col-sm-2"><h4>${task.status}</h4></div>
@@ -43,14 +43,14 @@
             </div>
         </div>
         <button type="button" class="btn btn-edifice pull-right">
-            <a class="accordion-toggle pull-right" data-toggle="collapse" data-parent="#accordion-stage-${stage.projectStageId}-activity-${activity.projectStageActivityId}-task-${task.projectStageActivityTaskId}" href="#collapse-stage-${stage.projectStageId}-activity-${activity.projectStageActivityId}-task-${task.projectStageActivityTaskId}">
+            <a class="accordion-toggle pull-right" data-toggle="collapse" data-parent="#accordion-stage-${stage.id}-activity-${activity.id}-task-${task.id}" href="#collapse-stage-${stage.id}-activity-${activity.id}-task-${task.id}">
                 <span class="glyphicon glyphicon-plus"></span>
             </a>
         </button>
         <div class="clearfix"></div>
-        <div class="accordion" id="accordion-stage-${stage.projectStageId}-activity-${activity.projectStageActivityId}-task-${task.projectStageActivityTaskId}">
+        <div class="accordion" id="accordion-stage-${stage.id}-activity-${activity.id}-task-${task.id}">
             <div class="accordion-group">
-                <div id="collapse-stage-${stage.projectStageId}-activity-${activity.projectStageActivityId}-task-${task.projectStageActivityTaskId}" class="accordion-body collapse in">
+                <div id="collapse-stage-${stage.id}-activity-${activity.id}-task-${task.id}" class="accordion-body collapse in">
                     <div class="accordion-inner">
                         <br>
                         <c:choose>

@@ -2,7 +2,7 @@
     Show an individual project stage activity
 --%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<div id="stage-${stage.projectStageId}-activity-${activity.projectStageActivityId}" class="panel panel-default">
+<div id="stage-${stage.id}-activity-${activity.id}" class="panel panel-default">
     <div class="panel-heading">
         <div class="project-stage-type-name col-sm-4"><h4>${activity.type.name}: ${activity.type.description}</h4></div>
         <div class="project-stage-status col-sm-2"><h4>${activity.status}</h4></div>
@@ -59,20 +59,20 @@
             </div>
         </div>
         <button type="button" class="btn btn-edifice pull-right">
-            <a class="accordion-toggle pull-right" data-toggle="collapse" data-parent="#accordion-stage-${stage.projectStageId}-activity-${activity.projectStageActivityId}" href="#collapse-stage-${stage.projectStageId}-activity-${activity.projectStageActivityId}">
+            <a class="accordion-toggle pull-right" data-toggle="collapse" data-parent="#accordion-stage-${stage.id}-activity-${activity.id}" href="#collapse-stage-${stage.id}-activity-${activity.id}">
                 <span class="glyphicon glyphicon-plus"></span>
             </a>
         </button>
         <div class="clearfix"></div>
-        <div class="accordion" id="accordion-stage-${stage.projectStageId}-activity-${activity.projectStageActivityId}">
+        <div class="accordion" id="accordion-stage-${stage.id}-activity-${activity.id}">
             <div class="accordion-group">
-                <div id="collapse-stage-${stage.projectStageId}-activity-${activity.projectStageActivityId}" class="accordion-body collapse in">
+                <div id="collapse-stage-${stage.id}-activity-${activity.id}" class="accordion-body collapse in">
                     <div class="accordion-inner">
                         <br>
                         <c:choose>
                             <c:when test="${!empty activity.tasks}">
                                 <h3>Tasks</h3>
-                                <div id="project-stage-${stage.projectStageId}-activity-${activity.projectStageActivityId}-tasks">
+                                <div id="project-stage-${stage.id}-activity-${activity.id}-tasks">
                                     <c:forEach var="task" items="${activity.tasks}">
                                         <%@ include file="show-stage-activity-task.jsp" %>
                                     </c:forEach>
