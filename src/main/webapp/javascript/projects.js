@@ -36,7 +36,7 @@ $(document).ready(function() {
         }
     );
 
-    $(".a-project-status, .a-project-count, .a-project-assignment").tooltip();
+    $(".a-project-status, .a-project-count, .a-project-assignment, .a-event-created-by").tooltip();
 
     // details view
     $("#project-stages").sortable({

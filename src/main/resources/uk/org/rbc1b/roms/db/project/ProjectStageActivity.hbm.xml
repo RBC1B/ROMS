@@ -45,6 +45,11 @@ THE SOFTWARE.
             <one-to-many class="uk.org.rbc1b.roms.db.project.ProjectStageActivityTask" />
         </set>
 
+        <set name="events" inverse="true" cascade="all-delete-orphan">
+            <key column="ProjectStageActivityId" />
+            <one-to-many class="uk.org.rbc1b.roms.db.project.ProjectStageActivityEvent" />
+        </set>
+
         <property name="updateTime" not-null="true" />
         <property name="updatedBy" not-null="true" />
 

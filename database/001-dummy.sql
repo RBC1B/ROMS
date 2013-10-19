@@ -415,6 +415,11 @@ StartedTime, CompletedTime, UpdateTime, UpdatedBy)
 values (1, 'Ponder it a little bit more', 6, 1, null, '2013-07-11 17:25:48',
 null, null, '2013-07-11 17:25:48', 1);
 
+insert into ProjectStageActivityTaskEvent(ProjectStageActivityTaskId, ProjectStageActivityTaskEventTypeId, Comments, CreateTime, CreatedBy) 
+values (1, 1, null, '2013-07-09 14:23:30', 5);
+
+insert into ProjectStageActivityTaskEvent(ProjectStageActivityTaskId, ProjectStageActivityTaskEventTypeId, Comments, CreateTime, CreatedBy) 
+values (1, 5, 'these are the notes I have added', '2013-07-09 14:25:30', 5);
 
 insert into Project(Name,ProjectTypeId,KingdomHallId,Priority,Street,Town,County,Postcode,Telephone,ContactPersonId,RequestDate,VisitDate,EstimateCost,
                 StatusId,SupportingCongregation,ProjectConstraints,CoordinatorId, UpdateTime, UpdatedBy)

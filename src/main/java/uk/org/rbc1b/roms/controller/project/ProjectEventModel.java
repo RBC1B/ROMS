@@ -23,23 +23,23 @@
  */
 package uk.org.rbc1b.roms.controller.project;
 
+import java.util.Comparator;
 import java.util.Date;
-import java.util.List;
 import uk.org.rbc1b.roms.controller.common.model.PersonModel;
 
 /**
- * Model the project stage tasks.
+ * Generic model used for the project stage, activity and task events.
  */
-public class ProjectStageActivityTaskModel {
+public class ProjectEventModel {
+    /**
+     * instance of the comparator used to sort the results by create time.
+     */
+    public static final ProjectEventModelCreateTimeComparator CREATE_TIME_COMPARATOR = new ProjectEventModelCreateTimeComparator();
     private Integer id;
-    private String name;
-    private PersonModel assignedVolunteer;
+    private PersonModel createdBy;
     private String comments;
-    private Date createdTime;
-    private Date startedTime;
-    private Date completedTime;
-    private List<ProjectEventModel> events;
-    private String status;
+    private Date createTime;
+    private String type;
 
     public Integer getId() {
         return id;
@@ -49,20 +49,12 @@ public class ProjectStageActivityTaskModel {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public PersonModel getCreatedBy() {
+        return createdBy;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public PersonModel getAssignedVolunteer() {
-        return assignedVolunteer;
-    }
-
-    public void setAssignedVolunteer(PersonModel assignedVolunteer) {
-        this.assignedVolunteer = assignedVolunteer;
+    public void setCreatedBy(PersonModel createdBy) {
+        this.createdBy = createdBy;
     }
 
     public String getComments() {
@@ -73,44 +65,31 @@ public class ProjectStageActivityTaskModel {
         this.comments = comments;
     }
 
-    public Date getCreatedTime() {
-        return createdTime;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreatedTime(Date createdTime) {
-        this.createdTime = createdTime;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
-    public Date getStartedTime() {
-        return startedTime;
+    public String getType() {
+        return type;
     }
 
-    public void setStartedTime(Date startedTime) {
-        this.startedTime = startedTime;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public Date getCompletedTime() {
-        return completedTime;
-    }
+    /**
+     * Sort the events by date ascending
+     */
+    private static class ProjectEventModelCreateTimeComparator implements Comparator<ProjectEventModel> {
 
-    public void setCompletedTime(Date completedTime) {
-        this.completedTime = completedTime;
-    }
+        @Override
+        public int compare(ProjectEventModel event0, ProjectEventModel event1) {
+            return event0.getCreateTime().compareTo(event1.getCreateTime());
+        }
 
-    public List<ProjectEventModel> getEvents() {
-        return events;
     }
-
-    public void setEvents(List<ProjectEventModel> events) {
-        this.events = events;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
 }

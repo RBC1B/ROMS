@@ -27,6 +27,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
 import uk.org.rbc1b.roms.db.UpdateAuditable;
 
 /**
@@ -46,6 +47,7 @@ public class ProjectStage implements UpdateAuditable, Serializable {
     private java.sql.Date projectedStart;
     private java.sql.Date projectedCompletion;
     private Set<ProjectStageActivity> activities;
+    private Set<ProjectStageEvent> events;
     private Date updateTime;
     private Integer updatedBy;
 
@@ -127,6 +129,16 @@ public class ProjectStage implements UpdateAuditable, Serializable {
 
     public void setActivities(Set<ProjectStageActivity> activities) {
         this.activities = activities;
+    }
+
+    @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
+    public Set<ProjectStageEvent> getEvents() {
+        return events;
+    }
+
+    @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
+    public void setEvents(Set<ProjectStageEvent> events) {
+        this.events = events;
     }
 
     @Override

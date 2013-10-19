@@ -80,8 +80,13 @@ public class HibernateProjectDao implements ProjectDao {
         List<ProjectStage> stages = criteria.list();
 
         for (ProjectStage stage : stages) {
+            Hibernate.initialize(stage.getEvents());
             for (ProjectStageActivity activity : stage.getActivities()) {
-                Hibernate.initialize(activity.getTasks());
+                Hibernate.initialize(activity.getEvents());
+
+                for (ProjectStageActivityTask task : activity.getTasks()) {
+                    Hibernate.initialize(task.getEvents());
+                }
             }
         }
 

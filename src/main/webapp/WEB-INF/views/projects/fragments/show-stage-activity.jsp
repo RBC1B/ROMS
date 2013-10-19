@@ -99,6 +99,14 @@
                             </c:when>
                             <c:otherwise>No tasks defined</c:otherwise>
                         </c:choose>
+                        <c:if test="${!empty activity.events}">
+                            <h3>Events</h3>
+                            <div class="list-group">
+                                <c:forEach var="event" items="${activity.events}">
+                                    <%@ include file="show-event.jsp" %>
+                                </c:forEach>
+                            </div>
+                        </c:if>
                     </div>
                 </div>
             </div>

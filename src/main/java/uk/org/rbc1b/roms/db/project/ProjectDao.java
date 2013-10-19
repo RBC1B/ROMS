@@ -53,6 +53,7 @@ public interface ProjectDao {
 
     /**
      * Look up the list of stages associated with the project.
+     * <p>This also looks up all associated activities, tasks and events
      * @param projectId project id
      * @return stages
      */

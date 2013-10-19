@@ -66,12 +66,17 @@
                 <div id="collapse-stage-${stage.id}-activity-${activity.id}-task-${task.id}" class="accordion-body collapse in">
                     <div class="accordion-inner">
                         <br>
-                        <c:choose>
-                            <c:when test="${!empty task.comments}">
-                                <p>${task.comments}</p>
-                            </c:when>
-                            <c:otherwise>-</c:otherwise>
-                        </c:choose>
+                        <c:if test="${!empty task.comments}">
+                            <p>${task.comments}</p>
+                        </c:if>
+                        <c:if test="${!empty task.events}">
+                            <h3>Events</h3>
+                            <div class="list-group">
+                                <c:forEach var="event" items="${task.events}">
+                                    <%@ include file="show-event.jsp" %>
+                                </c:forEach>
+                            </div>
+                        </c:if>
                     </div>
                 </div>
             </div>

@@ -38,6 +38,7 @@ public class ProjectStageActivityModel {
     private Date createdTime;
     private Date startedTime;
     private Date completedTime;
+    private List<ProjectEventModel> events;
     private java.sql.Date projectedStart;
     private java.sql.Date projectedCompletion;
     private String status;
@@ -136,6 +137,14 @@ public class ProjectStageActivityModel {
 
     public void setCompletedTime(Date completedTime) {
         this.completedTime = completedTime;
+    }
+
+    public List<ProjectEventModel> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<ProjectEventModel> events) {
+        this.events = events;
     }
 
     public java.sql.Date getProjectedStart() {

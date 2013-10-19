@@ -38,6 +38,11 @@ THE SOFTWARE.
         <property name="startedTime" />
         <property name="completedTime" />
 
+        <set name="events" inverse="true" cascade="all-delete-orphan">
+            <key column="ProjectStageActivityTaskId" />
+            <one-to-many class="uk.org.rbc1b.roms.db.project.ProjectStageActivityTaskEvent" />
+        </set>
+
         <property name="updateTime" not-null="true" />
         <property name="updatedBy" not-null="true" />
 

@@ -80,6 +80,14 @@
                             </c:when>
                             <c:otherwise>No activities defined</c:otherwise>
                         </c:choose>
+                        <c:if test="${!empty stage.events}">
+                            <h3>Events</h3>
+                            <div class="list-group">
+                                <c:forEach var="event" items="${stage.events}">
+                                    <%@ include file="show-event.jsp" %>
+                                </c:forEach>
+                            </div>
+                        </c:if>
                     </div>
                 </div>
             </div>

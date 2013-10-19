@@ -32,6 +32,7 @@ import uk.org.rbc1b.roms.db.project.ProjectStageType;
  */
 public class ProjectStageModel {
     private List<ProjectStageActivityModel> activities;
+    private List<ProjectEventModel> events;
     private Integer id;
     private ProjectStageType type;
     private String status;
@@ -91,6 +92,14 @@ public class ProjectStageModel {
 
     public void setActivities(List<ProjectStageActivityModel> activities) {
         this.activities = activities;
+    }
+
+    public List<ProjectEventModel> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<ProjectEventModel> events) {
+        this.events = events;
     }
 
     public Integer getId() {
