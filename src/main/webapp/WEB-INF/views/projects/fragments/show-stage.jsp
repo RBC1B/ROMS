@@ -59,7 +59,7 @@
         </div>
     </div>
       <button type="button" class="btn btn-edifice pull-right">
-      <a class="accordion-toggle pull-right" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">            
+      <a class="accordion-toggle pull-right" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
       <span class="glyphicon glyphicon-plus"></span></a>
       </button>
     <div class="clearfix"></div>

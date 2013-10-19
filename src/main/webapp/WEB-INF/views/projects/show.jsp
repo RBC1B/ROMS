@@ -13,106 +13,44 @@
         <div class="container-fluid">
             <h1>Project #${project.projectId}: ${project.name}</h1>
             <hr>
-            <div class="span6">
-                <h2>Details</h2>
-                <dl class="dl-horizontal">
-                    <dt>Type:</dt><dd>${project.type}</dd>
-                    <dt>Status:</dt><dd>${project.status}</dd>
-                    <dt>Priority:</dt><dd>${project.priority}</dd>
-                    <dt>Type:</dt><dd>${project.type}</dd>
-                    <c:if test="${project.requestDate != null}">
-                        <dt>Request Date:</dt><dd><fmt:formatDate value="${project.requestDate}" pattern="yyyy-MM-dd" /></dd>
-                    </c:if>
-                    <c:if test="${project.visitDate != null}">
-                        <dt>Visit Date:</dt><dd><fmt:formatDate value="${project.visitDate}" pattern="yyyy-MM-dd" /></dd>
-                    </c:if>
-                    <c:if test="${project.completedDate != null}">
-                        <dt>Completed Date:</dt><dd><fmt:formatDate value="${project.completedDate}" pattern="yyyy-MM-dd" /></dd>
-                    </c:if>
-                    <dt>Estimate Cost:</dt><dd>${project.estimateCost}</dd>
-                    <c:if test="${project.kingdomHall != null}">
-                        <dt>Kingdom Hall</dt><dd><a href="<c:url value='${project.kingdomHall.uri}' />">${project.kingdomHall.name}</a></dd>
-                    </c:if>
-                    <c:if test="${project.address != null}">
-                        <dt>Address:</dt>
-                        <dd>
-                            <address>
-                                <c:if test="${project.address.street != null}">${project.address.street}<br/></c:if>
-                                <c:if test="${project.address.town != null}">${project.address.town}<br/></c:if>
-                                <c:if test="${project.address.county != null}">${project.address.county}<br/></c:if>
-                                <c:if test="${project.address.postcode != null}">${project.address.postcode}<br/></c:if>
-                            </address>
-                        </dd>
-                    </c:if>
-                    <c:if test="${project.supportingCongregation != null}">
-                        <dt>Supporting Cong:</dt><dd>${project.supportingCongregation}</dd>
-                    </c:if>
-                    <c:if test="${project.constraints != null}">
-                        <dt>Constraints:</dt><dd>${project.constraints}</dd>
-                    </c:if>
-                </dl>
-            </div>
-            <div class="span6">
-                <h2>Contact</h2>
-                <dl class="dl-horizontal">
-                    <c:if test="${project.telephone != null}">
-                        <dt>Telephone:</dt><dd>${project.telephone}</dd>
-                    </c:if>
-                    <c:if test="${project.contactPerson != null}">
-                        <h3>Contact Person</h3>
-                        <dt>Name:</dt>
-                        <dd><a href="<c:url value='${project.contactPerson.uri}' />">${project.contactPerson.displayName}</a></dd>
-                        <dt>Email:</dt>
-                        <dd>
-                            <c:if test="${project.contactPerson.email != null}">
-                                <a href="mailto:${project.contactPerson.email}">${project.contactPerson.email}</a>
-                            </c:if>
-                        </dd>
-                        <c:if test="${project.contactPerson.telephone != null}">
-                            <dt>Home phone:</dt><dd>${project.contactPerson.telephone}</dd>
-                        </c:if>
-                        <c:if test="${project.contactPerson.mobile != null}">
-                            <dt>Mobile phone:</dt><dd>${project.contactPerson.mobile}</dd>
-                        </c:if>
-                        <c:if test="${project.contactPerson.workPhone != null}">
-                            <dt>Work phone:</dt><dd>${project.contactPerson.workPhone}</dd>
-                        </c:if>
-                    </c:if>
-                    <c:if test="${project.coordinator != null}">
-                        <h3>Coordinator</h3>
-                        <dt>Name:</dt>
-                        <dd><a href="<c:url value='${project.coordinator.uri}' />">${project.coordinator.displayName}</a></dd>
-                        <dt>Email:</dt>
-                        <dd>
-                            <c:if test="${project.coordinator.email != null}">
-                                <a href="mailto:${project.coordinator.email}">${project.coordinator.email}</a>
-                            </c:if>
-                        </dd>
-                        <c:if test="${project.coordinator.telephone != null}">
-                            <dt>Home phone:</dt><dd>${project.coordinator.telephone}</dd>
-                        </c:if>
-                        <c:if test="${project.coordinator.mobile != null}">
-                            <dt>Mobile phone:</dt><dd>${project.coordinator.mobile}</dd>
-                        </c:if>
-                        <c:if test="${project.coordinator.workPhone != null}">
-                            <dt>Work phone:</dt><dd>${project.coordinator.workPhone}</dd>
-                        </c:if>
-                    </c:if>
-                </dl>
+            <div class="clearfix"></div>
+            <br />
+            <dl class="dl-horizontal">
+                <dt>Type:</dt><dd>${project.type}</dd>
+                <dt>Status:</dt><dd>${project.status}</dd>
+            </dl>
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#stages" data-toggle="tab">Stages</a></li>
+                <li><a href="#details" data-toggle="tab">Details</a></li>
+                <li><a href="#contacts" data-toggle="tab">Contacts</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="stages">
+                    <div class="row-fluid">
+                        <c:choose>
+                            <c:when test="${!empty project.stages}">
+                                <div id="project-stages" data-project-id="${project.projectId}">
+                                    <c:forEach var="stage" items="${project.stages}">
+                                        <%@ include file="fragments/show-stage.jsp" %>
+                                    </c:forEach>
+                                </div>
+                            </c:when>
+                            <c:otherwise>No stages defined</c:otherwise>
+                        </c:choose>
+                    </div>
+                </div>
+                <div class="tab-pane active" id="details">
+                    <div class="row-fluid">
+                        <%@ include file="fragments/show-details.jsp" %>
+                    </div>
+                </div>
+                <div class="tab-pane active" id="contacts">
+                    <div class="row-fluid">
+                        <%@ include file="fragments/show-contacts.jsp" %>
+                    </div>
+                </div>
             </div>
             <div class="clearfix"></div>
-
-            <c:choose>
-                <c:when test="${!empty project.stages}">
-                    <div id="project-stages" data-project-id="${project.projectId}">
-                        <c:forEach var="stage" items="${project.stages}">
-                            <%@ include file="fragments/show-stage.jsp" %>
-                        </c:forEach>
-                    </div>
-                </c:when>
-                <c:otherwise>No stages defined</c:otherwise>
-            </c:choose>
-                
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
                 <sec:authorize access="hasPermission('PROJECT', 'READ')">
@@ -120,7 +58,6 @@
                 </sec:authorize>
                 <li>#${project.projectId}: ${project.name}</li>
             </ol>
-                
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
         <script type="text/javascript" src="<c:url value='/javascript/projects.js' />" ></script>
