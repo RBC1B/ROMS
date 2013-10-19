@@ -43,6 +43,19 @@
             </div>
         </div>
         <div class="col-sm-2">
+            <div>
+                <c:choose>
+                    <c:when test="${!empty activity.assignedVolunteer}">
+                        <a class="a-project-assignment" href="${activity.assignedVolunteer.uri}"
+                           data-toggle="tooltip" data-original-title="${activity.assignedVolunteer.displayName}">
+                            ${activity.assignedVolunteer.initials}
+                        </a>
+                    </c:when>
+                    <c:otherwise>Unassigned</c:otherwise>
+                </c:choose>
+            </div>
+        </div>
+        <div class="col-sm-2">
             <div class="project-counts">
                 <div class="project-count a-project-count" title="" data-toggle="tooltip"
                      data-original-title="Not started: ${activity.createdTaskCount} of ${activity.totalTaskCount}">
@@ -69,6 +82,12 @@
                 <div id="collapse-stage-${stage.id}-activity-${activity.id}" class="accordion-body collapse in">
                     <div class="accordion-inner">
                         <br>
+                        <c:choose>
+                            <c:when test="${!empty activity.comments}">
+                                <p>${activity.comments}</p>
+                            </c:when>
+                            <c:otherwise>-</c:otherwise>
+                        </c:choose>
                         <c:choose>
                             <c:when test="${!empty activity.tasks}">
                                 <h3>Tasks</h3>

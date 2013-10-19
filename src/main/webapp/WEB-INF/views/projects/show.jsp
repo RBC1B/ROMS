@@ -13,8 +13,6 @@
         <div class="container-fluid">
             <h1>Project #${project.projectId}: ${project.name}</h1>
             <hr>
-            <div class="clearfix"></div>
-            <br />
             <dl class="dl-horizontal">
                 <dt>Type:</dt><dd>${project.type}</dd>
                 <dt>Status:</dt><dd>${project.status}</dd>

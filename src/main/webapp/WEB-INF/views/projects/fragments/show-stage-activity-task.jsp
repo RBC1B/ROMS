@@ -42,6 +42,19 @@
                 </c:choose>
             </div>
         </div>
+        <div class="col-sm-2">
+            <div>
+                <c:choose>
+                    <c:when test="${!empty task.assignedVolunteer}">
+                        <a class="a-project-assignment" href="${task.assignedVolunteer.uri}"
+                           data-toggle="tooltip" data-original-title="${task.assignedVolunteer.displayName}">
+                            ${task.assignedVolunteer.initials}
+                        </a>
+                    </c:when>
+                    <c:otherwise>Unassigned</c:otherwise>
+                </c:choose>
+            </div>
+        </div>
         <button type="button" class="btn btn-edifice pull-right">
             <a class="accordion-toggle pull-right" data-toggle="collapse" data-parent="#accordion-stage-${stage.id}-activity-${activity.id}-task-${task.id}" href="#collapse-stage-${stage.id}-activity-${activity.id}-task-${task.id}">
                 <span class="glyphicon glyphicon-plus"></span>
