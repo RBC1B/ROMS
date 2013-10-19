@@ -39,6 +39,7 @@ public class ProjectStageActivityTask implements UpdateAuditable, Serializable {
     private ProjectStageActivity projectStageActivity;
     private String name;
     private Volunteer assignedVolunteer;
+    private Integer statusId;
     private String comments;
     private Date createdTime;
     private Date startedTime;
@@ -76,6 +77,14 @@ public class ProjectStageActivityTask implements UpdateAuditable, Serializable {
 
     public void setAssignedVolunteer(Volunteer assignedVolunteer) {
         this.assignedVolunteer = assignedVolunteer;
+    }
+
+    public Integer getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(Integer statusId) {
+        this.statusId = statusId;
     }
 
     public String getComments() {

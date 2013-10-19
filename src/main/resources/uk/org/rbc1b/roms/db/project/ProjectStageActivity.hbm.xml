@@ -32,12 +32,18 @@ THE SOFTWARE.
         <many-to-one name="projectStageActivityType" column="ProjectStageActivityTypeId" not-null="true" />
         <many-to-one name="projectStage" column="ProjectStageId" not-null="true" />
         <many-to-one name="assignedVolunteer" column="AssignedVolunteerId" />
+        <property name="statusId" />
         <property name="comments" />
         <property name="createdTime" not-null="true" />
         <property name="startedTime" />
         <property name="completedTime" />
         <property name="projectedStart" />
         <property name="projectedCompletion" />
+
+        <set name="tasks" inverse="true" cascade="all-delete-orphan">
+            <key column="ProjectStageActivityId" />
+            <one-to-many class="uk.org.rbc1b.roms.db.project.ProjectStageActivityTask" />
+        </set>
 
         <property name="updateTime" not-null="true" />
         <property name="updatedBy" not-null="true" />

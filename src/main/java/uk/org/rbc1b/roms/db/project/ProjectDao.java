@@ -61,11 +61,18 @@ public interface ProjectDao {
     List<ProjectStage> findProjectStages(Integer projectId);
 
     /**
-     * Look up the ordered map of project stages.
+     * Look up the ordered map of project stage types.
      * @return project stage, mapped by id
      */
     @Transactional(readOnly = true)
     Map<Integer, ProjectStageType> findProjectStageTypes();
+
+    /**
+     * Look up the ordered map of project stage activity types.
+     * @return project stage activity type, mapped by id
+     */
+    @Transactional(readOnly = true)
+    Map<Integer, ProjectStageActivityType> findProjectStageActivityTypes();
 
     /**
      * Update the project stage order.

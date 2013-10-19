@@ -21,35 +21,74 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.db.project;
+package uk.org.rbc1b.roms.controller.project;
 
-import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
-import org.hibernate.envers.Audited;
-import uk.org.rbc1b.roms.db.UpdateAuditable;
-import uk.org.rbc1b.roms.db.volunteer.Volunteer;
+import java.util.List;
+import uk.org.rbc1b.roms.controller.common.model.PersonModel;
+import uk.org.rbc1b.roms.db.project.ProjectStageActivityType;
 
 /**
- * Activity involved in completing a project stage.
+ * Model the project stage activities.
  */
-@Audited
-public class ProjectStageActivity implements UpdateAuditable, Serializable {
-    private static final long serialVersionUID = -2121305669657847928L;
+public class ProjectStageActivityModel {
     private Integer projectStageActivityId;
-    private ProjectStageActivityType projectStageActivityType;
-    private ProjectStage projectStage;
-    private Volunteer assignedVolunteer;
-    private Integer statusId;
+    private PersonModel assignedVolunteer;
     private String comments;
     private Date createdTime;
     private Date startedTime;
     private Date completedTime;
     private java.sql.Date projectedStart;
     private java.sql.Date projectedCompletion;
-    private Set<ProjectStageActivityTask> tasks;
-    private Date updateTime;
-    private Integer updatedBy;
+    private String status;
+    private List<ProjectStageActivityTaskModel> tasks;
+    private ProjectStageActivityType type;
+
+    /**
+     * @return total number of tasks connected to the stage
+     */
+    public int getTotalTaskCount() {
+        return tasks.size();
+    }
+
+    /**
+     * @return  total number of tasks created but not started
+     */
+    public int getCreatedTaskCount() {
+        int count = 0;
+        for (ProjectStageActivityTaskModel task : tasks) {
+            if (task.getStartedTime() == null) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
+     * @return  total number of tasks started but not completed
+     */
+    public int getStartedTaskCount() {
+        int count = 0;
+        for (ProjectStageActivityTaskModel task : tasks) {
+            if (task.getStartedTime() != null && task.getCompletedTime() == null) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
+     * @return  total number of tasks completed
+     */
+    public int getCompletedTaskCount() {
+        int count = 0;
+        for (ProjectStageActivityTaskModel task : tasks) {
+            if (task.getCompletedTime() != null) {
+                count++;
+            }
+        }
+        return count;
+    }
 
     public Integer getProjectStageActivityId() {
         return projectStageActivityId;
@@ -59,36 +98,12 @@ public class ProjectStageActivity implements UpdateAuditable, Serializable {
         this.projectStageActivityId = projectStageActivityId;
     }
 
-    public ProjectStageActivityType getProjectStageActivityType() {
-        return projectStageActivityType;
-    }
-
-    public void setProjectStageActivityType(ProjectStageActivityType projectStageActivityType) {
-        this.projectStageActivityType = projectStageActivityType;
-    }
-
-    public ProjectStage getProjectStage() {
-        return projectStage;
-    }
-
-    public void setProjectStage(ProjectStage projectStage) {
-        this.projectStage = projectStage;
-    }
-
-    public Volunteer getAssignedVolunteer() {
+    public PersonModel getAssignedVolunteer() {
         return assignedVolunteer;
     }
 
-    public void setAssignedVolunteer(Volunteer assignedVolunteer) {
+    public void setAssignedVolunteer(PersonModel assignedVolunteer) {
         this.assignedVolunteer = assignedVolunteer;
-    }
-
-    public Integer getStatusId() {
-        return statusId;
-    }
-
-    public void setStatusId(Integer statusId) {
-        this.statusId = statusId;
     }
 
     public String getComments() {
@@ -139,34 +154,28 @@ public class ProjectStageActivity implements UpdateAuditable, Serializable {
         this.projectedCompletion = projectedCompletion;
     }
 
-    public Set<ProjectStageActivityTask> getTasks() {
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public List<ProjectStageActivityTaskModel> getTasks() {
         return tasks;
     }
 
-    public void setTasks(Set<ProjectStageActivityTask> tasks) {
+    public void setTasks(List<ProjectStageActivityTaskModel> tasks) {
         this.tasks = tasks;
     }
 
-    @Override
-    public Date getUpdateTime() {
-        return updateTime;
+    public ProjectStageActivityType getType() {
+        return type;
     }
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setType(ProjectStageActivityType type) {
+        this.type = type;
     }
 
-    @Override
-    public Integer getUpdatedBy() {
-        return updatedBy;
-    }
-
-    public void setUpdatedBy(Integer updatedBy) {
-        this.updatedBy = updatedBy;
-    }
-
-    @Override
-    public String toString() {
-        return "ProjectStageActivity{" + "projectStageActivityId=" + projectStageActivityId + '}';
-    }
 }

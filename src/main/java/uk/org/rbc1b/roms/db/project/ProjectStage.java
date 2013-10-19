@@ -39,7 +39,7 @@ public class ProjectStage implements UpdateAuditable, Serializable {
     private Integer projectStageId;
     private Project project;
     private Integer projectStageTypeId;
-    private Integer projectStageStatusId;
+    private Integer statusId;
     private Date createdTime;
     private Date startedTime;
     private Date completedTime;
@@ -73,12 +73,12 @@ public class ProjectStage implements UpdateAuditable, Serializable {
         this.projectStageTypeId = projectStageTypeId;
     }
 
-    public Integer getProjectStageStatusId() {
-        return projectStageStatusId;
+    public Integer getStatusId() {
+        return statusId;
     }
 
-    public void setProjectStageStatusId(Integer projectStageStatusId) {
-        this.projectStageStatusId = projectStageStatusId;
+    public void setStatusId(Integer statusId) {
+        this.statusId = statusId;
     }
 
     public Date getCreatedTime() {

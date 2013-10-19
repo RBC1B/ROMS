@@ -617,7 +617,7 @@ create table Project(
     RequestDate     date,
     VisitDate       date,
     EstimateCost    varchar(50),
-    ProjectStatusId bigint(20)  not null,
+    StatusId        bigint(20)  not null,
     SupportingCongregation varchar(250),
     ProjectConstraints text,
     CoordinatorId   bigint(20),
@@ -628,7 +628,7 @@ create table Project(
     foreign key (ProjectTypeId) references ProjectType(ProjectTypeId),
     foreign key (KingdomHallId) references KingdomHall(KingdomHallId) on delete set null,
     foreign key (ContactPersonId) references Person(PersonId) on delete set null,
-    foreign key (ProjectStatusId) references ProjectStatus(ProjectStatusId),
+    foreign key (StatusId) references ProjectStatus(ProjectStatusId),
     foreign key (CoordinatorId) references Person(PersonId) on delete set null,
     foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
@@ -650,7 +650,7 @@ create table Project_AUD (
     RequestDate     date,
     VisitDate       date,
     EstimateCost    varchar(50),
-    ProjectStatusId bigint(20)  not null,
+    StatusId        bigint(20)  not null,
     SupportingCongregation varchar(250),
     ProjectConstraints text,
     CoordinatorId   bigint(20),
@@ -710,7 +710,7 @@ create table ProjectTypeStageType_AUD (
 )engine=InnoDB;
 
 create table ProjectStageActivityType (
-    ProjectStageActivityTypeId   bigint(20)  auto_increment,
+    ProjectStageActivityTypeId  bigint(20)  auto_increment,
     Name                        varchar(5)  not null    unique,
     Description                 varchar(50),
     AssignedTo                  varchar(500),
@@ -782,7 +782,7 @@ create table ProjectStage (
     ProjectStageId          bigint(20)  auto_increment,
     ProjectId               bigint(20)  not null,
     ProjectStageTypeId      bigint(20)  not null,
-    ProjectStageStatusId    bigint(20)  not null,
+    StatusId                bigint(20)  not null,
     CreatedTime             timestamp   not null,
     StartedTime             timestamp   null,
     CompletedTime           timestamp   null,
@@ -793,7 +793,7 @@ create table ProjectStage (
     primary key (ProjectStageId),
     foreign key (ProjectId) references Project(ProjectId),
     foreign key (ProjectStageTypeId) references ProjectStageType(ProjectStageTypeId),
-    foreign key (ProjectStageStatusId) references ProjectStatus(ProjectStatusId),
+    foreign key (StatusId) references ProjectStatus(ProjectStatusId),
     foreign key (UpdatedBy) references User(PersonId)
 )engine=InnoDB;
 
@@ -849,6 +849,7 @@ create table ProjectStageActivity (
     ProjectStageId              bigint(20)  not null,
     AssignedVolunteerId         bigint(20)  not null,
     Comments                    varchar(1000),
+    StatusId                    bigint(20)  not null,
     CreatedTime                 timestamp   not null,
     StartedTime                 timestamp   null,
     CompletedTime               timestamp   null,
@@ -860,6 +861,7 @@ create table ProjectStageActivity (
     foreign key (ProjectStageActivityTypeId) references ProjectStageActivityType(ProjectStageActivityTypeId),
     foreign key (ProjectStageId) references ProjectStage(ProjectStageId),
     foreign key (AssignedVolunteerId) references Volunteer(PersonId),
+    foreign key (StatusId) references ProjectStatus(ProjectStatusId),
     foreign key (UpdatedBy) references User(PersonId)
 )engine=InnoDB;
 
@@ -870,6 +872,7 @@ create table ProjectStageActivity_AUD (
     ProjectStageActivityTypeId  bigint(20)  not null,
     ProjectStageId              bigint(20)  not null,
     AssignedVolunteerId         bigint(20)  not null,
+    StatusId                    bigint(20)  not null,
     Comments                    varchar(1000),
     CreatedTime                 timestamp   not null,
     StartedTime                 timestamp   null,
@@ -886,6 +889,7 @@ create table ProjectStageActivityTask (
     ProjectStageActivityId      bigint(20)  not null,
     Name                        varchar(250),
     AssignedVolunteerId         bigint(20)  not null,
+    StatusId                    bigint(20)  not null,
     Comments                    varchar(1000),
     CreatedTime                 timestamp   not null,
     StartedTime                 timestamp   null,
@@ -895,6 +899,7 @@ create table ProjectStageActivityTask (
     primary key (ProjectStageActivityTaskId),
     foreign key (ProjectStageActivityId) references ProjectStageActivity(ProjectStageActivityId),
     foreign key (AssignedVolunteerId) references Volunteer(PersonId),
+    foreign key (StatusId) references ProjectStatus(ProjectStatusId),
     foreign key (UpdatedBy) references User(PersonId)
 )engine=InnoDB;
 

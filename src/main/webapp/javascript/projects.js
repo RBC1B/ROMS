@@ -36,7 +36,7 @@ $(document).ready(function() {
         }
     );
 
-    $(".a-project-status, .a-project-task-count").tooltip();
+    $(".a-project-status, .a-project-count").tooltip();
 
     // details view
     $("#project-stages").sortable({

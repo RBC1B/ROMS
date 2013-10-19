@@ -40,6 +40,8 @@ import uk.org.rbc1b.roms.db.project.Project;
 import uk.org.rbc1b.roms.db.project.ProjectDao;
 import uk.org.rbc1b.roms.db.project.ProjectStage;
 import uk.org.rbc1b.roms.db.project.ProjectStageActivity;
+import uk.org.rbc1b.roms.db.project.ProjectStageActivityTask;
+import uk.org.rbc1b.roms.db.project.ProjectStageActivityType;
 import uk.org.rbc1b.roms.db.project.ProjectStageType;
 import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 
@@ -89,7 +91,7 @@ public class ProjectModelFactory {
         }
         model.setName(project.getName());
         model.setRequestDate(project.getRequestDate());
-        model.setStatus(statuses.get(project.getProjectStatusId()));
+        model.setStatus(statuses.get(project.getStatusId()));
         model.setType(types.get(project.getProjectTypeId()));
         model.setUri(generateUri(project.getProjectId()));
 
@@ -132,7 +134,7 @@ public class ProjectModelFactory {
         model.setPriority(project.getPriority());
         model.setProjectId(project.getProjectId());
         model.setRequestDate(project.getRequestDate());
-        model.setStatus(statuses.get(project.getProjectStatusId()));
+        model.setStatus(statuses.get(project.getStatusId()));
         model.setSupportingCongregation(project.getSupportingCongregation());
         model.setTelephone(project.getTelephone());
         model.setType(types.get(project.getProjectTypeId()));
@@ -151,7 +153,7 @@ public class ProjectModelFactory {
             return Collections.emptyList();
         }
 
-        Map<Integer, ProjectStageType> types = projectDao.findProjectStageTypes();
+        Map<Integer, ProjectStageType> stageTypes = projectDao.findProjectStageTypes();
         Map<Integer, String> statuses = referenceDao.findProjectStatusValues();
 
         List<ProjectStageModel> modelList = new ArrayList<ProjectStageModel>();
@@ -159,35 +161,77 @@ public class ProjectModelFactory {
         for (ProjectStage stage : stages) {
             ProjectStageModel model = new ProjectStageModel();
             model.setProjectStageId(stage.getProjectStageId());
-            model.setType(types.get(stage.getProjectStageTypeId()));
-            model.setStatus(statuses.get(stage.getProjectStageStatusId()));
+            model.setType(stageTypes.get(stage.getProjectStageTypeId()));
+            model.setStatus(statuses.get(stage.getStatusId()));
             model.setCreatedTime(stage.getCreatedTime());
             model.setStartedTime(stage.getStartedTime());
             model.setCompletedTime(stage.getCompletedTime());
 
-            List<ProjectStageTaskModel> taskModelList = new ArrayList<ProjectStageTaskModel>();
-            for (ProjectStageActivity activity : stage.getActivities()) {
-                ProjectStageTaskModel taskModel = new ProjectStageTaskModel();
-
-                // we make use of the person dao caching, otherwise we would look these up first
-                // to prevent duplicate lookups.
-                // Person person = personDao.findPerson(task.getAssignedVolunteer().getPersonId());
-                //
-                // taskModel.setAssignedVolunteer(personModelFactory.generatePersonModel(person));
-                // taskModel.setComments(task.getComments());
-                // taskModel.setCompletedTime(task.getCompletedTime());
-                // taskModel.setCreatedTime(task.getCreatedTime());
-                // taskModel.setName(task.getName());
-                // taskModel.setProjectStageTaskId(Integer.SIZE);
-                // taskModel.setStartedTime(task.getStartedTime());
-                // taskModelList.add(taskModel);
-
-            }
-            Collections.sort(taskModelList, TASK_COMPARATOR);
-            model.setTasks(taskModelList);
+            model.setActivities(generateProjectStageActivities(stage, statuses));
 
             modelList.add(model);
         }
+        return modelList;
+    }
+
+    private List<ProjectStageActivityModel> generateProjectStageActivities(ProjectStage stage,
+            Map<Integer, String> statuses) {
+
+        Map<Integer, ProjectStageActivityType> activityTypes = projectDao.findProjectStageActivityTypes();
+
+        List<ProjectStageActivityModel> modelList = new ArrayList<ProjectStageActivityModel>();
+        for (ProjectStageActivity activity : stage.getActivities()) {
+
+            // we make use of the person dao caching, otherwise we would look these up first
+            // to prevent duplicate lookups.
+            Person person = personDao.findPerson(activity.getAssignedVolunteer().getPersonId());
+
+            ProjectStageActivityModel model = new ProjectStageActivityModel();
+            model.setAssignedVolunteer(personModelFactory.generatePersonModel(person));
+            model.setComments(activity.getComments());
+            model.setCompletedTime(activity.getCompletedTime());
+            model.setCreatedTime(activity.getCreatedTime());
+            model.setProjectedCompletion(activity.getProjectedCompletion());
+            model.setProjectedStart(activity.getProjectedStart());
+            model.setProjectStageActivityId(activity.getProjectStageActivityId());
+            model.setStartedTime(activity.getStartedTime());
+            model.setStatus(statuses.get(activity.getStatusId()));
+            model.setType(activityTypes.get(activity.getProjectStageActivityType().getProjectStageActivityTypeId()));
+
+            model.setTasks(generateProjectStageActivityTasks(activity, statuses));
+
+            modelList.add(model);
+
+        }
+        return modelList;
+    }
+
+    private List<ProjectStageActivityTaskModel> generateProjectStageActivityTasks(ProjectStageActivity activity,
+            Map<Integer, String> statuses) {
+
+        List<ProjectStageActivityTaskModel> modelList = new ArrayList<ProjectStageActivityTaskModel>();
+        for (ProjectStageActivityTask task : activity.getTasks()) {
+
+            // we make use of the person dao caching, otherwise we would look these up first
+            // to prevent duplicate lookups.
+            Person person = personDao.findPerson(task.getAssignedVolunteer().getPersonId());
+
+            ProjectStageActivityTaskModel model = new ProjectStageActivityTaskModel();
+
+            model.setAssignedVolunteer(personModelFactory.generatePersonModel(person));
+            model.setComments(task.getComments());
+            model.setCompletedTime(task.getCompletedTime());
+            model.setCreatedTime(task.getCreatedTime());
+            model.setName(task.getName());
+            model.setProjectStageActivityTaskId(task.getProjectStageActivityTaskId());
+            model.setStartedTime(task.getStartedTime());
+            model.setStatus(statuses.get(activity.getStatusId()));
+            modelList.add(model);
+
+        }
+
+        Collections.sort(modelList, TASK_COMPARATOR);
+
         return modelList;
     }
 
@@ -214,11 +258,12 @@ public class ProjectModelFactory {
     /**
      * Task comparator, sort by task creation date.
      */
-    private static class ProjectStageTaskModelComparator implements Comparator<ProjectStageTaskModel>, Serializable {
+    private static class ProjectStageTaskModelComparator implements Comparator<ProjectStageActivityTaskModel>,
+            Serializable {
         private static final long serialVersionUID = 5200865793008893390L;
 
         @Override
-        public int compare(ProjectStageTaskModel t, ProjectStageTaskModel t1) {
+        public int compare(ProjectStageActivityTaskModel t, ProjectStageActivityTaskModel t1) {
             return t.getCreatedTime().compareTo(t1.getCreatedTime());
         }
     }

@@ -39,12 +39,12 @@
                         </c:choose>
                     </div>
                 </div>
-                <div class="tab-pane active" id="details">
+                <div class="tab-pane" id="details">
                     <div class="row-fluid">
                         <%@ include file="fragments/show-details.jsp" %>
                     </div>
                 </div>
-                <div class="tab-pane active" id="contacts">
+                <div class="tab-pane" id="contacts">
                     <div class="row-fluid">
                         <%@ include file="fragments/show-contacts.jsp" %>
                     </div>

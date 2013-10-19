@@ -20,7 +20,7 @@
         <property name="requestDate" />
         <property name="visitDate" />
         <property name="estimateCost" length="50" />
-        <property name="projectStatusId" />
+        <property name="statusId" />
         <property name="supportingCongregation" length="250" />
         <property name="constraints" column="ProjectConstraints" />
         <many-to-one name="coordinator" column="CoordinatorId" />

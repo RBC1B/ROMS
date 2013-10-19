@@ -31,29 +31,28 @@ import uk.org.rbc1b.roms.db.project.ProjectStageType;
  * Model for an individual project stage.
  */
 public class ProjectStageModel {
-
+    private List<ProjectStageActivityModel> activities;
     private Integer projectStageId;
     private ProjectStageType type;
     private String status;
     private Date createdTime;
     private Date startedTime;
     private Date completedTime;
-    private List<ProjectStageTaskModel> tasks;
 
     /**
-     * @return total number of tasks connected to the stage
+     * @return total number of activities connected to the stage
      */
-    public int getTotalTaskCount() {
-        return tasks.size();
+    public int getTotalActivityCount() {
+        return activities.size();
     }
 
     /**
-     * @return  total number of tasks created but not started
+     * @return  total number of activities created but not started
      */
-    public int getCreatedTaskCount() {
+    public int getCreatedActivityCount() {
         int count = 0;
-        for (ProjectStageTaskModel task: tasks) {
-            if (task.getStartedTime() == null) {
+        for (ProjectStageActivityModel activity : activities) {
+            if (activity.getStartedTime() == null) {
                 count++;
             }
         }
@@ -61,12 +60,12 @@ public class ProjectStageModel {
     }
 
     /**
-     * @return  total number of tasks started but not completed
+     * @return  total number of activities started but not completed
      */
-    public int getStartedTaskCount() {
+    public int getStartedActivityCount() {
         int count = 0;
-        for (ProjectStageTaskModel task: tasks) {
-            if (task.getStartedTime() != null && task.getCompletedTime() == null) {
+        for (ProjectStageActivityModel activity : activities) {
+            if (activity.getStartedTime() != null && activity.getCompletedTime() == null) {
                 count++;
             }
         }
@@ -74,16 +73,24 @@ public class ProjectStageModel {
     }
 
     /**
-     * @return  total number of tasks completed
+     * @return  total number of activities completed
      */
-    public int getCompletedTaskCount() {
+    public int getCompletedActivityCount() {
         int count = 0;
-        for (ProjectStageTaskModel task: tasks) {
-            if (task.getCompletedTime() != null) {
+        for (ProjectStageActivityModel activity : activities) {
+            if (activity.getCompletedTime() != null) {
                 count++;
             }
         }
         return count;
+    }
+
+    public List<ProjectStageActivityModel> getActivities() {
+        return activities;
+    }
+
+    public void setActivities(List<ProjectStageActivityModel> activities) {
+        this.activities = activities;
     }
 
     public Integer getProjectStageId() {
@@ -134,11 +141,4 @@ public class ProjectStageModel {
         this.completedTime = completedTime;
     }
 
-    public List<ProjectStageTaskModel> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(List<ProjectStageTaskModel> tasks) {
-        this.tasks = tasks;
-    }
 }

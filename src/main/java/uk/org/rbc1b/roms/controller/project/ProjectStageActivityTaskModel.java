@@ -29,22 +29,23 @@ import uk.org.rbc1b.roms.controller.common.model.PersonModel;
 /**
  * Model the project stage tasks.
  */
-public class ProjectStageTaskModel {
+public class ProjectStageActivityTaskModel {
 
-    private Integer projectStageTaskId;
+    private Integer projectStageActivityTaskId;
     private String name;
     private PersonModel assignedVolunteer;
     private String comments;
     private Date createdTime;
     private Date startedTime;
     private Date completedTime;
+    private String status;
 
-    public Integer getProjectStageTaskId() {
-        return projectStageTaskId;
+    public Integer getProjectStageActivityTaskId() {
+        return projectStageActivityTaskId;
     }
 
-    public void setProjectStageTaskId(Integer projectStageTaskId) {
-        this.projectStageTaskId = projectStageTaskId;
+    public void setProjectStageActivityTaskId(Integer projectStageActivityTaskId) {
+        this.projectStageActivityTaskId = projectStageActivityTaskId;
     }
 
     public String getName() {
@@ -94,4 +95,13 @@ public class ProjectStageTaskModel {
     public void setCompletedTime(Date completedTime) {
         this.completedTime = completedTime;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
 }
