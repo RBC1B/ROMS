@@ -65,35 +65,6 @@ public class VolunteerBadgePdfModelFactory {
     }
 
     /**
-     * Generates the title that is displayed in the popup when a volunteer badge
-     * cannot be created as the volunteer has no departmental assignment.
-     *
-     * @return String title
-     */
-    public String generatePopupTitle() {
-        return "Pdf Badge Generation - Not Possible";
-    }
-
-    /**
-     * Generates the content that is displayed when a volunteer badge cannot be
-     * created because the volunteer has no departmental assignment.
-     *
-     * @param volunteer the volunteer
-     * @return String content
-     */
-    public String generatePopupContent(Volunteer volunteer) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("A badge cannot be generated for ").append(volunteer.formatDisplayName()).append(" until ");
-        if (volunteer.getGender().equals("M")) {
-            stringBuilder.append("he ");
-        } else {
-            stringBuilder.append("she ");
-        }
-        stringBuilder.append("receives an assignment.");
-        return stringBuilder.toString();
-    }
-
-    /**
      * Generate a Set of skills for a volunteer to appear on the badge.
      *
      * @param volunteer volunteer
