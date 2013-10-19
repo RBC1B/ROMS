@@ -23,6 +23,7 @@
  */
 package uk.org.rbc1b.roms.controller.volunteer;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -65,35 +66,37 @@ public class VolunteerBadgePdfModelFactory {
     }
 
     /**
-     * Generate a Set of skills for a volunteer to appear on the badge.
+     * Generate a Set of skills that should appear on a volunteer badge. These
+     * skills are Strings of each skill's name. No more than 8 skills can be
+     * displayed on a badge.
      *
-     * @param volunteer volunteer
-     * @return Set
+     * @param volunteer the volunteer
+     * @return Set of skill names
      */
     public Set<String> generateSkillsSet(Volunteer volunteer) {
-        Set<Skill> skills = findVolunteerSkills(volunteer.getPersonId());
-        Set<String> skillsSet = new HashSet<String>();
+        List<Skill> skills = findVolunteerSkills(volunteer.getPersonId());
+        Set<String> badgeSkills = new HashSet<String>();
         for (Skill skill : skills) {
-            SkillCategory skillCategory = skillDao.findSkillCategory(skill.getCategory().getSkillCategoryId());
-            if (skillCategory.isAppearOnBadge()) {
-                skillsSet.add(skill.getName());
-                if (skillsSet.size() == 8) {
+            if (skillDao.findSkillCategory(skill.getCategory().getSkillCategoryId()).isAppearOnBadge()) {
+                badgeSkills.add(skill.getName());
+                if (badgeSkills.size() >= 8) {
                     break;
                 }
             }
         }
-        return skillsSet;
+        return badgeSkills;
     }
 
     /**
      * Generate the colour band of the badge depending on the volunteer's
-     * skills.
+     * skills. Null is returned if a volunteer has no skill that has a colour
+     * associated with that skill.
      *
      * @param volunteer volunteer
-     * @return String colour
+     * @return String colour or null
      */
     public String generateColourBand(Volunteer volunteer) {
-        Set<Skill> skills = findVolunteerSkills(volunteer.getPersonId());
+        List<Skill> skills = findVolunteerSkills(volunteer.getPersonId());
         String otherColour = null;
         for (Skill skill : skills) {
             SkillCategory skillCategory = skillDao.findSkillCategory(skill.getCategory().getSkillCategoryId());
@@ -107,31 +110,31 @@ public class VolunteerBadgePdfModelFactory {
     }
 
     /**
-     * Find the primary assignment of a volunteer. This appears on the badge.
+     * Find the primary assignment of a volunteer. This appears on the badge as
+     * the volunteer's departmental assignment.
      *
      * @param volunteer volunteer
      * @return String
      */
     public String generatePrimaryAssignment(Volunteer volunteer) {
-        Assignment primaryAssignment = volunteerDao.findPrimaryAssignment(volunteer.getPersonId());
+        List<Assignment> assignments = volunteerDao.findAssignments(volunteer.getPersonId());
+        Assignment primaryAssignment = assignments.get(0);
         Department department = departmentDao.findDepartment(primaryAssignment.getDepartmentId());
         return department.getName();
     }
 
     /**
-     * Helper method to return a set of skills.
+     * Helper method to return a list of skills for a volunteer.
      *
      * @param personId volunteer id
-     * @return set of skills
+     * @return list of skills
      */
-    private Set<Skill> findVolunteerSkills(Integer personId) {
-        Set<Skill> skills = new HashSet<Skill>();
+    private List<Skill> findVolunteerSkills(Integer personId) {
         List<VolunteerSkill> volunteerSkills = volunteerDao.findSkills(personId);
-        if (!volunteerSkills.isEmpty()) {
-            for (VolunteerSkill volunteerSkill : volunteerSkills) {
-                Skill skill = skillDao.findSkill(volunteerSkill.getSkillId());
-                skills.add(skill);
-            }
+        List<Skill> skills = new ArrayList<Skill>();
+        for (VolunteerSkill volunteerSkill : volunteerSkills) {
+            Skill skill = skillDao.findSkill(volunteerSkill.getSkillId());
+            skills.add(skill);
         }
         return skills;
     }
