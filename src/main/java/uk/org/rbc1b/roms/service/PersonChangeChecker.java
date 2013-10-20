@@ -26,16 +26,15 @@ package uk.org.rbc1b.roms.service;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import uk.org.rbc1b.roms.controller.LoggingHandlerExceptionResolver;
 import uk.org.rbc1b.roms.db.PersonChange;
 import uk.org.rbc1b.roms.db.PersonChangeDao;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.ui.velocity.VelocityEngineUtils;
+import uk.org.rbc1b.roms.db.Email;
+import uk.org.rbc1b.roms.db.EmailDao;
 
 /**
  * Checks PersonChange table to see if there are any outstanding changes.
@@ -43,9 +42,10 @@ import org.springframework.ui.velocity.VelocityEngineUtils;
 @Component
 public class PersonChangeChecker {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LoggingHandlerExceptionResolver.class);
     @Autowired
     private PersonChangeDao personChangeDao;
+    @Autowired
+    private EmailDao emailDao;
     @Autowired
     private VelocityEngine velocityEngine;
 
@@ -62,7 +62,11 @@ public class PersonChangeChecker {
             Map<String, Volunteer> model = new HashMap<String, Volunteer>();
             model.put("volunteerOverseer", volunteerOverseer);
             String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "uk/org/rbc1b/roms/service/EmailForPersonChanges.vm", model);
-            LOGGER.error("PersonChangeChecker:" + text);
+            Email email = new Email();
+            email.setReceipient(volunteerOverseer.getEmail());
+            email.setSubject("Volunteer Information Changes");
+            email.setText(text);
+            emailDao.save(email);
         }
     }
 }

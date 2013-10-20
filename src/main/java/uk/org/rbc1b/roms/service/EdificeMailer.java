@@ -23,10 +23,17 @@
  */
 package uk.org.rbc1b.roms.service;
 
+import java.util.List;
+import java.util.Set;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import uk.org.rbc1b.roms.db.Email;
+import uk.org.rbc1b.roms.db.EmailAttachment;
+import uk.org.rbc1b.roms.db.EmailDao;
 
 /**
  *
@@ -36,16 +43,48 @@ public class EdificeMailer {
 
     @Autowired
     private JavaMailSender mailGateway;
+    @Autowired
+    private EmailDao emailDao;
 
     /**
      * Prepares and sends out all outstanding email.
      *
+     * @throws MessagingException messaging exception
      */
-    public void prepareAndSendEmail() {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo("ramindur.singh@blackcrowsys.com");
-        message.setSubject("testing");
-        message.setText("This is a test.");
-        this.mailGateway.send(message);
+    public void prepareAndSendEmail()
+            throws MessagingException {
+        List<Email> emails = this.emailDao.findAll();
+        for (Email email : emails) {
+            MimeMessage mimeMessage = this.mailGateway.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+            helper.setTo(email.getReceipient());
+            helper.setSubject(email.getSubject());
+            helper.setText(email.getText());
+            Set<EmailAttachment> attachments = email.getEmailAttachments();
+            /* To do - add attachements
+            if (!attachments.isEmpty()) {
+                for (EmailAttachment attachment : attachments) {
+                    // To do
+                }
+            } */
+            this.getMailGateway().send(mimeMessage);
+            this.emailDao.delete(email);
+        }
+    }
+
+    public JavaMailSender getMailGateway() {
+        return mailGateway;
+    }
+
+    public void setMailGateway(JavaMailSender mailGateway) {
+        this.mailGateway = mailGateway;
+    }
+
+    public EmailDao getEmailDao() {
+        return emailDao;
+    }
+
+    public void setEmailDao(EmailDao emailDao) {
+        this.emailDao = emailDao;
     }
 }

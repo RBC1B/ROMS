@@ -1150,6 +1150,23 @@ create table VolunteerSkill_AUD (
     primary key (VolunteerSkillId, REV)
 )engine=InnoDB;
 
+create table Email (
+    EmailId             bigint(20) auto_increment,
+    Receipient          varchar(250) not null,
+    Subject             varchar(250) not null,
+    Text                varchar(1000) not null,
+    primary key (EmailId)
+)engine=InnoDB;
+
+create table EmailAttachment (
+    EmailAttachmentId   bigint(20) auto_increment,
+    EmailId             bigint(20) not null,
+    Filename            varchar(100) not null,
+    Attachment          mediumblob,
+    primary key (EmailAttachmentId),
+    foreign key(EmailId) references Email(EmailId) on delete cascade
+)engine=InnoDB;
+
 -- create the base system user. The password is unhashed, so they can't log in
 -- this is only used to set up the initial data
 insert into Person(Forename, Surname, UpdateTime, UpdatedBy)

@@ -21,38 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.scheduled;
+package uk.org.rbc1b.roms.db;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.mail.MessagingException;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
-import org.springframework.scheduling.quartz.QuartzJobBean;
-import org.springframework.stereotype.Component;
-import uk.org.rbc1b.roms.service.EdificeMailer;
+import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Sends email periodically.
+ * Accesses the Email table.
  *
  */
-@Component
-public class MailerJob extends QuartzJobBean {
+public interface EmailDao {
 
     /**
-     * Scheduled job.
+     * Gets a list of emails.
      *
-     * @param context the job execution context
-     * @throws JobExecutionException the job exception
+     * @return emails list or null if there is none
      */
-    @Override
-    protected void executeInternal(JobExecutionContext context)
-            throws JobExecutionException {
-        EdificeMailer edificeMailer = (EdificeMailer) context.getJobDetail().getJobDataMap().get("edificeMailer");
-        try {
-            edificeMailer.prepareAndSendEmail();
-        } catch (MessagingException ex) {
-            Logger.getLogger(MailerJob.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+    @Transactional
+    List<Email> findAll();
+
+    /**
+     * Saves an email to the table.
+     *
+     * @param email the email to save
+     */
+    @Transactional
+    void save(Email email);
+
+    /**
+     * Deletes a row from the table.
+     *
+     * @param email the email to delete
+     */
+    @Transactional
+    void delete(Email email);
 }
