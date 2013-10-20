@@ -171,6 +171,9 @@ THE SOFTWARE.
                     <property name="name" value="project.stageType" />
                 </bean>
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
+                    <property name="name" value="project.stageActivityType" />
+                </bean>
+                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
                     <property name="name" value="department.team" />
                 </bean>
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">

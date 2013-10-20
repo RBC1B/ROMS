@@ -25,7 +25,7 @@ THE SOFTWARE.
 -->
 <hibernate-mapping package="uk.org.rbc1b.roms.db.project">
     <class name="ProjectStageActivityType" table="ProjectStageActivityType">
-        <id name="ProjectStageActivityTypeId">
+        <id name="projectStageActivityTypeId">
             <generator class="identity" />
         </id>
 

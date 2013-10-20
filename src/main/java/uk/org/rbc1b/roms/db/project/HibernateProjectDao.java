@@ -80,7 +80,14 @@ public class HibernateProjectDao implements ProjectDao {
         List<ProjectStage> stages = criteria.list();
 
         for (ProjectStage stage : stages) {
-            Hibernate.initialize(stage.getActivities());
+            Hibernate.initialize(stage.getEvents());
+            for (ProjectStageActivity activity : stage.getActivities()) {
+                Hibernate.initialize(activity.getEvents());
+
+                for (ProjectStageActivityTask task : activity.getTasks()) {
+                    Hibernate.initialize(task.getEvents());
+                }
+            }
         }
 
         criteria = session.createCriteria(ProjectStageOrder.class);
@@ -142,6 +149,24 @@ public class HibernateProjectDao implements ProjectDao {
         Map<Integer, ProjectStageType> resultMap = new LinkedHashMap<Integer, ProjectStageType>(stages.size());
         for (ProjectStageType stage : stages) {
             resultMap.put(stage.getProjectStageTypeId(), stage);
+        }
+        return resultMap;
+    }
+
+    @Override
+    @Cacheable("project.stageActivityType")
+    public Map<Integer, ProjectStageActivityType> findProjectStageActivityTypes() {
+        Session session = this.sessionFactory.getCurrentSession();
+
+        Criteria criteria = session.createCriteria(ProjectStageActivityType.class).addOrder(
+                Order.asc("projectStageActivityTypeId"));
+        @SuppressWarnings("unchecked")
+        List<ProjectStageActivityType> activities = criteria.list();
+
+        Map<Integer, ProjectStageActivityType> resultMap = new LinkedHashMap<Integer, ProjectStageActivityType>(
+                activities.size());
+        for (ProjectStageActivityType activity : activities) {
+            resultMap.put(activity.getProjectStageActivityTypeId(), activity);
         }
         return resultMap;
     }

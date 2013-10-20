@@ -365,7 +365,7 @@ update Person set congregationId = 3 where PersonId = 7;
 
 -- projects
 insert into Project(Name,ProjectTypeId,KingdomHallId,Priority,Street,Town,County,Postcode,Telephone,ContactPersonId,RequestDate,VisitDate,EstimateCost,
-				ProjectStatusId,SupportingCongregation,ProjectConstraints,CoordinatorId,UpdateTime, UpdatedBy)
+				StatusId,SupportingCongregation,ProjectConstraints,CoordinatorId,UpdateTime, UpdatedBy)
 values ('Slightly scruffy hall spruce', 1, 2, 2, null, null, null, null, null, 2, '2012-09-12', '2012-11-24', '£300 + VAT',
 		2, 'Murmurings of approval all round', 'The cong is reknowned as terrible cooks', 4, NOW(), 1);
 
@@ -378,15 +378,15 @@ values (1, 3, 'Add shelfs along main wall. Fix the door lock.', NOW(), 1);
 insert into ProjectWorkBrief(ProjectId, WorkFeatureId, Brief, UpdateTime, UpdatedBy)
 values (1, 8, 'Replace slabs at front door', NOW(), 1);
 
-insert into ProjectStage(ProjectId, ProjectStageTypeId, ProjectStageStatusId, CreatedTime,
+insert into ProjectStage(ProjectId, ProjectStageTypeId, StatusId, CreatedTime,
 StartedTime, CompletedTime, UpdateTime, UpdatedBy)
 values (1, 19, 4, '2013-06-13', '2013-06-15', '2013-06-17', '2013-06-19 11:45:00', 1);
 
-insert into ProjectStage(ProjectId, ProjectStageTypeId, ProjectStageStatusId, CreatedTime,
+insert into ProjectStage(ProjectId, ProjectStageTypeId, StatusId, CreatedTime,
 StartedTime, CompletedTime, UpdateTime, UpdatedBy)
 values (1, 20, 2, '2013-06-24', '2013-06-25', null, '2013-06-21 17:45:00', 1);
 
-insert into ProjectStage(ProjectId, ProjectStageTypeId, ProjectStageStatusId, CreatedTime,
+insert into ProjectStage(ProjectId, ProjectStageTypeId, StatusId, CreatedTime,
 StartedTime, CompletedTime, UpdateTime, UpdatedBy)
 values (1, 21, 1, '2013-07-13', null, null, '2013-07-08 11:45:00', 1);
 
@@ -399,25 +399,30 @@ values (1, 2, 1, 3, '2013-07-08 11:45:00', 1);
 insert into ProjectStageOrder(ProjectId, ProjectStageId, PreviousProjectStageId, NextProjectStageId, UpdateTime, UpdatedBy)
 values (1, 3, 2, null, '2013-07-08 11:45:00', 1);
 
-insert into ProjectStageActivity(ProjectStageId, ProjectStageActivityTypeId, AssignedVolunteerId, Comments, UpdateTime, UpdatedBy)
-values(1, 1, 5, 'Should be straight forward', '2013-07-08 11:45:00', 1);
+insert into ProjectStageActivity(ProjectStageId, ProjectStageActivityTypeId, AssignedVolunteerId, StatusId, Comments, UpdateTime, UpdatedBy)
+values(1, 1, 5, 1, 'Should be straight forward', '2013-07-08 11:45:00', 1);
 
-insert into ProjectStageActivity(ProjectStageId, ProjectStageActivityTypeId, AssignedVolunteerId, Comments, UpdateTime, UpdatedBy)
-values(1, 2, 5, 'Gonna be tricky!', '2013-07-08 11:46:00', 1);
+insert into ProjectStageActivity(ProjectStageId, ProjectStageActivityTypeId, AssignedVolunteerId, StatusId, Comments, UpdateTime, UpdatedBy)
+values(1, 2, 5, 1, 'Gonna be tricky!', '2013-07-08 11:46:00', 1);
 
-insert into ProjectStageActivityTask (ProjectStageActivityId, Name, AssignedVolunteerId, Comments, CreatedTime,
+insert into ProjectStageActivityTask (ProjectStageActivityId, Name, AssignedVolunteerId, StatusId, Comments, CreatedTime,
 StartedTime, CompletedTime, UpdateTime, UpdatedBy)
-values (1, 'Ponder it for a while', 5, 'Fingernail chewing optional', '2013-07-09 11:45:00',
+values (1, 'Ponder it for a while', 5, 1, 'Fingernail chewing optional', '2013-07-09 11:45:00',
 '2013-07-09 14:23:30', '2013-07-10 08:17:00', '2013-07-10 08:17:00', 1);
 
-insert into ProjectStageActivityTask (ProjectStageActivityId, Name, AssignedVolunteerId, Comments, CreatedTime,
+insert into ProjectStageActivityTask (ProjectStageActivityId, Name, AssignedVolunteerId, StatusId, Comments, CreatedTime,
 StartedTime, CompletedTime, UpdateTime, UpdatedBy)
-values (1, 'Ponder it a little bit more', 6, null, '2013-07-11 17:25:48',
+values (1, 'Ponder it a little bit more', 6, 1, null, '2013-07-11 17:25:48',
 null, null, '2013-07-11 17:25:48', 1);
 
+insert into ProjectStageActivityTaskEvent(ProjectStageActivityTaskId, ProjectStageActivityTaskEventTypeId, Comments, CreateTime, CreatedBy) 
+values (1, 1, null, '2013-07-09 14:23:30', 5);
+
+insert into ProjectStageActivityTaskEvent(ProjectStageActivityTaskId, ProjectStageActivityTaskEventTypeId, Comments, CreateTime, CreatedBy) 
+values (1, 5, 'these are the notes I have added', '2013-07-09 14:25:30', 5);
 
 insert into Project(Name,ProjectTypeId,KingdomHallId,Priority,Street,Town,County,Postcode,Telephone,ContactPersonId,RequestDate,VisitDate,EstimateCost,
-                ProjectStatusId,SupportingCongregation,ProjectConstraints,CoordinatorId, UpdateTime, UpdatedBy)
+                StatusId,SupportingCongregation,ProjectConstraints,CoordinatorId, UpdateTime, UpdatedBy)
 values ('Brand new hall near Hull', 2, null, null, '73 Industrial Street', 'Hull', null, 'HL12 5FD', '1234 53367', null, null, null, null,
         1, null, null, null, NOW(), 1);
 

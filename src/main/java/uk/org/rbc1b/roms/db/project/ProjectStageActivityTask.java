@@ -25,7 +25,9 @@ package uk.org.rbc1b.roms.db.project;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
 import uk.org.rbc1b.roms.db.UpdateAuditable;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 
@@ -39,10 +41,12 @@ public class ProjectStageActivityTask implements UpdateAuditable, Serializable {
     private ProjectStageActivity projectStageActivity;
     private String name;
     private Volunteer assignedVolunteer;
+    private Integer statusId;
     private String comments;
     private Date createdTime;
     private Date startedTime;
     private Date completedTime;
+    private Set<ProjectStageActivityTaskEvent> events;
     private Date updateTime;
     private Integer updatedBy;
 
@@ -78,6 +82,14 @@ public class ProjectStageActivityTask implements UpdateAuditable, Serializable {
         this.assignedVolunteer = assignedVolunteer;
     }
 
+    public Integer getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(Integer statusId) {
+        this.statusId = statusId;
+    }
+
     public String getComments() {
         return comments;
     }
@@ -108,6 +120,16 @@ public class ProjectStageActivityTask implements UpdateAuditable, Serializable {
 
     public void setCompletedTime(Date completedTime) {
         this.completedTime = completedTime;
+    }
+
+    @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
+    public Set<ProjectStageActivityTaskEvent> getEvents() {
+        return events;
+    }
+
+    @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
+    public void setEvents(Set<ProjectStageActivityTaskEvent> events) {
+        this.events = events;
     }
 
     @Override

@@ -55,6 +55,23 @@ public class PersonModel {
         return forename + " " + surname;
     }
 
+    /**
+     * @return the person display initials
+     */
+    public String getInitials() {
+        StringBuilder builder = new StringBuilder();
+        if (forename != null) {
+            builder.append(forename.charAt(0));
+        }
+        if (middleName != null) {
+            builder.append(middleName.charAt(0));
+        }
+        if (surname != null) {
+            builder.append(surname.charAt(0));
+        }
+        return builder.toString();
+    }
+
     public Integer getId() {
         return id;
     }

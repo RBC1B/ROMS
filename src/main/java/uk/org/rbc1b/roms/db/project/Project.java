@@ -51,7 +51,7 @@ public class Project implements UpdateAuditable, Serializable {
     private Integer projectTypeId;
     private String priority;
     private Date requestDate;
-    private Integer projectStatusId;
+    private Integer statusId;
     private Set<ProjectStage> stages;
     private String supportingCongregation;
     private String telephone;
@@ -156,20 +156,20 @@ public class Project implements UpdateAuditable, Serializable {
         this.requestDate = requestDate;
     }
 
-    public Integer getProjectStatusId() {
-        return projectStatusId;
-    }
-
-    public void setProjectStatusId(Integer projectStatusId) {
-        this.projectStatusId = projectStatusId;
-    }
-
     public Set<ProjectStage> getStages() {
         return stages;
     }
 
     public void setStages(Set<ProjectStage> stages) {
         this.stages = stages;
+    }
+
+    public Integer getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(Integer statusId) {
+        this.statusId = statusId;
     }
 
     public String getSupportingCongregation() {
