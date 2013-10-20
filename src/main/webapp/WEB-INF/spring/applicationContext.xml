@@ -40,6 +40,7 @@ THE SOFTWARE.
 
     <context:component-scan base-package="uk.org.rbc1b.roms.db" />
     <context:component-scan base-package="uk.org.rbc1b.roms.security" />
+    <context:component-scan base-package="uk.org.rbc1b.roms.service" />
 
     <jee:jndi-lookup id="dataSource" jndi-name="jdbc/_roms" />
 
@@ -202,4 +203,77 @@ THE SOFTWARE.
     <!-- AOP Aspect -->
     <aop:aspectj-autoproxy />
     <bean id="personAspect" class="uk.org.rbc1b.roms.aop.PersonAspect" />
+    
+    <!-- Velocity -->
+    <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+        <property name="velocityProperties">
+            <value>
+                resource.loader=class
+                class.resource.loader.class=org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+            </value>
+        </property>
+    </bean>
+    
+    <!-- Glassfish Java Mail Settings -->
+    <jee:jndi-lookup id="mailSession" jndi-name="mail/EdificeMail" />
+    <bean id="mailGateway" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="session">
+            <ref bean="mailSession" />
+        </property>
+    </bean>
+
+    <!-- Scheduled Jobs -->
+    <bean id="edificeMailer" class="uk.org.rbc1b.roms.service.EdificeMailer" />
+    <bean name="mailerJob" class="org.springframework.scheduling.quartz.JobDetailBean" >
+        <property name="jobClass" value="uk.org.rbc1b.roms.scheduled.MailerJob" />
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="edificeMailer" value-ref="edificeMailer" />
+            </map>
+        </property>
+    </bean>
+    <bean id="personChangeChecker" class="uk.org.rbc1b.roms.service.PersonChangeChecker" />
+    <bean name="personChangesJob" class="org.springframework.scheduling.quartz.JobDetailBean" >
+        <property name="jobClass" value="uk.org.rbc1b.roms.scheduled.PersonChangesJob" />
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="personChangeChecker" value-ref="personChangeChecker" />
+            </map>
+        </property>
+    </bean>
+
+    <!-- Cron Jobs -->
+    <bean id="mailCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean" >
+        <property name="jobDetail" ref="mailerJob" />
+        <property name="cronExpression" value="0 0/30 * * * ?" />
+    </bean>
+    <bean id="personchangesCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean" >
+        <property name="jobDetail" ref="personChangesJob" />
+        <property name="cronExpression" value="0 0/1 * * * ?" />
+    </bean>
+ 
+    <bean id="mailer" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="jobDetails">
+            <list>
+                <ref bean="mailerJob" />
+            </list>
+        </property>
+        <property name="triggers">
+            <list>
+                <ref bean="mailCronTrigger" />
+            </list>
+        </property>
+    </bean>
+    <bean id="personChanges" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="jobDetails">
+            <list>
+                <ref bean="personChangesJob" />
+            </list>
+        </property>
+        <property name="triggers">
+            <list>
+                <ref bean="personchangesCronTrigger" />
+            </list>
+        </property>
+    </bean>
 </beans>

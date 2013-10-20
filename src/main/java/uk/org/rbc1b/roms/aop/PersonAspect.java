@@ -32,9 +32,6 @@ import uk.org.rbc1b.roms.db.PersonDao;
 import uk.org.rbc1b.roms.db.PersonChange;
 import uk.org.rbc1b.roms.db.PersonChangeDao;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import uk.org.rbc1b.roms.controller.LoggingHandlerExceptionResolver;
 import java.sql.Date;
 
 /**
@@ -43,7 +40,6 @@ import java.sql.Date;
 @Aspect
 public class PersonAspect {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LoggingHandlerExceptionResolver.class);
     private PersonDao personDao;
     private PersonChangeDao personChangeDao;
 
@@ -102,7 +98,6 @@ public class PersonAspect {
      * @param person the person to save to personChange table
      */
     public void saveChangesToPerson(Person person) {
-        LOGGER.error("Captured updatePerson. ID:" + person.getPersonId() + "; Name:" + person.getForename() + " " + person.getSurname() + ".");
         Person oldPerson = this.personChangeDao.getOldPerson(person.getPersonId(), person);
         PersonChange personChange = new PersonChange();
         personChange.setPersonId(person.getPersonId());
