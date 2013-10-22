@@ -14,25 +14,20 @@
             <hr>
             <dl class="dl-horizontal">
                 <dt>Address:</dt>
-                <c:choose>
-                    <c:when test="${!empty kingdomHall.address}">
-                        <dd>
-                            <address>
-                                <c:if test="${!empty kingdomHall.address.street}">${kingdomHall.address.street}<br /></c:if>
-                                <c:if test="${!empty kingdomHall.address.town}">${kingdomHall.address.town}<br /></c:if>
-                                <c:if test="${!empty kingdomHall.address.county}">${kingdomHall.address.county}<br /></c:if>
-                                <c:if test="${!empty kingdomHall.address.postcode}">${kingdomHall.address.postcode}<br /></c:if>
-                            </address>
-                        </dd>
-                    </c:when>
-                    <c:otherwise>-</c:otherwise>
-                </c:choose>
+                <dd>
+                    <address>
+                        <c:if test="${!empty kingdomHall.street}">${kingdomHall.street}<br /></c:if>
+                        <c:if test="${!empty kingdomHall.town}">${kingdomHall.town}<br /></c:if>
+                        <c:if test="${!empty kingdomHall.county}">${kingdomHall.county}<br /></c:if>
+                        <c:if test="${!empty kingdomHall.postcode}">${kingdomHall.postcode}<br /></c:if>
+                    </address>
+                </dd>
                 <dt>Used By:</dt>
                 <dd>
                     <c:choose>
                         <c:when test="${!empty congregations}">
                             <c:forEach items="${congregations}" var="congregation" varStatus="loop">
-                                <a href="<c:url value="/congregations/${congregation.congregationId}" />">
+                                <a href="<c:url value="${congregation.uri}" />">
                                 ${congregation.name}
                                 </a>
                                 ${!loop.last ? ', ' : ''}
@@ -44,9 +39,9 @@
                 <dt>Title Holder:</dt>
                 <dd>
                     <c:choose>
-                        <c:when test="${!empty titleHolder}">
-                            <a href="<c:url value="/congregations/${congregation.congregationId}" />">
-                            ${titleHolder.name}
+                        <c:when test="${!empty titleHoldingCongregation}">
+                            <a href="<c:url value="${titleHoldingCongregation.uri}" />">
+                            ${titleHoldingCongregation.name}
                             </a>
                         </c:when>
                         <c:otherwise>-</c:otherwise>

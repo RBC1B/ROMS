@@ -23,6 +23,7 @@
  */
 package uk.org.rbc1b.roms.controller.kingdomhall;
 
+import java.util.Set;
 import uk.org.rbc1b.roms.controller.common.model.EntityModel;
 
 /**
@@ -32,18 +33,10 @@ import uk.org.rbc1b.roms.controller.common.model.EntityModel;
  */
 public class KingdomHallModel extends KingdomHallListModel {
 
-    private String county;
     private Integer ownershipTypeId;
     private String drawings;
     private EntityModel titleHoldingCongregation;
-
-    public String getCounty() {
-        return county;
-    }
-
-    public void setCounty(String county) {
-        this.county = county;
-    }
+    private Set<EntityModel> congregations;
 
     public Integer getOwnershipTypeId() {
         return ownershipTypeId;
@@ -67,5 +60,13 @@ public class KingdomHallModel extends KingdomHallListModel {
 
     public void setTitleHoldingCongregation(EntityModel titleHoldingCongregation) {
         this.titleHoldingCongregation = titleHoldingCongregation;
+    }
+
+    public Set<EntityModel> getCongregations() {
+        return congregations;
+    }
+
+    public void setCongregations(Set<EntityModel> congregations) {
+        this.congregations = congregations;
     }
 }

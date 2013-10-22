@@ -46,7 +46,6 @@ import uk.org.rbc1b.roms.controller.congregation.CongregationModelFactory;
 import uk.org.rbc1b.roms.db.Address;
 import uk.org.rbc1b.roms.db.Congregation;
 import uk.org.rbc1b.roms.db.CongregationDao;
-import uk.org.rbc1b.roms.db.CongregationSearchCriteria;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHallDao;
 import uk.org.rbc1b.roms.db.reference.ReferenceDao;
@@ -101,19 +100,7 @@ public class KingdomHallsController {
             throw new NoSuchRequestHandlingMethodException("No kingdom hall #" + kingdomHallId, this.getClass());
         }
 
-        model.addAttribute("kingdomHall", kingdomHall);
-
-        if (kingdomHall.getTitleHolder() != null) {
-            Congregation titleHolder = congregationDao.findCongregation(kingdomHall.getTitleHolder()
-                    .getCongregationId());
-            model.addAttribute("titleHolder", titleHolder);
-        }
-
-        CongregationSearchCriteria congregationSearchCriteria = new CongregationSearchCriteria();
-        congregationSearchCriteria.setKingdomHallId(kingdomHallId);
-
-        model.addAttribute("congregations", congregationModelFactory.generateCongregationListModels(congregationDao
-                .findCongregations(congregationSearchCriteria)));
+        model.addAttribute("kingdomHall", kingdomHallModelFactory.generateKingdomHallModel(kingdomHall));
         model.addAttribute("ownershipType",
                 referenceDao.findKingdomHallOwnershipTypeValues().get(kingdomHall.getOwnershipTypeId()));
 

@@ -35,6 +35,7 @@ public class KingdomHallListModel {
     private String name;
     private String street;
     private String town;
+    private String county;
     private String postcode;
     private String uri;
 
@@ -92,5 +93,13 @@ public class KingdomHallListModel {
 
     public void setStreet(String street) {
         this.street = street;
+    }
+
+    public String getCounty() {
+        return county;
+    }
+
+    public void setCounty(String county) {
+        this.county = county;
     }
 }

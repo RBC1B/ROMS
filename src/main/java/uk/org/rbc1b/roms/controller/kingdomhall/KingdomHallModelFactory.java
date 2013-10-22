@@ -24,10 +24,16 @@
 package uk.org.rbc1b.roms.controller.kingdomhall;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import uk.org.rbc1b.roms.controller.common.model.EntityModel;
+import uk.org.rbc1b.roms.controller.congregation.CongregationModelFactory;
+import uk.org.rbc1b.roms.db.Congregation;
 import uk.org.rbc1b.roms.db.CongregationDao;
+import uk.org.rbc1b.roms.db.CongregationSearchCriteria;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 
 /**
@@ -42,13 +48,43 @@ public class KingdomHallModelFactory {
     private CongregationDao congregationDao;
 
     /**
-     * generates a URI for kingdom hall.
+     * Generates a URI for kingdom hall.
      *
      * @param kingdomHallId the Kingdom Hall Id to set
      * @return String
      */
     public static String generateUri(Integer kingdomHallId) {
         return kingdomHallId != null ? BASE_URI + "/" + kingdomHallId : BASE_URI;
+    }
+
+    /**
+     * Generate the model to be used for the kingdom hall details view.
+     *
+     * @param kingdomHall kingdom hall
+     * @return KingdomHallModel the model
+     */
+    public KingdomHallModel generateKingdomHallModel(KingdomHall kingdomHall) {
+        KingdomHallModel model = new KingdomHallModel();
+        // kingdom hall base model information
+        populateBaseModel(kingdomHall, model);
+
+        model.setOwnershipTypeId(kingdomHall.getOwnershipTypeId());
+        model.setCongregations(generateCongregationModels(kingdomHall.getKingdomHallId()));
+
+        if (kingdomHall.getTitleHolder() != null) {
+            Congregation titleHoldingCongregation = congregationDao.findCongregation(kingdomHall
+                    .getTitleHolder().getCongregationId());
+
+            EntityModel titleHolderModel = new EntityModel();
+            titleHolderModel.setId(titleHoldingCongregation.getCongregationId());
+            titleHolderModel.setName(titleHoldingCongregation.getName());
+            titleHolderModel.setUri(CongregationModelFactory.generateUri(titleHoldingCongregation
+                    .getCongregationId()));
+
+            model.setTitleHoldingCongregation(titleHolderModel);
+        }
+
+        return model;
     }
 
     /**
@@ -85,11 +121,37 @@ public class KingdomHallModelFactory {
         if (kingdomHall.getAddress() != null) {
             model.setStreet(kingdomHall.getAddress().getStreet());
             model.setTown(kingdomHall.getAddress().getTown());
+            model.setCounty(kingdomHall.getAddress().getCounty());
             model.setPostcode(kingdomHall.getAddress().getPostcode());
         }
 
         model.setUri(KingdomHallModelFactory.generateUri(kingdomHall.getKingdomHallId()));
         model.setEditUri(KingdomHallModelFactory.generateUri(kingdomHall.getKingdomHallId()) + "/edit");
+    }
+
+    /**
+     * Helper method to generate congregation models for each congregation that
+     * meets at a hall.
+     *
+     * @param kingdomHallId kingdom hall id
+     * @return set of entity models representing congregations
+     */
+    private Set<EntityModel> generateCongregationModels(Integer kingdomHallId) {
+        Set<EntityModel> models = new HashSet<EntityModel>();
+
+        CongregationSearchCriteria congregationSearchCriteria = new CongregationSearchCriteria();
+        congregationSearchCriteria.setKingdomHallId(kingdomHallId);
+
+        List<Congregation> congregations = congregationDao.findCongregations(congregationSearchCriteria);
+        for (Congregation congregation : congregations) {
+            EntityModel model = new EntityModel();
+            model.setId(congregation.getCongregationId());
+            model.setName(congregation.getName());
+            model.setUri(CongregationModelFactory.generateUri(congregation.getCongregationId()));
+
+            models.add(model);
+        }
+        return models;
     }
 
     /**
