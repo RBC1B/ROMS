@@ -46,6 +46,7 @@ import uk.org.rbc1b.roms.controller.congregation.CongregationModelFactory;
 import uk.org.rbc1b.roms.db.Address;
 import uk.org.rbc1b.roms.db.Congregation;
 import uk.org.rbc1b.roms.db.CongregationDao;
+import uk.org.rbc1b.roms.db.CongregationSearchCriteria;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHallDao;
 import uk.org.rbc1b.roms.db.reference.ReferenceDao;
@@ -124,30 +125,34 @@ public class KingdomHallsController {
             throw new NoSuchRequestHandlingMethodException("No kingdom hall #" + kingdomHallId, this.getClass());
         }
 
-        KingdomHallModel kingdomHallModel = new KingdomHallModel();
-        kingdomHallModel.setKingdomHallId(kingdomHall.getKingdomHallId());
-        kingdomHallModel.setName(kingdomHall.getName());
+        // initialise the Kingdom Hall Form
+        KingdomHallForm kingdomHallForm = new KingdomHallForm();
+
+        kingdomHallForm.setName(kingdomHall.getName());
 
         if (kingdomHall.getAddress() != null) {
-            kingdomHallModel.setStreet(kingdomHall.getAddress().getStreet());
-            kingdomHallModel.setTown(kingdomHall.getAddress().getTown());
-            kingdomHallModel.setCounty(kingdomHall.getAddress().getCounty());
-            kingdomHallModel.setPostcode(kingdomHall.getAddress().getPostcode());
+            kingdomHallForm.setStreet(kingdomHall.getAddress().getStreet());
+            kingdomHallForm.setTown(kingdomHall.getAddress().getTown());
+            kingdomHallForm.setCounty(kingdomHall.getAddress().getCounty());
+            kingdomHallForm.setPostcode(kingdomHall.getAddress().getPostcode());
         }
-
-        kingdomHallModel.setOwnershipTypeId(kingdomHall.getOwnershipTypeId());
-        kingdomHallModel.setDrawings(kingdomHall.getDrawings());
 
         if (kingdomHall.getTitleHolder() != null) {
-            Congregation titleHoldingCongregation = congregationDao.findCongregation(kingdomHall.getTitleHolder()
+            Congregation titleHoldingCongregation = congregationDao.findCongregation(kingdomHall
+                    .getTitleHolder().getCongregationId());
+            kingdomHallForm.setTitleHoldingCongregationId(titleHoldingCongregation
                     .getCongregationId());
-            /**
-             * kingdomHallModel.setTitleHolderCongregationId(titleHoldingCongregation.getCongregationId());
-             * kingdomHallModel.setTitleHolderCongregationName(titleHoldingCongregation.getName());
-             */
+            kingdomHallForm.setTitleHoldingCongregationName(titleHoldingCongregation
+                    .getName());
         }
 
-        model.addAttribute("kingdomHallForm", kingdomHallModel);
+        kingdomHallForm.setOwnershipTypeId(kingdomHall.getOwnershipTypeId());
+
+        if (findCongregations(kingdomHall.getKingdomHallId()) != null) {
+            kingdomHallForm.setCongregations(findCongregations(kingdomHall.getKingdomHallId()));
+        }
+
+        model.addAttribute("kingdomHallForm", kingdomHallForm);
         model.addAttribute("submitUri", KingdomHallModelFactory.generateUri(kingdomHallId));
         model.addAttribute("ownershipValues", referenceDao.findKingdomHallOwnershipTypeValues());
         model.addAttribute("submitMethod", "PUT");
@@ -168,6 +173,21 @@ public class KingdomHallsController {
         model.addAttribute("kingdomHall", new KingdomHallModel());
 
         return "kingdom-halls/edit";
+    }
+
+    /**
+     * Helper method to find a list of congregations that meet at a hall.
+     *
+     * @param kingdomHallId kingdom hall id
+     * @return list of congregations
+     */
+    private List<Congregation> findCongregations(Integer kingdomHallId) {
+        CongregationSearchCriteria searchCriteria = new CongregationSearchCriteria();
+        searchCriteria.setKingdomHallId(kingdomHallId);
+
+        List<Congregation> congregations = congregationDao.findCongregations(searchCriteria);
+
+        return congregations;
     }
 
     /**

@@ -26,6 +26,7 @@ package uk.org.rbc1b.roms.controller.kingdomhall;
 import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import uk.org.rbc1b.roms.db.Congregation;
 
 /**
  * Kingdom Hall form bean for creating/editing a kingdom hall.
@@ -38,17 +39,17 @@ public class KingdomHallForm {
     @Size(min = 2, max = 50)
     private String name;
     @Size(min = 2, max = 50)
-    private String steet;
+    private String street;
     @Size(min = 2, max = 50)
     private String town;
     @Size(min = 2, max = 50)
     private String county;
     @Size(min = 4, max = 7)
     private String postcode;
-    private Integer owningCongregationId;
-    private String owningCongregationName;
+    private Integer titleHoldingCongregationId;
+    private String titleHoldingCongregationName;
     private Integer ownershipTypeId;
-    private List<String> congregations;
+    private List<Congregation> congregations;
 
     public String getName() {
         return name;
@@ -58,12 +59,12 @@ public class KingdomHallForm {
         this.name = name;
     }
 
-    public String getSteet() {
-        return steet;
+    public String getStreet() {
+        return street;
     }
 
-    public void setSteet(String steet) {
-        this.steet = steet;
+    public void setStreet(String street) {
+        this.street = street;
     }
 
     public String getTown() {
@@ -90,20 +91,20 @@ public class KingdomHallForm {
         this.postcode = postcode;
     }
 
-    public Integer getOwningCongregationId() {
-        return owningCongregationId;
+    public Integer getTitleHoldingCongregationId() {
+        return titleHoldingCongregationId;
     }
 
-    public void setOwningCongregationId(Integer owningCongregationId) {
-        this.owningCongregationId = owningCongregationId;
+    public void setTitleHoldingCongregationId(Integer titleHoldingCongregationId) {
+        this.titleHoldingCongregationId = titleHoldingCongregationId;
     }
 
-    public String getOwningCongregationName() {
-        return owningCongregationName;
+    public String getTitleHoldingCongregationName() {
+        return titleHoldingCongregationName;
     }
 
-    public void setOwningCongregationName(String owningCongregationName) {
-        this.owningCongregationName = owningCongregationName;
+    public void setTitleHoldingCongregationName(String titleHoldingCongregationName) {
+        this.titleHoldingCongregationName = titleHoldingCongregationName;
     }
 
     public Integer getOwnershipTypeId() {
@@ -114,11 +115,11 @@ public class KingdomHallForm {
         this.ownershipTypeId = ownershipTypeId;
     }
 
-    public List<String> getCongregations() {
+    public List<Congregation> getCongregations() {
         return congregations;
     }
 
-    public void setCongregations(List<String> congregations) {
+    public void setCongregations(List<Congregation> congregations) {
         this.congregations = congregations;
     }
 }
