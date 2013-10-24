@@ -9,8 +9,8 @@ Author     : oliver.elder.esq
 <!DOCTYPE html>
 <html>
     <c:choose>
-        <c:when test="${!empty kingdomHallForm.kingdomHallId}">
-            <c:set var="pageTitle" value="Edit Kingdom Hall - ${kingdomHallForm.kingdomHallId}" />
+        <c:when test="${!empty kingdomHallForm.name}">
+            <c:set var="pageTitle" value="Edit Kingdom Hall - ${kingdomHallForm.name}" />
         </c:when>
         <c:otherwise>
             <c:set var="pageTitle" value="Create Kingdom Hall" />
@@ -19,8 +19,9 @@ Author     : oliver.elder.esq
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
+        <div class="container-fluid">
             <c:choose>
-                <c:when test="${!empty kingdomHallForm.kingdomHallId}">
+                <c:when test="${!empty kingdomHallForm.name}">
                     <h1>Edit Kingdom Hall - ${kingdomHallForm.name}</h1>
                 </c:when>
                 <c:otherwise>
@@ -30,45 +31,53 @@ Author     : oliver.elder.esq
             <hr>
             <c:url var="formAction" value="${submitUri}" />
             <form:form commandName="kingdomHallForm" method="${submitMethod}" action="${formAction}">
-                    <form:hidden path="kingdomHallId" />
-                <div class="control-group">
-                    <label for="name">Name:</label>
-                    <form:input path="name" placeholder="Kingdom Hall Name" /><br />
-                </div>
-                <div class="control-group">
-                    <label for="street">Street:</label>
-                    <form:input path="street" placeholder="Kingdom Hall Street" /><br/>
-                    <label for="town">Town:</label>
-                    <form:input path="town" placeholder="Kingdom Hall Town" /><br />
-                    <label for="county">County:</label>
-                    <form:input path="county" placeholder="Kingdom Hall County" /><br />
-                    <label for="postcode">Postcode:</label>
-                    <form:input path="postcode" placeholder="Kingdom Hall Postcode" /><br/>
-                </div>
-                <div class="control-group">
-                    <label for="ownershipTypeId">Ownership Type:</label>
-                    <form:select path="ownershipTypeId">
-                        <form:option value="" label="None" />
-                        <form:options items="${ownershipValues}" />
-                    </form:select><br />
-                </div>
-                <div class="control-group">
-                    <form:hidden path="titleHolderCongregationId" />
-                    <label for="titleHolderCongregationName">Title Holding Congregation:</label>
-                    <form:input path="titleHolderCongregationName" type="text" name="titleHolderCongregationName" placeholder="Title Holder" value="" id="searchinput" data-provide="typeahead" data-source="congregation.Name" maxlength="30" autocomplete="on" /><br>
-                </div>
-                <input type="submit" class="btn btn-primary"/>
+                <fieldset>
+                    <div class="control-group">
+                        <label for="name">Name:</label>
+                        <form:input path="name" placeholder="Kingdom Hall Name" /><br />
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="control-group">
+                        <label for="street">Street:</label>
+                        <form:input path="street" placeholder="Kingdom Hall Street" /><br/>
+                        <label for="town">Town:</label>
+                        <form:input path="town" placeholder="Kingdom Hall Town" /><br />
+                        <label for="county">County:</label>
+                        <form:input path="county" placeholder="Kingdom Hall County" /><br />
+                        <label for="postcode">Postcode:</label>
+                        <form:input path="postcode" placeholder="Kingdom Hall Postcode" /><br/>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="control-group">
+                        <label for="ownershipTypeId">Ownership Type:</label>
+                        <form:select path="ownershipTypeId">
+                            <form:option value="" label="None" />
+                            <form:options items="${ownershipValues}" />
+                        </form:select><br />
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="control-group">
+                        <form:hidden path="titleHoldingCongregationId" />
+                        <label for="titleHoldingCongregationName">Title Holding Congregation:</label>
+                        <form:input path="titleHoldingCongregationName" type="text" name="titleHoldingCongregationName" placeholder="Title Holder" value="" id="searchinput" data-provide="typeahead" data-source="congregation.Name" maxlength="30" autocomplete="on" /><br>
+                    </div>
+                    <input type="submit" class="btn btn-primary"/>
+                </fieldset>
             </form:form>
-                
-            <ol class="breadcrumb">
-                <li><a href="<c:url value="/" />">Edifice</a></li>
+        </div>
+
+        <ol class="breadcrumb">
+            <li><a href="<c:url value="/" />">Edifice</a></li>
                 <sec:authorize access="hasPermission('KINGDOMHALL', 'READ')">
-                  <li role="menuitem"><a href="<c:url value="/kingdom-halls" />">Kingdom Halls</a></li>
+                <li role="menuitem"><a href="<c:url value="/kingdom-halls" />">Kingdom Halls</a></li>
                 </sec:authorize>
-                  <li class="active">Edit</li>
-            </ol>                
-                
-            <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+            <li class="active">Edit</li>
+        </ol>                
+
+        <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         <script type="text/javascript" src="<c:url value='/javascript/kingdom-halls.js' />" ></script>
     </body>
 </html>
