@@ -30,15 +30,31 @@ import uk.org.rbc1b.roms.db.project.ProjectStageType;
 /**
  * Model for an individual project stage.
  */
-public class ProjectStageModel {
+public class ProjectStageModel implements ProjectAction {
     private List<ProjectStageActivityModel> activities;
     private List<ProjectEventModel> events;
     private Integer id;
     private ProjectStageType type;
+    private boolean started;
     private String status;
     private Date createdTime;
     private Date startedTime;
     private Date completedTime;
+
+    @Override
+    public boolean isInProgress() {
+        if (started) {
+            return true;
+        }
+
+        for (ProjectStageActivityModel activity : activities) {
+            if (activity.isInProgress()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     /**
      * @return total number of activities connected to the stage
@@ -48,7 +64,7 @@ public class ProjectStageModel {
     }
 
     /**
-     * @return  total number of activities created but not started
+     * @return total number of activities created but not started
      */
     public int getCreatedActivityCount() {
         int count = 0;
@@ -61,7 +77,7 @@ public class ProjectStageModel {
     }
 
     /**
-     * @return  total number of activities started but not completed
+     * @return total number of activities started but not completed
      */
     public int getStartedActivityCount() {
         int count = 0;
@@ -74,7 +90,7 @@ public class ProjectStageModel {
     }
 
     /**
-     * @return  total number of activities completed
+     * @return total number of activities completed
      */
     public int getCompletedActivityCount() {
         int count = 0;
@@ -126,6 +142,15 @@ public class ProjectStageModel {
         this.status = status;
     }
 
+    public boolean isStarted() {
+        return started;
+    }
+
+    public void setStarted(boolean started) {
+        this.started = started;
+    }
+
+    @Override
     public Date getCreatedTime() {
         return createdTime;
     }
@@ -134,6 +159,7 @@ public class ProjectStageModel {
         this.createdTime = createdTime;
     }
 
+    @Override
     public Date getStartedTime() {
         return startedTime;
     }
@@ -142,6 +168,7 @@ public class ProjectStageModel {
         this.startedTime = startedTime;
     }
 
+    @Override
     public Date getCompletedTime() {
         return completedTime;
     }
@@ -149,5 +176,4 @@ public class ProjectStageModel {
     public void setCompletedTime(Date completedTime) {
         this.completedTime = completedTime;
     }
-
 }

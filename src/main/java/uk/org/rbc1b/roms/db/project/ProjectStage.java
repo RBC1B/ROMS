@@ -37,6 +37,7 @@ import uk.org.rbc1b.roms.db.UpdateAuditable;
 @Audited
 public class ProjectStage implements UpdateAuditable, Serializable {
     private static final long serialVersionUID = 1L;
+    private static final int STARTED_STATUS_ID = 1;
     private Integer projectStageId;
     private Project project;
     private Integer projectStageTypeId;
@@ -50,6 +51,13 @@ public class ProjectStage implements UpdateAuditable, Serializable {
     private Set<ProjectStageEvent> events;
     private Date updateTime;
     private Integer updatedBy;
+
+    /**
+     * @return true if the status is started
+     */
+    public boolean isStarted() {
+        return statusId.equals(STARTED_STATUS_ID);
+    }
 
     public Integer getProjectStageId() {
         return projectStageId;

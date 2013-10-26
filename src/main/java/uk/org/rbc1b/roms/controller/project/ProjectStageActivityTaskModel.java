@@ -30,7 +30,8 @@ import uk.org.rbc1b.roms.controller.common.model.PersonModel;
 /**
  * Model the project stage tasks.
  */
-public class ProjectStageActivityTaskModel {
+public class ProjectStageActivityTaskModel implements ProjectAction {
+
     private Integer id;
     private String name;
     private PersonModel assignedVolunteer;
@@ -40,6 +41,16 @@ public class ProjectStageActivityTaskModel {
     private Date completedTime;
     private List<ProjectEventModel> events;
     private String status;
+    private boolean started;
+
+    /**
+     * Determine if this task is started.
+     * @return true if this activity is started.
+     */
+    @Override
+    public boolean isInProgress() {
+        return started;
+    }
 
     public Integer getId() {
         return id;
@@ -73,6 +84,7 @@ public class ProjectStageActivityTaskModel {
         this.comments = comments;
     }
 
+    @Override
     public Date getCreatedTime() {
         return createdTime;
     }
@@ -81,6 +93,7 @@ public class ProjectStageActivityTaskModel {
         this.createdTime = createdTime;
     }
 
+    @Override
     public Date getStartedTime() {
         return startedTime;
     }
@@ -89,6 +102,7 @@ public class ProjectStageActivityTaskModel {
         this.startedTime = startedTime;
     }
 
+    @Override
     public Date getCompletedTime() {
         return completedTime;
     }
@@ -113,4 +127,11 @@ public class ProjectStageActivityTaskModel {
         this.status = status;
     }
 
+    public boolean isStarted() {
+        return started;
+    }
+
+    public void setStarted(boolean started) {
+        this.started = started;
+    }
 }

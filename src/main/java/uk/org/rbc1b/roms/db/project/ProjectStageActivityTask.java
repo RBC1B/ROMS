@@ -37,6 +37,7 @@ import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 @Audited
 public class ProjectStageActivityTask implements UpdateAuditable, Serializable {
     private static final long serialVersionUID = -2121305669657847928L;
+    private static final int STARTED_STATUS_ID = 1;
     private Integer projectStageActivityTaskId;
     private ProjectStageActivity projectStageActivity;
     private String name;
@@ -49,6 +50,13 @@ public class ProjectStageActivityTask implements UpdateAuditable, Serializable {
     private Set<ProjectStageActivityTaskEvent> events;
     private Date updateTime;
     private Integer updatedBy;
+
+    /**
+     * @return true if the status is started
+     */
+    public boolean isStarted() {
+        return statusId.equals(STARTED_STATUS_ID);
+    }
 
     public Integer getProjectStageActivityTaskId() {
         return projectStageActivityTaskId;

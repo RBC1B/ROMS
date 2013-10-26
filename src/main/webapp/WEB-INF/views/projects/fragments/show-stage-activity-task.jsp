@@ -1,6 +1,7 @@
 <%--
     Show an individual project stage activity tasks
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <div id="stage-${stage.id}-activity-${activity.id}-task-${task.id}" class="panel panel-default">
     <div class="panel-heading">
@@ -55,28 +56,40 @@
                 </c:choose>
             </div>
         </div>
-        <button type="button" class="btn btn-edifice pull-right">
-            <a class="accordion-toggle pull-right" data-toggle="collapse" data-parent="#accordion-stage-${stage.id}-activity-${activity.id}-task-${task.id}" href="#collapse-stage-${stage.id}-activity-${activity.id}-task-${task.id}">
-                <span class="glyphicon glyphicon-plus"></span>
-            </a>
-        </button>
-        <div class="clearfix"></div>
-        <div class="accordion" id="accordion-stage-${stage.id}-activity-${activity.id}-task-${task.id}">
-            <div class="accordion-group">
-                <div id="collapse-stage-${stage.id}-activity-${activity.id}-task-${task.id}" class="accordion-body collapse in">
-                    <div class="accordion-inner">
-                        <br>
-                        <c:if test="${!empty task.comments}">
-                            <p>${task.comments}</p>
-                        </c:if>
-                        <c:if test="${!empty task.events}">
-                            <h3>Events</h3>
-                            <div class="list-group">
-                                <c:forEach var="event" items="${task.events}">
-                                    <%@ include file="show-event.jsp" %>
-                                </c:forEach>
-                            </div>
-                        </c:if>
+        <div class="a-accordian-wrapper">
+            <c:choose> 
+                <c:when test="${task.isInProgress()}">
+                    <c:set var="accordionOpenClass">in</c:set>
+                    <c:set var="accordionIconClass">glyphicon-minus</c:set>
+                </c:when>
+                <c:otherwise>
+                    <c:set var="accordionOpenClass"></c:set>
+                    <c:set var="accordionIconClass">glyphicon-plus</c:set>
+                </c:otherwise>
+            </c:choose>
+            <button type="button" class="btn btn-edifice pull-right a-accordian-control">
+                <a class="accordion-toggle pull-right" data-toggle="collapse" data-parent="#accordion-stage-${stage.id}-activity-${activity.id}-task-${task.id}" href="#collapse-stage-${stage.id}-activity-${activity.id}-task-${task.id}">
+                    <span class="glyphicon ${accordionIconClass}"></span>
+                </a>
+            </button>
+            <div class="clearfix"></div>
+            <div class="accordion" id="accordion-stage-${stage.id}-activity-${activity.id}-task-${task.id}">
+                <div class="accordion-group">
+                    <div id="collapse-stage-${stage.id}-activity-${activity.id}-task-${task.id}" class="accordion-body collapse ${accordionOpenClass}">
+                        <div class="accordion-inner">
+                            <br>
+                            <c:if test="${!empty task.comments}">
+                                <p>${task.comments}</p>
+                            </c:if>
+                            <c:if test="${!empty task.events}">
+                                <h3>Events</h3>
+                                <div class="list-group">
+                                    <c:forEach var="event" items="${task.events}">
+                                        <%@ include file="show-event.jsp" %>
+                                    </c:forEach>
+                                </div>
+                            </c:if>
+                        </div>
                     </div>
                 </div>
             </div>

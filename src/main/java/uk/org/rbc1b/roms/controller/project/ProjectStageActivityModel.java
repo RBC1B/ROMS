@@ -31,7 +31,8 @@ import uk.org.rbc1b.roms.db.project.ProjectStageActivityType;
 /**
  * Model the project stage activities.
  */
-public class ProjectStageActivityModel {
+public class ProjectStageActivityModel implements ProjectAction {
+
     private Integer id;
     private PersonModel assignedVolunteer;
     private String comments;
@@ -39,6 +40,7 @@ public class ProjectStageActivityModel {
     private Date startedTime;
     private Date completedTime;
     private List<ProjectEventModel> events;
+    private boolean started;
     private java.sql.Date projectedStart;
     private java.sql.Date projectedCompletion;
     private String status;
@@ -53,7 +55,7 @@ public class ProjectStageActivityModel {
     }
 
     /**
-     * @return  total number of tasks created but not started
+     * @return total number of tasks created but not started
      */
     public int getCreatedTaskCount() {
         int count = 0;
@@ -66,7 +68,7 @@ public class ProjectStageActivityModel {
     }
 
     /**
-     * @return  total number of tasks started but not completed
+     * @return total number of tasks started but not completed
      */
     public int getStartedTaskCount() {
         int count = 0;
@@ -79,7 +81,7 @@ public class ProjectStageActivityModel {
     }
 
     /**
-     * @return  total number of tasks completed
+     * @return total number of tasks completed
      */
     public int getCompletedTaskCount() {
         int count = 0;
@@ -89,6 +91,21 @@ public class ProjectStageActivityModel {
             }
         }
         return count;
+    }
+
+    @Override
+    public boolean isInProgress() {
+        if (started) {
+            return true;
+        }
+
+        for (ProjectStageActivityTaskModel task : tasks) {
+            if (task.isInProgress()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public Integer getId() {
@@ -115,6 +132,7 @@ public class ProjectStageActivityModel {
         this.comments = comments;
     }
 
+    @Override
     public Date getCreatedTime() {
         return createdTime;
     }
@@ -123,6 +141,7 @@ public class ProjectStageActivityModel {
         this.createdTime = createdTime;
     }
 
+    @Override
     public Date getStartedTime() {
         return startedTime;
     }
@@ -131,6 +150,7 @@ public class ProjectStageActivityModel {
         this.startedTime = startedTime;
     }
 
+    @Override
     public Date getCompletedTime() {
         return completedTime;
     }
@@ -145,6 +165,14 @@ public class ProjectStageActivityModel {
 
     public void setEvents(List<ProjectEventModel> events) {
         this.events = events;
+    }
+
+    public boolean isStarted() {
+        return started;
+    }
+
+    public void setStarted(boolean started) {
+        this.started = started;
     }
 
     public java.sql.Date getProjectedStart() {
@@ -186,5 +214,4 @@ public class ProjectStageActivityModel {
     public void setType(ProjectStageActivityType type) {
         this.type = type;
     }
-
 }

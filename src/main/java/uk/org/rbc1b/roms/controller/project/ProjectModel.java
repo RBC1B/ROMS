@@ -35,7 +35,6 @@ import uk.org.rbc1b.roms.db.Address;
  * @author oliver
  */
 public class ProjectModel {
-
     private Address address;
     private String constraints;
     private Date completedDate;

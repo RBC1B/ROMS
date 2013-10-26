@@ -168,6 +168,7 @@ public class ProjectModelFactory {
             model.setId(stage.getProjectStageId());
             model.setType(stageTypes.get(stage.getProjectStageTypeId()));
             model.setStatus(statuses.get(stage.getStatusId()));
+            model.setStarted(stage.isStarted());
             model.setCreatedTime(stage.getCreatedTime());
             model.setStartedTime(stage.getStartedTime());
             model.setCompletedTime(stage.getCompletedTime());
@@ -210,6 +211,7 @@ public class ProjectModelFactory {
             model.setId(activity.getProjectStageActivityId());
             model.setStartedTime(activity.getStartedTime());
             model.setStatus(statuses.get(activity.getStatusId()));
+            model.setStarted(activity.isStarted());
             model.setType(activityTypes.get(activity.getProjectStageActivityType().getProjectStageActivityTypeId()));
 
             model.setTasks(generateProjectStageActivityTasks(activity, statuses));
@@ -251,6 +253,7 @@ public class ProjectModelFactory {
             model.setId(task.getProjectStageActivityTaskId());
             model.setStartedTime(task.getStartedTime());
             model.setStatus(statuses.get(activity.getStatusId()));
+            model.setStarted(task.isStarted());
 
             List<ProjectEventModel> events = new ArrayList<ProjectEventModel>();
             for (ProjectStageActivityTaskEvent event : task.getEvents()) {

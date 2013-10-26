@@ -1,6 +1,7 @@
 <%--
     Show an individual project stage
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <div id="stage-${stage.id}" class="panel panel-default">
     <div class="panel-heading">
@@ -58,36 +59,48 @@
                 </div>
             </div>
         </div>
-        <button type="button" class="btn btn-edifice pull-right">
-            <a class="accordion-toggle pull-right" data-toggle="collapse" data-parent="#accordion-stage-${stage.id}" href="#collapse-stage-${stage.id}">
-                <span class="glyphicon glyphicon-plus"></span>
-            </a>
-        </button>
-        <div class="clearfix"></div>
-        <div class="accordion" id="accordion-stage-${stage.id}">
-            <div class="accordion-group">
-                <div id="collapse-stage-${stage.id}" class="accordion-body collapse in">
-                    <div class="accordion-inner">
-                        <br>
-                        <c:choose>
-                            <c:when test="${!empty stage.activities}">
-                                <h3>Activities</h3>
-                                <div id="project-stage-${stage.id}-activities">
-                                    <c:forEach var="activity" items="${stage.activities}">
-                                        <%@ include file="show-stage-activity.jsp" %>
+        <div class="a-accordian-wrapper">
+            <c:choose> 
+                <c:when test="${stage.isInProgress()}">
+                    <c:set var="accordionOpenClass">in</c:set>
+                    <c:set var="accordionIconClass">glyphicon-minus</c:set>
+                </c:when>
+                <c:otherwise>
+                    <c:set var="accordionOpenClass"></c:set>
+                    <c:set var="accordionIconClass">glyphicon-plus</c:set>
+                </c:otherwise>
+            </c:choose>
+            <button type="button" class="btn btn-edifice pull-right a-accordian-control">
+                <a class="accordion-toggle pull-right" data-toggle="collapse" data-parent="#accordion-stage-${stage.id}" href="#collapse-stage-${stage.id}">
+                    <span class="glyphicon ${accordionIconClass}"></span>
+                </a>
+            </button>
+            <div class="clearfix"></div>
+            <div class="accordion" id="accordion-stage-${stage.id}">
+                <div class="accordion-group">
+                    <div id="collapse-stage-${stage.id}" class="accordion-body collapse ${accordionOpenClass}">
+                        <div class="accordion-inner">
+                            <br>
+                            <c:choose>
+                                <c:when test="${!empty stage.activities}">
+                                    <h3>Activities</h3>
+                                    <div id="project-stage-${stage.id}-activities">
+                                        <c:forEach var="activity" items="${stage.activities}">
+                                            <%@ include file="show-stage-activity.jsp" %>
+                                        </c:forEach>
+                                    </div>
+                                </c:when>
+                                <c:otherwise>No activities defined</c:otherwise>
+                            </c:choose>
+                            <c:if test="${!empty stage.events}">
+                                <h3>Events</h3>
+                                <div class="list-group">
+                                    <c:forEach var="event" items="${stage.events}">
+                                        <%@ include file="show-event.jsp" %>
                                     </c:forEach>
                                 </div>
-                            </c:when>
-                            <c:otherwise>No activities defined</c:otherwise>
-                        </c:choose>
-                        <c:if test="${!empty stage.events}">
-                            <h3>Events</h3>
-                            <div class="list-group">
-                                <c:forEach var="event" items="${stage.events}">
-                                    <%@ include file="show-event.jsp" %>
-                                </c:forEach>
-                            </div>
-                        </c:if>
+                            </c:if>
+                        </div>
                     </div>
                 </div>
             </div>
