@@ -29,7 +29,12 @@ import javax.mail.MessagingException;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import uk.org.rbc1b.roms.security.ROMSUserDetailsService;
 import uk.org.rbc1b.roms.service.EdificeMailer;
 
 /**
@@ -48,6 +53,10 @@ public class MailerJob extends QuartzJobBean {
     @Override
     protected void executeInternal(JobExecutionContext context)
             throws JobExecutionException {
+        ROMSUserDetailsService userDetailsService = (ROMSUserDetailsService) context.getJobDetail().getJobDataMap().get("userDetailsService");
+        UserDetails system = userDetailsService.loadUserByUsername("System");
+        Authentication authentication = new UsernamePasswordAuthenticationToken(system, system.getUsername(), system.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
         EdificeMailer edificeMailer = (EdificeMailer) context.getJobDetail().getJobDataMap().get("edificeMailer");
         try {
             edificeMailer.prepareAndSendEmail();

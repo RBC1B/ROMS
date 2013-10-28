@@ -23,18 +23,24 @@
  */
 package uk.org.rbc1b.roms.service;
 
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import uk.org.rbc1b.roms.db.PersonChange;
 import uk.org.rbc1b.roms.db.PersonChangeDao;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
-import org.apache.velocity.app.VelocityEngine;
-import org.springframework.ui.velocity.VelocityEngineUtils;
 import uk.org.rbc1b.roms.db.Email;
 import uk.org.rbc1b.roms.db.EmailDao;
+import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
 
 /**
  * Checks PersonChange table to see if there are any outstanding changes.
@@ -45,27 +51,38 @@ public class PersonChangeChecker {
     @Autowired
     private PersonChangeDao personChangeDao;
     @Autowired
+    private VolunteerDao volunteerDao;
+    @Autowired
     private EmailDao emailDao;
     @Autowired
-    private VelocityEngine velocityEngine;
+    private FreeMarkerConfigurer freemarkerConfig;
 
     /**
      * Checks if there are changes in the PersonChanges table.
      *
+     * @throws IOException the IO exception reading template
+     * @throws TemplateException the template mapping
      */
-    public void checkIfOutstandingChanges() {
+    public void checkIfOutstandingChanges()
+            throws IOException, TemplateException {
         List<PersonChange> personChangeList = this.personChangeDao.findPersonChangeNotUpdated();
         if (!personChangeList.isEmpty()) {
+            // This should be the volunteer overseer
             Volunteer volunteerOverseer = new Volunteer();
             volunteerOverseer.setForename("Ramindur");
             volunteerOverseer.setEmail("ramindur.singh@blackcrowsys.com");
+
+
             Map<String, Volunteer> model = new HashMap<String, Volunteer>();
             model.put("volunteerOverseer", volunteerOverseer);
-            String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "uk/org/rbc1b/roms/service/EmailForPersonChanges.vm", model);
+            Configuration conf = freemarkerConfig.getConfiguration();
+            Template template = conf.getTemplate("EmailForPersonChanges.ftl");
+            Writer out = new StringWriter();
+            template.process(model, out);
             Email email = new Email();
             email.setReceipient(volunteerOverseer.getEmail());
             email.setSubject("Volunteer Information Changes");
-            email.setText(text);
+            email.setText(out.toString());
             emailDao.save(email);
         }
     }

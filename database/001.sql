@@ -1169,22 +1169,51 @@ create table EmailAttachment (
 
 -- create the base system user. The password is unhashed, so they can't log in
 -- this is only used to set up the initial data
-insert into Person(Forename, Surname, UpdateTime, UpdatedBy)
-values ('System', '-', NOW(), 1);
+insert into Person(PersonId, Forename, Surname, UpdateTime, UpdatedBy)
+values (0, 'System', '-', NOW(), 0);
 
 insert into User(PersonId, UserName, Password, UpdateTime, UpdatedBy)
-values (1, 'System', 'INVALID', NOW(), 1);
+values (0, 'System', 'INVALID', NOW(), 0);
 
 insert into Application (Name, Code, Comments, UpdateTime, UpdatedBy) values
-    ('Attendance & Invitations', 'ATTENDANCE', 'Mangaging project invites and gates list', NOW(), 1),
-    ('Circuit', 'CIRCUIT', 'Managing Circuits in RBC region', NOW(), 1),
-    ('Congregation', 'CONG', 'Managing Congregations in RBC region', NOW(), 1),
-    ('Database', 'DATABASE', 'Managing database and definitions', NOW(), 1),
-    ('Kingdom Halls', 'KINGDOMHALL', 'Managing Kingdom Halls in RBC region', NOW(), 1),
-    ('Projects', 'PROJECT', 'Managing Projects', NOW(), 1),
-    ('Skills', 'SKILL', 'Managing volunteer\'s skills and qualifications', NOW(), 1),
-    ('User', 'USER', 'Managing User access', NOW(), 1),
-    ('Volunteers', 'VOLUNTEER', 'Managing Volunteers', NOW(), 1);
+    ('Attendance & Invitations', 'ATTENDANCE', 'Mangaging project invites and gates list', NOW(), 0),
+    ('Circuit', 'CIRCUIT', 'Managing Circuits in RBC region', NOW(), 0),
+    ('Congregation', 'CONG', 'Managing Congregations in RBC region', NOW(), 0),
+    ('Database', 'DATABASE', 'Managing database and definitions', NOW(), 0),
+    ('Kingdom Halls', 'KINGDOMHALL', 'Managing Kingdom Halls in RBC region', NOW(), 0),
+    ('Projects', 'PROJECT', 'Managing Projects', NOW(), 0),
+    ('Skills', 'SKILL', 'Managing volunteer\'s skills and qualifications', NOW(), 0),
+    ('User', 'USER', 'Managing User access', NOW(), 0),
+    ('Volunteers', 'VOLUNTEER', 'Managing Volunteers', NOW(), 0);
+
+-- System account full access
+-- Attendance & Invitations
+insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
+values (0, 1, 4, 4, NOW(), 0);
+-- Circuit
+insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
+values (0, 2, 4, 4, NOW(), 0);
+-- Congregation
+insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
+values (0, 3, 4, 4, NOW(), 0);
+-- Database
+insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
+values (0, 4, 4, 4, NOW(), 0);
+-- Kingdom Halls
+insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
+values (0, 5, 4, 4, NOW(), 0);
+-- Projects
+insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
+values (0, 6, 4, 4, NOW(), 0);
+-- Skills
+insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
+values (0, 7, 4, 4, NOW(), 0);
+-- User
+insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
+values (0, 8, 4, 4, NOW(), 0);
+-- Volunteers
+insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
+values (0, 9, 4, 4, NOW(), 0);
 
 insert into KingdomHallOwnershipType (Name) values
     ('Freehold'),
@@ -1221,60 +1250,60 @@ insert into InterviewStatus (Name) values
     ('Completed');
 
 insert into Department (DepartmentId, Name, Description, UpdateTime, UpdatedBy) values
-    ('1','RBC','RBC Committee and assistants', NOW(), 1),
-    ('2','Chairman','RBC Chairman\'s office', NOW(), 1),
-    ('3','Construction','RBC Construction', NOW(), 1),
-    ('4','Construction Support','RBC Construction Support', NOW(), 1),
-    ('5','Personal','RBC Personal', NOW(), 1),
-    ('6','Project Development','RBC Project Development', NOW(), 1);
+    ('1','RBC','RBC Committee and assistants', NOW(), 0),
+    ('2','Chairman','RBC Chairman\'s office', NOW(), 0),
+    ('3','Construction','RBC Construction', NOW(), 0),
+    ('4','Construction Support','RBC Construction Support', NOW(), 0),
+    ('5','Personal','RBC Personal', NOW(), 0),
+    ('6','Project Development','RBC Project Development', NOW(), 0);
 insert into Department (Name, SuperDepartmentId, Description, UpdateTime, UpdatedBy) values
-    ('Project Coordination','2','Project Coordinators', NOW(), 1),
-    ('Alarms','3','', NOW(), 1),
-    ('Block Paving','3','', NOW(), 1),
-    ('Bricklaying','3','', NOW(), 1),
-    ('Carpentry','3','', NOW(), 1),
-    ('Carpeting','3','', NOW(), 1),
-    ('Ceiling','3','', NOW(), 1),
-    ('Decorating','3','', NOW(), 1),
-    ('Electrical','3','', NOW(), 1),
-    ('Electrical Testing','3','', NOW(), 1),
-    ('Ground Works','3','', NOW(), 1),
-    ('Insulation','3','', NOW(), 1),
-    ('Internal Finishes','3','', NOW(), 1),
-    ('Landscaping','3','', NOW(), 1),
-    ('Maintenance Inspection','3','', NOW(), 1),
-    ('Plasterboard','3','', NOW(), 1),
-    ('Plastering','3','', NOW(), 1),
-    ('Plumbing','3','', NOW(), 1),
-    ('Roof Trusses','3','', NOW(), 1),
-    ('Roofing','3','', NOW(), 1),
-    ('Sound','3','', NOW(), 1),
-    ('Tiling','3','', NOW(), 1),
-    ('Ventilation','3','', NOW(), 1),
-    ('Wall Panelling','3','', NOW(), 1),
-    ('Accounts','4','', NOW(), 1),
-    ('Audit','4','', NOW(), 1),
-    ('Equipment','4','', NOW(), 1),
-    ('Food Service','4','', NOW(), 1),
-    ('IT Support','4','', NOW(), 1),
-    ('Installation','4','', NOW(), 1),
-    ('Materials','4','', NOW(), 1),
-    ('On Site Services','4','', NOW(), 1),
-    ('Purchasing','4','', NOW(), 1),
-    ('Quality Control','4','', NOW(), 1),
-    ('Scaffolding','4','', NOW(), 1),
-    ('Admin','5','', NOW(), 1),
-    ('First Aid','5','', NOW(), 1),
-    ('Safety','5','', NOW(), 1),
-    ('Training','5','', NOW(), 1),
-    ('Volunteer Service','5','', NOW(), 1),
-    ('Design','6','', NOW(), 1),
-    ('Legel','6','', NOW(), 1),
-    ('Real Estate','6','', NOW(), 1);
+    ('Project Coordination','2','Project Coordinators', NOW(), 0),
+    ('Alarms','3','', NOW(), 0),
+    ('Block Paving','3','', NOW(), 0),
+    ('Bricklaying','3','', NOW(), 0),
+    ('Carpentry','3','', NOW(), 0),
+    ('Carpeting','3','', NOW(), 0),
+    ('Ceiling','3','', NOW(), 0),
+    ('Decorating','3','', NOW(), 0),
+    ('Electrical','3','', NOW(), 0),
+    ('Electrical Testing','3','', NOW(), 0),
+    ('Ground Works','3','', NOW(), 0),
+    ('Insulation','3','', NOW(), 0),
+    ('Internal Finishes','3','', NOW(), 0),
+    ('Landscaping','3','', NOW(), 0),
+    ('Maintenance Inspection','3','', NOW(), 0),
+    ('Plasterboard','3','', NOW(), 0),
+    ('Plastering','3','', NOW(), 0),
+    ('Plumbing','3','', NOW(), 0),
+    ('Roof Trusses','3','', NOW(), 0),
+    ('Roofing','3','', NOW(), 0),
+    ('Sound','3','', NOW(), 0),
+    ('Tiling','3','', NOW(), 0),
+    ('Ventilation','3','', NOW(), 0),
+    ('Wall Panelling','3','', NOW(), 0),
+    ('Accounts','4','', NOW(), 0),
+    ('Audit','4','', NOW(), 0),
+    ('Equipment','4','', NOW(), 0),
+    ('Food Service','4','', NOW(), 0),
+    ('IT Support','4','', NOW(), 0),
+    ('Installation','4','', NOW(), 0),
+    ('Materials','4','', NOW(), 0),
+    ('On Site Services','4','', NOW(), 0),
+    ('Purchasing','4','', NOW(), 0),
+    ('Quality Control','4','', NOW(), 0),
+    ('Scaffolding','4','', NOW(), 0),
+    ('Admin','5','', NOW(), 0),
+    ('First Aid','5','', NOW(), 0),
+    ('Safety','5','', NOW(), 0),
+    ('Training','5','', NOW(), 0),
+    ('Volunteer Service','5','', NOW(), 0),
+    ('Design','6','', NOW(), 0),
+    ('Legel','6','', NOW(), 0),
+    ('Real Estate','6','', NOW(), 0);
 insert into Department (Name, SuperDepartmentId, Description, UpdateTime, UpdatedBy) values
-    ('Land Acquisition and Sale','49','', NOW(), 1),
-    ('Land Search','49','', NOW(), 1),
-    ('Planning Policy','49','', NOW(), 1);
+    ('Land Acquisition and Sale','49','', NOW(), 0),
+    ('Land Search','49','', NOW(), 0),
+    ('Planning Policy','49','', NOW(), 0);
 
 insert into RbcStatus (Name) values
     ('Active'),
@@ -1335,41 +1364,41 @@ insert into ProjectType (Name) values
     ('Refurbishment');
 
 insert into ProjectStageType(Name, Description, AssignedTo, WorkNotes, UpdateTime, UpdatedBy) values
-    ('0','Land Search','Project Development','Land Search.', NOW(), 1),
-    ('1','Assess Project Viability','Chairman','Assess project viability.', NOW(), 1),
-    ('002a','Viability Design','Project Development','Following necessary site visits provide initial concept designs, site layouts. More than one design option may be required.', NOW(), 1),
-    ('002b','Viability Costings','Construction Support','Provide estimated costs for project including all options to be presented to congregations.', NOW(), 1),
-    ('3','Visit Congregation','Chairman','Meet with all congregation elders, present design options & costs. Agree scope of works (SOW).', NOW(), 1),
-    ('4','Signed Scope Of Works (SOW)','Chairman','Ensure a scope of works is signed by all congregation elders.', NOW(), 1),
-    ('5','S-83','Construction Support','S83 to be signed by congregations and retained in RBC files. Only needed if a loan required.', NOW(), 1),
-    ('6','Detailed Design Work','Project Development','Prepare detailed drawings based upon agreed SOW. Prepare planning application drawings if required.', NOW(), 1),
-    ('7','Design And Access Statement','Project Development - Design','Prepare design & Access statement.', NOW(), 1),
-    ('8','RBC Review of Draft Plan','Chairman','Review drawings and plans with RBC and approve or request alterations.', NOW(), 1),
-    ('9','Congregation Approval of Drawings','Chairman','Project Co-Ordinator to contact Congregation and inform Chairman/PD of decision.', NOW(), 1),
-    ('10','Planning Application and Approval','Project Development - Design','Submit plans to local authority for approval. Fees to be paid by congregation direct.', NOW(), 1),
-    ('11','S84 - Loan Application and Resolution','Construction Support','Congregation need to complete and sign S84 together with congregation resolutions. S84 then to be forwarded to branch for approval.', NOW(), 1),
-    ('12','Bank Account and VAT Application','Construction Support','Open a bank account for projects over £10,000. VAT registration required for all new or rebuilds.', NOW(), 1),
-    ('13','Foundation Design and Selection','Project Development - Design','Complete foundation design and specification.', NOW(), 1),
-    ('14','Building Regulation Approval','Project Development','Prepare and submit drawings for building regulation approval.', NOW(), 1),
-    ('15','Material List','Construction Support','Prepare detailed materials list.', NOW(), 1),
-    ('16','S-124 - List of Major Cost Elements','Construction Support','Complete S-124.', NOW(), 1),
-    ('17','Construction Planning','Chairman','Agree construction date and inform congregation.', NOW(), 1),
-    ('18','Construction Kick-Off Meeting','Chairman','Project Coordinator to organise kick off meeting 4-6 weeks prior to build. Meetings for construction support, trade overseers, basic site safety meetings and food safety training.', NOW(), 1),
-    ('19','Construction','Construction','Carry out work in line with SOW.', NOW(), 1),
-    ('20','Project Documentation','Construction Support','Ensure all relevant documentation retained and help in congregation H&S file. All local authority approvals, instruction manuals.', NOW(), 1),
-    ('21','Complete S-85','Chairman','Complete S-85 and send to Branch.', NOW(), 1),
-    ('999','Close Project','Chairman','Close project after all project work has been completed.', NOW(), 1);
+    ('0','Land Search','Project Development','Land Search.', NOW(), 0),
+    ('1','Assess Project Viability','Chairman','Assess project viability.', NOW(), 0),
+    ('002a','Viability Design','Project Development','Following necessary site visits provide initial concept designs, site layouts. More than one design option may be required.', NOW(), 0),
+    ('002b','Viability Costings','Construction Support','Provide estimated costs for project including all options to be presented to congregations.', NOW(), 0),
+    ('3','Visit Congregation','Chairman','Meet with all congregation elders, present design options & costs. Agree scope of works (SOW).', NOW(), 0),
+    ('4','Signed Scope Of Works (SOW)','Chairman','Ensure a scope of works is signed by all congregation elders.', NOW(), 0),
+    ('5','S-83','Construction Support','S83 to be signed by congregations and retained in RBC files. Only needed if a loan required.', NOW(), 0),
+    ('6','Detailed Design Work','Project Development','Prepare detailed drawings based upon agreed SOW. Prepare planning application drawings if required.', NOW(), 0),
+    ('7','Design And Access Statement','Project Development - Design','Prepare design & Access statement.', NOW(), 0),
+    ('8','RBC Review of Draft Plan','Chairman','Review drawings and plans with RBC and approve or request alterations.', NOW(), 0),
+    ('9','Congregation Approval of Drawings','Chairman','Project Co-Ordinator to contact Congregation and inform Chairman/PD of decision.', NOW(), 0),
+    ('10','Planning Application and Approval','Project Development - Design','Submit plans to local authority for approval. Fees to be paid by congregation direct.', NOW(), 0),
+    ('11','S84 - Loan Application and Resolution','Construction Support','Congregation need to complete and sign S84 together with congregation resolutions. S84 then to be forwarded to branch for approval.', NOW(), 0),
+    ('12','Bank Account and VAT Application','Construction Support','Open a bank account for projects over £10,000. VAT registration required for all new or rebuilds.', NOW(), 0),
+    ('13','Foundation Design and Selection','Project Development - Design','Complete foundation design and specification.', NOW(), 0),
+    ('14','Building Regulation Approval','Project Development','Prepare and submit drawings for building regulation approval.', NOW(), 0),
+    ('15','Material List','Construction Support','Prepare detailed materials list.', NOW(), 0),
+    ('16','S-124 - List of Major Cost Elements','Construction Support','Complete S-124.', NOW(), 0),
+    ('17','Construction Planning','Chairman','Agree construction date and inform congregation.', NOW(), 0),
+    ('18','Construction Kick-Off Meeting','Chairman','Project Coordinator to organise kick off meeting 4-6 weeks prior to build. Meetings for construction support, trade overseers, basic site safety meetings and food safety training.', NOW(), 0),
+    ('19','Construction','Construction','Carry out work in line with SOW.', NOW(), 0),
+    ('20','Project Documentation','Construction Support','Ensure all relevant documentation retained and help in congregation H&S file. All local authority approvals, instruction manuals.', NOW(), 0),
+    ('21','Complete S-85','Chairman','Complete S-85 and send to Branch.', NOW(), 0),
+    ('999','Close Project','Chairman','Close project after all project work has been completed.', NOW(), 0);
 
 insert into ProjectTypeStageType (ProjectTypeId, ProjectStageTypeId, UpdateTime, UpdatedBy) values
-    (1, 1, NOW(), 1);
+    (1, 1, NOW(), 0);
     
 insert into ProjectStageActivityType (Name, Description, AssignedTo, WorkNotes, UpdateTime, UpdatedBy) values
-    ('0-a', 'Council website search', 'Project Development', 'yadda yadda', NOW(), 1);
+    ('0-a', 'Council website search', 'Project Development', 'yadda yadda', NOW(), 0);
 insert into ProjectStageActivityType (Name, Description, AssignedTo, WorkNotes, UpdateTime, UpdatedBy) values
-    ('0-b', 'Speak to some farmers', 'Project Development', 'Get aff my land!', NOW(), 1);    
+    ('0-b', 'Speak to some farmers', 'Project Development', 'Get aff my land!', NOW(), 0);    
 
 insert into ProjectStageTypeActivityType (ProjectStageTypeId, ProjectStageActivityTypeId, UpdateTime, UpdatedBy) values
-    (1, 1, NOW(), 1);    
+    (1, 1, NOW(), 0);    
     
 insert into InvitationConfirmation (Description) values
     ('Assembly/Convention'),
@@ -1418,7 +1447,7 @@ insert into ProjectStageActivityTaskEventType (Name) values
     ('Notes');
 
 insert into SkillCategory (Name, Colour, AppearOnBadge, UpdateTime, UpdatedBy) values
-    ('General', 'RED', true, NOW(), 1);
+    ('General', 'RED', true, NOW(), 0);
 
 insert into SkillCategory (Name, Colour, AppearOnBadge, UpdateTime, UpdatedBy) values
-    ('Other', 'GREEN', false, NOW(), 1);
+    ('Other', 'GREEN', false, NOW(), 0);

@@ -23,9 +23,18 @@
  */
 package uk.org.rbc1b.roms.scheduled;
 
+import freemarker.template.TemplateException;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import uk.org.rbc1b.roms.security.ROMSUserDetailsService;
 import uk.org.rbc1b.roms.service.PersonChangeChecker;
 
 /**
@@ -37,12 +46,23 @@ public class PersonChangesJob extends QuartzJobBean {
      * Scheduled job.
      *
      * @param context the job execution context
-     * @throws JobExecutionException exception
+     * @throws JobExecutionException the job exception
      */
     @Override
     protected void executeInternal(JobExecutionContext context)
             throws JobExecutionException {
+        // Authorise this thread
+        ROMSUserDetailsService userDetailsService = (ROMSUserDetailsService) context.getJobDetail().getJobDataMap().get("userDetailsService");
+        UserDetails system = userDetailsService.loadUserByUsername("System");
+        Authentication authentication = new UsernamePasswordAuthenticationToken(system, system.getUsername(), system.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
         PersonChangeChecker personChangeChecker = (PersonChangeChecker) context.getJobDetail().getJobDataMap().get("personChangeChecker");
-        personChangeChecker.checkIfOutstandingChanges();
+        try {
+            personChangeChecker.checkIfOutstandingChanges();
+        } catch (IOException e) {
+            Logger.getLogger(PersonChangesJob.class.getName()).log(Level.SEVERE, null, e);
+        } catch (TemplateException e) {
+            Logger.getLogger(PersonChangesJob.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
 }

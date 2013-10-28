@@ -59,7 +59,7 @@ public interface PersonChangeDao {
      *
      * @return list of personchange
      */
-    //@PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional
     List<PersonChange> findPersonChangeNotUpdated();
 

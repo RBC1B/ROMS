@@ -1,5 +1,5 @@
-* * * This is an automated email from Edifice - RBC Information Management System * * *
 PLEASE DO NOT REPLY TO THIS EMAIL.
+* This is an automated email from RBC (London and the Home Counties) M. I. S. *
 
 Dear ${volunteerOverseer.forename},
 

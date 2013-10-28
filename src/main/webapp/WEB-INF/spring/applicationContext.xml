@@ -208,15 +208,11 @@ THE SOFTWARE.
     <!-- AOP Aspect -->
     <aop:aspectj-autoproxy />
     <bean id="personAspect" class="uk.org.rbc1b.roms.aop.PersonAspect" />
-    
-    <!-- Velocity -->
-    <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
-        <property name="velocityProperties">
-            <value>
-                resource.loader=class
-                class.resource.loader.class=org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
-            </value>
-        </property>
+
+    <!-- FreeMarker Configuration -->
+    <bean id="freemarkerConfig" 
+          class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="/WEB-INF/templates/" />
     </bean>
     
     <!-- Glassfish Java Mail Settings -->
@@ -233,6 +229,7 @@ THE SOFTWARE.
         <property name="jobClass" value="uk.org.rbc1b.roms.scheduled.MailerJob" />
         <property name="jobDataAsMap">
             <map>
+                <entry key="userDetailsService" value-ref="userDetailsService" />
                 <entry key="edificeMailer" value-ref="edificeMailer" />
             </map>
         </property>
@@ -242,6 +239,7 @@ THE SOFTWARE.
         <property name="jobClass" value="uk.org.rbc1b.roms.scheduled.PersonChangesJob" />
         <property name="jobDataAsMap">
             <map>
+                <entry key="userDetailsService" value-ref="userDetailsService" />
                 <entry key="personChangeChecker" value-ref="personChangeChecker" />
             </map>
         </property>
@@ -254,7 +252,7 @@ THE SOFTWARE.
     </bean>
     <bean id="personchangesCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean" >
         <property name="jobDetail" ref="personChangesJob" />
-        <property name="cronExpression" value="0 /15 0 * * ?" />
+        <property name="cronExpression" value="0 0 01 * * ?" />
     </bean>
  
     <bean id="mailer" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
