@@ -82,6 +82,7 @@ public class PersonChangeModelFactory {
         model.setNewMobile(personChange.getNewMobile());
         model.setNewTelephone(personChange.getNewTelephone());
         model.setNewWorkPhone(personChange.getNewWorkPhone());
+        model.setComment(personChange.getComment());
 
         model.setUpdateUri(generatorUri(personChange.getPersonChangeId()));
 

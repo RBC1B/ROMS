@@ -32,6 +32,7 @@ public class PersonChangeModel {
     private Integer personChangeId;
     private Integer personId;
     private String oldSurname;
+    private String oldMiddleName;
     private String oldForename;
     private String oldStreet;
     private String oldTown;
@@ -42,6 +43,7 @@ public class PersonChangeModel {
     private String oldMobile;
     private String oldEmail;
     private String newSurname;
+    private String newMiddleName;
     private String newForename;
     private String newStreet;
     private String newTown;
@@ -51,6 +53,7 @@ public class PersonChangeModel {
     private String newWorkPhone;
     private String newMobile;
     private String newEmail;
+    private String comment;
     private String updateUri;
 
     /**
@@ -373,5 +376,47 @@ public class PersonChangeModel {
      */
     public void setUpdateUri(String updateUri) {
         this.updateUri = updateUri;
+    }
+
+    /**
+     * @return the oldMiddleName
+     */
+    public String getOldMiddleName() {
+        return oldMiddleName;
+    }
+
+    /**
+     * @param oldMiddleName the oldMiddleName to set
+     */
+    public void setOldMiddleName(String oldMiddleName) {
+        this.oldMiddleName = oldMiddleName;
+    }
+
+    /**
+     * @return the newMiddleName
+     */
+    public String getNewMiddleName() {
+        return newMiddleName;
+    }
+
+    /**
+     * @param newMiddleName the newMiddleName to set
+     */
+    public void setNewMiddleName(String newMiddleName) {
+        this.newMiddleName = newMiddleName;
+    }
+
+    /**
+     * @return the comment
+     */
+    public String getComment() {
+        return comment;
+    }
+
+    /**
+     * @param comment the comment to set
+     */
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

@@ -33,6 +33,7 @@ import uk.org.rbc1b.roms.db.PersonChange;
 import uk.org.rbc1b.roms.db.PersonChangeDao;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import java.sql.Date;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  *
@@ -102,6 +103,7 @@ public class PersonAspect {
         PersonChange personChange = new PersonChange();
         personChange.setPersonId(person.getPersonId());
         personChange.setNewForename(person.getForename());
+        personChange.setNewMiddleName(person.getMiddleName());
         personChange.setNewSurname(person.getSurname());
         personChange.setNewAddress(person.getAddress());
         personChange.setNewEmail(person.getEmail());
@@ -109,6 +111,7 @@ public class PersonAspect {
         personChange.setNewMobile(person.getMobile());
         personChange.setNewWorkPhone(person.getWorkPhone());
         personChange.setOldForename(oldPerson.getForename());
+        personChange.setOldMiddleName(oldPerson.getMiddleName());
         personChange.setOldSurname(oldPerson.getSurname());
         personChange.setOldAddress(oldPerson.getAddress());
         personChange.setOldEmail(oldPerson.getEmail());
@@ -117,6 +120,9 @@ public class PersonAspect {
         personChange.setOldWorkPhone(oldPerson.getWorkPhone());
         java.util.Calendar calendar = java.util.Calendar.getInstance();
         personChange.setChangeDate(new Date(calendar.getTimeInMillis()));
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        String comment = "Updated by " + username + ".";
+        personChange.setComment(comment);
         personChange.setFormUpdated(false);
         this.personChangeDao.savePersonChange(personChange);
     }
