@@ -36,6 +36,7 @@ public class EmailAttachment implements Serializable {
     private Integer emailAttachmentId;
     private Email email;
     private String filename;
+    private String fileType;
     private Blob attachment;
 
     /**
@@ -92,5 +93,19 @@ public class EmailAttachment implements Serializable {
      */
     public void setAttachment(Blob attachment) {
         this.attachment = attachment;
+    }
+
+    /**
+     * @return the fileType
+     */
+    public String getFileType() {
+        return fileType;
+    }
+
+    /**
+     * @param fileType the fileType to set
+     */
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
     }
 }

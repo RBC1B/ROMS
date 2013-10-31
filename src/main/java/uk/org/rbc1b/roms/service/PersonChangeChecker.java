@@ -37,10 +37,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import uk.org.rbc1b.roms.db.PersonChange;
 import uk.org.rbc1b.roms.db.PersonChangeDao;
-import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import uk.org.rbc1b.roms.db.Email;
 import uk.org.rbc1b.roms.db.EmailDao;
-import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
+import uk.org.rbc1b.roms.db.MailRecipient;
+import uk.org.rbc1b.roms.db.MailRecipientDao;
+import uk.org.rbc1b.roms.db.Person;
+import uk.org.rbc1b.roms.db.PersonDao;
 
 /**
  * Checks PersonChange table to see if there are any outstanding changes.
@@ -48,13 +50,14 @@ import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
 @Component
 public class PersonChangeChecker {
 
-    @Autowired
+    // private static final String RECIPIENT_SEARCH = "Volunteer Update";
+    private static final Integer RECIPIENT_ID = 1;
+    private static final String EMAIL_TEMPLATE = "EmailForPersonChanges.ftl";
+    private static final String SUBJECT = "Volunteer Information Changes";
     private PersonChangeDao personChangeDao;
-    @Autowired
-    private VolunteerDao volunteerDao;
-    @Autowired
+    private PersonDao personDao;
     private EmailDao emailDao;
-    @Autowired
+    private MailRecipientDao mailRecipientDao;
     private FreeMarkerConfigurer freemarkerConfig;
 
     /**
@@ -65,25 +68,63 @@ public class PersonChangeChecker {
      */
     public void checkIfOutstandingChanges()
             throws IOException, TemplateException {
-        List<PersonChange> personChangeList = this.personChangeDao.findPersonChangeNotUpdated();
+        List<PersonChange> personChangeList = personChangeDao.findPersonChangeNotUpdated();
         if (!personChangeList.isEmpty()) {
-            // This should be the volunteer overseer
-            Volunteer volunteerOverseer = new Volunteer();
-            volunteerOverseer.setForename("Ramindur");
-            volunteerOverseer.setEmail("ramindur.singh@blackcrowsys.com");
-
-
-            Map<String, Volunteer> model = new HashMap<String, Volunteer>();
-            model.put("volunteerOverseer", volunteerOverseer);
-            Configuration conf = freemarkerConfig.getConfiguration();
-            Template template = conf.getTemplate("EmailForPersonChanges.ftl");
-            Writer out = new StringWriter();
-            template.process(model, out);
-            Email email = new Email();
-            email.setReceipient(volunteerOverseer.getEmail());
-            email.setSubject("Volunteer Information Changes");
-            email.setText(out.toString());
-            emailDao.save(email);
+            List<MailRecipient> mailRecipients = mailRecipientDao.getRecipientByMailTypeId(RECIPIENT_ID);
+            for (MailRecipient mailRecipient : mailRecipients) {
+                Map<String, Person> model = new HashMap<String, Person>();
+                Person person = personDao.findPerson(mailRecipient.getPerson().getPersonId());
+                model.put("person", person);
+                Configuration conf = freemarkerConfig.getConfiguration();
+                Template template = conf.getTemplate(EMAIL_TEMPLATE);
+                Writer out = new StringWriter();
+                template.process(model, out);
+                Email email = new Email();
+                email.setRecipient(person.getEmail());
+                email.setSubject(SUBJECT);
+                email.setText(out.toString());
+                emailDao.save(email);
+            }
         }
+    }
+
+    /**
+     * @param personChangeDao the personChangeDao to set
+     */
+    @Autowired
+    public void setPersonChangeDao(PersonChangeDao personChangeDao) {
+        this.personChangeDao = personChangeDao;
+    }
+
+    /**
+     * @param personDao the personDao to set
+     */
+    @Autowired
+    public void setPersonDao(PersonDao personDao) {
+        this.personDao = personDao;
+    }
+
+    /**
+     * @param emailDao the emailDao to set
+     */
+    @Autowired
+    public void setEmailDao(EmailDao emailDao) {
+        this.emailDao = emailDao;
+    }
+
+    /**
+     * @param mailRecipientDao the mailRecipientDao to set
+     */
+    @Autowired
+    public void setMailRecipientDao(MailRecipientDao mailRecipientDao) {
+        this.mailRecipientDao = mailRecipientDao;
+    }
+
+    /**
+     * @param freemarkerConfig the freemarkerConfig to set
+     */
+    @Autowired
+    public void setFreemarkerConfig(FreeMarkerConfigurer freemarkerConfig) {
+        this.freemarkerConfig = freemarkerConfig;
     }
 }

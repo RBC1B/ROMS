@@ -455,3 +455,7 @@ insert into PersonChange(PersonId, ChangeDate, FormUpdated)
 values(3, '2013-07-25', false);
 insert into PersonChange(PersonId, ChangeDate, FormUpdated)
 values(3, '2013-07-26', true);
+-- Only run this if you want to test out the Email for Person Change functionality
+-- Please use your email address rather than someone elses!!!
+-- update Person set Email="ramindur.singh@blackcrowsys.com" where PersonId=1;
+-- insert into MailRecipient (MailTypeId, PersonId) values (1,1);

@@ -1152,7 +1152,7 @@ create table VolunteerSkill_AUD (
 
 create table Email (
     EmailId             bigint(20) auto_increment,
-    Receipient          varchar(250) not null,
+    Recipient          varchar(250) not null,
     Subject             varchar(250) not null,
     Text                varchar(1000) not null,
     primary key (EmailId)
@@ -1162,9 +1162,27 @@ create table EmailAttachment (
     EmailAttachmentId   bigint(20) auto_increment,
     EmailId             bigint(20) not null,
     Filename            varchar(100) not null,
+    FileType            varchar(15) not null,
     Attachment          mediumblob,
     primary key (EmailAttachmentId),
     foreign key(EmailId) references Email(EmailId) on delete cascade
+)engine=InnoDB;
+
+create table MailType (
+    MailTypeId          bigint(20) auto_increment,
+    MailCode            varchar(50) not null unique,
+    Description         varchar(150),
+    primary key (MailTypeId)
+)engine=InnoDB;
+
+create Table MailRecipient (
+    MailRecipientId    bigint(20) auto_increment,
+    MailTypeId          bigint(20),
+    PersonId            bigint(20),
+    primary key (MailRecipientId),
+    constraint unique (MailTypeId, PersonId),
+    foreign key(MailTypeId) references MailType(MailTypeId) on delete cascade,
+    foreign key(PersonId) references Person(PersonId) on delete cascade
 )engine=InnoDB;
 
 -- create the base system user. The password is unhashed, so they can't log in
@@ -1451,3 +1469,7 @@ insert into SkillCategory (Name, Colour, AppearOnBadge, UpdateTime, UpdatedBy) v
 
 insert into SkillCategory (Name, Colour, AppearOnBadge, UpdateTime, UpdatedBy) values
     ('Other', 'GREEN', false, NOW(), 0);
+
+insert into MailType(MailCode, Description) values
+    ('Volunteer Update', 'Volunteer Information Update Notification'),
+    ('Training Update', 'Training Record Update Notification');

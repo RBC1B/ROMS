@@ -1,7 +1,7 @@
 PLEASE DO NOT REPLY TO THIS EMAIL.
 * This is an automated email from RBC (London and the Home Counties) M. I. S. *
 
-Dear ${volunteerOverseer.forename},
+Dear ${person.forename},
 
 There have been updates to information about volunteers for which you will need to update the paperwork.
 

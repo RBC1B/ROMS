@@ -66,6 +66,8 @@ THE SOFTWARE.
                 <value>uk/org/rbc1b/roms/db/PersonChange.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/Email.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/EmailAttachment.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/MailType.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/MailRecipient.hbm.xml</value>
 
                 <value>uk/org/rbc1b/roms/db/application/Application.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/application/ApplicationAccess.hbm.xml</value>
@@ -252,7 +254,10 @@ THE SOFTWARE.
     </bean>
     <bean id="personchangesCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean" >
         <property name="jobDetail" ref="personChangesJob" />
-        <property name="cronExpression" value="0 0 01 * * ?" />
+        <!-- Production setting for 1AM once a day -->
+        <!-- property name="cronExpression" value="0 0 01 * * ?" / -->
+        <!-- Test setting every 0/X seconds or 0 1/Y minutes -->
+        <property name="cronExpression" value="0 0/2 * * * ?" />
     </bean>
  
     <bean id="mailer" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">

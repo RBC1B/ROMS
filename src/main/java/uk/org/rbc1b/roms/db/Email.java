@@ -35,7 +35,7 @@ public class Email implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private Integer emailId;
-    private String receipient;
+    private String recipient;
     private String subject;
     private String text;
     private Set<EmailAttachment> emailAttachments;
@@ -55,17 +55,17 @@ public class Email implements Serializable {
     }
 
     /**
-     * @return the receipient
+     * @return the recipient
      */
-    public String getReceipient() {
-        return receipient;
+    public String getRecipient() {
+        return recipient;
     }
 
     /**
-     * @param receipient the receipient to set
+     * @param recipient the recipient to set
      */
-    public void setReceipient(String receipient) {
-        this.receipient = receipient;
+    public void setRecipient(String recipient) {
+        this.recipient = recipient;
     }
 
     /**

@@ -57,7 +57,7 @@ public class EdificeMailer {
         for (Email email : emails) {
             MimeMessage mimeMessage = this.mailGateway.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
-            helper.setTo(email.getReceipient());
+            helper.setTo(email.getRecipient());
             helper.setSubject(email.getSubject());
             helper.setText(email.getText());
             Set<EmailAttachment> attachments = email.getEmailAttachments();
