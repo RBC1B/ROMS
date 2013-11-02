@@ -313,14 +313,14 @@ values (5, "Juggling", "Balls and skittles. Only once tried to do chainsaws", 1,
 -- update the person cong now. Can before because of the relationships between person, circuit and congregation
 update Person set CongregationId = 1 where PersonId = 5;
 
-insert into Assignment(PersonId, DepartmentId, AssignmentRoleId, AssignedDate, TradeNumberId, TeamId, UpdateTime, UpdatedBy)
-values(5, 10, 5, '2010-04-11', 1, 1, NOW(), 0);
+insert into Assignment(PersonId, DepartmentId, AssignmentRoleCode, AssignedDate, TradeNumberId, TeamId, UpdateTime, UpdatedBy)
+values(5, 10, 'AT', '2010-04-11', 1, 1, NOW(), 0);
 
-insert into Assignment(PersonId, DepartmentId, AssignmentRoleId, AssignedDate, TradeNumberId, TeamId, UpdateTime, UpdatedBy)
-values(5, 51, 1, '2011-03-16', 2, 1, NOW(), 0);
+insert into Assignment(PersonId, DepartmentId, AssignmentRoleCode, AssignedDate, TradeNumberId, TeamId, UpdateTime, UpdatedBy)
+values(5, 51, 'AD', '2011-03-16', 2, 1, NOW(), 0);
 
-insert into Assignment(PersonId, DepartmentId, AssignmentRoleId, AssignedDate, TradeNumberId, TeamId, UpdateTime, UpdatedBy)
-values(6, 22, 8, '2006-04-04', 1, 1, NOW(), 0);
+insert into Assignment(PersonId, DepartmentId, AssignmentRoleCode, AssignedDate, TradeNumberId, TeamId, UpdateTime, UpdatedBy)
+values(6, 22, 'VN', '2006-04-04', 1, 1, NOW(), 0);
 
 insert into VolunteerSkill(PersonId, SkillId, Level, Comments, TrainingDate, TrainingResults, UpdateTime, UpdatedBy)
 values (5, 1, 1, null, null, null, NOW(), 0);

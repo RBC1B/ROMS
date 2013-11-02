@@ -8,7 +8,7 @@
 
         <many-to-one name="person" column="PersonId" not-null="true" />
         <property name="departmentId" />
-        <many-to-one name="role" column="assignmentRoleId" not-null="true" />
+        <many-to-one name="role" column="assignmentRoleCode" not-null="true" />
         <property name="assignedDate" />
         <property name="tradeNumberId" />
         <many-to-one name="team" column="TeamId" />

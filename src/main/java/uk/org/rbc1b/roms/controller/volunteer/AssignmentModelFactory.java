@@ -79,7 +79,7 @@ public class AssignmentModelFactory {
         model.setId(assignment.getAssignmentId());
         model.setPerson(personModelFactory.generatePersonModel(personDao.findPerson(assignment.getPerson()
                 .getPersonId())));
-        model.setRole(referenceDao.findAssignmentRoleValues().get(assignment.getRole().getAssignmentRoleId()));
+        model.setRole(referenceDao.findAssignmentRoleValues().get(assignment.getRole().getAssignmentRoleCode()));
         if (assignment.getTeam() != null) {
             model.setTeam(createTeamModel(departmentDao.findTeam(assignment.getTeam().getTeamId())));
         }

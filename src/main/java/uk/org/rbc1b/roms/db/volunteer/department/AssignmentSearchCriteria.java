@@ -29,7 +29,7 @@ import uk.org.rbc1b.roms.db.common.AbstractSearchCriteria;
  * Criteria used when searching the assignments.
  */
 public class AssignmentSearchCriteria extends AbstractSearchCriteria {
-    private Integer roleId;
+    private String roleCode;
     private Integer departmentId;
     private Integer teamId;
     private Integer personId;
@@ -45,12 +45,12 @@ public class AssignmentSearchCriteria extends AbstractSearchCriteria {
         }
     }
 
-    public Integer getRoleId() {
-        return roleId;
+    public String getRoleCode() {
+        return roleCode;
     }
 
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
     }
 
     public Integer getDepartmentId() {

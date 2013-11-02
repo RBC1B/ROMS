@@ -56,8 +56,8 @@ import uk.org.rbc1b.roms.db.volunteer.skill.SkillSearchCriteria;
 @Controller
 @RequestMapping("/departments")
 public class DepartmentsController {
-    private static final int OVERSEER_ROLE_ID = 5;
-    private static final int ASSISTANT_ROLE_ID = 1;
+    private static final String OVERSEER_ROLE_CODE = "OV";
+    private static final String ASSISTANT_ROLE_CODE = "AT";
     private DepartmentDao departmentDao;
     private DepartmentModelFactory departmentModelFactory;
     private AssignmentModelFactory assignmentModelFactory;
@@ -99,8 +99,8 @@ public class DepartmentsController {
             throw new NoSuchRequestHandlingMethodException("No department#" + departmentId, this.getClass());
         }
 
-        Assignment overseerAssignment = findDepartmentAssignment(departmentId, OVERSEER_ROLE_ID);
-        Assignment assistantAssignment = findDepartmentAssignment(departmentId, ASSISTANT_ROLE_ID);
+        Assignment overseerAssignment = findDepartmentAssignment(departmentId, OVERSEER_ROLE_CODE);
+        Assignment assistantAssignment = findDepartmentAssignment(departmentId, ASSISTANT_ROLE_CODE);
 
         model.addAttribute("department",
                 departmentModelFactory.generateDepartmentModel(department, overseerAssignment, assistantAssignment));
@@ -128,9 +128,9 @@ public class DepartmentsController {
         return "departments/show";
     }
 
-    private Assignment findDepartmentAssignment(Integer departmentId, Integer roleId) {
+    private Assignment findDepartmentAssignment(Integer departmentId, String roleCode) {
         AssignmentSearchCriteria assignmentSearchCriteria = new AssignmentSearchCriteria();
-        assignmentSearchCriteria.setRoleId(roleId);
+        assignmentSearchCriteria.setRoleCode(roleCode);
         assignmentSearchCriteria.setDepartmentId(departmentId);
         assignmentSearchCriteria.setMaxResults(1);
 
@@ -141,7 +141,7 @@ public class DepartmentsController {
 
     private Map<Integer, Assignment> fetchDepartmentOverseers() {
         AssignmentSearchCriteria assignmentSearchCriteria = new AssignmentSearchCriteria();
-        assignmentSearchCriteria.setRoleId(OVERSEER_ROLE_ID);
+        assignmentSearchCriteria.setRoleCode(OVERSEER_ROLE_CODE);
         assignmentSearchCriteria.setMaxResults(null); // no limit to the results
 
         List<Assignment> assignments = departmentDao.findAssignments(assignmentSearchCriteria);

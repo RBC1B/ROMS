@@ -27,15 +27,15 @@ package uk.org.rbc1b.roms.db.volunteer.department;
  * Name of the role the volunteer is in in their assignment.
  */
 public class AssignmentRole {
-    private Integer assignmentRoleId;
+    private String assignmentRoleCode;
     private String name;
 
-    public Integer getAssignmentRoleId() {
-        return assignmentRoleId;
+    public String getAssignmentRoleCode() {
+        return assignmentRoleCode;
     }
 
-    public void setAssignmentRoleId(Integer assignmentRoleId) {
-        this.assignmentRoleId = assignmentRoleId;
+    public void setAssignmentRoleCode(String assignmentRoleCode) {
+        this.assignmentRoleCode = assignmentRoleCode;
     }
 
     public String getName() {

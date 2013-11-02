@@ -143,8 +143,8 @@ public class HibernateDepartmentDao implements DepartmentDao {
         if (searchCriteria.getPersonId() != null) {
             criteria.add(Restrictions.eq("personId", searchCriteria.getPersonId()));
         }
-        if (searchCriteria.getRoleId() != null) {
-            criteria.add(Restrictions.eq("role.assignmentRoleId", searchCriteria.getRoleId()));
+        if (searchCriteria.getRoleCode() != null) {
+            criteria.add(Restrictions.eq("role.assignmentRoleCode", searchCriteria.getRoleCode()));
         }
         if (searchCriteria.getTeamId() != null) {
             criteria.add(Restrictions.eq("teamId", searchCriteria.getTeamId()));

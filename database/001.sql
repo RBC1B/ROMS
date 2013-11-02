@@ -526,9 +526,9 @@ create table ApplicationAccess_AUD(
 )engine=InnoDB;
 
 create table AssignmentRole(
-    AssignmentRoleId    bigint(20)  auto_increment,
+    AssignmentRoleCode  char(2)     not null    unique,
     Name                varchar(50) not null    unique,
-    primary key (AssignmentRoleId)
+    primary key (AssignmentRoleCode)
 )engine=InnoDB;
 
 -- maps assignment priority of the volunteer to the department
@@ -548,7 +548,7 @@ create table Assignment(
     AssignmentId        bigint(20)  auto_increment,
     PersonId            bigint(20)  not null,
     DepartmentId        bigint(20)  not null,
-    AssignmentRoleId    bigint(20)  not null,
+    AssignmentRoleCode  char(2)     not null,
     AssignedDate        date        not null,
     TradeNumberId       bigint(20)  not null,
     TeamId              bigint(20)  not null,
@@ -557,7 +557,7 @@ create table Assignment(
     primary key (AssignmentId),
     foreign key (PersonId) references Person(PersonId) on delete cascade,
     foreign key (DepartmentId) references Department(DepartmentId) on delete cascade,
-    foreign key (AssignmentRoleId) references AssignmentRole(AssignmentRoleId),
+    foreign key (AssignmentRoleCode) references AssignmentRole(AssignmentRoleCode),
     foreign key (TradeNumberId) references TradeNumber(TradeNumberId),
     foreign key (TeamId) references Team(TeamId),
     foreign key (UpdatedBy) references Person(PersonId)
@@ -569,7 +569,7 @@ create table Assignment_AUD(
     REVTYPE             tinyint,
     PersonId            bigint(20)  not null,
     DepartmentId        bigint(20)  not null,
-    AssignmentRoleId    bigint(20)  not null,
+    AssignmentRoleCode  char(2)     not null,
     AssignedDate        date        not null,
     TradeNumberId       bigint(20)  not null,
     TeamId              bigint(20)  not null,
@@ -1356,15 +1356,15 @@ insert into MaritalStatus(MaritalStatusCode, Name) values
     ('SG', 'Single'),
     ('WD', 'Widowed');
 
-insert into AssignmentRole(Name) values
-    ('Assistant'),
-    ('Administration'),
-    ('Department Safety Advisor'),
-    ('Inspector'),
-    ('Overseer'),
-    ('Trainee'),
-    ('Trainer'),
-    ('Volunteer');
+insert into AssignmentRole(AssignmentRoleCode, Name) values
+    ('AT', 'Assistant'),
+    ('AD', 'Administration'),
+    ('DS', 'Department Safety Advisor'),
+    ('IN', 'Inspector'),
+    ('OV', 'Overseer'),
+    ('TE', 'Trainee'),
+    ('TR', 'Trainer'),
+    ('VN', 'Volunteer');
 
 insert into TradeNumber(Name) values
     ('1st Trade'),

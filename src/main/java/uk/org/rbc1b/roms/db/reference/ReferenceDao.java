@@ -79,7 +79,7 @@ public interface ReferenceDao {
     /**
      * @return ordered map of assignment role type values
      */
-    Map<Integer, String> findAssignmentRoleValues();
+    Map<String, String> findAssignmentRoleValues();
 
     /**
      * @return ordered map of project type values

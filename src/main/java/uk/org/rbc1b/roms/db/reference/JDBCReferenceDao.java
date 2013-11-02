@@ -108,9 +108,9 @@ public class JDBCReferenceDao implements ReferenceDao {
 
     @Override
     @Cacheable("reference.assignmentRole")
-    public Map<Integer, String> findAssignmentRoleValues() {
-        return findReferenceIdValues("SELECT AssignmentRoleId AS id, Name AS value "
-                + "FROM AssignmentRole ORDER BY AssignmentRoleId");
+    public Map<String, String> findAssignmentRoleValues() {
+        return findReferenceCodeValues("SELECT AssignmentRoleCode AS code, Name AS value "
+                + "FROM AssignmentRole ORDER BY AssignmentRoleCode");
     }
 
     @Override
