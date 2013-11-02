@@ -71,21 +71,4 @@ $(document).ready(function() {
        }
     });
     
-    /*
-    $('.collapse').on('hidden.bs.collapse', function () {
-        if (!$(this).hasClass("in")) {
-            var control = $(this).closest(".a-accordian-wrapper").children(".a-accordian-control").find("span.glyphicon-minus");
-            control.addClass("glyphicon-plus");
-            control.removeClass("glyphicon-minus");
-        }
-    })
-    
-    $('.collapse').on('show.bs.collapse', function () {
-        if ($(this).hasClass("in")) {
-            var control = $(this).closest(".a-accordian-wrapper").children(".a-accordian-control").find("span.glyphicon-plus");
-            control.removeClass("glyphicon-minus");
-            control.addClass("glyphicon-minus");
-        }
-    })
-    */
 });
