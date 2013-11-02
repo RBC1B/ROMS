@@ -137,8 +137,8 @@ public class VolunteerModelFactory {
         }
 
         // spiritual data
-        if (volunteer.getAppointmentId() != null) {
-            model.setAppointment(referenceDao.findAppointmentValues().get(volunteer.getAppointmentId()));
+        if (volunteer.getAppointmentCode() != null) {
+            model.setAppointment(referenceDao.findAppointmentValues().get(volunteer.getAppointmentCode()));
         }
         model.setBaptismDate(volunteer.getBaptismDate());
         model.setEmergencyContact(personModelFactory.generatePersonModel(volunteer.getEmergencyContact()));

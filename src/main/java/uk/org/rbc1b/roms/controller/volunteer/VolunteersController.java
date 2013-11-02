@@ -77,8 +77,8 @@ public class VolunteersController {
     private static final String RBC_STATUS_ACTIVE = "AT";
     private static final String INTERVIEW_STATUS_INVITE_DUE = "ID";
     private static final int FULLTIME_REGULAR_PIONEER = 2;
-    private static final int APPOINTMENT_ELDER = 1;
-    private static final int APPOINTMENT_MINISTERIAL_SERVANT = 2;
+    private static final String APPOINTMENT_ELDER = "EL";
+    private static final String APPOINTMENT_MINISTERIAL_SERVANT = "MS";
     private static final Set<VolunteerData> VOLUNTEER_DATA = EnumSet.of(VolunteerData.SPOUSE,
             VolunteerData.EMERGENCY_CONTACT, VolunteerData.TRADES, VolunteerData.INTERVIEWER);
     private VolunteerDao volunteerDao;
@@ -269,9 +269,9 @@ public class VolunteersController {
         volunteer.setBaptismDate(DataConverterUtil.toSqlDate(form.getBaptismDate()));
 
         if (form.isElder()) {
-            volunteer.setAppointmentId(APPOINTMENT_ELDER);
+            volunteer.setAppointmentCode(APPOINTMENT_ELDER);
         } else if (form.isMinisterialServant()) {
-            volunteer.setAppointmentId(APPOINTMENT_MINISTERIAL_SERVANT);
+            volunteer.setAppointmentCode(APPOINTMENT_MINISTERIAL_SERVANT);
         }
         volunteer.setGender(form.getGender());
 
@@ -330,7 +330,7 @@ public class VolunteersController {
         }
 
         VolunteerSpiritualForm form = new VolunteerSpiritualForm();
-        form.setAppointmentId(volunteer.getAppointmentId());
+        form.setAppointmentCode(volunteer.getAppointmentCode());
         form.setBaptismDate(DataConverterUtil.toDateTime(volunteer.getBaptismDate()));
 
         if (volunteer.getCongregation() != null) {
@@ -536,7 +536,7 @@ public class VolunteersController {
 
         volunteer.setBaptismDate(DataConverterUtil.toSqlDate(form.getBaptismDate()));
         volunteer.setFulltimeId(form.getFulltimeId());
-        volunteer.setAppointmentId(form.getAppointmentId());
+        volunteer.setAppointmentCode(form.getAppointmentCode());
 
         if (form.getCongregationId() == null) {
             volunteer.setCongregation(null);

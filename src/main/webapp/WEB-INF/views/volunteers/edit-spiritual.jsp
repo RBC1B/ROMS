@@ -28,7 +28,7 @@ Author: oliver.elder.esq
                         <form:options items="${fulltimeValues}" />
                     </form:select>
                     <label>Appointment</label>
-                    <form:select path="appointmentId">
+                    <form:select path="appointmentCode">
                         <form:option value="" label="None (Publisher)" />
                         <form:options items="${appointmentValues}" />
                     </form:select>

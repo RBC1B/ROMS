@@ -42,7 +42,7 @@ public class VolunteerSpiritualForm {
     @NotNull
     private String congregationName;
     private Integer fulltimeId;
-    private Integer appointmentId;
+    private String appointmentCode;
 
     public DateTime getBaptismDate() {
         return baptismDate;
@@ -76,11 +76,12 @@ public class VolunteerSpiritualForm {
         this.fulltimeId = fulltimeId;
     }
 
-    public Integer getAppointmentId() {
-        return appointmentId;
+    public String getAppointmentCode() {
+        return appointmentCode;
     }
 
-    public void setAppointmentId(Integer appointmentId) {
-        this.appointmentId = appointmentId;
+    public void setAppointmentCode(String appointmentCode) {
+        this.appointmentCode = appointmentCode;
     }
+
 }

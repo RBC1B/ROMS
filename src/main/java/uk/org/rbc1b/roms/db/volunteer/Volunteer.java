@@ -35,7 +35,7 @@ import uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTrade;
 @Audited
 public class Volunteer extends Person {
     private static final long serialVersionUID = -8454242375027482447L;
-    private Integer appointmentId;
+    private String appointmentCode;
     private String availability; // 7 char string, representing T or F, Monday to Sunday
     private Person emergencyContact;
     private Integer emergencyContactRelationshipId;
@@ -88,12 +88,12 @@ public class Volunteer extends Person {
         this.setComments(person.getComments());
     }
 
-    public Integer getAppointmentId() {
-        return appointmentId;
+    public String getAppointmentCode() {
+        return appointmentCode;
     }
 
-    public void setAppointmentId(Integer appointmentId) {
-        this.appointmentId = appointmentId;
+    public void setAppointmentCode(String appointmentCode) {
+        this.appointmentCode = appointmentCode;
     }
 
     public String getAvailability() {

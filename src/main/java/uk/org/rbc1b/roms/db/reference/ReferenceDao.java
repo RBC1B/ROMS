@@ -34,7 +34,7 @@ public interface ReferenceDao {
     /**
      * @return ordered map of appointment values
      */
-    Map<Integer, String> findAppointmentValues();
+    Map<String, String> findAppointmentValues();
 
     /**
      * @return ordered map of marital status values

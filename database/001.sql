@@ -373,9 +373,9 @@ create table RbcStatus(
 
 -- Person appointment, e.g. ministerial servant
 create table Appointment(
-    AppointmentId   bigint(20)  auto_increment,
+    AppointmentCode char(2)     not null    unique,
     Name            varchar(25) not null    unique,
-    primary key (AppointmentId)
+    primary key (AppointmentCode)
 )engine=InnoDB;
 
 create table Fulltime(
@@ -400,7 +400,7 @@ create table MaritalStatus(
 create table Volunteer(
     PersonId            bigint(20)  not null    unique,
     RbcStatusCode       char(2)     not null,
-    AppointmentId       bigint(20),
+    AppointmentCode     char(2),
     FulltimeId          bigint(20),
     Availability        varchar(7),
     EmergencyContactId  bigint(20),
@@ -427,7 +427,7 @@ create table Volunteer(
     primary key(PersonId),
     foreign key (PersonId) references Person(PersonId) on delete cascade,
     foreign key (RbcStatusCode) references RbcStatus(RbcStatusCode),
-    foreign key (AppointmentId) references Appointment(AppointmentId),
+    foreign key (AppointmentCode) references Appointment(AppointmentCode),
     foreign key (FulltimeId) references Fulltime(FulltimeId),
     foreign key (EmergencyContactId) references Person(PersonId) on delete set null,
     foreign key (EmergencyContactRelationshipId) references Relationship(RelationshipId) on delete set null,
@@ -442,7 +442,7 @@ create table Volunteer_AUD (
     REV                 int         not null,
     REVTYPE             tinyint,
     RbcStatusCode       char(2)     not null,
-    AppointmentId       bigint(20),
+    AppointmentCode     char(2),
     FulltimeId          bigint(20),
     Availability        varchar(7),
     EmergencyContactId  bigint(20),
@@ -1330,9 +1330,9 @@ insert into RbcStatus (RbcStatusCode, Name) values
     ('PD', 'Pending'),
     ('RA', 'Reassign');
 
-insert into Appointment (Name) values
-    ('Elder'),
-    ('Ministerial Servant');
+insert into Appointment (AppointmentCode, Name) values
+    ('EL', 'Elder'),
+    ('MS', 'Ministerial Servant');
 
 insert into Fulltime (Name) values
     ('Bethel'),
