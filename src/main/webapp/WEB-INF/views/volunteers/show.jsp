@@ -48,8 +48,8 @@
                     <a class="btn btn-edifice" href="<c:url value="${badgeUri}"/>">Generate Badge</a>
                 </c:when>
                 <c:otherwise>
-                    <button class="btn" type="button" data-title="Pdf Badge Generation Not Possible" 
-                            data-content="A badge for ${volunteer.displayName} cannot be created until the 
+                    <button class="btn" type="button" data-title="Pdf Badge Generation Not Possible"
+                            data-content="A badge for ${volunteer.displayName} cannot be created until the
                             volunteer receives a departmental assignment"
                             id="disabled-badge-button">Generate Badge</button><br />
                 </c:otherwise>
@@ -121,7 +121,7 @@
                         <li><a href="<c:url value="/volunteers" />">Volunteers</a></li>
                     </sec:authorize>
                 <li class="active">#${volunteer.id}: ${volunteer.displayName}</li>
-            </ol>            
+            </ol>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
         <%@ include file="fragments/show-name-edit-modal.jsp" %>

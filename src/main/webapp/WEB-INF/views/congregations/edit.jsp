@@ -98,15 +98,15 @@
             </fieldset>
             <input type="submit" class="btn btn-primary" />
         </form:form>
-            
-            <ol class="breadcrumb">
-                <li><a href="<c:url value="/" />">Edifice</a></li>
-                <sec:authorize access="hasPermission('CONG', 'READ')">
-                  <li><a href="<c:url value="/congregations" />">Congregations</a></li>
-                </sec:authorize>
-                  <li class="active">Edit Congregation</li>
-            </ol>            
-            
+
+        <ol class="breadcrumb">
+            <li><a href="<c:url value="/" />">Edifice</a></li>
+            <sec:authorize access="hasPermission('CONG', 'READ')">
+              <li><a href="<c:url value="/congregations" />">Congregations</a></li>
+            </sec:authorize>
+              <li class="active">Edit Congregation</li>
+        </ol>
+
         <%@ include file="/WEB-INF/views/common/footer.jsp"%>
     <%@ include file="/WEB-INF/views/common/mustache-person-link-search-form.jsp"%>
     <%@ include file="/WEB-INF/views/common/person-link-modal.jsp"%>

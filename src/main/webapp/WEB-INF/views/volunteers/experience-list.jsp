@@ -33,8 +33,7 @@
                   </tfoot>
                 </table>
             </div>
-            <p>&nbsp;</p>            
-            
+            <p>&nbsp;</p>
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
                 <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
@@ -42,7 +41,7 @@
                 </sec:authorize>
                 <li class="active">#${volunteer.id}: ${volunteer.displayName} Edit Experience</li>
             </ol>
-            
+
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
         <%@ include file="/WEB-INF/views/common/mustache-list-actions.jsp" %>

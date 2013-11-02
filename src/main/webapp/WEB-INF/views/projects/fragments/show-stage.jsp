@@ -60,7 +60,7 @@
             </div>
         </div>
         <div class="a-accordian-wrapper">
-            <c:choose> 
+            <c:choose>
                 <c:when test="${stage.isInProgress()}">
                     <c:set var="accordionOpenClass">in</c:set>
                     <c:set var="accordionIconClass">glyphicon-minus</c:set>
