@@ -163,10 +163,10 @@ create table Circuit_AUD(
 )engine=InnoDB;
 
 
-create table KingdomHallOwnershipType(
-    KingdomHallOwnershipTypeId  bigint(20)  not null    auto_increment,
-    Name                        varchar(50) not null    unique,
-    primary key (KingdomHallOwnershipTypeId)
+create table KingdomHallOwnershipType (
+    KingdomHallOwnershipTypeCode    char(2)    not null,
+    Name                            varchar(50) not null    unique,
+    primary key (KingdomHallOwnershipTypeCode)
 )engine=InnoDB;
 
 create table HallFeature(
@@ -182,13 +182,13 @@ create table KingdomHall(
     Town                        varchar(50) not null,
     County                      varchar(50),
     Postcode                    varchar(10) not null,
-    KingdomHallOwnershipTypeId  bigint(20),
+    KingdomHallOwnershipTypeCode char(2),
     TitleHolderId               bigint(20),
     Drawings                    varchar(50),
     UpdateTime                  timestamp   not null,
     UpdatedBy                   bigint(20)  not null,
     primary key (KingdomHallId),
-    foreign key (KingdomHallOwnershipTypeId) references KingdomHallOwnershipType(KingdomHallOwnershipTypeId),
+    foreign key (KingdomHallOwnershipTypeCode) references KingdomHallOwnershipType(KingdomHallOwnershipTypeCode),
     foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
@@ -201,7 +201,7 @@ create table KingdomHall_AUD (
     Town                        varchar(50) not null,
     County                      varchar(50),
     Postcode                    varchar(10) not null,
-    KingdomHallOwnershipTypeId  bigint(20),
+    KingdomHallOwnershipTypeCode  char(2),
     TitleHolderId               bigint(20),
     Drawings                    varchar(50),
     UpdateTime                  timestamp   not null,
@@ -1233,10 +1233,10 @@ values (0, 8, 4, 4, NOW(), 0);
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
 values (0, 9, 4, 4, NOW(), 0);
 
-insert into KingdomHallOwnershipType (Name) values
-    ('Freehold'),
-    ('Leasehold'),
-    ('Rented');
+insert into KingdomHallOwnershipType (KingdomHallOwnershipTypeCode, Name) values
+    ('FH', 'Freehold'),
+    ('LH', 'Leasehold'),
+    ('RT', 'Rented');
 
 insert into HallFeature(Name) values
     ('Car Park'),

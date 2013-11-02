@@ -51,8 +51,8 @@ Author     : oliver.elder.esq
                 </fieldset>
                 <fieldset>
                     <div class="control-group">
-                        <label for="ownershipTypeId">Ownership Type:</label>
-                        <form:select path="ownershipTypeId">
+                        <label for="ownershipTypeCode">Ownership Type:</label>
+                        <form:select path="ownershipTypeCode">
                             <form:option value="" label="None" />
                             <form:options items="${ownershipValues}" />
                         </form:select><br />

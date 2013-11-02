@@ -75,8 +75,8 @@ public class KingdomHallsController {
      */
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=text/html")
     public String showKingdomHallList(ModelMap model) {
-        model.addAttribute("kingdomHalls", kingdomHallModelFactory.generateKingdomHallListModels(kingdomHallDao
-                .findKingdomHalls()));
+        model.addAttribute("kingdomHalls",
+                kingdomHallModelFactory.generateKingdomHallListModels(kingdomHallDao.findKingdomHalls()));
         model.addAttribute("newUri", KingdomHallModelFactory.generateUri(null) + "/new");
 
         return "kingdom-halls/list";
@@ -103,7 +103,7 @@ public class KingdomHallsController {
 
         model.addAttribute("kingdomHall", kingdomHallModelFactory.generateKingdomHallModel(kingdomHall));
         model.addAttribute("ownershipType",
-                referenceDao.findKingdomHallOwnershipTypeValues().get(kingdomHall.getOwnershipTypeId()));
+                referenceDao.findKingdomHallOwnershipTypeValues().get(kingdomHall.getOwnershipTypeCode()));
 
         return "kingdom-halls/show";
     }
@@ -138,15 +138,13 @@ public class KingdomHallsController {
         }
 
         if (kingdomHall.getTitleHolder() != null) {
-            Congregation titleHoldingCongregation = congregationDao.findCongregation(kingdomHall
-                    .getTitleHolder().getCongregationId());
-            kingdomHallForm.setTitleHoldingCongregationId(titleHoldingCongregation
+            Congregation titleHoldingCongregation = congregationDao.findCongregation(kingdomHall.getTitleHolder()
                     .getCongregationId());
-            kingdomHallForm.setTitleHoldingCongregationName(titleHoldingCongregation
-                    .getName());
+            kingdomHallForm.setTitleHoldingCongregationId(titleHoldingCongregation.getCongregationId());
+            kingdomHallForm.setTitleHoldingCongregationName(titleHoldingCongregation.getName());
         }
 
-        kingdomHallForm.setOwnershipTypeId(kingdomHall.getOwnershipTypeId());
+        kingdomHallForm.setOwnershipTypeCode(kingdomHall.getOwnershipTypeCode());
 
         if (findCongregations(kingdomHall.getKingdomHallId()) != null) {
             kingdomHallForm.setCongregations(findCongregations(kingdomHall.getKingdomHallId()));

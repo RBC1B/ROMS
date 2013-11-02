@@ -48,7 +48,7 @@ public class KingdomHallForm {
     private String postcode;
     private Integer titleHoldingCongregationId;
     private String titleHoldingCongregationName;
-    private Integer ownershipTypeId;
+    private String ownershipTypeCode;
     private List<Congregation> congregations;
 
     public String getName() {
@@ -107,12 +107,12 @@ public class KingdomHallForm {
         this.titleHoldingCongregationName = titleHoldingCongregationName;
     }
 
-    public Integer getOwnershipTypeId() {
-        return ownershipTypeId;
+    public String getOwnershipTypeCode() {
+        return ownershipTypeCode;
     }
 
-    public void setOwnershipTypeId(Integer ownershipTypeId) {
-        this.ownershipTypeId = ownershipTypeId;
+    public void setOwnershipTypeCode(String ownershipTypeCode) {
+        this.ownershipTypeCode = ownershipTypeCode;
     }
 
     public List<Congregation> getCongregations() {

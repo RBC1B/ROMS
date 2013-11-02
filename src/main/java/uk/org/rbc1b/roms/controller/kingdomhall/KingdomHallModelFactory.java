@@ -68,18 +68,17 @@ public class KingdomHallModelFactory {
         // kingdom hall base model information
         populateBaseModel(kingdomHall, model);
 
-        model.setOwnershipTypeId(kingdomHall.getOwnershipTypeId());
+        model.setOwnershipTypeCode(kingdomHall.getOwnershipTypeCode());
         model.setCongregations(generateCongregationModels(kingdomHall.getKingdomHallId()));
 
         if (kingdomHall.getTitleHolder() != null) {
-            Congregation titleHoldingCongregation = congregationDao.findCongregation(kingdomHall
-                    .getTitleHolder().getCongregationId());
+            Congregation titleHoldingCongregation = congregationDao.findCongregation(kingdomHall.getTitleHolder()
+                    .getCongregationId());
 
             EntityModel titleHolderModel = new EntityModel();
             titleHolderModel.setId(titleHoldingCongregation.getCongregationId());
             titleHolderModel.setName(titleHoldingCongregation.getName());
-            titleHolderModel.setUri(CongregationModelFactory.generateUri(titleHoldingCongregation
-                    .getCongregationId()));
+            titleHolderModel.setUri(CongregationModelFactory.generateUri(titleHoldingCongregation.getCongregationId()));
 
             model.setTitleHoldingCongregation(titleHolderModel);
         }

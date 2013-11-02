@@ -33,17 +33,17 @@ import uk.org.rbc1b.roms.controller.common.model.EntityModel;
  */
 public class KingdomHallModel extends KingdomHallListModel {
 
-    private Integer ownershipTypeId;
+    private String ownershipTypeCode;
     private String drawings;
     private EntityModel titleHoldingCongregation;
     private Set<EntityModel> congregations;
 
-    public Integer getOwnershipTypeId() {
-        return ownershipTypeId;
+    public String getOwnershipTypeCode() {
+        return ownershipTypeCode;
     }
 
-    public void setOwnershipTypeId(Integer ownershipTypeId) {
-        this.ownershipTypeId = ownershipTypeId;
+    public void setOwnershipTypeCode(String ownershipTypeCode) {
+        this.ownershipTypeCode = ownershipTypeCode;
     }
 
     public String getDrawings() {

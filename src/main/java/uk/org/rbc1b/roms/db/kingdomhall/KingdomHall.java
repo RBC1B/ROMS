@@ -43,7 +43,7 @@ public class KingdomHall implements UpdateAuditable, Serializable {
     private Integer kingdomHallId;
     private String name;
     private Address address;
-    private Integer ownershipTypeId;
+    private String ownershipTypeCode;
     private String drawings;
     private Congregation titleHolder;
     private Set<KingdomHallFeature> features;
@@ -90,12 +90,12 @@ public class KingdomHall implements UpdateAuditable, Serializable {
         this.features = features;
     }
 
-    public Integer getOwnershipTypeId() {
-        return ownershipTypeId;
+    public String getOwnershipTypeCode() {
+        return ownershipTypeCode;
     }
 
-    public void setOwnershipTypeId(Integer ownershipTypeId) {
-        this.ownershipTypeId = ownershipTypeId;
+    public void setOwnershipTypeCode(String ownershipTypeCode) {
+        this.ownershipTypeCode = ownershipTypeCode;
     }
 
     @Override

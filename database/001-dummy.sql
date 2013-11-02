@@ -209,12 +209,12 @@ insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepa
 values (4, 9, 1, 1, NOW(), 0);
 
 -- Kingdom Halls
-insert into KingdomHall(Name, Street, Town, County, Postcode, KingdomHallOwnershipTypeId, Drawings, UpdateTime, UpdatedBy)
-values ('Spangly new hall', 'Nice Street', 'Sunnytown', 'Angus', 'DD2 8FE', 1, 'None', NOW(), 0);
-insert into KingdomHall(Name, Street, Town, County, Postcode, KingdomHallOwnershipTypeId, Drawings, UpdateTime, UpdatedBy)
-values ('Slightly scruffy hall', 'Pleasant Street', 'Grimsby', 'Southshire', 'AB1 2EF', 2, 'Detailed, old', NOW(), 0);
-insert into KingdomHall(Name, Street, Town, County, Postcode, KingdomHallOwnershipTypeId, Drawings, UpdateTime, UpdatedBy)
-values ('Ripe For Demolition', 'Rundown Street', 'Hull', 'Nowhere', 'ZZ10 4RG', 3, 'Destroyed mysteriously', NOW(), 0);
+insert into KingdomHall(Name, Street, Town, County, Postcode, KingdomHallOwnershipTypeCode, Drawings, UpdateTime, UpdatedBy)
+values ('Spangly new hall', 'Nice Street', 'Sunnytown', 'Angus', 'DD2 8FE', 'FH', 'None', NOW(), 0);
+insert into KingdomHall(Name, Street, Town, County, Postcode, KingdomHallOwnershipTypeCode, Drawings, UpdateTime, UpdatedBy)
+values ('Slightly scruffy hall', 'Pleasant Street', 'Grimsby', 'Southshire', 'AB1 2EF', 'LH', 'Detailed, old', NOW(), 0);
+insert into KingdomHall(Name, Street, Town, County, Postcode, KingdomHallOwnershipTypeCode, Drawings, UpdateTime, UpdatedBy)
+values ('Ripe For Demolition', 'Rundown Street', 'Hull', 'Nowhere', 'ZZ10 4RG', 'RT', 'Destroyed mysteriously', NOW(), 0);
 
 -- Kingdom Hall Features
 insert into KingdomHallFeature(KingdomHallId, HallFeatureId, Comments, UpdateTime, UpdatedBy)
