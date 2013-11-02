@@ -392,9 +392,9 @@ create table Relationship(
 )engine=InnoDB;
 
 create table MaritalStatus(
-    MaritalStatusId bigint(20)  auto_increment,
-    Name            varchar(50) not null    unique,
-    primary key (MaritalStatusId)
+    MaritalStatusCode   char(2)     not null    unique,
+    Name                varchar(50) not null    unique,
+    primary key (MaritalStatusCode)
 )engine=InnoDB;
 
 create table Volunteer(
@@ -406,7 +406,7 @@ create table Volunteer(
     EmergencyContactId  bigint(20),
     EmergencyContactRelationshipId bigint(20),
     Gender              varchar(1)  not null,
-    MaritalStatusId     bigint(20),
+    MaritalStatusCode   char(2),
     SpousePersonId      bigint(20),
     BaptismDate         date,
     InterviewDate       date,
@@ -431,7 +431,7 @@ create table Volunteer(
     foreign key (FulltimeCode) references Fulltime(FulltimeCode),
     foreign key (EmergencyContactId) references Person(PersonId) on delete set null,
     foreign key (EmergencyContactRelationshipId) references Relationship(RelationshipId) on delete set null,
-    foreign key (MaritalStatusId) references MaritalStatus(MaritalStatusId),
+    foreign key (MaritalStatusCode) references MaritalStatus(MaritalStatusCode),
     foreign key (InterviewerA) references User(PersonId) on delete set null,
     foreign key (InterviewerB) references User(PersonId) on delete set null,
     foreign key (InterviewStatusCode) references InterviewStatus(InterviewStatusCode)
@@ -448,7 +448,7 @@ create table Volunteer_AUD (
     EmergencyContactId  bigint(20),
     EmergencyContactRelationshipId bigint(20),
     Gender              varchar(1)  not null,
-    MaritalStatusId     bigint(20),
+    MaritalStatusCode   char(2),
     SpousePersonId      bigint(20),
     BaptismDate         date,
     InterviewDate       date,
@@ -1348,13 +1348,13 @@ insert into Relationship(Name) values
     ('Wife'),
     ('Other');
 
-insert into MaritalStatus(Name) values
-    ('Divorced'),
-    ('Married'),
-    ('Other'),
-    ('Separated'),
-    ('Single'),
-    ('Widowed');
+insert into MaritalStatus(MaritalStatusCode, Name) values
+    ('DV', 'Divorced'),
+    ('MR', 'Married'),
+    ('OT', 'Other'),
+    ('SP', 'Separated'),
+    ('SG', 'Single'),
+    ('WD', 'Widowed');
 
 insert into AssignmentRole(Name) values
     ('Assistant'),

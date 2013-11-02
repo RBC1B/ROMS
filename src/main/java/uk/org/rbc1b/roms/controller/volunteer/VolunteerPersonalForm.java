@@ -43,7 +43,7 @@ public class VolunteerPersonalForm {
     private String gender;
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private DateTime birthDate;
-    private Integer maritalStatusId;
+    private String maritalStatusCode;
     private Integer spousePersonId;
     private String spouseSurname;
     private String spouseForename;
@@ -128,12 +128,12 @@ public class VolunteerPersonalForm {
         this.birthDate = birthDate;
     }
 
-    public Integer getMaritalStatusId() {
-        return maritalStatusId;
+    public String getMaritalStatusCode() {
+        return maritalStatusCode;
     }
 
-    public void setMaritalStatusId(Integer maritalStatusId) {
-        this.maritalStatusId = maritalStatusId;
+    public void setMaritalStatusCode(String maritalStatusCode) {
+        this.maritalStatusCode = maritalStatusCode;
     }
 
     public Integer getSpousePersonId() {

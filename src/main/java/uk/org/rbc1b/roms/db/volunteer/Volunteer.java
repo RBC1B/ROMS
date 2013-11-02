@@ -41,7 +41,7 @@ public class Volunteer extends Person {
     private Integer emergencyContactRelationshipId;
     private String fulltimeCode;
     private String gender; // M or F
-    private Integer maritalStatusId;
+    private String maritalStatusCode;
     private java.sql.Date baptismDate;
     private java.sql.Date interviewDate;
     private User interviewerA;
@@ -216,12 +216,12 @@ public class Volunteer extends Person {
         this.joinedDate = joinedDate;
     }
 
-    public Integer getMaritalStatusId() {
-        return maritalStatusId;
+    public String getMaritalStatusCode() {
+        return maritalStatusCode;
     }
 
-    public void setMaritalStatusId(Integer maritalStatusId) {
-        this.maritalStatusId = maritalStatusId;
+    public void setMaritalStatusCode(String maritalStatusCode) {
+        this.maritalStatusCode = maritalStatusCode;
     }
 
     public boolean isOversight() {

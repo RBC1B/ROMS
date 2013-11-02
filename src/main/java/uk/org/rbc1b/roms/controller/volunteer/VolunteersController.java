@@ -73,7 +73,7 @@ import uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTrade;
 @RequestMapping("/volunteers")
 public class VolunteersController {
 
-    private static final int MARRIED_MARITAL_STATUS = 2;
+    private static final String MARRIED_MARITAL_STATUS = "MR";
     private static final String RBC_STATUS_ACTIVE = "AT";
     private static final String INTERVIEW_STATUS_INVITE_DUE = "ID";
     private static final String FULLTIME_REGULAR_PIONEER = "RP";
@@ -286,7 +286,7 @@ public class VolunteersController {
 
         Person spouse = createSpouse(form, emergencyContact);
         if (spouse != null) {
-            volunteer.setMaritalStatusId(MARRIED_MARITAL_STATUS);
+            volunteer.setMaritalStatusCode(MARRIED_MARITAL_STATUS);
             volunteer.setSpouse(spouse);
         }
 
@@ -449,7 +449,7 @@ public class VolunteersController {
             form.setBirthDate(new DateTime(volunteer.getBirthDate().getTime()));
         }
 
-        form.setMaritalStatusId(volunteer.getMaritalStatusId());
+        form.setMaritalStatusCode(volunteer.getMaritalStatusCode());
         if (volunteer.getSpouse() != null) {
             form.setSpousePersonId(volunteer.getSpouse().getPersonId());
             form.setSpouseForename(volunteer.getSpouse().getForename());
@@ -631,7 +631,7 @@ public class VolunteersController {
         volunteer.setBirthDate(DataConverterUtil.toSqlDate(form.getBirthDate()));
         volunteer.setEmail(form.getEmail());
         volunteer.setGender(form.getGender());
-        volunteer.setMaritalStatusId(form.getMaritalStatusId());
+        volunteer.setMaritalStatusCode(form.getMaritalStatusCode());
         volunteer.setMobile(PhoneNumberFormatter.format(form.getMobile()));
         volunteer.setTelephone(PhoneNumberFormatter.format(form.getTelephone()));
         volunteer.setWorkPhone(PhoneNumberFormatter.format(form.getWorkPhone()));

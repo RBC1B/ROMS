@@ -297,11 +297,11 @@ values ('Email technicial', 'Fully trained in the difference between reply and r
 
 -- Volunteer
 insert into Volunteer(PersonId, RbcStatusCode, AppointmentCode, FulltimeCode, Availability,
-EmergencyContactId, EmergencyContactRelationshipId, Gender, MaritalStatusId, BaptismDate, InterviewDate,
+EmergencyContactId, EmergencyContactRelationshipId, Gender, MaritalStatusCode, BaptismDate, InterviewDate,
 InterviewerA, InterviewerB, InterviewComments, JoinedDate, FormDate, InterviewStatusCode, Oversight, OversightComments,
 ReliefUK, ReliefUKComments, ReliefAbroad, ReliefAbroadComments, HHCFormCode, BadgeIssueDate)
 values(5, 'AT', 'EL', null, 'TTTTTTT',
-3, 5, 'M', 2, '1982-06-19', '2008-02-09',
+3, 5, 'M', 'SG', '1982-06-19', '2008-02-09',
 1, 4, 'Jolly nice bloke', '2008-02-11', '2008-01-03', 'ID', true, 'Very capable...still a jolly nice bloke?',
 true, '3 weeks notice', true, '6 weeks notice', 'HHCForm-1', '2010-04-17');
 
@@ -338,11 +338,11 @@ insert into VolunteerQualification(PersonId, QualificationId, Comments, UpdateTi
 values(5, 1, 'Maths is only ok', NOW(), 0);
 
 insert into Volunteer(PersonId, RbcStatusCode, AppointmentCode, FulltimeCode, Availability,
-EmergencyContactId, EmergencyContactRelationshipId, Gender, MaritalStatusId, BaptismDate, InterviewDate,
+EmergencyContactId, EmergencyContactRelationshipId, Gender, MaritalStatusCode, BaptismDate, InterviewDate,
 InterviewerA, InterviewerB, InterviewComments, JoinedDate, FormDate, InterviewStatusCode, Oversight, OversightComments,
 ReliefUK, ReliefUKComments, ReliefAbroad, ReliefAbroadComments, HHCFormCode, BadgeIssueDate)
 values(6, 'RA', null, null, 'TTFTTTT',
-null, null, 'M', 5, null, null,
+null, null, 'M', 'MR', null, null,
 null, null, null, null, null, 'RI', false, null,
 false, null, false, null, null, null);
 
@@ -352,11 +352,11 @@ insert into VolunteerQualification(PersonId, QualificationId, Comments, UpdateTi
 values(6, 2, 'Hand washing is a bit suspect', NOW(), 0);
 
 insert into Volunteer(PersonId, RbcStatusCode, AppointmentCode, FulltimeCode, Availability,
-EmergencyContactId, EmergencyContactRelationshipId, Gender, MaritalStatusId, BaptismDate, InterviewDate,
+EmergencyContactId, EmergencyContactRelationshipId, Gender, MaritalStatusCode, BaptismDate, InterviewDate,
 InterviewerA, InterviewerB, InterviewComments, JoinedDate, FormDate, InterviewStatusCode, Oversight, OversightComments,
 ReliefUK, ReliefUKComments, ReliefAbroad, ReliefAbroadComments, HHCFormCode, BadgeIssueDate)
 values(7, 'DN', null, 'RP', 'FFFFFFT',
-3, 5, 'M', 4, '1999-07-10', '2012-05-29',
+3, 5, 'M', 'WD', '1999-07-10', '2012-05-29',
 1, null, null, null, '2012-03-13', 'RI', false, null,
 false, null, false, null, null, null);
 

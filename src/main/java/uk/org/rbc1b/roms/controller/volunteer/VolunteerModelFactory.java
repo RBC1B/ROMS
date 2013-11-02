@@ -132,8 +132,8 @@ public class VolunteerModelFactory {
         model.setGender(volunteer.getGender());
         model.setStatus(referenceDao.findRBCStatusValues().get(volunteer.getRbcStatusCode()));
 
-        if (volunteer.getMaritalStatusId() != null) {
-            model.setMaritalStatus(referenceDao.findMaritalStatusValues().get(volunteer.getMaritalStatusId()));
+        if (volunteer.getMaritalStatusCode() != null) {
+            model.setMaritalStatus(referenceDao.findMaritalStatusValues().get(volunteer.getMaritalStatusCode()));
         }
 
         // spiritual data

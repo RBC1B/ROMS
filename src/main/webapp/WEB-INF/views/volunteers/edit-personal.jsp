@@ -52,8 +52,8 @@ Edit form for the volunteer data under the personal tab.
             </fieldset>
             <fieldset>
                 <legend>Marital status</legend>
-                <label for="maritalStatusId">Status</label>
-                <form:select path="maritalStatusId">
+                <label for="maritalStatusCode">Status</label>
+                <form:select path="maritalStatusCode">
                     <form:option value="" />
                     <form:options items="${maritalStatusValues}" />
                 </form:select>

@@ -152,7 +152,7 @@ $(document).ready(function() {
             workphone: {
                 phoneNumber: true
             },
-            maritalStatusId: {
+            maritalStatusCode: {
                 required: true
             },
             emergencyContactForename: {
@@ -486,7 +486,7 @@ $(document).ready(function() {
             workphone: {
                 phoneNumber: true
             },
-            maritalStatusId: {
+            maritalStatusCode: {
                 required: true
             }
         },
