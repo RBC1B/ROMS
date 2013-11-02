@@ -56,15 +56,36 @@ $(document).ready(function() {
         }
     });
 
+    // toggle the accordion and the accordion image
+    $('.a-accordian-control').click(function() {
+       var target = $(this).data("target");
+       var $accordion = $(target);
+       if ($accordion.hasClass("in")) {
+           $accordion.collapse('hide');
+           $("span", $(this)).addClass("glyphicon-plus");
+           $("span", $(this)).removeClass("glyphicon-minus");
+       } else {
+           $accordion.collapse('show');
+           $("span", $(this)).removeClass("glyphicon-plus");
+           $("span", $(this)).addClass("glyphicon-minus");
+       }
+    });
+    
+    /*
     $('.collapse').on('hidden.bs.collapse', function () {
-        var control = $(this).closest(".a-accordian-wrapper").children(".a-accordian-control").find("span.glyphicon-minus");
-        control.addClass("glyphicon-plus")
-        control.removeClass("glyphicon-minus")
+        if (!$(this).hasClass("in")) {
+            var control = $(this).closest(".a-accordian-wrapper").children(".a-accordian-control").find("span.glyphicon-minus");
+            control.addClass("glyphicon-plus");
+            control.removeClass("glyphicon-minus");
+        }
     })
     
     $('.collapse').on('show.bs.collapse', function () {
-        var control = $(this).closest(".a-accordian-wrapper").children(".a-accordian-control").find("span.glyphicon-plus");
-        control.removeClass("glyphicon-minus")
-        control.addClass("glyphicon-minus")
+        if ($(this).hasClass("in")) {
+            var control = $(this).closest(".a-accordian-wrapper").children(".a-accordian-control").find("span.glyphicon-plus");
+            control.removeClass("glyphicon-minus");
+            control.addClass("glyphicon-minus");
+        }
     })
+    */
 });
