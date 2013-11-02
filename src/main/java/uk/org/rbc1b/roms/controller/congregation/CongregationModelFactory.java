@@ -123,7 +123,7 @@ public class CongregationModelFactory {
     private CongregationContactModel generateContactModel(CongregationContact contact) {
 
         CongregationContactModel model = new CongregationContactModel();
-        model.setRole(referenceDao.findCongregationRoleValues().get(contact.getCongregationRoleId()));
+        model.setRole(referenceDao.findCongregationRoleValues().get(contact.getCongregationRoleCode()));
 
         Person person = personDao.findPerson(contact.getPerson().getPersonId());
 

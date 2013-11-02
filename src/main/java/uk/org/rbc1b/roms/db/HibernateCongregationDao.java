@@ -96,7 +96,7 @@ public class HibernateCongregationDao implements CongregationDao {
                 new Comparator<CongregationContact>() {
                     @Override
                     public int compare(CongregationContact o1, CongregationContact o2) {
-                        return o1.getCongregationRoleId().compareTo(o2.getCongregationRoleId());
+                        return o1.getCongregationRoleCode().compareTo(o2.getCongregationRoleCode());
                     }
                 }, new MergeUtil.Callback<CongregationContact, CongregationContact>() {
                     @Override

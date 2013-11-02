@@ -302,22 +302,22 @@ alter table KingdomHall add
     constraint foreign key (TitleHolderId) references Congregation(CongregationId) on delete set null;
 
 create table CongregationRole(
-    CongregationRoleId  bigint(20)  auto_increment,
-    Name                varchar(50) not null    unique,
-    primary key (CongregationRoleId)
+    CongregationRoleCode    char(2),
+    Name                    varchar(50) not null    unique,
+    primary key (CongregationRoleCode)
 )engine=InnoDB;
 
 create table CongregationContact(
     CongregationContactId   bigint(20)  auto_increment,
     CongregationId          bigint(20)  not null,
-    CongregationRoleId      bigint(20)  not null,
+    CongregationRoleCode    char(2)     not null,
     PersonId                bigint(20)  not null,
     UpdateTime              timestamp   not null,
     UpdatedBy               bigint(20)  not null,
     primary key (CongregationContactId),
-    unique(CongregationId, CongregationRoleId),
+    unique(CongregationId, CongregationRoleCode),
     foreign key (CongregationId) references Congregation(CongregationId) on delete cascade,
-    foreign key (CongregationRoleId) references CongregationRole(CongregationRoleId),
+    foreign key (CongregationRoleCode) references CongregationRole(CongregationRoleCode),
     foreign key (PersonId) references Person(PersonId) on delete cascade,
     foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
@@ -327,7 +327,7 @@ create table CongregationContact_AUD(
     REV                     int         not null,
     REVTYPE                 tinyint,
     CongregationId          bigint(20)  not null,
-    CongregationRoleId      bigint(20)  not null,
+    CongregationRoleCode    char(2)     not null,
     PersonId                bigint(20)  not null,
     UpdateTime              timestamp   not null,
     UpdatedBy               bigint(20)  not null,
@@ -1256,9 +1256,9 @@ insert into RbcSubRegion(Name) values
     ('North'),
     ('South');
 
-insert into CongregationRole(Name) values
-    ('CoBE'),
-    ('Secretary');
+insert into CongregationRole(CongregationRoleCode, Name) values
+    ('CB', 'CoBE'),
+    ('SC', 'Secretary');
 
 insert into InterviewStatus (Name) values
     ('Invite Due'),

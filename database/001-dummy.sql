@@ -267,7 +267,7 @@ update KingdomHall set TitleHolderId = 1 where KingdomHallId = 2;
 
 update KingdomHall set TitleHolderId = 2 where KingdomHallId = 3;
 
-insert into CongregationContact(CongregationId, CongregationRoleId, PersonId, UpdateTime, UpdatedBy) values (2, 1, 3, NOW(), 0);
+insert into CongregationContact(CongregationId, CongregationRoleCode, PersonId, UpdateTime, UpdatedBy) values (2, 'CB', 3, NOW(), 0);
 
 -- Skills
 insert into Skill(Name, DepartmentId, Description, SkillCategoryId, UpdateTime, UpdatedBy)

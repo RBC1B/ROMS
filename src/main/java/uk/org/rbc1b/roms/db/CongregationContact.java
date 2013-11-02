@@ -34,13 +34,13 @@ import org.hibernate.envers.Audited;
 @Audited
 public class CongregationContact implements UpdateAuditable, Serializable {
 
-    public static final int COORDINATOR_ROLE = 1;
-    public static final int SECRETARY_ROLE = 2;
+    public static final String COORDINATOR_ROLE = "CB";
+    public static final String SECRETARY_ROLE = "SC";
 
     private static final long serialVersionUID = 4754412345307010085L;
     private Integer congregationContactId;
     private Congregation congregation;
-    private Integer congregationRoleId;
+    private String congregationRoleCode;
     private Person person;
     private Date updateTime;
     private Integer updatedBy;
@@ -61,12 +61,12 @@ public class CongregationContact implements UpdateAuditable, Serializable {
         this.congregationContactId = congregationContactId;
     }
 
-    public Integer getCongregationRoleId() {
-        return congregationRoleId;
+    public String getCongregationRoleCode() {
+        return congregationRoleCode;
     }
 
-    public void setCongregationRoleId(Integer congregationRoleId) {
-        this.congregationRoleId = congregationRoleId;
+    public void setCongregationRoleCode(String congregationRoleCode) {
+        this.congregationRoleCode = congregationRoleCode;
     }
 
     public Person getPerson() {

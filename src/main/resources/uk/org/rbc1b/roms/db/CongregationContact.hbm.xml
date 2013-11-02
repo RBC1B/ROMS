@@ -6,7 +6,7 @@
             <generator class="identity" />
         </id>
         <many-to-one name="congregation" column="CongregationId" not-null="true" />
-        <property name="congregationRoleId" />
+        <property name="congregationRoleCode" />
         <many-to-one name="person" column="PersonId" not-null="true" />
         <property name="updateTime" not-null="true" />
         <property name="updatedBy" not-null="true" />

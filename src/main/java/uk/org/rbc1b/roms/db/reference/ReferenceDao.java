@@ -74,7 +74,7 @@ public interface ReferenceDao {
     /**
      * @return ordered map of congregation role type values
      */
-    Map<Integer, String> findCongregationRoleValues();
+    Map<String, String> findCongregationRoleValues();
 
     /**
      * @return ordered map of assignment role type values

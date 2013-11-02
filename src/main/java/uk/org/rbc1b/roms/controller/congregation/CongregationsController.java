@@ -153,16 +153,16 @@ public class CongregationsController {
             for (CongregationContact contact : congregation.getContacts()) {
                 Person person = personDao.findPerson(contact.getPerson().getPersonId());
 
-                if (contact.getCongregationRoleId() == CongregationContact.COORDINATOR_ROLE) {
+                if (contact.getCongregationRoleCode().equals(CongregationContact.COORDINATOR_ROLE)) {
                     form.setCoordinatorForename(person.getForename());
                     form.setCoordinatorSurname(person.getSurname());
                     form.setCoordinatorPersonId(person.getPersonId());
-                } else if (contact.getCongregationRoleId() == CongregationContact.SECRETARY_ROLE) {
+                } else if (contact.getCongregationRoleCode().equals(CongregationContact.SECRETARY_ROLE)) {
                     form.setSecretaryForename(person.getForename());
                     form.setSecretarySurname(person.getSurname());
                     form.setSecretaryPersonId(person.getPersonId());
                 } else {
-                    throw new IllegalStateException("Unknown congregation role: " + contact.getCongregationRoleId());
+                    throw new IllegalStateException("Unknown congregation role: " + contact.getCongregationRoleCode());
                 }
             }
         }
@@ -280,20 +280,20 @@ public class CongregationsController {
     /**
      * Merge an individual congregation contact.
      */
-    private void mergeContact(Congregation congregation, Integer roleId, Integer personId, String forename,
+    private void mergeContact(Congregation congregation, String roleCode, Integer personId, String forename,
             String surname) {
         if (personId == null && surname == null) {
-            congregation.removeContact(roleId);
+            congregation.removeContact(roleCode);
             return;
         }
 
-        CongregationContact contact = congregation.findContact(roleId);
+        CongregationContact contact = congregation.findContact(roleCode);
         if (contact == null) {
             Person person = fetchPerson(congregation, personId, forename, surname);
             if (person != null) {
                 contact = new CongregationContact();
                 contact.setCongregation(congregation);
-                contact.setCongregationRoleId(roleId);
+                contact.setCongregationRoleCode(roleCode);
                 contact.setPerson(person);
                 congregation.getContacts().add(contact);
             }

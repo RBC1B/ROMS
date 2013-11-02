@@ -57,12 +57,12 @@ public class Congregation implements UpdateAuditable, Serializable {
 
     /**
      * Find the contact matching the type.
-     * @param congregationRoleId role id
+     * @param congregationRoleCode role code
      * @return contact
      */
-    public CongregationContact findContact(Integer congregationRoleId) {
+    public CongregationContact findContact(String congregationRoleCode) {
         for (CongregationContact contact : contacts) {
-            if (contact.getCongregationRoleId().equals(congregationRoleId)) {
+            if (contact.getCongregationRoleCode().equals(congregationRoleCode)) {
                 return contact;
             }
         }
@@ -71,13 +71,13 @@ public class Congregation implements UpdateAuditable, Serializable {
 
     /**
      * Remove a contact from the collection.
-     * @param congregationRoleId role id
+     * @param congregationRoleCode role code
      * @return true if we remove a contact
      */
-    public boolean removeContact(Integer congregationRoleId) {
+    public boolean removeContact(String congregationRoleCode) {
         for (Iterator<CongregationContact> i = contacts.iterator(); i.hasNext();) {
             CongregationContact contact = i.next();
-            if (contact.getCongregationRoleId().equals(congregationRoleId)) {
+            if (contact.getCongregationRoleCode().equals(congregationRoleCode)) {
                 i.remove();
                 return true;
             }
