@@ -87,14 +87,14 @@
             </div>
         </div>
 
-            <ol class="breadcrumb">
-                <li><a href="<c:url value="/" />">Edifice</a></li>
-                <sec:authorize access="hasPermission('SKILL', 'READ')">
-                  <li><a href="<c:url value="/skills" />">Skills</a></li>
-                </sec:authorize>
-                <li>${skill.name}</li>
-            </ol>
-                            
+        <ol class="breadcrumb">
+            <li><a href="<c:url value="/" />">Edifice</a></li>
+            <sec:authorize access="hasPermission('SKILL', 'READ')">
+              <li><a href="<c:url value="/skills" />">Skills</a></li>
+            </sec:authorize>
+            <li>${skill.name}</li>
+        </ol>
+
         <%@ include file="/WEB-INF/views/common/footer.jsp"%>
     </div>
     <%@ include file="/WEB-INF/views/common/mustache-list-actions.jsp" %>

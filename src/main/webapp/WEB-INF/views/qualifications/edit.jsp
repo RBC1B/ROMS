@@ -36,7 +36,7 @@
                 </fieldset>
                 <input type="submit" class="btn btn-primary" />
             </form:form>
-                
+
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
                 <sec:authorize access="hasPermission('SKILL', 'READ')">
@@ -44,7 +44,7 @@
                 </sec:authorize>
                 <li class="active">Edit</li>
             </ol>
-                
+
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         <script type="text/javascript" src="<c:url value='/javascript/qualifications.js' />" ></script>
     </body>

@@ -49,7 +49,6 @@
                 </div>
                 <input type="submit" class="btn btn-edifice" />
             </form:form>
-                
 
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
@@ -57,8 +56,7 @@
                   <li><a href="<c:url value="/skills" />">Skills</a></li>
                 </sec:authorize>
                 <li>Edit</li>
-            </ol>                
-     
+            </ol>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         <script type="text/javascript" src="<c:url value='/javascript/skills.js' />" ></script>
     </body>

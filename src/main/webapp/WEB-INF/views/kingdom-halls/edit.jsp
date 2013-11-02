@@ -75,7 +75,7 @@ Author     : oliver.elder.esq
                 <li role="menuitem"><a href="<c:url value="/kingdom-halls" />">Kingdom Halls</a></li>
                 </sec:authorize>
             <li class="active">Edit</li>
-        </ol>                
+        </ol>
 
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         <script type="text/javascript" src="<c:url value='/javascript/kingdom-halls.js' />" ></script>

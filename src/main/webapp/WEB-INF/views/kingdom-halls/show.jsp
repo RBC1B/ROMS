@@ -48,15 +48,15 @@
                     </c:choose>
                 </dd>
             </dl>
-            
+
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
                 <sec:authorize access="hasPermission('KINGDOMHALL', 'READ')">
                   <li><a href="<c:url value="/kingdom-halls" />">Kingdom Halls</a></li>
                 </sec:authorize>
                 <li class="active">#${kingdomHall.kingdomHallId}: ${kingdomHall.name}</li>
-            </ol>            
-            
+            </ol>
+
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
      <script type="text/javascript" src="<c:url value='/javascript/kingdom-halls.js' />" ></script>

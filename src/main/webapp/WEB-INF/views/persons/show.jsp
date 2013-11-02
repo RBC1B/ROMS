@@ -97,8 +97,8 @@
                   <li><a href="<c:url value="/persons" />">Persons</a></li>
                 </sec:authorize>
                 <li class="active">#${person.id}: ${person.displayName}</li>
-            </ol>                
-                
+            </ol>
+
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
         <script type="text/javascript" src="<c:url value='/javascript/persons.js' />" ></script>
