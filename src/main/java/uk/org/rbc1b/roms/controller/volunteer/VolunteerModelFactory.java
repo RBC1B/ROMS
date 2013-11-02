@@ -146,8 +146,8 @@ public class VolunteerModelFactory {
             model.setEmergencyContactRelationship(referenceDao.findRelationshipValues().get(
                     volunteer.getEmergencyContactRelationshipId()));
         }
-        if (volunteer.getFulltimeId() != null) {
-            model.setFulltime(referenceDao.findFulltimeValues().get(volunteer.getFulltimeId()));
+        if (volunteer.getFulltimeCode() != null) {
+            model.setFulltime(referenceDao.findFulltimeValues().get(volunteer.getFulltimeCode()));
         }
         model.setSpouse(personModelFactory.generatePersonModel(volunteer.getSpouse()));
 

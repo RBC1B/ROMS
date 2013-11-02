@@ -39,7 +39,7 @@ public class Volunteer extends Person {
     private String availability; // 7 char string, representing T or F, Monday to Sunday
     private Person emergencyContact;
     private Integer emergencyContactRelationshipId;
-    private Integer fulltimeId;
+    private String fulltimeCode;
     private String gender; // M or F
     private Integer maritalStatusId;
     private java.sql.Date baptismDate;
@@ -144,12 +144,12 @@ public class Volunteer extends Person {
         this.formDate = formDate;
     }
 
-    public Integer getFulltimeId() {
-        return fulltimeId;
+    public String getFulltimeCode() {
+        return fulltimeCode;
     }
 
-    public void setFulltimeId(Integer fulltimeId) {
-        this.fulltimeId = fulltimeId;
+    public void setFulltimeCode(String fulltimeCode) {
+        this.fulltimeCode = fulltimeCode;
     }
 
     public String getGender() {

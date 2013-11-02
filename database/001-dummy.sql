@@ -296,7 +296,7 @@ insert into Qualification(Name, Description, UpdateTime, UpdatedBy)
 values ('Email technicial', 'Fully trained in the difference between reply and reply to all', NOW(), 0);
 
 -- Volunteer
-insert into Volunteer(PersonId, RbcStatusCode, AppointmentCode, FulltimeId, Availability,
+insert into Volunteer(PersonId, RbcStatusCode, AppointmentCode, FulltimeCode, Availability,
 EmergencyContactId, EmergencyContactRelationshipId, Gender, MaritalStatusId, BaptismDate, InterviewDate,
 InterviewerA, InterviewerB, InterviewComments, JoinedDate, FormDate, InterviewStatusCode, Oversight, OversightComments,
 ReliefUK, ReliefUKComments, ReliefAbroad, ReliefAbroadComments, HHCFormCode, BadgeIssueDate)
@@ -337,7 +337,7 @@ values (6, 1, 1, null, null, null, NOW(), 0);
 insert into VolunteerQualification(PersonId, QualificationId, Comments, UpdateTime, UpdatedBy)
 values(5, 1, 'Maths is only ok', NOW(), 0);
 
-insert into Volunteer(PersonId, RbcStatusCode, AppointmentCode, FulltimeId, Availability,
+insert into Volunteer(PersonId, RbcStatusCode, AppointmentCode, FulltimeCode, Availability,
 EmergencyContactId, EmergencyContactRelationshipId, Gender, MaritalStatusId, BaptismDate, InterviewDate,
 InterviewerA, InterviewerB, InterviewComments, JoinedDate, FormDate, InterviewStatusCode, Oversight, OversightComments,
 ReliefUK, ReliefUKComments, ReliefAbroad, ReliefAbroadComments, HHCFormCode, BadgeIssueDate)
@@ -351,11 +351,11 @@ update Person set congregationId = 2 where PersonId = 6;
 insert into VolunteerQualification(PersonId, QualificationId, Comments, UpdateTime, UpdatedBy)
 values(6, 2, 'Hand washing is a bit suspect', NOW(), 0);
 
-insert into Volunteer(PersonId, RbcStatusCode, AppointmentCode, FulltimeId, Availability,
+insert into Volunteer(PersonId, RbcStatusCode, AppointmentCode, FulltimeCode, Availability,
 EmergencyContactId, EmergencyContactRelationshipId, Gender, MaritalStatusId, BaptismDate, InterviewDate,
 InterviewerA, InterviewerB, InterviewComments, JoinedDate, FormDate, InterviewStatusCode, Oversight, OversightComments,
 ReliefUK, ReliefUKComments, ReliefAbroad, ReliefAbroadComments, HHCFormCode, BadgeIssueDate)
-values(7, 'DN', null, 2, 'FFFFFFT',
+values(7, 'DN', null, 'RP', 'FFFFFFT',
 3, 5, 'M', 4, '1999-07-10', '2012-05-29',
 1, null, null, null, '2012-03-13', 'RI', false, null,
 false, null, false, null, null, null);

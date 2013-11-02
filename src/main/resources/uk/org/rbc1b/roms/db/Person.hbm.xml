@@ -28,7 +28,7 @@
         <key column="personId" />
         <property name="rbcStatusCode" not-null="true" />
         <property name="appointmentCode" />
-        <property name="fulltimeId"/>
+        <property name="fulltimeCode"/>
         <property length="7" name="availability"/>
         <many-to-one column="EmergencyContactId" name="emergencyContact" cascade="save-update" />
         <property name="emergencyContactRelationshipId" />

@@ -76,7 +76,7 @@ public class VolunteersController {
     private static final int MARRIED_MARITAL_STATUS = 2;
     private static final String RBC_STATUS_ACTIVE = "AT";
     private static final String INTERVIEW_STATUS_INVITE_DUE = "ID";
-    private static final int FULLTIME_REGULAR_PIONEER = 2;
+    private static final String FULLTIME_REGULAR_PIONEER = "RP";
     private static final String APPOINTMENT_ELDER = "EL";
     private static final String APPOINTMENT_MINISTERIAL_SERVANT = "MS";
     private static final Set<VolunteerData> VOLUNTEER_DATA = EnumSet.of(VolunteerData.SPOUSE,
@@ -276,7 +276,7 @@ public class VolunteersController {
         volunteer.setGender(form.getGender());
 
         if (form.isRegularPioneer()) {
-            volunteer.setFulltimeId(FULLTIME_REGULAR_PIONEER);
+            volunteer.setFulltimeCode(FULLTIME_REGULAR_PIONEER);
         }
 
         Person emergencyContact = createEmergencyContact(form);
@@ -340,7 +340,7 @@ public class VolunteersController {
             form.setCongregationId(congregation.getCongregationId());
         }
 
-        form.setFulltimeId(volunteer.getFulltimeId());
+        form.setFulltimeCode(volunteer.getFulltimeCode());
 
         model.addAttribute("volunteerSpiritual", form);
         model.addAttribute("forename", volunteer.getForename());
@@ -535,7 +535,7 @@ public class VolunteersController {
         }
 
         volunteer.setBaptismDate(DataConverterUtil.toSqlDate(form.getBaptismDate()));
-        volunteer.setFulltimeId(form.getFulltimeId());
+        volunteer.setFulltimeCode(form.getFulltimeCode());
         volunteer.setAppointmentCode(form.getAppointmentCode());
 
         if (form.getCongregationId() == null) {

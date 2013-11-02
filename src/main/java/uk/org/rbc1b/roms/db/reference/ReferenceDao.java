@@ -54,7 +54,7 @@ public interface ReferenceDao {
     /**
      * @return ordered map of full time service values
      */
-    Map<Integer, String> findFulltimeValues();
+    Map<String, String> findFulltimeValues();
 
     /**
      * @return ordered map of (emergency contact) relationship values

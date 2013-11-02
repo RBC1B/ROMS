@@ -379,9 +379,9 @@ create table Appointment(
 )engine=InnoDB;
 
 create table Fulltime(
-    FulltimeId  bigint(20)  auto_increment,
-    Name        varchar(25) not null    unique,
-    primary key (FulltimeId)
+    FulltimeCode    char(2)     not null    unique,
+    Name            varchar(25) not null    unique,
+    primary key (FulltimeCode)
 )engine=InnoDB;
 
 -- emergency contact relationship
@@ -401,7 +401,7 @@ create table Volunteer(
     PersonId            bigint(20)  not null    unique,
     RbcStatusCode       char(2)     not null,
     AppointmentCode     char(2),
-    FulltimeId          bigint(20),
+    FulltimeCode        char(2),
     Availability        varchar(7),
     EmergencyContactId  bigint(20),
     EmergencyContactRelationshipId bigint(20),
@@ -428,7 +428,7 @@ create table Volunteer(
     foreign key (PersonId) references Person(PersonId) on delete cascade,
     foreign key (RbcStatusCode) references RbcStatus(RbcStatusCode),
     foreign key (AppointmentCode) references Appointment(AppointmentCode),
-    foreign key (FulltimeId) references Fulltime(FulltimeId),
+    foreign key (FulltimeCode) references Fulltime(FulltimeCode),
     foreign key (EmergencyContactId) references Person(PersonId) on delete set null,
     foreign key (EmergencyContactRelationshipId) references Relationship(RelationshipId) on delete set null,
     foreign key (MaritalStatusId) references MaritalStatus(MaritalStatusId),
@@ -443,7 +443,7 @@ create table Volunteer_AUD (
     REVTYPE             tinyint,
     RbcStatusCode       char(2)     not null,
     AppointmentCode     char(2),
-    FulltimeId          bigint(20),
+    FulltimeCode        char(2),
     Availability        varchar(7),
     EmergencyContactId  bigint(20),
     EmergencyContactRelationshipId bigint(20),
@@ -1334,9 +1334,9 @@ insert into Appointment (AppointmentCode, Name) values
     ('EL', 'Elder'),
     ('MS', 'Ministerial Servant');
 
-insert into Fulltime (Name) values
-    ('Bethel'),
-    ('Regular Pioneer');
+insert into Fulltime (FulltimeCode, Name) values
+    ('BT', 'Bethel'),
+    ('RP', 'Regular Pioneer');
 
 insert into Relationship(Name) values
     ('Elder'),

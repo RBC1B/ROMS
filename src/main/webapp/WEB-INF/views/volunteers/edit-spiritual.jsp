@@ -23,7 +23,7 @@ Author: oliver.elder.esq
                     <label>Date of baptism</label>
                     <form:input path="baptismDate" placeholder="15/03/1980" class="datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
                     <label>Full time service</label>
-                    <form:select path="fulltimeId">
+                    <form:select path="fulltimeCode">
                         <form:option value="" label="None" />
                         <form:options items="${fulltimeValues}" />
                     </form:select>
