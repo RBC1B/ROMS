@@ -159,7 +159,7 @@ public class ProjectModelFactory {
 
         Map<Integer, ProjectStageType> stageTypes = projectDao.findProjectStageTypes();
         Map<String, String> statuses = referenceDao.findProjectStatusValues();
-        Map<Integer, String> eventTypes = referenceDao.findProjectStageEventTypeValues();
+        Map<String, String> eventTypes = referenceDao.findProjectStageEventTypeValues();
 
         List<ProjectStageModel> modelList = new ArrayList<ProjectStageModel>();
 
@@ -178,7 +178,7 @@ public class ProjectModelFactory {
             List<ProjectEventModel> events = new ArrayList<ProjectEventModel>();
             for (ProjectStageEvent event : stage.getEvents()) {
                 events.add(createProjectEvent(event.getProjectStageEventId(),
-                        eventTypes.get(event.getProjectStageEventTypeId()), event.getCreatedBy(),
+                        eventTypes.get(event.getProjectStageEventTypeCode()), event.getCreatedBy(),
                         event.getCreateTime(), event.getComments()));
             }
             Collections.sort(events, ProjectEventModel.CREATE_TIME_COMPARATOR);

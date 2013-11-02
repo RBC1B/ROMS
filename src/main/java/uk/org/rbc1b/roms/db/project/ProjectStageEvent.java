@@ -37,7 +37,7 @@ public class ProjectStageEvent implements CreateAuditable, Serializable {
     private static final long serialVersionUID = 4947689666475610021L;
     private Integer projectStageEventId;
     private ProjectStage projectStage;
-    private Integer projectStageEventTypeId;
+    private String projectStageEventTypeCode;
     private String comments;
     private Date createTime;
     private Integer createdBy;
@@ -58,12 +58,12 @@ public class ProjectStageEvent implements CreateAuditable, Serializable {
         this.projectStage = projectStage;
     }
 
-    public Integer getProjectStageEventTypeId() {
-        return projectStageEventTypeId;
+    public String getProjectStageEventTypeCode() {
+        return projectStageEventTypeCode;
     }
 
-    public void setProjectStageEventTypeId(Integer projectStageEventTypeId) {
-        this.projectStageEventTypeId = projectStageEventTypeId;
+    public void setProjectStageEventTypeCode(String projectStageEventTypeCode) {
+        this.projectStageEventTypeCode = projectStageEventTypeCode;
     }
 
     public String getComments() {

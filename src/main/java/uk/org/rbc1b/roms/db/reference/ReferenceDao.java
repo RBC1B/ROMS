@@ -94,7 +94,7 @@ public interface ReferenceDao {
     /**
      * @return ordered map of project stage event values
      */
-    Map<Integer, String> findProjectStageEventTypeValues();
+    Map<String, String> findProjectStageEventTypeValues();
 
     /**
      * @return ordered map of project stage activity type values

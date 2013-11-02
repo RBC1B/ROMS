@@ -761,9 +761,9 @@ create table ProjectStageTypeActivityType_AUD (
 )engine=InnoDB;
 
 create table ProjectStageEventType (
-    ProjectStageEventTypeId bigint(20)  auto_increment,
-    Name                    varchar(50),
-    primary key (ProjectStageEventTypeId)
+    ProjectStageEventTypeCode   char(2)     not null    unique,
+    Name                        varchar(50) not null    unique,
+    primary key (ProjectStageEventTypeCode)
 )engine=InnoDB;
 
 create table ProjectStageActivityEventType (
@@ -922,13 +922,13 @@ create table ProjectStageActivityTask_AUD (
 create table ProjectStageEvent (
     ProjectStageEventId     bigint(20)  auto_increment,
     ProjectStageId          bigint(20)  not null,
-    ProjectStageEventTypeId bigint(20)  not null,
+    ProjectStageEventTypeCode char(2)   not null,
     Comments                text,
     CreateTime              timestamp   not null,
     CreatedBy               bigint(20)  not null,
     primary key (ProjectStageEventId),
     foreign key (ProjectStageId) references ProjectStage(ProjectStageId) on delete cascade,
-    foreign key (ProjectStageEventTypeId) references ProjectStageEventType(ProjectStageEventTypeId),
+    foreign key (ProjectStageEventTypeCode) references ProjectStageEventType(ProjectStageEventTypeCode),
     foreign key (CreatedBy) references User(PersonId)
 )engine=InnoDB;
 
@@ -1443,12 +1443,12 @@ insert into ProjectStatus (ProjectStatusCode, Name) values
     ('CC', 'Cancelled'),
     ('CP', 'Completed');
 
-insert into ProjectStageEventType (Name) values
-    ('Started'),
-    ('Completed'),
-    ('Reopened'),
-    ('Cancelled'),
-    ('Notes');
+insert into ProjectStageEventType (ProjectStageEventTypeCode, Name) values
+    ('ST', 'Started'),
+    ('CP', 'Completed'),
+    ('RO', 'Reopened'),
+    ('CC', 'Cancelled'),
+    ('NT', 'Notes');
 
 insert into ProjectStageActivityEventType (Name) values
     ('Started'),
