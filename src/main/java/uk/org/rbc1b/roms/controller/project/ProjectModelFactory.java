@@ -192,7 +192,7 @@ public class ProjectModelFactory {
             Map<String, String> statuses) {
 
         Map<Integer, ProjectStageActivityType> activityTypes = projectDao.findProjectStageActivityTypes();
-        Map<Integer, String> eventTypes = referenceDao.findProjectStageActivityEventTypeValues();
+        Map<String, String> eventTypes = referenceDao.findProjectStageActivityEventTypeValues();
 
         List<ProjectStageActivityModel> modelList = new ArrayList<ProjectStageActivityModel>();
         for (ProjectStageActivity activity : stage.getActivities()) {
@@ -219,7 +219,7 @@ public class ProjectModelFactory {
             List<ProjectEventModel> events = new ArrayList<ProjectEventModel>();
             for (ProjectStageActivityEvent event : activity.getEvents()) {
                 events.add(createProjectEvent(event.getProjectStageActivityEventId(),
-                        eventTypes.get(event.getProjectStageActivityEventTypeId()), event.getCreatedBy(),
+                        eventTypes.get(event.getProjectStageActivityEventTypeCode()), event.getCreatedBy(),
                         event.getCreateTime(), event.getComments()));
             }
             Collections.sort(events, ProjectEventModel.CREATE_TIME_COMPARATOR);
@@ -234,7 +234,7 @@ public class ProjectModelFactory {
     private List<ProjectStageActivityTaskModel> generateProjectStageActivityTasks(ProjectStageActivity activity,
             Map<String, String> statuses) {
 
-        Map<Integer, String> eventTypes = referenceDao.findProjectStageActivityTaskEventTypeValues();
+        Map<String, String> eventTypes = referenceDao.findProjectStageActivityTaskEventTypeValues();
 
         List<ProjectStageActivityTaskModel> modelList = new ArrayList<ProjectStageActivityTaskModel>();
         for (ProjectStageActivityTask task : activity.getTasks()) {
@@ -258,7 +258,7 @@ public class ProjectModelFactory {
             List<ProjectEventModel> events = new ArrayList<ProjectEventModel>();
             for (ProjectStageActivityTaskEvent event : task.getEvents()) {
                 events.add(createProjectEvent(event.getProjectStageActivityTaskEventId(),
-                        eventTypes.get(event.getProjectStageActivityTaskEventTypeId()), event.getCreatedBy(),
+                        eventTypes.get(event.getProjectStageActivityTaskEventTypeCode()), event.getCreatedBy(),
                         event.getCreateTime(), event.getComments()));
             }
             Collections.sort(events, ProjectEventModel.CREATE_TIME_COMPARATOR);

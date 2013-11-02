@@ -767,15 +767,15 @@ create table ProjectStageEventType (
 )engine=InnoDB;
 
 create table ProjectStageActivityEventType (
-    ProjectStageActivityEventTypeId bigint(20)  auto_increment,
-    Name                            varchar(50),
-    primary key (ProjectStageActivityEventTypeId)
+    ProjectStageActivityEventTypeCode   char(2)     not null    unique,
+    Name                                varchar(50) not null    unique,
+    primary key (ProjectStageActivityEventTypeCode)
 )engine=InnoDB;
 
 create table ProjectStageActivityTaskEventType (
-    ProjectStageActivityTaskEventTypeId  bigint(20)  auto_increment,
-    Name                            varchar(50),
-    primary key (ProjectStageActivityTaskEventTypeId)
+    ProjectStageActivityTaskEventTypeCode   char(2)     not null    unique,
+    Name                                    varchar(50) not null    unique,
+    primary key (ProjectStageActivityTaskEventTypeCode)
 )engine=InnoDB;
 
 create table ProjectStage (
@@ -935,26 +935,26 @@ create table ProjectStageEvent (
 create table ProjectStageActivityEvent (
     ProjectStageActivityEventId         bigint(20)  auto_increment,
     ProjectStageActivityId              bigint(20)  not null,
-    ProjectStageActivityEventTypeId     bigint(20)  not null,
+    ProjectStageActivityEventTypeCode   char(2)     not null,
     Comments                            text,
     CreateTime                          timestamp   not null,
     CreatedBy                           bigint(20)  not null,
     primary key (ProjectStageActivityEventId),
     foreign key (ProjectStageActivityId) references ProjectStageActivity(ProjectStageActivityId) on delete cascade,
-    foreign key (ProjectStageActivityEventTypeId) references ProjectStageActivityEventType(ProjectStageActivityEventTypeId),
+    foreign key (ProjectStageActivityEventTypeCode) references ProjectStageActivityEventType(ProjectStageActivityEventTypeCode),
     foreign key (CreatedBy) references User(PersonId)
 )engine=InnoDB;
 
 create table ProjectStageActivityTaskEvent (
     ProjectStageActivityTaskEventId     bigint(20)  auto_increment,
     ProjectStageActivityTaskId          bigint(20)  not null,
-    ProjectStageActivityTaskEventTypeId bigint(20)  not null,
+    ProjectStageActivityTaskEventTypeCode char(2)  not null,
     Comments                            text,
     CreateTime                          timestamp   not null,
     CreatedBy                           bigint(20)  not null,
     primary key (ProjectStageActivityTaskEventId),
     foreign key (ProjectStageActivityTaskId) references ProjectStageActivityTask(ProjectStageActivityTaskId) on delete cascade,
-    foreign key (ProjectStageActivityTaskEventTypeId) references ProjectStageActivityTaskEventType(ProjectStageActivityTaskEventTypeId),
+    foreign key (ProjectStageActivityTaskEventTypeCode) references ProjectStageActivityTaskEventType(ProjectStageActivityTaskEventTypeCode),
     foreign key (CreatedBy) references User(PersonId)
 )engine=InnoDB;
 
@@ -1450,19 +1450,19 @@ insert into ProjectStageEventType (ProjectStageEventTypeCode, Name) values
     ('CC', 'Cancelled'),
     ('NT', 'Notes');
 
-insert into ProjectStageActivityEventType (Name) values
-    ('Started'),
-    ('Completed'),
-    ('Reopened'),
-    ('Cancelled'),
-    ('Notes');
+insert into ProjectStageActivityEventType (ProjectStageActivityEventTypeCode, Name) values
+    ('ST', 'Started'),
+    ('CP', 'Completed'),
+    ('RO', 'Reopened'),
+    ('CC', 'Cancelled'),
+    ('NT', 'Notes');
     
-insert into ProjectStageActivityTaskEventType (Name) values
-    ('Started'),
-    ('Completed'),
-    ('Reopened'),
-    ('Cancelled'),
-    ('Notes');
+insert into ProjectStageActivityTaskEventType (ProjectStageActivityTaskEventTypeCode, Name) values
+    ('ST', 'Started'),
+    ('CP', 'Completed'),
+    ('RO', 'Reopened'),
+    ('CC', 'Cancelled'),
+    ('NT', 'Notes');
 
 insert into SkillCategory (Name, Colour, AppearOnBadge, UpdateTime, UpdatedBy) values
     ('General', 'RED', true, NOW(), 0);

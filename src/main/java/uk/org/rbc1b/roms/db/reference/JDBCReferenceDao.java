@@ -137,16 +137,16 @@ public class JDBCReferenceDao implements ReferenceDao {
 
     @Override
     @Cacheable("reference.projectStageActivityEventType")
-    public Map<Integer, String> findProjectStageActivityEventTypeValues() {
-        return findReferenceIdValues("SELECT ProjectStageActivityEventTypeId AS id, Name AS value "
-                + "FROM ProjectStageActivityEventType ORDER BY ProjectStageActivityEventTypeId");
+    public Map<String, String> findProjectStageActivityEventTypeValues() {
+        return findReferenceCodeValues("SELECT ProjectStageActivityEventTypeCode AS code, Name AS value "
+                + "FROM ProjectStageActivityEventType ORDER BY ProjectStageActivityEventTypeCode");
     }
 
     @Override
     @Cacheable("reference.projectStageActivityTaskEventType")
-    public Map<Integer, String> findProjectStageActivityTaskEventTypeValues() {
-        return findReferenceIdValues("SELECT ProjectStageActivityTaskEventTypeId AS id, Name AS value "
-                + "FROM ProjectStageActivityTaskEventType ORDER BY ProjectStageActivityTaskEventTypeId");
+    public Map<String, String> findProjectStageActivityTaskEventTypeValues() {
+        return findReferenceCodeValues("SELECT ProjectStageActivityTaskEventTypeCode AS code, Name AS value "
+                + "FROM ProjectStageActivityTaskEventType ORDER BY ProjectStageActivityTaskEventTypeCode");
     }
 
     @Override
