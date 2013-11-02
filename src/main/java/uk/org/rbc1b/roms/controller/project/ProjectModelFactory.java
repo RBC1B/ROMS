@@ -79,7 +79,7 @@ public class ProjectModelFactory {
      * @return model
      */
     public ProjectListModel generateProjectListModel(Project project, Map<Integer, String> types,
-            Map<Integer, String> statuses) {
+            Map<String, String> statuses) {
         ProjectListModel model = new ProjectListModel();
         model.setProjectId(project.getProjectId());
         model.setCompletedDate(project.getCompletedDate());
@@ -95,7 +95,7 @@ public class ProjectModelFactory {
         }
         model.setName(project.getName());
         model.setRequestDate(project.getRequestDate());
-        model.setStatus(statuses.get(project.getStatusId()));
+        model.setStatus(statuses.get(project.getStatusCode()));
         model.setType(types.get(project.getProjectTypeId()));
         model.setUri(generateUri(project.getProjectId()));
 
@@ -110,7 +110,7 @@ public class ProjectModelFactory {
     public ProjectModel generateProjectModel(Project project) {
 
         Map<Integer, String> types = referenceDao.findProjectTypeValues();
-        Map<Integer, String> statuses = referenceDao.findProjectStatusValues();
+        Map<String, String> statuses = referenceDao.findProjectStatusValues();
 
         ProjectModel model = new ProjectModel();
         model.setCompletedDate(project.getCompletedDate());
@@ -138,7 +138,7 @@ public class ProjectModelFactory {
         model.setPriority(project.getPriority());
         model.setProjectId(project.getProjectId());
         model.setRequestDate(project.getRequestDate());
-        model.setStatus(statuses.get(project.getStatusId()));
+        model.setStatus(statuses.get(project.getStatusCode()));
         model.setSupportingCongregation(project.getSupportingCongregation());
         model.setTelephone(project.getTelephone());
         model.setType(types.get(project.getProjectTypeId()));
@@ -158,7 +158,7 @@ public class ProjectModelFactory {
         }
 
         Map<Integer, ProjectStageType> stageTypes = projectDao.findProjectStageTypes();
-        Map<Integer, String> statuses = referenceDao.findProjectStatusValues();
+        Map<String, String> statuses = referenceDao.findProjectStatusValues();
         Map<Integer, String> eventTypes = referenceDao.findProjectStageEventTypeValues();
 
         List<ProjectStageModel> modelList = new ArrayList<ProjectStageModel>();
@@ -167,7 +167,7 @@ public class ProjectModelFactory {
             ProjectStageModel model = new ProjectStageModel();
             model.setId(stage.getProjectStageId());
             model.setType(stageTypes.get(stage.getProjectStageTypeId()));
-            model.setStatus(statuses.get(stage.getStatusId()));
+            model.setStatus(statuses.get(stage.getStatusCode()));
             model.setStarted(stage.isStarted());
             model.setCreatedTime(stage.getCreatedTime());
             model.setStartedTime(stage.getStartedTime());
@@ -189,7 +189,7 @@ public class ProjectModelFactory {
     }
 
     private List<ProjectStageActivityModel> generateProjectStageActivities(ProjectStage stage,
-            Map<Integer, String> statuses) {
+            Map<String, String> statuses) {
 
         Map<Integer, ProjectStageActivityType> activityTypes = projectDao.findProjectStageActivityTypes();
         Map<Integer, String> eventTypes = referenceDao.findProjectStageActivityEventTypeValues();
@@ -210,7 +210,7 @@ public class ProjectModelFactory {
             model.setProjectedStart(activity.getProjectedStart());
             model.setId(activity.getProjectStageActivityId());
             model.setStartedTime(activity.getStartedTime());
-            model.setStatus(statuses.get(activity.getStatusId()));
+            model.setStatus(statuses.get(activity.getStatusCode()));
             model.setStarted(activity.isStarted());
             model.setType(activityTypes.get(activity.getProjectStageActivityType().getProjectStageActivityTypeId()));
 
@@ -232,7 +232,7 @@ public class ProjectModelFactory {
     }
 
     private List<ProjectStageActivityTaskModel> generateProjectStageActivityTasks(ProjectStageActivity activity,
-            Map<Integer, String> statuses) {
+            Map<String, String> statuses) {
 
         Map<Integer, String> eventTypes = referenceDao.findProjectStageActivityTaskEventTypeValues();
 
@@ -252,7 +252,7 @@ public class ProjectModelFactory {
             model.setName(task.getName());
             model.setId(task.getProjectStageActivityTaskId());
             model.setStartedTime(task.getStartedTime());
-            model.setStatus(statuses.get(activity.getStatusId()));
+            model.setStatus(statuses.get(activity.getStatusCode()));
             model.setStarted(task.isStarted());
 
             List<ProjectEventModel> events = new ArrayList<ProjectEventModel>();

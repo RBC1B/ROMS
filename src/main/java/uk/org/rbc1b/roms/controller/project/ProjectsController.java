@@ -64,7 +64,7 @@ public class ProjectsController {
 
         List<Project> projects = projectDao.findProjects();
         Map<Integer, String> types = referenceDao.findProjectTypeValues();
-        Map<Integer, String> statuses = referenceDao.findProjectStatusValues();
+        Map<String, String> statuses = referenceDao.findProjectStatusValues();
         List<ProjectListModel> modelList = new ArrayList<ProjectListModel>(projects.size());
         for (Project project : projects) {
             modelList.add(projectModelFactory.generateProjectListModel(project, types, statuses));

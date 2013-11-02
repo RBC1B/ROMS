@@ -37,11 +37,11 @@ import uk.org.rbc1b.roms.db.UpdateAuditable;
 @Audited
 public class ProjectStage implements UpdateAuditable, Serializable {
     private static final long serialVersionUID = 1L;
-    private static final int STARTED_STATUS_ID = 1;
+    private static final String STARTED_STATUS_CODE = "WP";
     private Integer projectStageId;
     private Project project;
     private Integer projectStageTypeId;
-    private Integer statusId;
+    private String statusCode;
     private Date createdTime;
     private Date startedTime;
     private Date completedTime;
@@ -56,7 +56,7 @@ public class ProjectStage implements UpdateAuditable, Serializable {
      * @return true if the status is started
      */
     public boolean isStarted() {
-        return statusId.equals(STARTED_STATUS_ID);
+        return statusCode.equals(STARTED_STATUS_CODE);
     }
 
     public Integer getProjectStageId() {
@@ -83,12 +83,12 @@ public class ProjectStage implements UpdateAuditable, Serializable {
         this.projectStageTypeId = projectStageTypeId;
     }
 
-    public Integer getStatusId() {
-        return statusId;
+    public String getStatusCode() {
+        return statusCode;
     }
 
-    public void setStatusId(Integer statusId) {
-        this.statusId = statusId;
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
     }
 
     public Date getCreatedTime() {
