@@ -44,7 +44,7 @@ public interface ReferenceDao {
     /**
      * @return ordered map of RBC status values
      */
-    Map<Integer, String> findRBCStatusValues();
+    Map<String, String> findRBCStatusValues();
 
     /**
      * @return ordered map of interview status values

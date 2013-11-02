@@ -26,7 +26,7 @@
     </class>
     <joined-subclass name="uk.org.rbc1b.roms.db.volunteer.Volunteer" extends="Person">
         <key column="personId" />
-        <property name="rbcStatusId" not-null="true" />
+        <property name="rbcStatusCode" not-null="true" />
         <property name="appointmentId" />
         <property name="fulltimeId"/>
         <property length="7" name="availability"/>

@@ -164,7 +164,7 @@ create table Circuit_AUD(
 
 
 create table KingdomHallOwnershipType (
-    KingdomHallOwnershipTypeCode    char(2)    not null,
+    KingdomHallOwnershipTypeCode    char(2)    not null     unique,
     Name                            varchar(50) not null    unique,
     primary key (KingdomHallOwnershipTypeCode)
 )engine=InnoDB;
@@ -302,7 +302,7 @@ alter table KingdomHall add
     constraint foreign key (TitleHolderId) references Congregation(CongregationId) on delete set null;
 
 create table CongregationRole(
-    CongregationRoleCode    char(2),
+    CongregationRoleCode    char(2)     not null    unique,
     Name                    varchar(50) not null    unique,
     primary key (CongregationRoleCode)
 )engine=InnoDB;
@@ -366,9 +366,9 @@ create table Department_AUD(
 )engine=InnoDB;
 
 create table RbcStatus(
-    RbcStatusId     bigint(20)      auto_increment,
-    Name            varchar (15)    not null    unique,
-    primary key (RbcStatusId)
+    RbcStatusCode   char(2)     not null    unique,
+    Name            varchar(15) not null    unique,
+    primary key (RbcStatusCode)
 )engine=InnoDB;
 
 -- Person appointment, e.g. ministerial servant
@@ -399,7 +399,7 @@ create table MaritalStatus(
 
 create table Volunteer(
     PersonId            bigint(20)  not null    unique,
-    RbcStatusId         bigint(20)  not null,
+    RbcStatusCode       char(2)     not null,
     AppointmentId       bigint(20),
     FulltimeId          bigint(20),
     Availability        varchar(7),
@@ -426,7 +426,7 @@ create table Volunteer(
     BadgeIssueDate      date,
     primary key(PersonId),
     foreign key (PersonId) references Person(PersonId) on delete cascade,
-    foreign key (RbcStatusId) references RbcStatus(RbcStatusId),
+    foreign key (RbcStatusCode) references RbcStatus(RbcStatusCode),
     foreign key (AppointmentId) references Appointment(AppointmentId),
     foreign key (FulltimeId) references Fulltime(FulltimeId),
     foreign key (EmergencyContactId) references Person(PersonId) on delete set null,
@@ -441,7 +441,7 @@ create table Volunteer_AUD (
     PersonId            bigint(20)  not null,
     REV                 int         not null,
     REVTYPE             tinyint,
-    RbcStatusId         bigint(20)  not null,
+    RbcStatusCode       char(2)     not null,
     AppointmentId       bigint(20),
     FulltimeId          bigint(20),
     Availability        varchar(7),
@@ -1323,12 +1323,12 @@ insert into Department (Name, SuperDepartmentId, Description, UpdateTime, Update
     ('Land Search','49','', NOW(), 0),
     ('Planning Policy','49','', NOW(), 0);
 
-insert into RbcStatus (Name) values
-    ('Active'),
-    ('Do Not Use'),
-    ('Inactive'),
-    ('Pending'),
-    ('Reassign');
+insert into RbcStatus (RbcStatusCode, Name) values
+    ('AT', 'Active'),
+    ('DN', 'Do Not Use'),
+    ('IA', 'Inactive'),
+    ('PD', 'Pending'),
+    ('RA', 'Reassign');
 
 insert into Appointment (Name) values
     ('Elder'),

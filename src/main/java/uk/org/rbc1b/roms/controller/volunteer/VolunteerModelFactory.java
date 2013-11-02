@@ -130,7 +130,7 @@ public class VolunteerModelFactory {
 
         // volunteer specific personal data
         model.setGender(volunteer.getGender());
-        model.setStatus(referenceDao.findRBCStatusValues().get(volunteer.getRbcStatusId()));
+        model.setStatus(referenceDao.findRBCStatusValues().get(volunteer.getRbcStatusCode()));
 
         if (volunteer.getMaritalStatusId() != null) {
             model.setMaritalStatus(referenceDao.findMaritalStatusValues().get(volunteer.getMaritalStatusId()));

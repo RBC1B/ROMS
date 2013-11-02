@@ -52,7 +52,7 @@ public class Volunteer extends Person {
     private String interviewStatusCode;
     private boolean oversight;
     private String oversightComments;
-    private Integer rbcStatusId;
+    private String rbcStatusCode;
     private boolean reliefUK;
     private String reliefUKComments;
     private boolean reliefAbroad;
@@ -240,12 +240,12 @@ public class Volunteer extends Person {
         this.oversightComments = oversightComments;
     }
 
-    public Integer getRbcStatusId() {
-        return rbcStatusId;
+    public String getRbcStatusCode() {
+        return rbcStatusCode;
     }
 
-    public void setRbcStatusId(Integer rbcStatusId) {
-        this.rbcStatusId = rbcStatusId;
+    public void setRbcStatusCode(String rbcStatusCode) {
+        this.rbcStatusCode = rbcStatusCode;
     }
 
     public boolean isReliefAbroad() {
