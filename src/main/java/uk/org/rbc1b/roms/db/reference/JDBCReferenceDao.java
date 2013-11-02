@@ -65,9 +65,9 @@ public class JDBCReferenceDao implements ReferenceDao {
 
     @Override
     @Cacheable("reference.interviewStatus")
-    public Map<Integer, String> findInterviewStatusValues() {
-        return findReferenceIdValues("SELECT InterviewStatusId AS id, Name AS value "
-                + "FROM InterviewStatus ORDER BY InterviewStatusId");
+    public Map<String, String> findInterviewStatusValues() {
+        return findReferenceCodeValues("SELECT InterviewStatusCode AS code, Name AS value "
+                + "FROM InterviewStatus ORDER BY InterviewStatusCode");
     }
 
     @Override

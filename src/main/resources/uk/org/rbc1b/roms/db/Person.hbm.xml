@@ -42,7 +42,7 @@
         <property length="150" name="interviewComments"/>
         <property name="joinedDate"/>
         <property name="formDate"/>
-        <property name="interviewStatusId" not-null="true" />
+        <property name="interviewStatusCode" not-null="true" />
         <property name="oversight" not-null="true" />
         <property length="50" name="oversightComments"/>
         <property name="reliefUK" not-null="true" />

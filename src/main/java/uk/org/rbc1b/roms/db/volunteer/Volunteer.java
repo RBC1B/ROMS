@@ -49,7 +49,7 @@ public class Volunteer extends Person {
     private String interviewComments;
     private java.sql.Date joinedDate;
     private java.sql.Date formDate;
-    private Integer interviewStatusId;
+    private String interviewStatusCode;
     private boolean oversight;
     private String oversightComments;
     private Integer rbcStatusId;
@@ -184,12 +184,12 @@ public class Volunteer extends Person {
         this.interviewDate = interviewDate;
     }
 
-    public Integer getInterviewStatusId() {
-        return interviewStatusId;
+    public String getInterviewStatusCode() {
+        return interviewStatusCode;
     }
 
-    public void setInterviewStatusId(Integer interviewStatusId) {
-        this.interviewStatusId = interviewStatusId;
+    public void setInterviewStatusCode(String interviewStatusCode) {
+        this.interviewStatusCode = interviewStatusCode;
     }
 
     public User getInterviewerA() {

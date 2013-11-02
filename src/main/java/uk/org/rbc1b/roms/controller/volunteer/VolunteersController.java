@@ -75,7 +75,7 @@ public class VolunteersController {
 
     private static final int MARRIED_MARITAL_STATUS = 2;
     private static final int RBC_STATUS_ACTIVE = 1;
-    private static final int INTERVIEW_STATUS_INVITE_DUE = 1;
+    private static final String INTERVIEW_STATUS_INVITE_DUE = "ID";
     private static final int FULLTIME_REGULAR_PIONEER = 2;
     private static final int APPOINTMENT_ELDER = 1;
     private static final int APPOINTMENT_MINISTERIAL_SERVANT = 2;
@@ -291,7 +291,7 @@ public class VolunteersController {
         }
 
         volunteer.setRbcStatusId(RBC_STATUS_ACTIVE);
-        volunteer.setInterviewStatusId(INTERVIEW_STATUS_INVITE_DUE);
+        volunteer.setInterviewStatusCode(INTERVIEW_STATUS_INVITE_DUE);
 
         if (form.getTrades() != null) {
             Set<VolunteerTrade> volunteerTrades = new HashSet<VolunteerTrade>();

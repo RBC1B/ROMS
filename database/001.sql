@@ -335,9 +335,9 @@ create table CongregationContact_AUD(
 )engine=InnoDB;
 
 create table InterviewStatus(
-    InterviewStatusId   bigint(20)  auto_increment,
+    InterviewStatusCode char(2)     not null    unique,
     Name                varchar(50) not null    unique,
-    primary key (InterviewStatusId)
+    primary key (InterviewStatusCode)
 )engine=InnoDB;
 
 -- RBC department
@@ -415,7 +415,7 @@ create table Volunteer(
     InterviewComments   varchar(150),
     JoinedDate          date,
     FormDate            date,
-    InterviewStatusId   bigint(20)  not null,
+    InterviewStatusCode char(2)     not null,
     Oversight           boolean     not null,
     OversightComments   varchar(50),
     ReliefUK            boolean     not null,
@@ -434,7 +434,7 @@ create table Volunteer(
     foreign key (MaritalStatusId) references MaritalStatus(MaritalStatusId),
     foreign key (InterviewerA) references User(PersonId) on delete set null,
     foreign key (InterviewerB) references User(PersonId) on delete set null,
-    foreign key (InterviewStatusId) references InterviewStatus(InterviewStatusId)
+    foreign key (InterviewStatusCode) references InterviewStatus(InterviewStatusCode)
 )engine=InnoDB;
 
 create table Volunteer_AUD (
@@ -457,7 +457,7 @@ create table Volunteer_AUD (
     InterviewComments   varchar(150),
     JoinedDate          date,
     FormDate            date,
-    InterviewStatusId   bigint(20)  not null,
+    InterviewStatusCode char(2)     not null,
     Oversight           boolean     not null,
     OversightComments   varchar(50),
     ReliefUK            boolean     not null,
@@ -1260,12 +1260,12 @@ insert into CongregationRole(CongregationRoleCode, Name) values
     ('CB', 'CoBE'),
     ('SC', 'Secretary');
 
-insert into InterviewStatus (Name) values
-    ('Invite Due'),
-    ('Invited'),
-    ('No-Show'),
-    ('Re-Invite'),
-    ('Completed');
+insert into InterviewStatus (InterviewStatusCode, Name) values
+    ('ID', 'Invite Due'),
+    ('IT', 'Invited'),
+    ('NS', 'No-Show'),
+    ('RI', 'Re-Invite'),
+    ('CP', 'Completed');
 
 insert into Department (DepartmentId, Name, Description, UpdateTime, UpdatedBy) values
     ('1','RBC','RBC Committee and assistants', NOW(), 0),
