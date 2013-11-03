@@ -32,7 +32,7 @@ import java.sql.Blob;
  */
 public class EmailAttachment implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 6107784604416662241L;
     private Integer emailAttachmentId;
     private Email email;
     private String filename;
@@ -47,7 +47,8 @@ public class EmailAttachment implements Serializable {
     }
 
     /**
-     * @param emailAttachmentId the emailAttachmentId to set
+     * @param emailAttachmentId
+     *            the emailAttachmentId to set
      */
     public void setEmailAttachmentId(Integer emailAttachmentId) {
         this.emailAttachmentId = emailAttachmentId;
@@ -61,7 +62,8 @@ public class EmailAttachment implements Serializable {
     }
 
     /**
-     * @param email the email to set
+     * @param email
+     *            the email to set
      */
     public void setEmail(Email email) {
         this.email = email;
@@ -75,7 +77,8 @@ public class EmailAttachment implements Serializable {
     }
 
     /**
-     * @param filename the filename to set
+     * @param filename
+     *            the filename to set
      */
     public void setFilename(String filename) {
         this.filename = filename;
@@ -89,7 +92,8 @@ public class EmailAttachment implements Serializable {
     }
 
     /**
-     * @param attachment the attachment to set
+     * @param attachment
+     *            the attachment to set
      */
     public void setAttachment(Blob attachment) {
         this.attachment = attachment;
@@ -103,7 +107,8 @@ public class EmailAttachment implements Serializable {
     }
 
     /**
-     * @param fileType the fileType to set
+     * @param fileType
+     *            the fileType to set
      */
     public void setFileType(String fileType) {
         this.fileType = fileType;

@@ -27,13 +27,13 @@ import java.util.Set;
 import java.io.Serializable;
 
 /**
- * An object that defines an email.
- * There is no sender address as this is set by the JavaMail JNDI session.
+ * An object that defines an email. There is no sender address as this is set by
+ * the JavaMail JNDI session.
  */
 
 public class Email implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -1589295278670347715L;
     private Integer emailId;
     private String recipient;
     private String subject;
@@ -48,7 +48,8 @@ public class Email implements Serializable {
     }
 
     /**
-     * @param emailId the emailId to set
+     * @param emailId
+     *            the emailId to set
      */
     public void setEmailId(Integer emailId) {
         this.emailId = emailId;
@@ -62,7 +63,8 @@ public class Email implements Serializable {
     }
 
     /**
-     * @param recipient the recipient to set
+     * @param recipient
+     *            the recipient to set
      */
     public void setRecipient(String recipient) {
         this.recipient = recipient;
@@ -76,7 +78,8 @@ public class Email implements Serializable {
     }
 
     /**
-     * @param subject the subject to set
+     * @param subject
+     *            the subject to set
      */
     public void setSubject(String subject) {
         this.subject = subject;
@@ -90,7 +93,8 @@ public class Email implements Serializable {
     }
 
     /**
-     * @param text the text to set
+     * @param text
+     *            the text to set
      */
     public void setText(String text) {
         this.text = text;
@@ -104,7 +108,8 @@ public class Email implements Serializable {
     }
 
     /**
-     * @param emailAttachments the emailAttachments to set
+     * @param emailAttachments
+     *            the emailAttachments to set
      */
     public void setEmailAttachments(Set<EmailAttachment> emailAttachments) {
         this.emailAttachments = emailAttachments;
