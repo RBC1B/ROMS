@@ -23,25 +23,10 @@
  */
 package uk.org.rbc1b.roms.security;
 
-import org.springframework.security.core.userdetails.UserDetails;
-
 /**
- * Store the authenticated user details, including the user id.
- *
- * @author oliver.elder.esq
+ * Application values.
+ * An application is a section of the site
  */
-public interface ROMSUserDetails extends UserDetails {
-
-    /**
-     * Look up the authority by the application name.
-     *
-     * @param application application name
-     * @return authority
-     */
-    ROMSGrantedAuthority findAuthority(Application application);
-
-    /**
-     * @return user id
-     */
-    Integer getUserId();
+public enum Application {
+    ATTENDANCE, CIRCUIT, CONG, DATABASE, KINGDOMHALL, PROJECT, SKILL, USER, VOLUNTEER
 }

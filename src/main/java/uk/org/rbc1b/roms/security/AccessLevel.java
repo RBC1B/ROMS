@@ -23,25 +23,36 @@
  */
 package uk.org.rbc1b.roms.security;
 
-import org.springframework.security.core.userdetails.UserDetails;
-
 /**
- * Store the authenticated user details, including the user id.
- *
- * @author oliver.elder.esq
+ * Access level values for user permissions.
  */
-public interface ROMSUserDetails extends UserDetails {
+public enum AccessLevel {
+
+    NOACCESS('X'), READ('R'), EDIT('E'), ADD('A'), DELETE('D');
+
+    private final char code;
+
+    private AccessLevel(char code) {
+        this.code = code;
+    }
+
+    public char getCode() {
+        return code;
+    }
 
     /**
-     * Look up the authority by the application name.
-     *
-     * @param application application name
-     * @return authority
+     * Find the access level associated with the code.
+     * @param code code
+     * @return level
      */
-    ROMSGrantedAuthority findAuthority(Application application);
+    public static AccessLevel findAccessLevel(char code) {
+        for (AccessLevel level : AccessLevel.values()) {
+            if (level.getCode() == code) {
+                return level;
+            }
+        }
 
-    /**
-     * @return user id
-     */
-    Integer getUserId();
+        throw new IllegalArgumentException("Failed to find access level with code [" + code + "]");
+    }
+
 }

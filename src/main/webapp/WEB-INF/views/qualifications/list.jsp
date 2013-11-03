@@ -32,19 +32,21 @@
                             <td>
                                 <ul class="list-inline">
                                     <li><a class="btn btn-success" href="<c:url value="${qualification.uri}" />">View</a></li>
-                                    <li><a class="list-action" href="<c:url value="${qualification.editUri}" />">Edit</a></li>
+                                    <sec:authorize access="hasPermission('SKILL', 'EDIT')">
+                                        <li><a class="list-action" href="<c:url value="${qualification.editUri}" />">Edit</a></li>
+                                    </sec:authorize>
                                 </ul>
                             </td>
                         </tr>
                     </c:forEach>
                 </tbody>
             </table>
-            <div id="new-qualification">
+            <sec:authorize access="hasPermission('SKILL', 'EDIT')">
+                <br />
                 <a class="btn btn-edifice" href="<c:url value="${newUri}" />" />Create new qualification</a>
-            </div>
+            </sec:authorize>
 
-            <p>&nbsp;</p>
-
+            <br />
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
                 <li class="active">Qualifications</li>

@@ -38,9 +38,8 @@ public class ApplicationAccess implements UpdateAuditable, Serializable {
     private Integer applicationAccessId;
     private Person person;
     private Application application;
-    private Integer departmentAccess;
-    private Integer nonDepartmentAccess;
-    private String name;
+    private char departmentAccess;
+    private char nonDepartmentAccess;
     private Date updateTime;
     private Integer updatedBy;
 
@@ -60,27 +59,19 @@ public class ApplicationAccess implements UpdateAuditable, Serializable {
         this.application = application;
     }
 
-    public Integer getDepartmentAccess() {
+    public char getDepartmentAccess() {
         return departmentAccess;
     }
 
-    public void setDepartmentAccess(Integer departmentAccess) {
+    public void setDepartmentAccess(char departmentAccess) {
         this.departmentAccess = departmentAccess;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getNonDepartmentAccess() {
+    public char getNonDepartmentAccess() {
         return nonDepartmentAccess;
     }
 
-    public void setNonDepartmentAccess(Integer nonDepartmentAccess) {
+    public void setNonDepartmentAccess(char nonDepartmentAccess) {
         this.nonDepartmentAccess = nonDepartmentAccess;
     }
 

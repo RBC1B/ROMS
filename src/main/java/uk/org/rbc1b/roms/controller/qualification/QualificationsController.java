@@ -33,8 +33,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
+import uk.org.rbc1b.roms.controller.ForbiddenRequestException;
 import uk.org.rbc1b.roms.db.volunteer.qualification.Qualification;
 import uk.org.rbc1b.roms.db.volunteer.qualification.QualificationDao;
+import uk.org.rbc1b.roms.security.AccessLevel;
+import uk.org.rbc1b.roms.security.Application;
+import uk.org.rbc1b.roms.security.RomsPermissionEvaluator;
 
 /**
  * Qualification types which may be applied to a volunteer.
@@ -103,6 +107,11 @@ public class QualificationsController {
             throw new NoSuchRequestHandlingMethodException("No qualification #" + qualificationId, this.getClass());
         }
 
+        if (!RomsPermissionEvaluator.hasPermission(Application.SKILL, AccessLevel.EDIT)) {
+            throw new ForbiddenRequestException(
+                    "Skill application edit permission is required to show the qualification form");
+        }
+
         QualificationForm form = new QualificationForm();
         form.setName(qualification.getName());
         form.setDescription(qualification.getDescription());
@@ -122,6 +131,11 @@ public class QualificationsController {
      */
     @RequestMapping(value = "new", method = RequestMethod.GET)
     public String showCreateQualificationForm(ModelMap model) {
+
+        if (!RomsPermissionEvaluator.hasPermission(Application.SKILL, AccessLevel.ADD)) {
+            throw new ForbiddenRequestException(
+                    "Skill application add permission is required to show the qualification form");
+        }
 
         model.addAttribute("qualificationForm", new QualificationForm());
         model.addAttribute("submitUri", QualificationModelFactory.generateUri(null));

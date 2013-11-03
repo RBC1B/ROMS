@@ -84,4 +84,8 @@
         <error-code>404</error-code>
         <location>/WEB-INF/views/errors/404.jsp</location>
     </error-page>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/WEB-INF/views/errors/403.jsp</location>
+    </error-page>
 </web-app>

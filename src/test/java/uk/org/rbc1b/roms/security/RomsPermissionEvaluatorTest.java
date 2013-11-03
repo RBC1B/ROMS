@@ -45,9 +45,9 @@ public class RomsPermissionEvaluatorTest {
     public void setUp() {
         evaluator = new RomsPermissionEvaluator();
         authentication = new MockAuthentication(1, "testname", "passwd");
-        authentication.addAuthority("AuthA", "ApplicationA", 4, 5);
-        authentication.addAuthority("AuthB", "ApplicationB", 2, 5);
-        authentication.addAuthority("AuthC", "Applicationc", 3, 5);
+        authentication.addAuthority(Application.ATTENDANCE, AccessLevel.DELETE, AccessLevel.DELETE);
+        authentication.addAuthority(Application.CIRCUIT, AccessLevel.EDIT, AccessLevel.DELETE);
+        authentication.addAuthority(Application.CONG, AccessLevel.ADD, AccessLevel.DELETE);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -55,25 +55,25 @@ public class RomsPermissionEvaluatorTest {
         evaluator.hasPermission(authentication, "AuthC", "Invalid");
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testValidPermissionTargetNotFound() {
-        assertEquals(false, evaluator.hasPermission(authentication, "AuthUnknown", "READ"));
+        evaluator.hasPermission(authentication, "AuthUnknown", "READ");
     }
 
     @Test
     public void testValidPermissionDenied() {
-        assertEquals(false, evaluator.hasPermission(authentication, "AuthB", "ADD"));
+        assertEquals(false, evaluator.hasPermission(authentication, Application.CIRCUIT.name(), "ADD"));
     }
 
     @Test
     public void testValidPermissionAllowed() {
-        assertEquals(true, evaluator.hasPermission(authentication, "AuthC", "ADD"));
-        assertEquals(true, evaluator.hasPermission(authentication, "AuthA", "ADD"));
+        assertEquals(true, evaluator.hasPermission(authentication, Application.CONG.name(), "ADD"));
+        assertEquals(true, evaluator.hasPermission(authentication, Application.ATTENDANCE.name(), "ADD"));
     }
 
     private class MockAuthentication implements Authentication {
         private static final long serialVersionUID = 1L;
-        private final Map<String, ROMSGrantedAuthority> authorities = new HashMap<String, ROMSGrantedAuthority>();
+        private final Map<Application, ROMSGrantedAuthority> authorities = new HashMap<Application, ROMSGrantedAuthority>();
         private final Integer userId;
         private final String password;
         private final String userName;
@@ -84,13 +84,13 @@ public class RomsPermissionEvaluatorTest {
             this.password = password;
         }
 
-        private void addAuthority(String code, String application, Integer departmentLevel, Integer nonDepartmentLevel) {
+        private void addAuthority(Application application, AccessLevel departmentLevel, AccessLevel nonDepartmentLevel) {
             ROMSGrantedAuthority authority = new ROMSGrantedAuthority();
             authority.setApplication(application);
             authority.setDepartmentLevelAccess(departmentLevel);
             authority.setNonDepartmentLevelAccess(nonDepartmentLevel);
 
-            authorities.put(code, authority);
+            authorities.put(application, authority);
         }
 
         @Override
@@ -114,7 +114,7 @@ public class RomsPermissionEvaluatorTest {
                 private static final long serialVersionUID = 1L;
 
                 @Override
-                public ROMSGrantedAuthority findAuthority(String application) {
+                public ROMSGrantedAuthority findAuthority(Application application) {
                     return authorities.get(application);
                 }
 

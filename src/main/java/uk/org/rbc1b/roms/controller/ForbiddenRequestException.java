@@ -21,27 +21,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.security;
+package uk.org.rbc1b.roms.controller;
 
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * Store the authenticated user details, including the user id.
- *
- * @author oliver.elder.esq
+ * Exception representing a 403 forbidden exception.
  */
-public interface ROMSUserDetails extends UserDetails {
+@ResponseStatus(value = HttpStatus.FORBIDDEN)
+public class ForbiddenRequestException extends RuntimeException {
+    private static final long serialVersionUID = -609859282956616717L;
 
     /**
-     * Look up the authority by the application name.
-     *
-     * @param application application name
-     * @return authority
+     * @param message error message
      */
-    ROMSGrantedAuthority findAuthority(Application application);
-
-    /**
-     * @return user id
-     */
-    Integer getUserId();
+    public ForbiddenRequestException(String message) {
+        super(message);
+    }
 }

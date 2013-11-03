@@ -21,10 +21,10 @@ delete from VolunteerQualification;
 delete from Volunteer;
 delete from Skill;
 delete from Qualification;
-delete from User where PersonId > 1;
+delete from User where PersonId != 0;
 delete from PersonChange;
 -- delete all persons apart from the pre-defined system user
-delete from Person where PersonId > 1;
+delete from Person where PersonId != 0;
 
 -- reset the auto-increments
 alter table Attendance AUTO_INCREMENT=1;
@@ -94,119 +94,119 @@ values (5, 'NoPermissions', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3', NOW(), 0
 -- RaminderSingh full access (DELETE)
 -- Attendance & Invitations
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (1, 1, 4, 4, NOW(), 0);
+values (1, 1, 'D', 'D', NOW(), 0);
 -- Circuit
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (1, 2, 4, 4, NOW(), 0);
+values (1, 2, 'D', 'D', NOW(), 0);
 -- Congregation
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (1, 3, 4, 4, NOW(), 0);
+values (1, 3, 'D', 'D', NOW(), 0);
 -- Database
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (1, 4, 4, 4, NOW(), 0);
+values (1, 4, 'D', 'D', NOW(), 0);
 -- Kingdom Halls
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (1, 5, 4, 4, NOW(), 0);
+values (1, 5, 'D', 'D', NOW(), 0);
 -- Projects
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (1, 6, 4, 4, NOW(), 0);
+values (1, 6, 'D', 'D', NOW(), 0);
 -- Skills
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (1, 7, 4, 4, NOW(), 0);
+values (1, 7, 'D', 'D', NOW(), 0);
 -- User
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (1, 8, 4, 4, NOW(), 0);
+values (1, 8, 'D', 'D', NOW(), 0);
 -- Volunteers
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (1, 9, 4, 4, NOW(), 0);
+values (1, 9, 'D', 'D', NOW(), 0);
 
 -- AddOnly add-access to all applications
 -- Attendance & Invitations
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (2, 1, 3, 3, NOW(), 0);
+values (2, 1, 'A', 'A', NOW(), 0);
 -- Circuit
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (2, 2, 3, 3, NOW(), 0);
+values (2, 2, 'A', 'A', NOW(), 0);
 -- Congregation
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (2, 3, 3, 3, NOW(), 0);
+values (2, 3, 'A', 'A', NOW(), 0);
 -- Database
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (2, 4, 3, 3, NOW(), 0);
+values (2, 4, 'A', 'A', NOW(), 0);
 -- Kingdom Halls
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (2, 5, 3, 3, NOW(), 0);
+values (2, 5, 'A', 'A', NOW(), 0);
 -- Projects
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (2, 6, 3, 3, NOW(), 0);
+values (2, 6, 'A', 'A', NOW(), 0);
 -- Skills
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (2, 7, 3, 3, NOW(), 0);
+values (2, 7, 'A', 'A', NOW(), 0);
 -- User
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (2, 8, 3, 3, NOW(), 0);
+values (2, 8, 'A', 'A', NOW(), 0);
 -- Volunteers
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (2, 9, 3, 3, NOW(), 0);
+values (2, 9, 'A', 'A', NOW(), 0);
 
 
 -- EditOnly edit only for all applications
 -- Attendance & Invitations
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (3, 1, 2, 2, NOW(), 0);
+values (3, 1, 'E', 'E', NOW(), 0);
 -- Circuit
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (3, 2, 2, 2, NOW(), 0);
+values (3, 2, 'E', 'E', NOW(), 0);
 -- Congregation
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (3, 3, 2, 2, NOW(), 0);
+values (3, 3, 'E', 'E', NOW(), 0);
 -- Database
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (3, 4, 2, 2, NOW(), 0);
+values (3, 4, 'E', 'E', NOW(), 0);
 -- Kingdom Halls
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (3, 5, 2, 2, NOW(), 0);
+values (3, 5, 'E', 'E', NOW(), 0);
 -- Projects
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (3, 6, 2, 2, NOW(), 0);
+values (3, 6, 'E', 'E', NOW(), 0);
 -- Skills
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (3, 7, 2, 2, NOW(), 0);
+values (3, 7, 'E', 'E', NOW(), 0);
 -- User
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (3, 8, 2, 2, NOW(), 0);
+values (3, 8, 'E', 'E', NOW(), 0);
 -- Volunteers
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (3, 9, 2, 2, NOW(), 0);
+values (3, 9, 'E', 'E', NOW(), 0);
 
 
 -- ReadOnly read only access
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (4, 1, 1, 1, NOW(), 0);
+values (4, 1, 'R', 'R', NOW(), 0);
 -- Circuit
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (4, 2, 1, 1, NOW(), 0);
+values (4, 2, 'R', 'R', NOW(), 0);
 -- Congregation
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (4, 3, 1, 1, NOW(), 0);
+values (4, 3, 'R', 'R', NOW(), 0);
 -- Database
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (4, 4, 1, 1, NOW(), 0);
+values (4, 4, 'R', 'R', NOW(), 0);
 -- Kingdom Halls
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (4, 5, 1, 1, NOW(), 0);
+values (4, 5, 'R', 'R', NOW(), 0);
 -- Projects
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (4, 6, 1, 1, NOW(), 0);
+values (4, 6, 'R', 'R', NOW(), 0);
 -- Skills
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (4, 7, 1, 1, NOW(), 0);
+values (4, 7, 'R', 'R', NOW(), 0);
 -- User
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (4, 8, 1, 1, NOW(), 0);
+values (4, 8, 'R', 'R', NOW(), 0);
 -- Volunteers
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (4, 9, 1, 1, NOW(), 0);
+values (4, 9, 'R', 'R', NOW(), 0);
 
 -- Kingdom Halls
 insert into KingdomHall(Name, Street, Town, County, Postcode, KingdomHallOwnershipTypeCode, Drawings, UpdateTime, UpdatedBy)

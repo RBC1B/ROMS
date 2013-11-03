@@ -36,8 +36,8 @@
                         <sec:authorize access="hasPermission('SKILL', 'READ')">
                             <li role="menuitem"><a href="<c:url value="/skills" />">Skills</a></li>
                         </sec:authorize>
-                        <sec:authorize access="hasPermission('DEPARTMENT', 'READ')">
-                            <li><a href="<c:url value="/department" />">Department</a></li>
+                        <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
+                            <li><a href="<c:url value="/departments" />">Department</a></li>
                         </sec:authorize>
                     </ul>
                 </div>

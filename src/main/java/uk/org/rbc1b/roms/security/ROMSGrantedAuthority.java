@@ -31,36 +31,43 @@ import org.springframework.security.core.GrantedAuthority;
  */
 public class ROMSGrantedAuthority implements GrantedAuthority {
     private static final long serialVersionUID = 7170344476765512185L;
-    private String application;
-    private Integer departmentLevelAccess;
-    private Integer nonDepartmentLevelAccess;
+    private Application application;
+    private AccessLevel departmentLevelAccess;
+    private AccessLevel nonDepartmentLevelAccess;
 
     @Override
     public String getAuthority() {
         return departmentLevelAccess.toString();
     }
 
-    public String getApplication() {
+    public Application getApplication() {
         return application;
     }
 
-    public void setApplication(String application) {
+    public void setApplication(Application application) {
         this.application = application;
     }
 
-    public Integer getDepartmentLevelAccess() {
+    public AccessLevel getDepartmentLevelAccess() {
         return departmentLevelAccess;
     }
 
-    public void setDepartmentLevelAccess(Integer departmentLevelAccess) {
+    public void setDepartmentLevelAccess(AccessLevel departmentLevelAccess) {
         this.departmentLevelAccess = departmentLevelAccess;
     }
 
-    public Integer getNonDepartmentLevelAccess() {
+    public AccessLevel getNonDepartmentLevelAccess() {
         return nonDepartmentLevelAccess;
     }
 
-    public void setNonDepartmentLevelAccess(Integer nonDepartmentLevelAccess) {
+    public void setNonDepartmentLevelAccess(AccessLevel nonDepartmentLevelAccess) {
         this.nonDepartmentLevelAccess = nonDepartmentLevelAccess;
     }
+
+    @Override
+    public String toString() {
+        return "ROMSGrantedAuthority [application=" + application + ", departmentLevelAccess=" + departmentLevelAccess
+                + ", nonDepartmentLevelAccess=" + nonDepartmentLevelAccess + "]";
+    }
+
 }

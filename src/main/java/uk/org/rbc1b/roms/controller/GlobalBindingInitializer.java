@@ -34,8 +34,6 @@ import org.springframework.web.context.request.WebRequest;
 /**
  * Implement the spring request parameter binder to convert empty strings to
  * null by default.
- *
- * @author oliver.elder.esq
  */
 public class GlobalBindingInitializer implements WebBindingInitializer {
 

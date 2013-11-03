@@ -501,8 +501,8 @@ create table ApplicationAccess(
     ApplicationAccessId bigint(20)  auto_increment,
     PersonId            bigint(20)  not null,
     ApplicationId       bigint(20),
-    DepartmentAccess    integer     not null,
-    NonDepartmentAccess integer     not null,
+    DepartmentAccess    char(1)     not null,
+    NonDepartmentAccess char(1)     not null,
     UpdateTime          timestamp   not null,
     UpdatedBy           bigint(20)  not null,
     primary key (ApplicationAccessId),
@@ -518,8 +518,8 @@ create table ApplicationAccess_AUD(
     REVTYPE             tinyint,
     PersonId            bigint(20)  not null,
     ApplicationId       bigint(20),
-    DepartmentAccess    integer     not null,
-    NonDepartmentAccess integer     not null,
+    DepartmentAccess    char(1)     not null,
+    NonDepartmentAccess char(1)     not null,
     UpdateTime          timestamp   not null,
     UpdatedBy           bigint(20)  not null,
     primary key (ApplicationAccessId, REV)
@@ -1207,31 +1207,31 @@ insert into Application (Name, Code, Comments, UpdateTime, UpdatedBy) values
 -- System account full access
 -- Attendance & Invitations
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (0, 1, 4, 4, NOW(), 0);
+values (0, 1, 'D', 'D', NOW(), 0);
 -- Circuit
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (0, 2, 4, 4, NOW(), 0);
+values (0, 2, 'D', 'D', NOW(), 0);
 -- Congregation
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (0, 3, 4, 4, NOW(), 0);
+values (0, 3, 'D', 'D', NOW(), 0);
 -- Database
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (0, 4, 4, 4, NOW(), 0);
+values (0, 4, 'D', 'D', NOW(), 0);
 -- Kingdom Halls
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (0, 5, 4, 4, NOW(), 0);
+values (0, 5, 'D', 'D', NOW(), 0);
 -- Projects
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (0, 6, 4, 4, NOW(), 0);
+values (0, 6, 'D', 'D', NOW(), 0);
 -- Skills
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (0, 7, 4, 4, NOW(), 0);
+values (0, 7, 'D', 'D', NOW(), 0);
 -- User
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (0, 8, 4, 4, NOW(), 0);
+values (0, 8, 'D', 'D', NOW(), 0);
 -- Volunteers
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (0, 9, 4, 4, NOW(), 0);
+values (0, 9, 'D', 'D', NOW(), 0);
 
 insert into KingdomHallOwnershipType (KingdomHallOwnershipTypeCode, Name) values
     ('FH', 'Freehold'),

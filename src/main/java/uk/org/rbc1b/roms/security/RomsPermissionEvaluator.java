@@ -26,6 +26,7 @@ package uk.org.rbc1b.roms.security;
 import java.io.Serializable;
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  * Implementation of the permission validator to match the JACL AppNames and levels. with the part of the application being viewed
@@ -51,8 +52,30 @@ public class RomsPermissionEvaluator implements PermissionEvaluator {
         }
 
         ROMSUserDetails user = (ROMSUserDetails) authentication.getPrincipal();
-        ROMSGrantedAuthority authority = user.findAuthority((String) targetDomainObject);
 
+        return hasPermission(user, Application.valueOf((String) targetDomainObject), level);
+
+    }
+
+    @Override
+    public boolean hasPermission(Authentication authentication, Serializable targetId, String targetType,
+            Object permission) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    /**
+     * Determine if the suer has permission to access the application.
+     * @param application appication name
+     * @param level minimum permission level
+     * @return tue if access is allowed
+     */
+    public static boolean hasPermission(Application application, AccessLevel level) {
+        ROMSUserDetails user = (ROMSUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return hasPermission(user, application, level);
+    }
+
+    private static boolean hasPermission(ROMSUserDetails user, Application application, AccessLevel level) {
+        ROMSGrantedAuthority authority = user.findAuthority(application);
         if (authority == null) {
             return false;
         }
@@ -60,19 +83,7 @@ public class RomsPermissionEvaluator implements PermissionEvaluator {
         // the user authority (0-4) matches the ordinal values of the access levels.
         // the have permission the user authority must be greater or equal to the
         // access level required, i.e. accounts with edit access can read, but not add
-        return authority.getDepartmentLevelAccess().intValue() >= level.ordinal();
+        return authority.getDepartmentLevelAccess().compareTo(level) >= 0;
     }
 
-    @Override
-    public boolean hasPermission(Authentication authentication, Serializable targetId, String targetType, Object permission) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    /**
-     * Access level values, corresponding to the levels 0-4.
-     */
-    public static enum AccessLevel {
-
-        NOACCESS, READ, EDIT, ADD, DELETE
-    }
 }

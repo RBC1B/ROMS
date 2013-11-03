@@ -92,12 +92,10 @@
 
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
-                <sec:authorize access="hasPermission('CONG', 'READ')">
-                  <li><a href="<c:url value="/congregations" />">Congregations</a></li>
-                </sec:authorize>
-                  <li class="active">${congregation.name}</li>
+                <li><a href="<c:url value="/congregations" />">Congregations</a></li>
+                <li class="active">${congregation.name}</li>
             </ol>
-            
+
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
         <script type="text/javascript" src="<c:url value='/javascript/congregations.js' />" ></script>

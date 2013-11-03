@@ -53,20 +53,20 @@ public class ROMSUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("Failed to find user [" + userName + "]");
         }
 
-        final Map<String, ROMSGrantedAuthority> authorityMap = new HashMap<String, ROMSGrantedAuthority>();
+        final Map<Application, ROMSGrantedAuthority> authorityMap = new HashMap<Application, ROMSGrantedAuthority>();
         for (ApplicationAccess access : user.getApplicationAccess()) {
             ROMSGrantedAuthority authority = new ROMSGrantedAuthority();
-            authority.setApplication(access.getName());
-            authority.setDepartmentLevelAccess(access.getDepartmentAccess());
-            authority.setNonDepartmentLevelAccess(access.getNonDepartmentAccess());
-            authorityMap.put(access.getApplication().getCode(), authority);
+            authority.setApplication(Application.valueOf(access.getApplication().getCode()));
+            authority.setDepartmentLevelAccess(AccessLevel.findAccessLevel(access.getDepartmentAccess()));
+            authority.setNonDepartmentLevelAccess(AccessLevel.findAccessLevel(access.getNonDepartmentAccess()));
+            authorityMap.put(Application.valueOf(access.getApplication().getCode()), authority);
         }
 
         return new ROMSUserDetails() {
             private static final long serialVersionUID = -2342863582753427493L;
 
             @Override
-            public ROMSGrantedAuthority findAuthority(String application) {
+            public ROMSGrantedAuthority findAuthority(Application application) {
                 return authorityMap.get(application);
             }
 
