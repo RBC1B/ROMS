@@ -80,9 +80,9 @@ public class JDBCReferenceDao implements ReferenceDao {
 
     @Override
     @Cacheable("reference.relationship")
-    public Map<Integer, String> findRelationshipValues() {
-        return findReferenceIdValues("SELECT RelationshipId AS id, Name AS value "
-                + "FROM Relationship ORDER BY RelationshipId");
+    public Map<String, String> findRelationshipValues() {
+        return findReferenceCodeValues("SELECT RelationshipCode AS code, Name AS value "
+                + "FROM Relationship ORDER BY RelationshipCode");
     }
 
     @Override

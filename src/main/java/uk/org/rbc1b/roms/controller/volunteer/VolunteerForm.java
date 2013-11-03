@@ -68,7 +68,7 @@ public class VolunteerForm {
     private String emergencyContactTown;
     private String emergencyContactPostcode;
     @NotNull
-    private Integer emergencyRelationshipId;
+    private String emergencyRelationshipCode;
     @NotNull
     @Size(min = 2)
     private String forename;
@@ -77,7 +77,7 @@ public class VolunteerForm {
     private DateTime formDate;
     @NotNull
     @Size(min = 1, max = 1)
-    private String gender;    // M or F
+    private String gender; // M or F
     private String middleName;
     private boolean ministerialServant;
     private String mobile;
@@ -198,12 +198,12 @@ public class VolunteerForm {
         this.emergencyContactPostcode = emergencyContactPostcode;
     }
 
-    public Integer getEmergencyRelationshipId() {
-        return emergencyRelationshipId;
+    public String getEmergencyRelationshipCode() {
+        return emergencyRelationshipCode;
     }
 
-    public void setEmergencyRelationshipId(Integer emergencyRelationshipId) {
-        this.emergencyRelationshipId = emergencyRelationshipId;
+    public void setEmergencyRelationshipCode(String emergencyRelationshipCode) {
+        this.emergencyRelationshipCode = emergencyRelationshipCode;
     }
 
     public String getGender() {

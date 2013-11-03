@@ -59,7 +59,7 @@ public interface ReferenceDao {
     /**
      * @return ordered map of (emergency contact) relationship values
      */
-    Map<Integer, String> findRelationshipValues();
+    Map<String, String> findRelationshipValues();
 
     /**
      * @return ordered map of trade number values

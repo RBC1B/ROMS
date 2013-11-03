@@ -167,7 +167,7 @@
                             <form:input path="emergencyContactSurname" placeholder="Surname"/>
                         </div>
                         <div class="span2">
-                            <form:select path="emergencyRelationshipId">
+                            <form:select path="emergencyRelationshipCode">
                                 <form:option value="" label="Relationship" />
                                 <form:options items="${relationshipValues}" />
                             </form:select>

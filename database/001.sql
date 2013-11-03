@@ -386,9 +386,9 @@ create table Fulltime(
 
 -- emergency contact relationship
 create table Relationship(
-    RelationshipId  bigint(20)  auto_increment,
-    Name            varchar(50) not null    unique,
-    primary key (RelationshipId)
+    RelationshipCode    char(2)     not null    unique,
+    Name                varchar(50) not null    unique,
+    primary key (RelationshipCode)
 )engine=InnoDB;
 
 create table MaritalStatus(
@@ -404,7 +404,7 @@ create table Volunteer(
     FulltimeCode        char(2),
     Availability        varchar(7),
     EmergencyContactId  bigint(20),
-    EmergencyContactRelationshipId bigint(20),
+    EmergencyContactRelationshipCode char(2),
     Gender              varchar(1)  not null,
     MaritalStatusCode   char(2),
     SpousePersonId      bigint(20),
@@ -430,7 +430,7 @@ create table Volunteer(
     foreign key (AppointmentCode) references Appointment(AppointmentCode),
     foreign key (FulltimeCode) references Fulltime(FulltimeCode),
     foreign key (EmergencyContactId) references Person(PersonId) on delete set null,
-    foreign key (EmergencyContactRelationshipId) references Relationship(RelationshipId) on delete set null,
+    foreign key (EmergencyContactRelationshipCode) references Relationship(RelationshipCode) on delete set null,
     foreign key (MaritalStatusCode) references MaritalStatus(MaritalStatusCode),
     foreign key (InterviewerA) references User(PersonId) on delete set null,
     foreign key (InterviewerB) references User(PersonId) on delete set null,
@@ -446,7 +446,7 @@ create table Volunteer_AUD (
     FulltimeCode        char(2),
     Availability        varchar(7),
     EmergencyContactId  bigint(20),
-    EmergencyContactRelationshipId bigint(20),
+    EmergencyContactRelationshipCode char(2),
     Gender              varchar(1)  not null,
     MaritalStatusCode   char(2),
     SpousePersonId      bigint(20),
@@ -1338,15 +1338,15 @@ insert into Fulltime (FulltimeCode, Name) values
     ('BT', 'Bethel'),
     ('RP', 'Regular Pioneer');
 
-insert into Relationship(Name) values
-    ('Elder'),
-    ('Family'),
-    ('Father'),
-    ('Husband'),
-    ('Ministerial Servant/Congregation Member'),
-    ('Mother'),
-    ('Wife'),
-    ('Other');
+insert into Relationship(RelationshipCode, Name) values
+    ('EL', 'Elder'),
+    ('FM', 'Family'),
+    ('FT', 'Father'),
+    ('HB', 'Husband'),
+    ('CM', 'Ministerial Servant/Congregation Member'),
+    ('MT', 'Mother'),
+    ('WF', 'Wife'),
+    ('OT', 'Other');
 
 insert into MaritalStatus(MaritalStatusCode, Name) values
     ('DV', 'Divorced'),

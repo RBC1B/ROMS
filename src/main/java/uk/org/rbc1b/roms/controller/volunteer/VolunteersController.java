@@ -282,7 +282,7 @@ public class VolunteersController {
         Person emergencyContact = createEmergencyContact(form);
 
         volunteer.setEmergencyContact(emergencyContact);
-        volunteer.setEmergencyContactRelationshipId(form.getEmergencyRelationshipId());
+        volunteer.setEmergencyContactRelationshipCode(form.getEmergencyRelationshipCode());
 
         Person spouse = createSpouse(form, emergencyContact);
         if (spouse != null) {

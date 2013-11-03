@@ -38,7 +38,7 @@ public class Volunteer extends Person {
     private String appointmentCode;
     private String availability; // 7 char string, representing T or F, Monday to Sunday
     private Person emergencyContact;
-    private Integer emergencyContactRelationshipId;
+    private String emergencyContactRelationshipCode;
     private String fulltimeCode;
     private String gender; // M or F
     private String maritalStatusCode;
@@ -128,12 +128,12 @@ public class Volunteer extends Person {
         this.emergencyContact = emergencyContact;
     }
 
-    public Integer getEmergencyContactRelationshipId() {
-        return emergencyContactRelationshipId;
+    public String getEmergencyContactRelationshipCode() {
+        return emergencyContactRelationshipCode;
     }
 
-    public void setEmergencyContactRelationshipId(Integer emergencyContactRelationshipId) {
-        this.emergencyContactRelationshipId = emergencyContactRelationshipId;
+    public void setEmergencyContactRelationshipCode(String emergencyContactRelationshipCode) {
+        this.emergencyContactRelationshipCode = emergencyContactRelationshipCode;
     }
 
     public java.sql.Date getFormDate() {

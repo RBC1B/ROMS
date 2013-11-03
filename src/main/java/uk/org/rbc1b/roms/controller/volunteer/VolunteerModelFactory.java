@@ -142,9 +142,9 @@ public class VolunteerModelFactory {
         }
         model.setBaptismDate(volunteer.getBaptismDate());
         model.setEmergencyContact(personModelFactory.generatePersonModel(volunteer.getEmergencyContact()));
-        if (volunteer.getEmergencyContactRelationshipId() != null) {
+        if (volunteer.getEmergencyContactRelationshipCode() != null) {
             model.setEmergencyContactRelationship(referenceDao.findRelationshipValues().get(
-                    volunteer.getEmergencyContactRelationshipId()));
+                    volunteer.getEmergencyContactRelationshipCode()));
         }
         if (volunteer.getFulltimeCode() != null) {
             model.setFulltime(referenceDao.findFulltimeValues().get(volunteer.getFulltimeCode()));

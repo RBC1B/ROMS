@@ -171,7 +171,7 @@ $(document).ready(function() {
                 minlength: 2,
                 required: true
             },
-            emergencyRelationshipId: {
+            emergencyRelationshipCode: {
                 required: true
             },
             congregationName: {
