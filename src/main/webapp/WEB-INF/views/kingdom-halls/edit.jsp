@@ -19,7 +19,7 @@ Author     : oliver.elder.esq
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="container-fluid">
+        <div class="container">
             <c:choose>
                 <c:when test="${!empty kingdomHallForm.name}">
                     <h1>Edit Kingdom Hall - ${kingdomHallForm.name}</h1>
@@ -30,39 +30,55 @@ Author     : oliver.elder.esq
             </c:choose>
             <hr>
             <c:url var="formAction" value="${submitUri}" />
-            <form:form commandName="kingdomHallForm" method="${submitMethod}" action="${formAction}">
+            <form:form commandName="kingdomHallForm" method="${submitMethod}" action="${formAction}" role="form">
                 <fieldset>
-                    <div class="control-group">
+                    <div class="form-group">
                         <label for="name">Name:</label>
-                        <form:input path="name" placeholder="Kingdom Hall Name" /><br />
+                        <div class="span2">
+                            <form:input path="name" class="form-control" placeholder="Kingdom Hall Name" /><br />
+                        </div>
                     </div>
                 </fieldset>
                 <fieldset>
-                    <div class="control-group">
+                    <div class="form-group">
+                        <h4>Address:</h4>
                         <label for="street">Street:</label>
-                        <form:input path="street" placeholder="Kingdom Hall Street" /><br/>
+                        <div class="span2">
+                            <form:input path="street" class="form-control" placeholder="Kingdom Hall Street" /><br/>
+                        </div>
                         <label for="town">Town:</label>
-                        <form:input path="town" placeholder="Kingdom Hall Town" /><br />
+                        <div class="span2">
+                            <form:input path="town" class="form-control" placeholder="Kingdom Hall Town" /><br />
+                        </div>
                         <label for="county">County:</label>
-                        <form:input path="county" placeholder="Kingdom Hall County" /><br />
+                        <div class="span2">
+                            <form:input path="county" class="form-control" placeholder="Kingdom Hall County" /><br />
+                        </div>
                         <label for="postcode">Postcode:</label>
-                        <form:input path="postcode" placeholder="Kingdom Hall Postcode" /><br/>
+                        <div class="span2">
+                            <form:input path="postcode" class="form-control" placeholder="Kingdom Hall Postcode" /><br/>
+                        </div>
                     </div>
                 </fieldset>
                 <fieldset>
-                    <div class="control-group">
+                    <h4>Ownership Details:</h4>
+                    <div class="form-group">
                         <label for="ownershipTypeCode">Ownership Type:</label>
-                        <form:select path="ownershipTypeCode">
-                            <form:option value="" label="None" />
-                            <form:options items="${ownershipValues}" />
-                        </form:select><br />
+                        <div class="span2">
+                            <form:select style="width:175px" class="form-control" path="ownershipTypeCode">
+                                <form:option value="" label="None" />
+                                <form:options items="${ownershipValues}" />
+                            </form:select><br />
+                        </div>
                     </div>
                 </fieldset>
                 <fieldset>
-                    <div class="control-group">
+                    <div class="form-group">
                         <form:hidden path="titleHoldingCongregationId" />
                         <label for="titleHoldingCongregationName">Title Holding Congregation:</label>
-                        <form:input path="titleHoldingCongregationName" type="text" name="titleHoldingCongregationName" placeholder="Title Holder" value="" id="searchinput" data-provide="typeahead" data-source="congregation.Name" maxlength="30" autocomplete="on" /><br>
+                        <div class="span2">
+                            <form:input path="titleHoldingCongregationName" class="form-control" type="text" name="titleHoldingCongregationName" placeholder="Title Holder" value="" id="searchinput" data-provide="typeahead" data-source="congregation.Name" maxlength="30" autocomplete="on" /><br />
+                        </div>    
                     </div>
                     <input type="submit" class="btn btn-primary"/>
                 </fieldset>

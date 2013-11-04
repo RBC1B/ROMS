@@ -168,7 +168,7 @@ public class KingdomHallsController {
     @RequestMapping(value = "new", method = RequestMethod.GET)
     public String showCreateKingdomHallForm(ModelMap model) {
         // initialise the form bean
-        model.addAttribute("kingdomHall", new KingdomHallModel());
+        model.addAttribute("kingdomHallForm", new KingdomHallForm());
 
         return "kingdom-halls/edit";
     }
