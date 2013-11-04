@@ -100,7 +100,7 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
      * @param colourBand of the volunteer's badge
      */
     private static void addBand(PdfContentByte content, String colourBand) {
-        content.roundRectangle(80, 700, 250, 7, 2.5f);
+        content.roundRectangle(80, 700, 250, 9, 2.5f);
         if (colourBand != null) {
             if (colourBand.equals("RED")) {
                 content.setColorFill(Color.RED);
@@ -131,7 +131,7 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
      * @param img the image
      */
     private static void addImage(PdfContentByte content, Image img) throws DocumentException {
-        content.addImage(img, 75, 0, 0, 90, 247, 577);
+        content.addImage(img, 75, 0, 0, 98, 247, 577);
     }
 
     /**
@@ -212,7 +212,7 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
         content.beginText();
         content.moveText(90, 670);
 
-        BaseFont bf = BaseFont.createFont();
+        BaseFont bf = BaseFont.createFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1252, false);
         content.setFontAndSize(bf, 11);
         content.setColorFill(Color.BLACK);
         content.showText(name);

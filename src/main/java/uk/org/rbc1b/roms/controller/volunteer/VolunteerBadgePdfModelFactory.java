@@ -118,6 +118,9 @@ public class VolunteerBadgePdfModelFactory {
      */
     public String generatePrimaryAssignment(Volunteer volunteer) {
         List<Assignment> assignments = volunteerDao.findAssignments(volunteer.getPersonId());
+
+        // this should be the assignment with greatest priority
+
         Assignment primaryAssignment = assignments.get(0);
         Department department = departmentDao.findDepartment(primaryAssignment.getDepartmentId());
         return department.getName();
