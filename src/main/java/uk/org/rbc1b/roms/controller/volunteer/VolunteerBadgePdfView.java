@@ -64,7 +64,7 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
             HttpServletRequest request, HttpServletResponse response) throws DocumentException, IOException {
 
         Volunteer volunteer = (Volunteer) model.get("volunteer");
-        String colourBand = (String) model.get("colourBand");
+        VolunteerBadgeColour colourBand = (VolunteerBadgeColour) model.get("colourBand");
         Set<String> skillsSet = (Set<String>) model.get("skillsSet");
         String assignment = (String) model.get("assignment");
         document.open();
@@ -99,16 +99,21 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
      * @param content to added to the pdf
      * @param colourBand of the volunteer's badge
      */
-    private static void addBand(PdfContentByte content, String colourBand) {
+    private static void addBand(PdfContentByte content, VolunteerBadgeColour colourBand) {
         content.roundRectangle(80, 700, 250, 9, 2.5f);
-        if (colourBand != null) {
-            if (colourBand.equals("RED")) {
-                content.setColorFill(Color.RED);
-            } else if (colourBand.equals("GREEN")) {
+        switch (colourBand) {
+            case GREEN:
                 content.setColorFill(Color.GREEN);
-            }
-        } else {
-            content.setColorFill(Color.DARK_GRAY);
+                break;
+            case ORANGE:
+                content.setColorFill(Color.ORANGE);
+                break;
+            case RED:
+                content.setColorFill(Color.RED);
+                break;
+            default:
+                content.setColorFill(Color.DARK_GRAY);
+                break;
         }
         content.fill();
     }
