@@ -191,7 +191,6 @@ public class CongregationsController {
     @RequestMapping(value = "new", method = RequestMethod.GET)
     public String showCreateCongregationForm(ModelMap model) {
         model.addAttribute("congregationForm", new CongregationForm());
-        model.addAttribute("kingdomHalls", kingdomHallDao.findKingdomHalls());
         model.addAttribute("circuits", circuitDao.findCircuits());
         model.addAttribute("rbcRegions", referenceDao.findRbcRegionValues());
         model.addAttribute("rbcSubRegions", referenceDao.findRbcSubRegionValues());

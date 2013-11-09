@@ -1,7 +1,5 @@
 <%--
-    Document   : volunteerEdit
-    Created on : 14-Jul-2012, 00:54:53
-    Author     : oliver.elder.esq
+    Create a new volunteer. The layout is based on the S-82 form.
 --%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>

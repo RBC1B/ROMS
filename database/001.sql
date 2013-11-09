@@ -1407,8 +1407,21 @@ insert into ProjectStageType(Name, Description, AssignedTo, WorkNotes, UpdateTim
     ('21','Complete S-85','Chairman','Complete S-85 and send to Branch.', NOW(), 0),
     ('999','Close Project','Chairman','Close project after all project work has been completed.', NOW(), 0);
 
+-- project type stage type mappings are work in progress
 insert into ProjectTypeStageType (ProjectTypeId, ProjectStageTypeId, UpdateTime, UpdatedBy) values
-    (1, 1, NOW(), 0);
+    (1, 2, NOW(), 0),
+    (1, 5, NOW(), 0),
+    (1, 6, NOW(), 0),
+    (1, 8, NOW(), 0);
+    
+insert into ProjectTypeStageType (ProjectTypeId, ProjectStageTypeId, UpdateTime, UpdatedBy) values
+    (2, 1, NOW(), 0),
+    (2, 2, NOW(), 0),
+    (2, 3, NOW(), 0),
+    (2, 4, NOW(), 0),
+    (2, 5, NOW(), 0),
+    (2, 6, NOW(), 0),
+    (2, 8, NOW(), 0);    
     
 insert into ProjectStageActivityType (Name, Description, AssignedTo, WorkNotes, UpdateTime, UpdatedBy) values
     ('0-a', 'Council website search', 'Project Development', 'yadda yadda', NOW(), 0);

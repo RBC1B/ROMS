@@ -39,9 +39,7 @@
 
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
-                <sec:authorize access="hasPermission('SKILL', 'READ')">
-                  <li role="menuitem"><a href="<c:url value="/qualifications" />">Qualifications</a></li>
-                </sec:authorize>
+                <li role="menuitem"><a href="<c:url value="/qualifications" />">Qualifications</a></li>
                 <li class="active">Edit</li>
             </ol>
 

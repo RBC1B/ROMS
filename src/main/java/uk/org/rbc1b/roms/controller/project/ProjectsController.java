@@ -29,6 +29,8 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,6 +43,7 @@ import uk.org.rbc1b.roms.controller.common.DataConverterUtil;
 import uk.org.rbc1b.roms.db.project.Project;
 import uk.org.rbc1b.roms.db.project.ProjectDao;
 import uk.org.rbc1b.roms.db.reference.ReferenceDao;
+import uk.org.rbc1b.roms.security.ROMSUserDetails;
 
 /**
  * Control access to the underlying person data.
@@ -74,6 +77,7 @@ public class ProjectsController {
         }
 
         model.addAttribute("projects", modelList);
+        model.addAttribute("newUri", ProjectModelFactory.generateUri(null) + "/new");
 
         return "projects/list";
     }
@@ -118,6 +122,31 @@ public class ProjectsController {
         }
 
         projectDao.updateProjectStageOrder(projectId, stageIds);
+    }
+
+    /**
+     * Display the form to create a new project.
+     *
+     * @param model mvc model
+     * @return view name
+     */
+    @RequestMapping(value = "new", method = RequestMethod.GET)
+    public String showCreateProjectForm(ModelMap model) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        ROMSUserDetails user = (ROMSUserDetails) authentication.getPrincipal();
+
+        // initialise the form bean
+        ProjectForm form = new ProjectForm();
+        form.setCoordinatorUserId(user.getUserId());
+        form.setCoordinatorUserName(user.getUsername());
+
+        model.addAttribute("projectForm", form);
+        model.addAttribute("projectTypeValues", referenceDao.findProjectTypeValues());
+        model.addAttribute("submitUri", ProjectModelFactory.generateUri(null));
+        model.addAttribute("submitMethod", "POST");
+
+        return "projects/create";
     }
 
 }

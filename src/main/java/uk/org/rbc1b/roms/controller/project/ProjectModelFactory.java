@@ -55,7 +55,7 @@ import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 @Component
 public class ProjectModelFactory {
 
-    private static final String BASE_URI = "/projects/";
+    private static final String BASE_URI = "/projects";
     private static final ProjectStageTaskModelComparator TASK_COMPARATOR = new ProjectStageTaskModelComparator();
     @Autowired
     private PersonModelFactory personModelFactory;
@@ -72,7 +72,7 @@ public class ProjectModelFactory {
      * @return uri
      */
     public static String generateUri(Integer projectId) {
-        return projectId != null ? BASE_URI + projectId : BASE_URI;
+        return projectId != null ? BASE_URI + "/" + projectId : BASE_URI;
     }
 
     /**
