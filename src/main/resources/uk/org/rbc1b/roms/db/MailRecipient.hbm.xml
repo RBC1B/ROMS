@@ -5,13 +5,13 @@
         <id name="mailRecipientId">
             <generator class="identity" />
         </id>
-        <many-to-one column="MailTypeId" 
-                     name="mailType" 
+        <many-to-one column="MailTypeId"
+                     name="mailType"
                      class="uk.org.rbc1b.roms.db.MailType"
                      not-null="true"
                      lazy="false" />
         <many-to-one column="PersonId"
-                     name="person" 
+                     name="person"
                      class="uk.org.rbc1b.roms.db.Person"
                      not-null="true" />
     </class>
