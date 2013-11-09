@@ -337,9 +337,33 @@ $(document).ready(function() {
         };
     }
     
-    roms.common.validation.user = function($nameInput, $idInput) {
+    roms.common.validation.congregation = function($nameInput, $idInput) {
         return {
             // check for an exact match. Populate the congregation id
+            url: roms.common.relativePath + "/congregations/search",
+            contentType: "application/json",
+            dataType: "json",
+            data: {
+                name: function() {
+                    return $nameInput.val();
+                }
+            },
+            dataFilter: function(rawData) {
+                var data = JSON.parse(rawData)
+                if (data && data[0].name == $nameInput.val()) {
+                    $idInput.val(data[0].id);
+                    return true;
+                }
+                // no match - clear the stored id
+                $idInput.val(null);
+                return false;
+            }
+        };
+    }
+    
+    roms.common.validation.user = function($nameInput, $idInput) {
+        return {
+            // check for an exact match. Populate the user id
             url: roms.common.relativePath + "/users/search",
             contentType: "application/json",
             dataType: "json",

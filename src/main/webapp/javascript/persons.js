@@ -60,26 +60,7 @@ $(document).ready(function() {
                 email: true
             },
             congregationName: {
-                remote: {
-                    // check for an exact match. Populate the congregation id
-                    url: roms.common.relativePath + "/congregations/search",
-                    contentType: "application/json",
-                    dataType: "json",
-                    data: {
-                        name: function() {
-                            return $("#congregationName").val();
-                        }
-                    },
-                    dataFilter: function(rawData) {
-                        var data = JSON.parse(rawData)
-                        if (data && data[0].name == $("#congregationName").val()) {
-                            $("#congregationId").val(data[0].id);
-                            return true;
-
-                        }
-                        return false;
-                    }
-                }
+                remote: roms.common.validation.congregation($("#congregationName"), $("#congregationId"))
             },
             telephone: {
                 phoneNumber: true

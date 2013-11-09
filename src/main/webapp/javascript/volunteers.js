@@ -178,26 +178,7 @@ $(document).ready(function() {
             },
             congregationName: {
                 required: true,
-                remote: {
-                    // check for an exact match. Populate the congregation id
-                    url: roms.common.relativePath + "/congregations/search",
-                    contentType: "application/json",
-                    dataType: "json",
-                    data: {
-                        name: function() {
-                            return $("#congregationName").val();
-                        }
-                    },
-                    dataFilter: function(rawData) {
-                        var data = JSON.parse(rawData);
-                        if (data && data[0].name == $("#congregationName").val()) {
-                            $("#congregationId").val(data[0].id);
-                            return true;
-
-                        }
-                        return false;
-                    }
-                }
+                remote: roms.common.validation.congregation($("#congregationName"), $("#congregationId"))
             },
             congregationId: {
                 required: true
@@ -510,26 +491,7 @@ $(document).ready(function() {
             },
             congregationName: {
                 required: true,
-                remote: {
-                    // check for an exact match. Populate the congregation id
-                    url: roms.common.relativePath + "/congregations/search",
-                    contentType: "application/json",
-                    dataType: "json",
-                    data: {
-                        name: function() {
-                            return $("#congregationName").val();
-                        }
-                    },
-                    dataFilter: function(rawData) {
-                        var data = JSON.parse(rawData)
-                        if (data && data[0].name == $("#congregationName").val()) {
-                            $("#congregationId").val(data[0].id);
-                            return true;
-
-                        }
-                        return false;
-                    }
-                }
+                remote: roms.common.validation.congregation($("#congregationName"), $("#congregationId"))
             },
             congregationId: {
                 required: true
@@ -570,51 +532,19 @@ $(document).ready(function() {
         rules: {
             interviewerAUserName: {
                 required: false,
-                remote: {
-                    // check for an exact match. Populate the congregation id
-                    url: roms.common.relativePath + "/users/search",
-                    contentType: "application/json",
-                    dataType: "json",
-                    data: {
-                        name: function() {
-                            return $("#interviewerAUserName").val();
-                        }
-                    },
-                    dataFilter: function(rawData) {
-                        var data = JSON.parse(rawData)
-                        if (data && data[0].userName == $("#interviewerAUserName").val()) {
-                            $("#interviewerAPersonId").val(data[0].personId);
-                            return true;
-                        } else {
-                            $("#interviewerAPersonId").val(null);
-                        }
-                        return false;
-                    }
-                }
+                remote: roms.common.validation.user($("#interviewerAUserName"), $("#interviewerAPersonId"))
             },
             interviewerBUserName: {
                 required: false,
-                remote: {
-                    // check for an exact match. Populate the congregation id
-                    url: roms.common.relativePath + "/users/search",
-                    contentType: "application/json",
-                    dataType: "json",
-                    data: {
-                        name: function() {
-                            return $("#interviewerBUserName").val();
-                        }
-                    },
-                    dataFilter: function(rawData) {
-                        var data = JSON.parse(rawData)
-                        if (data && data[0].userName == $("#interviewerBUserName").val()) {
-                            $("#interviewerBPersonId").val(data[0].personId);
-                            return true;
-                        } else {
-                            $("#interviewerBPersonId").val(null);
-                        }
-                        return false;
-                    }
-                }
+                remote: roms.common.validation.user($("#interviewerBUserName"), $("#interviewerBPersonId"))
+            }
+        },
+        messages: {
+            interviewerAUserName: {
+                remote: "Please provide the name of an existing user"
+            },
+            interviewerBUserName: {
+                remote: "Please provide the name of an existing user"
             }
         },
         submitHandler :function(form) {

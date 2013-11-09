@@ -91,26 +91,7 @@ $(document).ready(function() {
             },
             kingdomHallName: {
                 required: true,
-                remote: {
-                    // check for an exact match. Populate the kingdom hall id
-                    url: roms.common.relativePath + "/kingdom-halls/search",
-                    contentType: "application/json",
-                    dataType: "json",
-                    data: {
-                        name: function() {
-                            return $("#kingdomHallName").val();
-                        }
-                    },
-                    dataFilter: function(rawData) {
-                        var data = JSON.parse(rawData)
-                        if (data && data[0].name == $("#kingdomHallName").val()) {
-                            $("#kingdomHallId").val(data[0].id);
-                            return true;
-
-                        }
-                        return false;
-                    }
-                }
+                remote: roms.common.validation.kingdomHall($("#kingdomHallName"), $("#kingdomHallId"))
             },
             circuitId: {
                 required: true
