@@ -103,14 +103,14 @@ roms.common.matchLinkedPerson = function (forename, surname, $personId, populate
         },
         success: function(data) {
             // no match, and no person linked. We don't show anything
-            if (!data.results && !existingPersonId) {
+            if (!data && !existingPersonId) {
                 return;
             }
 
             data.existingPersonId = existingPersonId;
             data.existingPersonName = existingPersonName;
 
-            if (data.results) {
+            if (data) {
                 data.matchedPersons = true;
             }
 

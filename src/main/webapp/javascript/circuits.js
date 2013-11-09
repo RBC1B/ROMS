@@ -78,7 +78,7 @@ $(document).ready(function() {
             },
             success: function(data) {
                 // no response and no person id
-                if (!data.results && !existingPersonId) {
+                if (!data && !existingPersonId) {
                     return;
                 }
 
@@ -89,7 +89,7 @@ $(document).ready(function() {
                     data.existingPersonName = existingPersonName;
                 }
 
-                if (data.results) {
+                if (data) {
                     data.matchedPersons = true;
                 }
 

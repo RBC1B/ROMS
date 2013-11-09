@@ -188,8 +188,8 @@ $(document).ready(function() {
                     },
                     dataFilter: function(rawData) {
                         var data = JSON.parse(rawData)
-                        if (data.results && data.results[0].name == $("#congregationName").val()) {
-                            $("#congregationId").val(data.results[0].id);
+                        if (data && data[0].name == $("#congregationName").val()) {
+                            $("#congregationId").val(data[0].id);
                             return true;
 
                         }
@@ -293,7 +293,7 @@ $(document).ready(function() {
             },
             success: function(data) {
                 // no match, and no person linked. We don't show anything
-                if (!data.results && !existingPersonId) {
+                if (!data && !existingPersonId) {
                     return;
                 }
 
@@ -301,9 +301,9 @@ $(document).ready(function() {
                 // if we are matching an existing volunteer we don't want to create a new one
                 var volunteers = new Array();
                 var persons = new Array();
-                if (data.results) {
-                    for (var i = 0; i < data.results.length; i++) {
-                        var result = data.results[i];
+                if (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        var result = data[i];
 
                         if (result.personId != existingPersonId) {
                             if (result.volunteer) {
@@ -515,8 +515,8 @@ $(document).ready(function() {
                     },
                     dataFilter: function(rawData) {
                         var data = JSON.parse(rawData)
-                        if (data.results && data.results[0].name == $("#congregationName").val()) {
-                            $("#congregationId").val(data.results[0].id);
+                        if (data && data[0].name == $("#congregationName").val()) {
+                            $("#congregationId").val(data[0].id);
                             return true;
 
                         }
@@ -570,8 +570,8 @@ $(document).ready(function() {
                     },
                     dataFilter: function(rawData) {
                         var data = JSON.parse(rawData)
-                        if (data.results && data.results[0].userName == $("#interviewerAUserName").val()) {
-                            $("#interviewerAPersonId").val(data.results[0].personId);
+                        if (data && data[0].userName == $("#interviewerAUserName").val()) {
+                            $("#interviewerAPersonId").val(data[0].personId);
                             return true;
                         } else {
                             $("#interviewerAPersonId").val(null);
@@ -594,8 +594,8 @@ $(document).ready(function() {
                     },
                     dataFilter: function(rawData) {
                         var data = JSON.parse(rawData)
-                        if (data.results && data.results[0].userName == $("#interviewerBUserName").val()) {
-                            $("#interviewerBPersonId").val(data.results[0].personId);
+                        if (data && data[0].userName == $("#interviewerBUserName").val()) {
+                            $("#interviewerBPersonId").val(data[0].personId);
                             return true;
                         } else {
                             $("#interviewerBPersonId").val(null);

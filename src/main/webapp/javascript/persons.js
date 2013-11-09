@@ -69,8 +69,8 @@ $(document).ready(function() {
                     },
                     dataFilter: function(rawData) {
                         var data = JSON.parse(rawData)
-                        if (data.results && data.results[0].name == $("#congregationName").val()) {
-                            $("#congregationId").val(data.results[0].id);
+                        if (data && data[0].name == $("#congregationName").val()) {
+                            $("#congregationId").val(data[0].id);
                             return true;
 
                         }
