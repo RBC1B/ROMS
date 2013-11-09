@@ -50,8 +50,11 @@ import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 @RequestMapping("/projects")
 public class ProjectsController {
 
+    @Autowired
     private ProjectDao projectDao;
+    @Autowired
     private ReferenceDao referenceDao;
+    @Autowired
     private ProjectModelFactory projectModelFactory;
 
     /**
@@ -117,18 +120,4 @@ public class ProjectsController {
         projectDao.updateProjectStageOrder(projectId, stageIds);
     }
 
-    @Autowired
-    public void setProjectDao(ProjectDao projectDao) {
-        this.projectDao = projectDao;
-    }
-
-    @Autowired
-    public void setProjectModelFactory(ProjectModelFactory projectModelFactory) {
-        this.projectModelFactory = projectModelFactory;
-    }
-
-    @Autowired
-    public void setReferenceDao(ReferenceDao referenceDao) {
-        this.referenceDao = referenceDao;
-    }
 }

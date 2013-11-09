@@ -48,10 +48,15 @@ import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 @Component
 public class CongregationModelFactory {
     private static final String BASE_URI = "/congregations";
+    @Autowired
     private CircuitDao circuitDao;
+    @Autowired
     private PersonDao personDao;
+    @Autowired
     private ReferenceDao referenceDao;
+    @Autowired
     private KingdomHallDao kingdomHallDao;
+    @Autowired
     private PersonModelFactory personModelFactory;
 
     /**
@@ -168,31 +173,6 @@ public class CongregationModelFactory {
 
         model.setUri(generateUri(congregation.getCongregationId()));
         model.setEditUri(generateUri(congregation.getCongregationId()) + "/edit");
-    }
-
-    @Autowired
-    public void setCircuitDao(CircuitDao circuitDao) {
-        this.circuitDao = circuitDao;
-    }
-
-    @Autowired
-    public void setKingdomHallDao(KingdomHallDao kingdomHallDao) {
-        this.kingdomHallDao = kingdomHallDao;
-    }
-
-    @Autowired
-    public void setPersonDao(PersonDao personDao) {
-        this.personDao = personDao;
-    }
-
-    @Autowired
-    public void setReferenceDao(ReferenceDao referenceDao) {
-        this.referenceDao = referenceDao;
-    }
-
-    @Autowired
-    public void setPersonModelFactory(PersonModelFactory personModelFactory) {
-        this.personModelFactory = personModelFactory;
     }
 
 }

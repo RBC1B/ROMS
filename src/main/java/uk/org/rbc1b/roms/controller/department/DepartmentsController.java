@@ -58,10 +58,15 @@ import uk.org.rbc1b.roms.db.volunteer.skill.SkillSearchCriteria;
 public class DepartmentsController {
     private static final String OVERSEER_ROLE_CODE = "OV";
     private static final String ASSISTANT_ROLE_CODE = "AT";
+    @Autowired
     private DepartmentDao departmentDao;
+    @Autowired
     private DepartmentModelFactory departmentModelFactory;
+    @Autowired
     private AssignmentModelFactory assignmentModelFactory;
+    @Autowired
     private SkillModelFactory skillModelFactory;
+    @Autowired
     private SkillDao skillDao;
 
     /**
@@ -193,31 +198,6 @@ public class DepartmentsController {
 
         return result;
 
-    }
-
-    @Autowired
-    public void setDepartmentDao(DepartmentDao departmentDao) {
-        this.departmentDao = departmentDao;
-    }
-
-    @Autowired
-    public void setDepartmentModelFactory(DepartmentModelFactory departmentModelFactory) {
-        this.departmentModelFactory = departmentModelFactory;
-    }
-
-    @Autowired
-    public void setSkillDao(SkillDao skillDao) {
-        this.skillDao = skillDao;
-    }
-
-    @Autowired
-    public void setSkillModelFactory(SkillModelFactory skillModelFactory) {
-        this.skillModelFactory = skillModelFactory;
-    }
-
-    @Autowired
-    public void setAssignmentModelFactory(AssignmentModelFactory assignmentModelFactory) {
-        this.assignmentModelFactory = assignmentModelFactory;
     }
 
 }

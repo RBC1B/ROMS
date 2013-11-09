@@ -128,7 +128,4 @@ public class HibernateCongregationDao implements CongregationDao {
         }
     }
 
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
 }

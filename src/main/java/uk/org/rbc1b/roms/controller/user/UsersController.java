@@ -43,6 +43,7 @@ import uk.org.rbc1b.roms.db.application.UserDao;
 @RequestMapping("/users")
 public class UsersController {
 
+    @Autowired
     private UserDao userDao;
 
     /**
@@ -69,8 +70,4 @@ public class UsersController {
         return results;
     }
 
-    @Autowired
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
 }

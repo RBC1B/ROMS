@@ -36,7 +36,9 @@ import uk.org.rbc1b.roms.db.circuit.Circuit;
 @Component
 public class CircuitModelFactory {
     private static final String BASE_CIRCUIT_URI = "/circuits";
+    @Autowired
     private PersonModelFactory personModelFactory;
+    @Autowired
     private PersonDao personDao;
 
     /**
@@ -68,16 +70,6 @@ public class CircuitModelFactory {
         model.setUri(generateCircuitUri(circuit.getCircuitId()));
 
         return model;
-    }
-
-    @Autowired
-    public void setPersonDao(PersonDao personDao) {
-        this.personDao = personDao;
-    }
-
-    @Autowired
-    public void setPersonModelFactory(PersonModelFactory personModelFactory) {
-        this.personModelFactory = personModelFactory;
     }
 
 }

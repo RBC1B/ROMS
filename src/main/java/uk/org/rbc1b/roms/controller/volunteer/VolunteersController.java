@@ -81,12 +81,19 @@ public class VolunteersController {
     private static final String APPOINTMENT_MINISTERIAL_SERVANT = "MS";
     private static final Set<VolunteerData> VOLUNTEER_DATA = EnumSet.of(VolunteerData.SPOUSE,
             VolunteerData.EMERGENCY_CONTACT, VolunteerData.TRADES, VolunteerData.INTERVIEWER);
+    @Autowired
     private VolunteerDao volunteerDao;
+    @Autowired
     private PersonDao personDao;
+    @Autowired
     private CongregationDao congregationDao;
+    @Autowired
     private ReferenceDao referenceDao;
+    @Autowired
     private VolunteerModelFactory volunteerModelFactory;
+    @Autowired
     private AssignmentModelFactory assignmentModelFactory;
+    @Autowired
     private VolunteerBadgePdfModelFactory volunteerBadgePdfModelFactory;
 
     /**
@@ -742,38 +749,4 @@ public class VolunteersController {
         return spouse;
     }
 
-    @Autowired
-    public void setCongregationDao(CongregationDao congregationDao) {
-        this.congregationDao = congregationDao;
-    }
-
-    @Autowired
-    public void setPersonDao(PersonDao personDao) {
-        this.personDao = personDao;
-    }
-
-    @Autowired
-    public void setReferenceDao(ReferenceDao referenceDao) {
-        this.referenceDao = referenceDao;
-    }
-
-    @Autowired
-    public void setVolunteerDao(VolunteerDao volunteerDao) {
-        this.volunteerDao = volunteerDao;
-    }
-
-    @Autowired
-    public void setAssignmentModelFactory(AssignmentModelFactory assignmentModelFactory) {
-        this.assignmentModelFactory = assignmentModelFactory;
-    }
-
-    @Autowired
-    public void setVolunteerModelFactory(VolunteerModelFactory volunteerModelFactory) {
-        this.volunteerModelFactory = volunteerModelFactory;
-    }
-
-    @Autowired
-    public void setVolunteerBadgePdfModelFactory(VolunteerBadgePdfModelFactory volunteerBadgePdfModelFactory) {
-        this.volunteerBadgePdfModelFactory = volunteerBadgePdfModelFactory;
-    }
 }

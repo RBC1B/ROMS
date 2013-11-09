@@ -59,11 +59,17 @@ public class VolunteerModelFactory {
     private static final String BASE_URI = "/volunteers/";
     private static final Integer DAYS_PER_WEEK = 7;
     private static final Map<Integer, Boolean> NO_AVAILABILITY = new HashMap<Integer, Boolean>();
+    @Autowired
     private ReferenceDao referenceDao;
+    @Autowired
     private PersonModelFactory personModelFactory;
+    @Autowired
     private CongregationDao congregationDao;
+    @Autowired
     private SkillDao skillDao;
+    @Autowired
     private DepartmentDao departmentDao;
+    @Autowired
     private QualificationDao qualificationDao;
 
     static {
@@ -289,36 +295,6 @@ public class VolunteerModelFactory {
         }
 
         return modelList;
-    }
-
-    @Autowired
-    public void setPersonModelFactory(PersonModelFactory personModelFactory) {
-        this.personModelFactory = personModelFactory;
-    }
-
-    @Autowired
-    public void setReferenceDao(ReferenceDao referenceDao) {
-        this.referenceDao = referenceDao;
-    }
-
-    @Autowired
-    public void setSkillDao(SkillDao skillDao) {
-        this.skillDao = skillDao;
-    }
-
-    @Autowired
-    public void setCongregationDao(CongregationDao congregationDao) {
-        this.congregationDao = congregationDao;
-    }
-
-    @Autowired
-    public void setDepartmentDao(DepartmentDao departmentDao) {
-        this.departmentDao = departmentDao;
-    }
-
-    @Autowired
-    public void setQualificationDao(QualificationDao qualificationDao) {
-        this.qualificationDao = qualificationDao;
     }
 
 }

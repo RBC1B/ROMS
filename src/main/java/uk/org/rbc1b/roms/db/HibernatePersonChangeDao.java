@@ -38,7 +38,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class HibernatePersonChangeDao implements PersonChangeDao {
-
+    @Autowired
     private SessionFactory sessionFactory;
 
     @SuppressWarnings("unchecked")
@@ -93,12 +93,4 @@ public class HibernatePersonChangeDao implements PersonChangeDao {
         return oldPerson;
     }
 
-    /**
-     *
-     * @param sessionFactory the sessionFactory to set
-     */
-    @Autowired
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
 }

@@ -43,9 +43,13 @@ public class AssignmentModelFactory {
 
     private static final String BASE_TEAMS_URI = "/teams/";
     private static final String BASE_DEPARTMENTS_URI = "/departments/";
+    @Autowired
     private ReferenceDao referenceDao;
+    @Autowired
     private DepartmentDao departmentDao;
+    @Autowired
     private PersonModelFactory personModelFactory;
+    @Autowired
     private PersonDao personDao;
 
     /**
@@ -102,26 +106,6 @@ public class AssignmentModelFactory {
         model.setName(team.getName());
         model.setUri(generateTeamUri(team.getTeamId()));
         return model;
-    }
-
-    @Autowired
-    public void setReferenceDao(ReferenceDao referenceDao) {
-        this.referenceDao = referenceDao;
-    }
-
-    @Autowired
-    public void setDepartmentDao(DepartmentDao departmentDao) {
-        this.departmentDao = departmentDao;
-    }
-
-    @Autowired
-    public void setPersonDao(PersonDao personDao) {
-        this.personDao = personDao;
-    }
-
-    @Autowired
-    public void setPersonModelFactory(PersonModelFactory personModelFactory) {
-        this.personModelFactory = personModelFactory;
     }
 
 }

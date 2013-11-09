@@ -61,10 +61,15 @@ import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 public class KingdomHallsController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggingHandlerExceptionResolver.class);
+    @Autowired
     private KingdomHallDao kingdomHallDao;
+    @Autowired
     private KingdomHallModelFactory kingdomHallModelFactory;
+    @Autowired
     private ReferenceDao referenceDao;
+    @Autowired
     private CongregationDao congregationDao;
+    @Autowired
     private CongregationModelFactory congregationModelFactory;
 
     /**
@@ -297,28 +302,4 @@ public class KingdomHallsController {
         }
     }
 
-    @Autowired
-    public void setCongregationDao(CongregationDao congregationDao) {
-        this.congregationDao = congregationDao;
-    }
-
-    @Autowired
-    public void setCongregationModelFactory(CongregationModelFactory congregationModelFactory) {
-        this.congregationModelFactory = congregationModelFactory;
-    }
-
-    @Autowired
-    public void setKingdomHallDao(KingdomHallDao kingdomHallDao) {
-        this.kingdomHallDao = kingdomHallDao;
-    }
-
-    @Autowired
-    public void setReferenceDao(ReferenceDao referenceDao) {
-        this.referenceDao = referenceDao;
-    }
-
-    @Autowired
-    public void setKingdomHallModelFactory(KingdomHallModelFactory kingdomHallModelFactory) {
-        this.kingdomHallModelFactory = kingdomHallModelFactory;
-    }
 }

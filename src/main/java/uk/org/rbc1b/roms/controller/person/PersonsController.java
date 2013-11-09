@@ -60,9 +60,13 @@ import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
 @RequestMapping("/persons")
 public class PersonsController {
 
+    @Autowired
     private PersonDao personDao;
+    @Autowired
     private VolunteerDao volunteerDao;
+    @Autowired
     private CongregationDao congregationDao;
+    @Autowired
     private PersonModelFactory personModelFactory;
 
     /**
@@ -306,26 +310,6 @@ public class PersonsController {
             throw new NoSuchRequestHandlingMethodException("No person with id [" + personId + "]", this.getClass());
         }
         return person;
-    }
-
-    @Autowired
-    public void setCongregationDao(CongregationDao congregationDao) {
-        this.congregationDao = congregationDao;
-    }
-
-    @Autowired
-    public void setPersonDao(PersonDao personDao) {
-        this.personDao = personDao;
-    }
-
-    @Autowired
-    public void setPersonModelFactory(PersonModelFactory personModelFactory) {
-        this.personModelFactory = personModelFactory;
-    }
-
-    @Autowired
-    public void setVolunteerDao(VolunteerDao volunteerDao) {
-        this.volunteerDao = volunteerDao;
     }
 
 }

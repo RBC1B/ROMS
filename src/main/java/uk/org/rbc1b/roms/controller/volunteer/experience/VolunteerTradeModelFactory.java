@@ -34,7 +34,9 @@ import uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTrade;
  */
 @Component
 public class VolunteerTradeModelFactory {
+    @Autowired
     private PersonDao personDao;
+    @Autowired
     private PersonModelFactory personModelFactory;
 
     /**
@@ -51,16 +53,6 @@ public class VolunteerTradeModelFactory {
         model.setPerson(personModelFactory.generatePersonModel(personDao.findPerson(volunteerTrade.getPerson()
                 .getPersonId())));
         return model;
-    }
-
-    @Autowired
-    public void setPersonDao(PersonDao personDao) {
-        this.personDao = personDao;
-    }
-
-    @Autowired
-    public void setPersonModelFactory(PersonModelFactory personModelFactory) {
-        this.personModelFactory = personModelFactory;
     }
 
 }

@@ -27,9 +27,9 @@ import java.util.List;
 import java.util.Set;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.org.rbc1b.roms.db.Email;
 import uk.org.rbc1b.roms.db.EmailAttachment;
@@ -51,8 +51,7 @@ public class EdificeMailer {
      *
      * @throws MessagingException messaging exception
      */
-    public void prepareAndSendEmail()
-            throws MessagingException {
+    public void prepareAndSendEmail() throws MessagingException {
         List<Email> emails = this.emailDao.findAll();
         for (Email email : emails) {
             MimeMessage mimeMessage = this.mailGateway.createMimeMessage();
@@ -61,30 +60,13 @@ public class EdificeMailer {
             helper.setSubject(email.getSubject());
             helper.setText(email.getText());
             Set<EmailAttachment> attachments = email.getEmailAttachments();
-            /* To do - add attachements
-            if (!attachments.isEmpty()) {
-                for (EmailAttachment attachment : attachments) {
-                    // To do
-                }
-            } */
-            this.getMailGateway().send(mimeMessage);
+            /*
+             * To do - add attachements if (!attachments.isEmpty()) { for (EmailAttachment attachment : attachments) {
+             * // To do } }
+             */
+            this.mailGateway.send(mimeMessage);
             this.emailDao.delete(email);
         }
     }
 
-    public JavaMailSender getMailGateway() {
-        return mailGateway;
-    }
-
-    public void setMailGateway(JavaMailSender mailGateway) {
-        this.mailGateway = mailGateway;
-    }
-
-    public EmailDao getEmailDao() {
-        return emailDao;
-    }
-
-    public void setEmailDao(EmailDao emailDao) {
-        this.emailDao = emailDao;
-    }
 }

@@ -50,8 +50,11 @@ import uk.org.rbc1b.roms.db.volunteer.skill.SkillSearchCriteria;
 public class SkillsController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggingHandlerExceptionResolver.class);
+    @Autowired
     private SkillDao skillDao;
+    @Autowired
     private SkillModelFactory skillModelFactory;
+    @Autowired
     private DepartmentDao departmentDao;
 
     /**
@@ -212,18 +215,4 @@ public class SkillsController {
         }
     }
 
-    @Autowired
-    public void setSkillDao(SkillDao skillDao) {
-        this.skillDao = skillDao;
-    }
-
-    @Autowired
-    public void setSkillModelFactory(SkillModelFactory skillModelFactory) {
-        this.skillModelFactory = skillModelFactory;
-    }
-
-    @Autowired
-    public void setDepartmentDao(DepartmentDao departmentDao) {
-        this.departmentDao = departmentDao;
-    }
 }

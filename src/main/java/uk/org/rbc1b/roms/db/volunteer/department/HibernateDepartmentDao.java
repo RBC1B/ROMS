@@ -170,7 +170,4 @@ public class HibernateDepartmentDao implements DepartmentDao {
         return criteria;
     }
 
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
 }

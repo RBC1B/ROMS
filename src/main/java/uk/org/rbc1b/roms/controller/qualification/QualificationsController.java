@@ -49,7 +49,9 @@ import uk.org.rbc1b.roms.security.RomsPermissionEvaluator;
 @RequestMapping("/qualifications")
 public class QualificationsController {
 
+    @Autowired
     private QualificationDao qualificationDao;
+    @Autowired
     private QualificationModelFactory qualificationModelFactory;
 
     /**
@@ -181,16 +183,6 @@ public class QualificationsController {
         qualificationDao.createQualification(qualification);
 
         return "redirect:" + QualificationModelFactory.generateUri(qualification.getQualificationId());
-    }
-
-    @Autowired
-    public void setQualificationDao(QualificationDao qualificationDao) {
-        this.qualificationDao = qualificationDao;
-    }
-
-    @Autowired
-    public void setQualificationModelFactory(QualificationModelFactory qualificationModelFactory) {
-        this.qualificationModelFactory = qualificationModelFactory;
     }
 
 }

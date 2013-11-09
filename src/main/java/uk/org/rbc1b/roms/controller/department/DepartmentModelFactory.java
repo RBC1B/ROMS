@@ -39,7 +39,9 @@ import uk.org.rbc1b.roms.db.volunteer.department.Department;
 @Component
 public class DepartmentModelFactory {
     private static final String BASE_URI = "/departments";
+    @Autowired
     private PersonDao personDao;
+    @Autowired
     private PersonModelFactory personModelFactory;
 
     /**
@@ -114,16 +116,6 @@ public class DepartmentModelFactory {
         }
 
         return model;
-    }
-
-    @Autowired
-    public void setPersonDao(PersonDao personDao) {
-        this.personDao = personDao;
-    }
-
-    @Autowired
-    public void setPersonModelFactory(PersonModelFactory personModelFactory) {
-        this.personModelFactory = personModelFactory;
     }
 
 }

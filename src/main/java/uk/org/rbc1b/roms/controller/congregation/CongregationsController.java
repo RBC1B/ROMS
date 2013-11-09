@@ -55,11 +55,17 @@ import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 @RequestMapping("/congregations")
 public class CongregationsController {
 
+    @Autowired
     private CongregationDao congregationDao;
+    @Autowired
     private CongregationModelFactory congregationModelFactory;
+    @Autowired
     private KingdomHallDao kingdomHallDao;
+    @Autowired
     private CircuitDao circuitDao;
+    @Autowired
     private ReferenceDao referenceDao;
+    @Autowired
     private PersonDao personDao;
 
     /**
@@ -322,36 +328,6 @@ public class CongregationsController {
             return person;
         }
         return null;
-    }
-
-    @Autowired
-    public void setCongregationDao(CongregationDao congregationDao) {
-        this.congregationDao = congregationDao;
-    }
-
-    @Autowired
-    public void setCongregationModelFactory(CongregationModelFactory congregationModelFactory) {
-        this.congregationModelFactory = congregationModelFactory;
-    }
-
-    @Autowired
-    public void setKingdomHallDao(KingdomHallDao kingdomHallDao) {
-        this.kingdomHallDao = kingdomHallDao;
-    }
-
-    @Autowired
-    public void setCircuitDao(CircuitDao circuitDao) {
-        this.circuitDao = circuitDao;
-    }
-
-    @Autowired
-    public void setPersonDao(PersonDao personDao) {
-        this.personDao = personDao;
-    }
-
-    @Autowired
-    public void setReferenceDao(ReferenceDao referenceDao) {
-        this.referenceDao = referenceDao;
     }
 
 }

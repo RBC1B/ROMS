@@ -84,7 +84,4 @@ public class HibernateKingdomHallDao implements KingdomHallDao {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
 }

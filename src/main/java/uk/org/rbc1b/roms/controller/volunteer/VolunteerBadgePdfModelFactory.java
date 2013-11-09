@@ -51,8 +51,11 @@ public class VolunteerBadgePdfModelFactory {
     private static final String BASE_URI = "/volunteers/";
     private static final String MIDDLE_URI = "/rbc-";
     private static final String END_URI = "-badge.pdf";
+    @Autowired
     private VolunteerDao volunteerDao;
+    @Autowired
     private DepartmentDao departmentDao;
+    @Autowired
     private SkillDao skillDao;
 
     /**
@@ -62,8 +65,8 @@ public class VolunteerBadgePdfModelFactory {
      * @return String uri
      */
     public static String generateUri(Integer volunteerId) {
-        return volunteerId != null ? BASE_URI + volunteerId + MIDDLE_URI
-                + volunteerId + END_URI : BASE_URI + volunteerId;
+        return volunteerId != null ? BASE_URI + volunteerId + MIDDLE_URI + volunteerId + END_URI : BASE_URI
+                + volunteerId;
     }
 
     /**
@@ -78,8 +81,7 @@ public class VolunteerBadgePdfModelFactory {
         List<Skill> skills = findVolunteerSkills(volunteer.getPersonId());
         Set<String> badgeSkills = new HashSet<String>();
         for (Skill skill : skills) {
-            if (skillDao.findSkillCategory(skill.getCategory()
-                    .getSkillCategoryId()).isAppearOnBadge()) {
+            if (skillDao.findSkillCategory(skill.getCategory().getSkillCategoryId()).isAppearOnBadge()) {
                 badgeSkills.add(skill.getName());
                 if (badgeSkills.size() >= 8) {
                     break;
@@ -97,8 +99,7 @@ public class VolunteerBadgePdfModelFactory {
      * @return VolunteerBadgeColour the colour
      */
     public VolunteerBadgeColour generateColourBand(Volunteer volunteer) {
-        LocalDate birthDate = LocalDate.fromDateFields(volunteer
-                .getBirthDate());
+        LocalDate birthDate = LocalDate.fromDateFields(volunteer.getBirthDate());
         LocalDate now = new LocalDate();
         Years age = Years.yearsBetween(birthDate, now);
 
@@ -122,13 +123,11 @@ public class VolunteerBadgePdfModelFactory {
      * @return String
      */
     public String generatePrimaryAssignment(Volunteer volunteer) {
-        List<Assignment> assignments = volunteerDao.findAssignments(volunteer
-                .getPersonId());
+        List<Assignment> assignments = volunteerDao.findAssignments(volunteer.getPersonId());
 
         // This should be the assignment with greatest priority
         Assignment primaryAssignment = assignments.get(0);
-        Department department = departmentDao.findDepartment(primaryAssignment
-                .getDepartmentId());
+        Department department = departmentDao.findDepartment(primaryAssignment.getDepartmentId());
         return department.getName();
     }
 
@@ -139,8 +138,7 @@ public class VolunteerBadgePdfModelFactory {
      * @return list of skills
      */
     private List<Skill> findVolunteerSkills(Integer personId) {
-        List<VolunteerSkill> volunteerSkills = volunteerDao
-                .findSkills(personId);
+        List<VolunteerSkill> volunteerSkills = volunteerDao.findSkills(personId);
         List<Skill> skills = new ArrayList<Skill>();
         for (VolunteerSkill volunteerSkill : volunteerSkills) {
             Skill skill = skillDao.findSkill(volunteerSkill.getSkillId());
@@ -158,16 +156,13 @@ public class VolunteerBadgePdfModelFactory {
      * @return boolean dangerous assignment or not
      */
     private boolean isVolunteerAssignmentDangerous(Volunteer volunteer) {
-        List<Assignment> assignments = volunteerDao.findAssignments(volunteer
-                .getPersonId());
+        List<Assignment> assignments = volunteerDao.findAssignments(volunteer.getPersonId());
 
         for (Assignment assignment : assignments) {
-            Department department = departmentDao.findDepartment(assignment
-                    .getDepartmentId());
+            Department department = departmentDao.findDepartment(assignment.getDepartmentId());
             String departmentName = department.getName();
 
-            if (departmentName.equals("Roofing")
-                    || departmentName.equals("Roof Trusses")
+            if (departmentName.equals("Roofing") || departmentName.equals("Roof Trusses")
                     || departmentName.equals("Scaffolding")) {
                 return true;
             }
@@ -175,18 +170,4 @@ public class VolunteerBadgePdfModelFactory {
         return false;
     }
 
-    @Autowired
-    public void setVolunteerDao(VolunteerDao volunteerDao) {
-        this.volunteerDao = volunteerDao;
-    }
-
-    @Autowired
-    public void setDepartmentDao(DepartmentDao departmentDao) {
-        this.departmentDao = departmentDao;
-    }
-
-    @Autowired
-    public void setSkillDao(SkillDao skillDao) {
-        this.skillDao = skillDao;
-    }
 }

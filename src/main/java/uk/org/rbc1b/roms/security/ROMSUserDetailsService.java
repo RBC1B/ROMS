@@ -42,7 +42,7 @@ import uk.org.rbc1b.roms.db.application.UserDao;
  */
 @Service("userDetailsService")
 public class ROMSUserDetailsService implements UserDetailsService {
-
+    @Autowired
     private UserDao userDao;
 
     @Override
@@ -112,8 +112,4 @@ public class ROMSUserDetailsService implements UserDetailsService {
         };
     }
 
-    @Autowired
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
 }

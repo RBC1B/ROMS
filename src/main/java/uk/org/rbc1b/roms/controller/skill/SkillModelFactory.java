@@ -42,8 +42,11 @@ import uk.org.rbc1b.roms.db.volunteer.skill.SkillDao;
 public class SkillModelFactory {
 
     private static final String BASE_URI = "/skills";
+    @Autowired
     private DepartmentDao departmentDao;
+    @Autowired
     private CategoryModelFactory categoryModelFactory;
+    @Autowired
     private SkillDao skillDao;
 
     /**
@@ -82,21 +85,6 @@ public class SkillModelFactory {
         model.setCategory(categoryModelFactory.generateCategoryModel(category));
 
         return model;
-    }
-
-    @Autowired
-    public void setDepartmentDao(DepartmentDao departmentDao) {
-        this.departmentDao = departmentDao;
-    }
-
-    @Autowired
-    public void setSkillDao(SkillDao skillDao) {
-        this.skillDao = skillDao;
-    }
-
-    @Autowired
-    public void setCategoryModelFactory(CategoryModelFactory categoryModelFactory) {
-        this.categoryModelFactory = categoryModelFactory;
     }
 
 }

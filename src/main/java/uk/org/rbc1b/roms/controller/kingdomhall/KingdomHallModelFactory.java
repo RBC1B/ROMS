@@ -45,6 +45,7 @@ import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 public class KingdomHallModelFactory {
 
     private static final String BASE_URI = "/kingdom-halls";
+    @Autowired
     private CongregationDao congregationDao;
 
     /**
@@ -153,11 +154,4 @@ public class KingdomHallModelFactory {
         return models;
     }
 
-    /**
-     * @param congregationDao the congregationDao to set
-     */
-    @Autowired
-    public void setCongregationDao(CongregationDao congregationDao) {
-        this.congregationDao = congregationDao;
-    }
 }

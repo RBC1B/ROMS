@@ -39,6 +39,7 @@ import uk.org.rbc1b.roms.db.application.User;
 public class PersonModelFactory {
 
     private static final String BASE_URI = "/persons/";
+    @Autowired
     private CongregationDao congregationDao;
 
     /**
@@ -116,8 +117,4 @@ public class PersonModelFactory {
         return congregationModel;
     }
 
-    @Autowired
-    public void setCongregationDao(CongregationDao congregationDao) {
-        this.congregationDao = congregationDao;
-    }
 }

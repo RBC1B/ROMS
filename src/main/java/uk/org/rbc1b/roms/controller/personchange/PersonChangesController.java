@@ -23,17 +23,17 @@
  */
 package uk.org.rbc1b.roms.controller.personchange;
 
-import org.springframework.stereotype.Controller;
-import uk.org.rbc1b.roms.db.PersonChangeDao;
-import uk.org.rbc1b.roms.db.PersonChange;
-import org.springframework.ui.ModelMap;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
+import uk.org.rbc1b.roms.db.PersonChange;
+import uk.org.rbc1b.roms.db.PersonChangeDao;
 
 /**
  * Control access to PersonChange table.
@@ -43,7 +43,9 @@ import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMeth
 @RequestMapping("/person-changes")
 public class PersonChangesController {
 
+    @Autowired
     private PersonChangeDao personChangeDao;
+    @Autowired
     private PersonChangeModelFactory personChangeModelFactory;
 
     /**
@@ -73,8 +75,7 @@ public class PersonChangesController {
      * @throws NoSuchRequestHandlingMethodException on failure to find the row
      */
     @RequestMapping(value = "{personChangeId}", method = RequestMethod.PUT)
-    public void updatePersonChange(@PathVariable Integer personChangeId)
-            throws NoSuchRequestHandlingMethodException {
+    public void updatePersonChange(@PathVariable Integer personChangeId) throws NoSuchRequestHandlingMethodException {
         PersonChange personChange = personChangeDao.findPersonChange(personChangeId);
         if (personChange == null) {
             throw new NoSuchRequestHandlingMethodException("No personChange #" + personChangeId, this.getClass());
@@ -83,13 +84,4 @@ public class PersonChangesController {
         personChangeDao.updatePersonChange(personChange);
     }
 
-    @Autowired
-    public void setPersonChangeDao(PersonChangeDao personChangeDao) {
-        this.personChangeDao = personChangeDao;
-    }
-
-    @Autowired
-    public void setPersonChangeModelFactory(PersonChangeModelFactory personChangeModelFactory) {
-        this.personChangeModelFactory = personChangeModelFactory;
-    }
 }

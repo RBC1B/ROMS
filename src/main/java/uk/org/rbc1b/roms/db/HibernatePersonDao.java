@@ -121,7 +121,4 @@ public class HibernatePersonDao implements PersonDao {
 
     }
 
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
 }

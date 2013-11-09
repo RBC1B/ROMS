@@ -21,7 +21,9 @@ import uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTradeSearchCriteria;
 @Controller
 @RequestMapping("/volunteer-experience")
 public class VolunteerExperienceController {
+    @Autowired
     private VolunteerDao volunteerDao;
+    @Autowired
     private VolunteerTradeModelFactory volunteerTradeModelFactory;
 
     /**
@@ -73,16 +75,6 @@ public class VolunteerExperienceController {
         }
 
         return result;
-    }
-
-    @Autowired
-    public void setVolunteerDao(VolunteerDao volunteerDao) {
-        this.volunteerDao = volunteerDao;
-    }
-
-    @Autowired
-    public void setVolunteerTradeModelFactory(VolunteerTradeModelFactory volunteerTradeModelFactory) {
-        this.volunteerTradeModelFactory = volunteerTradeModelFactory;
     }
 
 }

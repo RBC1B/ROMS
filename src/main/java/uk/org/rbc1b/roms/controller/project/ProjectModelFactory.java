@@ -57,9 +57,13 @@ public class ProjectModelFactory {
 
     private static final String BASE_URI = "/projects/";
     private static final ProjectStageTaskModelComparator TASK_COMPARATOR = new ProjectStageTaskModelComparator();
+    @Autowired
     private PersonModelFactory personModelFactory;
+    @Autowired
     private ReferenceDao referenceDao;
+    @Autowired
     private ProjectDao projectDao;
+    @Autowired
     private PersonDao personDao;
 
     /**
@@ -284,26 +288,6 @@ public class ProjectModelFactory {
         model.setCreatedBy(personModelFactory.generatePersonModel(person));
         model.setCreateTime(createTime);
         return model;
-    }
-
-    @Autowired
-    public void setPersonDao(PersonDao personDao) {
-        this.personDao = personDao;
-    }
-
-    @Autowired
-    public void setPersonModelFactory(PersonModelFactory personModelFactory) {
-        this.personModelFactory = personModelFactory;
-    }
-
-    @Autowired
-    public void setProjectDao(ProjectDao projectDao) {
-        this.projectDao = projectDao;
-    }
-
-    @Autowired
-    public void setReferenceDao(ReferenceDao referenceDao) {
-        this.referenceDao = referenceDao;
     }
 
     /**

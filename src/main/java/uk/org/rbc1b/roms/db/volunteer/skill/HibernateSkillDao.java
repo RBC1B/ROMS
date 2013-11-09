@@ -85,10 +85,4 @@ public class HibernateSkillDao implements SkillDao {
         return criteria.list();
     }
 
-    /**
-     * @param sessionFactory hibernate session factory
-     */
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
 }

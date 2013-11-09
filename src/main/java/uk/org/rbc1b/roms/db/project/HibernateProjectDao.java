@@ -171,7 +171,4 @@ public class HibernateProjectDao implements ProjectDao {
         return resultMap;
     }
 
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
 }

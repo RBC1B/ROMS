@@ -46,8 +46,11 @@ import uk.org.rbc1b.roms.db.circuit.CircuitDao;
 @RequestMapping("/circuits")
 public class CircuitsController {
 
+    @Autowired
     private CircuitDao circuitDao;
+    @Autowired
     private PersonDao personDao;
+    @Autowired
     private CircuitModelFactory circuitModelFactory;
 
     /**
@@ -207,21 +210,6 @@ public class CircuitsController {
         circuitOverseer.setMobile(PhoneNumberFormatter.format(circuitForm.getMobile()));
 
         return circuitOverseer;
-    }
-
-    @Autowired
-    public void setCircuitDao(CircuitDao circuitDao) {
-        this.circuitDao = circuitDao;
-    }
-
-    @Autowired
-    public void setPersonDao(PersonDao personDao) {
-        this.personDao = personDao;
-    }
-
-    @Autowired
-    public void setCircuitModelFactory(CircuitModelFactory circuitModelFactory) {
-        this.circuitModelFactory = circuitModelFactory;
     }
 
 }

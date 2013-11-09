@@ -63,10 +63,4 @@ public class HibernateCircuitDao implements CircuitDao {
         this.sessionFactory.getCurrentSession().merge(circuit);
     }
 
-    /**
-     * @param sessionFactory hibernate session factory
-     */
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
 }

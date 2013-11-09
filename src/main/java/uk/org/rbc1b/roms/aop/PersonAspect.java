@@ -23,17 +23,17 @@
  */
 package uk.org.rbc1b.roms.aop;
 
-import org.aspectj.lang.annotation.Pointcut;
+import java.sql.Date;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import uk.org.rbc1b.roms.db.Person;
-import uk.org.rbc1b.roms.db.PersonDao;
 import uk.org.rbc1b.roms.db.PersonChange;
 import uk.org.rbc1b.roms.db.PersonChangeDao;
+import uk.org.rbc1b.roms.db.PersonDao;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
-import java.sql.Date;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  *
@@ -41,7 +41,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @Aspect
 public class PersonAspect {
 
+    @Autowired
     private PersonDao personDao;
+    @Autowired
     private PersonChangeDao personChangeDao;
 
     /**
@@ -127,13 +129,4 @@ public class PersonAspect {
         this.personChangeDao.savePersonChange(personChange);
     }
 
-    @Autowired
-    public void setPersonChangeDao(PersonChangeDao personChangeDao) {
-        this.personChangeDao = personChangeDao;
-    }
-
-    @Autowired
-    public void setPersonDao(PersonDao personDao) {
-        this.personDao = personDao;
-    }
 }
