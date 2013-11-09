@@ -48,7 +48,7 @@ Edit form for the volunteer data under the personal tab.
             <fieldset>
                 <legend>Date of birth</legend>
                 <label for="birthDate">Date of birth</label>
-                <form:input class="datepicker" path="birthDate" placeholder="15/03/1980" />
+                <form:input class="datepicker" path="birthDate" />
             </fieldset>
             <fieldset>
                 <legend>Marital status</legend>

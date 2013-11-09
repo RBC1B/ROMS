@@ -71,4 +71,78 @@ $(document).ready(function() {
        }
     });
     
+    // project create/edit
+    $("#kingdomHallName").typeahead({
+        remote: roms.common.relativePath + '/kingdom-halls/search?name=%QUERY',
+        valueKey: 'name'
+    });
+    
+    // we always clear the kingdom hall id on change.
+    // it will be re-calculated in validation
+    $("#kingdomHallName").change(function() {
+        $("#kingdomHallId").val(null);
+    });
+    
+    $(".datepicker").datepicker({
+        dateFormat: "dd/mm/yy",
+        minDate: "-1y",
+        maxDate: "+0d"
+    });
+    
+    $("#coordinatorUserName").typeahead({
+        remote: roms.common.relativePath + '/users/search?name=%QUERY',
+        valueKey: 'userName'
+    });
+    
+    // we always clear the coordinator user id on change.
+    // it will be re-calculated in validation
+    $("#coordinatorUserName").change(function() {
+        $("#coordinatorUserId").val(null);
+    });
+    
+    $("#projectForm").validate({
+        rules: {
+            name: {
+                required: true,
+                remote: {
+                    // make sure this is not a duplicate name
+                    url: roms.common.relativePath + "/projects/search",
+                    contentType: "text/plain",
+                    dataType: "text",
+                    data: {
+                        name: function() {
+                            return $("#name").val();
+                        }
+                    },
+                    dataFilter: function(rawData) {
+                        // if we return an empty string, we didn't match an existing project name
+                        return rawData == "";
+                    }
+                }
+            },
+            kingdomHallName: {
+                remote: roms.common.validation.kingdomHall($("#kingdomHallName"), $("#kingdomHallId"))
+            },
+            coordinatorUserName: {
+                remote: roms.common.validation.user($("#coordinatorUserName"), $("#coordinatorUserId"))
+            }
+        },
+        messages: {
+            name: {
+                remote: "The project name must be unique"
+            },
+            kingdomHallName: {
+                remote: "Please provide the name of an existing kingdom hall"
+            },
+            coordinatorUserName: {
+                remote: "Please provide the name of an existing user"
+            }
+        },
+        submitHandler :function(form) {
+            form.submit();
+        },
+        errorPlacement: roms.common.validatorErrorPlacement
+    });
+    
+    
 });

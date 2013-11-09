@@ -47,7 +47,7 @@
                     <label class="control-label">2.(a) Date of birth:</label>
                     <div class="controls controls-row">
                         <div class="span2">
-                            <form:input path="birthDate" placeholder="15/03/1980" class="datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
+                            <form:input path="birthDate" class="datepicker" type="text" value=""/>
                         </div>
                     </div>
                 </fieldset>
@@ -55,7 +55,7 @@
                     <label class="control-label">2.(b) Date of baptism:</label>
                     <div class="controls controls-row">
                         <div class="span2">
-                            <form:input path="baptismDate" placeholder="15/03/1980" class="datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
+                            <form:input path="baptismDate" class="datepicker" type="text" value=""/>
                         </div>
                     </div>
                 </fieldset>

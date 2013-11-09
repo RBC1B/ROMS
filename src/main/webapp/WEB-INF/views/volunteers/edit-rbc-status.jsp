@@ -18,12 +18,12 @@ Edit form for the volunteer data under the rbc status tab.
             <form:form commandName="volunteerRbcStatus" method="PUT" action="${formAction}">
                 <fieldset>
                     <label>Form date</label>
-                    <form:input path="formDate" class="datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
+                    <form:input path="formDate" class="datepicker" type="text" value=""/>
                 </fieldset>
                 <fieldset>
                     <legend>Interview</legend>
                     <label>Interview date</label>
-                    <form:input path="interviewDate" class="datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
+                    <form:input path="interviewDate" class="datepicker" type="text" value=""/>
                     <label>Interviewer A</label>
                     <form:input path="interviewerAUserName" class="user" placeholder="User Name" autocomplete="off" />
                     <form:hidden path="interviewerAPersonId" />
@@ -33,9 +33,9 @@ Edit form for the volunteer data under the rbc status tab.
                     <label>Interview comments</label>
                     <form:input path="interviewComments" maxlength="150" />
                     <label>Joined date</label>
-                    <form:input path="joinedDate" class="datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
+                    <form:input path="joinedDate" class="datepicker" type="text" value=""/>
                     <label>Badge issue date</label>
-                    <form:input path="badgeIssueDate" class="datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
+                    <form:input path="badgeIssueDate" class="datepicker" type="text" value=""/>
                 </fieldset>
                 <fieldset>
                     <legend>Availability</legend>

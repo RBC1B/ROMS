@@ -92,6 +92,11 @@ $(document).ready(function() {
                 phoneNumber: true
             }
         },
+        messages: {
+            congregationName: {
+                remote: "Please provide the name of an existing congregation"
+            }
+        },
         errorPlacement: roms.common.validatorErrorPlacement
     });
 

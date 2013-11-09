@@ -35,9 +35,9 @@
                 </fieldset>
                 <fieldset>
                     <label>Request Date</label>
-                    <form:input path="requestDate" class="datepicker" data-date-format="dd/mm/yy" />
+                    <form:input path="requestDate" class="datepicker" />
                     <label>Visit Date</label>
-                    <form:input path="visitDate" class="datepicker" data-date-format="dd/mm/yy" />
+                    <form:input path="visitDate" class="datepicker" />
                 </fieldset>
                 <fieldset>
                     <label>Priority</label>

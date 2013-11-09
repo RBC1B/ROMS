@@ -72,6 +72,22 @@ public class HibernateProjectDao implements ProjectDao {
     }
 
     @Override
+    public Project findProject(String name) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(Project.class);
+        criteria.add(Restrictions.eq("name", name));
+
+        Project project = (Project) criteria.uniqueResult();
+
+        if (project == null) {
+            return null;
+        }
+        Hibernate.initialize(project.getKingdomHall());
+
+        return project;
+    }
+
+    @Override
     public List<ProjectStage> findProjectStages(Integer projectId) {
         Session session = this.sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(ProjectStage.class);

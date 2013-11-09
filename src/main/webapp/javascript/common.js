@@ -305,8 +305,64 @@ roms.common.persistentTabs = function() {
     });
 }
 
-// store the relative path, used for all the ajax calls
-// we trim the trailing slash to allow uris that include it look absolute
+
+roms.common.validation = {};
 $(document).ready(function() {
+    // store the relative path, used for all the ajax calls
+    // we trim the trailing slash to allow uris that include it look absolute
     roms.common.relativePath = $("#relative-path").data("relative-path").replace(/\/$/, '');
+    
+    // remote validation method for kingdom hall typeahead lookups
+    roms.common.validation.kingdomHall = function($nameInput, $idInput) { 
+        return {
+            // check for an exact match. Populate the kingdom hall id
+            url: roms.common.relativePath + "/kingdom-halls/search",
+            contentType: "application/json",
+            dataType: "json",
+            data: {
+                name: function() {
+                    return $nameInput.val();
+                }
+            },
+            dataFilter: function(rawData) {
+                var data = JSON.parse(rawData)
+                if (data && data[0].name == $nameInput.val()) {
+                    $idInput.val(data[0].id);
+                    return true;
+                } 
+             // no match - clear the stored id
+                $idInput.val(null);
+                return false;
+            }
+        };
+    }
+    
+    roms.common.validation.user = function($nameInput, $idInput) {
+        return {
+            // check for an exact match. Populate the congregation id
+            url: roms.common.relativePath + "/users/search",
+            contentType: "application/json",
+            dataType: "json",
+            data: {
+                name: function() {
+                    return $nameInput.val();
+                }
+            },
+            dataFilter: function(rawData) {
+                var data = JSON.parse(rawData)
+                if (data && data[0].userName == $nameInput.val()) {
+                    $idInput.val(data[0].personId);
+                    return true;
+                } 
+                // no match - clear the stored id
+                $idInput.val(null);
+                return false;
+            }
+        };
+    }
+    
 });
+
+// validation configuration
+
+

@@ -29,6 +29,7 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -37,6 +38,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.controller.common.DataConverterUtil;
@@ -65,7 +67,7 @@ public class ProjectsController {
      * @param model mvc model
      * @return view
      */
-    @RequestMapping(method = RequestMethod.GET, headers = "Accept=text/html")
+    @RequestMapping(method = RequestMethod.GET)
     public String showProjectList(ModelMap model) {
 
         List<Project> projects = projectDao.findProjects();
@@ -80,6 +82,19 @@ public class ProjectsController {
         model.addAttribute("newUri", ProjectModelFactory.generateUri(null) + "/new");
 
         return "projects/list";
+    }
+
+    /**
+     * Look up a project id by name.
+     * @param name project name
+     * @return matched project id
+     */
+    @RequestMapping(value = "search", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Integer findProjectIdByName(@RequestParam("name") String name) {
+        Project project = projectDao.findProject(name);
+
+        return project != null ? project.getProjectId() : null;
     }
 
     /**

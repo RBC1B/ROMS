@@ -45,11 +45,20 @@ public interface ProjectDao {
     /**
      * Look up the project details.
      * @param projectId project id
-     * @return list of projects
+     * @return project, or null if not found
      */
     @PreAuthorize("hasPermission('PROJECT', 'READ')")
     @Transactional(readOnly = true)
     Project findProject(Integer projectId);
+
+    /**
+     * Look up the project details by exact match name.
+     * @param name project name
+     * @return project
+     */
+    @PreAuthorize("hasPermission('PROJECT', 'READ')")
+    @Transactional(readOnly = true)
+    Project findProject(String name);
 
     /**
      * Look up the list of stages associated with the project.

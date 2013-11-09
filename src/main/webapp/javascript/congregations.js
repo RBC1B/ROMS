@@ -119,6 +119,11 @@ $(document).ready(function() {
                 maxlength: 1000
             }
         },
+        messages: {
+            kingdomHallName: {
+                remote: "Please provide the name of an existing kingdom hall"
+            }
+        },
         errorPlacement: roms.common.validatorErrorPlacement
     });
     

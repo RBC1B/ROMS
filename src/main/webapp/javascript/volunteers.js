@@ -189,7 +189,7 @@ $(document).ready(function() {
                         }
                     },
                     dataFilter: function(rawData) {
-                        var data = JSON.parse(rawData)
+                        var data = JSON.parse(rawData);
                         if (data && data[0].name == $("#congregationName").val()) {
                             $("#congregationId").val(data[0].id);
                             return true;
@@ -204,6 +204,11 @@ $(document).ready(function() {
             },
             formDate: {
                 required: true
+            }
+        },
+        messages: {
+            congregationName: {
+                remote: "Please provide the name of an existing congregation"
             }
         },
         submitHandler :function(form) {
@@ -528,6 +533,11 @@ $(document).ready(function() {
             },
             congregationId: {
                 required: true
+            }
+        },
+        messages: {
+            congregationName: {
+                remote: "Please provide the name of an existing congregation"
             }
         },
         submitHandler :function(form) {

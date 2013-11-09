@@ -35,7 +35,7 @@
                 <fieldset>
                     <legend>Personal</legend>
                     <label for="birthDate">Date of birth</label>
-                    <form:input class="datepicker" path="birthDate" placeholder="15/03/1980" data-date-format="dd/mm/yy" />
+                    <form:input class="datepicker" path="birthDate" />
                 </fieldset>
                 <fieldset>
                     <legend>Contact</legend>
