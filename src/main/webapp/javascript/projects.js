@@ -120,6 +120,9 @@ $(document).ready(function() {
                     }
                 }
             },
+            projectTypeId: {
+                required: true
+            },
             kingdomHallName: {
                 remote: roms.common.validation.kingdomHall($("#kingdomHallName"), $("#kingdomHallId"))
             },
