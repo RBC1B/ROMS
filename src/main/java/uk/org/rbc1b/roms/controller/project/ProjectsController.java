@@ -24,8 +24,11 @@
 package uk.org.rbc1b.roms.controller.project;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import javax.validation.Valid;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,8 +45,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.controller.common.DataConverterUtil;
+import uk.org.rbc1b.roms.db.PersonDao;
+import uk.org.rbc1b.roms.db.kingdomhall.KingdomHallDao;
 import uk.org.rbc1b.roms.db.project.Project;
 import uk.org.rbc1b.roms.db.project.ProjectDao;
+import uk.org.rbc1b.roms.db.project.ProjectStage;
+import uk.org.rbc1b.roms.db.project.ProjectStageActivity;
+import uk.org.rbc1b.roms.db.project.ProjectStageActivityType;
+import uk.org.rbc1b.roms.db.project.ProjectStageType;
+import uk.org.rbc1b.roms.db.project.ProjectStageTypeActivityType;
+import uk.org.rbc1b.roms.db.project.ProjectTypeStageType;
 import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 import uk.org.rbc1b.roms.security.ROMSUserDetails;
 
@@ -54,7 +65,12 @@ import uk.org.rbc1b.roms.security.ROMSUserDetails;
 @Controller
 @RequestMapping("/projects")
 public class ProjectsController {
+    private static final String CREATED_STATUS_CODE = "CR";
 
+    @Autowired
+    private KingdomHallDao kingdomHallDao;
+    @Autowired
+    private PersonDao personDao;
     @Autowired
     private ProjectDao projectDao;
     @Autowired
@@ -162,6 +178,66 @@ public class ProjectsController {
         model.addAttribute("submitMethod", "POST");
 
         return "projects/create";
+    }
+
+    /**
+     * Creates a project, creating the default stages and activities for the type.
+     * @param projectForm projectForm bean
+     * @return view name
+     */
+    @RequestMapping(method = RequestMethod.POST)
+    public String createProject(@Valid ProjectForm projectForm) {
+
+        Project project = new Project();
+        project.setConstraints(projectForm.getConstraints());
+
+        if (projectForm.getCoordinatorUserId() != null) {
+            project.setCoordinator(personDao.findPerson(projectForm.getCoordinatorUserId()));
+        }
+
+        project.setEstimateCost(projectForm.getEstimateCost());
+
+        if (projectForm.getKingdomHallId() != null) {
+            project.setKingdomHall(kingdomHallDao.findKingdomHall(projectForm.getKingdomHallId()));
+        }
+        project.setName(projectForm.getName());
+        project.setPriority(projectForm.getPriority());
+        project.setProjectTypeId(projectForm.getProjectTypeId());
+        project.setRequestDate(DataConverterUtil.toDate(projectForm.getRequestDate()));
+        project.setStatusCode(CREATED_STATUS_CODE);
+        project.setSupportingCongregation(projectForm.getSupportingCongregation());
+        project.setVisitDate(DataConverterUtil.toDate(projectForm.getVisitDate()));
+
+        Map<Integer, ProjectStageType> stageTypes = projectDao.findProjectStageTypes();
+        Map<Integer, ProjectStageActivityType> activityTypes = projectDao.findProjectStageActivityTypes();
+        List<ProjectTypeStageType> projectTypeStageTypes = projectDao.findProjectTypeStageTypes(projectForm
+                .getProjectTypeId());
+
+        Set<ProjectStage> stages = new HashSet<ProjectStage>();
+        for (ProjectTypeStageType projectTypeStageType : projectTypeStageTypes) {
+            ProjectStage stage = new ProjectStage();
+            stage.setProjectStageType(stageTypes.get(projectTypeStageType.getProjectStageTypeId()));
+            stage.setStatusCode(CREATED_STATUS_CODE);
+
+            List<ProjectStageTypeActivityType> stageTypeActivityTypes = projectDao
+                    .findProjectStageTypeActivityType(projectTypeStageType.getProjectStageTypeId());
+            Set<ProjectStageActivity> activities = new HashSet<ProjectStageActivity>();
+            for (ProjectStageTypeActivityType stageTypeActivityType : stageTypeActivityTypes) {
+                ProjectStageActivity activity = new ProjectStageActivity();
+                activity.setStatusCode(CREATED_STATUS_CODE);
+                activity.setProjectStageActivityType(activityTypes.get(stageTypeActivityType
+                        .getProjectStageActivityTypeId()));
+            }
+            stage.setActivities(activities);
+
+            stages.add(stage);
+        }
+        project.setStages(stages);
+
+        projectDao.createProject(project);
+
+        return "redirect:" + ProjectModelFactory.generateUri(project.getProjectId());
+
     }
 
 }

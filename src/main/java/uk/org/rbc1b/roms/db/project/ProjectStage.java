@@ -40,7 +40,7 @@ public class ProjectStage implements UpdateAuditable, Serializable {
     private static final String STARTED_STATUS_CODE = "WP";
     private Integer projectStageId;
     private Project project;
-    private Integer projectStageTypeId;
+    private ProjectStageType projectStageType;
     private String statusCode;
     private Date createdTime;
     private Date startedTime;
@@ -75,12 +75,12 @@ public class ProjectStage implements UpdateAuditable, Serializable {
         this.project = project;
     }
 
-    public Integer getProjectStageTypeId() {
-        return projectStageTypeId;
+    public ProjectStageType getProjectStageType() {
+        return projectStageType;
     }
 
-    public void setProjectStageTypeId(Integer projectStageTypeId) {
-        this.projectStageTypeId = projectStageTypeId;
+    public void setProjectStageType(ProjectStageType projectStageType) {
+        this.projectStageType = projectStageType;
     }
 
     public String getStatusCode() {

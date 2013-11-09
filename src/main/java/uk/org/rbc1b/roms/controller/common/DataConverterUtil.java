@@ -63,6 +63,18 @@ public final class DataConverterUtil {
     }
 
     /**
+     * Convert a joda time value into a java util date.
+     * @param dateTime incoming date time
+     * @return date, or null if not set
+     */
+    public static java.util.Date toDate(DateTime dateTime) {
+        if (dateTime == null) {
+            return null;
+        }
+        return new java.util.Date(dateTime.getMillis());
+    }
+
+    /**
      * Convert the string to an integer.
      * @param value string value
      * @return integer, or null if the value is null or empty

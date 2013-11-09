@@ -23,6 +23,7 @@
  */
 package uk.org.rbc1b.roms.db.project;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -85,6 +86,65 @@ public class HibernateProjectDao implements ProjectDao {
         Hibernate.initialize(project.getKingdomHall());
 
         return project;
+    }
+
+    @Override
+    public void createProject(Project project) {
+
+        for (ProjectStage stage : project.getStages()) {
+            stage.setProject(project);
+
+            for (ProjectStageActivity activity : stage.getActivities()) {
+                activity.setProjectStage(stage);
+            }
+        }
+
+        Session session = this.sessionFactory.getCurrentSession();
+
+        session.save(project);
+
+        // save the stage orders in the order they are defined in the type map
+        List<ProjectTypeStageType> stageTypes = findProjectTypeStageTypes(project.getProjectTypeId());
+        List<ProjectStageOrder> stageOrders = new ArrayList<ProjectStageOrder>();
+        int index = 1;
+        for (ProjectTypeStageType stageType : stageTypes) {
+            ProjectStage stage = project.findStage(stageType.getProjectStageTypeId());
+
+            ProjectStageOrder stageOrder = new ProjectStageOrder();
+            stageOrder.setNextProjectStageId(index + 1);
+            stageOrder.setPreviousProjectStageId(index > 1 ? index - 1 : null);
+            stageOrder.setProjectId(project.getProjectId());
+            stageOrder.setProjectStageId(stage.getProjectStageId());
+            stageOrders.add(stageOrder);
+        }
+
+        // delete the last stage order next id
+        stageOrders.get(stageOrders.size() - 1).setNextProjectStageId(null);
+
+        for (ProjectStageOrder stageOrder : stageOrders) {
+            session.save(stageOrder);
+        }
+
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<ProjectTypeStageType> findProjectTypeStageTypes(Integer projectTypeId) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(ProjectTypeStageType.class);
+        criteria.add(Restrictions.eq("projectTypeId", projectTypeId));
+
+        return criteria.list();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<ProjectStageTypeActivityType> findProjectStageTypeActivityType(Integer stageTypeId) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(ProjectStageTypeActivityType.class);
+        criteria.add(Restrictions.eq("projectStageTypeId", stageTypeId));
+
+        return criteria.list();
     }
 
     @Override

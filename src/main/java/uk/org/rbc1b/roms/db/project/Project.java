@@ -60,6 +60,25 @@ public class Project implements UpdateAuditable, Serializable {
     private Date updateTime;
     private Integer updatedBy;
 
+    /**
+     * Find the stage identified by the stage type.
+     * @param projectStageTypeId type id
+     * @return stage, or null if not found
+     */
+    public ProjectStage findStage(Integer projectStageTypeId) {
+        if (stages == null) {
+            return null;
+        }
+
+        for (ProjectStage stage : stages) {
+            if (stage.getProjectStageType().getProjectStageTypeId().equals(projectStageTypeId)) {
+                return stage;
+            }
+        }
+
+        return null;
+    }
+
     public Address getAddress() {
         return address;
     }

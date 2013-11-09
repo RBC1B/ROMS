@@ -25,11 +25,11 @@ THE SOFTWARE.
 -->
 <hibernate-mapping package="uk.org.rbc1b.roms.db.project">
     <class name="ProjectTypeStageType" table="ProjectTypeStageType">
-        <id name="ProjectTypeStageTypeId">
+        <id name="projectTypeStageTypeId">
             <generator class="identity" />
         </id>
-        <property name="ProjectTypeId"  not-null="true" />
-        <property name="ProjectStageTypeId"  not-null="true" />
+        <property name="projectTypeId"  not-null="true" />
+        <property name="projectStageTypeId"  not-null="true" />
 
         <property name="updateTime" not-null="true" />
         <property name="updatedBy" not-null="true" />

@@ -170,7 +170,7 @@ public class ProjectModelFactory {
         for (ProjectStage stage : stages) {
             ProjectStageModel model = new ProjectStageModel();
             model.setId(stage.getProjectStageId());
-            model.setType(stageTypes.get(stage.getProjectStageTypeId()));
+            model.setType(stageTypes.get(stage.getProjectStageType().getProjectStageTypeId()));
             model.setStatus(statuses.get(stage.getStatusCode()));
             model.setStarted(stage.isStarted());
             model.setCreatedTime(stage.getCreatedTime());

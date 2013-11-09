@@ -61,6 +61,32 @@ public interface ProjectDao {
     Project findProject(String name);
 
     /**
+     * Creates a new project, with the underlying default stages and activities.
+     * @param project to create
+     */
+    @PreAuthorize("hasPermission('PROJECT','ADD')")
+    @Transactional
+    void createProject(Project project);
+
+    /**
+     * Look up the stage types mapped to the project type.
+     * @param projectTypeId project type
+     * @return list of stage types
+     */
+    @PreAuthorize("hasPermission('PROJECT', 'READ')")
+    @Transactional(readOnly = true)
+    List<ProjectTypeStageType> findProjectTypeStageTypes(Integer projectTypeId);
+
+    /**
+     * Look up the activity types mapped to a stage type.
+     * @param stageTypeId stage type
+     * @return list of activity types
+     */
+    @PreAuthorize("hasPermission('PROJECT', 'READ')")
+    @Transactional(readOnly = true)
+    List<ProjectStageTypeActivityType> findProjectStageTypeActivityType(Integer stageTypeId);
+
+    /**
      * Look up the list of stages associated with the project.
      * <p>This also looks up all associated activities, tasks and events
      * @param projectId project id

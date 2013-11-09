@@ -507,7 +507,7 @@ create table ApplicationAccess(
     UpdatedBy           bigint(20)  not null,
     primary key (ApplicationAccessId),
     unique (PersonId, ApplicationId),
-    constraint foreign key (PersonId) references Person(PersonId) on delete cascade,
+    constraint foreign key (PersonId) references User(PersonId) on delete cascade,
     constraint foreign key (ApplicationId) references Application(ApplicationId) on delete cascade,
     foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
@@ -629,7 +629,7 @@ create table Project(
     foreign key (KingdomHallId) references KingdomHall(KingdomHallId) on delete set null,
     foreign key (ContactPersonId) references Person(PersonId) on delete set null,
     foreign key (StatusCode) references ProjectStatus(ProjectStatusCode),
-    foreign key (CoordinatorId) references Person(PersonId) on delete set null,
+    foreign key (CoordinatorId) references User(PersonId) on delete set null,
     foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 
@@ -1451,8 +1451,9 @@ insert into WorkFeature (Name) values
     ('Landscape');
 
 insert into ProjectStatus (ProjectStatusCode, Name) values
-    ('OH', 'On Hold'),
+    ('CR', 'Created'),
     ('WP', 'Work In Progress'),
+    ('OH', 'On Hold'),
     ('CC', 'Cancelled'),
     ('CP', 'Completed');
 

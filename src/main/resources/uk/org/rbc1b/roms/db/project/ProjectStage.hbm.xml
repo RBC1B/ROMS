@@ -29,7 +29,7 @@ THE SOFTWARE.
             <generator class="identity" />
         </id>
         <many-to-one name="project" column="ProjectId" not-null="true" />
-        <property name="projectStageTypeId" not-null="true" />
+        <many-to-one name="projectStageType" column="ProjectStageTypeId" not-null="true" />
         <property name="statusCode" />
         <property name="createdTime" not-null="true" />
         <property name="startedTime" />

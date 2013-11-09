@@ -23,9 +23,10 @@
  */
 package uk.org.rbc1b.roms.controller.project;
 
-import java.util.Date;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * Form bean used when creating a new project.
@@ -45,10 +46,12 @@ public class ProjectForm {
     private Integer projectTypeId;
     @Size(max = 50)
     private String priority;
-    private Date requestDate;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private DateTime requestDate;
     @Size(max = 250)
     private String supportingCongregation;
-    private Date visitDate;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private DateTime visitDate;
 
     public String getConstraints() {
         return constraints;
@@ -122,11 +125,11 @@ public class ProjectForm {
         this.priority = priority;
     }
 
-    public Date getRequestDate() {
+    public DateTime getRequestDate() {
         return requestDate;
     }
 
-    public void setRequestDate(Date requestDate) {
+    public void setRequestDate(DateTime requestDate) {
         this.requestDate = requestDate;
     }
 
@@ -138,11 +141,11 @@ public class ProjectForm {
         this.supportingCongregation = supportingCongregation;
     }
 
-    public Date getVisitDate() {
+    public DateTime getVisitDate() {
         return visitDate;
     }
 
-    public void setVisitDate(Date visitDate) {
+    public void setVisitDate(DateTime visitDate) {
         this.visitDate = visitDate;
     }
 
