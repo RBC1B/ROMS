@@ -26,7 +26,10 @@ $(document).ready(function() {
     // edit page
     $(".datepicker").datepicker({
         dateFormat: "dd/mm/yy",
-        changeYear: true
+        changeYear: true,
+        minDate: "-70y",
+        maxDate: "-1d",
+        yearRange: "-70:+0"
     });
 
     $("#congregationName").typeahead({

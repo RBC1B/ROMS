@@ -27,7 +27,9 @@ $(document).ready(function() {
     $(".datepicker").datepicker({
         dateFormat: "dd/mm/yy",
         changeYear: true,
-        maxDate: "0"
+        minDate: "-70y",
+        maxDate: "-1d",
+        yearRange: "-70:+0"
     });
     
     $("#congregationName").typeahead({
