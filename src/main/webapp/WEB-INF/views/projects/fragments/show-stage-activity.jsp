@@ -121,9 +121,10 @@
                                     </c:forEach>
                                 </div>
                             </c:when>
-                            <c:otherwise>No tasks defined</c:otherwise>
+                            <c:otherwise><p>No tasks defined</p></c:otherwise>
                         </c:choose>
                         </div>
+                        <button type="button" class="btn btn-edifice a-add-task-button">Add task</button>
                         <c:if test="${!empty activity.events}">
                             <h3>Events</h3>
                             <div class="list-group">

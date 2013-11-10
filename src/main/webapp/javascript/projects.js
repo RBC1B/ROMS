@@ -71,6 +71,10 @@ $(document).ready(function() {
        }
     });
     
+    $(".a-add-task-button").click(function() {
+        $('#project-task-modal').modal('show');
+    });
+    
     // project create/edit
     $("#kingdomHallName").typeahead({
         remote: roms.common.relativePath + '/kingdom-halls/search?name=%QUERY',
