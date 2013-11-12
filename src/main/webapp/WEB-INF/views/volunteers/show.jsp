@@ -45,7 +45,7 @@
             <br />
             <c:choose>
                 <c:when test="${!empty assignments}">
-                    <a class="btn btn-edifice" href="<c:url value="${badgeUri}"/>">Generate Badge</a>
+                    <a class="btn btn-edifice" href="<c:url value="${badgeUri}"/>" id="badge-button">Generate Badge</a>
                 </c:when>
                 <c:otherwise>
                     <button class="btn" type="button" data-title="Pdf Badge Generation Not Possible"
@@ -54,6 +54,10 @@
                             id="disabled-badge-button">Generate Badge</button><br />
                 </c:otherwise>
             </c:choose>
+            <div id="birth-date-badge-alert" class="alert alert-warning alert-dismissable" style="display: none;">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                A badge cannot be generated until the birth date is set for ${volunteer.displayName}
+            </div>
             <hr>
             <c:choose>
                 <c:when test="${!empty assignments}">

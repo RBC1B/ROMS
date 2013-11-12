@@ -57,7 +57,7 @@ The contents of the personal tab.
 </c:if>
 </dd>
 <dt>Birth date:</dt>
-<dd>
+<dd id="birth-date">
 <c:choose>
     <c:when test="${!empty volunteer.birthDate}">
         <fmt:formatDate value="${volunteer.birthDate}" pattern="dd MMM yyyy" />

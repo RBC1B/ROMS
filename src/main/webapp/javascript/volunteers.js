@@ -686,6 +686,13 @@ $(document).ready(function() {
         content: $(this).data("content")
     });
     
+    if ($.trim($("#birth-date").text()) === '-') {
+        $("#badge-button").click(function(e) {
+            e.preventDefault();
+            $("#birth-date-badge-alert").show();
+        });
+    }
+    
     // volunteers experience list
     var volunteerExperienceListActionTemplate = $("#read-only-list-action").html();
     roms.common.datatables(

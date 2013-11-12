@@ -75,6 +75,11 @@ values ('Arthur', 'Anyjobs', 'Willing volunteer', NOW(), 0);
 insert into Person(Forename, Surname, Comments, BirthDate, UpdateTime, UpdatedBy)
 values ('Ken', 'Whereheis', 'Unlikely to show up volunteer', '1978-11-14', NOW(), 0);
 
+insert into Person(Forename, Surname, Comments, BirthDate, UpdateTime, UpdatedBy)
+values ('Bob', 'Dylan', 'Legendary songwriter', '2000-11-12', NOW(), 0);
+
+insert into Person(Forename, Surname, Comments, BirthDate, UpdateTime, UpdatedBy)
+values ('Leonard', 'Cohen', 'Legendary songwriter', '1997-11-12', NOW(), 0);
 
 insert into User(PersonId, UserName, Password, UpdateTime, UpdatedBy)
 values (1, 'RaminderSingh', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3', NOW(), 0);
@@ -322,6 +327,9 @@ values(5, 51, 'AD', '2011-03-16', 2, 1, NOW(), 0);
 insert into Assignment(PersonId, DepartmentId, AssignmentRoleCode, AssignedDate, TradeNumberId, TeamId, UpdateTime, UpdatedBy)
 values(6, 22, 'VN', '2006-04-04', 1, 1, NOW(), 0);
 
+insert into Assignment(PersonId, DepartmentId, AssignmentRoleCode, AssignedDate, TradeNumberId, TeamId, UpdateTime, UpdatedBy)
+values(6, 41, 'VN', '2006-04-01', 2, 1, NOW(), 0);
+
 insert into VolunteerSkill(PersonId, SkillId, Level, Comments, TrainingDate, TrainingResults, UpdateTime, UpdatedBy)
 values (5, 1, 1, null, null, null, NOW(), 0);
 
@@ -361,6 +369,34 @@ values(7, 'DN', null, 'RP', 'FFFFFFT',
 false, null, false, null, null, null);
 
 update Person set congregationId = 3 where PersonId = 7;
+
+insert into Volunteer(PersonId, RbcStatusCode, AppointmentCode, FulltimeCode, Availability,
+EmergencyContactId, EmergencyContactRelationshipCode, Gender, MaritalStatusCode, BaptismDate, InterviewDate,
+InterviewerA, InterviewerB, InterviewComments, JoinedDate, FormDate, InterviewStatusCode, Oversight, OversightComments,
+ReliefUK, ReliefUKComments, ReliefAbroad, ReliefAbroadComments, HHCFormCode, BadgeIssueDate)
+values(8, 'RA', null, null, 'TTFTTTT',
+null, null, 'M', 'MR', null, null,
+null, null, null, null, null, 'RI', false, null,
+false, null, false, null, null, null);
+
+update Person set congregationId = 2 where PersonId = 8;
+
+insert into Assignment(PersonId, DepartmentId, AssignmentRoleCode, AssignedDate, TradeNumberId, TeamId, UpdateTime, UpdatedBy)
+values(8, 27, 'VN', '2010-04-11', 1, 1, NOW(), 0);
+
+insert into Volunteer(PersonId, RbcStatusCode, AppointmentCode, FulltimeCode, Availability,
+EmergencyContactId, EmergencyContactRelationshipCode, Gender, MaritalStatusCode, BaptismDate, InterviewDate,
+InterviewerA, InterviewerB, InterviewComments, JoinedDate, FormDate, InterviewStatusCode, Oversight, OversightComments,
+ReliefUK, ReliefUKComments, ReliefAbroad, ReliefAbroadComments, HHCFormCode, BadgeIssueDate)
+values(9, 'RA', null, null, 'TFFTTTT',
+null, null, 'M', 'MR', null, null,
+null, null, null, null, null, 'RI', false, null,
+false, null, false, null, null, null);
+
+update Person set congregationId = 3 where PersonId = 9;
+
+insert into Assignment(PersonId, DepartmentId, AssignmentRoleCode, AssignedDate, TradeNumberId, TeamId, UpdateTime, UpdatedBy)
+values(9, 16, 'VN', '2010-10-10', 1, 1, NOW(), 0);
 
 
 -- projects

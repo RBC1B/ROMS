@@ -103,7 +103,7 @@ public class VolunteerBadgePdfModelFactory {
         LocalDate now = new LocalDate();
         Years age = Years.yearsBetween(birthDate, now);
 
-        // volunteers between the ages of 13 and 15
+        // volunteer badge colour depends on age or assignment
         if (age.getYears() >= 13 && age.getYears() <= 15) {
             return VolunteerBadgeColour.GREEN;
         } else if (age.getYears() >= 16 && age.getYears() <= 17) {
@@ -169,5 +169,4 @@ public class VolunteerBadgePdfModelFactory {
         }
         return false;
     }
-
 }
