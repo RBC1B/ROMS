@@ -689,6 +689,7 @@ $(document).ready(function() {
     if ($.trim($("#birth-date").text()) === '-') {
         $("#badge-button").click(function(e) {
             e.preventDefault();
+            $("#birth-date-badge-alert").before("<br />");
             $("#birth-date-badge-alert").show();
         });
     }

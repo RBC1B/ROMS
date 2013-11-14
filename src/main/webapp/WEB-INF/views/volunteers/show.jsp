@@ -45,7 +45,7 @@
             <br />
             <c:choose>
                 <c:when test="${!empty assignments}">
-                    <a class="btn btn-edifice" href="<c:url value="${badgeUri}"/>" id="badge-button">Generate Badge</a>
+                    <a class="btn btn-edifice" href="<c:url value="${badgeUri}"/>" id="badge-button">Generate Badge</a><br />
                 </c:when>
                 <c:otherwise>
                     <button class="btn" type="button" data-title="Pdf Badge Generation Not Possible"
