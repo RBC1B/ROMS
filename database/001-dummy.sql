@@ -76,10 +76,13 @@ insert into Person(Forename, Surname, Comments, BirthDate, UpdateTime, UpdatedBy
 values ('Ken', 'Whereheis', 'Unlikely to show up volunteer', '1978-11-14', NOW(), 0);
 
 insert into Person(Forename, Surname, Comments, BirthDate, UpdateTime, UpdatedBy)
-values ('Bob', 'Dylan', 'Legendary songwriter', '2000-11-12', NOW(), 0);
+values ('Bob', 'Dylan', 'It\'s allright Ma, I\'m only bleeding', '2000-11-12', NOW(), 0);
 
 insert into Person(Forename, Surname, Comments, BirthDate, UpdateTime, UpdatedBy)
-values ('Leonard', 'Cohen', 'Legendary songwriter', '1997-11-12', NOW(), 0);
+values ('Leonard', 'Cohen', 'Like a Bird', '1997-11-12', NOW(), 0);
+
+insert into Person(Forename, Surname, Comments, BirthDate, UpdateTime, UpdatedBy)
+values ('Mike', 'Michael', 'Hard core volunteer', '1990-11-14', NOW(), 0);
 
 insert into User(PersonId, UserName, Password, UpdateTime, UpdatedBy)
 values (1, 'RaminderSingh', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3', NOW(), 0);
@@ -288,7 +291,23 @@ insert into Skill(Name, DepartmentId, Description, SkillCategoryId, UpdateTime, 
 values('Decorative brick laying' , 10,  'Does not smear all over the joints', 1, NOW(), 0);
 
 insert into Skill(Name, DepartmentId, Description, SkillCategoryId, UpdateTime, UpdatedBy)
-values('Structural brick laying' , 10,  'Good for walls hidden round the back', 1, NOW(), 0);
+values('Structural brick laying', 10,  'Good for walls hidden round the back', 1, NOW(), 0);
+
+insert into Skill(Name, DepartmentId, Description, SkillCategoryId, UpdateTime, UpdatedBy)
+values('Induction Loop' , 27,  'CAT 5 cable to go around the main hall only', 1, NOW(), 0);
+
+insert into Skill(Name, DepartmentId, Description, SkillCategoryId, UpdateTime, UpdatedBy)
+values('Reading of plans and drawings', 10,  'Ability to read the architectural drawings of brickwork',
+1, NOW(), 0);
+
+insert into Skill(Name, DepartmentId, Description, SkillCategoryId, UpdateTime, UpdatedBy)
+values('Brick inspection' , 10,  'Which bricks are good and bad', 1, NOW(), 0);
+
+insert into Skill(Name, DepartmentId, Description, SkillCategoryId, UpdateTime, UpdatedBy)
+values('Brick weight' , 10,  'Brick weight is important', 1, NOW(), 0);
+
+insert into Skill(Name, DepartmentId, Description, SkillCategoryId, UpdateTime, UpdatedBy)
+values('Measure incline' , 10,  'Measuring whether the ground is inclined or not', 1, NOW(), 0);
 
 -- Qualifications
 insert into Qualification(Name, Description, UpdateTime, UpdatedBy)
@@ -337,7 +356,28 @@ insert into VolunteerSkill(PersonId, SkillId, Level, Comments, TrainingDate, Tra
 values (5, 2, 2, null, '2010-05-09', 'No problems', NOW(), 0);
 
 insert into VolunteerSkill(PersonId, SkillId, Level, Comments, TrainingDate, TrainingResults, UpdateTime, UpdatedBy)
+values (5, 3, 2, '¿Qué es la problema? No sé.', '2010-05-09', null, NOW(), 0);
+
+insert into VolunteerSkill(PersonId, SkillId, Level, Comments, TrainingDate, TrainingResults, UpdateTime, UpdatedBy)
 values (5, 4, 1, '... and fast too', null, null, NOW(), 0);
+
+insert into VolunteerSkill(PersonId, SkillId, Level, Comments, TrainingDate, TrainingResults, UpdateTime, UpdatedBy)
+values (5, 5, 1, '... hay', null, null, NOW(), 0);
+
+insert into VolunteerSkill(PersonId, SkillId, Level, Comments, TrainingDate, TrainingResults, UpdateTime, UpdatedBy)
+values (5, 6, 3, 'Quite competent', null, null, NOW(), 0);
+
+insert into VolunteerSkill(PersonId, SkillId, Level, Comments, TrainingDate, TrainingResults, UpdateTime, UpdatedBy)
+values (5, 7, 4, 'Good enough to train others', null, null, NOW(), 0);
+
+insert into VolunteerSkill(PersonId, SkillId, Level, Comments, TrainingDate, TrainingResults, UpdateTime, UpdatedBy)
+values (5, 8, 5, 'An expert', null, null, NOW(), 0);
+
+insert into VolunteerSkill(PersonId, SkillId, Level, Comments, TrainingDate, TrainingResults, UpdateTime, UpdatedBy)
+values (5, 9, 2, 'Improver', null, null, NOW(), 0);
+
+insert into VolunteerSkill(PersonId, SkillId, Level, Comments, TrainingDate, TrainingResults, UpdateTime, UpdatedBy)
+values (5, 10, 1, 'Just started', '2013-10-22', null, NOW(), 0);
 
 insert into VolunteerSkill(PersonId, SkillId, Level, Comments, TrainingDate, TrainingResults, UpdateTime, UpdatedBy)
 values (6, 1, 1, null, null, null, NOW(), 0);
@@ -397,6 +437,20 @@ update Person set congregationId = 3 where PersonId = 9;
 
 insert into Assignment(PersonId, DepartmentId, AssignmentRoleCode, AssignedDate, TradeNumberId, TeamId, UpdateTime, UpdatedBy)
 values(9, 16, 'VN', '2010-10-10', 1, 1, NOW(), 0);
+
+insert into Volunteer(PersonId, RbcStatusCode, AppointmentCode, FulltimeCode, Availability,
+EmergencyContactId, EmergencyContactRelationshipCode, Gender, MaritalStatusCode, BaptismDate, InterviewDate,
+InterviewerA, InterviewerB, InterviewComments, JoinedDate, FormDate, InterviewStatusCode, Oversight, OversightComments,
+ReliefUK, ReliefUKComments, ReliefAbroad, ReliefAbroadComments, HHCFormCode, BadgeIssueDate)
+values(10, 'RA', null, null, 'TFFTTTT',
+null, null, 'M', 'MR', null, null,
+null, null, null, null, null, 'RI', false, null,
+false, null, false, null, null, null);
+
+update Person set congregationId = 3 where PersonId = 10;
+
+insert into Assignment(PersonId, DepartmentId, AssignmentRoleCode, AssignedDate, TradeNumberId, TeamId, UpdateTime, UpdatedBy)
+values(10, 25, 'VN', '2010-10-10', 1, 1, NOW(), 0);
 
 
 -- projects

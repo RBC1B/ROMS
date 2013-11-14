@@ -56,7 +56,7 @@
             </c:choose>
             <div id="birth-date-badge-alert" class="alert alert-warning alert-dismissable" style="display: none;">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                A badge cannot be generated until the birth date is set for ${volunteer.displayName}
+                A badge cannot be generated until a birth date is set for ${volunteer.displayName}
             </div>
             <hr>
             <c:choose>

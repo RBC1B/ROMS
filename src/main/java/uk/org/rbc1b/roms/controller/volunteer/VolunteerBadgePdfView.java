@@ -78,9 +78,10 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
 
         addSkills(cb, skillsSet);
 
+        // Get image from the images directory relative to context root
         ServletContext context = request.getServletContext();
         String contextPath = context.getRealPath("/");
-        Image img = Image.getInstance(contextPath + "/images/oli-lion.jpg");
+        Image img = Image.getInstance(contextPath + "/images/" + volunteer.getPersonId() + ".jpg");
 
         addImage(cb, img);
         addBarcode(cb, volunteer.getPersonId());
@@ -112,7 +113,7 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
                 content.setColorFill(Color.RED);
                 break;
             default:
-                content.setColorFill(Color.DARK_GRAY);
+                content.setColorFill(Color.GRAY);
                 break;
         }
         content.fill();
@@ -167,7 +168,7 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
         int y = 0;
         for (int i = 0; i <= 8; i++) {
             content.moveTo(90, 635 - y);
-            content.lineTo(180, 635 - y);
+            content.lineTo(205, 635 - y);
             content.closePathStroke();
 
             y += 12;
@@ -179,8 +180,8 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
         content.closePathStroke();
 
         // right side
-        content.moveTo(180, 635);
-        content.lineTo(180, 539);
+        content.moveTo(205, 635);
+        content.lineTo(205, 539);
         content.setColorStroke(Color.BLACK);
         content.closePathStroke();
     }
