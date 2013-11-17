@@ -23,10 +23,17 @@
  */
 package uk.org.rbc1b.roms.service;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
+
+import javax.activation.DataSource;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.mail.util.ByteArrayDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -36,11 +43,10 @@ import uk.org.rbc1b.roms.db.EmailAttachment;
 import uk.org.rbc1b.roms.db.EmailDao;
 
 /**
- *
+ * Edifice Mailer that sends out emails.
  */
 @Component
 public class EdificeMailer {
-
     @Autowired
     private JavaMailSender mailGateway;
     @Autowired
@@ -49,9 +55,15 @@ public class EdificeMailer {
     /**
      * Prepares and sends out all outstanding email.
      *
-     * @throws MessagingException messaging exception
+     * @throws MessagingException
+     *             messaging exception
+     * @throws SQLException
+     *             SQL exception
+     * @throws IOException
+     *             IO exception
      */
-    public void prepareAndSendEmail() throws MessagingException {
+    public void prepareAndSendEmail() throws MessagingException, SQLException,
+            IOException {
         List<Email> emails = this.emailDao.findAll();
         for (Email email : emails) {
             MimeMessage mimeMessage = this.mailGateway.createMimeMessage();
@@ -59,14 +71,18 @@ public class EdificeMailer {
             helper.setTo(email.getRecipient());
             helper.setSubject(email.getSubject());
             helper.setText(email.getText());
-            Set<EmailAttachment> attachments = email.getEmailAttachments();
-            /*
-             * To do - add attachements if (!attachments.isEmpty()) { for (EmailAttachment attachment : attachments) {
-             * // To do } }
-             */
+            Set<EmailAttachment> emailAttachments = email.getEmailAttachments();
+            if (!emailAttachments.isEmpty()) {
+                for (EmailAttachment emailAttachment : emailAttachments) {
+                    InputStream inputStream = new BufferedInputStream(
+                            emailAttachment.getAttachment().getBinaryStream());
+                    DataSource source = new ByteArrayDataSource(inputStream,
+                            emailAttachment.getFileType());
+                    helper.addAttachment(emailAttachment.getFilename(), source);
+                }
+            }
             this.mailGateway.send(mimeMessage);
             this.emailDao.delete(email);
         }
     }
-
 }
