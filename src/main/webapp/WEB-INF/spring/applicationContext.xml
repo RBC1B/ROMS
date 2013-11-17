@@ -258,9 +258,9 @@ THE SOFTWARE.
     <bean id="personchangesCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean" >
         <property name="jobDetail" ref="personChangesJob" />
         <!-- Production setting for 1AM once a day -->
-        <!-- property name="cronExpression" value="0 0 01 * * ?" / -->
+        <property name="cronExpression" value="0 0 01 * * ?" />
         <!-- Test setting every 0/X seconds or 0 1/Y minutes -->
-        <property name="cronExpression" value="0 0/2 * * * ?" />
+        <!-- property name="cronExpression" value="0 0/2 * * * ?" / -->
     </bean>
 
     <bean id="mailer" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">

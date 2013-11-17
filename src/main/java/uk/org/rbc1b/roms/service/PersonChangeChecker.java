@@ -74,6 +74,7 @@ public class PersonChangeChecker {
     public void checkIfOutstandingChanges() throws IOException, TemplateException {
         List<PersonChange> personChangeList = personChangeDao.findPersonChangeNotUpdated();
         if (!personChangeList.isEmpty()) {
+            // We really should use RECIPIENT_SEARCH rather than ID to find the list!
             List<MailRecipient> mailRecipients = mailRecipientDao.getRecipientByMailTypeId(RECIPIENT_ID);
             for (MailRecipient mailRecipient : mailRecipients) {
                 Map<String, Person> model = new HashMap<String, Person>();
