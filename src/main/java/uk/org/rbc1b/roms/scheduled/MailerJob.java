@@ -23,8 +23,6 @@
  */
 package uk.org.rbc1b.roms.scheduled;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -53,10 +51,8 @@ public class MailerJob extends QuartzJobBean {
     /**
      * Scheduled job.
      *
-     * @param context
-     *            the job execution context
-     * @throws JobExecutionException
-     *             the job exception
+     * @param context the job execution context
+     * @throws JobExecutionException the job exception
      */
     @Override
     protected void executeInternal(JobExecutionContext context)
@@ -72,12 +68,6 @@ public class MailerJob extends QuartzJobBean {
         try {
             edificeMailer.prepareAndSendEmail();
         } catch (MessagingException ex) {
-            Logger.getLogger(MailerJob.class.getName()).log(Level.SEVERE, null,
-                    ex);
-        } catch (IOException ex) {
-            Logger.getLogger(MailerJob.class.getName()).log(Level.SEVERE, null,
-                    ex);
-        } catch (SQLException ex) {
             Logger.getLogger(MailerJob.class.getName()).log(Level.SEVERE, null,
                     ex);
         }
