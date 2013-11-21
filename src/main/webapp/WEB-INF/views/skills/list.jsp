@@ -45,7 +45,7 @@
                                     ${skill.category.name}
                                 </td>
                                 <td>
-                                    <ul class="list-inline">
+                                    <ul class="inline list-actions">
                                         <li><a class="btn btn-success" href="<c:url value="${skill.uri}" />">View</a></li>
                                         <li><a class="list-action" href="<c:url value="${skill.editUri}" />">Edit</a></li>
                                     </ul>

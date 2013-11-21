@@ -9,6 +9,7 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
+        <div class="container-fluid">
             <h1>Department: ${department.name}</h1>
             <hr />
             <dl class="dl-horizontal">
@@ -75,6 +76,7 @@
             </ol>
 
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+        </div>
         <%@ include file="/WEB-INF/views/common/mustache-list-actions.jsp" %>
         <script type="text/javascript" src="<c:url value='/javascript/departments.js' />" ></script>
     </body>

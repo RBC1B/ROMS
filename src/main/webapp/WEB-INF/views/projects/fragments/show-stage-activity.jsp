@@ -3,7 +3,7 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<div id="stage-${stage.id}-activity-${activity.id}" class="panel panel-stage">
+<div id="stage-${stage.id}-activity-${activity.id}" class="panel panel-default">
     <div class="panel-heading">
         <div class="project-stage-type-name col-sm-4"><h4>${activity.type.name}: ${activity.type.description}</h4></div>
         <div class="project-stage-status col-sm-2"><h4>${activity.status}</h4></div>

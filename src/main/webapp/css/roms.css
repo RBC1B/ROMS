@@ -34,9 +34,6 @@ input {
     padding:4px;
     margin:4px;
 }
-.list-inline, ul.inline.list-actions {
-    margin-bottom: 0!important;
-}
 /* Now some styling for additional classes created for use throughout the site */
 
 .btn-edifice {
@@ -506,34 +503,8 @@ div.project-count {
 .drag-move {
     padding:4px 10px 6px;
     border-radius: 4px;
-    background-color:#fff;
-    color:#000!important;
-}
-.panel-stage {
-    border: 1px solid #2D5261;
-}
-.panel-stage .panel-heading  {
-    background-color: #2D5261;
-    color: #fff;
-}
-.panel-activity {
-    border: 1px solid #104A61;
-}
-.panel-activity .panel-heading  {
-    background-color: #104A61;
-}
-.panel-task {
-    border: 1px solid #1D83AE;
-}
-.panel-task .panel-heading  {
-    background-color: #1D83AE;
-}
-.panel-event {
-    border: 1px solid #25AAE1;
-}
-.panel-event .panel-heading  {
-    background-color: #25AAE1;
-}
+    background-color:#25aae1;
+    color:#fff!important;
 }
 /*****************************************************************************/
 /* Person Change/Update page                                                 */

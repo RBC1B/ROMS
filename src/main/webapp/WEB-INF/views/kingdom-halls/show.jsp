@@ -9,6 +9,7 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
+        <div class="container-fluid">
             <h1>Kingdom Hall #${kingdomHall.kingdomHallId}: ${kingdomHall.name}</h1>
             <hr>
             <dl class="dl-horizontal">
@@ -57,6 +58,7 @@
             </ol>
 
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+        </div>
      <script type="text/javascript" src="<c:url value='/javascript/kingdom-halls.js' />" ></script>
     </body>
 </html>

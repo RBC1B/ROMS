@@ -10,6 +10,7 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
+        <div class="container-fluid">
             <h1>Project #${project.projectId}: ${project.name}</h1>
             <hr>
             <dl class="dl-horizontal">
@@ -56,6 +57,7 @@
                 <li>#${project.projectId}: ${project.name}</li>
             </ol>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+        </div>
         <script type="text/javascript" src="<c:url value='/javascript/projects.js' />" ></script>
     </body>
 </html>

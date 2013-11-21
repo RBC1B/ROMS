@@ -19,6 +19,7 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
+        <div class="container-fluid">
             <c:choose>
                 <c:when test="${!empty circuitForm.name}">
                     <h1>Edit Circuit</h1>
@@ -91,6 +92,7 @@
                     <br />
                 </fieldset>
             </form:form>
+        </div>
 
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>

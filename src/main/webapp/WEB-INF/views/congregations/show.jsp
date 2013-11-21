@@ -9,6 +9,7 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
+        <div class="container-fluid">
             <h1>Congregation: ${congregation.name}</h1>
             <hr />
             <dl class="dl-horizontal">
@@ -96,6 +97,7 @@
             </ol>
 
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+        </div>
         <script type="text/javascript" src="<c:url value='/javascript/congregations.js' />" ></script>
     </body>
 </html>

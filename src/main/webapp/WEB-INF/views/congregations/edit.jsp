@@ -96,7 +96,7 @@
                 <label>Strategy</label>
                 <form:textarea path="strategy" />
             </fieldset>
-            <input type="submit" class="btn btn-edifice" />
+            <input type="submit" class="btn btn-primary" />
         </form:form>
 
         <ol class="breadcrumb">

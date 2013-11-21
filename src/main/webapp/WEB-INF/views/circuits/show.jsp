@@ -9,7 +9,7 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="container">
+        <div class="container-fluid">
             <h1>#${circuit.circuitId}: ${circuit.name}</h1>
             <hr />
             <h3>Circuit Overseer</h3>
