@@ -11,41 +11,61 @@ Author: oliver.elder.esq
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="container-fluid">
+        <div class="container">
             <h1>${forename} ${surname} - Spiritual Information</h1>
             <hr>
             <c:url var="formAction" value="${submitUri}" />
-            <form:form commandName="volunteerSpiritual" method="PUT" action="${formAction}">
+            <form:form class="form-horizontal" commandName="volunteerSpiritual" method="PUT" action="${formAction}">
                 <fieldset>
-                    <label>Congregation</label>
-                    <form:input path="congregationName" placeholder="Congregation name" autocomplete="off" />
-                    <form:hidden path="congregationId" />
-                    <label>Date of baptism</label>
-                    <form:input path="baptismDate" class="datepicker" type="text" value=""/>
-                    <label>Full time service</label>
-                    <form:select path="fulltimeCode">
-                        <form:option value="" label="None" />
-                        <form:options items="${fulltimeValues}" />
-                    </form:select>
-                    <label>Appointment</label>
-                    <form:select path="appointmentCode">
-                        <form:option value="" label="None (Publisher)" />
-                        <form:options items="${appointmentValues}" />
-                    </form:select>
+                    <legend>Congregation and Baptism Details</legend>
+                    <div class="form-group">
+                        <label class="control-label col-sm-4 col-md-3">Congregation</label>
+                        <div class="col-sm-8 col-md-3">
+                            <form:input path="congregationName" placeholder="Congregation name" autocomplete="off" />
+                            <form:hidden path="congregationId" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-4 col-md-3">Date of baptism</label>
+                        <div class="col-sm-8 col-md-3">
+                            <form:input path="baptismDate" placeholder="15/03/1980" class="datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
+                        </div>
+                    </div>
                 </fieldset>
                 <fieldset>
-                    <button type="submit" class="btn btn-success">Submit</button>
+                    <legend>Congregational Privileges</legend>
+                    <div class="form-group">
+                        <label class="control-label col-sm-4 col-md-3">Full time service</label>
+                        <div class="col-sm-8 col-md-9">
+                            <form:select class="form-control" path="fulltimeId">
+                                <form:option value="" label="None" />
+                                <form:options items="${fulltimeValues}" />
+                            </form:select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-4 col-md-3">Appointment</label>
+                        <div class="col-sm-8 col-md-9">
+                            <form:select class="form-control" path="appointmentId">
+                                <form:option value="" label="None (Publisher)" />
+                                <form:options items="${appointmentValues}" />
+                            </form:select>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <button type="submit" class="btn btn-default btn-success">Submit</button>
                 </fieldset>
             </form:form>
-
+            
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
                 <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
                   <li><a href="<c:url value="/volunteers" />">Volunteers</a></li>
                 </sec:authorize>
                 <li class="active">#${volunteer.id}: ${volunteer.displayName} Edit Spiritual Info</li>
-            </ol>
-
+            </ol>            
+            
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
         <script type="text/javascript" src="<c:url value='/javascript/thirdparty/jquery-numeric-1.3.1.js' />" ></script>

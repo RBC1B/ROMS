@@ -10,100 +10,149 @@ Edit form for the volunteer data under the rbc status tab.
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="container-fluid">
+        <div class="container">
             <h1>${forename} ${surname} - RBC Status Information</h1>
             <hr>
 
             <c:url var="formAction" value="${submitUri}" />
-            <form:form commandName="volunteerRbcStatus" method="PUT" action="${formAction}">
+            <form:form class="form-horizontal" commandName="volunteerRbcStatus" method="PUT" action="${formAction}">
                 <fieldset>
-                    <label>Form date</label>
-                    <form:input path="formDate" class="datepicker" type="text" value=""/>
+                    <legend>Form Date</legend>
+                    <div class="form-group">
+                        <label for="formDate" class="control-label col-sm-3 col-md-2">Form Date</label>
+                        <div class="col-sm-9 col-md-2">
+                        <form:input path="formDate" class="datepicker form-control" data-date-format="dd/mm/yy" type="text" value=""/>
+                        </div>
+                    </div>
                 </fieldset>
                 <fieldset>
                     <legend>Interview</legend>
-                    <label>Interview date</label>
-                    <form:input path="interviewDate" class="datepicker" type="text" value=""/>
-                    <label>Interviewer A</label>
-                    <form:input path="interviewerAUserName" class="user" placeholder="User Name" autocomplete="off" />
-                    <form:hidden path="interviewerAPersonId" />
-                    <label>Interviewer B</label>
-                    <form:input path="interviewerBUserName" class="user" placeholder="User Name" autocomplete="off" />
-                    <form:hidden path="interviewerBPersonId" />
-                    <label>Interview comments</label>
-                    <form:input path="interviewComments" maxlength="150" />
-                    <label>Joined date</label>
-                    <form:input path="joinedDate" class="datepicker" type="text" value=""/>
-                    <label>Badge issue date</label>
-                    <form:input path="badgeIssueDate" class="datepicker" type="text" value=""/>
+                    <div class="form-group">
+                        <label for="interviewDate" class="control-label col-sm-3 col-md-2">Interview date</label>
+                        <div class="col-sm-9 col-md-2">
+                            <form:input path="interviewDate" class="datepicker form-control" data-date-format="dd/mm/yy" type="text" value=""/>
+                        </div>
+                        <label for="joinedDate" class="control-label col-sm-3 col-md-2">Joined date</label>
+                        <div class="col-sm-9 col-md-2">
+                            <form:input path="joinedDate" class="datepicker form-control" data-date-format="dd/mm/yy" type="text" value=""/>
+                        </div>
+                        <label for="badgeIssueDate" class="control-label col-sm-3 col-md-2">Badge issue date</label>
+                        <div class="col-sm-9 col-md-2">
+                            <form:input path="badgeIssueDate" class="datepicker form-control" data-date-format="dd/mm/yy" type="text" value=""/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="interviewerAUserName" class="control-label col-sm-3 col-md-2">Interviewer A</label>
+                        <div class="col-sm-9 col-md-2">
+                        <form:input path="interviewerAUserName" class="user form-control" placeholder="User Name" autocomplete="off" />
+                        <form:hidden path="interviewerAPersonId" />
+                        </div>
+                        <label for="interviewerBPersonId" class="control-label col-sm-3 col-md-2">Interviewer B</label>
+                        <div class="col-sm-9 col-md-2">
+                        <form:input path="interviewerBUserName" class="user form-control" placeholder="User Name" autocomplete="off" />
+                        <form:hidden path="interviewerBPersonId" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="interviewComments" class="control-label col-sm-3 col-md-2">Interview comments</label>
+                        <div class="col-sm-9 col-md-10">
+                        <form:textarea path="interviewComments" class="form-control" rows="5" maxlength="200" />
+                        </div>
+                    </div>
                 </fieldset>
                 <fieldset>
                     <legend>Availability</legend>
-                    <a href="#" id="clear-availability">No days</a>|<a href="#" id="set-availability">All days</a>
-                    <label class="checkbox">
+                    <div class="form-group">
+                        <strong><a href="#" id="clear-availability">Clear all days</a> | <a href="#" id="set-availability">Tick all days</a></strong>
+                    </div>
+                    <div class="form-group">
+                    <label class="checkbox-inline">
                         <form:checkbox path="availabilityMonday" class="availability" /> Monday
                     </label>
-                    <label class="checkbox">
+                    <label class="checkbox-inline">
                         <form:checkbox path="availabilityTuesday" class="availability" /> Tuesday
                     </label>
-                    <label class="checkbox">
+                    <label class="checkbox-inline">
                         <form:checkbox path="availabilityWednesday" class="availability" /> Wednesday
                     </label>
-                    <label class="checkbox">
+                    <label class="checkbox-inline">
                         <form:checkbox path="availabilityThursday" class="availability" /> Thursday
                     </label>
-                    <label class="checkbox">
+                    <label class="checkbox-inline">
                         <form:checkbox path="availabilityFriday" class="availability" /> Friday
                     </label>
-                    <label class="checkbox">
+                    <label class="checkbox-inline">
                         <form:checkbox path="availabilitySaturday" class="availability" /> Saturday
                     </label>
-                    <label class="checkbox">
+                    <label class="checkbox-inline">
                         <form:checkbox path="availabilitySunday" class="availability" /> Sunday
                     </label>
+                    </div>
                 </fieldset>
                 <fieldset>
                     <legend>Oversight</legend>
+                    <div class="form-group">
                     <label class="checkbox">
                         <form:checkbox path="oversight" /> Recommended
                     </label>
-                    <label>Comments</label>
-                    <form:input path="oversightComments" maxlength="50" />
+                    </div>
+                    <div class="form-group">
+                    <label for="oversightComments" class="col-sm-3 col-md-2 control-label">Comments</label>
+                    <div class="col-sm-9 col-md-10">
+                        <form:textarea path="oversightComments" class="form-control" rows="3" maxlength="200" />
+                    </div>
+                    </div>
                 </fieldset>
                 <fieldset>
                     <legend>Relief - UK</legend>
+                    <div class="form-group">
                     <label class="checkbox">
                         <form:checkbox path="reliefUK" /> Recommended
                     </label>
-                    <label>Comments</label>
-                    <form:input path="reliefUKComments" maxlength="50" />
+                    </div>
+                    <div class="form-group">
+                    <label for="reliefUKComments" class="control-label col-sm-3 col-md-2">Comments</label>
+                    <div class="col-sm-9 col-md-10">
+                    <form:textarea path="reliefUKComments" class="form-control" rows="2" maxlength="50" />
+                    </div>
+                    </div>
                 </fieldset>
                 <fieldset>
                     <legend>Relief - Abroad</legend>
+                    <div class="form-group">
                     <label class="checkbox">
                         <form:checkbox path="reliefAbroad" /> Recommended
                     </label>
-                    <label>Comments</label>
-                    <form:input path="reliefAbroadComments" maxlength="50" />
+                    </div>
+                    <div class="form-group">
+                    <label for="reliefAbroadComments" class="control-label col-sm-3 col-md-2">Comments</label>
+                    <div class="col-sm-9 col-md-10">
+                    <form:textarea path="reliefAbroadComments" class="form-control" rows="2" maxlength="50" />
+                    </div>
+                    </div>
                 </fieldset>
                 <fieldset>
                     <legend>HHC</legend>
-                    <label>Form code</label>
-                    <form:input path="hhcFormCode" maxlength="15" />
+                    <div class="form-group">
+                    <label for="hhcFormCode" class="control-label col-sm-3 col-md-2">Form code</label>
+                    <div class="col-sm-9 col-md-2">
+                    <form:input path="hhcFormCode" class="form-control" maxlength="15" />
+                    </div>
+                    </div>
                 </fieldset>
                 <fieldset>
-                    <button type="submit" class="btn">Submit</button>
+                    <button type="submit" class="btn btn-default btn-success">Submit</button>
                 </fieldset>
             </form:form>
-
+            
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
                 <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
                   <li><a href="<c:url value="/volunteers" />">Volunteers</a></li>
                 </sec:authorize>
                 <li class="active">#${volunteer.id}: ${volunteer.displayName} Edit RBC Status</li>
-            </ol>
-
+            </ol>           
+            
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         </div>
         <script type="text/javascript" src="<c:url value='/javascript/thirdparty/jquery-numeric-1.3.1.js' />" ></script>
