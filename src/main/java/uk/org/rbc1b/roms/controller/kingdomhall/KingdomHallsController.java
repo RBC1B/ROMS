@@ -46,7 +46,6 @@ import uk.org.rbc1b.roms.controller.congregation.CongregationModelFactory;
 import uk.org.rbc1b.roms.db.Address;
 import uk.org.rbc1b.roms.db.Congregation;
 import uk.org.rbc1b.roms.db.CongregationDao;
-import uk.org.rbc1b.roms.db.CongregationSearchCriteria;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHallDao;
 import uk.org.rbc1b.roms.db.reference.ReferenceDao;
@@ -151,10 +150,6 @@ public class KingdomHallsController {
 
         kingdomHallForm.setOwnershipTypeCode(kingdomHall.getOwnershipTypeCode());
 
-        if (findCongregations(kingdomHall.getKingdomHallId()) != null) {
-            kingdomHallForm.setCongregations(findCongregations(kingdomHall.getKingdomHallId()));
-        }
-
         model.addAttribute("kingdomHallForm", kingdomHallForm);
         model.addAttribute("submitUri", KingdomHallModelFactory.generateUri(kingdomHallId));
         model.addAttribute("ownershipValues", referenceDao.findKingdomHallOwnershipTypeValues());
@@ -162,6 +157,30 @@ public class KingdomHallsController {
 
         return "kingdom-halls/edit";
 
+    }
+
+    /**
+     * Update a kingdom hall using the form bean passed to the controller.
+     *
+     * @param kingdomHallId id
+     * @param kingdomHallForm form
+     * @throws NoSuchRequestHandlingMethodException if kingdom hall does not exist
+     * @return String view
+     */
+    @RequestMapping(value = "{kingdomHallId}", method = RequestMethod.PUT)
+    public String updateKingdomHall(@PathVariable Integer kingdomHallId,
+            @Valid KingdomHallForm kingdomHallForm) throws NoSuchRequestHandlingMethodException {
+        KingdomHall kingdomHall = kingdomHallDao.findKingdomHall(kingdomHallId);
+
+        if (kingdomHall == null) {
+            throw new NoSuchRequestHandlingMethodException("No kingdom hall #" + kingdomHallId, this.getClass());
+        }
+
+        populateKingdomHall(kingdomHallForm, kingdomHall);
+
+        kingdomHallDao.updateKingdomHall(kingdomHall);
+
+        return "redirect:" + KingdomHallModelFactory.generateUri(kingdomHallId);
     }
 
     /**
@@ -174,23 +193,50 @@ public class KingdomHallsController {
     public String showCreateKingdomHallForm(ModelMap model) {
         // initialise the form bean
         model.addAttribute("kingdomHallForm", new KingdomHallForm());
+        model.addAttribute("ownershipValues", referenceDao.findKingdomHallOwnershipTypeValues());
+        model.addAttribute("submitMethod", "POST");
 
         return "kingdom-halls/edit";
     }
 
     /**
-     * Helper method to find a list of congregations that meet at a hall.
+     * Create a new kingdom hall.
      *
-     * @param kingdomHallId kingdom hall id
-     * @return list of congregations
+     * @param kingdomHallForm form bean
+     * @return view name
      */
-    private List<Congregation> findCongregations(Integer kingdomHallId) {
-        CongregationSearchCriteria searchCriteria = new CongregationSearchCriteria();
-        searchCriteria.setKingdomHallId(kingdomHallId);
+    @RequestMapping(method = RequestMethod.POST)
+    public String createKingdomHall(@Valid KingdomHallForm kingdomHallForm) {
+        KingdomHall kingdomHall = new KingdomHall();
 
-        List<Congregation> congregations = congregationDao.findCongregations(searchCriteria);
+        populateKingdomHall(kingdomHallForm, kingdomHall);
 
-        return congregations;
+        return "redirect:" + KingdomHallModelFactory.generateUri(kingdomHall.getKingdomHallId());
+    }
+
+    /**
+     * Helper method to populate the Kingdom Hall when editing/creating a new
+     * Kingdom Hall.
+     *
+     * @param kingdomHallForm form
+     * @param kingdomHall kingdom hall object
+     */
+    private void populateKingdomHall(KingdomHallForm kingdomHallForm, KingdomHall kingdomHall) {
+        kingdomHall.setName(kingdomHallForm.getName());
+
+        Address address = new Address();
+        address.setStreet(kingdomHallForm.getStreet());
+        address.setTown(kingdomHallForm.getTown());
+        address.setCounty(kingdomHallForm.getCounty());
+        address.setPostcode(kingdomHallForm.getPostcode());
+        kingdomHall.setAddress(address);
+
+        Congregation titleHoldingCongregation = congregationDao.findCongregation(
+                kingdomHallForm.getTitleHoldingCongregationId());
+
+        kingdomHall.setTitleHolder(titleHoldingCongregation);
+
+        kingdomHall.setOwnershipTypeCode(kingdomHallForm.getOwnershipTypeCode());
     }
 
     /**
@@ -215,29 +261,6 @@ public class KingdomHallsController {
             }
         }
         return results;
-    }
-
-    /**
-     * Create a new kingdom hall.
-     *
-     * @param kingdomHallForm form bean
-     * @return view name
-     */
-    @RequestMapping(method = RequestMethod.POST)
-    public String createKingdomHall(@Valid KingdomHallModel kingdomHallForm) {
-        KingdomHall kingdomHall = new KingdomHall();
-        if (kingdomHallForm.getKingdomHallId() != null) {
-            kingdomHall.setKingdomHallId(kingdomHallForm.getKingdomHallId());
-        }
-        Address address = new Address();
-        address.setCounty(kingdomHallForm.getCounty());
-        address.setPostcode(kingdomHallForm.getPostcode());
-        address.setStreet(kingdomHallForm.getStreet());
-        address.setTown(kingdomHallForm.getTown());
-        kingdomHall.setAddress(address);
-        kingdomHall.setName(kingdomHallForm.getName());
-
-        return "redirect:" + KingdomHallModelFactory.generateUri(kingdomHall.getKingdomHallId());
     }
 
     /**
@@ -301,5 +324,4 @@ public class KingdomHallsController {
             return "redirect:/kingdom-halls";
         }
     }
-
 }

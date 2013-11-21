@@ -23,10 +23,8 @@
  */
 package uk.org.rbc1b.roms.controller.kingdomhall;
 
-import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import uk.org.rbc1b.roms.db.Congregation;
 
 /**
  * Kingdom Hall form bean for creating/editing a kingdom hall.
@@ -38,18 +36,22 @@ public class KingdomHallForm {
     @NotNull
     @Size(min = 2, max = 50)
     private String name;
+    @NotNull
     @Size(min = 2, max = 50)
     private String street;
+    @NotNull
     @Size(min = 2, max = 50)
     private String town;
     @Size(min = 2, max = 50)
     private String county;
-    @Size(min = 4, max = 7)
+    @NotNull
+    @Size(min = 4, max = 10)
     private String postcode;
     private Integer titleHoldingCongregationId;
     private String titleHoldingCongregationName;
+    @NotNull
+    @Size(max = 20)
     private String ownershipTypeCode;
-    private List<Congregation> congregations;
 
     public String getName() {
         return name;
@@ -113,13 +115,5 @@ public class KingdomHallForm {
 
     public void setOwnershipTypeCode(String ownershipTypeCode) {
         this.ownershipTypeCode = ownershipTypeCode;
-    }
-
-    public List<Congregation> getCongregations() {
-        return congregations;
-    }
-
-    public void setCongregations(List<Congregation> congregations) {
-        this.congregations = congregations;
     }
 }

@@ -68,14 +68,13 @@ public class HibernateKingdomHallDao implements KingdomHallDao {
 
     @Override
     public void createKingdomHall(KingdomHall kingdomHall) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        this.sessionFactory.getCurrentSession().save(kingdomHall);
     }
 
     @Override
     @CacheEvict(value = "kingdomHall.kingdomHall", key = "#kingdomHall.kingdomHallId")
     public void updateKingdomHall(KingdomHall kingdomHall) {
-        throw new UnsupportedOperationException("Not supported yet.");
-
+        this.sessionFactory.getCurrentSession().merge(kingdomHall);
     }
 
     @Override
@@ -83,5 +82,4 @@ public class HibernateKingdomHallDao implements KingdomHallDao {
     public void deleteKingdomHall(KingdomHall kingdomHall) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
 }
