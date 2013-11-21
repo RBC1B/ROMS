@@ -19,27 +19,25 @@ Author     : oliver.elder.esq
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="container">
-            <c:choose>
-                <c:when test="${!empty kingdomHallForm.name}">
-                    <h1>Edit Kingdom Hall - ${kingdomHallForm.name}</h1>
-                </c:when>
-                <c:otherwise>
-                    <h1>Create New Kingdom Hall</h1>
-                </c:otherwise>
-            </c:choose>
-            <hr>
-            <c:url var="formAction" value="${submitUri}" />
-            <form:form commandName="kingdomHallForm" method="${submitMethod}" action="${formAction}" role="form">
-                <fieldset>
+        <c:choose>
+            <c:when test="${!empty kingdomHallForm.name}">
+                <h1>Edit Kingdom Hall - ${kingdomHallForm.name}</h1>
+            </c:when>
+            <c:otherwise>
+                <h1>Create New Kingdom Hall</h1>
+            </c:otherwise>
+        </c:choose>
+        <hr>
+        <c:url var="formAction" value="${submitUri}" />
+        <form:form commandName="kingdomHallForm" method="${submitMethod}" action="${formAction}" role="form">
+            <div class="row">
+                <div class="col-md-6">
                     <div class="form-group">
                         <label for="name">Name:</label>
                         <div class="span2">
                             <form:input path="name" class="form-control" placeholder="Kingdom Hall Name" /><br />
                         </div>
                     </div>
-                </fieldset>
-                <fieldset>
                     <div class="form-group">
                         <h4>Address:</h4>
                         <label for="street">Street:</label>
@@ -59,8 +57,8 @@ Author     : oliver.elder.esq
                             <form:input path="postcode" class="form-control" placeholder="Kingdom Hall Postcode" /><br/>
                         </div>
                     </div>
-                </fieldset>
-                <fieldset>
+                </div>
+                <div class="col-md-6">
                     <h4>Ownership Details:</h4>
                     <div class="form-group">
                         <label for="ownershipTypeCode">Ownership Type:</label>
@@ -70,20 +68,16 @@ Author     : oliver.elder.esq
                                 <form:options items="${ownershipValues}" />
                             </form:select><br />
                         </div>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <div class="form-group">
                         <form:hidden path="titleHoldingCongregationId" />
                         <label for="titleHoldingCongregationName">Title Holding Congregation:</label>
                         <div class="span2">
                             <form:input path="titleHoldingCongregationName" class="form-control" type="text" name="titleHoldingCongregationName" placeholder="Title Holder" value="" id="searchinput" data-provide="typeahead" data-source="congregation.Name" maxlength="30" autocomplete="on" /><br />
-                        </div>    
+                        </div>
+                        <input type="submit" class="btn btn-primary"/>
                     </div>
-                    <input type="submit" class="btn btn-primary"/>
-                </fieldset>
-            </form:form>
-        </div>
+                </div>
+            </div>
+        </form:form>
 
         <ol class="breadcrumb">
             <li><a href="<c:url value="/" />">Edifice</a></li>
