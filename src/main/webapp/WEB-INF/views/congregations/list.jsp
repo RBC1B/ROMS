@@ -44,9 +44,9 @@
                                 <td>${congregation.rbcRegion}</td>
                                 <td>${congregation.rbcSubRegion}</td>
                                 <td>
-                                    <ul class="inline list-actions">
+                                    <ul class="list-inline">
                                         <li><a class="btn btn-success" href="<c:url value="${congregation.uri}" />">View</a></li>
-                                        <li><a href="<c:url value="${congregation.editUri}" />">Edit</a></li>
+                                        <li><a class="list-action" href="<c:url value="${congregation.editUri}" />">Edit</a></li>
                                     </ul>
                                 </td>
                             </tr>

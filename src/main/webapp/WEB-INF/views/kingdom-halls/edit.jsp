@@ -19,7 +19,6 @@ Author     : oliver.elder.esq
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="container">
             <c:choose>
                 <c:when test="${!empty kingdomHallForm.name}">
                     <h1>Edit Kingdom Hall - ${kingdomHallForm.name}</h1>
@@ -83,7 +82,6 @@ Author     : oliver.elder.esq
                     <input type="submit" class="btn btn-primary"/>
                 </fieldset>
             </form:form>
-        </div>
 
         <ol class="breadcrumb">
             <li><a href="<c:url value="/" />">Edifice</a></li>

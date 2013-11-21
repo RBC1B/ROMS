@@ -10,7 +10,6 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="container-fluid">
             <div class="media">
                 <img src="<c:url value='/images/oli-lion.jpg' />" class="media-object img-thumbnail pull-left" alt="volunteer image" />
                 <div class="media-body">
@@ -127,7 +126,6 @@
                 <li class="active">#${volunteer.id}: ${volunteer.displayName}</li>
             </ol>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-        </div>
         <%@ include file="fragments/show-name-edit-modal.jsp" %>
         <%@ include file="fragments/show-comments-edit-modal.jsp" %>
         <script type="text/javascript" src="<c:url value='/javascript/volunteers.js' />" ></script>
