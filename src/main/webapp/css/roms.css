@@ -504,13 +504,17 @@ div.project-count {
 }
 .drag-move {
     padding:4px 10px 6px;
-    border-radius: 4px;
-    background-color:#fff;
-    color:#000!important;
+    color:#fff!important;
+    font-size: 20px;
 }
 .panel-stage {
     border: 1px solid #2D5261;
 }
+.panel-stage .btn-default {
+    border:0;
+    color: #7f7f7f;
+}
+
 .panel-stage .panel-heading  {
     background-color: #2D5261;
     color: #fff;

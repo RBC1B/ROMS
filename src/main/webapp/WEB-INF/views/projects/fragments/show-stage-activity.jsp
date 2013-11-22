@@ -5,29 +5,24 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <div id="stage-${stage.id}-activity-${activity.id}" class="panel panel-activity">
     <div class="panel-heading">
-                    <c:choose>
-                <c:when test="${activity.isInProgress()}">
-                    <c:set var="accordionOpenClass">in</c:set>
-                    <c:set var="accordionIconClass">glyphicon-chevron-right</c:set>
-                </c:when>
-                <c:otherwise>
-                    <c:set var="accordionOpenClass"></c:set>
-                    <c:set var="accordionIconClass">glyphicon-chevron-down</c:set>
-                </c:otherwise>
-            </c:choose>
-                    
-            <button type="button"
-                    class="btn btn-default pull-left a-accordian-control"
-                    data-target="#collapse-stage-${stage.id}-activity-${activity.id}">
-                <span class="glyphicon ${accordionIconClass}"></span>
-            </button>
-        
+        <c:choose>
+            <c:when test="${activity.isInProgress()}">
+                <c:set var="accordionOpenClass">in</c:set>
+                <c:set var="accordionIconClass">glyphicon-chevron-right</c:set>
+            </c:when>
+            <c:otherwise>
+                <c:set var="accordionOpenClass"></c:set>
+                <c:set var="accordionIconClass">glyphicon-chevron-down</c:set>
+            </c:otherwise>
+        </c:choose>
+        <button type="button"
+                class="btn btn-default pull-left a-accordian-control"
+                data-target="#collapse-stage-${stage.id}-activity-${activity.id}">
+            <span class="glyphicon ${accordionIconClass}"></span>
+        </button>
         <div class="project-stage-type-name col-sm-4"><h4>${activity.type.name}: ${activity.type.description}</h4></div>
         <div class="project-stage-status col-sm-4"><h4>${activity.status}</h4></div>
-        
-        
-        
-                <div class="col-sm-2">
+        <div class="col-sm-2">
             <div class="project-counts">
                 <div class="project-count a-project-count" title="" data-toggle="tooltip"
                      data-original-title="Not started: ${activity.createdTaskCount} of ${activity.totalTaskCount}">
@@ -43,82 +38,75 @@
                 </div>
             </div>
         </div>
-        
-        
-        
         <div class="drag-move pull-right">
             <span class="glyphicon glyphicon-move"></span>
         </div>
-          <div class="clearfix"></div>      
+        <div class="clearfix"></div>      
     </div>
+    <div class="a-accordian-wrapper">
+        <div class="accordion" id="accordion-stage-${stage.id}-activity-${activity.id}">
+            <div class="accordion-group">
+                <div id="collapse-stage-${stage.id}-activity-${activity.id}" class="accordion-body collapse ${accordionOpenClass}">
+                    <div class="panel-body">
+
+                        <div class="col-sm-3">
+                            <div>
+                                <strong>Created:</strong>
+                                <c:choose>
+                                    <c:when test="${!empty activity.createdTime}">
+                                        <fmt:formatDate value="${activity.createdTime}" pattern="yyyy-MM-dd" />
+                                    </c:when>
+                                    <c:otherwise>&nbsp;</c:otherwise>
+                                </c:choose>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div>
+                                <strong>Started:</strong>
+                                <c:choose>
+                                    <c:when test="${!empty activity.startedTime}">
+                                        <fmt:formatDate value="${activity.startedTime}" pattern="yyyy-MM-dd" />
+                                    </c:when>
+                                    <c:otherwise>&nbsp;</c:otherwise>
+                                </c:choose>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div>
+                                <strong>Completed:</strong>
+                                <c:choose>
+                                    <c:when test="${!empty activity.completedTime}">
+                                        <fmt:formatDate value="${activity.completedTime}" pattern="yyyy-MM-dd" />
+                                    </c:when>
+                                    <c:otherwise>&nbsp;</c:otherwise>
+                                </c:choose>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <c:choose>
+                                <c:when test="${!empty activity.assignedVolunteer}">
+                                    <a class="a-project-assignment" href="${activity.assignedVolunteer.uri}"
+                                       data-toggle="tooltip" data-original-title="${activity.assignedVolunteer.displayName}">
+                                        ${activity.assignedVolunteer.initials}
+                                    </a>
+                                </c:when>
+                                <c:otherwise>Unassigned</c:otherwise>
+                            </c:choose>
+                        </div>
 
 
-        <div class="a-accordian-wrapper">
 
-            <div class="accordion" id="accordion-stage-${stage.id}-activity-${activity.id}">
-                <div class="accordion-group">
-                    <div id="collapse-stage-${stage.id}-activity-${activity.id}" class="accordion-body collapse ${accordionOpenClass}">
-                        
-                        
-                            <div class="panel-body">
-                                
-        <div class="col-sm-2">
-            <div>
-                <strong>Created:</strong>
-                <c:choose>
-                    <c:when test="${!empty activity.createdTime}">
-                        <fmt:formatDate value="${activity.createdTime}" pattern="yyyy-MM-dd" />
-                    </c:when>
-                    <c:otherwise>&nbsp;</c:otherwise>
-                </c:choose>
-            </div>
-        </div>
-        <div class="col-sm-2">
-            <div>
-                <strong>Started:</strong>
-                <c:choose>
-                    <c:when test="${!empty activity.startedTime}">
-                        <fmt:formatDate value="${activity.startedTime}" pattern="yyyy-MM-dd" />
-                    </c:when>
-                    <c:otherwise>&nbsp;</c:otherwise>
-                </c:choose>
-            </div>
-        </div>
-        <div class="col-sm-2">
-            <div>
-                <strong>Completed:</strong>
-                <c:choose>
-                    <c:when test="${!empty activity.completedTime}">
-                        <fmt:formatDate value="${activity.completedTime}" pattern="yyyy-MM-dd" />
-                    </c:when>
-                    <c:otherwise>&nbsp;</c:otherwise>
-                </c:choose>
-            </div>
-        </div>
-                                
-            <div>
-                <c:choose>
-                    <c:when test="${!empty activity.assignedVolunteer}">
-                        <a class="a-project-assignment" href="${activity.assignedVolunteer.uri}"
-                           data-toggle="tooltip" data-original-title="${activity.assignedVolunteer.displayName}">
-                            ${activity.assignedVolunteer.initials}
-                        </a>
-                    </c:when>
-                    <c:otherwise>Unassigned</c:otherwise>
-                </c:choose>
-            </div>
-        
-                                
-                                
-                        
-                      
+
+
                         <br>
-                        
-                        
-                        
-                     
+
+
+
+
                         <c:choose>
                             <c:when test="${!empty activity.comments}">
+                                <strong>Comments:</strong>
                                 <p>${activity.comments}</p>
                             </c:when>
                             <c:otherwise>-</c:otherwise>

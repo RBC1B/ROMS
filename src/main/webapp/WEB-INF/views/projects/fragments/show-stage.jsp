@@ -48,13 +48,8 @@
     <div class="a-accordian-wrapper">
         <div class="accordion" id="accordion-stage-${stage.id}">
             <div class="accordion-group">
-
                 <div id="collapse-stage-${stage.id}" class="accordion-body collapse ${accordionOpenClass}">
-
-
                     <div class="panel-body">       
-
-
                         <div class="col-sm-3">
                             <strong>Created:</strong>
                             <c:choose>
@@ -82,16 +77,7 @@
                                 <c:otherwise>&nbsp;</c:otherwise>
                             </c:choose>
                         </div>
-
-
-
                         <br>
-
-
-
-
-
-
                         <c:choose>
                             <c:when test="${!empty stage.activities}">
                                 <h3>Activities</h3>
