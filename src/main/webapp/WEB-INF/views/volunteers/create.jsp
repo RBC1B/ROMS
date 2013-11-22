@@ -10,7 +10,6 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="container-fluid">
             <h1>RBC Volunteer Application</h1>
             <hr>
             <c:url var="formAction" value="/volunteers" />
@@ -233,7 +232,6 @@
                 </fieldset>
             </form:form>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-        </div>
         <!-- mustache template used to display the person selection form -->
         <script id="volunteer-person-search-form" type="text/html" charset="utf-8">
             {{#existingPersonId}}
