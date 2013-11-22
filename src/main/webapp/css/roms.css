@@ -466,6 +466,8 @@ li.first {
 /*****************************************************************************/
 div.project-count {
     float: left;
+    margin-top:8px;
+    padding-right:4px;
 }
 .icon-span {
     width: 16px!important;  
@@ -534,28 +536,22 @@ div.project-count {
 
 /* Custom panels for Project Stages */
 .panel-stage {
-    border: 1px solid #2D5261;
+    border: 1px solid #104A61;
 }
 .panel-stage .panel-heading  {
-    background-color: #2D5261;
+    background-color: #104A61;
     color: #fff;
 }
 .panel-activity {
-    border: 1px solid #104A61;
-}
-.panel-activity .panel-heading  {
-    background-color: #104A61;
-}
-.panel-task {
     border: 1px solid #1D83AE;
 }
-.panel-task .panel-heading  {
+.panel-activity .panel-heading  {
     background-color: #1D83AE;
 }
-.panel-event {
+.panel-task {
     border: 1px solid #25AAE1;
 }
-.panel-event .panel-heading  {
+.panel-task .panel-heading  {
     background-color: #25AAE1;
 }
 /*****************************************************************************/

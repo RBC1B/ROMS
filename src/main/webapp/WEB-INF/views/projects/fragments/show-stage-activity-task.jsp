@@ -3,12 +3,12 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<div id="stage-${stage.id}-activity-${activity.id}-task-${task.id}" class="panel panel-default">
+<div id="stage-${stage.id}-activity-${activity.id}-task-${task.id}" class="panel panel-task">
     <div class="panel-heading">
         <div class="project-stage-type-name col-sm-4"><h4>${task.name}</h4></div>
         <div class="project-stage-status col-sm-2"><h4>${task.status}</h4></div>
         <div class="drag-move pull-right">
-            <span class="glyphicon glyphicon-align-justify"></span>
+            <span class="glyphicon glyphicon-move"></span>
         </div>
         <div class="clearfix"></div>
     </div>
