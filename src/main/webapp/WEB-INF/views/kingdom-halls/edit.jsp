@@ -71,7 +71,7 @@ Author     : oliver.elder.esq
                         <form:hidden path="titleHoldingCongregationId" />
                         <label for="titleHoldingCongregationName">Title Holding Congregation:</label>
                         <div class="span2">
-                            <form:input path="titleHoldingCongregationName" class="form-control" type="text" name="titleHoldingCongregationName" placeholder="Title Holder" value="" id="searchinput" data-provide="typeahead" data-source="congregation.Name" maxlength="30" autocomplete="on" /><br />
+                            <form:input path="titleHoldingCongregationName" class="form-control" type="text" name="titleHoldingCongregationName" placeholder="Title Holder" /><br />
                         </div>
                         <input type="submit" class="btn btn-primary"/>
                     </div>

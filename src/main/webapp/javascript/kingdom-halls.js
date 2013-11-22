@@ -30,8 +30,20 @@ $(document).ready(function() {
                     {
                         'bSortable': false,
                         'aTargets': [3]
-                    }
-                ]
+                    }]
             }
     );
+    
+    // use the congregation name as the query parameter as in the controller
+    $("#titleHoldingCongregationName").typeahead({
+        remote: roms.common.relativePath + '/congregations/search?name=%QUERY',
+        valueKey: 'name'
+    });
+
+    // we always clear the congregation id on change.
+    // it will be re-calculated in validation
+    $("#titleHoldingCongregationName").change(function() {
+        $("#congregationId").val(null);
+    });
+
 });
