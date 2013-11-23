@@ -20,10 +20,10 @@
                 <li class="active"><a href="#stages" data-toggle="tab">Stages</a></li>
                 <li><a href="#details" data-toggle="tab">Details</a></li>
                 <li><a href="#contacts" data-toggle="tab">Contacts</a></li>
-            </ul>
+            </ul><br>
             <div class="tab-content">
                 <div class="tab-pane active" id="stages">
-                    <div class="row-fluid">
+                    <!--div class="row"-->
                         <c:choose>
                             <c:when test="${!empty project.stages}">
                                 <div id="project-stages" data-project-id="${project.projectId}">
@@ -34,15 +34,15 @@
                             </c:when>
                             <c:otherwise>No stages defined</c:otherwise>
                         </c:choose>
-                    </div>
+                    <!--/div-->
                 </div>
                 <div class="tab-pane" id="details">
-                    <div class="row-fluid">
+                    <div class="row">
                         <%@ include file="fragments/show-details.jsp" %>
                     </div>
                 </div>
                 <div class="tab-pane" id="contacts">
-                    <div class="row-fluid">
+                    <div class="row">
                         <%@ include file="fragments/show-contacts.jsp" %>
                     </div>
                 </div>

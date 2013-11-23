@@ -570,7 +570,7 @@ div.project-count {
 
 /* Custom panels for Project Stages */
 .panel-stage {
-    border: 1px solid #104A61;
+    border: 3px solid #104A61;
 }
 .panel-stage .panel-heading  {
     background-color: #104A61;

@@ -37,7 +37,7 @@ Author: oliver.elder.esq
                     <div class="form-group">
                         <label class="control-label col-sm-4 col-md-3">Full time service</label>
                         <div class="col-sm-8 col-md-9">
-                            <form:select class="form-control" path="fulltimeId">
+                            <form:select class="form-control" path="fulltimeCode">
                                 <form:option value="" label="None" />
                                 <form:options items="${fulltimeValues}" />
                             </form:select>
@@ -46,7 +46,7 @@ Author: oliver.elder.esq
                     <div class="form-group">
                         <label class="control-label col-sm-4 col-md-3">Appointment</label>
                         <div class="col-sm-8 col-md-9">
-                            <form:select class="form-control" path="appointmentId">
+                            <form:select class="form-control" path="appointmentCode">
                                 <form:option value="" label="None (Publisher)" />
                                 <form:options items="${appointmentValues}" />
                             </form:select>

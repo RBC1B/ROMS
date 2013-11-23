@@ -104,6 +104,7 @@
 
 
 
+                        <div class="col-sm-12">
                         <c:choose>
                             <c:when test="${!empty activity.comments}">
                                 <strong>Comments:</strong>
@@ -122,6 +123,7 @@
                             </c:when>
                             <c:otherwise>No tasks defined</c:otherwise>
                         </c:choose>
+                        </div>
                         <c:if test="${!empty activity.events}">
                             <h3>Events</h3>
                             <div class="list-group">
