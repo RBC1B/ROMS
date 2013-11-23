@@ -93,46 +93,85 @@
      </fieldset> 
                 
                 
-                <fieldset class="control-group">
-                    <label class="control-label">3. Addresses: </label>
-                    <div class="controls controls-row">
-                        <div class="span3">
-                            <form:input path="street" placeholder="Street" />
-                        </div>
-                        <div class="span2">
-                            <form:input path="town" placeholder="Town" />
-                        </div>
-                        <div class="span1">
-                            <form:input path="county" placeholder="County" />
-                        </div>
-                        <div class="span1">
-                            <form:input path="postcode" placeholder="Postcode" maxlength="10" />
-                        </div>
+     <fieldset class="control-group">
+      <div class="row">
+      <h3 class="text-left">3. Addresses</h3>
+            <div class="col-md-4">
+                <div class="col-md-12">
+                     <div class="form-group">
+                         <label for="street">No & Street</label>
+                         <form:input class="form-control" path="street" placeholder="No & Street" />
                     </div>
-                </fieldset>
-                <fieldset class="control-group">
-                    <label class="control-label"></label>
-                    <div class="controls controls-row">
-                        <div class="span3">
-                            <form:input path="email" placeholder="Email" />
-                        </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="town">Town</label>
+            <form:input class="form-control" path="town" placeholder="Town" />
                     </div>
-                </fieldset>
-                <fieldset class="control-group">
-                    <label class="control-label">4. Phones: </label>
-                    <div class="controls controls-row">
-                        <div class="span2">
-                            <form:input path="telephone" placeholder="Home"/>
-                        </div>
-                        <div class="span2">
-                            <form:input path="workPhone" placeholder="Work"/>
-                        </div>
-                        <div class="span2">
-                            <form:input path="mobile" placeholder="Mobile"/>
-                        </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="col-md-12">
+                 <div class="form-group"> 
+                     <label for="county">County</label>
+                <form:input class="form-control" path="county" placeholder="County" />
+                 </div>   
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="postcode">Postcode</label>
+            <form:input class="form-control" path="postcode" placeholder="Postcode" maxlength="10" />
                     </div>
-                </fieldset>
-                <fieldset class="control-group">
+                </div>
+            </div>
+             <div class="col-md-4">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+            <form:input class="form-control" path="email" placeholder="Email" />
+                    </div>
+                </div>
+            </div>
+      </div>
+    </fieldset>
+                        
+                        
+ <fieldset class="control-group">
+      <div class="row">
+      <h3 class="text-left">4. Phones</h3>
+            <div class="col-md-4">
+                <div class="col-md-12">
+                     <div class="form-group">
+                         <label for="telephone">Home</label>
+                         <form:input class="form-control" path="telephone" placeholder="Home"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="workPhone">Work</label>
+            <form:input class="form-control" path="workPhone" placeholder="Work"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="col-md-12">
+                 <div class="form-group"> 
+                     <label for="mobile">Mobile</label>
+               <form:input class="form-control" path="mobile" placeholder="Mobile"/>
+                 </div>   
+                </div>
+            </div>
+      </div>
+</fieldset>
+                
+                 
+                 <fieldset class="control-group">
                     <label class="control-label">5. Current privileges:</label>
                     <div class="controls controls-row">
                         <div class="span3 error-container">
