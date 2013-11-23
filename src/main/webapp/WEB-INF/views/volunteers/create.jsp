@@ -10,54 +10,89 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
+        <div class="container">
             <h1>RBC Volunteer Application</h1>
             <hr>
             <c:url var="formAction" value="/volunteers" />
-            <form:form commandName="volunteer" method="post" action="${formAction}" class="form-horizontal">
-                <fieldset class="control-group">
+            <form:form class="form-horizontal" commandName="volunteer" method="POST" action="${formAction}">
+   
+  <fieldset class="control-group">
                     <form:hidden path="personId" />
-                    <label class="control-label">1.(a) Legal name:</label>
-                    <div class="controls controls-row">
-                        <div class="span2">
-                            <form:input path="surname" maxlength="50" placeholder="Last"/>
-                        </div>,
-                        <div class="span2">
-                            <form:input path="forename" maxlength="50" placeholder="First"/>
-                        </div>
-                        <div class="span2">
-                            <form:input path="middleName" maxlength="50" placeholder="Middle" />
+          <div class="row">
+                    <h3 class="text-left">1.(a) Legal Name</h3>
+                    <div class="col-md-4">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                             <label for="surname">Last</label>
+                             <form:input class="form-control" path="surname" maxlength="50" placeholder="Last"/>
+                            </div>
                         </div>
                     </div>
-                </fieldset>
-                <fieldset class="control-group">
-                    <label class="control-label">1.(b) Gender:</label>
-                    <div class="controls controls-row">
-                        <div class="span3 error-container">
-                            <label class="radio inline">
-                                <form:radiobutton path="gender" value="M" /> Male
-                            </label>
-                            <label class="radio inline">
-                                <form:radiobutton path="gender" value="F" /> Female
-                            </label>
-                        </div>
+          <div class="col-md-4">
+            <div class="col-md-12">
+                <div class="form-group">
+                <label for="forename">First</label>
+                <form:input class="form-control" path="forename" maxlength="50" placeholder="First"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="col-md-12">
+                <div class="form-group">
+                     <label for="middleName">Middle</label>
+                     <form:input class="form-control" path="middleName" maxlength="50" placeholder="Middle" />
+                </div>
+            </div>
+        </div>
+           </div>
+                   
+    </fieldset>
+               
+    <fieldset class="control-group">        
+   <div class="row">
+    <h3 class="text-left">1.(b) Gender</h3>
+        <div class="col-md-4">
+            <div class="col-md-12">
+                <label class="radio inline">
+                <form:radiobutton path="gender" value="M" /> Male
+                </label>
+                </div>
+            </div>
+
+        <div class="col-md-4">
+            <div class="col-md-12">
+                <label class="radio inline">
+                 <form:radiobutton path="gender" value="F" /> Female
+                </label>
+                </div>
+            </div>
+        </div>        
+    </fieldset>
+                
+                
+     <fieldset>  
+         <div class="row">
+        <h3 class="text-left">2. Dates</h3>
+            <div class="col-md-4">
+                <div class="col-md-6">
+                    <div class="form-group">
+                    <label for="birthDate">(a) Date of birth </label>
+                    <form:input path="birthDate" placeholder="15/03/1980" class="form-control datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
                     </div>
-                </fieldset>
-                <fieldset class="control-group">
-                    <label class="control-label">2.(a) Date of birth:</label>
-                    <div class="controls controls-row">
-                        <div class="span2">
-                            <form:input path="birthDate" class="datepicker" type="text" value=""/>
-                        </div>
-                    </div>
-                </fieldset>
-                <fieldset class="control-group">
-                    <label class="control-label">2.(b) Date of baptism:</label>
-                    <div class="controls controls-row">
-                        <div class="span2">
-                            <form:input path="baptismDate" class="datepicker" type="text" value=""/>
-                        </div>
-                    </div>
-                </fieldset>
+                </div>
+            </div>
+        <div class="col-md-4">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="baptismDate">(b) Date of baptism</label>
+                <form:input path="baptismDate" placeholder="15/03/1980" class="form-control datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
+                </div>
+            </div>
+        </div>
+       </div>        
+     </fieldset> 
+                
+                
                 <fieldset class="control-group">
                     <label class="control-label">3. Addresses: </label>
                     <div class="controls controls-row">
@@ -229,6 +264,7 @@
                             <input type="submit" class="btn btn-large btn-success"/>
                         </div>
                     </div>
+  </div>
                 </fieldset>
             </form:form>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
@@ -252,8 +288,7 @@
             {{/persons}}
             {{/matchedPersons}}
         </script>
-        <%@ include file="/WEB-INF/views/common/mustache-person-link-search-form.jsp" %>
-        <%@ include file="/WEB-INF/views/common/person-link-modal.jsp" %>
+       //paste mustache scripts here
         <script type="text/javascript" src="<c:url value='/javascript/thirdparty/jquery-numeric-1.3.1.js' />" ></script>
         <script type="text/javascript" src="<c:url value='/javascript/thirdparty/phoneformat-574.js' />" ></script>
         <script type="text/javascript" src="<c:url value='/javascript/volunteers.js' />" ></script>

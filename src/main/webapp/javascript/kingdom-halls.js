@@ -45,9 +45,5 @@ $(document).ready(function() {
     $("#titleHoldingCongregationName").change(function() {
         $("#congregationId").val(null);
     });
-    
-    $('.typeahead.input-sm').siblings('input.tt-hint').addClass('hint-small');
-    $('.typeahead.input-lg').siblings('input.tt-hint').addClass('hint-large');
-
 });
 
