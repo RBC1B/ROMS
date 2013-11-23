@@ -239,14 +239,7 @@ div.dataTables_info {
 	padding-top: 8px;
 }
 
-div.dataTables_paginate {
-	float: right;
-	margin: 0;
-}
 
-div.dataTables_paginate ul.pagination {
-	margin: 2px;
-}
 
 table.table {
 	clear: both;
@@ -419,11 +412,14 @@ div.DTFC_LeftFootWrapper table {
 /* List views                                                                */
 /*****************************************************************************/
 .list-actions li {
-    border-left: 1px solid #ddd;
+    margin-left: 2px;
+    display: inline-block;
+    float: left;
 }
 
 .list-actions li:first-child {
-    border-left: none
+       border-right: 1px solid #ddd;
+
 }
 
 .list-actions a.list-action {
@@ -598,7 +594,7 @@ div.project-count {
 
 /* Custom panels for Project Stages */
 .panel-stage {
-    border: 3px solid #104A61;
+    border: 1px solid #104A61;
 }
 .panel-stage .panel-heading  {
     background-color: #104A61;
@@ -621,4 +617,7 @@ div.project-count {
 /*****************************************************************************/
 .details-changed {
     color: red;
+}
+.panel-stage {
+    border: 3px solid #104A61;
 }
