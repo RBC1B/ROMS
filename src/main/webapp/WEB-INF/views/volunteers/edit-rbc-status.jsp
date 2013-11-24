@@ -10,7 +10,6 @@ Edit form for the volunteer data under the rbc status tab.
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="container">
             <h1>${forename} ${surname} - RBC Status Information</h1>
             <hr>
 
@@ -62,39 +61,47 @@ Edit form for the volunteer data under the rbc status tab.
                 </fieldset>
                 <fieldset>
                     <legend>Availability</legend>
-                    <div class="form-group">
-                        <strong><a href="#" id="clear-availability">Clear all days</a> | <a href="#" id="set-availability">Tick all days</a></strong>
+                    <div class="col-sm-3 col-md-2">
+                        &nbsp;
                     </div>
-                    <div class="form-group">
-                    <label class="checkbox-inline">
-                        <form:checkbox path="availabilityMonday" class="availability" /> Monday
-                    </label>
-                    <label class="checkbox-inline">
-                        <form:checkbox path="availabilityTuesday" class="availability" /> Tuesday
-                    </label>
-                    <label class="checkbox-inline">
-                        <form:checkbox path="availabilityWednesday" class="availability" /> Wednesday
-                    </label>
-                    <label class="checkbox-inline">
-                        <form:checkbox path="availabilityThursday" class="availability" /> Thursday
-                    </label>
-                    <label class="checkbox-inline">
-                        <form:checkbox path="availabilityFriday" class="availability" /> Friday
-                    </label>
-                    <label class="checkbox-inline">
-                        <form:checkbox path="availabilitySaturday" class="availability" /> Saturday
-                    </label>
-                    <label class="checkbox-inline">
-                        <form:checkbox path="availabilitySunday" class="availability" /> Sunday
-                    </label>
+                    <div class="col-sm-9 col-md-10">
+                        <div class="form-group">
+                            <strong><a href="#" id="clear-availability">Clear all days</a> | <a href="#" id="set-availability">Tick all days</a></strong>
+                        </div>
+                        <div class="form-group">
+                        <label class="checkbox-inline">
+                            <form:checkbox path="availabilityMonday" class="availability" /> Monday
+                        </label>
+                        <label class="checkbox-inline">
+                            <form:checkbox path="availabilityTuesday" class="availability" /> Tuesday
+                        </label>
+                        <label class="checkbox-inline">
+                            <form:checkbox path="availabilityWednesday" class="availability" /> Wednesday
+                        </label>
+                        <label class="checkbox-inline">
+                            <form:checkbox path="availabilityThursday" class="availability" /> Thursday
+                        </label>
+                        <label class="checkbox-inline">
+                            <form:checkbox path="availabilityFriday" class="availability" /> Friday
+                        </label>
+                        <label class="checkbox-inline">
+                            <form:checkbox path="availabilitySaturday" class="availability" /> Saturday
+                        </label>
+                        <label class="checkbox-inline">
+                            <form:checkbox path="availabilitySunday" class="availability" /> Sunday
+                        </label>
+                        </div>
                     </div>
-                </fieldset>
+                    </fieldset>
                 <fieldset>
                     <legend>Oversight</legend>
-                    <div class="form-group">
-                    <label class="checkbox">
-                        <form:checkbox path="oversight" /> Recommended
-                    </label>
+                    <div class="col-sm-3 col-md-2">
+                        &nbsp;
+                    </div>
+                    <div class="form-group col-sm-9 col-md-10">
+                        <label class="checkbox">
+                            <form:checkbox path="oversight" /> Recommended
+                        </label>
                     </div>
                     <div class="form-group">
                     <label for="oversightComments" class="col-sm-3 col-md-2 control-label">Comments</label>
@@ -105,7 +112,10 @@ Edit form for the volunteer data under the rbc status tab.
                 </fieldset>
                 <fieldset>
                     <legend>Relief - UK</legend>
-                    <div class="form-group">
+                        <div class="col-sm-3 col-md-2">
+                            &nbsp;
+                        </div>
+                    <div class="form-group col-sm-9 col-md-10">
                     <label class="checkbox">
                         <form:checkbox path="reliefUK" /> Recommended
                     </label>
@@ -119,7 +129,10 @@ Edit form for the volunteer data under the rbc status tab.
                 </fieldset>
                 <fieldset>
                     <legend>Relief - Abroad</legend>
-                    <div class="form-group">
+                        <div class="col-sm-3 col-md-2">
+                            &nbsp;
+                        </div>
+                    <div class="form-group col-sm-9 col-md-10">
                     <label class="checkbox">
                         <form:checkbox path="reliefAbroad" /> Recommended
                     </label>
@@ -154,7 +167,6 @@ Edit form for the volunteer data under the rbc status tab.
             </ol>           
             
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-        </div>
         <script type="text/javascript" src="<c:url value='/javascript/thirdparty/jquery-numeric-1.3.1.js' />" ></script>
         <script type="text/javascript" src="<c:url value='/javascript/volunteers.js' />" ></script>
     </body>

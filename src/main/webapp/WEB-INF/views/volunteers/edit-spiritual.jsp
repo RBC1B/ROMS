@@ -11,7 +11,6 @@ Author: oliver.elder.esq
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <div class="container">
             <h1>${forename} ${surname} - Spiritual Information</h1>
             <hr>
             <c:url var="formAction" value="${submitUri}" />
@@ -36,7 +35,7 @@ Author: oliver.elder.esq
                     <legend>Congregational Privileges</legend>
                     <div class="form-group">
                         <label class="control-label col-sm-4 col-md-3">Full time service</label>
-                        <div class="col-sm-8 col-md-9">
+                        <div class="col-sm-4 col-md-5">
                             <form:select class="form-control" path="fulltimeCode">
                                 <form:option value="" label="None" />
                                 <form:options items="${fulltimeValues}" />
@@ -45,7 +44,7 @@ Author: oliver.elder.esq
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-4 col-md-3">Appointment</label>
-                        <div class="col-sm-8 col-md-9">
+                        <div class="col-sm-4 col-md-5">
                             <form:select class="form-control" path="appointmentCode">
                                 <form:option value="" label="None (Publisher)" />
                                 <form:options items="${appointmentValues}" />
@@ -67,7 +66,6 @@ Author: oliver.elder.esq
             </ol>            
             
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-        </div>
         <script type="text/javascript" src="<c:url value='/javascript/thirdparty/jquery-numeric-1.3.1.js' />" ></script>
         <script type="text/javascript" src="<c:url value='/javascript/volunteers.js' />" ></script>
     </body>

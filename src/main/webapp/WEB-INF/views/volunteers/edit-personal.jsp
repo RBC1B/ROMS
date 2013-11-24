@@ -10,7 +10,6 @@ Edit form for the volunteer data under the personal tab.
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 <body>
     <%@ include file="/WEB-INF/views/common/titlebar.jsp"%>
-    <div class="container">
         <h1>${forename} ${surname} - Personal Information</h1>
         <hr>
 
@@ -117,7 +116,6 @@ Edit form for the volunteer data under the personal tab.
             </ol>
             
         <%@ include file="/WEB-INF/views/common/footer.jsp"%>
-    </div>
     <%@ include file="/WEB-INF/views/common/mustache-person-link-search-form.jsp"%>
     <%@ include file="/WEB-INF/views/common/person-link-modal.jsp"%>
     <script type="text/javascript" src="<c:url value='/javascript/thirdparty/phoneformat-574.js' />" ></script>
