@@ -16,7 +16,7 @@
             <c:url var="formAction" value="/volunteers" />
             <form:form class="form-horizontal" commandName="volunteer" method="POST" action="${formAction}">
    
-  <fieldset class="control-group">
+  <fieldset>
                     <form:hidden path="personId" />
           <div class="row">
                     <h3 class="text-left">1.(a) Legal Name</h3>
@@ -48,7 +48,7 @@
                    
     </fieldset>
                
-    <fieldset class="control-group">        
+    <fieldset>        
    <div class="row">
     <h3 class="text-left">1.(b) Gender</h3>
         <div class="col-md-4">
@@ -93,7 +93,7 @@
      </fieldset> 
                 
                 
-     <fieldset class="control-group">
+     <fieldset>
       <div class="row">
       <h3 class="text-left">3. Addresses</h3>
             <div class="col-md-4">
@@ -140,7 +140,7 @@
     </fieldset>
                         
                         
- <fieldset class="control-group">
+ <fieldset>
       <div class="row">
       <h3 class="text-left">4. Phones</h3>
             <div class="col-md-4">
@@ -171,7 +171,7 @@
 </fieldset>
                 
                  
-<fieldset class="control-group">
+<fieldset>
     <div class="row">
       <h3 class="text-left">5. Current privileges</h3>
         <div class="col-md-4">
@@ -198,7 +198,7 @@
      </div>
 </fieldset>
 
-<fieldset class="control-group">
+<fieldset>
     <div class="row">
     <form:hidden path="spousePersonId" />
     <h3 class="text-left">6. Name of mate, if married</h3>
