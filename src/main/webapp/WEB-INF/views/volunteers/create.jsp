@@ -171,7 +171,7 @@
 </fieldset>
                 
                  
-                <fieldset class="control-group">
+<fieldset class="control-group">
     <div class="row">
       <h3 class="text-left">5. Current privileges</h3>
         <div class="col-md-4">
@@ -197,22 +197,34 @@
         </div>
      </div>
 </fieldset>
-                <fieldset class="control-group">
-                    <form:hidden path="spousePersonId" />
-                    <label class="control-label">6. Name of mate, if married:</label>
-                    <div class="controls controls-row">
-                        <div class="span2">
-                            <form:input path="spouseForename" placeholder="First Name"/>
-                        </div>
-                        <div class="span2">
-                            <form:input path="spouseSurname" placeholder="Surname"/>
-                        </div>
+
+<fieldset class="control-group">
+    <div class="row">
+    <form:hidden path="spousePersonId" />
+    <h3 class="text-left">6. Name of mate, if married</h3>
+    <div class="col-md-4">
+        <div class="col-md-12">
+            <div class="form-group">
+            <label for="spouseForename">First</label>
+            <form:input class="form-control" path="spouseForename" placeholder="First Name"/>
+            </div>
+        </div>
+    </div>
+            <div class="col-md-4">
+                <div class="col-md-12">
+                    <div class="form-group">
+                    <label for="spouseSurname">Last</label>
+                    <form:input class="form-control" path="spouseSurname" placeholder="Surname"/>
                     </div>
-                    <div id="spouse-linked" class="controls alert span10" style="display:none;">
-                        <button type="button" class="close">Unlink</button>
-                        Linked to an existing person in the database
-                    </div>
-                </fieldset>
+                </div>
+            </div>
+    <div id="spouse-linked" class="controls alert span10" style="display:none;">
+        <button type="button" class="close">Unlink</button>
+        Linked to an existing person in the database
+    </div>
+    </div>
+</fieldset>
+
                 <fieldset class="control-group">
                     <label class="control-label">7. Work background</label>
                     <div class="controls controls-row trades-row" data-index="0">
