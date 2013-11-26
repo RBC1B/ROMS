@@ -5,10 +5,12 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <div id="stage-${stage.id}-activity-${activity.id}-task-${task.id}" class="panel panel-task">
     <div class="panel-heading">
+       <button type="button" class="btn btn-edifice pull-left a-accordian-control" data-target="#collapse-stage-1-activity-1-task-1">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+        </button>
         <div class="project-stage-type-name col-sm-4"><h4>${task.name}</h4></div>
         <div class="project-stage-status col-sm-2"><h4>${task.status}</h4></div>
         <div class="drag-move pull-right">
-            <span class="glyphicon glyphicon-move"></span>
         </div>
         <div class="clearfix"></div>
     </div>
@@ -68,7 +70,7 @@
                 </c:otherwise>
             </c:choose>
             <button type="button"
-                    class="btn btn-edifice pull-right a-accordian-control"
+                    class="btn btn-edifice pull-left a-accordian-control"
                     data-target="#collapse-stage-${stage.id}-activity-${activity.id}-task-${task.id}">
                 <span class="glyphicon ${accordionIconClass}"></span>
             </button>
