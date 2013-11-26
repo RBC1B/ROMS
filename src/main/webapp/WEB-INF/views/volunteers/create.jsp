@@ -171,24 +171,32 @@
 </fieldset>
                 
                  
-                 <fieldset class="control-group">
-                    <label class="control-label">5. Current privileges:</label>
-                    <div class="controls controls-row">
-                        <div class="span3 error-container">
-                            <label class="checkbox inline">
-                                <form:checkbox path="elder" /> Elder
-                            </label>
-                            <label class="checkbox inline">
-                                <form:checkbox path="ministerialServant" /> Ministerial&nbsp;Servant
-                            </label>
-                        </div>
-                        <div class="span3 error-container">
-                            <label class="checkbox inline">
-                                <form:checkbox path="regularPioneer" /> Regular&nbsp;pioneer
-                            </label>
-                        </div>
-                    </div>
-                </fieldset>
+                <fieldset class="control-group">
+    <div class="row">
+      <h3 class="text-left">5. Current privileges</h3>
+        <div class="col-md-4">
+            <div class="col-md-12">
+                    <label class="checkbox inline">
+                        <form:checkbox path="elder" /> Elder
+                    </label>
+            </div>
+        </div>
+         <div class="col-md-4">
+            <div class="col-md-12">
+                    <label class="checkbox inline">
+                        <form:checkbox path="ministerialServant" /> Ministerial&nbsp;Servant
+                    </label>
+            </div>
+         </div>               
+        <div class="col-md-4">
+               <div class="col-md-12">
+                   <label class="checkbox inline">
+                       <form:checkbox path="regularPioneer" /> Regular&nbsp;pioneer
+                   </label>
+               </div>
+        </div>
+     </div>
+</fieldset>
                 <fieldset class="control-group">
                     <form:hidden path="spousePersonId" />
                     <label class="control-label">6. Name of mate, if married:</label>
