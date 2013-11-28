@@ -43,7 +43,57 @@ $(document).ready(function() {
     // we always clear the congregation id on change.
     // it will be re-calculated in validation
     $("#titleHoldingCongregationName").change(function() {
-        $("#congregationId").val(null);
+        $("#titleHoldingCongregationId").val(null);
+    });
+    
+    $("#kingdomHallForm").validate({
+        rules: {
+            name: {
+                minlength: 2,
+                maxlength: 50,
+                required: true
+            },
+            street: {
+                minlength: 2,
+                maxlength: 50,
+                required: true
+            },
+            town: {
+                minlength: 2,
+                maxlength: 50,
+                required: true
+            },
+            county: {
+                minlength: 2,
+                maxlength: 50
+            },
+            postcode: {
+                minlength: 2,
+                maxlength: 10,
+                required: true
+            },
+            ownershipTypeCode: {
+                required: true
+            },
+            titleHoldingCongregationName: {
+                required: true,
+                remote: roms.common.validation.congregation($("#titleHoldingCongregationName"),
+                        $("#titleHoldingCongregationId"))
+            },
+            titleHoldingCongregationId: {
+                // which will have been updated after the remote AJAX call in common.js
+                required: true
+            }
+        },
+        messages: {
+            titleHoldingCongregationName: {
+                remote: "Please provide the name of an existing congregation"
+            }
+        },
+        submitHandler :function(form) {
+            form.submit();
+        },
+        errorPlacement: roms.common.validatorErrorPlacement
     });
 });
 

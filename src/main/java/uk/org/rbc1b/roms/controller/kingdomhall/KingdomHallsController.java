@@ -42,7 +42,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.controller.LoggingHandlerExceptionResolver;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableResult;
-import uk.org.rbc1b.roms.controller.congregation.CongregationModelFactory;
 import uk.org.rbc1b.roms.db.Address;
 import uk.org.rbc1b.roms.db.Congregation;
 import uk.org.rbc1b.roms.db.CongregationDao;
@@ -68,8 +67,6 @@ public class KingdomHallsController {
     private ReferenceDao referenceDao;
     @Autowired
     private CongregationDao congregationDao;
-    @Autowired
-    private CongregationModelFactory congregationModelFactory;
 
     /**
      * Display the list of kingdom halls.
@@ -164,7 +161,8 @@ public class KingdomHallsController {
      *
      * @param kingdomHallId id
      * @param kingdomHallForm form
-     * @throws NoSuchRequestHandlingMethodException if kingdom hall does not exist
+     * @throws NoSuchRequestHandlingMethodException if kingdom hall does not
+     * exist
      * @return String view
      */
     @RequestMapping(value = "{kingdomHallId}", method = RequestMethod.PUT)
@@ -194,6 +192,7 @@ public class KingdomHallsController {
         // initialise the form bean
         model.addAttribute("kingdomHallForm", new KingdomHallForm());
         model.addAttribute("ownershipValues", referenceDao.findKingdomHallOwnershipTypeValues());
+        model.addAttribute("submitUri", KingdomHallModelFactory.generateUri(null));
         model.addAttribute("submitMethod", "POST");
 
         return "kingdom-halls/edit";
@@ -210,6 +209,8 @@ public class KingdomHallsController {
         KingdomHall kingdomHall = new KingdomHall();
 
         populateKingdomHall(kingdomHallForm, kingdomHall);
+
+        kingdomHallDao.createKingdomHall(kingdomHall);
 
         return "redirect:" + KingdomHallModelFactory.generateUri(kingdomHall.getKingdomHallId());
     }
