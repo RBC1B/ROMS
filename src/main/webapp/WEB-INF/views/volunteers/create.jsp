@@ -225,50 +225,45 @@
     </div>
 </fieldset>
 
-                <fieldset class="control-group">
-                    <label class="control-label">7. Work background</label>
-                    <div class="controls controls-row trades-row" data-index="0">
-                        <div class="span2">
-                            <input type="text" name="trades[0].name" class="trade-experience-name" placeholder="Name" />
-                        </div>
-                        <div class="span6">
-                            <input type="text" name="trades[0].experienceDescription" class="trade-experience-description" placeholder="Description"/>
-                        </div>
-                        <div class="span1">
-                            <input type="text" name="trades[0].experienceYears" class="trade-experience-years" placeholder="Years"/>
-                        </div>
-                        <div class="span1">
-                            <button type="button" class="btn btn-danger trades-row-delete"><i class="icon-remove icon-white"></i></button>
-                        </div>
-                    </div>
-                    <div class="controls controls-row">
-                        <div class="span2">
-                            <button id="trades-row-add" type="button" class="btn"><i class="icon-align-left icon-plus"></i> Add trade</button>
-                        </div>
-                    </div>
-                </fieldset>
-                <fieldset class="control-group">
-                    <form:hidden path="emergencyContactPersonId" />
-                    <label class="control-label">8.(a) In case of accident or illness notify:</label>
-                    <div class="controls controls-row">
-                        <div class="span2">
-                            <form:input path="emergencyContactForename" placeholder="First Name"/>
-                        </div>
-                        <div class="span2">
-                            <form:input path="emergencyContactSurname" placeholder="Surname"/>
-                        </div>
-                        <div class="span2">
-                            <form:select path="emergencyRelationshipCode">
-                                <form:option value="" label="Relationship" />
-                                <form:options items="${relationshipValues}" />
-                            </form:select>
-                        </div>
-                    </div>
-                    <div id="emergency-contact-linked" class="controls alert span10" style="display:none;">
-                        <button type="button" class="close">Unlink</button>
-                        Linked to an existing person in the database
-                    </div>
-                </fieldset>
+<fieldset>
+    <div class="row">
+    <h3 class="text-left">7. Work background</h3>
+    <div class="controls controls-row trades-row" data-index="0">
+        <div class="col-md-4">
+            <div class="col-md-12">
+                <div class="form-group">
+                <label for="trade-experience-name">Trade/Profession</label>
+            <input type="text" name="trades[0].name" class="form-control trade-experience-name" placeholder="Trade/Profession" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="col-md-12">
+                <div class="form-group">
+                <label for="trade-experience-description">Type of experience</label>
+            <input type="text" name="trades[0].experienceDescription" class="form-control trade-experience-description" placeholder="Description"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="col-md-6">
+                <div class="form-group">
+                <label for="trade-experience-years">Years experience</label>
+            <input type="text" name="trades[0].experienceYears" class="form-control trade-experience-years" placeholder="Years"/>
+                </div>
+            </div>
+        </div>
+        <div class="span1">
+            <button type="button" class="btn btn-danger btn-xs trades-row-delete"><i class="icon-remove icon-white"></i>Remove</button>
+        </div>
+    </div>
+    <div class="controls controls-row">
+        <div class="span2">
+            <button id="trades-row-add" type="button" class="btn"><i class="icon-align-left icon-plus"></i> Add trade</button>
+        </div>
+    </div>
+    </div>
+</fieldset>
                 <div id="emergency-contact-additional-fields">
                     <fieldset class="control-group">
                         <label class="control-label">8.(b) Phones:</label>
