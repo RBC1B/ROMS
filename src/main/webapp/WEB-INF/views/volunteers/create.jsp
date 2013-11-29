@@ -11,138 +11,137 @@
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container">
-            <h1>RBC Volunteer Application</h1>
+            <h1>Regional Building Committee Volunteer Application</h1>
             <hr>
             <c:url var="formAction" value="/volunteers" />
             <form:form class="form-horizontal" commandName="volunteer" method="POST" action="${formAction}">
    
-  <fieldset>
-                    <form:hidden path="personId" />
-          <div class="row">
-                    <h3 class="text-left">1.(a) Legal Name</h3>
-                    <div class="col-md-4">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                             <label for="surname">Last</label>
-                             <form:input class="form-control" path="surname" maxlength="50" placeholder="Last"/>
-                            </div>
+<fieldset>
+                <form:hidden path="personId" />
+ <div class="row">
+                <h3 class="text-left">1.(a) Legal Name</h3>
+                <div class="col-md-4">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                         <label for="surname">Last</label>
+                         <form:input class="form-control" path="surname" maxlength="50" placeholder="Last"/>
                         </div>
                     </div>
-          <div class="col-md-4">
-            <div class="col-md-12">
-                <div class="form-group">
-                <label for="forename">First</label>
-                <form:input class="form-control" path="forename" maxlength="50" placeholder="First"/>
                 </div>
+      <div class="col-md-4">
+        <div class="col-md-12">
+            <div class="form-group">
+            <label for="forename">First</label>
+            <form:input class="form-control" path="forename" maxlength="50" placeholder="First"/>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="col-md-12">
-                <div class="form-group">
-                     <label for="middleName">Middle</label>
-                     <form:input class="form-control" path="middleName" maxlength="50" placeholder="Middle" />
-                </div>
+    </div>
+    <div class="col-md-4">
+        <div class="col-md-12">
+            <div class="form-group">
+                 <label for="middleName">Middle</label>
+                 <form:input class="form-control" path="middleName" maxlength="50" placeholder="Middle" />
             </div>
         </div>
-           </div>
-                   
-    </fieldset>
-               
-    <fieldset>        
-   <div class="row">
-    <h3 class="text-left">1.(b) Gender</h3>
-        <div class="col-md-4">
-            <div class="col-md-12">
-                <label class="radio inline">
-                <form:radiobutton path="gender" value="M" /> Male
-                </label>
-                </div>
-            </div>
+    </div>
+ </div>                 
+</fieldset>
 
-        <div class="col-md-4">
-            <div class="col-md-12">
-                <label class="radio inline">
-                 <form:radiobutton path="gender" value="F" /> Female
-                </label>
-                </div>
+<fieldset>        
+<div class="row">
+<h3 class="text-left">1.(b) Gender</h3>
+    <div class="col-md-4">
+        <div class="col-md-12">
+            <label class="radio inline">
+            <form:radiobutton path="gender" value="M" /> Male
+            </label>
             </div>
-        </div>        
-    </fieldset>
+        </div>
+
+    <div class="col-md-4">
+        <div class="col-md-12">
+            <label class="radio inline">
+             <form:radiobutton path="gender" value="F" /> Female
+            </label>
+            </div>
+        </div>
+    </div>        
+</fieldset>
                 
                 
-     <fieldset>  
-         <div class="row">
-        <h3 class="text-left">2. Dates</h3>
-            <div class="col-md-4">
-                <div class="col-md-6">
-                    <div class="form-group">
-                    <label for="birthDate">(a) Date of birth </label>
-                    <form:input path="birthDate" placeholder="15/03/1980" class="form-control datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
-                    </div>
-                </div>
-            </div>
+ <fieldset>  
+     <div class="row">
+    <h3 class="text-left">2. Dates</h3>
         <div class="col-md-4">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="baptismDate">(b) Date of baptism</label>
-                <form:input path="baptismDate" placeholder="15/03/1980" class="form-control datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
+                <label for="birthDate">(a) Date of birth </label>
+                <form:input path="birthDate" placeholder="15/03/1980" class="form-control datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
                 </div>
             </div>
         </div>
-       </div>        
-     </fieldset> 
+    <div class="col-md-4">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="baptismDate">(b) Date of baptism</label>
+            <form:input path="baptismDate" placeholder="15/03/1980" class="form-control datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
+            </div>
+        </div>
+    </div>
+   </div>        
+ </fieldset> 
                 
                 
-     <fieldset>
-      <div class="row">
-      <h3 class="text-left">3. Addresses</h3>
-            <div class="col-md-4">
-                <div class="col-md-12">
-                     <div class="form-group">
-                         <label for="street">No & Street</label>
-                         <form:input class="form-control" path="street" placeholder="No & Street" />
-                    </div>
+ <fieldset>
+  <div class="row">
+  <h3 class="text-left">3. Addresses</h3>
+        <div class="col-md-4">
+            <div class="col-md-12">
+                 <div class="form-group">
+                     <label for="street">No & Street</label>
+                     <form:input class="form-control" path="street" placeholder="No & Street" />
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="town">Town</label>
-            <form:input class="form-control" path="town" placeholder="Town" />
-                    </div>
+        </div>
+        <div class="col-md-4">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="town">Town</label>
+                    <form:input class="form-control" path="town" placeholder="Town" />
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="col-md-12">
-                 <div class="form-group"> 
-                     <label for="county">County</label>
-                <form:input class="form-control" path="county" placeholder="County" />
-                 </div>   
+        </div>
+        <div class="col-md-4">
+            <div class="col-md-12">
+             <div class="form-group"> 
+                 <label for="county">County</label>
+            <form:input class="form-control" path="county" placeholder="County" />
+             </div>   
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="col-md-6">
+                <div class="form-group">
+                 <label for="postcode">Postcode</label>
+                 <form:input class="form-control" path="postcode" placeholder="Postcode" maxlength="10" />
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="postcode">Postcode</label>
-            <form:input class="form-control" path="postcode" placeholder="Postcode" maxlength="10" />
-                    </div>
+        </div>
+         <div class="col-md-4">
+            <div class="col-md-12">
+                <div class="form-group">
+                 <label for="email">Email</label>
+                <form:input class="form-control" path="email" placeholder="Email" />
                 </div>
             </div>
-             <div class="col-md-4">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="email">Email</label>
-            <form:input class="form-control" path="email" placeholder="Email" />
-                    </div>
-                </div>
-            </div>
-      </div>
-    </fieldset>
+        </div>
+  </div>
+</fieldset>
                         
                         
  <fieldset>
       <div class="row">
-      <h3 class="text-left">4. Phones</h3>
+        <h3 class="text-left">4. Phones</h3>
             <div class="col-md-4">
                 <div class="col-md-12">
                      <div class="form-group">
@@ -163,7 +162,7 @@
                 <div class="col-md-12">
                  <div class="form-group"> 
                      <label for="mobile">Mobile</label>
-               <form:input class="form-control" path="mobile" placeholder="Mobile"/>
+                    <form:input class="form-control" path="mobile" placeholder="Mobile"/>
                  </div>   
                 </div>
             </div>
@@ -200,24 +199,24 @@
 
 <fieldset>
     <div class="row">
-    <form:hidden path="spousePersonId" />
-    <h3 class="text-left">6. Name of mate, if married</h3>
-    <div class="col-md-4">
-        <div class="col-md-12">
-            <div class="form-group">
-            <label for="spouseForename">First</label>
-            <form:input class="form-control" path="spouseForename" placeholder="First Name"/>
-            </div>
-        </div>
-    </div>
+        <form:hidden path="spousePersonId" />
+         <h3 class="text-left">6. Name of mate, if married</h3>
             <div class="col-md-4">
                 <div class="col-md-12">
                     <div class="form-group">
-                    <label for="spouseSurname">Last</label>
-                    <form:input class="form-control" path="spouseSurname" placeholder="Surname"/>
+                    <label for="spouseForename">First</label>
+                    <form:input class="form-control" path="spouseForename" placeholder="First Name"/>
                     </div>
                 </div>
             </div>
+        <div class="col-md-4">
+            <div class="col-md-12">
+                <div class="form-group">
+                <label for="spouseSurname">Last</label>
+                <form:input class="form-control" path="spouseSurname" placeholder="Surname"/>
+                </div>
+            </div>
+        </div>
     <div id="spouse-linked" class="controls alert span10" style="display:none;">
         <button type="button" class="close">Unlink</button>
         Linked to an existing person in the database
@@ -265,71 +264,108 @@
     </div>
 </fieldset>
 
-                    
-                    
- <fieldset class="control-group">
-     <div id="emergency-contact-additional-fields">
-         <div class="row">  
-         <h3 class="text-left">8.(b) In case of illness or accident, notify</h3>
-            <div class="controls controls-row">
-                <div class="col-md-4">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                    <label for="emergencyContactTelephone">Telephone</label>
-                    <form:input class="form-control" path="emergencyContactTelephone" placeholder="Home"/>
-                        </div>
-                    </div>
-                </div>
-            <div class="col-md-4">
-                <div class="col-md-6">
-                    <div class="form-group">
-                <label for="emergencyContactMobile">Mobile</label>
-                <form:input class="form-control" path="emergencyContactMobile" placeholder="Mobile"/>
-                    </div>
+   <!-- fields which weren't working-->
+   <fieldset>
+    <div class="row">
+    <form:hidden path="emergencyContactPersonId" />
+    <h3 class="text-left">8.(a) In case of accident or illness, notify</h3>
+
+        <div class="col-md-4">
+            <div class="col-md-12">
+                <div class="form-group">
+             <label for="emergencyContactForename">First</label>
+            <form:input class="form-control" path="emergencyContactForename" placeholder="First Name"/>
                 </div>
             </div>
+        </div>
+        <div class="col-md-4">
+            <div class="col-md-12">
+                <div class="form-group">
+                <label for="emergencyContactSurname">Last</label>
+            <form:input class="form-control" path="emergencyContactSurname" placeholder="Surname"/>
+                </div>
             </div>
-          </div>
-       </div>
+        </div>
+        <div class="col-md-4">
+            <div class="col-md-12">
+                <div class="form-group">
+            <label for="emergencyRelationshipCode">Relationship</label>
+            <form:select class="form-control" path="emergencyRelationshipCode">
+                <form:option value="" label="Relationship" />
+                <form:options items="${relationshipValues}" />
+            </form:select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="emergency-contact-linked" class="controls alert span10" style="display:none;">
+        <button type="button" class="close">Unlink</button>
+        Linked to an existing person in the database
+    </div>
+    
+</fieldset>
+            
+<!-- End of fields which weren't working-->
+                    
+ <fieldset>
+        <!-- Original H3 was here but deleted -->
+    <div class="row">
+        <div class="col-md-4">
+            <div class="col-md-6">
+                <div class="form-group">
+            <label for="emergencyContactTelephone">Telephone</label>
+            <form:input class="form-control" path="emergencyContactTelephone" placeholder="Home"/>
+                </div>
+            </div>
+        </div>
+    <div class="col-md-4">
+        <div class="col-md-6">
+            <div class="form-group">
+        <label for="emergencyContactMobile">Mobile</label>
+        <form:input class="form-control" path="emergencyContactMobile" placeholder="Mobile"/>
+            </div>
+        </div>
+    </div>
+    </div>
  </fieldset>
-                    <fieldset>
-                        <div class="row">
-                           <div class="col-md-4">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                    <label for="emergencyContactStreet">Street</label>
-                                <form:input class="form-control" path="emergencyContactStreet" placeholder="Street" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                    <label for="emergencyContactTown">Town</label>
-                                <form:input class="form-control" path="emergencyContactTown" placeholder="Town" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                    <label for="emergencyContactCounty">County</label>
-                                <form:input class="form-control" path="emergencyContactCounty" placeholder="County" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                 <label for="emergencyContactPostcode">Postcode</label>
-                                <form:input class="form-control" path="emergencyContactPostcode" maxlength="10" placeholder="Postcode" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                      
-                    </fieldset>
-                
+<fieldset>
+    <div class="row">
+       <div class="col-md-4">
+            <div class="col-md-12">
+                <div class="form-group">
+                <label for="emergencyContactStreet">Street</label>
+            <form:input class="form-control" path="emergencyContactStreet" placeholder="Street" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="col-md-12">
+                <div class="form-group">
+                <label for="emergencyContactTown">Town</label>
+            <form:input class="form-control" path="emergencyContactTown" placeholder="Town" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="col-md-12">
+                <div class="form-group">
+                <label for="emergencyContactCounty">County</label>
+            <form:input class="form-control" path="emergencyContactCounty" placeholder="County" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="col-md-6">
+                <div class="form-group">
+             <label for="emergencyContactPostcode">Postcode</label>
+            <form:input class="form-control" path="emergencyContactPostcode" maxlength="10" placeholder="Postcode" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+</fieldset>
+
 <fieldset>
   <div class="row">
         <h3 class="text-left">9. Congregation</h3>
@@ -339,7 +375,7 @@
                 <div class="form-group">
                 <label for="congregationName">Congregation</label>
                 <form:input class="form-control" path="congregationName" placeholder="Congregation name" autocomplete="off" />
-               <!-- <form:hidden path="congregationId" /> -->
+                <form:hidden path="congregationId" />
                 </div>
             </div>
         </div>
@@ -358,13 +394,14 @@
         </div>
     </div>
 </fieldset>
-                <fieldset>
-                    
-                    <div>
-                     <input type="submit" class="btn btn-large btn-success"/>
-                    </div>
-  </div>
-                </fieldset>
+<fieldset>
+
+    <div>
+     <input type="submit" class="btn btn-large btn-success"/>
+    </div>
+
+</fieldset>
+ </div> <!--container div-->
             </form:form>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         <!-- mustache template used to display the person selection form -->
