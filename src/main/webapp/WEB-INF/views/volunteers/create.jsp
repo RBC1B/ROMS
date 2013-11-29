@@ -17,155 +17,153 @@
             <form:form class="form-horizontal" commandName="volunteer" method="POST" action="${formAction}">
    
 <fieldset>
-                <form:hidden path="personId" />
- <div class="row">
-                <h3 class="text-left">1.(a) Legal Name</h3>
-                <div class="col-md-4">
+   <form:hidden path="personId" />
+      <div class="row">
+           <h3 class="text-left">1.(a) Legal name</h3>
+              <div class="col-md-4">
                     <div class="col-md-12">
                         <div class="form-group">
                         <!-- <label for="surname">Last</label> -->
                          <form:input class="form-control" path="surname" maxlength="50" placeholder="Last"/>
                         </div>
                     </div>
+              </div>
+          <div class="col-md-4">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <!-- <label for="forename">First</label> -->
+                            <form:input class="form-control" path="forename" maxlength="50" placeholder="First"/>
+                    </div>
                 </div>
-      <div class="col-md-4">
-        <div class="col-md-12">
-            <div class="form-group">
-            <!-- <label for="forename">First</label> -->
-            <form:input class="form-control" path="forename" maxlength="50" placeholder="First"/>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="col-md-12">
-            <div class="form-group">
+           </div>
+        <div class="col-md-4">
+            <div class="col-md-12">
+                <div class="form-group">
                  <!-- <label for="middleName">Middle</label> -->
                  <form:input class="form-control" path="middleName" maxlength="50" placeholder="Middle" />
+                </div>
             </div>
         </div>
-    </div>
- </div>                 
+     </div>                 
 </fieldset>
 
 <fieldset>        
 <div class="row">
-<h3 class="text-left">1.(b) Gender</h3>
+    <h3 class="text-left">1.(b) Gender</h3>
+         <div class="col-md-4">
+            <div class="col-md-12">
+                <label class="radio inline">
+                    <form:radiobutton path="gender" value="M" /> Male
+                </label>
+            </div>
+        </div>
     <div class="col-md-4">
         <div class="col-md-12">
             <label class="radio inline">
-            <form:radiobutton path="gender" value="M" /> Male
+                 <form:radiobutton path="gender" value="F" /> Female
             </label>
-            </div>
         </div>
-
-    <div class="col-md-4">
-        <div class="col-md-12">
-            <label class="radio inline">
-             <form:radiobutton path="gender" value="F" /> Female
-            </label>
-            </div>
-        </div>
-    </div>        
+    </div>
+</div>        
 </fieldset>
                              
  <fieldset>  
      <div class="row">
-    <h3 class="text-left">2. Dates</h3>
-        <div class="col-md-4">
-            <div class="col-md-6">
-                <div class="form-group">
-                <label for="birthDate">(a) Date of birth </label>
-                <form:input path="birthDate" placeholder="15/03/1980" class="form-control datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
+          <h3 class="text-left">2. Dates</h3>
+               <div class="col-md-4">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="birthDate">(a) Date of birth </label>
+                                <form:input path="birthDate" placeholder="15/03/1980" class="form-control datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
+                        </div>
+                    </div>
+                </div>
+            <div class="col-md-4">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="baptismDate">(b) Date of baptism</label>
+                            <form:input path="baptismDate" placeholder="15/03/1980" class="form-control datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
+                    </div>
                 </div>
             </div>
-        </div>
-    <div class="col-md-4">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="baptismDate">(b) Date of baptism</label>
-            <form:input path="baptismDate" placeholder="15/03/1980" class="form-control datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
-            </div>
-        </div>
-    </div>
    </div>        
  </fieldset> 
                 
                 
  <fieldset>
   <div class="row">
-  <h3 class="text-left">3. Addresses</h3>
+     <h3 class="text-left">3. Addresses</h3>
         <div class="col-md-4">
             <div class="col-md-12">
                  <div class="form-group">
                      <!--<label for="street">No & Street</label> -->
-                     <form:input class="form-control" path="street" placeholder="No & street" />
+                        <form:input class="form-control" path="street" placeholder="No & street" />
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <!--<label for="town">Town</label>-->
-                    <form:input class="form-control" path="town" placeholder="Town" />
-                </div>
+    <div class="col-md-4">
+        <div class="col-md-12">
+            <div class="form-group">
+                <!--<label for="town">Town</label>-->
+                <form:input class="form-control" path="town" placeholder="Town" />
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="col-md-12">
-             <div class="form-group"> 
-                 <!--<label for="county">County</label>-->
-            <form:input class="form-control" path="county" placeholder="County" />
-             </div>   
+    </div>
+  <div class="col-md-4">
+     <div class="col-md-12">
+         <div class="form-group"> 
+             <!--<label for="county">County</label>-->
+                 <form:input class="form-control" path="county" placeholder="County" />
+         </div>   
+    </div>
+ </div>
+    <div class="col-md-4">
+        <div class="col-md-6">
+            <div class="form-group">
+                 <!-- <label for="postcode">Postcode</label> -->
+                     <form:input class="form-control" path="postcode" placeholder="Postcode" maxlength="10" />
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="col-md-6">
-                <div class="form-group">
-                <!-- <label for="postcode">Postcode</label> -->
-                 <form:input class="form-control" path="postcode" placeholder="Postcode" maxlength="10" />
-                </div>
-            </div>
-        </div>
-         <div class="col-md-4">
-            <div class="col-md-12">
-                <div class="form-group">
+    </div>
+     <div class="col-md-4">
+        <div class="col-md-12">
+            <div class="form-group">
                  <!--<label for="email">Email</label>-->
-                <form:input class="form-control" path="email" placeholder="Email" />
-                </div>
+                    <form:input class="form-control" path="email" placeholder="Email" />
             </div>
         </div>
-  </div>
+    </div>
+</div>
 </fieldset>
-                        
-                        
+                       
  <fieldset>
-      <div class="row">
+  <div class="row">
         <h3 class="text-left">4. Phones</h3>
             <div class="col-md-4">
                 <div class="col-md-12">
                      <div class="form-group">
                         <!-- <label for="telephone">Home Phone</label>-->
-                         <form:input class="form-control" path="telephone" placeholder="Home phone"/>
+                             <form:input class="form-control" path="telephone" placeholder="Home phone"/>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <!--<label for="workPhone">Work</label>-->
-            <form:input class="form-control" path="workPhone" placeholder="Work phone"/>
-                    </div>
+        <div class="col-md-4">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <!--<label for="workPhone">Work</label>-->
+                         <form:input class="form-control" path="workPhone" placeholder="Work phone"/>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="col-md-12">
-                 <div class="form-group"> 
-                     <!--<label for="mobile">Mobile</label>-->
-                    <form:input class="form-control" path="mobile" placeholder="Mobile"/>
-                 </div>   
-                </div>
-            </div>
-      </div>
+        </div>
+     <div class="col-md-4">
+         <div class="col-md-12">
+             <div class="form-group"> 
+                 <!--<label for="mobile">Mobile</label>-->
+                       <form:input class="form-control" path="mobile" placeholder="Mobile"/>
+             </div>   
+         </div>
+     </div>
+  </div>
 </fieldset>
                 
                  
@@ -179,7 +177,7 @@
                     </label>
             </div>
         </div>
-         <div class="col-md-4">
+     <div class="col-md-4">
             <div class="col-md-12">
                     <label class="checkbox inline">
                         <form:checkbox path="ministerialServant" /> Ministerial&nbsp;Servant
@@ -197,22 +195,22 @@
 </fieldset>
 
 <fieldset>
-    <div class="row">
+  <div class="row">
         <form:hidden path="spousePersonId" />
-         <h3 class="text-left">6. Name of mate, if married</h3>
-            <div class="col-md-4">
-                <div class="col-md-12">
-                    <div class="form-group">
-                    <!--<label for="spouseForename">First</label>-->
-                    <form:input class="form-control" path="spouseForename" placeholder="Spouse first name"/>
+            <h3 class="text-left">6. Name of mate, if married</h3>
+                 <div class="col-md-4">
+                     <div class="col-md-12">
+                         <div class="form-group">
+                             <!--<label for="spouseForename">First</label>-->
+                                 <form:input class="form-control" path="spouseForename" placeholder="Spouse first name"/>
+                         </div>
                     </div>
-                </div>
-            </div>
+                 </div>
         <div class="col-md-4">
             <div class="col-md-12">
                 <div class="form-group">
-               <!-- <label for="spouseSurname">Last</label>-->
-                <form:input class="form-control" path="spouseSurname" placeholder="Spouse surname"/>
+                    <!-- <label for="spouseSurname">Last</label>-->
+                        <form:input class="form-control" path="spouseSurname" placeholder="Spouse surname"/>
                 </div>
             </div>
         </div>
@@ -220,47 +218,47 @@
         <button type="button" class="close">Unlink</button>
         Linked to an existing person in the database
     </div>
-    </div>
+  </div>
 </fieldset>
 
 <fieldset>
     <div class="row">
-    <h3 class="text-left">7. Work background</h3>
-    <div class="controls controls-row trades-row" data-index="0">
-        <div class="col-md-4">
-            <div class="col-md-12">
-                <div class="form-group">
-              <!--  <label for="trade-experience-name">Trade/Profession</label>-->
-            <input type="text" name="trades[0].name" class="form-control trade-experience-name" placeholder="Trade/Profession" />
+        <h3 class="text-left">7. Work background</h3>
+            <div class="controls controls-row trades-row" data-index="0">
+                 <div class="col-md-4">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <!--  <label for="trade-experience-name">Trade/Profession</label>-->
+                                <input type="text" name="trades[0].name" class="form-control trade-experience-name" placeholder="Trade/Profession" />
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="col-md-12">
-                <div class="form-group">
-                <!--<label for="trade-experience-description">Type of experience</label>-->
-            <input type="text" name="trades[0].experienceDescription" class="form-control trade-experience-description" placeholder="Type of experience"/>
+                     <div class="col-md-4">
+                         <div class="col-md-12">
+                             <div class="form-group">
+                                <!--<label for="trade-experience-description">Type of experience</label>-->
+                                 <input type="text" name="trades[0].experienceDescription" class="form-control trade-experience-description" placeholder="Type of experience"/>
+                             </div>
+                        </div>
+                    </div>
+            <div class="col-md-4">
+                <div class="col-md-6">
+                      <div class="form-group">
+                            <!-- <label for="trade-experience-years">Years experience</label>-->
+                                 <input type="text" name="trades[0].experienceYears" class="form-control trade-experience-years" placeholder="Years experience"/>
+                     </div>
+               </div>
+           </div>
+                <div class="span1">
+                    <button type="button" class="btn btn-danger btn-xs trades-row-delete"><i class="icon-remove icon-white"></i>Remove</button>
                 </div>
-            </div>
         </div>
-        <div class="col-md-4">
-            <div class="col-md-6">
-                <div class="form-group">
-               <!-- <label for="trade-experience-years">Years experience</label>-->
-            <input type="text" name="trades[0].experienceYears" class="form-control trade-experience-years" placeholder="Years experience"/>
-                </div>
-            </div>
-        </div>
-        <div class="span1">
-            <button type="button" class="btn btn-danger btn-xs trades-row-delete"><i class="icon-remove icon-white"></i>Remove</button>
-        </div>
-    </div>
-    <div class="controls controls-row">
+    <div>
         <div class="span2">
             <button id="trades-row-add" type="button" class="btn"><i class="icon-align-left icon-plus"></i> Add trade</button>
         </div>
     </div>
-    </div>
+  </div>
 </fieldset>
 
  <fieldset>
