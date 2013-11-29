@@ -264,59 +264,104 @@
     </div>
     </div>
 </fieldset>
-                <div id="emergency-contact-additional-fields">
-                    <fieldset class="control-group">
-                        <label class="control-label">8.(b) Phones:</label>
-                        <div class="controls controls-row">
-                            <div class="span2">
-                                <form:input path="emergencyContactTelephone" placeholder="Home"/>
-                            </div>
-                            <div class="span2">
-                                <form:input path="emergencyContactMobile" placeholder="Mobile"/>
-                            </div>
+
+                    
+                    
+ <fieldset class="control-group">
+     <div id="emergency-contact-additional-fields">
+         <div class="row">  
+         <h3 class="text-left">8.(b) In case of illness or accident, notify</h3>
+            <div class="controls controls-row">
+                <div class="col-md-4">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                    <label for="emergencyContactTelephone">Telephone</label>
+                    <form:input class="form-control" path="emergencyContactTelephone" placeholder="Home"/>
                         </div>
-                    </fieldset>
-                    <fieldset class="control-group">
-                        <label class="control-label">8.(c) Address</label>
-                        <div class="controls controls-row">
-                            <div class="span3">
-                                <form:input path="emergencyContactStreet" placeholder="Street" />
-                            </div>
-                            <div class="span2">
-                                <form:input path="emergencyContactTown" placeholder="Town" />
-                            </div>
-                            <div class="span1">
-                                <form:input path="emergencyContactCounty" placeholder="County" />
-                            </div>
-                            <div class="span1">
-                                <form:input path="emergencyContactPostcode" maxlength="10" placeholder="Postcode" />
-                            </div>
-                        </div>
-                    </fieldset>
+                    </div>
                 </div>
-                <fieldset class="control-group">
-                    <label class="control-label">Congregation:</label>
-                    <div class="controls controls-row">
-                        <div class="span2">
-                            <form:input path="congregationName" placeholder="Congregation name" autocomplete="off" />
-                            <form:hidden path="congregationId" />
-                        </div>
+            <div class="col-md-4">
+                <div class="col-md-6">
+                    <div class="form-group">
+                <label for="emergencyContactMobile">Mobile</label>
+                <form:input class="form-control" path="emergencyContactMobile" placeholder="Mobile"/>
                     </div>
-                </fieldset>
-                <fieldset class="control-group">
-                    <label class="control-label">Form date:</label>
-                    <div class="controls controls-row">
-                        <div class="span2">
-                            <form:input path="formDate" placeholder="15/03/1980" class="datepicker" data-date-format="dd/mm/yy" />
+                </div>
+            </div>
+            </div>
+          </div>
+       </div>
+ </fieldset>
+                    <fieldset>
+                        <div class="row">
+                           <div class="col-md-4">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                    <label for="emergencyContactStreet">Street</label>
+                                <form:input class="form-control" path="emergencyContactStreet" placeholder="Street" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                    <label for="emergencyContactTown">Town</label>
+                                <form:input class="form-control" path="emergencyContactTown" placeholder="Town" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                    <label for="emergencyContactCounty">County</label>
+                                <form:input class="form-control" path="emergencyContactCounty" placeholder="County" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                 <label for="emergencyContactPostcode">Postcode</label>
+                                <form:input class="form-control" path="emergencyContactPostcode" maxlength="10" placeholder="Postcode" />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </fieldset>
-                <fieldset class="control-group">
-                    <label class="control-label"></label>
-                    <div class="controls controls-row">
-                        <div class="span2">
-                            <input type="submit" class="btn btn-large btn-success"/>
-                        </div>
+                      
+                    </fieldset>
+                
+<fieldset>
+  <div class="row">
+        <h3 class="text-left">9. Congregation</h3>
+     <div class="controls controls-row">
+        <div class="col-md-4">
+            <div class="col-md-6">
+                <div class="form-group">
+                <label for="congregationName">Congregation</label>
+                <form:input class="form-control" path="congregationName" placeholder="Congregation name" autocomplete="off" />
+               <!-- <form:hidden path="congregationId" /> -->
+                </div>
+            </div>
+        </div>
+     </div>
+  </div>
+</fieldset>
+<fieldset>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="col-md-6">
+                <div class="form-group">
+             <label class="control-label">Form date:</label>
+            <form:input path="formDate" placeholder="15/03/1980" class="datepicker form-control" data-date-format="dd/mm/yy" />
+                </div>
+            </div>
+        </div>
+    </div>
+</fieldset>
+                <fieldset>
+                    
+                    <div>
+                     <input type="submit" class="btn btn-large btn-success"/>
                     </div>
   </div>
                 </fieldset>
