@@ -266,7 +266,7 @@
  <fieldset>
     <div class="row">
         <form:hidden path="emergencyContactPersonId" />
-            <h3 class="text-left">8.(a) In case of accident or illness, notify</h3>
+            <h3 class="text-left">8. In case of accident or illness, notify</h3>
                 <div class="col-md-4">
                     <div class="col-md-12">
                         <div class="form-group">
