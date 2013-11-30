@@ -5,9 +5,21 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <div id="stage-${stage.id}-activity-${activity.id}-task-${task.id}" class="panel panel-task">
     <div class="panel-heading">
-       <button type="button" class="btn btn-edifice pull-left a-accordian-control" data-target="#collapse-stage-1-activity-1-task-1">
-            <span class="glyphicon glyphicon-chevron-right"></span>
-        </button>
+       <c:set var="accordionOpenClass">in</c:set>
+                    <c:set var="accordionIconClass">glyphicon-minus</c:set>
+                </c:when>
+                <c:otherwise>
+                    <c:set var="accordionOpenClass"></c:set>
+                    <c:set var="accordionIconClass">glyphicon-plus</c:set>
+                </c:otherwise>
+            </c:choose>
+            <button type="button"
+                    class="btn btn-edifice pull-left a-accordian-control"
+                    data-target="#collapse-stage-${stage.id}-activity-${activity.id}-task-${task.id}">
+                <span class="glyphicon ${accordionIconClass}"></span>
+            </button>
+            <div class="clearfix"></div>
+            <div class="accordion" id="accordion-stage-${stage.id}-activity-${activity.id}-task-${task.id}">
         <div class="project-stage-type-name col-sm-4"><h4>${task.name}</h4></div>
         <div class="project-stage-status col-sm-2"><h4>${task.status}</h4></div>
         <div class="drag-move pull-right">
