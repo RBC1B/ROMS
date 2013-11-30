@@ -194,6 +194,7 @@ body.blueprints {
 /*****************************************************************************/
 label.error {
     color: #b94a48;
+    margin-left: 5px;
 }
 div.span1>input[type=text] {
     max-width: 60px;
