@@ -8,11 +8,11 @@
         <c:choose>
             <c:when test="${activity.isInProgress()}">
                 <c:set var="accordionOpenClass">in</c:set>
-                <c:set var="accordionIconClass">glyphicon-chevron-right</c:set>
+                <c:set var="accordionIconClass">glyphicon-chevron-down</c:set>
             </c:when>
             <c:otherwise>
                 <c:set var="accordionOpenClass"></c:set>
-                <c:set var="accordionIconClass">glyphicon-chevron-down</c:set>
+                <c:set var="accordionIconClass">glyphicon-chevron-right</c:set>
             </c:otherwise>
         </c:choose>
         <button type="button"

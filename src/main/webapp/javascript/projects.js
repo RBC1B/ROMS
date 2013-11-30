@@ -62,12 +62,12 @@ $(document).ready(function() {
        var $accordion = $(target);
        if ($accordion.hasClass("in")) {
            $accordion.collapse('hide');
-           $("span", $(this)).addClass("glyphicon-chevron-right");
            $("span", $(this)).removeClass("glyphicon-chevron-down");
+           $("span", $(this)).addClass("glyphicon-chevron-right");
        } else {
            $accordion.collapse('show');
-           $("span", $(this)).removeClass("glyphicon-chevron-down");
-           $("span", $(this)).addClass("glyphicon-chevron-right");
+           $("span", $(this)).removeClass("glyphicon-chevron-right");
+           $("span", $(this)).addClass("glyphicon-chevron-down");
        }
     });
     
