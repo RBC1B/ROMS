@@ -50,9 +50,7 @@
 
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
-                <sec:authorize access="hasPermission('KINGDOMHALL', 'READ')">
-                  <li><a href="<c:url value="/kingdom-halls" />">Kingdom Halls</a></li>
-                </sec:authorize>
+                <li><a href="<c:url value="/kingdom-halls" />">Kingdom Halls</a></li>
                 <li class="active">#${kingdomHall.kingdomHallId}: ${kingdomHall.name}</li>
             </ol>
 

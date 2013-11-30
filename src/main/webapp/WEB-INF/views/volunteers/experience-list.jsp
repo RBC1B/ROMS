@@ -36,9 +36,7 @@
             <p>&nbsp;</p>
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
-                <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
-                  <li><a href="<c:url value="/volunteers" />">Volunteers</a></li>
-                </sec:authorize>
+                <li><a href="<c:url value="/volunteers" />">Volunteers</a></li>
                 <li class="active">#${volunteer.id}: ${volunteer.displayName} Edit Experience</li>
             </ol>
 
