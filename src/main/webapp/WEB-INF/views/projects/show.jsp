@@ -32,9 +32,10 @@
                                     </c:forEach>
                                 </div>
                             </c:when>
-                            <c:otherwise>No stages defined</c:otherwise>
+                            <c:otherwise><p>No stages defined</p></c:otherwise>
                         </c:choose>
                     <!--/div-->
+                    <%@ include file="fragments/add-task-popup.jsp" %>
                 </div>
                 <div class="tab-pane" id="details">
                     <div class="row">

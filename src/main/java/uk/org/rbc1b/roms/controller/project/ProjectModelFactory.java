@@ -219,6 +219,8 @@ public class ProjectModelFactory {
             model.setType(activityTypes.get(activity.getProjectStageActivityType().getProjectStageActivityTypeId()));
 
             model.setTasks(generateProjectStageActivityTasks(activity, statuses));
+            model.setCreateNewTaskUri(generateTaskUri(stage.getProject().getProjectId(),
+                    activity.getProjectStageActivityId()));
 
             List<ProjectEventModel> events = new ArrayList<ProjectEventModel>();
             for (ProjectStageActivityEvent event : activity.getEvents()) {
@@ -233,6 +235,16 @@ public class ProjectModelFactory {
 
         }
         return modelList;
+    }
+
+    /**
+     * Generate the uri used to access the project activity task.
+     * @param projectId project id
+     * @param activityId activity id
+     * @return uri
+     */
+    private String generateTaskUri(Integer projectId, Integer activityId) {
+        return generateUri(projectId) + "/activities/" + activityId + "/tasks";
     }
 
     private List<ProjectStageActivityTaskModel> generateProjectStageActivityTasks(ProjectStageActivity activity,

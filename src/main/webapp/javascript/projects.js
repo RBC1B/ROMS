@@ -71,6 +71,16 @@ $(document).ready(function() {
        }
     });
     
+    $(".a-add-task-button").click(function() {
+        var $modal = $('#project-task-modal');
+        $("#project-task-modal-form", $modal).attr("action", $(this).data("uri"));
+        
+        $("input[name='assignedVolunteerId']", $modal).val($(this).data("userId"));
+        $("input[name='assignedVolunteerName']", $modal).val($(this).data("userName"));
+        
+        $modal.modal('show');
+    });
+    
     // project create/edit
     $("#kingdomHallName").typeahead({
         remote: roms.common.relativePath + '/kingdom-halls/search?name=%QUERY',
@@ -143,6 +153,28 @@ $(document).ready(function() {
         },
         submitHandler :function(form) {
             form.submit();
+        },
+        errorPlacement: roms.common.validatorErrorPlacement
+    });
+    
+    
+    $("input[name='assignedVolunteerName']").typeahead({
+        remote: roms.common.relativePath + '/users/search?name=%QUERY',
+        valueKey: 'userName'
+    });
+    
+    $("#project-task-modal-form").validate({
+        rules: {
+            name: {
+                required: true
+            },
+            assignedVolunteerName: {
+                required: true,
+                remote: roms.common.validation.user($("input[name='assignedVolunteerName']"), $("input[name='assignedVolunteerId']"))
+            }
+        },
+        submitHandler :function(form) {
+            alert("boom");
         },
         errorPlacement: roms.common.validatorErrorPlacement
     });
