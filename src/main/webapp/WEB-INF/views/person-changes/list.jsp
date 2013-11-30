@@ -145,9 +145,11 @@
                                 ${personchange.comment}
                             </td>
                             <td>
-                                <div class="update-paperwork">
-                                    <a class="btn btn-success" data-update-url="<c:url value="${personchange.updateUri}" />">Paper Work Updated</a>
-                                </div>
+                                <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
+                                    <div class="update-paperwork">
+                                        <a class="btn btn-success" data-update-url="<c:url value="${personchange.updateUri}" />">Paper Work Updated</a>
+                                    </div>
+                                </sec:authorize>
                             </td>
                         </tr>
                     </c:forEach>

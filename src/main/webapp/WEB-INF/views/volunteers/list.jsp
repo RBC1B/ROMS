@@ -31,10 +31,12 @@
                   </tfoot>
                 </table>
             </div>
-            <div class="entity-list-add-new">
-                <a class="btn btn-edifice" href="<c:url value="${newUri}" />">Create new Volunteer</a>
-            </div>
-            <p>&nbsp;</p>
+            <sec:authorize access="hasPermission('VOLUNTEER', 'ADD')">
+                <div class="entity-list-add-new">
+                    <a class="btn btn-edifice" href="<c:url value="${newUri}" />">Create new Volunteer</a>
+                </div>
+                <p>&nbsp;</p>
+            </sec:authorize>
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
                 <li class="active">Volunteers</li>

@@ -51,9 +51,11 @@
                 </c:when>
                 <c:otherwise>Not set</c:otherwise>
             </c:choose>
-            <div class="entity-list-add-new">
-                <a class="btn btn-edifice" href="<c:url value="${circuit.editUri}" />">Edit Circuit</a>
-            </div>
+            <sec:authorize access="hasPermission('CIRCUIT', 'EDIT')">
+                <div class="entity-list-add-new">
+                    <a class="btn btn-edifice" href="<c:url value="${circuit.editUri}" />">Edit Circuit</a>
+                </div>
+            </sec:authorize>
 
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>

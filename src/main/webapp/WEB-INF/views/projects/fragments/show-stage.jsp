@@ -49,7 +49,7 @@
         <div class="accordion" id="accordion-stage-${stage.id}">
             <div class="accordion-group">
                 <div id="collapse-stage-${stage.id}" class="accordion-body collapse ${accordionOpenClass}">
-                    <div class="panel-body">       
+                    <div class="panel-body">
                         <div class="col-sm-3">
                             <strong>Created:</strong>
                             <c:choose>
@@ -58,7 +58,7 @@
                                 </c:when>
                                 <c:otherwise>&nbsp;</c:otherwise>
                             </c:choose>
-                        </div>      
+                        </div>
                         <div class="col-sm-3">
                             <strong>Started:</strong>
                             <c:choose>

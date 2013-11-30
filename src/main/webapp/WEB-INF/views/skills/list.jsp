@@ -47,7 +47,9 @@
                                 <td>
                                     <ul class="inline list-actions">
                                         <li><a class="btn btn-success" href="<c:url value="${skill.uri}" />">View</a></li>
-                                        <li><a class="list-action" href="<c:url value="${skill.editUri}" />">Edit</a></li>
+                                        <sec:authorize access="hasPermission('SKILL', 'EDIT')">
+                                            <li><a class="list-action" href="<c:url value="${skill.editUri}" />">Edit</a></li>
+                                        </sec:authorize>
                                     </ul>
                                 </td>
                             </tr>
