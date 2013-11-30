@@ -118,4 +118,12 @@ public interface ProjectDao {
     @Transactional
     void updateProjectStageOrder(Integer projectId, List<Integer> stageIds);
 
+    /**
+     * Creates a new project task.
+     * @param task to create
+     */
+    @PreAuthorize("hasPermission('PROJECT','EDIT')")
+    @Transactional
+    void createTask(ProjectStageActivityTask task);
+
 }

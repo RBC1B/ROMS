@@ -46,6 +46,7 @@ public class ProjectStageActivityModel implements ProjectAction {
     private String status;
     private List<ProjectStageActivityTaskModel> tasks;
     private ProjectStageActivityType type;
+    private String createNewTaskUri;
 
     /**
      * @return total number of tasks connected to the stage
@@ -214,4 +215,13 @@ public class ProjectStageActivityModel implements ProjectAction {
     public void setType(ProjectStageActivityType type) {
         this.type = type;
     }
+
+    public String getCreateNewTaskUri() {
+        return createNewTaskUri;
+    }
+
+    public void setCreateNewTaskUri(String createNewTaskUri) {
+        this.createNewTaskUri = createNewTaskUri;
+    }
+
 }

@@ -247,4 +247,16 @@ public class HibernateProjectDao implements ProjectDao {
         return resultMap;
     }
 
+    @Override
+    public void createTask(ProjectStageActivityTask task) {
+
+        Session session = this.sessionFactory.getCurrentSession();
+
+        // task.setProjectStageActivity((ProjectStageActivity) session.get(ProjectStageActivity.class, task
+        // .getProjectStageActivity().getProjectStageActivityId()));
+
+        session.save(task);
+
+    }
+
 }
