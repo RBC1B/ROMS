@@ -77,4 +77,10 @@ public class HibernateUserDao implements UserDao {
         criteria.addOrder(Order.asc("userName"));
         return criteria.list();
     }
+
+    @Override
+    public User findUser(Integer userId) {
+        return (User) this.sessionFactory.getCurrentSession().get(User.class, userId);
+    }
+
 }

@@ -69,4 +69,5 @@
 <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="<c:url value='/javascript/thirdparty/mustache-0.7.2.js' />"></script>
 <script type="text/javascript" src="<c:url value='/javascript/thirdparty/typeahead-0.9.3.min.js' />" ></script>
+<script type="text/javascript" src="<c:url value='/javascript/thirdparty/jquery.form.v20131121.min.js' />" ></script>
 <script type="text/javascript" src="<c:url value='/javascript/common.js' />"></script>

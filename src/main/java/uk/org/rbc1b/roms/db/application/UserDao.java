@@ -48,4 +48,12 @@ public interface UserDao {
     @Transactional(readOnly = true)
     List<User> findUsers(String userName);
 
+    /**
+     * Look up the user by id.
+     * @param userId user id
+     * @return user
+     */
+    @Transactional(readOnly = true)
+    User findUser(Integer userId);
+
 }
