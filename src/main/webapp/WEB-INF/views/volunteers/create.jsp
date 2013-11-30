@@ -239,7 +239,7 @@
         </div>
     <div>
         <div class="span2">
-            <button id="trades-row-add" type="button" class="btn"><i class="icon-align-left icon-plus"></i> Add trade</button>
+            <button id="trades-row-add" type="button" class="btn btn-edifice btn-large"><i class="icon-align-left icon-plus"></i> Add trade</button>
         </div>
     </div>
   </div>
