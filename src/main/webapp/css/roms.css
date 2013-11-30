@@ -469,6 +469,7 @@ div.skill-category-colour {
 .ui-datepicker {
     background-color:#e5e5e5;
     padding:5px;
+    z-index:2003!important;
 }
 .ui-datepicker-calendar td, .ui-datepicker-calendar th, .ui-datepicker a {
     padding:2px;

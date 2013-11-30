@@ -1,6 +1,5 @@
 <%--
 Content of the model dialog used to update the volunteer name
-Author: oliver.elder.esq
 --%>
 <div id="volunteer-name-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="volunteer-name-modal-label" aria-hidden="true">
     <c:url var="formAction" value="${volunteer.editNameUri}" />

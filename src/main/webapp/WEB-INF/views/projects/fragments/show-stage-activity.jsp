@@ -41,14 +41,13 @@
         <div class="drag-move pull-right">
             <span class="glyphicon glyphicon-move"></span>
         </div>
-        <div class="clearfix"></div>      
+        <div class="clearfix"></div>
     </div>
     <div class="a-accordian-wrapper">
         <div class="accordion" id="accordion-stage-${stage.id}-activity-${activity.id}">
             <div class="accordion-group">
                 <div id="collapse-stage-${stage.id}-activity-${activity.id}" class="accordion-body collapse ${accordionOpenClass}">
                     <div class="panel-body">
-
                         <div class="col-sm-3">
                             <div>
                                 <strong>Created:</strong>
@@ -82,7 +81,6 @@
                                 </c:choose>
                             </div>
                         </div>
-
                         <div class="col-sm-3">
                             <c:choose>
                                 <c:when test="${!empty activity.assignedVolunteer}">
@@ -94,35 +92,32 @@
                                 <c:otherwise>Unassigned</c:otherwise>
                             </c:choose>
                         </div>
-
-
-
-
-
                         <br>
-
-
-
-
                         <div class="col-sm-12">
-                        <c:choose>
-                            <c:when test="${!empty activity.comments}">
-                                <strong>Comments:</strong>
-                                <p>${activity.comments}</p>
-                            </c:when>
-                            <c:otherwise>-</c:otherwise>
-                        </c:choose>
-                        <c:choose>
-                            <c:when test="${!empty activity.tasks}">
-                                <h3>Tasks</h3>
-                                <div id="project-stage-${stage.id}-activity-${activity.id}-tasks">
-                                    <c:forEach var="task" items="${activity.tasks}">
-                                        <%@ include file="show-stage-activity-task.jsp" %>
-                                    </c:forEach>
-                                </div>
-                            </c:when>
-                            <c:otherwise>No tasks defined</c:otherwise>
-                        </c:choose>
+                            <c:choose>
+                                <c:when test="${!empty activity.comments}">
+                                    <strong>Comments:</strong>
+                                    <p>${activity.comments}</p>
+                                </c:when>
+                                <c:otherwise>-</c:otherwise>
+                            </c:choose>
+                            <c:choose>
+                                <c:when test="${!empty activity.tasks}">
+                                    <h3>Tasks</h3>
+                                    <div id="project-stage-${stage.id}-activity-${activity.id}-tasks">
+                                        <c:forEach var="task" items="${activity.tasks}">
+                                            <%@ include file="show-stage-activity-task.jsp" %>
+                                        </c:forEach>
+                                    </div>
+                                </c:when>
+                                <c:otherwise><p>No tasks defined</p></c:otherwise>
+                            </c:choose>
+                            <button type="button"
+                                    class="btn btn-edifice a-add-task-button"
+                                    data-uri="<c:url value="${activity.createNewTaskUri}" />"
+                                    data-user-name="${userName}"
+                                    data-user-id="${userId}"
+                                    >Add task</button>
                         </div>
                         <c:if test="${!empty activity.events}">
                             <h3>Events</h3>
