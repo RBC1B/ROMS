@@ -71,21 +71,6 @@
             </div>
         </div>
         <div class="a-accordian-wrapper">
-            <c:choose>
-                <c:when test="${task.isInProgress()}">
-                    <c:set var="accordionOpenClass">in</c:set>
-                    <c:set var="accordionIconClass">glyphicon-minus</c:set>
-                </c:when>
-                <c:otherwise>
-                    <c:set var="accordionOpenClass"></c:set>
-                    <c:set var="accordionIconClass">glyphicon-plus</c:set>
-                </c:otherwise>
-            </c:choose>
-            <button type="button"
-                    class="btn btn-edifice pull-left a-accordian-control"
-                    data-target="#collapse-stage-${stage.id}-activity-${activity.id}-task-${task.id}">
-                <span class="glyphicon ${accordionIconClass}"></span>
-            </button>
             <div class="clearfix"></div>
             <div class="accordion" id="accordion-stage-${stage.id}-activity-${activity.id}-task-${task.id}">
                 <div class="accordion-group">

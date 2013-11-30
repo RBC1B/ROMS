@@ -469,7 +469,6 @@ div.skill-category-colour {
 .ui-datepicker {
     background-color:#e5e5e5;
     padding:5px;
-    z-index:2003!important;
 }
 .ui-datepicker-calendar td, .ui-datepicker-calendar th, .ui-datepicker a {
     padding:2px;
@@ -529,12 +528,14 @@ div.project-count {
 }
 .badge-important {
   background-color: #b94a48;
+  color: #FFFDFD;
 }
 .badge-important[href] {
   background-color: #953b39;
 }
 .badge-warning {
-  background-color: #f89406;
+  background-color: #F8A106;
+  color: #FFFCFC;
 }
 .badge-warning[href] {
   background-color: #c67605;
