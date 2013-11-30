@@ -21,4 +21,8 @@
         </config-files>
         <config-file-groups/>
     </spring-data>
+    <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
+        <word>chervon</word>
+        <word>glyphicon</word>
+    </spellchecker-wordlist>
 </project-shared-configuration>
