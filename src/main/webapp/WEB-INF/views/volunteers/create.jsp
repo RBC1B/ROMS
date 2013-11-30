@@ -23,7 +23,6 @@
               <div class="col-md-4">
                     <div class="col-md-12">
                         <div class="form-group">
-                        <!-- <label for="surname">Last</label> -->
                          <form:input class="form-control" path="surname" maxlength="50" placeholder="Last"/>
                         </div>
                     </div>
@@ -31,7 +30,6 @@
           <div class="col-md-4">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <!-- <label for="forename">First</label> -->
                             <form:input class="form-control" path="forename" maxlength="50" placeholder="First"/>
                     </div>
                 </div>
@@ -39,7 +37,6 @@
         <div class="col-md-4">
             <div class="col-md-12">
                 <div class="form-group">
-                 <!-- <label for="middleName">Middle</label> -->
                  <form:input class="form-control" path="middleName" maxlength="50" placeholder="Middle" />
                 </div>
             </div>
@@ -96,7 +93,6 @@
         <div class="col-md-4">
             <div class="col-md-12">
                  <div class="form-group">
-                     <!--<label for="street">No & Street</label> -->
                         <form:input class="form-control" path="street" placeholder="No & street" />
                 </div>
             </div>
@@ -104,15 +100,13 @@
     <div class="col-md-4">
         <div class="col-md-12">
             <div class="form-group">
-                <!--<label for="town">Town</label>-->
                 <form:input class="form-control" path="town" placeholder="Town" />
             </div>
         </div>
     </div>
   <div class="col-md-4">
      <div class="col-md-12">
-         <div class="form-group"> 
-             <!--<label for="county">County</label>-->
+         <div class="form-group">
                  <form:input class="form-control" path="county" placeholder="County" />
          </div>   
     </div>
@@ -120,7 +114,6 @@
     <div class="col-md-4">
         <div class="col-md-6">
             <div class="form-group">
-                 <!-- <label for="postcode">Postcode</label> -->
                      <form:input class="form-control" path="postcode" placeholder="Postcode" maxlength="10" />
             </div>
         </div>
@@ -128,7 +121,6 @@
      <div class="col-md-4">
         <div class="col-md-12">
             <div class="form-group">
-                 <!--<label for="email">Email</label>-->
                     <form:input class="form-control" path="email" placeholder="Email" />
             </div>
         </div>
@@ -142,7 +134,6 @@
             <div class="col-md-4">
                 <div class="col-md-12">
                      <div class="form-group">
-                        <!-- <label for="telephone">Home Phone</label>-->
                              <form:input class="form-control" path="telephone" placeholder="Home phone"/>
                     </div>
                 </div>
@@ -150,7 +141,6 @@
         <div class="col-md-4">
             <div class="col-md-12">
                 <div class="form-group">
-                    <!--<label for="workPhone">Work</label>-->
                          <form:input class="form-control" path="workPhone" placeholder="Work phone"/>
                 </div>
             </div>
@@ -158,7 +148,6 @@
      <div class="col-md-4">
          <div class="col-md-12">
              <div class="form-group"> 
-                 <!--<label for="mobile">Mobile</label>-->
                        <form:input class="form-control" path="mobile" placeholder="Mobile"/>
              </div>   
          </div>
@@ -201,7 +190,6 @@
                  <div class="col-md-4">
                      <div class="col-md-12">
                          <div class="form-group">
-                             <!--<label for="spouseForename">First</label>-->
                                  <form:input class="form-control" path="spouseForename" placeholder="Spouse first name"/>
                          </div>
                     </div>
@@ -209,7 +197,6 @@
         <div class="col-md-4">
             <div class="col-md-12">
                 <div class="form-group">
-                    <!-- <label for="spouseSurname">Last</label>-->
                         <form:input class="form-control" path="spouseSurname" placeholder="Spouse surname"/>
                 </div>
             </div>
@@ -228,7 +215,6 @@
                  <div class="col-md-4">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <!--  <label for="trade-experience-name">Trade/Profession</label>-->
                                 <input type="text" name="trades[0].name" class="form-control trade-experience-name" placeholder="Trade/Profession" />
                         </div>
                     </div>
@@ -236,7 +222,6 @@
                      <div class="col-md-4">
                          <div class="col-md-12">
                              <div class="form-group">
-                                <!--<label for="trade-experience-description">Type of experience</label>-->
                                  <input type="text" name="trades[0].experienceDescription" class="form-control trade-experience-description" placeholder="Type of experience"/>
                              </div>
                         </div>
@@ -244,7 +229,6 @@
             <div class="col-md-4">
                 <div class="col-md-6">
                       <div class="form-group">
-                            <!-- <label for="trade-experience-years">Years experience</label>-->
                                  <input type="text" name="trades[0].experienceYears" class="form-control trade-experience-years" placeholder="Years experience"/>
                      </div>
                </div>
@@ -268,7 +252,6 @@
                 <div class="col-md-4">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <!--<label for="emergencyContactForename">First</label>-->
                                 <form:input class="form-control" path="emergencyContactForename" placeholder="Contact's first name"/>
                         </div>
                     </div>
@@ -276,7 +259,6 @@
         <div class="col-md-4">
             <div class="col-md-12">
                 <div class="form-group">
-                <!--<label for="emergencyContactSurname">Last</label>-->
                     <form:input class="form-control" path="emergencyContactSurname" placeholder="Contact's surname"/>
                 </div>
             </div>
@@ -284,7 +266,6 @@
         <div class="col-md-4">
             <div class="col-md-12">
                 <div class="form-group">
-                    <!--<label for="emergencyRelationshipCode">Relationship</label>-->
                         <form:select class="form-control" path="emergencyRelationshipCode">
                             <form:option value="" label="Relationship" />
                                 <form:options items="${relationshipValues}" />
@@ -304,7 +285,6 @@
         <div class="col-md-4">
             <div class="col-md-6">
                 <div class="form-group">
-                    <!--<label for="emergencyContactTelephone">Telephone</label>-->
                         <form:input class="form-control" path="emergencyContactTelephone" placeholder="Contact's home phone"/>
                 </div>
             </div>
@@ -312,7 +292,6 @@
     <div class="col-md-4">
         <div class="col-md-6">
             <div class="form-group">
-                <!--<label for="emergencyContactMobile">Mobile</label>-->
                     <form:input class="form-control" path="emergencyContactMobile" placeholder="Contact's Mobile"/>
             </div>
         </div>
@@ -324,7 +303,6 @@
        <div class="col-md-4">
             <div class="col-md-12">
                 <div class="form-group">
-                    <!--<label for="emergencyContactStreet">Street</label>-->
                         <form:input class="form-control" path="emergencyContactStreet" placeholder="No & street" />
                 </div>
             </div>
@@ -332,7 +310,6 @@
         <div class="col-md-4">
             <div class="col-md-12">
                 <div class="form-group">
-                     <!--<label for="emergencyContactTown">Town</label>-->
                         <form:input class="form-control" path="emergencyContactTown" placeholder="Town" />
                 </div>
             </div>
@@ -340,7 +317,6 @@
         <div class="col-md-4">
             <div class="col-md-12">
                 <div class="form-group">
-                    <!--<label for="emergencyContactCounty">County</label>-->
                         <form:input class="form-control" path="emergencyContactCounty" placeholder="County" />
                 </div>
             </div>
@@ -348,7 +324,6 @@
         <div class="col-md-4">
             <div class="col-md-6">
                 <div class="form-group">
-                    <!-- <label for="emergencyContactPostcode">Postcode</label>-->
                         <form:input class="form-control" path="emergencyContactPostcode" maxlength="10" placeholder="Postcode" />
                 </div>
             </div>
@@ -364,7 +339,6 @@
             <div class="col-md-4">
                 <div class="col-md-6">
                     <div class="form-group">
-                      <!--  <label for="congregationName">Congregation</label>-->
                             <form:input class="form-control" path="congregationName" placeholder="Congregation name" autocomplete="off" />
                                 <form:hidden path="congregationId" />
                     </div>
@@ -387,7 +361,7 @@
 </fieldset>
 <fieldset>
     <div>
-         <input type="submit" class="btn btn-large btn-success"/>
+         <input type="submit" class="btn btn-lg btn-success"/>
     </div>
 
 </fieldset>

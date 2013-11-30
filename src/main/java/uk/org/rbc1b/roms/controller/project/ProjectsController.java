@@ -264,12 +264,24 @@ public class ProjectsController {
      * @param taskForm form data
      * @param uriBuilder uri builder
      * @return response entity, including the location header to identify the added task
+     * @throws NoSuchRequestHandlingMethodException on failure to find the activity
      */
     @RequestMapping(value = "{projectId}/activities/{activityId}/tasks", method = RequestMethod.POST)
     public ResponseEntity<Void> createTask(@PathVariable Integer projectId, @PathVariable Integer activityId,
-            @Valid ProjectTaskForm taskForm, UriComponentsBuilder uriBuilder) {
+            @Valid ProjectTaskForm taskForm, UriComponentsBuilder uriBuilder)
+            throws NoSuchRequestHandlingMethodException {
+
+        ProjectStageActivity activity = projectDao.findProjectStageActivity(activityId);
+        if (activity == null) {
+            throw new NoSuchRequestHandlingMethodException("No project actvity with id [" + activityId + "]",
+                    this.getClass());
+        }
+
+        // further validation to make sure the activity is part of the project
+        // could be done here.
 
         ProjectStageActivityTask task = new ProjectStageActivityTask();
+        task.setProjectStageActivity(activity);
         task.setAssignedVolunteer(volunteerDao.findVolunteer(taskForm.getAssignedVolunteerId(), null));
         task.setComments(taskForm.getComments());
         task.setCreatedTime(new Date());

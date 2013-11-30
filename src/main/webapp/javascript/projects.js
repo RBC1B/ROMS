@@ -174,7 +174,12 @@ $(document).ready(function() {
             }
         },
         submitHandler :function(form) {
-            alert("boom");
+            $(form).ajaxSubmit({
+                success: function(data) { 
+                    // we could add the newly created task inline, but for now just reload the page
+                    window.location.reload();
+                }
+            });
         },
         errorPlacement: roms.common.validatorErrorPlacement
     });

@@ -178,6 +178,43 @@ public class HibernateProjectDao implements ProjectDao {
     }
 
     @Override
+    public ProjectStage findProjectStage(Integer projectStageId) {
+        ProjectStage stage = (ProjectStage) this.sessionFactory.getCurrentSession().get(ProjectStage.class,
+                projectStageId);
+        if (stage == null) {
+            return null;
+        }
+
+        Hibernate.initialize(stage.getEvents());
+        for (ProjectStageActivity activity : stage.getActivities()) {
+            Hibernate.initialize(activity.getEvents());
+
+            for (ProjectStageActivityTask task : activity.getTasks()) {
+                Hibernate.initialize(task.getEvents());
+            }
+        }
+
+        return stage;
+    }
+
+    @Override
+    public ProjectStageActivity findProjectStageActivity(Integer projectStageActivityId) {
+        ProjectStageActivity activity = (ProjectStageActivity) this.sessionFactory.getCurrentSession().get(
+                ProjectStageActivity.class, projectStageActivityId);
+        if (activity == null) {
+            return null;
+        }
+
+        Hibernate.initialize(activity.getEvents());
+
+        for (ProjectStageActivityTask task : activity.getTasks()) {
+            Hibernate.initialize(task.getEvents());
+        }
+
+        return activity;
+    }
+
+    @Override
     public void updateProjectStageOrder(Integer projectId, List<Integer> stageIds) {
         final Session session = this.sessionFactory.getCurrentSession();
         List<ProjectStageOrder> incoming = ProjectStageOrder.createProjectStageOrders(projectId, stageIds);

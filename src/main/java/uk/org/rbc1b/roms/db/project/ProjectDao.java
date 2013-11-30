@@ -97,6 +97,26 @@ public interface ProjectDao {
     List<ProjectStage> findProjectStages(Integer projectId);
 
     /**
+     * Look up the project stage.
+     * <p>This also looks up all associated activities, tasks and events
+     * @param projectStageId project stage id
+     * @return stages
+     */
+    @PreAuthorize("hasPermission('PROJECT', 'READ')")
+    @Transactional(readOnly = true)
+    ProjectStage findProjectStage(Integer projectStageId);
+
+    /**
+     * Look up the project stage activity.
+     * <p>This also looks up all associated tasks and events
+     * @param projectStageActivityId project stage activity id
+     * @return stages
+     */
+    @PreAuthorize("hasPermission('PROJECT', 'READ')")
+    @Transactional(readOnly = true)
+    ProjectStageActivity findProjectStageActivity(Integer projectStageActivityId);
+
+    /**
      * Look up the ordered map of project stage types.
      * @return project stage, mapped by id
      */
