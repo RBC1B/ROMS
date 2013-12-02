@@ -28,7 +28,7 @@ $(document).ready(function() {
         dateFormat: "dd/mm/yy",
         changeYear: true,
         minDate: "-70y",
-        maxDate: "-1d",
+        maxDate: "0d",
         yearRange: "-70:+0"
     });
     

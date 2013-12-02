@@ -106,15 +106,13 @@ Edit form for the volunteer data under the personal tab.
                 <button type="submit" class="btn btn-default btn-success">Submit</button>
             </fieldset>
         </form:form>
-        
-            <ol class="breadcrumb">
-                <li><a href="<c:url value="/" />">Edifice</a></li>
-                <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
-                  <li><a href="<c:url value="/volunteers" />">Volunteers</a></li>
-                </sec:authorize>
-                <li class="active">#${volunteer.id}: ${volunteer.displayName} Edit Personal Info</li>
-            </ol>
-            
+
+        <ol class="breadcrumb">
+            <li><a href="<c:url value="/" />">Edifice</a></li>
+            <li><a href="<c:url value="/volunteers" />">Volunteers</a></li>
+            <li class="active">#${volunteer.id}: ${volunteer.displayName} Edit Personal Info</li>
+        </ol>
+
         <%@ include file="/WEB-INF/views/common/footer.jsp"%>
     <%@ include file="/WEB-INF/views/common/mustache-person-link-search-form.jsp"%>
     <%@ include file="/WEB-INF/views/common/person-link-modal.jsp"%>

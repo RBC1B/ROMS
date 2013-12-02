@@ -82,9 +82,7 @@ Author     : oliver.elder.esq
 
         <ol class="breadcrumb">
             <li><a href="<c:url value="/" />">Edifice</a></li>
-                <sec:authorize access="hasPermission('KINGDOMHALL', 'READ')">
-                <li role="menuitem"><a href="<c:url value="/kingdom-halls" />">Kingdom Halls</a></li>
-                </sec:authorize>
+            <li role="menuitem"><a href="<c:url value="/kingdom-halls" />">Kingdom Halls</a></li>
             <li class="active">Edit</li>
         </ol>
 

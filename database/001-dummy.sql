@@ -338,6 +338,9 @@ values (5, "Juggling", "Balls and skittles. Only once tried to do chainsaws", 1,
 update Person set CongregationId = 1 where PersonId = 5;
 
 insert into Assignment(PersonId, DepartmentId, AssignmentRoleCode, AssignedDate, TradeNumberId, TeamId, UpdateTime, UpdatedBy)
+values(6, 10, 'OV', '2010-04-11', 1, 1, NOW(), 0);
+
+insert into Assignment(PersonId, DepartmentId, AssignmentRoleCode, AssignedDate, TradeNumberId, TeamId, UpdateTime, UpdatedBy)
 values(5, 10, 'AT', '2010-04-11', 1, 1, NOW(), 0);
 
 insert into Assignment(PersonId, DepartmentId, AssignmentRoleCode, AssignedDate, TradeNumberId, TeamId, UpdateTime, UpdatedBy)

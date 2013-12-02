@@ -95,7 +95,7 @@
                 <li class="active"><a href="#personal" data-toggle="tab">Personal</a></li>
                 <li><a href="#spiritual" data-toggle="tab">Spiritual</a></li>
                 <li><a href="#skills" data-toggle="tab">Skills</a></li>
-                <li><a href="#rbcstatus" data-toggle="tab">RBC Status</a></li>
+                <li><a href="#rbc-status" data-toggle="tab">RBC Status</a></li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="personal">
@@ -111,7 +111,7 @@
                 <div class="tab-pane" id="skills">
                     <%@ include file="fragments/show-skills.jsp" %>
                 </div>
-                <div class="tab-pane" id="rbcstatus">
+                <div class="tab-pane" id="rbc-status">
                     <div class="row-fluid">
                         <%@ include file="fragments/show-rbc-status.jsp" %>
                     </div>
@@ -120,9 +120,7 @@
             <div class="clearfix"></div>
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
-                    <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
-                        <li><a href="<c:url value="/volunteers" />">Volunteers</a></li>
-                    </sec:authorize>
+                <li><a href="<c:url value="/volunteers" />">Volunteers</a></li>
                 <li class="active">#${volunteer.id}: ${volunteer.displayName}</li>
             </ol>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>

@@ -51,9 +51,7 @@
             <div class="clearfix"></div>
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
-                <sec:authorize access="hasPermission('PROJECT', 'READ')">
-                  <li><a href="<c:url value="/projects" />">Projects</a></li>
-                </sec:authorize>
+                <li><a href="<c:url value="/projects" />">Projects</a></li>
                 <li>#${project.projectId}: ${project.name}</li>
             </ol>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>

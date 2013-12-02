@@ -104,8 +104,6 @@ public class VolunteerModelFactory {
         model.setMiddleName(volunteer.getMiddleName());
         model.setSurname(volunteer.getSurname());
 
-        model.setUri(generateUri(volunteer.getPersonId()));
-
         return model;
     }
 

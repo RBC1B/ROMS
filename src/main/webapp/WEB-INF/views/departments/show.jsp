@@ -68,10 +68,8 @@
 
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
-                <sec:authorize access="hasPermission('DEPARTMENT', 'READ')">
-                  <li><a href="<c:url value="/department" />">Department</a></li>
-                </sec:authorize>
-                  <li class="active">${department.name}</li>
+                <li><a href="<c:url value="/department" />">Department</a></li>
+                <li class="active">${department.name}</li>
             </ol>
 
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>

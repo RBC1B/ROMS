@@ -92,9 +92,7 @@
 
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
-                <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
-                  <li><a href="<c:url value="/persons" />">Persons</a></li>
-                </sec:authorize>
+                <li><a href="<c:url value="/persons" />">Persons</a></li>
                 <li class="active">#${person.id}: ${person.displayName}</li>
             </ol>
 

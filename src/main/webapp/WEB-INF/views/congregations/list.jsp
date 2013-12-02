@@ -46,7 +46,9 @@
                                 <td>
                                     <ul class="inline list-actions">
                                         <li><a class="btn btn-success" href="<c:url value="${congregation.uri}" />">View</a></li>
-                                        <li><a href="<c:url value="${congregation.editUri}" />">Edit</a></li>
+                                        <sec:authorize access="hasPermission('CONG', 'EDIT')">
+                                            <li><a href="<c:url value="${congregation.editUri}" />">Edit</a></li>
+                                        </sec:authorize>
                                     </ul>
                                 </td>
                             </tr>

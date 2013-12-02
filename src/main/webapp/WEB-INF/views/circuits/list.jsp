@@ -31,7 +31,9 @@
                                 <td>
                                     <ul class="list-inline">
                                         <li><a class="btn btn-success" href="<c:url value="/circuits/${circuit.circuitId}" />">View</a></li>
-                                        <li><a class="list-action" href="<c:url value="/circuits/${circuit.circuitId}/edit" />">Edit</a></li>
+                                        <sec:authorize access="hasPermission('CIRCUIT', 'EDIT')">
+                                            <li><a class="list-action" href="<c:url value="/circuits/${circuit.circuitId}/edit" />">Edit</a></li>
+                                        </sec:authorize>
                                     </ul>
                                 </td>
                             </tr>
@@ -39,10 +41,12 @@
                     </tbody>
                 </table>
             </div>
-            <div class="entity-list-add-new">
-                <a class="btn btn-edifice" href="<c:url value="/circuits/new" />">Create new circuit</a>
-            </div>
-            <p>&nbsp;</p>
+            <sec:authorize access="hasPermission('CIRCUIT', 'ADD')">
+                <div class="entity-list-add-new">
+                    <a class="btn btn-edifice" href="<c:url value="/circuits/new" />">Create new circuit</a>
+                </div>
+                <p>&nbsp;</p>
+            </sec:authorize>
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
                 <li class="active">Circuits</li>

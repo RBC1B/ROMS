@@ -34,8 +34,9 @@
                                 <td>
                                     <ul class="list-inline">
                                         <li><a class="btn btn-success" href="<c:url value="${kingdomHall.uri}" />">View</a></li>
-                                        <li><a class="list-action" href="<c:url value="${kingdomHall.editUri}" />">Edit</a></li>
-                                        <li><a class="list-action" href="delete">Delete</a></li>
+                                        <sec:authorize access="hasPermission('KINGDOMHALL', 'EDIT')">
+                                            <li><a class="list-action" href="<c:url value="${kingdomHall.editUri}" />">Edit</a></li>
+                                        </sec:authorize>
                                     </ul>
                                 </td>
                             </tr>
@@ -43,10 +44,12 @@
                     </tbody>
                 </table>
             </div>
-            <div class="entity-list-add-new">
-                <a class="btn btn-edifice" href="<c:url value="${newUri}" />">Create new kingdom hall</a>
-            </div>
-            <p>&nbsp;</p>
+            <sec:authorize access="hasPermission('KINGDOMHALL', 'ADD')">
+                <div class="entity-list-add-new">
+                    <a class="btn btn-edifice" href="<c:url value="${newUri}" />">Create new kingdom hall</a>
+                </div>
+                <p>&nbsp;</p>
+            </sec:authorize>
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
                 <li class="active">Kingdom Halls</li>

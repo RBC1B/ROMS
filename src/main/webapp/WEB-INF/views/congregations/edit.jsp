@@ -101,10 +101,8 @@
 
         <ol class="breadcrumb">
             <li><a href="<c:url value="/" />">Edifice</a></li>
-            <sec:authorize access="hasPermission('CONG', 'READ')">
-              <li><a href="<c:url value="/congregations" />">Congregations</a></li>
-            </sec:authorize>
-              <li class="active">Edit Congregation</li>
+            <li><a href="<c:url value="/congregations" />">Congregations</a></li>
+            <li class="active">Edit Congregation</li>
         </ol>
 
         <%@ include file="/WEB-INF/views/common/footer.jsp"%>
