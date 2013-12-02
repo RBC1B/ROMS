@@ -325,6 +325,10 @@ div.DTTT .btn:hover {
 	text-decoration: none !important;
 }
 
+ul.DTTT_dropdown.dropdown-menu {
+  z-index: 2003;
+}
+
 ul.DTTT_dropdown.dropdown-menu a {
 	color: #333 !important; /* needed only when demo_page.css is included */
 }
@@ -465,7 +469,6 @@ div.skill-category-colour {
 .ui-datepicker {
     background-color:#e5e5e5;
     padding:5px;
-    z-index: 2003!important;
 }
 .ui-datepicker-calendar td, .ui-datepicker-calendar th, .ui-datepicker a {
     padding:2px;
@@ -477,7 +480,6 @@ div.skill-category-colour {
 /*****************************************************************************/
 /* Footer fancy styling                                                      */
 /*****************************************************************************/
-
 footer .navbar {
     margin-bottom: 0px;
 }
