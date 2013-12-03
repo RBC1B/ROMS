@@ -437,6 +437,14 @@ div.DTFC_LeftFootWrapper table {
     margin-left:0px!important;
 }
 
+.col-md-2 .col-md-6 .btn-xs {
+    margin-top: 9px;
+}
+
+#trades-row-add {
+    margin-left: 3px;
+}
+
 /*****************************************************************************/
 /* Volunteer details display                                                 */
 /*****************************************************************************/
