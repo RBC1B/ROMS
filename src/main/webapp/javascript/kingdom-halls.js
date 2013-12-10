@@ -68,7 +68,7 @@ $(document).ready(function() {
                 maxlength: 50
             },
             postcode: {
-                minlength: 2,
+                minlength: 4,
                 maxlength: 10,
                 required: true
             },
