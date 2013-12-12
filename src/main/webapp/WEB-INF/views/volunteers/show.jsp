@@ -11,7 +11,10 @@
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
             <div class="media">
-                <img src="<c:url value='/images/oli-lion.jpg' />" class="media-object img-thumbnail pull-left" alt="volunteer image" />
+                <img src="<c:url value='/images/${volunteer.id}.jpg' />" class="media-object img-thumbnail pull-left image" width="114px" height="143px" alt="volunteer image" />
+                <div id="popup" class="caption image-popup" style="display: none;">
+                    <a href="#" style="color:white;"><p class="image-popup-text" style="font-size:13px"><b>Edit/Add Image</b></p></a> 
+                </div>
                 <div class="media-body">
                     <div id="volunteer-name" class="a-edit-hover"
                          data-forename="${volunteer.forename}"

@@ -287,4 +287,9 @@ THE SOFTWARE.
             </list>
         </property>
     </bean>
+
+    <!-- GlassFish Image Directory File Upload Support -->
+    <!--<jee:jndi-lookup id="imageDirectory" jndi-name="jndi/_images_directory" />-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver" />
+
 </beans>

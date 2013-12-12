@@ -148,7 +148,7 @@ input {
 /* Sign in form                                                              */
 /*****************************************************************************/
 body.blueprints {
-    background-image:url('/images/blueprints.jpg');    
+    background-image:url('/images/blueprints.jpg');
 }
 .form-signin {
     max-width: 350px;
@@ -344,7 +344,7 @@ ul.DTTT_dropdown.dropdown-menu li:hover a {
 }
 
 div.DTTT_collection_background {
-	z-index: 2002;	
+	z-index: 2002;
 }
 
 /* TableTools information display */
@@ -375,7 +375,7 @@ div.DTFC_RightFootWrapper table,
 table.DTFC_Cloned tr.even {
     background-color: white;
 }
- 
+
 div.DTFC_RightHeadWrapper table ,
 div.DTFC_LeftHeadWrapper table {
     margin-bottom: 0 !important;
@@ -383,7 +383,7 @@ div.DTFC_LeftHeadWrapper table {
     border-bottom-left-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
 }
- 
+
 div.DTFC_RightHeadWrapper table thead tr:last-child th:first-child,
 div.DTFC_RightHeadWrapper table thead tr:last-child td:first-child,
 div.DTFC_LeftHeadWrapper table thead tr:last-child th:first-child,
@@ -391,20 +391,20 @@ div.DTFC_LeftHeadWrapper table thead tr:last-child td:first-child {
     border-bottom-left-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
 }
- 
+
 div.DTFC_RightBodyWrapper table,
 div.DTFC_LeftBodyWrapper table {
     border-top: none;
     margin-bottom: 0 !important;
 }
- 
+
 div.DTFC_RightBodyWrapper tbody tr:first-child th,
 div.DTFC_RightBodyWrapper tbody tr:first-child td,
 div.DTFC_LeftBodyWrapper tbody tr:first-child th,
 div.DTFC_LeftBodyWrapper tbody tr:first-child td {
     border-top: none;
 }
- 
+
 div.DTFC_RightFootWrapper table,
 div.DTFC_LeftFootWrapper table {
     border-top: none;
@@ -534,7 +534,7 @@ div.project-count {
     padding-right:4px;
 }
 .icon-span {
-    width: 16px!important;  
+    width: 16px!important;
 }
 .badge-important {
   background-color: #b94a48;
@@ -606,4 +606,25 @@ div.project-count {
 /*****************************************************************************/
 .details-changed {
     color: red;
+}
+
+/*****************************************************************************/
+/* Edit/Upload Volunteer image                                               */
+/*****************************************************************************/
+.image {
+    position: relative;
+}
+
+.image-popup {
+    position: absolute;
+    top: 210px;
+    left: 25px;
+    width: 104px;
+}
+
+.image-popup-text {
+    color: white;
+    background: rgb(0, 0, 0);
+    opacity: 0.7;
+    padding: 2px;
 }

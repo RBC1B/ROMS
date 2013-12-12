@@ -721,4 +721,10 @@ $(document).ready(function() {
         }
     );
     
+    $('img').mouseout(function() {
+        $('#popup').fadeOut('slow');
+    })
+    .mouseover(function() {
+        $('#popup').fadeIn(2000);
+    });
 });
