@@ -61,7 +61,7 @@
             </div>
                 <div class="col-xs-12" id="footer-nav">
                     <!-- So users on smaller screens don't have to scroll all the way back to the top -->
-                    <btn class="btn btn-edifice pull-right" id="back-to-top"> <a href="#navbar"><i class="glyphicon glyphicon-circle-arrow-up"></i>&nbsp;Back to Top</a></btn>
+                    <a href="#" class="btn btn-edifice pull-right" id="back-to-top"><span class="glyphicon glyphicon-circle-arrow-up"></span>&nbsp;Back to Top</a>
                 </div>
             </div>
         </div>
