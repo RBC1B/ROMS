@@ -44,7 +44,7 @@ input {
 .btn a:hover, .btn a:focus {
     color: #fff!important;
 }
-.btn-success, .btn-edifice a, .btn-danger a {
+.btn-success, .btn-edifice a, .btn-danger {
     color:#fff!important;
 }
 .well-edifice {
