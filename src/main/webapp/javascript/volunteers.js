@@ -727,4 +727,12 @@ $(document).ready(function() {
     .mouseover(function() {
         $('#popup').fadeIn(2000);
     });
+    
+    $('#image-link').click(function(){
+        $('#volunteer-image-modal').modal('show');
+    });
+    
+    $('#submit-image').on("click", function(){
+        $('#volunteer-image-modal').modal('hide');
+    });
 });

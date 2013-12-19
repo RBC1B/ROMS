@@ -181,6 +181,7 @@ public class VolunteerModelFactory {
         model.setEditSpiritualUri(generateUri(volunteer.getPersonId()) + "/spiritual/edit");
         model.setEditPersonalUri(generateUri(volunteer.getPersonId()) + "/personal/edit");
         model.setEditRbcStatusUri(generateUri(volunteer.getPersonId()) + "/rbc-status/edit");
+        model.setEditImageUri(generateUri(volunteer.getPersonId()) + "/image-upload");
 
         return model;
     }

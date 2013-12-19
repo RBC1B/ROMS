@@ -34,6 +34,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -44,6 +46,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.controller.common.DataConverterUtil;
@@ -73,6 +76,7 @@ import uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTrade;
 @RequestMapping("/volunteers")
 public class VolunteersController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(VolunteersController.class);
     private static final String MARRIED_MARITAL_STATUS = "MR";
     private static final String RBC_STATUS_ACTIVE = "AT";
     private static final String INTERVIEW_STATUS_INVITE_DUE = "ID";
@@ -692,6 +696,23 @@ public class VolunteersController {
         }
     }
 
+    /**
+     * Handles the volunteer image upload.
+     *
+     * @param volunteerId id
+     * @param imageFile file to be uploaded
+     * @return view
+     */
+    @RequestMapping(value = "{volunteerId}/image-upload", method = RequestMethod.POST)
+    public String handleImageUpload(@PathVariable Integer volunteerId,
+            @RequestParam(value = "image", required = true) MultipartFile imageFile) {
+
+        LOGGER.info("File name: {}", imageFile.getOriginalFilename());
+        System.out.println(imageFile.getOriginalFilename() + "The file");
+
+        return "redirect:" + VolunteerModelFactory.generateUri(volunteerId);
+    }
+
     private String generateAvailability(boolean... availabilityDays) {
         StringBuilder builder = new StringBuilder(7);
         for (boolean availabilityDay : availabilityDays) {
@@ -748,5 +769,4 @@ public class VolunteersController {
         spouse.setSurname(form.getSpouseSurname());
         return spouse;
     }
-
 }

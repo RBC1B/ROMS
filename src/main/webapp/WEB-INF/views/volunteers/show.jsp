@@ -13,7 +13,7 @@
             <div class="media">
                 <img src="<c:url value='/images/${volunteer.id}.jpg' />" class="media-object img-thumbnail pull-left image" width="114px" height="143px" alt="volunteer image" />
                 <div id="popup" class="caption image-popup" style="display: none;">
-                    <a href="#" style="color:white;"><p class="image-popup-text" style="font-size:13px"><b>Edit/Add Image</b></p></a> 
+                    <a href="#" id="image-link" style="color:white;"><p class="image-popup-text" style="font-size:13px"><b>Edit/Add Image</b></p></a> 
                 </div>
                 <div class="media-body">
                     <div id="volunteer-name" class="a-edit-hover"
@@ -129,6 +129,7 @@
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         <%@ include file="fragments/show-name-edit-modal.jsp" %>
         <%@ include file="fragments/show-comments-edit-modal.jsp" %>
+        <%@ include file="fragments/show-volunteer-image-edit-modal.jsp" %>
         <script type="text/javascript" src="<c:url value='/javascript/volunteers.js' />" ></script>
     </body>
 </html>
