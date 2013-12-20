@@ -57,6 +57,7 @@
                     </tbody>
                 </table>
             </div>
+            <hr>
             <sec:authorize access="hasPermission('SKILL', 'ADD')">
                 <div class="entity-list-add-new">
                     <a class="btn btn-edifice" href="<c:url value="${newUri}" />">Create new departmental skills</a>
