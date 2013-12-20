@@ -44,8 +44,8 @@
                     </c:forEach>
                 </tbody>
             </table>
+            <hr>
             <sec:authorize access="hasPermission('PROJECT', 'ADD')">
-                <br />
                 <a class="btn btn-edifice" href="<c:url value="${newUri}" />" />Create new project</a>
             </sec:authorize>
             <br />

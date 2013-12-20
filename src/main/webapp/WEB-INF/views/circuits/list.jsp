@@ -41,6 +41,7 @@
                     </tbody>
                 </table>
             </div>
+            <hr>
             <sec:authorize access="hasPermission('CIRCUIT', 'ADD')">
                 <div class="entity-list-add-new">
                     <a class="btn btn-edifice" href="<c:url value="/circuits/new" />">Create new circuit</a>

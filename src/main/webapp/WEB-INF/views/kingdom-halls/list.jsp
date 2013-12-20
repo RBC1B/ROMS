@@ -44,6 +44,7 @@
                     </tbody>
                 </table>
             </div>
+            <hr>
             <sec:authorize access="hasPermission('KINGDOMHALL', 'ADD')">
                 <div class="entity-list-add-new">
                     <a class="btn btn-edifice" href="<c:url value="${newUri}" />">Create new kingdom hall</a>

@@ -409,6 +409,16 @@ div.DTFC_RightFootWrapper table,
 div.DTFC_LeftFootWrapper table {
     border-top: none;
 }
+/* Edifice style for Pagination   */
+.pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus {
+    background-color: #25aae1;
+    border-color: #25aae1;
+    color: #fff!important;
+}
+.pagination {
+    margin: 0;
+    float: right;
+}
 /*****************************************************************************/
 /* List views                                                                */
 /*****************************************************************************/
@@ -422,7 +432,10 @@ div.DTFC_LeftFootWrapper table {
        border-right: 1px solid #ddd;
 
 }
-
+ul.list-inline {
+    margin:0;
+}
+/* Fix for some Datatables nested list uls   */
 .list-actions a.list-action {
     padding-left: 5px;
 }

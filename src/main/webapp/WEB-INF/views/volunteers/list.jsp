@@ -31,6 +31,7 @@
                   </tfoot>
                 </table>
             </div>
+            <hr>
             <sec:authorize access="hasPermission('VOLUNTEER', 'ADD')">
                 <div class="entity-list-add-new">
                     <a class="btn btn-edifice" href="<c:url value="${newUri}" />">Create new Volunteer</a>
