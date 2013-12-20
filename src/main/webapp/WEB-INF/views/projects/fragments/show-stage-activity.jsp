@@ -20,17 +20,6 @@
                 data-target="#collapse-stage-${stage.id}-activity-${activity.id}">
             <span class="glyphicon ${accordionIconClass}"></span>
         </button>
-        <div class="col-sm-1 project-assignee">
-            <c:choose>
-                <c:when test="${!empty activity.assignedVolunteer}">
-                    <a class="a-project-assignment" href="${activity.assignedVolunteer.uri}"
-                       data-toggle="tooltip" data-original-title="${activity.assignedVolunteer.displayName}">
-                        ${activity.assignedVolunteer.initials}
-                    </a>
-                </c:when>
-                <c:otherwise>Unassigned</c:otherwise>
-            </c:choose>
-        </div>
         <div class="project-stage-type-name col-sm-4"><h4>${activity.type.name}: ${activity.type.description}</h4></div>
         <div class="project-stage-status col-sm-4"><h4>${activity.status}</h4></div>
         <div class="col-sm-2">
@@ -92,6 +81,17 @@
                                 </c:choose>
                             </div>
                         </div>
+                        <div class="col-sm-3">
+                            <c:choose>
+                                <c:when test="${!empty activity.assignedVolunteer}">
+                                    <a class="a-project-assignment" href="${activity.assignedVolunteer.uri}"
+                                       data-toggle="tooltip" data-original-title="${activity.assignedVolunteer.displayName}">
+                                        ${activity.assignedVolunteer.initials}
+                                    </a>
+                                </c:when>
+                                <c:otherwise>Unassigned</c:otherwise>
+                            </c:choose>
+                        </div>
                         <br>
                         <div class="col-sm-12">
                             <c:choose>
@@ -117,8 +117,7 @@
                                     data-uri="<c:url value="${activity.createNewTaskUri}" />"
                                     data-user-name="${userName}"
                                     data-user-id="${userId}"
-                                    >
-                                <span class="glyphicon glyphicon-plus"></span> Add task</button>
+                                    >Add task</button>
                         </div>
                         <c:if test="${!empty activity.events}">
                             <h3>Events</h3>
