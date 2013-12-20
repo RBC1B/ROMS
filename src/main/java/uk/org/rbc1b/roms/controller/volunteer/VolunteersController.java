@@ -23,19 +23,22 @@
  */
 package uk.org.rbc1b.roms.controller.volunteer;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
+import javax.annotation.Resource;
 import javax.validation.Valid;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.joda.time.DateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -76,7 +79,6 @@ import uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTrade;
 @RequestMapping("/volunteers")
 public class VolunteersController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(VolunteersController.class);
     private static final String MARRIED_MARITAL_STATUS = "MR";
     private static final String RBC_STATUS_ACTIVE = "AT";
     private static final String INTERVIEW_STATUS_INVITE_DUE = "ID";
@@ -99,6 +101,8 @@ public class VolunteersController {
     private AssignmentModelFactory assignmentModelFactory;
     @Autowired
     private VolunteerBadgePdfModelFactory volunteerBadgePdfModelFactory;
+    @Resource(name = "imageDirectory")
+    private Properties imagesDirectory;
 
     /**
      * Display a list of volunteers.
@@ -701,16 +705,21 @@ public class VolunteersController {
      *
      * @param volunteerId id
      * @param imageFile file to be uploaded
+     * @throws IOException if file cannot be written
      * @return view
      */
     @RequestMapping(value = "{volunteerId}/image-upload", method = RequestMethod.POST)
     public String handleImageUpload(@PathVariable Integer volunteerId,
-            @RequestParam(value = "image", required = true) MultipartFile imageFile) {
+            @RequestParam(value = "image", required = true) MultipartFile imageFile) throws IOException {
 
-        LOGGER.info("File name: {}", imageFile.getOriginalFilename());
-        System.out.println(imageFile.getOriginalFilename() + "The file");
+        saveImage(volunteerId + ".jpg", imageFile);
 
         return "redirect:" + VolunteerModelFactory.generateUri(volunteerId);
+    }
+
+    private void saveImage(String filename, MultipartFile image) throws IOException {
+        File file = new File(imagesDirectory.getProperty("images.directory") + filename);
+        FileUtils.writeByteArrayToFile(file, image.getBytes());
     }
 
     private String generateAvailability(boolean... availabilityDays) {
