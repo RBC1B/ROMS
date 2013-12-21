@@ -20,7 +20,7 @@
                 data-target="#collapse-stage-${stage.id}-activity-${activity.id}">
             <span class="glyphicon ${accordionIconClass}"></span>
         </button>
-        <div class="col-sm-1 project-assignee">
+        <div class="col-xs-1 project-assignee">
             <c:choose>
                 <c:when test="${!empty activity.assignedVolunteer}">
                     <a class="a-project-assignment" href="${activity.assignedVolunteer.uri}"
@@ -31,9 +31,9 @@
                 <c:otherwise>Unassigned</c:otherwise>
             </c:choose>
         </div>
-        <div class="project-stage-type-name col-sm-4"><h4>${activity.type.name}: ${activity.type.description}</h4></div>
-        <div class="project-stage-status col-sm-4"><h4>${activity.status}</h4></div>
-        <div class="col-sm-2">
+        <div class="project-stage-type-name col-xs-4"><h4>${activity.type.name}: ${activity.type.description}</h4></div>
+        <div class="project-stage-status col-xs-4"><h4>${activity.status}</h4></div>
+        <div class="col-xs-2">
             <div class="project-counts">
                 <div class="project-count a-project-count" title="" data-toggle="tooltip"
                      data-original-title="Not started: ${activity.createdTaskCount} of ${activity.totalTaskCount}">

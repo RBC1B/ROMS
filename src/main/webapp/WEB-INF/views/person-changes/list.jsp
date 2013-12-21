@@ -146,8 +146,8 @@
                             </td>
                             <td>
                                 <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
-                                    <div class="update-paperwork">
-                                        <a class="btn btn-success" data-update-url="<c:url value="${personchange.updateUri}" />">Paper Work Updated</a>
+                                    <div class="update-paperwork alert alert-info">
+                                        <a class="alert-link" data-update-url="<c:url value="${personchange.updateUri}" />">Paper Work Updated</a>
                                     </div>
                                 </sec:authorize>
                             </td>
@@ -158,7 +158,7 @@
         </div>
         <p>&nbsp;</p>
         <ol class="breadcrumb">
-            <li><a href="<c:url value="/" />">Edifice</a> <span class="divider">/</span></li>
+            <li><a href="<c:url value="/" />">Edifice</a> <span class="divider"></span></li>
             <li class="active">Person Information Change</li>
         </ol>
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>

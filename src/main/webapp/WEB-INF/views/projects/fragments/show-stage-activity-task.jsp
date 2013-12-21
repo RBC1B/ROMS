@@ -20,7 +20,7 @@
                 data-target="#collapse-stage-${stage.id}-activity-${activity.id}-task-${task.id}">
             <span class="glyphicon ${accordionIconClass}"></span>
         </button>
-        <div class="col-sm-2 project-assignee">
+        <div class="col-xs-2 project-assignee">
             <c:choose>
                 <c:when test="${!empty task.assignedVolunteer}">
                     <a class="a-project-assignment" href="${task.assignedVolunteer.uri}"
@@ -31,8 +31,8 @@
                 <c:otherwise>Unassigned</c:otherwise>
             </c:choose>
         </div>
-        <div class="project-stage-type-name col-sm-4"><h4>${task.name}</h4></div>
-        <div class="project-stage-status col-sm-2"><h4>${task.status}</h4></div>
+        <div class="project-stage-type-name col-xs-4"><h4>${task.name}</h4></div>
+        <div class="project-stage-status col-xs-2"><h4>${task.status}</h4></div>
         <div class="drag-move pull-right">
             <span class="glyphicon glyphicon-move"></span>
         </div>

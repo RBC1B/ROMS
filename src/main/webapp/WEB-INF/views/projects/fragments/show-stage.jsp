@@ -20,10 +20,9 @@
                 data-target="#collapse-stage-${stage.id}">
             <span class="glyphicon ${accordionIconClass}"></span>
         </button>
-        <div class="project-stage-type-name col-sm-4"><h4>${stage.type.name}: ${stage.type.description}</h4></div>
-        <div class="project-stage-status col-sm-4"><h4>${stage.status}</h4></div>
-
-        <div class="col-sm-2">
+        <div class="project-stage-type-name col-xs-4"><h4>${stage.type.name}: ${stage.type.description}</h4></div>
+        <div class="project-stage-status col-xs-4"><h4>${stage.status}</h4></div>
+        <div class="col-xs-2">
             <div class="project-counts">
                 <div class="project-count a-project-count" title="" data-toggle="tooltip"
                      data-original-title="Not started: ${stage.createdActivityCount} of ${stage.totalActivityCount}">

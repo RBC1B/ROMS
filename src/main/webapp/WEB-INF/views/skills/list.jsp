@@ -41,8 +41,9 @@
                                             <c:set var="categoryColour" value="white" />
                                         </c:otherwise>
                                     </c:choose>
-                                    <div class="skill-category-colour" style="background-color:${categoryColour}"></div>
-                                    ${skill.category.name}
+                                    <div class="label label-default" style="background-color:${categoryColour}">
+                                        ${skill.category.name}
+                                    </div>
                                 </td>
                                 <td>
                                     <ul class="inline list-actions">

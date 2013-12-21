@@ -15,7 +15,6 @@
             <hr>
             <c:url var="formAction" value="/volunteers" />
             <form:form class="form-horizontal" commandName="volunteer" method="POST" action="${formAction}">
-
                 <fieldset>
                     <form:hidden path="personId" />
                     <div class="row">
@@ -43,7 +42,6 @@
                         </div>
                     </div>                 
                 </fieldset>
-
                 <fieldset>        
                     <div class="row">
                         <h3 class="text-left">1.(b) Gender</h3>
@@ -63,7 +61,6 @@
                         </div>
                     </div>        
                 </fieldset>
-
                 <fieldset>  
                     <div class="row">
                         <h3 class="text-left">2. Dates</h3>
@@ -85,8 +82,6 @@
                         </div>
                     </div>        
                 </fieldset> 
-
-
                 <fieldset>
                     <div class="row">
                         <h3 class="text-left">3. Addresses</h3>
@@ -127,7 +122,6 @@
                         </div>
                     </div>
                 </fieldset>
-
                 <fieldset>
                     <div class="row">
                         <h3 class="text-left">4. Phones</h3>
@@ -154,8 +148,6 @@
                         </div>
                     </div>
                 </fieldset>
-
-
                 <fieldset>
                     <div class="row">
                         <h3 class="text-left">5. Current privileges</h3>
@@ -182,7 +174,6 @@
                         </div>
                     </div>
                 </fieldset>
-
                 <fieldset>
                     <div class="row">
                         <form:hidden path="spousePersonId" />
@@ -207,7 +198,6 @@
                         </div>
                     </div>
                 </fieldset>
-
                 <fieldset>
                     <div class="row">
                         <h3 class="text-left">7. Work background</h3>
@@ -331,9 +321,7 @@
                             </div>
                         </div>
                     </div>
-
                 </fieldset>
-
                 <fieldset>
                     <div class="row">
                         <h3 class="text-left">9. Congregation</h3>
@@ -365,9 +353,13 @@
                     <div>
                         <input type="submit" class="btn btn-lg btn-success"/>
                     </div>
-
                 </fieldset>
-            </div> <!--container div-->
+             </div> <!--container div-->
+                <ol class="breadcrumb">
+                    <li><a href="<c:url value="/" />">Edifice</a></li>
+                    <li role="menuitem"><a href="<c:url value="/kingdom-halls" />">Kingdom Halls</a></li>
+                    <li class="active">Edit</li>
+                </ol>
         </form:form>
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         <!-- mustache template used to display the person selection form -->
@@ -390,7 +382,7 @@
             {{/persons}}
             {{/matchedPersons}}
         </script>
-        //paste mustache scripts here
+        <!-- paste mustache scripts here -->
         <script type="text/javascript" src="<c:url value='/javascript/thirdparty/jquery-numeric-1.3.1.js' />" ></script>
         <script type="text/javascript" src="<c:url value='/javascript/thirdparty/phoneformat-574.js' />" ></script>
         <script type="text/javascript" src="<c:url value='/javascript/volunteers.js' />" ></script>

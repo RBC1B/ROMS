@@ -84,7 +84,18 @@ input {
     border-top-color: #fff;
     border-bottom-color: #fff;
 }
-/* Fix for Bootstrap3 Typeahead   */
+
+
+/* make forms block as standard                                               */
+
+form input, form label, form select {
+    display: block;
+}
+form label {
+    margin-top:10px;
+}
+
+/* Fix for Bootstrap3 Typeahead                                              */
 .twitter-typeahead .tt-query,
 .twitter-typeahead .tt-hint {
   margin-bottom: 0;
@@ -409,6 +420,10 @@ div.DTFC_RightFootWrapper table,
 div.DTFC_LeftFootWrapper table {
     border-top: none;
 }
+/* Fix for some Datatables nested list uls   */
+.list-actions a.list-action {
+    padding-left: 5px;
+}
 /* Edifice style for Pagination   */
 .pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus {
     background-color: #25aae1;
@@ -435,10 +450,7 @@ div.DTFC_LeftFootWrapper table {
 ul.list-inline {
     margin:0;
 }
-/* Fix for some Datatables nested list uls   */
-.list-actions a.list-action {
-    padding-left: 5px;
-}
+
 
 /*****************************************************************************/
 /* Create volunteer form                                                     */
@@ -472,18 +484,6 @@ ul.list-inline {
 .btn-primary a {
     color:#ffffff;
 }
-
-/*****************************************************************************/
-/* Skills                                                                    */
-/*****************************************************************************/
-div.skill-category-colour {
-    height:12px;
-    width:12px;
-    float:left;
-    margin:3px 3px 3px 0;
-    border:1px solid black;
-}
-
 
 /*****************************************************************************/
 /* Date Picker CSSing (not a Bootstrap standard)                             */

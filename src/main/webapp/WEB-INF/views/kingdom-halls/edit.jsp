@@ -74,7 +74,7 @@ Author     : oliver.elder.esq
                             <form:input path="titleHoldingCongregationName" class="typeahead form-control" type="text" name="titleHoldingCongregationName" placeholder="Title Holder" maxlength="50" /><br />
                         </div>
                         <br />
-                        <input type="submit" class="btn btn-primary"/>
+                        <input type="submit" class="btn btn-edifice"/>
                     </div>
                 </div>
             </div>
