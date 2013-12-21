@@ -614,6 +614,14 @@ div.project-count {
 .panel-task .panel-heading  {
     background-color: #25AAE1;
 }
+/* Custom panels for Project Activity Task stage */
+.a-project-assignment {
+    color: #fff!important;
+}
+.project-assignee {
+    margin: 10px 0; 
+}
+
 /*****************************************************************************/
 /* Person Change/Update page                                                 */
 /*****************************************************************************/

@@ -39,10 +39,6 @@
                 </div>
             </div>
         </div>
-
-        <div class="drag-move pull-right">
-            <span class="glyphicon glyphicon-move"></span>
-        </div>
         <div class="clearfix"></div>
     </div>
     <div class="a-accordian-wrapper">
