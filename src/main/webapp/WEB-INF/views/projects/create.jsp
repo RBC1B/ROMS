@@ -45,7 +45,7 @@
                 <label>Estimated Cost</label>
                 <form:input path="estimateCost" maxlength="50" />
                 <label>Constraints</label>
-                <form:textarea path="constraints" rows="5" />
+                <form:textarea path="constraints"  rows="4" cols="50" />
             </fieldset>
             <input type="submit" class="btn btn-edifice"/>
         </form:form>

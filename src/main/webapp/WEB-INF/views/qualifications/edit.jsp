@@ -34,7 +34,7 @@
                     <label>Description</label>
                     <form:textarea path="description" rows="4" cols="50" />
                 </fieldset>
-                <input type="submit" class="btn btn-primary" />
+                <input type="submit" class="btn btn-edifice" />
             </form:form>
 
             <ol class="breadcrumb">

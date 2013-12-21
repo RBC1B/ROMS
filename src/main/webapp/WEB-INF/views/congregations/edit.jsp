@@ -94,9 +94,9 @@
                 <label>Monthly income</label>
                 <form:input path="monthlyIncome" maxlength="10" />
                 <label>Strategy</label>
-                <form:textarea path="strategy" />
+                <form:textarea path="strategy"  rows="4" cols="50" />
             </fieldset>
-            <input type="submit" class="btn btn-primary" />
+            <input type="submit" class="btn btn-edifice" />
         </form:form>
 
         <ol class="breadcrumb">
