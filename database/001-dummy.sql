@@ -483,14 +483,14 @@ insert into ProjectStage(ProjectId, ProjectStageTypeId, StatusCode, CreatedTime,
 StartedTime, CompletedTime, UpdateTime, UpdatedBy)
 values (1, 21, 'OH', '2013-07-13', null, null, '2013-07-08 11:45:00', 1);
 
-insert into ProjectStageOrder(ProjectId, ProjectStageId, PreviousProjectStageId, NextProjectStageId, UpdateTime, UpdatedBy)
-values (1, 1, null, 2, '2013-07-08 11:45:00', 1);
+insert into ProjectStageOrder(ProjectStageOrderTypeId, ProjectId, ProjectStageSortableId, PreviousProjectStageSortableId, NextProjectStageSortableId, UpdateTime, UpdatedBy)
+values (1, 1, 1, null, 2, '2013-07-08 11:45:00', 1);
 
-insert into ProjectStageOrder(ProjectId, ProjectStageId, PreviousProjectStageId, NextProjectStageId, UpdateTime, UpdatedBy)
-values (1, 2, 1, 3, '2013-07-08 11:45:00', 1);
+insert into ProjectStageOrder(ProjectStageOrderTypeId, ProjectId, ProjectStageSortableId, PreviousProjectStageSortableId, NextProjectStageSortableId, UpdateTime, UpdatedBy)
+values (1, 1, 2, 1, 3, '2013-07-08 11:45:00', 1);
 
-insert into ProjectStageOrder(ProjectId, ProjectStageId, PreviousProjectStageId, NextProjectStageId, UpdateTime, UpdatedBy)
-values (1, 3, 2, null, '2013-07-08 11:45:00', 1);
+insert into ProjectStageOrder(ProjectStageOrderTypeId, ProjectId, ProjectStageSortableId, PreviousProjectStageSortableId, NextProjectStageSortableId, UpdateTime, UpdatedBy)
+values (1, 1, 3, 2, null, '2013-07-08 11:45:00', 1);
 
 insert into ProjectStageActivity(ProjectStageId, ProjectStageActivityTypeId, AssignedVolunteerId, StatusCode, Comments, UpdateTime, UpdatedBy)
 values(1, 1, 5, 'OH', 'Should be straight forward', '2013-07-08 11:45:00', 1);

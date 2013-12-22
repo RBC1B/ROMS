@@ -816,28 +816,27 @@ create table ProjectStage_AUD (
 
 create table ProjectStageOrder (
     ProjectStageOrderId     bigint(20)  auto_increment,
+    ProjectStageOrderTypeId bigint(20)  null,
     ProjectId               bigint(20)  not null,
-    ProjectStageId          bigint(20)  not null,
-    PreviousProjectStageId  bigint(20),
-    NextProjectStageId      bigint(20),
+    ProjectStageSortableId          bigint(20)  not null,
+    PreviousProjectStageSortableId  bigint(20),
+    NextProjectStageSortableId      bigint(20),
     UpdateTime              timestamp   not null,
     UpdatedBy               bigint(20)  not null,
     primary key (ProjectStageOrderId),
     foreign key (ProjectId) references Project(ProjectId),
-    foreign key (ProjectStageId) references ProjectStage(ProjectStageId),
-    foreign key (PreviousProjectStageId) references ProjectStage(ProjectStageId),
-    foreign key (NextProjectStageId) references ProjectStage(ProjectStageId),
     foreign key (UpdatedBy) references User(PersonId)
 )engine=InnoDB;
 
 create table ProjectStageOrder_AUD (
     ProjectStageOrderId     bigint(20),
+    ProjectStageOrderTypeId bigint(20)  null,
     REV                     int         not null,
     REVTYPE                 tinyint,
     ProjectId               bigint(20)  not null,
-    ProjectStageId          bigint(20)  not null,
-    PreviousProjectStageId  bigint(20),
-    NextProjectStageId      bigint(20),
+    ProjectStageSortableId          bigint(20)  not null,
+    PreviousProjectStageSortableId  bigint(20),
+    NextProjectStageSortableId      bigint(20),
     UpdateTime              timestamp   not null,
     UpdatedBy               bigint(20)  not null,
     primary key (ProjectStageOrderId, REV)

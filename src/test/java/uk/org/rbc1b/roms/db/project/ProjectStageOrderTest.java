@@ -59,7 +59,7 @@ public class ProjectStageOrderTest {
 
     @Test
     public void testCreateProjectStageOrders() {
-        List<ProjectStageOrder> orders = ProjectStageOrder.createProjectStageOrders(1, Arrays.asList(10, 15, 6, 4, 11));
+        List<ProjectStageOrder> orders = ProjectStageOrder.createProjectStageOrders(1, 1, Arrays.asList(10, 15, 6, 4, 11));
         assertEquals("[ProjectStageOrder#null:null->10->15, ProjectStageOrder#null:10->15->6, "
                 + "ProjectStageOrder#null:15->6->4, ProjectStageOrder#null:6->4->11, "
                 + "ProjectStageOrder#null:4->11->null]", orders.toString());
@@ -74,9 +74,9 @@ public class ProjectStageOrderTest {
 
     private ProjectStageOrder createOrder(Integer prev, Integer current, Integer next) {
         ProjectStageOrder order = new ProjectStageOrder();
-        order.setPreviousProjectStageId(prev);
-        order.setProjectStageId(current);
-        order.setNextProjectStageId(next);
+        order.setPreviousProjectStageSortableId(prev);
+        order.setProjectStageSortableId(current);
+        order.setNextProjectStageSortableId(next);
 
         return order;
     }

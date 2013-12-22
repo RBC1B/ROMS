@@ -29,10 +29,11 @@ THE SOFTWARE.
             <generator class="identity" />
         </id>
 
+        <property name="projectStageOrderTypeId" />
         <property name="projectId" not-null="true" />
-        <property name="projectStageId" not-null="true" />
-        <property name="previousProjectStageId"  />
-        <property name="nextProjectStageId"  />
+        <property name="projectStageSortableId" not-null="true" />
+        <property name="previousProjectStageSortableId"  />
+        <property name="nextProjectStageSortableId"  />
 
         <property name="updateTime" not-null="true" />
         <property name="updatedBy" not-null="true" />

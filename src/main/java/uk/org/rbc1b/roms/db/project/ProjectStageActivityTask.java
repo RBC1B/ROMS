@@ -35,7 +35,7 @@ import uk.org.rbc1b.roms.db.volunteer.Volunteer;
  * Task involved in completing a project stage activity.
  */
 @Audited
-public class ProjectStageActivityTask implements UpdateAuditable, Serializable {
+public class ProjectStageActivityTask implements UpdateAuditable, Serializable, ProjectStageSortable {
     private static final long serialVersionUID = -2121305669657847928L;
     private static final String STARTED_STATUS_CODE = "WP";
     private Integer projectStageActivityTaskId;
@@ -58,6 +58,11 @@ public class ProjectStageActivityTask implements UpdateAuditable, Serializable {
         return statusCode.equals(STARTED_STATUS_CODE);
     }
 
+    @Override
+    public Integer getProjectStageSortableId() {
+        return projectStageActivityTaskId;
+    }
+    
     public Integer getProjectStageActivityTaskId() {
         return projectStageActivityTaskId;
     }

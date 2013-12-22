@@ -199,7 +199,8 @@ public class ProjectModelFactory {
         Map<String, String> eventTypes = referenceDao.findProjectStageActivityEventTypeValues();
 
         List<ProjectStageActivityModel> modelList = new ArrayList<ProjectStageActivityModel>();
-        for (ProjectStageActivity activity : stage.getActivities()) {
+        List<ProjectStageActivity> activities = projectDao.findProjectStageActivities(stage.getProjectStageId());
+        for (ProjectStageActivity activity : activities) {
 
             // we make use of the person dao caching, otherwise we would look these up first
             // to prevent duplicate lookups.
@@ -253,7 +254,9 @@ public class ProjectModelFactory {
         Map<String, String> eventTypes = referenceDao.findProjectStageActivityTaskEventTypeValues();
 
         List<ProjectStageActivityTaskModel> modelList = new ArrayList<ProjectStageActivityTaskModel>();
-        for (ProjectStageActivityTask task : activity.getTasks()) {
+        List<ProjectStageActivityTask> tasks = projectDao.findProjectStageActivityTasks(activity.
+                                                                                    getProjectStageActivityId());
+        for (ProjectStageActivityTask task : tasks) {
 
             // we make use of the person dao caching, otherwise we would look these up first
             // to prevent duplicate lookups.
@@ -282,8 +285,7 @@ public class ProjectModelFactory {
 
             modelList.add(model);
         }
-
-        Collections.sort(modelList, TASK_COMPARATOR);
+        
 
         return modelList;
     }

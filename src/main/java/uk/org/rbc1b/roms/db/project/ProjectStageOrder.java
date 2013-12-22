@@ -25,6 +25,7 @@ package uk.org.rbc1b.roms.db.project;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -43,10 +44,11 @@ import uk.org.rbc1b.roms.db.UpdateAuditable;
 public class ProjectStageOrder implements UpdateAuditable, Serializable {
     private static final long serialVersionUID = 1L;
     private Integer projectStageOrderId;
+    private Integer projectStageOrderTypeId;
     private Integer projectId;
-    private Integer projectStageId;
-    private Integer previousProjectStageId;
-    private Integer nextProjectStageId;
+    private Integer projectStageSortableId;
+    private Integer previousProjectStageSortableId;
+    private Integer nextProjectStageSortableId;
     private Date updateTime;
     private Integer updatedBy;
 
@@ -55,9 +57,9 @@ public class ProjectStageOrder implements UpdateAuditable, Serializable {
      * @param stages stages to sort
      * @param stageOrders stage orders, defining the stages
      */
-    public static void sortProjectStages(List<ProjectStage> stages, List<ProjectStageOrder> stageOrders) {
+    public static void sortProjectStages(List<? extends ProjectStageSortable> stages, List<ProjectStageOrder> stageOrders) {
 
-        if (stages.isEmpty()) {
+        if (stages.isEmpty() || stageOrders.isEmpty()) {
             return;
         }
 
@@ -68,10 +70,11 @@ public class ProjectStageOrder implements UpdateAuditable, Serializable {
     /**
      * From the list of stage ids, create the list of project stage orders with the previous and next stage ids defined.
      * @param projectId project id
+     * @param projectStageOrderTypeId project stage order type id
      * @param stageIds stage ids
      * @return list of project stage orders
      */
-    public static List<ProjectStageOrder> createProjectStageOrders(Integer projectId, List<Integer> stageIds) {
+    public static List<ProjectStageOrder> createProjectStageOrders(Integer projectId, Integer projectStageOrderTypeId, List<Integer> stageIds) {
         List<ProjectStageOrder> projectStageOrders = new ArrayList<ProjectStageOrder>(stageIds.size());
         Integer previousProjectStageId = null;
 
@@ -80,8 +83,9 @@ public class ProjectStageOrder implements UpdateAuditable, Serializable {
 
             ProjectStageOrder order = new ProjectStageOrder();
             order.setProjectId(projectId);
-            order.setProjectStageId(stageId);
-            order.setPreviousProjectStageId(previousProjectStageId);
+            order.setProjectStageOrderTypeId(projectStageOrderTypeId);
+            order.setProjectStageSortableId(stageId);
+            order.setPreviousProjectStageSortableId(previousProjectStageId);
 
             projectStageOrders.add(order);
 
@@ -93,9 +97,9 @@ public class ProjectStageOrder implements UpdateAuditable, Serializable {
         for (ListIterator<ProjectStageOrder> i = projectStageOrders.listIterator(projectStageOrders.size()); i
                 .hasPrevious();) {
             ProjectStageOrder projectStageOrder = i.previous();
-            projectStageOrder.setNextProjectStageId(nextProjectStageId);
+            projectStageOrder.setNextProjectStageSortableId(nextProjectStageId);
 
-            nextProjectStageId = projectStageOrder.getProjectStageId();
+            nextProjectStageId = projectStageOrder.getProjectStageSortableId();
         }
 
         return projectStageOrders;
@@ -108,6 +112,14 @@ public class ProjectStageOrder implements UpdateAuditable, Serializable {
     public void setProjectStageOrderId(Integer projectStageOrderId) {
         this.projectStageOrderId = projectStageOrderId;
     }
+    
+    public Integer getProjectStageOrderTypeId() {
+        return projectStageOrderTypeId;
+    }
+
+    public void setProjectStageOrderTypeId(Integer projectStageOrderTypeId) {
+        this.projectStageOrderTypeId = projectStageOrderTypeId;
+    }
 
     public Integer getProjectId() {
         return projectId;
@@ -117,28 +129,28 @@ public class ProjectStageOrder implements UpdateAuditable, Serializable {
         this.projectId = projectId;
     }
 
-    public Integer getProjectStageId() {
-        return projectStageId;
+    public Integer getProjectStageSortableId() {
+        return projectStageSortableId;
     }
 
-    public void setProjectStageId(Integer projectStageId) {
-        this.projectStageId = projectStageId;
+    public void setProjectStageSortableId(Integer projectStageSortableId) {
+        this.projectStageSortableId = projectStageSortableId;
     }
 
-    public Integer getPreviousProjectStageId() {
-        return previousProjectStageId;
+    public Integer getPreviousProjectStageSortableId() {
+        return previousProjectStageSortableId;
     }
 
-    public void setPreviousProjectStageId(Integer previousProjectStageId) {
-        this.previousProjectStageId = previousProjectStageId;
+    public void setPreviousProjectStageSortableId(Integer previousProjectStageSortableId) {
+        this.previousProjectStageSortableId = previousProjectStageSortableId;
     }
 
-    public Integer getNextProjectStageId() {
-        return nextProjectStageId;
+    public Integer getNextProjectStageSortableId() {
+        return nextProjectStageSortableId;
     }
 
-    public void setNextProjectStageId(Integer nextProjectStageId) {
-        this.nextProjectStageId = nextProjectStageId;
+    public void setNextProjectStageSortableId(Integer nextProjectStageSortableId) {
+        this.nextProjectStageSortableId = nextProjectStageSortableId;
     }
 
     @Override
@@ -161,11 +173,11 @@ public class ProjectStageOrder implements UpdateAuditable, Serializable {
 
     @Override
     public String toString() {
-        return "ProjectStageOrder#" + projectStageOrderId + ":" + previousProjectStageId + "->" + projectStageId + "->"
-                + nextProjectStageId;
+        return "ProjectStageOrder#" + projectStageOrderId + ":" + previousProjectStageSortableId + "->" + projectStageSortableId + "->"
+                + nextProjectStageSortableId;
     }
 
-    private static class ProjectStageComparator implements Comparator<ProjectStage>, Serializable {
+    private static class ProjectStageComparator implements Comparator<ProjectStageSortable>, Serializable {
         private static final long serialVersionUID = 1L;
         private final List<Integer> projectStageIndexes;
 
@@ -179,8 +191,8 @@ public class ProjectStageOrder implements UpdateAuditable, Serializable {
 
             ProjectStageOrder nextOrder = null;
             for (ProjectStageOrder stageOrder : stageOrders) {
-                sortOrderStageMap.put(stageOrder.getProjectStageId(), stageOrder);
-                if (stageOrder.getPreviousProjectStageId() == null) {
+                sortOrderStageMap.put(stageOrder.getProjectStageSortableId(), stageOrder);
+                if (stageOrder.getPreviousProjectStageSortableId() == null) {
                     nextOrder = stageOrder;
                 }
             }
@@ -194,21 +206,21 @@ public class ProjectStageOrder implements UpdateAuditable, Serializable {
 
             while (nextOrder != null) {
                 sortedOrders.add(nextOrder);
-                nextOrder = sortOrderStageMap.get(nextOrder.getNextProjectStageId());
+                nextOrder = sortOrderStageMap.get(nextOrder.getNextProjectStageSortableId());
             }
 
             projectStageIndexes = new ArrayList<Integer>();
             for (ProjectStageOrder stageOrder : sortedOrders) {
-                projectStageIndexes.add(stageOrder.projectStageId);
+                projectStageIndexes.add(stageOrder.projectStageSortableId);
             }
 
         }
 
         @Override
-        public int compare(ProjectStage stage0, ProjectStage stage1) {
-            Integer index0 = ObjectUtils.firstNonNull(projectStageIndexes.indexOf(stage0.getProjectStageId()),
+        public int compare(ProjectStageSortable stage0, ProjectStageSortable stage1) {
+            Integer index0 = ObjectUtils.firstNonNull(projectStageIndexes.indexOf(stage0.getProjectStageSortableId()),
                     Integer.MAX_VALUE);
-            Integer index1 = ObjectUtils.firstNonNull(projectStageIndexes.indexOf(stage1.getProjectStageId()),
+            Integer index1 = ObjectUtils.firstNonNull(projectStageIndexes.indexOf(stage1.getProjectStageSortableId()),
                     Integer.MAX_VALUE);
 
             return index0.compareTo(index1);

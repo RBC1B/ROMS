@@ -25,9 +25,11 @@ package uk.org.rbc1b.roms.db.project;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.apache.commons.lang3.ObjectUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
@@ -40,6 +42,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 import uk.org.rbc1b.roms.db.common.MergeUtil;
+import static uk.org.rbc1b.roms.db.project.ProjectStageSortable.ProjectStageOrderType.*;
 
 /**
  * Implements ProjectDao.
@@ -111,15 +114,15 @@ public class HibernateProjectDao implements ProjectDao {
             ProjectStage stage = project.findStage(stageType.getProjectStageTypeId());
 
             ProjectStageOrder stageOrder = new ProjectStageOrder();
-            stageOrder.setNextProjectStageId(index + 1);
-            stageOrder.setPreviousProjectStageId(index > 1 ? index - 1 : null);
+            stageOrder.setNextProjectStageSortableId(index + 1);
+            stageOrder.setPreviousProjectStageSortableId(index > 1 ? index - 1 : null);
             stageOrder.setProjectId(project.getProjectId());
-            stageOrder.setProjectStageId(stage.getProjectStageId());
+            stageOrder.setProjectStageSortableId(stage.getProjectStageId());
             stageOrders.add(stageOrder);
         }
 
         // delete the last stage order next id
-        stageOrders.get(stageOrders.size() - 1).setNextProjectStageId(null);
+        stageOrders.get(stageOrders.size() - 1).setNextProjectStageSortableId(null);
 
         for (ProjectStageOrder stageOrder : stageOrders) {
             session.save(stageOrder);
@@ -157,24 +160,45 @@ public class HibernateProjectDao implements ProjectDao {
 
         for (ProjectStage stage : stages) {
             Hibernate.initialize(stage.getEvents());
-            for (ProjectStageActivity activity : stage.getActivities()) {
-                Hibernate.initialize(activity.getEvents());
-
-                for (ProjectStageActivityTask task : activity.getTasks()) {
-                    Hibernate.initialize(task.getEvents());
-                }
-            }
         }
-
-        criteria = session.createCriteria(ProjectStageOrder.class);
-        criteria.add(Restrictions.eq("projectId", projectId));
-
-        @SuppressWarnings("unchecked")
-        List<ProjectStageOrder> stageOrders = criteria.list();
-
-        ProjectStageOrder.sortProjectStages(stages, stageOrders);
-
+              
+        ProjectStageOrder.sortProjectStages(stages, filterProjectStageOrder(session, ProjectStageOrder.class, projectId, PROJECT_STAGE.getValue()));
+                
         return stages;
+    }
+    
+    @Override
+    public List<ProjectStageActivity> findProjectStageActivities(Integer projectStageId) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(ProjectStageActivity.class);
+        criteria.add(Restrictions.eq("projectStage.id", projectStageId));
+        @SuppressWarnings("unchecked")
+        List<ProjectStageActivity> stageActivities = criteria.list();
+
+        for (ProjectStageActivity activity : stageActivities) {
+            Hibernate.initialize(activity.getEvents());
+        }
+              
+        ProjectStageOrder.sortProjectStages(stageActivities, filterProjectStageOrder(session, ProjectStageOrder.class, projectStageId, PROJECT_STAGE_ACTIVITY.getValue()));
+                
+        return stageActivities;
+    }
+    
+    @Override
+    public List<ProjectStageActivityTask> findProjectStageActivityTasks(Integer projectStageActivityId) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(ProjectStageActivityTask.class);
+        criteria.add(Restrictions.eq("projectStageActivity.id", projectStageActivityId));
+        @SuppressWarnings("unchecked")
+        List<ProjectStageActivityTask> stageActivityTasks = criteria.list();
+
+        for (ProjectStageActivityTask task : stageActivityTasks) {
+            Hibernate.initialize(task.getEvents());
+        }
+              
+        ProjectStageOrder.sortProjectStages(stageActivityTasks, filterProjectStageOrder(session, ProjectStageOrder.class, projectStageActivityId, PROJECT_STAGE_ACTIVITY_TASK.getValue()));
+                
+        return stageActivityTasks;
     }
 
     @Override
@@ -215,20 +239,16 @@ public class HibernateProjectDao implements ProjectDao {
     }
 
     @Override
-    public void updateProjectStageOrder(Integer projectId, List<Integer> stageIds) {
+    public void updateProjectStageOrder(Integer projectId, Integer projectStageOrderTypeId, List<Integer> stageIds) {
         final Session session = this.sessionFactory.getCurrentSession();
-        List<ProjectStageOrder> incoming = ProjectStageOrder.createProjectStageOrders(projectId, stageIds);
+        List<ProjectStageOrder> incoming = ProjectStageOrder.createProjectStageOrders(projectId, projectStageOrderTypeId, stageIds);
 
-        Criteria criteria = session.createCriteria(ProjectStageOrder.class);
-        criteria.add(Restrictions.eq("projectId", projectId));
-
-        @SuppressWarnings("unchecked")
-        List<ProjectStageOrder> existing = criteria.list();
+        List<ProjectStageOrder> existing = filterProjectStageOrder(session, ProjectStageOrder.class, projectId, projectStageOrderTypeId);
 
         MergeUtil.sortAndMerge(existing, incoming, new Comparator<ProjectStageOrder>() {
             @Override
             public int compare(ProjectStageOrder o1, ProjectStageOrder o2) {
-                return o1.getProjectStageId().compareTo(o2.getProjectStageId());
+                return o1.getProjectStageSortableId().compareTo(o2.getProjectStageSortableId());
             }
         }, new MergeUtil.Callback<ProjectStageOrder, ProjectStageOrder>() {
             @Override
@@ -237,12 +257,12 @@ public class HibernateProjectDao implements ProjectDao {
                     session.save(incomingOrder);
                 } else if (incomingOrder == null) {
                     session.delete(existingOrder);
-                } else if (!ObjectUtils.equals(existingOrder.getPreviousProjectStageId(),
-                        incomingOrder.getPreviousProjectStageId())
-                        || !ObjectUtils.equals(existingOrder.getNextProjectStageId(),
-                                incomingOrder.getNextProjectStageId())) {
-                    existingOrder.setNextProjectStageId(incomingOrder.getNextProjectStageId());
-                    existingOrder.setPreviousProjectStageId(incomingOrder.getPreviousProjectStageId());
+                } else if (!ObjectUtils.equals(existingOrder.getPreviousProjectStageSortableId(),
+                        incomingOrder.getPreviousProjectStageSortableId())
+                        || !ObjectUtils.equals(existingOrder.getNextProjectStageSortableId(),
+                                incomingOrder.getNextProjectStageSortableId())) {
+                    existingOrder.setNextProjectStageSortableId(incomingOrder.getNextProjectStageSortableId());
+                    existingOrder.setPreviousProjectStageSortableId(incomingOrder.getPreviousProjectStageSortableId());
                     session.update(existingOrder);
                 }
             }
@@ -295,5 +315,14 @@ public class HibernateProjectDao implements ProjectDao {
         session.save(task);
 
     }
-
+    
+        private List<ProjectStageOrder> filterProjectStageOrder(Session session, Class type, Integer projectId, Integer projectStageOrderTypeId) {
+        
+        Criteria criteria = session.createCriteria(type);
+        criteria.add(Restrictions.eq("projectId", projectId));
+        criteria.add(Restrictions.eq("projectStageOrderTypeId", projectStageOrderTypeId));
+        
+        return criteria.list();
+    }
+        
 }

@@ -40,14 +40,14 @@ $(document).ready(function() {
 
     // details view
     $("#project-stages").sortable({
-        items: "> div",
+        items: ".panel-activity",
         update: function( event, ui ) {
             var stageIds = $(this).sortable('toArray').toString();
             $.ajax({
-                url: roms.common.relativePath + '/projects/' + $(this).data("project-id") + "/stage-order",
+                url: roms.common.relativePath + '/projects/' + $(this).data("project-id") + "/stage-activity-order",
                 type: 'PUT',
                 data:  {
-                    stageIdValues: stageIds
+                    idValues: stageIds
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
                     alert(xhr.status + ": " + thrownError);
@@ -55,7 +55,24 @@ $(document).ready(function() {
             });
         }
     });
-
+    
+    $(".panel-activity").sortable({
+       items: ".panel-task",
+       update: function( event, ui ) {
+            var stageIds = $(this).sortable('toArray').toString();
+            $.ajax({
+                url: roms.common.relativePath + '/projects/' + $("#project-stages").data("project-id") + "/stage-activity-task-order",
+                type: 'PUT',
+                data:  {
+                    idValues: stageIds
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status + ": " + thrownError);
+                }
+            });
+        }
+    });
+    
     // toggle the accordion and the accordion image
     $('.a-accordian-control').click(function() {
        var target = $(this).data("target");

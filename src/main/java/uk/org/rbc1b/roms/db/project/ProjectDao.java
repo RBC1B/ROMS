@@ -97,6 +97,24 @@ public interface ProjectDao {
     List<ProjectStage> findProjectStages(Integer projectId);
 
     /**
+     * Look up the list of stage activities associated with the stage.
+     * @param projectStageId project stage id
+     * @return stages
+     */
+    @PreAuthorize("hasPermission('PROJECT', 'READ')")
+    @Transactional(readOnly = true)
+    List<ProjectStageActivity> findProjectStageActivities(Integer projectStageId);
+    
+    /**
+     * Look up the list of stage activity tasks associated with the stage activity.
+     * @param projectStageActivityId project stage activity id
+     * @return stages
+     */
+    @PreAuthorize("hasPermission('PROJECT', 'READ')")
+    @Transactional(readOnly = true)
+    List<ProjectStageActivityTask> findProjectStageActivityTasks(Integer projectStageActivityId);
+    
+    /**
      * Look up the project stage.
      * <p>This also looks up all associated activities, tasks and events
      * @param projectStageId project stage id
@@ -133,10 +151,11 @@ public interface ProjectDao {
     /**
      * Update the project stage order.
      * @param projectId project id to update the order for
+     * @param projectStageOrderTypeId project stage order type id
      * @param stageIds stage ids
      */
     @Transactional
-    void updateProjectStageOrder(Integer projectId, List<Integer> stageIds);
+    void updateProjectStageOrder(Integer projectId, Integer projectStageOrderTypeId, List<Integer> stageIds);
 
     /**
      * Creates a new project task.

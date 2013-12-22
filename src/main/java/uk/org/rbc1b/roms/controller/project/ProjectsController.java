@@ -65,6 +65,7 @@ import uk.org.rbc1b.roms.db.project.ProjectTypeStageType;
 import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
 import uk.org.rbc1b.roms.security.ROMSUserDetails;
+import static uk.org.rbc1b.roms.db.project.ProjectStageSortable.ProjectStageOrderType.*;
 
 /**
  * Control access to the underlying person data.
@@ -158,20 +159,37 @@ public class ProjectsController {
      * @param projectId project to reorder
      * @param stageIdValues comma separated list of the stage ids, in the format stage-1, stage-3, stage-17
      */
-    @RequestMapping(value = "{projectId}/stage-order", method = RequestMethod.PUT, consumes = "application/x-www-form-urlencoded")
+    @RequestMapping(value = "{projectId}/stage-activity-order", method = RequestMethod.PUT, consumes = "application/x-www-form-urlencoded")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void reorderStages(@PathVariable Integer projectId, @RequestParam("stageIdValues") String stageIdValues) {
+    public void reorderStageActivities(@PathVariable Integer projectId, @RequestParam("idValues") String stageIdValues) {
 
+          reorderStages(projectId, stageIdValues, "stage\\-\\d\\-activity\\-", PROJECT_STAGE_ACTIVITY.getValue());
+    }
+    
+    /**
+     * Reorder the project stages by passing in the new stage id order.
+     * @param projectId project to reorder
+     * @param stageIdValues comma separated list of the stage ids, in the format stage-1, stage-3, stage-17
+     */
+    @RequestMapping(value = "{projectId}/stage-activity-task-order", method = RequestMethod.PUT, consumes = "application/x-www-form-urlencoded")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void reorderStageActivityTasks(@PathVariable Integer projectId, @RequestParam("idValues") String stageIdValues) {
+
+          reorderStages(projectId, stageIdValues, "stage\\-\\d\\-activity\\-\\d\\-task\\-", PROJECT_STAGE_ACTIVITY_TASK.getValue());
+    }
+
+    private void reorderStages(Integer projectId, String stageIdValues, String regex, Integer projectStageOrderTypeId) {
+    
         String[] stageIdValueArray = StringUtils.split(stageIdValues, ',');
         List<Integer> stageIds = new ArrayList<Integer>();
         for (String stageIdValue : stageIdValueArray) {
-            Integer stageId = DataConverterUtil.toInteger(stageIdValue.replaceAll("stage\\-", ""));
+            Integer stageId = DataConverterUtil.toInteger(stageIdValue.replaceAll(regex, ""));
             stageIds.add(stageId);
         }
 
-        projectDao.updateProjectStageOrder(projectId, stageIds);
+        projectDao.updateProjectStageOrder(projectId, projectStageOrderTypeId, stageIds); 
     }
-
+    
     /**
      * Display the form to create a new project.
      *
