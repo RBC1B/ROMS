@@ -69,13 +69,14 @@ import static uk.org.rbc1b.roms.db.project.ProjectStageSortable.ProjectStageOrde
 
 /**
  * Control access to the underlying person data.
+ *
  * @author oliver
  */
 @Controller
 @RequestMapping("/projects")
 public class ProjectsController {
-    private static final String CREATED_STATUS_CODE = "CR";
 
+    private static final String CREATED_STATUS_CODE = "CR";
     @Autowired
     private KingdomHallDao kingdomHallDao;
     @Autowired
@@ -91,6 +92,7 @@ public class ProjectsController {
 
     /**
      * Display the list of projects.
+     *
      * @param model mvc model
      * @return view
      */
@@ -113,6 +115,7 @@ public class ProjectsController {
 
     /**
      * Look up a project id by name.
+     *
      * @param name project name
      * @return matched project id
      */
@@ -128,7 +131,8 @@ public class ProjectsController {
      * @param projectId project primary key
      * @param model model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException when no project matching the id is found
+     * @throws NoSuchRequestHandlingMethodException when no project matching the
+     * id is found
      */
     @RequestMapping(value = "{projectId}", method = RequestMethod.GET)
     public String showProject(@PathVariable Integer projectId, ModelMap model)
@@ -156,30 +160,34 @@ public class ProjectsController {
 
     /**
      * Reorder the project stages by passing in the new stage id order.
+     *
      * @param projectId project to reorder
-     * @param stageIdValues comma separated list of the stage ids, in the format stage-1, stage-3, stage-17
+     * @param stageIdValues comma separated list of the stage ids, in the format
+     * stage-1, stage-3, stage-17
      */
     @RequestMapping(value = "{projectId}/stage-activity-order", method = RequestMethod.PUT, consumes = "application/x-www-form-urlencoded")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void reorderStageActivities(@PathVariable Integer projectId, @RequestParam("idValues") String stageIdValues) {
 
-          reorderStages(projectId, stageIdValues, "stage\\-\\d\\-activity\\-", PROJECT_STAGE_ACTIVITY.getValue());
+        reorderStages(projectId, stageIdValues, "stage\\-\\d\\-activity\\-", PROJECT_STAGE_ACTIVITY.getValue());
     }
-    
+
     /**
      * Reorder the project stages by passing in the new stage id order.
+     *
      * @param projectId project to reorder
-     * @param stageIdValues comma separated list of the stage ids, in the format stage-1, stage-3, stage-17
+     * @param stageIdValues comma separated list of the stage ids, in the format
+     * stage-1, stage-3, stage-17
      */
     @RequestMapping(value = "{projectId}/stage-activity-task-order", method = RequestMethod.PUT, consumes = "application/x-www-form-urlencoded")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void reorderStageActivityTasks(@PathVariable Integer projectId, @RequestParam("idValues") String stageIdValues) {
 
-          reorderStages(projectId, stageIdValues, "stage\\-\\d\\-activity\\-\\d\\-task\\-", PROJECT_STAGE_ACTIVITY_TASK.getValue());
+        reorderStages(projectId, stageIdValues, "stage\\-\\d\\-activity\\-\\d\\-task\\-", PROJECT_STAGE_ACTIVITY_TASK.getValue());
     }
 
     private void reorderStages(Integer projectId, String stageIdValues, String regex, Integer projectStageOrderTypeId) {
-    
+
         String[] stageIdValueArray = StringUtils.split(stageIdValues, ',');
         List<Integer> stageIds = new ArrayList<Integer>();
         for (String stageIdValue : stageIdValueArray) {
@@ -187,9 +195,9 @@ public class ProjectsController {
             stageIds.add(stageId);
         }
 
-        projectDao.updateProjectStageOrder(projectId, projectStageOrderTypeId, stageIds); 
+        projectDao.updateProjectStageOrder(projectId, projectStageOrderTypeId, stageIds);
     }
-    
+
     /**
      * Display the form to create a new project.
      *
@@ -216,7 +224,9 @@ public class ProjectsController {
     }
 
     /**
-     * Creates a project, creating the default stages and activities for the type.
+     * Creates a project, creating the default stages and activities for the
+     * type.
+     *
      * @param projectForm projectForm bean
      * @return view name
      */
@@ -277,12 +287,15 @@ public class ProjectsController {
 
     /**
      * Create the task.
+     *
      * @param projectId containing project
      * @param activityId containing activity
      * @param taskForm form data
      * @param uriBuilder uri builder
-     * @return response entity, including the location header to identify the added task
-     * @throws NoSuchRequestHandlingMethodException on failure to find the activity
+     * @return response entity, including the location header to identify the
+     * added task
+     * @throws NoSuchRequestHandlingMethodException on failure to find the
+     * activity
      */
     @RequestMapping(value = "{projectId}/activities/{activityId}/tasks", method = RequestMethod.POST)
     public ResponseEntity<Void> createTask(@PathVariable Integer projectId, @PathVariable Integer activityId,
@@ -321,5 +334,4 @@ public class ProjectsController {
         return new ResponseEntity<Void>(responseHeaders, HttpStatus.CREATED);
 
     }
-
 }

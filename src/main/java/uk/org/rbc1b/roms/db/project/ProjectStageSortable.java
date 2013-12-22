@@ -26,23 +26,32 @@ package uk.org.rbc1b.roms.db.project;
 import java.io.Serializable;
 
 /**
- * Provides sorting capability
- * to Project Stages
+ * Provides sorting capability to Project Stages.
+ *
  * @author David Maggio
  */
 public interface ProjectStageSortable extends Serializable {
-    
+
+    /**
+     * @return id of a sortable project stage type
+     */
     Integer getProjectStageSortableId();
-    
-   /**
-    * Identifies the type of Project Stage that can be ordered.
-    * Avoids the need to provide multiple order tables for ProjectStage
-    * derivatives.
-    */
+
+    /**
+     * Identifies the type of Project Stage that can be ordered. Avoids the need
+     * to provide multiple order tables for ProjectStage derivatives.
+     */
     public static enum ProjectStageOrderType {
+
         PROJECT_STAGE(1), PROJECT_STAGE_ACTIVITY(2), PROJECT_STAGE_ACTIVITY_TASK(3);
         private final int value;
-        private ProjectStageOrderType(int value) { this.value = value; }
-        public int getValue() { return value; }
+
+        private ProjectStageOrderType(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
     }
 }

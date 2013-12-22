@@ -30,12 +30,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Add/edit/delete/update the core project data.
+ *
  * @author oliver
  */
 public interface ProjectDao {
 
     /**
      * Look up the list of projects.
+     *
      * @return list of projects
      */
     @PreAuthorize("hasPermission('PROJECT', 'READ')")
@@ -44,6 +46,7 @@ public interface ProjectDao {
 
     /**
      * Look up the project details.
+     *
      * @param projectId project id
      * @return project, or null if not found
      */
@@ -53,6 +56,7 @@ public interface ProjectDao {
 
     /**
      * Look up the project details by exact match name.
+     *
      * @param name project name
      * @return project
      */
@@ -62,6 +66,7 @@ public interface ProjectDao {
 
     /**
      * Creates a new project, with the underlying default stages and activities.
+     *
      * @param project to create
      */
     @PreAuthorize("hasPermission('PROJECT','ADD')")
@@ -70,6 +75,7 @@ public interface ProjectDao {
 
     /**
      * Look up the stage types mapped to the project type.
+     *
      * @param projectTypeId project type
      * @return list of stage types
      */
@@ -79,6 +85,7 @@ public interface ProjectDao {
 
     /**
      * Look up the activity types mapped to a stage type.
+     *
      * @param stageTypeId stage type
      * @return list of activity types
      */
@@ -89,6 +96,7 @@ public interface ProjectDao {
     /**
      * Look up the list of stages associated with the project.
      * <p>This also looks up all associated activities, tasks and events
+     *
      * @param projectId project id
      * @return stages
      */
@@ -98,25 +106,29 @@ public interface ProjectDao {
 
     /**
      * Look up the list of stage activities associated with the stage.
+     *
      * @param projectStageId project stage id
      * @return stages
      */
     @PreAuthorize("hasPermission('PROJECT', 'READ')")
     @Transactional(readOnly = true)
     List<ProjectStageActivity> findProjectStageActivities(Integer projectStageId);
-    
+
     /**
-     * Look up the list of stage activity tasks associated with the stage activity.
+     * Look up the list of stage activity tasks associated with the stage
+     * activity.
+     *
      * @param projectStageActivityId project stage activity id
      * @return stages
      */
     @PreAuthorize("hasPermission('PROJECT', 'READ')")
     @Transactional(readOnly = true)
     List<ProjectStageActivityTask> findProjectStageActivityTasks(Integer projectStageActivityId);
-    
+
     /**
      * Look up the project stage.
      * <p>This also looks up all associated activities, tasks and events
+     *
      * @param projectStageId project stage id
      * @return stages
      */
@@ -127,6 +139,7 @@ public interface ProjectDao {
     /**
      * Look up the project stage activity.
      * <p>This also looks up all associated tasks and events
+     *
      * @param projectStageActivityId project stage activity id
      * @return stages
      */
@@ -136,6 +149,7 @@ public interface ProjectDao {
 
     /**
      * Look up the ordered map of project stage types.
+     *
      * @return project stage, mapped by id
      */
     @Transactional(readOnly = true)
@@ -143,6 +157,7 @@ public interface ProjectDao {
 
     /**
      * Look up the ordered map of project stage activity types.
+     *
      * @return project stage activity type, mapped by id
      */
     @Transactional(readOnly = true)
@@ -150,6 +165,7 @@ public interface ProjectDao {
 
     /**
      * Update the project stage order.
+     *
      * @param projectId project id to update the order for
      * @param projectStageOrderTypeId project stage order type id
      * @param stageIds stage ids
@@ -159,10 +175,10 @@ public interface ProjectDao {
 
     /**
      * Creates a new project task.
+     *
      * @param task to create
      */
     @PreAuthorize("hasPermission('PROJECT','EDIT')")
     @Transactional
     void createTask(ProjectStageActivityTask task);
-
 }

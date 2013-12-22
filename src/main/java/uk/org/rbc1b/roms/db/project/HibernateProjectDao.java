@@ -25,11 +25,9 @@ package uk.org.rbc1b.roms.db.project;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import org.apache.commons.lang3.ObjectUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
@@ -46,6 +44,7 @@ import static uk.org.rbc1b.roms.db.project.ProjectStageSortable.ProjectStageOrde
 
 /**
  * Implements ProjectDao.
+ *
  * @author oliver
  */
 @Repository
@@ -161,12 +160,12 @@ public class HibernateProjectDao implements ProjectDao {
         for (ProjectStage stage : stages) {
             Hibernate.initialize(stage.getEvents());
         }
-              
+
         ProjectStageOrder.sortProjectStages(stages, filterProjectStageOrder(session, ProjectStageOrder.class, projectId, PROJECT_STAGE.getValue()));
-                
+
         return stages;
     }
-    
+
     @Override
     public List<ProjectStageActivity> findProjectStageActivities(Integer projectStageId) {
         Session session = this.sessionFactory.getCurrentSession();
@@ -178,12 +177,13 @@ public class HibernateProjectDao implements ProjectDao {
         for (ProjectStageActivity activity : stageActivities) {
             Hibernate.initialize(activity.getEvents());
         }
-              
-        ProjectStageOrder.sortProjectStages(stageActivities, filterProjectStageOrder(session, ProjectStageOrder.class, projectStageId, PROJECT_STAGE_ACTIVITY.getValue()));
-                
+
+        ProjectStageOrder.sortProjectStages(stageActivities, filterProjectStageOrder(session,
+                ProjectStageOrder.class, projectStageId, PROJECT_STAGE_ACTIVITY.getValue()));
+
         return stageActivities;
     }
-    
+
     @Override
     public List<ProjectStageActivityTask> findProjectStageActivityTasks(Integer projectStageActivityId) {
         Session session = this.sessionFactory.getCurrentSession();
@@ -195,9 +195,10 @@ public class HibernateProjectDao implements ProjectDao {
         for (ProjectStageActivityTask task : stageActivityTasks) {
             Hibernate.initialize(task.getEvents());
         }
-              
-        ProjectStageOrder.sortProjectStages(stageActivityTasks, filterProjectStageOrder(session, ProjectStageOrder.class, projectStageActivityId, PROJECT_STAGE_ACTIVITY_TASK.getValue()));
-                
+
+        ProjectStageOrder.sortProjectStages(stageActivityTasks, filterProjectStageOrder(session,
+                ProjectStageOrder.class, projectStageActivityId, PROJECT_STAGE_ACTIVITY_TASK.getValue()));
+
         return stageActivityTasks;
     }
 
@@ -260,7 +261,7 @@ public class HibernateProjectDao implements ProjectDao {
                 } else if (!ObjectUtils.equals(existingOrder.getPreviousProjectStageSortableId(),
                         incomingOrder.getPreviousProjectStageSortableId())
                         || !ObjectUtils.equals(existingOrder.getNextProjectStageSortableId(),
-                                incomingOrder.getNextProjectStageSortableId())) {
+                        incomingOrder.getNextProjectStageSortableId())) {
                     existingOrder.setNextProjectStageSortableId(incomingOrder.getNextProjectStageSortableId());
                     existingOrder.setPreviousProjectStageSortableId(incomingOrder.getPreviousProjectStageSortableId());
                     session.update(existingOrder);
@@ -315,14 +316,13 @@ public class HibernateProjectDao implements ProjectDao {
         session.save(task);
 
     }
-    
-        private List<ProjectStageOrder> filterProjectStageOrder(Session session, Class type, Integer projectId, Integer projectStageOrderTypeId) {
-        
+
+    private List<ProjectStageOrder> filterProjectStageOrder(Session session, Class type, Integer projectId, Integer projectStageOrderTypeId) {
+
         Criteria criteria = session.createCriteria(type);
         criteria.add(Restrictions.eq("projectId", projectId));
         criteria.add(Restrictions.eq("projectStageOrderTypeId", projectStageOrderTypeId));
-        
+
         return criteria.list();
     }
-        
 }

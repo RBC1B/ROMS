@@ -34,6 +34,7 @@ import org.junit.Test;
  */
 public class ProjectStageOrderTest {
     // CHECKSTYLE:OFF
+
     @Test
     public void testSortProjectStages() {
 
@@ -80,5 +81,4 @@ public class ProjectStageOrderTest {
 
         return order;
     }
-
 }

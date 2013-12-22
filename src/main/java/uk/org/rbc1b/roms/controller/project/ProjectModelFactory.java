@@ -68,6 +68,7 @@ public class ProjectModelFactory {
 
     /**
      * Generate the uri used to access the project pages.
+     *
      * @param projectId optional project id
      * @return uri
      */
@@ -77,6 +78,7 @@ public class ProjectModelFactory {
 
     /**
      * Generate the model used in the project list.
+     *
      * @param project project
      * @param types project types reference data
      * @param statuses project status reference data
@@ -108,6 +110,7 @@ public class ProjectModelFactory {
 
     /**
      * Project details model.
+     *
      * @param project project
      * @return model
      */
@@ -153,6 +156,7 @@ public class ProjectModelFactory {
 
     /**
      * Generate the list of project stages.
+     *
      * @param stages stages
      * @return stage model list
      */
@@ -240,6 +244,7 @@ public class ProjectModelFactory {
 
     /**
      * Generate the uri used to access the project activity task.
+     *
      * @param projectId project id
      * @param activityId activity id
      * @return uri
@@ -255,7 +260,7 @@ public class ProjectModelFactory {
 
         List<ProjectStageActivityTaskModel> modelList = new ArrayList<ProjectStageActivityTaskModel>();
         List<ProjectStageActivityTask> tasks = projectDao.findProjectStageActivityTasks(activity.
-                                                                                    getProjectStageActivityId());
+                getProjectStageActivityId());
         for (ProjectStageActivityTask task : tasks) {
 
             // we make use of the person dao caching, otherwise we would look these up first
@@ -285,7 +290,7 @@ public class ProjectModelFactory {
 
             modelList.add(model);
         }
-        
+
 
         return modelList;
     }
@@ -309,6 +314,7 @@ public class ProjectModelFactory {
      */
     private static class ProjectStageTaskModelComparator implements Comparator<ProjectStageActivityTaskModel>,
             Serializable {
+
         private static final long serialVersionUID = 5200865793008893390L;
 
         @Override

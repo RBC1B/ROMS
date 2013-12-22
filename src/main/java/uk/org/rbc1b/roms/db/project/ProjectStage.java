@@ -25,18 +25,18 @@ package uk.org.rbc1b.roms.db.project;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.RelationTargetAuditMode;
 import uk.org.rbc1b.roms.db.UpdateAuditable;
 
 /**
- * Project stage defined for a given project. Each project defines one or more stages to be completed to finish the
- * project.
+ * Project stage defined for a given project. Each project defines one or more
+ * stages to be completed to finish the project.
  */
 @Audited
 public class ProjectStage implements UpdateAuditable, Serializable, ProjectStageSortable {
+
     private static final long serialVersionUID = 1L;
     private static final String STARTED_STATUS_CODE = "WP";
     private Integer projectStageId;
@@ -59,7 +59,7 @@ public class ProjectStage implements UpdateAuditable, Serializable, ProjectStage
     public boolean isStarted() {
         return statusCode.equals(STARTED_STATUS_CODE);
     }
-    
+
     @Override
     public Integer getProjectStageSortableId() {
         return projectStageId;

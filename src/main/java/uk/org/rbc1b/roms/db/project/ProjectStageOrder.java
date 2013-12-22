@@ -25,7 +25,6 @@ package uk.org.rbc1b.roms.db.project;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -38,10 +37,12 @@ import org.hibernate.envers.Audited;
 import uk.org.rbc1b.roms.db.UpdateAuditable;
 
 /**
- * Store the ordering of the project stages. This is user for a linked list implementation.
+ * Store the ordering of the project stages. This is user for a linked list
+ * implementation.
  */
 @Audited
 public class ProjectStageOrder implements UpdateAuditable, Serializable {
+
     private static final long serialVersionUID = 1L;
     private Integer projectStageOrderId;
     private Integer projectStageOrderTypeId;
@@ -54,6 +55,7 @@ public class ProjectStageOrder implements UpdateAuditable, Serializable {
 
     /**
      * Sort the list of stages using the list of stage orders.
+     *
      * @param stages stages to sort
      * @param stageOrders stage orders, defining the stages
      */
@@ -68,7 +70,9 @@ public class ProjectStageOrder implements UpdateAuditable, Serializable {
     }
 
     /**
-     * From the list of stage ids, create the list of project stage orders with the previous and next stage ids defined.
+     * From the list of stage ids, create the list of project stage orders with
+     * the previous and next stage ids defined.
+     *
      * @param projectId project id
      * @param projectStageOrderTypeId project stage order type id
      * @param stageIds stage ids
@@ -112,7 +116,7 @@ public class ProjectStageOrder implements UpdateAuditable, Serializable {
     public void setProjectStageOrderId(Integer projectStageOrderId) {
         this.projectStageOrderId = projectStageOrderId;
     }
-    
+
     public Integer getProjectStageOrderTypeId() {
         return projectStageOrderTypeId;
     }
@@ -178,11 +182,13 @@ public class ProjectStageOrder implements UpdateAuditable, Serializable {
     }
 
     private static class ProjectStageComparator implements Comparator<ProjectStageSortable>, Serializable {
+
         private static final long serialVersionUID = 1L;
         private final List<Integer> projectStageIndexes;
 
         /**
          * Create the comparator, initialising the stage order indexes
+         *
          * @param stageOrders stage orders
          */
         public ProjectStageComparator(List<ProjectStageOrder> stageOrders) {
@@ -226,5 +232,4 @@ public class ProjectStageOrder implements UpdateAuditable, Serializable {
             return index0.compareTo(index1);
         }
     }
-
 }
