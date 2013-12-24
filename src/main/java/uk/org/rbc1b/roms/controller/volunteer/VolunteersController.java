@@ -85,6 +85,7 @@ public class VolunteersController {
     private static final String FULLTIME_REGULAR_PIONEER = "RP";
     private static final String APPOINTMENT_ELDER = "EL";
     private static final String APPOINTMENT_MINISTERIAL_SERVANT = "MS";
+    private static final String VOLUNTEER_IMAGE_DIRECTORY_KEY = "volunteer.images.directory";
     private static final Set<VolunteerData> VOLUNTEER_DATA = EnumSet.of(VolunteerData.SPOUSE,
             VolunteerData.EMERGENCY_CONTACT, VolunteerData.TRADES, VolunteerData.INTERVIEWER);
     @Autowired
@@ -101,8 +102,8 @@ public class VolunteersController {
     private AssignmentModelFactory assignmentModelFactory;
     @Autowired
     private VolunteerBadgePdfModelFactory volunteerBadgePdfModelFactory;
-    @Resource(name = "imageDirectory")
-    private Properties imagesDirectory;
+    @Resource(name = "imageDirectories")
+    private Properties imageDirectories;
 
     /**
      * Display a list of volunteers.
@@ -718,7 +719,7 @@ public class VolunteersController {
     }
 
     private void saveImage(String filename, MultipartFile image) throws IOException {
-        File file = new File(imagesDirectory.getProperty("images.directory") + filename);
+        File file = new File(imageDirectories.getProperty(VOLUNTEER_IMAGE_DIRECTORY_KEY) + filename);
         FileUtils.writeByteArrayToFile(file, image.getBytes());
     }
 
