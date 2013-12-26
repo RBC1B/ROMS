@@ -28,15 +28,15 @@ package uk.org.rbc1b.roms.controller.project;
  */
 public class ProjectTaskForm {
     private String comments;
-    private Integer assignedVolunteerId;
+    private Integer assignedUserId;
     private String name;
 
-    public Integer getAssignedVolunteerId() {
-        return assignedVolunteerId;
+    public Integer getAssignedUserId() {
+        return assignedUserId;
     }
 
-    public void setAssignedVolunteerId(Integer assignedVolunteerId) {
-        this.assignedVolunteerId = assignedVolunteerId;
+    public void setAssignedUserId(Integer assignedUserId) {
+        this.assignedUserId = assignedUserId;
     }
 
     public String getComments() {

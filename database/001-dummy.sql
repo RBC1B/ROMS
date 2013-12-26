@@ -492,20 +492,20 @@ values (1, 1, 2, 1, 3, '2013-07-08 11:45:00', 1);
 insert into ProjectStageOrder(ProjectStageOrderTypeId, ProjectId, ProjectStageSortableId, PreviousProjectStageSortableId, NextProjectStageSortableId, UpdateTime, UpdatedBy)
 values (1, 1, 3, 2, null, '2013-07-08 11:45:00', 1);
 
-insert into ProjectStageActivity(ProjectStageId, ProjectStageActivityTypeId, AssignedVolunteerId, StatusCode, Comments, UpdateTime, UpdatedBy)
+insert into ProjectStageActivity(ProjectStageId, ProjectStageActivityTypeId, AssignedUserId, StatusCode, Comments, UpdateTime, UpdatedBy)
 values(1, 1, 5, 'OH', 'Should be straight forward', '2013-07-08 11:45:00', 1);
 
-insert into ProjectStageActivity(ProjectStageId, ProjectStageActivityTypeId, AssignedVolunteerId, StatusCode, Comments, UpdateTime, UpdatedBy)
+insert into ProjectStageActivity(ProjectStageId, ProjectStageActivityTypeId, AssignedUserId, StatusCode, Comments, UpdateTime, UpdatedBy)
 values(1, 2, 5, 'OH', 'Gonna be tricky!', '2013-07-08 11:46:00', 1);
 
-insert into ProjectStageActivityTask (ProjectStageActivityId, Name, AssignedVolunteerId, StatusCode, Comments, CreatedTime,
+insert into ProjectStageActivityTask (ProjectStageActivityId, Name, AssignedUserId, StatusCode, Comments, CreatedTime,
 StartedTime, CompletedTime, UpdateTime, UpdatedBy)
 values (1, 'Ponder it for a while', 5, 'OH', 'Fingernail chewing optional', '2013-07-09 11:45:00',
 '2013-07-09 14:23:30', '2013-07-10 08:17:00', '2013-07-10 08:17:00', 1);
 
-insert into ProjectStageActivityTask (ProjectStageActivityId, Name, AssignedVolunteerId, StatusCode, Comments, CreatedTime,
+insert into ProjectStageActivityTask (ProjectStageActivityId, Name, AssignedUserId, StatusCode, Comments, CreatedTime,
 StartedTime, CompletedTime, UpdateTime, UpdatedBy)
-values (1, 'Ponder it a little bit more', 6, 'OH', null, '2013-07-11 17:25:48',
+values (1, 'Ponder it a little bit more', 3, 'OH', null, '2013-07-11 17:25:48',
 null, null, '2013-07-11 17:25:48', 1);
 
 insert into ProjectStageActivityTaskEvent(ProjectStageActivityTaskId, ProjectStageActivityTaskEventTypeCode, Comments, CreateTime, CreatedBy) 

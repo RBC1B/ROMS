@@ -37,6 +37,8 @@ import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
 import uk.org.rbc1b.roms.controller.kingdomhall.KingdomHallModelFactory;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.PersonDao;
+import uk.org.rbc1b.roms.db.application.User;
+import uk.org.rbc1b.roms.db.application.UserDao;
 import uk.org.rbc1b.roms.db.project.Project;
 import uk.org.rbc1b.roms.db.project.ProjectDao;
 import uk.org.rbc1b.roms.db.project.ProjectStage;
@@ -65,6 +67,8 @@ public class ProjectModelFactory {
     private ProjectDao projectDao;
     @Autowired
     private PersonDao personDao;
+    @Autowired
+    private UserDao userDao;
 
     /**
      * Generate the uri used to access the project pages.
@@ -206,12 +210,8 @@ public class ProjectModelFactory {
         List<ProjectStageActivity> activities = projectDao.findProjectStageActivities(stage.getProjectStageId());
         for (ProjectStageActivity activity : activities) {
 
-            // we make use of the person dao caching, otherwise we would look these up first
-            // to prevent duplicate lookups.
-            Person person = personDao.findPerson(activity.getAssignedVolunteer().getPersonId());
-
             ProjectStageActivityModel model = new ProjectStageActivityModel();
-            model.setAssignedVolunteer(personModelFactory.generatePersonModel(person));
+            model.setAssignedUser(generateUserModel(activity.getAssignedUser().getPersonId()));
             model.setComments(activity.getComments());
             model.setCompletedTime(activity.getCompletedTime());
             model.setCreatedTime(activity.getCreatedTime());
@@ -253,6 +253,18 @@ public class ProjectModelFactory {
         return generateUri(projectId) + "/activities/" + activityId + "/tasks";
     }
 
+    private EntityModel generateUserModel(Integer personId) {
+        // we make use of the user dao caching, otherwise we would look these up first
+        // to prevent duplicate lookups.
+        User user = userDao.findUser(personId);
+
+        EntityModel userModel = new EntityModel();
+        userModel.setId(user.getPersonId());
+        userModel.setName(user.getUserName());
+        userModel.setUri(PersonModelFactory.generateUri(user.getPersonId()));
+        return userModel;
+    }
+
     private List<ProjectStageActivityTaskModel> generateProjectStageActivityTasks(ProjectStageActivity activity,
             Map<String, String> statuses) {
 
@@ -263,13 +275,9 @@ public class ProjectModelFactory {
                 getProjectStageActivityId());
         for (ProjectStageActivityTask task : tasks) {
 
-            // we make use of the person dao caching, otherwise we would look these up first
-            // to prevent duplicate lookups.
-            Person person = personDao.findPerson(task.getAssignedVolunteer().getPersonId());
-
             ProjectStageActivityTaskModel model = new ProjectStageActivityTaskModel();
 
-            model.setAssignedVolunteer(personModelFactory.generatePersonModel(person));
+            model.setAssignedUser(generateUserModel(task.getAssignedUser().getPersonId()));
             model.setComments(task.getComments());
             model.setCompletedTime(task.getCompletedTime());
             model.setCreatedTime(task.getCreatedTime());

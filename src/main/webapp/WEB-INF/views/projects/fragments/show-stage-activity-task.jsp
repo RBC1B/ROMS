@@ -22,10 +22,9 @@
         </button>
         <div class="col-xs-2 project-assignee">
             <c:choose>
-                <c:when test="${!empty task.assignedVolunteer}">
-                    <a class="a-project-assignment" href="${task.assignedVolunteer.uri}"
-                       data-toggle="tooltip" data-original-title="${task.assignedVolunteer.displayName}">
-                        ${task.assignedVolunteer.initials}
+                <c:when test="${!empty task.assignedUser}">
+                    <a class="a-project-assignment" href="${task.assignedUser.uri}">
+                        ${task.assignedUser.name}
                     </a>
                 </c:when>
                 <c:otherwise>Unassigned</c:otherwise>
@@ -64,14 +63,26 @@
                                 </c:choose>
                         </div>
                         <div class="col-sm-3">
-                        <strong>Completed:</strong>
+                            <strong>Completed:</strong>
+                            <c:choose>
+                                <c:when test="${!empty task.completedTime}">
+                                    <fmt:formatDate value="${task.completedTime}" pattern="yyyy-MM-dd" />
+                                </c:when>
+                                <c:otherwise>&nbsp;</c:otherwise>
+                            </c:choose>
+                        </div>
+                        <div class="col-sm-2">
+                            <div>
                                 <c:choose>
-                                    <c:when test="${!empty task.completedTime}">
-                                        <fmt:formatDate value="${task.completedTime}" pattern="yyyy-MM-dd" />
+                                    <c:when test="${!empty task.assignedUser}">
+                                        <a class="a-project-assignment" href="${task.assignedUser.uri}">
+                                            ${task.assignedUser.name}
+                                        </a>
                                     </c:when>
-                                    <c:otherwise>&nbsp;</c:otherwise>
+                                    <c:otherwise>Unassigned</c:otherwise>
                                 </c:choose>
-                        </div>  
+                            </div>
+                            </div>
                         <div class="clearfix"></div>
                         <br>
                         <strong>Comments:</strong>

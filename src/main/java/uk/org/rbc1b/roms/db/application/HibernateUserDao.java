@@ -36,7 +36,6 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Use hibernate to look up the user information.
- * @author oliver.elder.esq
  */
 @Repository
 public class HibernateUserDao implements UserDao {
@@ -79,6 +78,7 @@ public class HibernateUserDao implements UserDao {
     }
 
     @Override
+    @Cacheable("user.userId")
     public User findUser(Integer userId) {
         return (User) this.sessionFactory.getCurrentSession().get(User.class, userId);
     }
