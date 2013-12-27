@@ -16,7 +16,7 @@
                 <span class="sr-only">Toggle navigation</span>
             </button>
             <a class="navbar-brand" href="<c:url value="/" />"><img src="<c:url value='/images/logo-brand.png' />" alt="edifice"></a>
-            <!-- Everything you want minimised at 940px or less, place within here -->
+            <div class="col-md-4">
             <a class="btn btn-edifice" href="#" ><span class="glyphicon glyphicon-question-sign"></span>&nbsp;Help</a>&nbsp;
             <button type="button" class="btn btn-success" id="login-popover" data-container="body" data-toggle="popover" data-placement="bottom">
                 Login
@@ -32,21 +32,22 @@
                             <input type='password' class="input-block-level" name='j_password'/>
                         </fieldset>
                         <input name="submit" class="btn btn-large btn-edifice" type="submit" value="Login"/>
-                    <c:if test="${not empty status}"><p class="error">Invalid login details supplied. Please try again</p></c:if>
+                    <c:if test="${not empty status}">
+                        <script type="text/javascrpt">
+                           
+                        </script><p class="error">Invalid login details supplied. Please try again</p></c:if>
                 </form>
+            </div>
             </div>
         </nav>
         <h1>Dashboard</h1>
         <hr>
-        <div class="jumbotron">
+        <div class="well">
             <div class="well-edifice col-md-4 col-xs-6">
                 <div class="well">
                     <!--Nested the well into another div with padding inside to give space between wells. Yoshi 09/10/13-->
-                    <h3>Organisations</h3>
-                    <ul class="nav nav-tabs nav-stacked">
-                        <li>Congregation</li>
-                        <li>Circuit</li>
-                    </ul>
+                    <h3>Old ROMS</h3>
+                        <a class="btn btn-lg btn-edifice" href="https://roms.rbc1b.org.uk:1443">Login to old ROMS &raquo;</a>
                 </div>
             </div>
             <div class="well-edifice col-md-4 col-xs-6">
