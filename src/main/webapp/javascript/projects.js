@@ -92,8 +92,8 @@ $(document).ready(function() {
         var $modal = $('#project-task-modal');
         $("#project-task-modal-form", $modal).attr("action", $(this).data("uri"));
         
-        $("input[name='assignedVolunteerId']", $modal).val($(this).data("userId"));
-        $("input[name='assignedVolunteerName']", $modal).val($(this).data("userName"));
+        $("input[name='assignedUserId']", $modal).val($(this).data("userId"));
+        $("input[name='assignedUserName']", $modal).val($(this).data("userName"));
         
         $modal.modal('show');
     });
@@ -175,7 +175,7 @@ $(document).ready(function() {
     });
     
     
-    $("input[name='assignedVolunteerName']").typeahead({
+    $("input[name='assignedUserName']").typeahead({
         remote: roms.common.relativePath + '/users/search?name=%QUERY',
         valueKey: 'userName'
     });
@@ -185,9 +185,9 @@ $(document).ready(function() {
             name: {
                 required: true
             },
-            assignedVolunteerName: {
+            assignedUserName: {
                 required: true,
-                remote: roms.common.validation.user($("input[name='assignedVolunteerName']"), $("input[name='assignedVolunteerId']"))
+                remote: roms.common.validation.user($("input[name='assignedUserName']"), $("input[name='assignedUserId']"))
             }
         },
         submitHandler :function(form) {

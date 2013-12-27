@@ -1,4 +1,4 @@
-/*
+/* 
  * The MIT License
  *
  * Copyright 2013 RBC1B.
@@ -21,38 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.controller.project;
-
-/**
- * Form used to create a project activity task.
- */
-public class ProjectTaskForm {
-    private String comments;
-    private Integer assignedUserId;
-    private String name;
-
-    public Integer getAssignedUserId() {
-        return assignedUserId;
-    }
-
-    public void setAssignedUserId(Integer assignedUserId) {
-        this.assignedUserId = assignedUserId;
-    }
-
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-}
+$(document).ready(function(){  
+    $('#login-popover').popover({ 
+        trigger: 'hover',
+        title: $(this).data("title"),
+        content: $(this).data("content")
+    });
+});

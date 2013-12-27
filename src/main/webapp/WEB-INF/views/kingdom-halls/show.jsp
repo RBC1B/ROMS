@@ -21,6 +21,15 @@
                         <c:if test="${!empty kingdomHall.postcode}">${kingdomHall.postcode}<br /></c:if>
                     </address>
                 </dd>
+                <dt>Ownership Type:</dt>
+                <dd>
+                    <c:choose>
+                        <c:when test="${!empty ownershipType}">
+                            ${kingdomHall.ownershipTypeCode}
+                        </c:when>
+                        <c:otherwise>Ownership Type is unknown</c:otherwise>
+                    </c:choose>
+                </dd>
                 <dt>Used By:</dt>
                 <dd>
                     <c:choose>
@@ -38,12 +47,12 @@
                 <dt>Title Holder:</dt>
                 <dd>
                     <c:choose>
-                        <c:when test="${!empty titleHoldingCongregation}">
-                            <a href="<c:url value="${titleHoldingCongregation.uri}" />">
-                            ${titleHoldingCongregation.name}
+                        <c:when test="${!empty kingdomHall.titleHoldingCongregation}">
+                            <a href="<c:url value="${kingdomHall.titleHoldingCongregation.uri}" />">
+                            ${kingdomHall.titleHoldingCongregation.name}
                             </a>
                         </c:when>
-                        <c:otherwise>-</c:otherwise>
+                        <c:otherwise>Unknown</c:otherwise>
                     </c:choose>
                 </dd>
             </dl>

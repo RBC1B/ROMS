@@ -16,9 +16,9 @@
                         <input type="text" name="name" maxlength="250" />
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">Assigned volunteer</label>
-                        <input type="hidden" name="assignedVolunteerId" />
-                        <input type="text" name="assignedVolunteerName" autocomplete="off" />
+                        <label class="col-sm-4 control-label">Assigned user</label>
+                        <input type="hidden" name="assignedUserId" />
+                        <input type="text" name="assignedUserName" autocomplete="off" />
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Comments</label>

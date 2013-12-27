@@ -48,6 +48,7 @@ import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 
 /**
  * Handle congregation related requests.
+ *
  * @author oliver.elder.esq
  * @author Ramindur
  */
@@ -70,6 +71,7 @@ public class CongregationsController {
 
     /**
      * Displays the list of congregations.
+     *
      * @param model mvc model
      * @return view
      */
@@ -86,6 +88,7 @@ public class CongregationsController {
 
     /**
      * Search for a congregation by name.
+     *
      * @param name partial name match
      * @return list of matching congregations
      */
@@ -107,10 +110,12 @@ public class CongregationsController {
 
     /**
      * Displays a congregation.
+     *
      * @param congregationId congregation Id (primary key)
      * @param model mvc
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException on failure to look up the congregation
+     * @throws NoSuchRequestHandlingMethodException on failure to look up the
+     * congregation
      */
     @RequestMapping(value = "{congregationId}", method = RequestMethod.GET)
     public String showCongregation(@PathVariable Integer congregationId, ModelMap model)
@@ -125,10 +130,12 @@ public class CongregationsController {
 
     /**
      * Displays a congregation for editing.
+     *
      * @param congregationId congregation ID to edit
      * @param model mvc model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException on failure to find congregation
+     * @throws NoSuchRequestHandlingMethodException on failure to find
+     * congregation
      */
     @RequestMapping(value = "{congregationId}/edit", method = RequestMethod.GET)
     public String showEditCongregationForm(@PathVariable Integer congregationId, ModelMap model)
@@ -142,11 +149,15 @@ public class CongregationsController {
         form.setName(congregation.getName());
         form.setNumber(congregation.getNumber());
 
-        KingdomHall kingdomHall = kingdomHallDao.findKingdomHall(congregation.getKingdomHall().getKingdomHallId());
+        if (congregation.getKingdomHall() != null) {
+            KingdomHall kingdomHall = kingdomHallDao.findKingdomHall(congregation.getKingdomHall().getKingdomHallId());
+            form.setKingdomHallId(kingdomHall.getKingdomHallId());
+            form.setKingdomHallName(kingdomHall.getName());
+        }
+        if (congregation.getCircuit() != null) {
+            form.setCircuitId(congregation.getCircuit().getCircuitId());
+        }
 
-        form.setKingdomHallId(kingdomHall.getKingdomHallId());
-        form.setKingdomHallName(kingdomHall.getName());
-        form.setCircuitId(congregation.getCircuit().getCircuitId());
         form.setRbcRegionId(congregation.getRbcRegionId());
         form.setPublishers(congregation.getPublishers());
         form.setAttendance(congregation.getAttendance());
@@ -185,6 +196,7 @@ public class CongregationsController {
 
     /**
      * Displays the form to create a new skill.
+     *
      * @param model mvc model
      * @return view name
      */
@@ -200,12 +212,14 @@ public class CongregationsController {
     }
 
     /**
-     * Updates a congregation, creating new {@link Person} instances for newly created congregation contacts if
-     * required.
+     * Updates a congregation, creating new {@link Person} instances for newly
+     * created congregation contacts if required.
+     *
      * @param congregationId existing congregation id
      * @param congregationForm congregationForm bean
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException on failure to find congregation
+     * @throws NoSuchRequestHandlingMethodException on failure to find
+     * congregation
      */
     @RequestMapping(value = "{congregationId}", method = RequestMethod.PUT)
     public String updateCongregation(@PathVariable Integer congregationId, @Valid CongregationForm congregationForm)
@@ -222,8 +236,9 @@ public class CongregationsController {
     }
 
     /**
-     * Creates a congregation, creating new {@link Person} instances for newly created congregation contacts if
-     * required.
+     * Creates a congregation, creating new {@link Person} instances for newly
+     * created congregation contacts if required.
+     *
      * @param congregationForm congregationForm bean
      * @return view name
      */
@@ -328,5 +343,4 @@ public class CongregationsController {
         }
         return null;
     }
-
 }
