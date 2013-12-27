@@ -86,7 +86,7 @@
                 <div class="well">
                     <h3>My Profile</h3>
                     <ul class="nav nav-tabs nav-stacked">
-                        <li>Ramindur</li>
+                        <li>Not logged in.</li>
                     </ul>
                 </div>
             </div>
