@@ -12,11 +12,7 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body class="blueprints">
         <div class="container">
-            <div class="col-md-6 well form-signin">
-                <h3>Old ROMS</h3>
-                <a class="btn btn-lg btn-edifice" href="https://roms.rbc1b.org.uk:1443">Login to old ROMS &raquo;</a>
-            </div>
-            <div class="col-md-6 form-signin">
+            <div class="form-signin">
             <form action="<c:url value='j_spring_security_check' />" method="POST">
                 <img src="<c:url value='/images/logo-login.png' />">
                 <p class="title-quote">Edifice :- Origin from Latin <b>aedificum</b> from <b><i>aedis 'dwelling' + facere 'make' </i></b></p>
@@ -30,6 +26,10 @@
                 <input name="submit" class="btn btn-large btn-edifice" type="submit" value="Login"/>
             </form>
             </div>
+            <div class="well form-signin">
+                <h3>Old ROMS</h3>
+                <a class="btn btn-lg btn-edifice" href="https://roms.rbc1b.org.uk:1443">Login to old ROMS &raquo;</a>
+            </div>                
         </div>
     </body>
 </html>

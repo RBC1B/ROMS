@@ -164,7 +164,7 @@ body.blueprints {
 .form-signin {
     max-width: 350px;
     padding: 19px 29px 29px;
-    margin: 0 auto 20px;
+    margin: 10px auto 20px;
     background-color: #fff;
     border: 1px solid #e5e5e5;
     -webkit-border-radius: 5px;
@@ -174,10 +174,11 @@ body.blueprints {
     -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
     box-shadow: 0 1px 2px rgba(0,0,0,.05);
 }
-.form-signin .form-signin-heading,
+/*Do we need this??*/
+/*.form-signin .form-signin-heading,
 .form-signin .checkbox {
     margin-bottom: 10px;
-}
+}*/
 .form-signin input[type="text"],
 .form-signin input[type="password"] {
     font-size: 16px;
@@ -190,9 +191,9 @@ body.blueprints {
     -moz-border-radius: 0px!important;
     border-radius: 0px!important;
 }
-.form-signin {
+/*.form-signin {
     margin-top:60px;
-}
+}*/
 .form-signin img {
     margin-bottom:10px;
 }
