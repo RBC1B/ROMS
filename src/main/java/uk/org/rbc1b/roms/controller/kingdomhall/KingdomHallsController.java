@@ -42,9 +42,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.controller.LoggingHandlerExceptionResolver;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableResult;
+import uk.org.rbc1b.roms.controller.congregation.CongregationModelFactory;
 import uk.org.rbc1b.roms.db.Address;
 import uk.org.rbc1b.roms.db.Congregation;
 import uk.org.rbc1b.roms.db.CongregationDao;
+import uk.org.rbc1b.roms.db.CongregationSearchCriteria;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHallDao;
 import uk.org.rbc1b.roms.db.reference.ReferenceDao;
@@ -67,6 +69,8 @@ public class KingdomHallsController {
     private ReferenceDao referenceDao;
     @Autowired
     private CongregationDao congregationDao;
+    @Autowired
+    private CongregationModelFactory congregationModelFactory;
 
     /**
      * Display the list of kingdom halls.
@@ -97,14 +101,16 @@ public class KingdomHallsController {
             throws NoSuchRequestHandlingMethodException {
 
         KingdomHall kingdomHall = kingdomHallDao.findKingdomHall(kingdomHallId);
-
+        CongregationSearchCriteria congregationSearchCriteria = new CongregationSearchCriteria();
+        congregationSearchCriteria.setKingdomHallId(kingdomHallId);
+        List<Congregation> congregations = congregationDao.findCongregations(congregationSearchCriteria);
         if (kingdomHall == null) {
             throw new NoSuchRequestHandlingMethodException("No kingdom hall #" + kingdomHallId, this.getClass());
         }
-
         model.addAttribute("kingdomHall", kingdomHallModelFactory.generateKingdomHallModel(kingdomHall));
         model.addAttribute("ownershipType",
                 referenceDao.findKingdomHallOwnershipTypeValues().get(kingdomHall.getOwnershipTypeCode()));
+        model.addAttribute("congregations", congregationModelFactory.generateCongregationListModels(congregations));
 
         return "kingdom-halls/show";
     }

@@ -60,13 +60,13 @@ public class PersonModel {
      */
     public String getInitials() {
         StringBuilder builder = new StringBuilder();
-        if (forename != null) {
+        if (forename != null && !forename.isEmpty()) {
             builder.append(forename.charAt(0));
         }
-        if (middleName != null) {
+        if (middleName != null && !middleName.isEmpty()) {
             builder.append(middleName.charAt(0));
         }
-        if (surname != null) {
+        if (surname != null && !surname.isEmpty()) {
             builder.append(surname.charAt(0));
         }
         return builder.toString();

@@ -22,10 +22,9 @@
         </button>
         <div class="col-xs-1 project-assignee">
             <c:choose>
-                <c:when test="${!empty activity.assignedVolunteer}">
-                    <a class="a-project-assignment" href="${activity.assignedVolunteer.uri}"
-                       data-toggle="tooltip" data-original-title="${activity.assignedVolunteer.displayName}">
-                        ${activity.assignedVolunteer.initials}
+                <c:when test="${!empty activity.assignedUser}">
+                    <a class="a-project-assignment" href="${activity.assignedUser.uri}">
+                        ${activity.assignedUser.name}
                     </a>
                 </c:when>
                 <c:otherwise>Unassigned</c:otherwise>
@@ -91,6 +90,16 @@
                                     <c:otherwise>&nbsp;</c:otherwise>
                                 </c:choose>
                             </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <c:choose>
+                                <c:when test="${!empty activity.assignedUser}">
+                                    <a class="a-project-assignment" href="${activity.assignedUser.uri}">
+                                        ${activity.assignedUser.name}
+                                    </a>
+                                </c:when>
+                                <c:otherwise>Unassigned</c:otherwise>
+                            </c:choose>
                         </div>
                         <br>
                         <div class="col-sm-12">

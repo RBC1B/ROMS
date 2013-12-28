@@ -194,7 +194,6 @@ $(document).ready(function() {
                 maxlength: 9
             },
             telephone: {
-                required: true,
                 phoneNumber: true
             },
             mobile: {

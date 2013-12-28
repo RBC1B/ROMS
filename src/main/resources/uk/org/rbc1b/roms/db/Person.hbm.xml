@@ -20,7 +20,7 @@
         <property name="mobile" length="15" />
         <property name="workPhone" length="15" />
         <property name="email" length="50" />
-        <property name="comments" length="250" />
+        <property name="comments" length="2000" />
         <property name="updateTime" not-null="true"  />
         <property name="updatedBy" not-null="true"  />
     </class>

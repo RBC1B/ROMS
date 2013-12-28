@@ -29,7 +29,7 @@ import java.util.Set;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.RelationTargetAuditMode;
 import uk.org.rbc1b.roms.db.UpdateAuditable;
-import uk.org.rbc1b.roms.db.volunteer.Volunteer;
+import uk.org.rbc1b.roms.db.application.User;
 
 /**
  * Task involved in completing a project stage activity.
@@ -42,7 +42,7 @@ public class ProjectStageActivityTask implements UpdateAuditable, Serializable, 
     private Integer projectStageActivityTaskId;
     private ProjectStageActivity projectStageActivity;
     private String name;
-    private Volunteer assignedVolunteer;
+    private User assignedUser;
     private String statusCode;
     private String comments;
     private Date createdTime;
@@ -88,12 +88,12 @@ public class ProjectStageActivityTask implements UpdateAuditable, Serializable, 
         this.name = name;
     }
 
-    public Volunteer getAssignedVolunteer() {
-        return assignedVolunteer;
+    public User getAssignedUser() {
+        return assignedUser;
     }
 
-    public void setAssignedVolunteer(Volunteer assignedVolunteer) {
-        this.assignedVolunteer = assignedVolunteer;
+    public void setAssignedUser(User assignedUser) {
+        this.assignedUser = assignedUser;
     }
 
     public String getStatusCode() {

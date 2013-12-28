@@ -52,6 +52,7 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 import uk.org.rbc1b.roms.controller.common.DataConverterUtil;
 import uk.org.rbc1b.roms.db.PersonDao;
+import uk.org.rbc1b.roms.db.application.UserDao;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHallDao;
 import uk.org.rbc1b.roms.db.project.Project;
 import uk.org.rbc1b.roms.db.project.ProjectDao;
@@ -89,6 +90,8 @@ public class ProjectsController {
     private ProjectModelFactory projectModelFactory;
     @Autowired
     private VolunteerDao volunteerDao;
+    @Autowired
+    private UserDao userDao;
 
     /**
      * Display the list of projects.
@@ -313,7 +316,8 @@ public class ProjectsController {
 
         ProjectStageActivityTask task = new ProjectStageActivityTask();
         task.setProjectStageActivity(activity);
-        task.setAssignedVolunteer(volunteerDao.findVolunteer(taskForm.getAssignedVolunteerId(), null));
+
+        task.setAssignedUser(userDao.findUser(taskForm.getAssignedUserId()));
         task.setComments(taskForm.getComments());
         task.setCreatedTime(new Date());
         task.setName(taskForm.getName());
