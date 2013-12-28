@@ -159,6 +159,7 @@ public class CongregationsController {
         }
 
         form.setRbcRegionId(congregation.getRbcRegionId());
+        form.setRbcSubRegionId(congregation.getRbcSubRegionId());
         form.setPublishers(congregation.getPublishers());
         form.setAttendance(congregation.getAttendance());
         form.setFunds(congregation.getFunds());
