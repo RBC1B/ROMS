@@ -34,17 +34,17 @@ The contents of the department linked skills.
                             <td>
                                 <c:choose>
                                     <c:when test="${skill.category.appearOnBadge}">
-                                        <span class="icon-ok">
+                                        <span class="glyphicon glyphicon-ok">
                                     </c:when>
                                     <c:otherwise>
-                                        <span class="icon-remove"></span>
+                                        <span class="glyphicon glyphicon-remove"></span>
                                     </c:otherwise>
                                 </c:choose>
                             </td>
                         </c:when>
                         <c:otherwise>
                             <td></td>
-                            <td><span class="icon-remove"></span></td>
+                            <td><span class="glyphicon glyphicon-remove"></span></td>
                         </c:otherwise>
                     </c:choose>
                 </tr>
