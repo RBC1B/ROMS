@@ -403,7 +403,7 @@ public class VolunteersController {
         form.setJoinedDate(DataConverterUtil.toDateTime(volunteer.getJoinedDate()));
         form.setBadgeIssueDate(DataConverterUtil.toDateTime(volunteer.getBadgeIssueDate()));
 
-        if (volunteer.getAvailability() != null || volunteer.getAvailability().length() == 7) {
+        if (volunteer.getAvailability() != null && volunteer.getAvailability().length() == 7) {
             char[] availability = volunteer.getAvailability().toCharArray();
 
             form.setAvailabilityMonday(availability[0] == 'T');
