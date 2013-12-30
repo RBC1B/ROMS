@@ -735,4 +735,6 @@ $(document).ready(function() {
     $('#submit-image').on("click", function(){
         $('#volunteer-image-modal').modal('hide');
     });
+    
+    
 });

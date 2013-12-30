@@ -35,7 +35,8 @@ import uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTrade;
  * @author oliver
  */
 public class VolunteerModel extends PersonModel {
-
+    
+    
     private String appointment;
     private java.sql.Date baptismDate;
     private PersonModel emergencyContact;

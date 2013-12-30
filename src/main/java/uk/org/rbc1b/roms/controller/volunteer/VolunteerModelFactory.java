@@ -57,7 +57,7 @@ import uk.org.rbc1b.roms.db.volunteer.skill.VolunteerSkill;
 public class VolunteerModelFactory {
 
     private static final String BASE_URI = "/volunteers/";
-    private static final Integer DAYS_PER_WEEK = 7;
+    private static final Integer DAYS_PER_WEEK = 7;  
     private static final Map<Integer, Boolean> NO_AVAILABILITY = new HashMap<Integer, Boolean>();
     @Autowired
     private ReferenceDao referenceDao;
