@@ -51,13 +51,14 @@ import uk.org.rbc1b.roms.db.volunteer.skill.VolunteerSkill;
 
 /**
  * Generate the volunteer model.
+ *
  * @author oliver
  */
 @Component
 public class VolunteerModelFactory {
 
     private static final String BASE_URI = "/volunteers/";
-    private static final Integer DAYS_PER_WEEK = 7;  
+    private static final Integer DAYS_PER_WEEK = 7;
     private static final Map<Integer, Boolean> NO_AVAILABILITY = new HashMap<Integer, Boolean>();
     @Autowired
     private ReferenceDao referenceDao;
@@ -80,6 +81,7 @@ public class VolunteerModelFactory {
 
     /**
      * Generate the uri used to access the volunteer pages.
+     *
      * @param volunteerId optional volunteer id
      * @return uri
      */
@@ -89,6 +91,7 @@ public class VolunteerModelFactory {
 
     /**
      * Generate the volunteer model to be used in the summary list.
+     *
      * @param volunteer volunteer
      * @return model
      */
@@ -109,6 +112,7 @@ public class VolunteerModelFactory {
 
     /**
      * Generate the model to be used in the volunteer details view.
+     *
      * @param volunteer volunteer
      * @return model
      */
@@ -215,6 +219,7 @@ public class VolunteerModelFactory {
 
     /**
      * Generate the models for the volunteer skills.
+     *
      * @param volunteerSkills list of volunteer skills
      * @return model list
      */
@@ -260,6 +265,7 @@ public class VolunteerModelFactory {
 
     /**
      * Generate the models for the volunteer qualifications.
+     *
      * @param volunteerQualifications list of volunteer qualifications
      * @return model list
      */
@@ -295,5 +301,4 @@ public class VolunteerModelFactory {
 
         return modelList;
     }
-
 }

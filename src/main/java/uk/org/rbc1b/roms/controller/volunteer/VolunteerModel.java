@@ -32,11 +32,11 @@ import uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTrade;
 
 /**
  * Model of volunteer details.
+ *
  * @author oliver
  */
 public class VolunteerModel extends PersonModel {
-    
-    
+
     private String appointment;
     private java.sql.Date baptismDate;
     private PersonModel emergencyContact;
@@ -71,6 +71,7 @@ public class VolunteerModel extends PersonModel {
 
     /**
      * Determine if the volunteer is available on a given day of the week.
+     *
      * @param dayOfWeek day of week, based on the Calendar DAY_OF_WEEK values
      * @return true if marked as available
      */
