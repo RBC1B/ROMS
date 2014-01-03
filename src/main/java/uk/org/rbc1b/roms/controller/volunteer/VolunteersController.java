@@ -23,8 +23,11 @@
  */
 package uk.org.rbc1b.roms.controller.volunteer;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumSet;
@@ -33,6 +36,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FileUtils;
@@ -43,6 +47,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -117,6 +122,7 @@ public class VolunteersController {
 
         model.addAttribute("volunteers", volunteerDao.findVolunteers(searchCriteria));
         model.addAttribute("newUri", VolunteerModelFactory.generateUri(null) + "new");
+
         return "volunteers/list";
     }
 
@@ -699,6 +705,33 @@ public class VolunteersController {
         } else {
             return new ModelAndView("redirect:" + VolunteerBadgePdfModelFactory.generateUri(volunteerId));
         }
+    }
+
+    /**
+     * Get volunteer image .
+     *
+     * @param volunteerId id
+     * @param response HttpServletResponse
+     * @throws IOException if the file cannot be read
+     */
+    @RequestMapping(value = "{volunteerId}/imageProfile",
+            method = RequestMethod.GET)
+    public void showImage(@PathVariable Integer volunteerId,
+            HttpServletResponse response) throws IOException {
+        String imageName = volunteerId + ".jpg";
+        File file = new File(imageDirectories.getProperty(VOLUNTEER_IMAGE_DIRECTORY_KEY) + imageName);
+        //if the file doesnt exist
+        if (!file.exists()) {
+            imageName = "default.jpg";
+            file = new File(imageDirectories.getProperty(VOLUNTEER_IMAGE_DIRECTORY_KEY) + imageName);
+        }
+
+        OutputStream out = response.getOutputStream();
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + imageName + "\"");
+        response.setContentType("image/jpeg");
+        BufferedInputStream in = new BufferedInputStream(new FileInputStream(file));
+        int copy = FileCopyUtils.copy(in, out);
+        out.flush();
     }
 
     /**
