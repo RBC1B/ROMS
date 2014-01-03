@@ -18,7 +18,7 @@
                             </sec:authorize>
                         </ul>
                     </sec:authorize>
-                </div>
+                </div>  
                 <div class="col-xs-4">
                     <sec:authorize access="hasPermission('VOLUNTEER', 'READ') or hasPermission('SKILL', 'READ')">
                         <ul class="footer-nav">
@@ -43,7 +43,7 @@
                             </sec:authorize>
                         </ul>
                     </sec:authorize>
-                </div>
+                </div> 
                 <div class="col-xs-4">
                     <sec:authorize access="hasPermission('PROJECT', 'READ') or hasPermission('DATABASE', 'READ')">
                         <ul class="footer-nav">
