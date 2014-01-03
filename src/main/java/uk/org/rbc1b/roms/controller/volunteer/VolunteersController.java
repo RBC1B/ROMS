@@ -23,10 +23,13 @@
  */
 package uk.org.rbc1b.roms.controller.volunteer;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,6 +39,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import javax.annotation.Resource;
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.apache.commons.collections.CollectionUtils;
@@ -683,11 +687,13 @@ public class VolunteersController {
      *
      * @param volunteerId volunteer id of for his/her badge
      * @param volunteerBadgeId volunteer badge id
+     *
+     * @throws IOException if image file not found
      * @return modelAndView of the VolunteerBadgePdfView
      */
     @RequestMapping(value = "{volunteerId}/rbc-{volunteerBadgeId}-badge.pdf", method = RequestMethod.GET)
     public ModelAndView produceVolunteerBadgePdf(@PathVariable Integer volunteerId,
-            @PathVariable Integer volunteerBadgeId) {
+            @PathVariable Integer volunteerBadgeId) throws IOException {
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
         if (volunteerId.equals(volunteerBadgeId)) {
             ModelAndView modelAndView = new ModelAndView("volunteerBadgePdfView");
@@ -700,6 +706,13 @@ public class VolunteersController {
             modelAndView.getModelMap().addAttribute("colourBand", colourBand);
             modelAndView.getModelMap().addAttribute("skillsSet", skillsSet);
             modelAndView.getModelMap().addAttribute("assignment", assignment);
+
+            String imageName = volunteerId + ".jpg";
+            File imageFile = new File(imageDirectories.getProperty(VOLUNTEER_IMAGE_DIRECTORY_KEY) + imageName);
+            byte[] bytes = FileUtils.readFileToByteArray(imageFile);
+            InputStream inputStream = new ByteArrayInputStream(bytes);
+            BufferedImage bufferedImage = ImageIO.read(inputStream);
+            modelAndView.getModelMap().addAttribute("bufferedImage", bufferedImage);
 
             return modelAndView;
         } else {
