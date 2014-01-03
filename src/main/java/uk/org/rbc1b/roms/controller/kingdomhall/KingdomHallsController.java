@@ -107,8 +107,9 @@ public class KingdomHallsController {
         if (kingdomHall == null) {
             throw new NoSuchRequestHandlingMethodException("No kingdom hall #" + kingdomHallId, this.getClass());
         }
+        kingdomHall.setOwnershipTypeCode(kingdomHall.getOwnershipTypeCode());
         model.addAttribute("kingdomHall", kingdomHallModelFactory.generateKingdomHallModel(kingdomHall));
-        model.addAttribute("ownershipType",
+        model.addAttribute("ownershipValue",
                 referenceDao.findKingdomHallOwnershipTypeValues().get(kingdomHall.getOwnershipTypeCode()));
         model.addAttribute("congregations", congregationModelFactory.generateCongregationListModels(congregations));
 
