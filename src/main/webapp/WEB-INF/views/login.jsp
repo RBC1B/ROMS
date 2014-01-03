@@ -13,17 +13,12 @@
     <body class="blueprints">
         <div class="container">
             <div class="col-md-6 well login-info">
-
                 <h1>Welcome to the new version of ROMS</h1>
-                <p>
-                    <em>Edifice</em> Is a new version of the RBC Online Management System.
-                    You will need training to use this system.
-                    Please contact <a href="mailto:Janicem_green@hotmail.com">Janicem_green@hotmail.com</a> to alert us of your training needs.
-                </p>
-                <div class="well form-signin">
-                    <h3>Old ROMS</h3>
-                    <a class="btn btn-lg btn-edifice" href="https://roms.rbc1b.org.uk:1443">Login to old ROMS &raquo;</a>
-                </div>                
+                <p><em>Edifice</em> Is a new version of the RBC Online Management System. You will need training to use this system. Please contact <a href="mailto:Janicem_green@hotmail.com">Janicem_green@hotmail.com</a> to alert us of your training needs.</p>
+                <br>
+                <h3>Old ROMS</h3>
+                <p>ROMS is still in use, but Volunteers is now read-only. Please use Edifice to update Volunteer details.</p>
+                <a class="btn btn-lg btn-edifice" href="https://roms.rbc1b.org.uk:1443">Login to old ROMS &raquo;</a>
             </div>
 
             <div class="form-signin col-md-6">

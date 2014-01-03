@@ -32,10 +32,10 @@ import com.lowagie.text.pdf.BaseFont;
 import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfWriter;
 import java.awt.Color;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.view.document.AbstractPdfView;
@@ -78,10 +78,9 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
 
         addSkills(cb, skillsSet);
 
-        // Get image from the images directory relative to context root
-        ServletContext context = request.getServletContext();
-        String contextPath = context.getRealPath("/");
-        Image img = Image.getInstance(contextPath + "/images/" + volunteer.getPersonId() + ".jpg");
+        // Get image
+        BufferedImage bufferedImage = (BufferedImage) model.get("bufferedImage");
+        Image img = Image.getInstance(bufferedImage, null);
 
         addImage(cb, img);
         addBarcode(cb, volunteer.getPersonId());

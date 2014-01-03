@@ -1316,7 +1316,9 @@ insert into Department (Name, SuperDepartmentId, Description, UpdateTime, Update
     ('Volunteer Service','5','', NOW(), 0),
     ('Design','6','', NOW(), 0),
     ('Legel','6','', NOW(), 0),
-    ('Real Estate','6','', NOW(), 0);
+    ('Real Estate','6','', NOW(), 0),
+    ('Materials Take Off','4','', NOW(), 0),
+    ('Construction Oversight', '3','',NOW(),0);
 insert into Department (Name, SuperDepartmentId, Description, UpdateTime, UpdatedBy) values
     ('Land Acquisition and Sale','49','', NOW(), 0),
     ('Land Search','49','', NOW(), 0),

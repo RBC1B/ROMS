@@ -158,9 +158,6 @@ form label {
 /*****************************************************************************/
 /* Sign in form                                                              */
 /*****************************************************************************/
-body.blueprints {
-    background-image:url('/images/blueprints.jpg');
-}
 .form-signin {
     max-width: 350px;
     padding: 19px 29px 29px;
@@ -202,10 +199,8 @@ body.blueprints {
     color:#7F7E7E;
 }
 .login-info {
-    
-    margin-top: 20px;
+    margin-top: 10px;
     margin-right: 20px;
-    
 }
 /*****************************************************************************/
 /* Form layout                                                               */
@@ -458,6 +453,25 @@ ul.list-inline {
     margin:0;
 }
 
+#congregation-member-list_wrapper {
+    margin-top: 10px!important;
+}
+
+#qualification-volunteer-list_wrapper {
+    margin-top: 10px!important;
+}
+
+#skills-volunteer-list_wrapper {
+    margin-top: 10px!important;
+}
+
+#department-skills-list_wrapper {
+    margin-top: 10px!important;
+}
+
+#department-assignment-list_wrapper {
+    margin-top: 10px!important;
+}
 
 /*****************************************************************************/
 /* Create volunteer form                                                     */

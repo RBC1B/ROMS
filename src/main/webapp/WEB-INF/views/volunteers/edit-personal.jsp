@@ -87,8 +87,8 @@ Edit form for the volunteer data under the personal tab.
             <fieldset>
                 <legend>Gender</legend>
                 <form:select path="gender">
-                    <option value="M">Male</option>
-                    <option value="F">Female</option>
+                    <form:option value="M">Male</form:option>
+                    <form:option value="F">Female</form:option>
                 </form:select>
             </fieldset><br>
             <fieldset>

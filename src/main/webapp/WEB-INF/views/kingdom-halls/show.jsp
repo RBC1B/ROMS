@@ -24,8 +24,8 @@
                 <dt>Ownership Type:</dt>
                 <dd>
                     <c:choose>
-                        <c:when test="${!empty ownershipType}">
-                            ${kingdomHall.ownershipTypeCode}
+                        <c:when test="${!empty ownershipValue}">
+                            ${ownershipValue}
                         </c:when>
                         <c:otherwise>Ownership Type is unknown</c:otherwise>
                     </c:choose>
