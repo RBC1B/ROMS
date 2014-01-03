@@ -453,6 +453,17 @@ ul.list-inline {
     margin:0;
 }
 
+#congregation-member-list_wrapper {
+    margin-top: 10px!important;
+}
+
+#qualification-volunteer-list_wrapper {
+    margin-top: 10px!important;
+}
+
+#skills-volunteer-list_wrapper {
+    margin-top: 10px!important;
+}
 
 /*****************************************************************************/
 /* Create volunteer form                                                     */
