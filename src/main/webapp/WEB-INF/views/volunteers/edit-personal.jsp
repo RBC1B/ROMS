@@ -16,112 +16,117 @@ Edit form for the volunteer data under the personal tab.
         <c:url var="formAction" value="${submitUri}" />
         <form:form class="form-horizontal" commandName="volunteerPersonal" method="PUT" action="${formAction}">
             <fieldset>
-                <div class="container">
-                    <div class="row">
-                    <h3>Contact details</h3>
-                    <div class="form-group">
-                        <div class="col-md-4">
-                            <div class="col-md-12">
-                                <form:input class="form-control" path="email" maxlength="50" placeholder="Email" />
-                            </div>
-                        </div>
+                <legend>Contacts</legend>
+                <div class="form-group">
+                    <label for="email" class="control-label col-sm-3 col-md-2">Email</label>
+                    <div class="col-sm-9 col-md-3">
+                        <form:input path="email" class="form-control" maxlength="50" />
                     </div>
+                </div>
+                <div class="form-group">
+                    <label for="telephone" class="control-label col-sm-3 col-md-2">Home phone</label>
+                    <div class="col-sm-9 col-md-2">
+                        <form:input path="telephone" class="form-control" maxlength="15" />
                     </div>
-                    <div class="row">
-                    <div class="form-group">
-                        <div class="col-md-4">
-                            <div class="col-md-12">
-                            <form:input class="form-control" path="telephone" maxlength="15" placeholder="Home phone" />
-                            </div>
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label for="mobile" class="control-label col-sm-3 col-md-2">Mobile phone</label>
+                    <div class="col-sm-9 col-md-2">
+                        <form:input path="mobile" class="form-control" maxlength="15" />
                     </div>
-
-                    <div class="form-group">
-                        <div class="col-md-4">
-                            <div class="col-md-12">
-                            <form:input class="form-control" path="mobile" maxlength="15" placeholder="Mobile phone" />
-                            </div>
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label for="workPhone" class="control-label col-sm-3 col-md-2">Work phone</label>
+                    <div class="col-sm-9 col-md-2">
+                        <form:input path="workPhone" class="form-control" maxlength="15" />
                     </div>
-                    <div class="form-group">
-                        <div class="col-md-4">
-                            <div class="col-md-12">
-                            <form:input class="form-control" path="workPhone" maxlength="15" placeholder="Work phone" />
-                            </div>
-                        </div>
-                    </div>
-                  </div>
+                </div>
             </fieldset>
             <fieldset>
                 <legend>Address</legend>
                 <div class="form-group">
-                    <div class="col-md-6">
-                        <label class="col-md-4 col-sm-3 control-label" for="street">Street</label>
-                        <div class="col-md-8 col-sm-9">
-                            <form:input class="form-control" path="street" maxlength="50" />
-                        </div>
+                    <label for="street" class="control-label col-sm-3 col-md-2">Street</label>
+                    <div class="col-sm-9 col-md-3">
+                        <form:input path="street" class="form-control" maxlength="50" />
                     </div>
-                    <div class="col-md-6">
-                        <label class="col-md-4 col-sm-3 control-label" for="town">Town</label>
-                        <div class="col-md-8 col-sm-9">
-                            <form:input class="form-control" path="town" maxlength="50" />
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label for="town" class="control-label col-sm-3 col-md-2">Town</label>
+                    <div class="col-sm-9 col-md-3">
+                        <form:input path="town" class="form-control" maxlength="50" />
                     </div>
-                    <div class="col-md-6">
-                        <label class="col-md-4 col-sm-3 control-label" for="county">County</label>
-                        <div class="col-md-8 col-sm-9">
-                            <form:input class="form-control" path="county" maxlength="50" />
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label for="county" class="control-label col-sm-3 col-md-2">County</label>
+                    <div class="col-sm-9 col-md-3">
+                        <form:input path="county" class="form-control" maxlength="50" />
                     </div>
-                    <div class="col-md-6">
-                        <label class="col-md-4 col-sm-3 control-label" for="postcode">Postcode</label>
-                        <div class="col-md-8 col-sm-9">
-                            <form:input class="form-control" path="postcode" maxlength="10" />
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label for="postcode" class="control-label col-sm-3 col-md-2">Postcode</label>
+                    <div class="col-sm-9 col-md-2">
+                        <form:input path="postcode" class="form-control" maxlength="10" />
                     </div>
                 </div>
             </fieldset>
-            <br/>
             <fieldset>
-                <legend>Gender</legend>
-                <form:select path="gender">
-                    <form:option value="M">Male</form:option>
-                    <form:option value="F">Female</form:option>
-                </form:select>
-            </fieldset>
-            <br/>
-            <fieldset>
-                <legend>Date of birth</legend>
-                <label for="birthDate">Date of birth</label>
-                <form:input class="datepicker" path="birthDate" placeholder="dd/mm/yyyy" />
-            </fieldset>
-            <br/>
-            <fieldset>
-                <legend>Marital status</legend>
-                <label for="maritalStatusCode">Status</label>
-                <form:select path="maritalStatusCode">
-                    <form:option value="" />
-                    <form:options items="${maritalStatusValues}" />
-                </form:select>
+                <legend>Personal</legend>
+                <div class="form-group">
+                    <label class="control-label col-sm-3 col-md-2">Gender</label>
+                    <div class="col-sm-4 col-md-2">
+                        <form:select path="gender">
+                            <form:option value="M">Male</form:option>
+                            <form:option value="F">Female</form:option>
+                        </form:select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3 col-md-2">Date of birth</label>
+                    <div class="col-sm-9 col-md-3">
+                        <form:input path="birthDate" placeholder="dd/mm/yyyy" class="datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3 col-md-2">Marital status</label>
+                    <div class="col-sm-4 col-md-2">
+                        <form:select path="maritalStatusCode">
+                            <form:option value="" />
+                            <form:options items="${maritalStatusValues}" />
+                        </form:select>
+                    </div>
+                </div>
                 <div id="spouse">
                     <form:hidden path="spousePersonId" />
-                    <div id="spouse-unlinked" class="hide">
-                        <label for="spouseForename">Spouse forename</label>
-                        <form:input path="spouseForename" maxlength="50" />
-                        <label for="spouseForename">Spouse surname</label>
-                        <form:input path="spouseSurname" maxlength="50" />
+                    <!-- use style display:none since the div is dynamically showm, based on the defined spouse -->
+                    <div id="spouse-unlinked" style="display:none">
+                        <div class="form-group">
+                            <label for="spouseForename" class="control-label col-sm-3 col-md-2">Spouse forename</label>
+                            <div class="col-sm-9 col-md-3">
+                                <form:input path="spouseForename" class="form-control" maxlength="50" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="spouseSurname" class="control-label col-sm-3 col-md-2">Spouse surname</label>
+                            <div class="col-sm-9 col-md-3">
+                                <form:input path="spouseSurname" class="form-control" maxlength="50" />
+                            </div>
+                        </div>
                     </div>
-                    <div id="spouse-linked" class="hide">
-                        Spouse: <span id="spouse-linked-text"></span>
-                        <a class="btn btn-edifice btn-xs" href="#">Unlink</a>
+                    <!-- use style display:none since the div is dynamically showm, based on the defined spouse -->
+                    <div id="spouse-linked" style="display:none">
+                        <div class="form-group">
+                            <label class="control-label col-sm-3 col-md-2">Spouse</label>
+                            <div class="col-sm-9 col-md-3">
+                                <span id="spouse-linked-text"></span>
+                                <a class="btn btn-edifice btn-xs" href="#">Unlink</a>
+                            </div>
+                        </div>
                     </div>
-                    <!--/div-->
-            </fieldset>
-            <br/>
+                </div>
             <fieldset>
                 <button type="submit" class="btn btn-default btn-success">Submit</button>
             </fieldset>
-    </div>
+        </div>
     </form:form>
 
     <ol class="breadcrumb">

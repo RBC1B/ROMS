@@ -107,15 +107,17 @@ roms.common.matchLinkedPerson = function (forename, surname, $personId, populate
                 return;
             }
 
-            data.existingPersonId = existingPersonId;
-            data.existingPersonName = existingPersonName;
+            templateData = {};
+            templateData.existingPersonId = existingPersonId;
+            templateData.existingPersonName = existingPersonName;
 
             if (data) {
-                data.matchedPersons = true;
+                templateData.matchedPersons = true;
+                templateData.results = data;
             }
 
             var template = $("#person-link-search-form").html();
-            var html = Mustache.to_html(template, data);
+            var html = Mustache.to_html(template, templateData);
 
             $("#person-link-modal .modal-body").html(html)
             var modalElement = $("#person-link-modal")

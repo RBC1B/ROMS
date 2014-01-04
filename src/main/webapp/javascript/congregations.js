@@ -108,7 +108,7 @@ $(document).ready(function() {
     });
     
     $("#coordinatorSurname").blur(function() {
-	roms.common.matchLinkedPerson(
+        roms.common.matchLinkedPerson(
             $("#coordinatorForename").val(),
             $("#coordinatorSurname").val(),
             $("#coordinatorPersonId"),
@@ -117,7 +117,7 @@ $(document).ready(function() {
     });
     
     $("#secretarySurname").blur(function() {
-	roms.common.matchLinkedPerson(
+        roms.common.matchLinkedPerson(
             $("#secretaryForename").val(),
             $("#secretarySurname").val(),
             $("#secretaryPersonId"),
@@ -126,19 +126,19 @@ $(document).ready(function() {
     });
     
     $("#coordinator-linked a").click(function() {
-	populateCoordinatorFromPerson(null, null, null, $("#coordinatorPersonId"));
+        populateCoordinatorFromPerson(null, null, null, $("#coordinatorPersonId"));
     });
     
     $("#secretary-linked a").click(function() {
-	populateSecretaryFromPerson(null, null, null, $("#secretaryPersonId"));
+        populateSecretaryFromPerson(null, null, null, $("#secretaryPersonId"));
     });
     
     // run the contacts display on page load
     populateCoordinatorFromPerson(
         $("#coordinatorPersonId").val(), 
-	$("#coordinatorForename").val(), 
-	$("#coordinatorSurname").val(), 
-	$("#coordinatorPersonId"));
+    	$("#coordinatorForename").val(), 
+    	$("#coordinatorSurname").val(), 
+    	$("#coordinatorPersonId"));
     populateSecretaryFromPerson(
         $("#secretaryPersonId").val(), 
         $("#secretaryForename").val(), 
