@@ -8,10 +8,10 @@
 <html>
 <c:choose>
     <c:when test="${!empty congregationForm.name}">
-        <c:set var="pageTitle" value="Edit Congregation" />
+        <c:set var="pageTitle" value="Edit congregation" />
     </c:when>
     <c:otherwise>
-        <c:set var="pageTitle" value="Create Congregation" />
+        <c:set var="pageTitle" value="Create new congregation" />
     </c:otherwise>
 </c:choose>
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
@@ -19,10 +19,10 @@
     <%@ include file="/WEB-INF/views/common/titlebar.jsp"%>
         <c:choose>
             <c:when test="${!empty congregationForm.name}">
-                <h1>Edit Congregation</h1>
+                <h1>Edit congregation</h1>
             </c:when>
             <c:otherwise>
-                <h1>Create New Congregation</h1>
+                <h1>Create new congregation</h1>
             </c:otherwise>
         </c:choose>
         <hr />
@@ -46,7 +46,7 @@
                     <form:option value="" />
                     <form:options items="${rbcRegions}" />
                 </form:select>
-                <label>RBC sub-region</label>
+                <label>RBC subregion</label>
                 <form:select path="rbcSubRegionId">
                     <form:option value="" />
                     <form:options items="${rbcSubRegions}" />

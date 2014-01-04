@@ -1,7 +1,5 @@
 <%--
-    Document   : DepartmentlList
-    Created on : 30-Jun-2012, 13:19:18
-    Author     : oliver.elder.esq
+    List all departments.
 --%>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -19,7 +17,7 @@
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Super Department</th>
+                            <th>Super department</th>
                             <th>Overseer</th>
                             <th>Action</th>
                         </tr>

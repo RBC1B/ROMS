@@ -11,8 +11,8 @@ Author: oliver.elder.esq
                     <th>Name</th>
                     <th>Department</th>
                     <th>Level</th>
-                    <th>Training Date</th>
-                    <th>Training Results</th>
+                    <th>Training date</th>
+                    <th>Training results</th>
                     <th>Comments</th>
                     <th>Badge</th>
                 </tr>

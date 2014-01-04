@@ -1,7 +1,5 @@
 <%--
-    Document   : homepage
-    Created on : 30-Jun-2012, 12:46:06
-    Author     : oliver.elder.esq
+    Homepage dashboard.
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -26,10 +24,10 @@
               </div>
               <div class="well-edifice col-md-4 col-xs-6">
                 <div class="well">
-                  <h3>Kingdom Hall</h3>
+                  <h3>Kingdom hall</h3>
                   <ul class="nav nav-tabs nav-stacked">
-                    <li>List Of Kingdom Halls</li>
-                        <a href="">Details of Kingdom Halls ></a></p>
+                    <li>List of kingdom halls</li>
+                        <a href="">Details of kingdom halls ></a></p>
                   </ul>
                 </div>
               </div>
@@ -37,9 +35,9 @@
                   <div class="well">
                 <h3>Projects</h3>
                 <ul class="nav nav-tabs nav-stacked">
-                    <li>Project Coordination</li>
-                    <li>Project Design</li>
-                    <li>Upcoming Projects</li>
+                    <li>Project coordination</li>
+                    <li>Project design</li>
+                    <li>Upcoming projects</li>
                 </ul>
                   </div>
               </div>
@@ -50,9 +48,9 @@
                 <div class="well">
                   <h3>Volunteers</h3>
                     <ul class="nav nav-tabs nav-stacked">
-                      <li>Contact Details</li>
-                      <li>Skills & Training</li>
-                      <li>Gate List</li>
+                      <li>Contact details</li>
+                      <li>Skills & training</li>
+                      <li>Gate list</li>
                     </ul>
                 </div>
               </div>

@@ -111,7 +111,7 @@ The contents of the rbc status tab.
             ${volunteer.reliefUKComments}
         </c:if>
     </dd>
-    <dt>Relief Abroad:</dt>
+    <dt>Relief abroad:</dt>
     <dd>
         <c:choose>
             <c:when test="${volunteer.reliefAbroad}"><span class="icon-ok"></span></c:when>
@@ -121,7 +121,7 @@ The contents of the rbc status tab.
             ${volunteer.reliefAbroadComments}
         </c:if>
     </dd>
-    <dt>HHC Form code:</dt>
+    <dt>HHC form code:</dt>
     <dd>
         <c:choose>
             <c:when test="${!empty volunteer.hhcFormCode}">

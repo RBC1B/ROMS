@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <c:url var="formAction" value="/skills" />
 <html>
-    <c:set var="pageTitle" value="Departmental Skills" />
+    <c:set var="pageTitle" value="Departmental skills" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
@@ -19,7 +19,7 @@
                 <table class="table table-bordered table-condensed table-striped table-hover" id="skill-list">
                     <thead>
                         <tr>
-                            <th>Skill Name</th>
+                            <th>Name</th>
                             <th>Department</th>
                             <th>Description</th>
                             <th>Category</th>

@@ -21,9 +21,9 @@
                         <th>Name</th>
                         <th>Address</th>
                         <th>Email</th>
-                        <th>Mobile</th>
-                        <th>Telephone</th>
-                        <th>Work Phone</th>
+                        <th>Mobile phone</th>
+                        <th>Home phone</th>
+                        <th>Work phone</th>
                         <th>Comment</th>
                         <th>Action</th>
                     </tr>

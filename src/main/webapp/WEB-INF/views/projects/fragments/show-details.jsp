@@ -5,17 +5,17 @@ The contents of the project details tab.
 <dl class="dl-horizontal">
     <dt>Priority:</dt><dd>${project.priority}</dd>
     <c:if test="${project.requestDate != null}">
-        <dt>Request Date:</dt><dd><fmt:formatDate value="${project.requestDate}" pattern="yyyy-MM-dd" /></dd>
+        <dt>Request date:</dt><dd><fmt:formatDate value="${project.requestDate}" pattern="yyyy-MM-dd" /></dd>
     </c:if>
     <c:if test="${project.visitDate != null}">
-        <dt>Visit Date:</dt><dd><fmt:formatDate value="${project.visitDate}" pattern="yyyy-MM-dd" /></dd>
+        <dt>Visit date:</dt><dd><fmt:formatDate value="${project.visitDate}" pattern="yyyy-MM-dd" /></dd>
     </c:if>
     <c:if test="${project.completedDate != null}">
-        <dt>Completed Date:</dt><dd><fmt:formatDate value="${project.completedDate}" pattern="yyyy-MM-dd" /></dd>
+        <dt>Completed date:</dt><dd><fmt:formatDate value="${project.completedDate}" pattern="yyyy-MM-dd" /></dd>
     </c:if>
-    <dt>Estimate Cost:</dt><dd>${project.estimateCost}</dd>
+    <dt>Estimate cost:</dt><dd>${project.estimateCost}</dd>
     <c:if test="${project.kingdomHall != null}">
-        <dt>Kingdom Hall</dt><dd><a href="<c:url value='${project.kingdomHall.uri}' />">${project.kingdomHall.name}</a></dd>
+        <dt>Kingdom hall</dt><dd><a href="<c:url value='${project.kingdomHall.uri}' />">${project.kingdomHall.name}</a></dd>
     </c:if>
     <c:if test="${project.address != null}">
         <dt>Address:</dt>
@@ -29,7 +29,7 @@ The contents of the project details tab.
         </dd>
     </c:if>
     <c:if test="${project.supportingCongregation != null}">
-        <dt>Supporting Cong:</dt><dd>${project.supportingCongregation}</dd>
+        <dt>Supporting cong.:</dt><dd>${project.supportingCongregation}</dd>
     </c:if>
     <c:if test="${project.constraints != null}">
         <dt>Constraints:</dt><dd>${project.constraints}</dd>

@@ -12,7 +12,7 @@
             <h1>Department: ${department.name}</h1>
             <hr />
             <dl class="dl-horizontal">
-                <dt>Super Department:</dt>
+                <dt>Super department:</dt>
                 <dd>
                     <c:choose>
                         <c:when test="${!empty department.superDepartment}">
@@ -63,7 +63,7 @@
             </div>
             <sec:authorize access="hasPermission('PROJECT', 'EDIT')">
                 <hr />
-                <a href="<c:url value='${department.editUri}' />" class="btn btn-edifice">Edit Department</a>
+                <a href="<c:url value='${department.editUri}' />" class="btn btn-edifice">Edit department</a>
             </sec:authorize>
             <div class="clearfix"></div>
 

@@ -56,7 +56,7 @@
         </dl>
         <sec:authorize access="hasPermission('SKILL', 'EDIT')">
             <hr />
-            <a href="<c:url value='${skill.editUri}' />" class="btn btn-edifice">Edit Skill</a>
+            <a href="<c:url value='${skill.editUri}' />" class="btn btn-edifice">Edit skill</a>
         </sec:authorize>
         <div class="clearfix"></div>
         <br />
@@ -71,8 +71,8 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
+                                    <th>Forename</th>
+                                    <th>Surname</th>
                                     <th>Congregation</th>
                                     <th>Action</th>
                                 </tr>

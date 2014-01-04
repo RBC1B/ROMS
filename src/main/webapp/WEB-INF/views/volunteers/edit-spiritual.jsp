@@ -1,22 +1,21 @@
 <%--
 Edit form for the volunteer data under the spiritual tab.
-Author: oliver.elder.esq
 --%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <c:set var="pageTitle" value="Edit ${forename} ${surname} Spiritual Information" />
+    <c:set var="pageTitle" value="Edit ${forename} ${surname} spiritual information" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-            <h1>${forename} ${surname} - Spiritual Information</h1>
+            <h1>${forename} ${surname} - spiritual information</h1>
             <hr />
             <c:url var="formAction" value="${submitUri}" />
             <form:form class="form-horizontal" commandName="volunteerSpiritual" method="PUT" action="${formAction}">
                 <fieldset>
-                    <legend>Congregation and Baptism Details</legend>
+                    <legend>Congregation and baptism details</legend>
                     <div class="form-group">
                         <label class="control-label col-sm-4 col-md-3">Congregation</label>
                         <div class="col-sm-8 col-md-3">
@@ -32,7 +31,7 @@ Author: oliver.elder.esq
                     </div>
                 </fieldset>
                 <fieldset>
-                    <legend>Congregational Privileges</legend>
+                    <legend>Congregational privileges</legend>
                     <div class="form-group">
                         <label class="control-label col-sm-4 col-md-3">Full time service</label>
                         <div class="col-sm-4 col-md-5">
@@ -60,7 +59,7 @@ Author: oliver.elder.esq
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
                 <li><a href="<c:url value="/volunteers" />">Volunteers</a></li>
-                <li class="active">#${volunteer.id}: ${volunteer.displayName} Edit Spiritual Info</li>
+                <li class="active">Edit ${forename} ${surname} spiritual information</li>
             </ol>
 
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>

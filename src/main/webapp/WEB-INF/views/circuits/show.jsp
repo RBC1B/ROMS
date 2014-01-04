@@ -20,7 +20,7 @@
                         <dd>
                             <a href="<c:url value="${circuit.circuitOverseer.uri}"/>">${circuit.circuitOverseer.displayName}</a>
                         </dd>
-                        <dt>E-mail:</dt>
+                        <dt>Email:</dt>
                         <dd>
                             <c:choose>
                                 <c:when test="${circuit.circuitOverseer.email != null}">
@@ -29,7 +29,7 @@
                                 <c:otherwise>-</c:otherwise>
                             </c:choose>
                         </dd>
-                        <dt>Home Phone:</dt>
+                        <dt>Home phone:</dt>
                         <dd>
                             <c:choose>
                                 <c:when test="${circuit.circuitOverseer.telephone != null}">
@@ -38,7 +38,7 @@
                                 <c:otherwise>-</c:otherwise>
                             </c:choose>
                         </dd>
-                        <dt>Mobile:</dt>
+                        <dt>Mobile phone:</dt>
                         <dd>
                             <c:choose>
                                 <c:when test="${circuit.circuitOverseer.mobile != null}">
@@ -54,7 +54,7 @@
             <sec:authorize access="hasPermission('CIRCUIT', 'EDIT')">
                 <hr />
                 <div class="entity-list-add-new">
-                    <a class="btn btn-edifice" href="<c:url value="${circuit.editUri}" />">Edit Circuit</a>
+                    <a class="btn btn-edifice" href="<c:url value="${circuit.editUri}" />">Edit circuit</a>
                 </div>
             </sec:authorize>
             <br />

@@ -1,7 +1,5 @@
 <%--
-    Document   : VolunteersList
-    Created on : 20-Sep-2012, 11:33:13
-    Author     : rahulsingh
+    List the volunteers.
 --%>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -19,8 +17,8 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
+                        <th>Forename</th>
+                        <th>Surname</th>
                         <th>Congregation</th>
                         <th>Action</th>
                     </tr>
@@ -34,7 +32,7 @@
         <sec:authorize access="hasPermission('VOLUNTEER', 'ADD')">
             <hr />
             <div class="entity-list-add-new">
-                <a class="btn btn-edifice" href="<c:url value="${newUri}" />">Create new Volunteer</a>
+                <a class="btn btn-edifice" href="<c:url value="${newUri}" />">Create new volunteer</a>
             </div>
         </sec:authorize>
         <br />

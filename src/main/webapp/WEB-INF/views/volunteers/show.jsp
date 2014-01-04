@@ -14,7 +14,7 @@
                 <img src="<c:url value='${volunteer.id}/imageProfile'/>" class="media-object img-thumbnail pull-left image" width="114px" height="143px" alt="volunteer image" />
                 <div id="popup" class="caption image-popup" style="display: none;">
                     <a href="#" id="image-link" style="color:white;">
-                        <p class="image-popup-text" style="font-size:13px"><b>Edit/Add Image</b></p>
+                        <p class="image-popup-text" style="font-size:13px"><b>Edit/Add image</b></p>
                     </a>
                 </div>
                 <div class="media-body">
@@ -49,13 +49,13 @@
             <br />
             <c:choose>
                 <c:when test="${!empty assignments}">
-                    <a class="btn btn-edifice" href="<c:url value="${badgeUri}"/>" id="badge-button">Generate Badge</a><br />
+                    <a class="btn btn-edifice" href="<c:url value="${badgeUri}"/>" id="badge-button">Generate badge</a><br />
                 </c:when>
                 <c:otherwise>
                     <button class="btn" type="button" data-title="Pdf Badge Generation Not Possible"
                             data-content="A badge for ${volunteer.displayName} cannot be created until the
                             volunteer receives a departmental assignment"
-                            id="disabled-badge-button">Generate Badge</button><br />
+                            id="disabled-badge-button">Generate badge</button><br />
                 </c:otherwise>
             </c:choose>
             <div id="birth-date-badge-alert" class="alert alert-warning alert-dismissable" style="display: none;">
@@ -65,11 +65,11 @@
             <hr />
             <c:choose>
                 <c:when test="${!empty assignments}">
-                    <h3>Team Roles</h3>
+                    <h3>Team roles</h3>
                     <table class="table table-bordered table-condensed table-striped table-hover">
                         <thead>
                             <tr>
-                                <th>Trade No.</th>
+                                <th>Trade no.</th>
                                 <th>Department</th>
                                 <th>Team</th>
                                 <th>Role</th>
@@ -100,7 +100,7 @@
                 <li class="active"><a href="#personal" data-toggle="tab">Personal</a></li>
                 <li><a href="#spiritual" data-toggle="tab">Spiritual</a></li>
                 <li><a href="#skills" data-toggle="tab">Skills</a></li>
-                <li><a href="#rbc-status" data-toggle="tab">RBC Status</a></li>
+                <li><a href="#rbc-status" data-toggle="tab">RBC status</a></li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="personal">

@@ -11,10 +11,10 @@
 <html>
     <c:choose>
         <c:when test="${!empty skillForm.name}">
-            <c:set var="pageTitle" value="Edit Skill" />
+            <c:set var="pageTitle" value="Edit skill" />
         </c:when>
         <c:otherwise>
-            <c:set var="pageTitle" value="Create Skill" />
+            <c:set var="pageTitle" value="Create new skill" />
         </c:otherwise>
     </c:choose>
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -22,10 +22,10 @@
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
             <c:choose>
                 <c:when test="${!empty skillForm.name}">
-                    <h1>Edit Skill</h1>
+                    <h1>Edit skill</h1>
                 </c:when>
                 <c:otherwise>
-                    <h1>Create New Skill</h1>
+                    <h1>Create new skill</h1>
                 </c:otherwise>
             </c:choose>
             <hr />
@@ -33,7 +33,7 @@
             <form:form commandName="skillForm" method="${submitMethod}" action="${formAction}">
                 <div class="form">
                     <fieldset class="container-fluid">
-                        <label>Skill Name</label>
+                        <label>Name</label>
                         <form:input path="name" maxlength="50" />
                         <label>Department</label>
                         <form:select path="departmentId">

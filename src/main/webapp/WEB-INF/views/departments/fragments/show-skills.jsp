@@ -9,7 +9,7 @@ The contents of the department linked skills.
                 <th>Name</th>
                 <th>Description</th>
                 <th>Category</th>
-                <th>On Badge</th>
+                <th>On badge</th>
             </tr>
         </thead>
         <tbody>

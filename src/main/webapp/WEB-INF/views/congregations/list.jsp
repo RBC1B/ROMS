@@ -20,10 +20,10 @@
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Kingdom Hall</th>
+                            <th>Kingdom hall</th>
                             <th>Circuit</th>
                             <th>Region</th>
-                            <th>Sub Region</th>
+                            <th>Subregion</th>
                             <th>Action</th>
                         </tr>
                     </thead>

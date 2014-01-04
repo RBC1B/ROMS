@@ -1,7 +1,5 @@
 <%--
-    Document   : QualificationsList
-    Created on : 23-Aug-2012, 20:22:25
-    Author     : Tina
+    List qualifications.
 --%>
 
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>

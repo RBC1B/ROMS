@@ -6,11 +6,11 @@ Edit form for the volunteer data under the personal tab.
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <c:set var="pageTitle" value="Edit ${forename} ${surname} Personal Information" />
+    <c:set var="pageTitle" value="Edit ${forename} ${surname} personal information" />
     <%@ include file="/WEB-INF/views/common/header.jsp"%>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp"%>
-        <h1>${forename} ${surname} - Personal Information</h1>
+        <h1>${forename} ${surname} - personal information</h1>
         <hr />
 
         <c:url var="formAction" value="${submitUri}" />
@@ -127,7 +127,7 @@ Edit form for the volunteer data under the personal tab.
     <ol class="breadcrumb">
         <li><a href="<c:url value="/" />">Edifice</a></li>
         <li><a href="<c:url value="/volunteers" />">Volunteers</a></li>
-        <li class="active">#${volunteer.id}: ${volunteer.displayName} Edit Personal Info</li>
+        <li class="active">Edit ${forename} ${surname} personal information</li>
     </ol>
 
     <%@ include file="/WEB-INF/views/common/footer.jsp"%>

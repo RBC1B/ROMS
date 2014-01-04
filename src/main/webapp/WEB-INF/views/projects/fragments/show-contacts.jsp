@@ -7,7 +7,7 @@ The contents of the project contacts tab.
         <dt>Telephone:</dt><dd>${project.telephone}</dd>
     </c:if>
     <c:if test="${project.contactPerson != null}">
-        <h3>Contact Person</h3>
+        <h3>Contact person</h3>
         <dt>Name:</dt>
         <dd><a href="<c:url value='${project.contactPerson.uri}' />">${project.contactPerson.displayName}</a></dd>
         <dt>Email:</dt>

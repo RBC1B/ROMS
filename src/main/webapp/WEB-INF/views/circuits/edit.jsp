@@ -1,7 +1,5 @@
 <%--
-    Document   : circuitEdit/Create
-    Created on : 14-Jul-2012, 00:54:53
-    Author     : oliver.elder.esq
+    Create or edit a circuit.
 --%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -10,10 +8,10 @@
 <html>
     <c:choose>
         <c:when test="${!empty circuitForm.name}">
-            <c:set var="pageTitle" value="Edit Circuit" />
+            <c:set var="pageTitle" value="Edit circuit" />
         </c:when>
         <c:otherwise>
-            <c:set var="pageTitle" value="Create Circuit" />
+            <c:set var="pageTitle" value="Create new circuit" />
         </c:otherwise>
     </c:choose>
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -21,23 +19,23 @@
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <c:choose>
             <c:when test="${!empty circuitForm.name}">
-                <h1>Edit Circuit</h1>
+                <h1>Edit circuit</h1>
             </c:when>
             <c:otherwise>
-                <h1>Create New Circuit</h1>
+                <h1>Create new circuit</h1>
             </c:otherwise>
         </c:choose>
         <hr />
         <c:url var="formAction" value="${submitUri}" />
         <form:form commandName="circuitForm" method="${submitMethod}" action="${formAction}">
             <fieldset>
-                <legend>Circuit Details</legend>
-                <label>Circuit Name</label>
-                <form:input path="name" maxlength="50" placeholder="Circuit Name"/>
+                <legend>Circuit details</legend>
+                <label>Circuit name</label>
+                <form:input path="name" maxlength="50" />
             </fieldset>
             <br />
             <fieldset>
-                <legend>Circuit Overseer Details</legend>
+                <legend>Circuit overseer details</legend>
                 <div class="controls controls-row">
                     <div id="circuit-overseer-linked" class="controls alert" style="display:none;">
                         <button type="button" class="close">Unlink</button>
@@ -46,14 +44,14 @@
                 </div>
                 <form:hidden path="personId" />
                 <div class="control-group">
-                    <label>Name Details:</label>
-                    <form:input path="forename" maxlength="50" placeholder="First Name"/>
-                    <form:input path="middleName" maxlength="50" placeholder="Middle Name" />
+                    <label>Name details:</label>
+                    <form:input path="forename" maxlength="50" placeholder="Forename"/>
+                    <form:input path="middleName" maxlength="50" placeholder="Middle name" />
                     <form:input path="surname" maxlength="50" placeholder="Surname"/>
                 </div>
                 <div class="control-group">
                     <label>Email:</label>
-                    <form:input path="email" maxlength="50" placeholder="E-mail"/>
+                    <form:input path="email" maxlength="50" placeholder="Email"/>
                 </div>
                 <div class="control-group">
                     <label>Address:</label>
@@ -64,8 +62,8 @@
                 </div>
                 <div class="control-group">
                     <label>Phones:</label>
-                    <form:input path="telephone" maxlength="20" placeholder="Telephone Number"/>
-                    <form:input path="mobile" maxlength="20" placeholder="Mobile Number"/>
+                    <form:input path="telephone" maxlength="20" placeholder="Home phone"/>
+                    <form:input path="mobile" maxlength="20" placeholder="Mobile phone"/>
                 </div>
                 <c:choose>
                     <c:when test="${circuitForm.forename != null && circuitForm.surname != null}">
@@ -120,7 +118,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h3>Select Matching Person</h3>
+                            <h3>Select matching person</h3>
                         </div>
                         <div class="modal-body">
 

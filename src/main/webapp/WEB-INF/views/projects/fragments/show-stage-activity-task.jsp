@@ -55,12 +55,12 @@
                         </div>
                         <div class="col-sm-3">
                             <strong>Started:</strong>
-                                <c:choose>
-                                    <c:when test="${!empty task.startedTime}">
-                                        <fmt:formatDate value="${task.startedTime}" pattern="yyyy-MM-dd" />
-                                    </c:when>
-                                    <c:otherwise>&nbsp;</c:otherwise>
-                                </c:choose>
+                            <c:choose>
+                                <c:when test="${!empty task.startedTime}">
+                                    <fmt:formatDate value="${task.startedTime}" pattern="yyyy-MM-dd" />
+                                </c:when>
+                                <c:otherwise>&nbsp;</c:otherwise>
+                            </c:choose>
                         </div>
                         <div class="col-sm-3">
                             <strong>Completed:</strong>

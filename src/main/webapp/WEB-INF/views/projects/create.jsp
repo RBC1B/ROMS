@@ -6,11 +6,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <c:set var="pageTitle" value="Create New Project" />
+    <c:set var="pageTitle" value="Create new project" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <h1>Create New Project</h1>
+        <h1>Create new project</h1>
         <hr />
         <c:url var="formAction" value="${submitUri}" />
         <form:form commandName="projectForm" method="${submitMethod}" action="${formAction}">
@@ -30,11 +30,11 @@
                 <label>Kingdom hall</label>
                 <form:input path="kingdomHallName" autocomplete="off" />
                 <form:hidden path="kingdomHallId" />
-                <label>Supporting Congregation</label>
+                <label>Supporting congregation</label>
                 <form:input path="supportingCongregation" maxlength="250" />
             </fieldset>
             <fieldset>
-                <label>Request Date</label>
+                <label>Request date</label>
                 <form:input path="requestDate" class="datepicker" />
                 <label>Visit Date</label>
                 <form:input path="visitDate" class="datepicker" />
@@ -42,7 +42,7 @@
             <fieldset>
                 <label>Priority</label>
                 <form:input path="priority" maxlength="50" />
-                <label>Estimated Cost</label>
+                <label>Estimated cost</label>
                 <form:input path="estimateCost" maxlength="50" />
                 <label>Constraints</label>
                 <form:textarea path="constraints"  rows="4" cols="50" />

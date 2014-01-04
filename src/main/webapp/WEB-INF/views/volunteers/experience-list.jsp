@@ -12,14 +12,14 @@
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
-            <h1>Volunteer Experience</h1>
+            <h1>Volunteer experience</h1>
             <hr />
             <div class="entity-list-results">
                 <table class="table table-bordered table-condensed table-striped table-hover" id="volunteer-experience-list">
                     <thead>
                         <tr>
-                            <th>First Name</th>
-                            <th>Last Name</th>
+                            <th>Forename</th>
+                            <th>Surname</th>
                             <th>Congregation</th>
                             <th>Experience</th>
                             <th>Description</th>
@@ -38,7 +38,7 @@
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
                 <li><a href="<c:url value="/volunteers" />">Volunteers</a></li>
-                <li class="active">#${volunteer.id}: ${volunteer.displayName} Edit Experience</li>
+                <li class="active">Volunteer experience</li>
             </ol>
 
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>

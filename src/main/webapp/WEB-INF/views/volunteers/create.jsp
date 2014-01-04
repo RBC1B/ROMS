@@ -6,12 +6,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <c:set var="pageTitle" value="Create Volunteer" />
+    <c:set var="pageTitle" value="Create volunteer" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container">
-            <h1>Regional Building Committee Volunteer Application</h1>
+            <h1>Regional building committee volunteer application</h1>
             <hr />
             <c:url var="formAction" value="/volunteers" />
             <form:form class="form-horizontal" commandName="volunteer" method="POST" action="${formAction}">
@@ -142,7 +142,7 @@
                         <div class="col-md-4">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <form:input class="form-control" path="mobile" placeholder="Mobile"/>
+                                    <form:input class="form-control" path="mobile" placeholder="Mobile phone"/>
                                 </div>
                             </div>
                         </div>
@@ -161,7 +161,7 @@
                         <div class="col-md-4">
                             <div class="col-md-12">
                                 <label class="checkbox inline">
-                                    <form:checkbox path="ministerialServant" /> Ministerial&nbsp;Servant
+                                    <form:checkbox path="ministerialServant" /> Ministerial&nbsp;servant
                                 </label>
                             </div>
                         </div>
@@ -181,7 +181,7 @@
                         <div class="col-md-4">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <form:input class="form-control" path="spouseForename" placeholder="Spouse first name"/>
+                                    <form:input class="form-control" path="spouseForename" placeholder="Spouse forename"/>
                                 </div>
                             </div>
                         </div>
@@ -244,7 +244,7 @@
                         <div class="col-md-4">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <form:input class="form-control" path="emergencyContactForename" placeholder="Contact's first name"/>
+                                    <form:input class="form-control" path="emergencyContactForename" placeholder="Contact's forename"/>
                                 </div>
                             </div>
                         </div>
@@ -284,7 +284,7 @@
                         <div class="col-md-4">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <form:input class="form-control" path="emergencyContactMobile" placeholder="Contact's Mobile"/>
+                                    <form:input class="form-control" path="emergencyContactMobile" placeholder="Contact's mobile"/>
                                 </div>
                             </div>
                         </div>
@@ -359,7 +359,7 @@
             <br />
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
-                <li role="menuitem"><a href="<c:url value="/kingdom-halls" />">Kingdom Halls</a></li>
+                <li role="menuitem"><a href="<c:url value="/volunteers" />">Volunteers</a></li>
                 <li class="active">Edit</li>
             </ol>
         </form:form>

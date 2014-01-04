@@ -6,11 +6,11 @@ Edit form for the volunteer data under the rbc status tab.
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <c:set var="pageTitle" value="Edit ${forename} ${surname} RBC Status Information" />
+    <c:set var="pageTitle" value="Edit ${forename} ${surname} RBC status information" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-            <h1>${forename} ${surname} - RBC Status Information</h1>
+            <h1>Edit ${forename} ${surname} - RBC status information</h1>
             <hr />
 
             <c:url var="formAction" value="${submitUri}" />
@@ -18,7 +18,7 @@ Edit form for the volunteer data under the rbc status tab.
                 <fieldset>
                     <legend>Form Date</legend>
                     <div class="form-group">
-                        <label for="formDate" class="control-label col-sm-3 col-md-2">Form Date</label>
+                        <label for="formDate" class="control-label col-sm-3 col-md-2">Form date</label>
                         <div class="col-sm-9 col-md-2">
                         <form:input path="formDate" class="datepicker form-control" data-date-format="dd/mm/yy" type="text" value=""/>
                         </div>
@@ -128,7 +128,7 @@ Edit form for the volunteer data under the rbc status tab.
                     </div>
                 </fieldset>
                 <fieldset>
-                    <legend>Relief - Abroad</legend>
+                    <legend>Relief - abroad</legend>
                         <div class="col-sm-3 col-md-2">
                             &nbsp;
                         </div>
@@ -161,7 +161,7 @@ Edit form for the volunteer data under the rbc status tab.
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
                 <li><a href="<c:url value="/volunteers" />">Volunteers</a></li>
-                <li class="active">#${volunteer.id}: ${volunteer.displayName} Edit RBC Status</li>
+                <li class="active">Edit ${forename} ${surname} - RBC status information</li>
             </ol>
 
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>

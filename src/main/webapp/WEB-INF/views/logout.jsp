@@ -1,7 +1,5 @@
 <%--
-    Document   : logout.jsp
-    Created on : 05-Jul-2012, 23:58:24
-    Author     : rhioli
+    Page displayed when a user logs out.
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -10,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Edifice Logout</title>
+<title>Logout | EDIFICE</title>
 </head>
 <body class="blueprints">
     <div class="container">

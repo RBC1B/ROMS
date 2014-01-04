@@ -1,7 +1,5 @@
 <%--
-    Document   : PeopleList
-    Created on : 20-Sep-2012, 11:33:13
-    Author     : rahulsingh
+    List the persons - a combination of all volunteers, overseers, emergency contacts, etc.
 --%>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -18,8 +16,8 @@
             <table class="table table-bordered table-condensed table-striped table-hover" id="person-list">
                 <thead>
                     <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
+                        <th>Forename</th>
+                        <th>Surname</th>
                         <th>Congregation</th>
                         <th>Action</th>
                     </tr>

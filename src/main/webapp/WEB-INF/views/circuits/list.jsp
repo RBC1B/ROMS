@@ -1,7 +1,5 @@
 <%--
-    Document   : circuit
-    Created on : 30-Jun-2012, 13:19:18
-    Author     : oliver.elder.esq
+    List circuits.
 --%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>

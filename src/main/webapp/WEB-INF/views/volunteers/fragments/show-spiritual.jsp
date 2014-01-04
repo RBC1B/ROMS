@@ -12,7 +12,7 @@ Author: oliver.elder.esq
             <c:otherwise>-</c:otherwise>
         </c:choose>
     </dd>
-    <dt>Date of Baptism:</dt>
+    <dt>Date of baptism:</dt>
     <dd>
         <c:choose>
             <c:when test="${!empty volunteer.baptismDate}">

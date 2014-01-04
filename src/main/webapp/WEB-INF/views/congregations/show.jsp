@@ -37,7 +37,7 @@
                         <c:otherwise>-</c:otherwise>
                     </c:choose>
                 </dd>
-                <dt>RBC Region:</dt>
+                <dt>RBC region:</dt>
                 <dd>
                     <c:choose>
                         <c:when test="${!empty congregation.rbcRegion}">
@@ -87,7 +87,7 @@
             </div>
             <sec:authorize access="hasPermission('CONG', 'EDIT')">
                 <hr />
-                <a href="<c:url value='${congregation.editUri}' />" class="btn btn-edifice">Edit Congregation</a>
+                <a href="<c:url value='${congregation.editUri}' />" class="btn btn-edifice">Edit congregation</a>
             </sec:authorize>
 
             <br />

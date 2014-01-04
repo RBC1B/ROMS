@@ -8,11 +8,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <c:set var="pageTitle" value="Edit Person" />
+    <c:set var="pageTitle" value="Edit person" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-            <h1>Edit Person</h1>
+            <h1>Edit person</h1>
             <hr />
             <c:url var="formAction" value="${submitUri}" />
             <form:form commandName="person" method="PUT" action="${formAction}">
@@ -21,7 +21,7 @@
                     <form:hidden path="personId" />
                     <label for="forename">Forename</label>
                     <form:input path="forename" maxlength="50" />
-                    <label for="middleName">Middle Name</label>
+                    <label for="middleName">Middle name</label>
                     <form:input path="middleName" maxlength="50" />
                     <label for="surname">Surname</label>
                     <form:input path="surname" maxlength="50" />

@@ -1,17 +1,15 @@
 <%--
-    Document   : kingdomhallList
-    Created on : 30-Jun-2012, 13:19:18
-    Author     : oliver.elder.esq
+    List the kingdom halls.
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <c:set var="pageTitle" value="Kingdom Halls" />
+    <c:set var="pageTitle" value="Kingdom halls" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-            <h1>Kingdom Halls</h1>
+            <h1>Kingdom halls</h1>
             <hr />
             <div class="entity-list-results">
                 <table class="table table-bordered table-condensed table-striped table-hover" id="kingdom-hall-list">
@@ -54,7 +52,7 @@
             <br />
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
-                <li class="active">Kingdom Halls</li>
+                <li class="active">Kingdom halls</li>
             </ol>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         <script type="text/javascript" src="<c:url value='/javascript/kingdom-halls.js' />" ></script>
