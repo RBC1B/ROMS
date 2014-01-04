@@ -727,8 +727,10 @@ public class VolunteersController {
      * @param response HttpServletResponse
      * @throws IOException if the file cannot be read
      */
-    @RequestMapping(value = "{volunteerId}/imageProfile", method = RequestMethod.GET)
-    public void showImage(@PathVariable Integer volunteerId, HttpServletResponse response) throws IOException {
+    @RequestMapping(value = "{volunteerId}/image",
+            method = RequestMethod.GET)
+    public void showImage(@PathVariable Integer volunteerId,
+            HttpServletResponse response) throws IOException {
         String imageName = volunteerId + ".jpg";
         File file = new File(imageDirectories.getProperty(VOLUNTEER_IMAGE_DIRECTORY_KEY) + imageName);
         // if the file doesnt exist
@@ -753,7 +755,7 @@ public class VolunteersController {
      * @throws IOException if file cannot be written
      * @return view
      */
-    @RequestMapping(value = "{volunteerId}/image-upload", method = RequestMethod.POST)
+    @RequestMapping(value = "{volunteerId}/image", method = RequestMethod.POST)
     public String handleImageUpload(@PathVariable Integer volunteerId,
             @RequestParam(value = "image", required = true) MultipartFile imageFile) throws IOException {
 
