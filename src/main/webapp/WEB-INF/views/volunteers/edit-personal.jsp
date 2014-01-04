@@ -97,7 +97,7 @@ Edit form for the volunteer data under the personal tab.
                 </div>
                 <div id="spouse">
                     <form:hidden path="spousePersonId" />
-                    <!-- use style display:none since the div is dynamically showm, based on the defined spouse -->
+                    <!-- use style display:none since the div is dynamically shown, based on the defined spouse -->
                     <div id="spouse-unlinked" style="display:none">
                         <div class="form-group">
                             <label for="spouseForename" class="control-label col-sm-3 col-md-2">Spouse forename</label>
@@ -112,7 +112,7 @@ Edit form for the volunteer data under the personal tab.
                             </div>
                         </div>
                     </div>
-                    <!-- use style display:none since the div is dynamically showm, based on the defined spouse -->
+                    <!-- use style display:none since the div is dynamically shown, based on the defined spouse -->
                     <div id="spouse-linked" style="display:none">
                         <div class="form-group">
                             <label class="control-label col-sm-3 col-md-2">Spouse</label>

@@ -60,26 +60,30 @@
                 <legend>Contacts</legend>
                 <div id="coordinator">
                     <form:hidden path="coordinatorPersonId" />
-                    <div id="coordinator-unlinked" class="hide">
+                    <!-- use style display:none since the div is dynamically shown, based on the defined coordinator -->
+                    <div id="coordinator-unlinked" style="display:none">
                         <label for="coordinatorForename">Coordinator forename</label>
                         <form:input path="coordinatorForename" maxlength="50" />
                         <label for="coordinatorForename">Coordinator surname</label>
                         <form:input path="coordinatorSurname" maxlength="50" />
                     </div>
-                    <div id="coordinator-linked" class="hide">
+                    <!-- use style display:none since the div is dynamically shown, based on the defined coordinator -->
+                    <div id="coordinator-linked" style="display:none">
                         Coordinator: <span id="coordinator-linked-text"></span>
                         <a class="btn btn-edifice btn-xs" href="#">Unlink</a>
                     </div>
                 </div>
                 <div id="secretary">
                     <form:hidden path="secretaryPersonId" />
-                    <div id="secretary-unlinked" class="hide">
+                    <!-- use style display:none since the div is dynamically shown, based on the defined secretary -->
+                    <div id="secretary-unlinked" style="display:none">
                         <label for="secretaryForename">Secretary forename</label>
                         <form:input path="secretaryForename" maxlength="50" />
                         <label for="secretaryForename">Secretary surname</label>
                         <form:input path="secretarySurname" maxlength="50" />
                     </div>
-                    <div id="secretary-linked" class="hide">
+                    <!-- use style display:none since the div is dynamically shown, based on the defined secretary -->
+                    <div id="secretary-linked" style="display:none">
                         Secretary: <span id="secretary-linked-text"></span>
                         <a class="btn btn-edifice btn-xs" href="#">Unlink</a>
                     </div>

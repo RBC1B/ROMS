@@ -103,7 +103,7 @@ roms.common.matchLinkedPerson = function (forename, surname, $personId, populate
         },
         success: function(data) {
             // no match, and no person linked. We don't show anything
-            if (!data && !existingPersonId) {
+            if ((!data || data.length == 0) && !existingPersonId) {
                 return;
             }
 
@@ -111,7 +111,7 @@ roms.common.matchLinkedPerson = function (forename, surname, $personId, populate
             templateData.existingPersonId = existingPersonId;
             templateData.existingPersonName = existingPersonName;
 
-            if (data) {
+            if (!data || data.length == 0) {
                 templateData.matchedPersons = true;
                 templateData.results = data;
             }
