@@ -28,7 +28,7 @@
                     <tbody>
                     </tbody>
                     <tfoot>
-                  </tfoot>
+                    </tfoot>
                 </table>
             </div>
             <sec:authorize access="hasPermission('VOLUNTEER', 'ADD')">

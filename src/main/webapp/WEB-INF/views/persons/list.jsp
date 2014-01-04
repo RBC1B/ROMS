@@ -15,14 +15,7 @@
         <h1>People</h1>
         <hr />
         <div class="entity-list-results">
-            <c:set var="editEnabled" value="false" />
-            <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
-                <c:set var="editEnabled" value="true" />
-            </sec:authorize>
-            <table
-                class="table table-bordered table-condensed table-striped table-hover"
-                id="person-list"
-                data-edit-enabled="${editEnabled}"
+            <table class="table table-bordered table-condensed table-striped table-hover" id="person-list"
                 <thead>
                     <tr>
                         <th>First Name</th>
@@ -33,6 +26,8 @@
                 </thead>
                 <tbody>
                 </tbody>
+                <tfoot>
+                </tfoot>
             </table>
         </div>
 
