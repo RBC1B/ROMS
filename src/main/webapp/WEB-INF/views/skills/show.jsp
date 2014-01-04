@@ -10,91 +10,91 @@
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 <body>
     <%@ include file="/WEB-INF/views/common/titlebar.jsp"%>
-        <h1>Skill: ${skill.name}</h1>
+    <h1>Skill: ${skill.name}</h1>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Description:</dt>
+        <dd>
+            <c:choose>
+                <c:when test="${!empty skill.description}">${skill.description}</c:when>
+                <c:otherwise>-</c:otherwise>
+            </c:choose>
+        </dd>
+        <dt>Department</dt>
+        <dd>
+            <a href="<c:url value='${skill.department.uri}' />">${skill.department.name}</a>
+        </dd>
+        <dt>Category:</dt>
+        <dd>
+            <c:choose>
+                <c:when test="${!empty skill.category}">
+                    <c:choose>
+                        <c:when test="${!empty skill.category.colour}">
+                            <c:set var="categoryColour" value="${skill.category.colour}" />
+                        </c:when>
+                        <c:otherwise>
+                            <c:set var="categoryColour" value="white" />
+                        </c:otherwise>
+                    </c:choose>
+                    <div class="skill-category-colour" style="background-color:${categoryColour}"></div>
+                    ${skill.category.name}
+                </c:when>
+                <c:otherwise>-</c:otherwise>
+            </c:choose>
+        </dd>
+        <dt>Appear on badge?:</dt>
+        <dd>
+            <c:choose>
+                <c:when test="${!empty skill.category && skill.category.appearOnBadge}">
+                    <span class="icon-ok"></span>
+                </c:when>
+                <c:otherwise>
+                    <span class="icon-remove"></span>
+                </c:otherwise>
+            </c:choose>
+        </dd>
+    </dl>
+    <sec:authorize access="hasPermission('SKILL', 'EDIT')">
         <hr />
-        <dl class="dl-horizontal">
-            <dt>Description:</dt>
-            <dd>
-                <c:choose>
-                    <c:when test="${!empty skill.description}">${skill.description}</c:when>
-                    <c:otherwise>-</c:otherwise>
-                </c:choose>
-            </dd>
-            <dt>Department</dt>
-            <dd>
-                <a href="<c:url value='${skill.department.uri}' />">${skill.department.name}</a>
-            </dd>
-            <dt>Category:</dt>
-            <dd>
-                <c:choose>
-                    <c:when test="${!empty skill.category}">
-                        <c:choose>
-                            <c:when test="${!empty skill.category.colour}">
-                                <c:set var="categoryColour" value="${skill.category.colour}" />
-                            </c:when>
-                            <c:otherwise>
-                                <c:set var="categoryColour" value="white" />
-                            </c:otherwise>
-                        </c:choose>
-                        <div class="skill-category-colour" style="background-color:${categoryColour}"></div>
-                        ${skill.category.name}
-                    </c:when>
-                    <c:otherwise>-</c:otherwise>
-                </c:choose>
-            </dd>
-            <dt>Appear on badge?:</dt>
-            <dd>
-                <c:choose>
-                    <c:when test="${!empty skill.category && skill.category.appearOnBadge}">
-                        <span class="icon-ok"></span>
-                    </c:when>
-                    <c:otherwise>
-                        <span class="icon-remove"></span>
-                    </c:otherwise>
-                </c:choose>
-            </dd>
-        </dl>
-        <sec:authorize access="hasPermission('SKILL', 'EDIT')">
-            <hr />
-            <a href="<c:url value='${skill.editUri}' />" class="btn btn-edifice">Edit skill</a>
-        </sec:authorize>
-        <div class="clearfix"></div>
-        <br />
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="#volunteers" data-toggle="tab">Volunteers</a></li>
-        </ul>
-        <div class="tab-content">
-            <div class="tab-pane active" id="volunteers">
-                <div class="row-fluid">
-                    <div class="entity-list-results">
-                        <table class="table table-bordered table-condensed table-striped table-hover" id="skills-volunteer-list" data-skill-id="${skill.skillId}">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Forename</th>
-                                    <th>Surname</th>
-                                    <th>Congregation</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                            <tfoot>
-                            </tfoot>
-                        </table>
-                    </div>
+        <a href="<c:url value='${skill.editUri}' />" class="btn btn-edifice">Edit skill</a>
+    </sec:authorize>
+    <div class="clearfix"></div>
+    <br />
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#volunteers" data-toggle="tab">Volunteers</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="volunteers">
+            <div class="row-fluid">
+                <div class="entity-list-results">
+                    <table class="table table-bordered table-condensed table-striped table-hover" id="skills-volunteer-list" data-skill-id="${skill.skillId}">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Forename</th>
+                                <th>Surname</th>
+                                <th>Congregation</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        <tfoot>
+                        </tfoot>
+                    </table>
                 </div>
             </div>
         </div>
+    </div>
 
-        <br />
-        <ol class="breadcrumb">
-            <li><a href="<c:url value="/" />">Edifice</a></li>
-            <li><a href="<c:url value="/skills" />">Skills</a></li>
-            <li>${skill.name}</li>
-        </ol>
+    <br />
+    <ol class="breadcrumb">
+        <li><a href="<c:url value="/" />">Edifice</a></li>
+        <li><a href="<c:url value="/skills" />">Skills</a></li>
+        <li>${skill.name}</li>
+    </ol>
 
-        <%@ include file="/WEB-INF/views/common/footer.jsp"%>
+    <%@ include file="/WEB-INF/views/common/footer.jsp"%>
     <%@ include file="/WEB-INF/views/common/mustache-list-actions.jsp" %>
     <script type="text/javascript" src="<c:url value='/javascript/skills.js' />"></script>
 </body>

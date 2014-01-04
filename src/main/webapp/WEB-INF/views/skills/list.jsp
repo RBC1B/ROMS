@@ -13,64 +13,64 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-            <h1>Skills</h1>
-            <hr />
-            <div class="entity-list-results">
-                <table class="table table-bordered table-condensed table-striped table-hover" id="skill-list">
-                    <thead>
+        <h1>Skills</h1>
+        <hr />
+        <div class="entity-list-results">
+            <table class="table table-bordered table-condensed table-striped table-hover" id="skill-list">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Department</th>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="${skills}" var="skill">
                         <tr>
-                            <th>Name</th>
-                            <th>Department</th>
-                            <th>Description</th>
-                            <th>Category</th>
-                            <th>Action</th>
+                            <td>${skill.name}</td>
+                            <td><a href="<c:url value='${skill.department.uri}' />">${skill.department.name}</a></td>
+                            <td>${skill.description}</td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${!empty skill.category.colour}">
+                                        <c:set var="categoryColour" value="${skill.category.colour}" />
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:set var="categoryColour" value="white" />
+                                    </c:otherwise>
+                                </c:choose>
+                                <div class="label label-default" style="background-color:${categoryColour}">
+                                    ${skill.category.name}
+                                </div>
+                            </td>
+                            <td>
+                                <ul class="inline list-actions">
+                                    <li><a class="btn btn-success" href="<c:url value="${skill.uri}" />">View</a></li>
+                                    <sec:authorize access="hasPermission('SKILL', 'EDIT')">
+                                        <li><a class="list-action" href="<c:url value="${skill.editUri}" />">Edit</a></li>
+                                    </sec:authorize>
+                                </ul>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach items="${skills}" var="skill">
-                            <tr>
-                                <td>${skill.name}</td>
-                                <td><a href="<c:url value='${skill.department.uri}' />">${skill.department.name}</a></td>
-                                <td>${skill.description}</td>
-                                <td>
-                                    <c:choose>
-                                        <c:when test="${!empty skill.category.colour}">
-                                            <c:set var="categoryColour" value="${skill.category.colour}" />
-                                        </c:when>
-                                        <c:otherwise>
-                                            <c:set var="categoryColour" value="white" />
-                                        </c:otherwise>
-                                    </c:choose>
-                                    <div class="label label-default" style="background-color:${categoryColour}">
-                                        ${skill.category.name}
-                                    </div>
-                                </td>
-                                <td>
-                                    <ul class="inline list-actions">
-                                        <li><a class="btn btn-success" href="<c:url value="${skill.uri}" />">View</a></li>
-                                        <sec:authorize access="hasPermission('SKILL', 'EDIT')">
-                                            <li><a class="list-action" href="<c:url value="${skill.editUri}" />">Edit</a></li>
-                                        </sec:authorize>
-                                    </ul>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
+        <sec:authorize access="hasPermission('SKILL', 'ADD')">
+            <hr />
+            <div class="entity-list-add-new">
+                <a class="btn btn-edifice" href="<c:url value="${newUri}" />">Create new departmental skills</a>
             </div>
-            <sec:authorize access="hasPermission('SKILL', 'ADD')">
-                <hr />
-                <div class="entity-list-add-new">
-                    <a class="btn btn-edifice" href="<c:url value="${newUri}" />">Create new departmental skills</a>
-                </div>
-            </sec:authorize>
+        </sec:authorize>
 
-            <br />
-            <ol class="breadcrumb">
-                <li><a href="<c:url value="/" />">Edifice</a></li>
-                <li class="active">Skills</li>
-            </ol>
-            <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+        <br />
+        <ol class="breadcrumb">
+            <li><a href="<c:url value="/" />">Edifice</a></li>
+            <li class="active">Skills</li>
+        </ol>
+        <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         <script type="text/javascript" src="<c:url value='/javascript/skills.js' />" ></script>
     </body>
 </html>
