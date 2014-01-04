@@ -16,11 +16,11 @@ Edit form for the volunteer data under the rbc status tab.
             <c:url var="formAction" value="${submitUri}" />
             <form:form class="form-horizontal" commandName="volunteerRbcStatus" method="PUT" action="${formAction}">
                 <fieldset>
-                    <legend>Form Date</legend>
+                    <legend>Form date</legend>
                     <div class="form-group">
                         <label for="formDate" class="control-label col-sm-3 col-md-2">Form date</label>
                         <div class="col-sm-9 col-md-2">
-                        <form:input path="formDate" class="datepicker form-control" data-date-format="dd/mm/yy" type="text" value=""/>
+                            <form:input path="formDate" class="datepicker form-control" data-date-format="dd/mm/yy" type="text" value=""/>
                         </div>
                     </div>
                 </fieldset>
@@ -31,10 +31,14 @@ Edit form for the volunteer data under the rbc status tab.
                         <div class="col-sm-9 col-md-2">
                             <form:input path="interviewDate" class="datepicker form-control" data-date-format="dd/mm/yy" type="text" value=""/>
                         </div>
+                    </div>
+                    <div class="form-group">
                         <label for="joinedDate" class="control-label col-sm-3 col-md-2">Joined date</label>
                         <div class="col-sm-9 col-md-2">
                             <form:input path="joinedDate" class="datepicker form-control" data-date-format="dd/mm/yy" type="text" value=""/>
                         </div>
+                    </div>
+                    <div class="form-group">
                         <label for="badgeIssueDate" class="control-label col-sm-3 col-md-2">Badge issue date</label>
                         <div class="col-sm-9 col-md-2">
                             <form:input path="badgeIssueDate" class="datepicker form-control" data-date-format="dd/mm/yy" type="text" value=""/>
@@ -43,19 +47,21 @@ Edit form for the volunteer data under the rbc status tab.
                     <div class="form-group">
                         <label for="interviewerAUserName" class="control-label col-sm-3 col-md-2">Interviewer A</label>
                         <div class="col-sm-9 col-md-2">
-                        <form:input path="interviewerAUserName" class="user form-control" placeholder="User Name" autocomplete="off" />
-                        <form:hidden path="interviewerAPersonId" />
+                            <form:input path="interviewerAUserName" class="user form-control" placeholder="User Name" autocomplete="off" />
+                            <form:hidden path="interviewerAPersonId" />
                         </div>
+                    </div>
+                    <div class="form-group">
                         <label for="interviewerBPersonId" class="control-label col-sm-3 col-md-2">Interviewer B</label>
                         <div class="col-sm-9 col-md-2">
-                        <form:input path="interviewerBUserName" class="user form-control" placeholder="User Name" autocomplete="off" />
-                        <form:hidden path="interviewerBPersonId" />
+                            <form:input path="interviewerBUserName" class="user form-control" placeholder="User Name" autocomplete="off" />
+                            <form:hidden path="interviewerBPersonId" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="interviewComments" class="control-label col-sm-3 col-md-2">Interview comments</label>
-                        <div class="col-sm-9 col-md-10">
-                        <form:textarea path="interviewComments" class="form-control" rows="5" maxlength="200" />
+                        <div class="col-sm-9 col-md-4">
+                            <form:textarea path="interviewComments" class="form-control" rows="5" maxlength="200" />
                         </div>
                     </div>
                 </fieldset>
@@ -104,10 +110,10 @@ Edit form for the volunteer data under the rbc status tab.
                         </label>
                     </div>
                     <div class="form-group">
-                    <label for="oversightComments" class="col-sm-3 col-md-2 control-label">Comments</label>
-                    <div class="col-sm-9 col-md-10">
-                        <form:textarea path="oversightComments" class="form-control" rows="3" maxlength="200" />
-                    </div>
+                        <label for="oversightComments" class="col-sm-3 col-md-2 control-label">Comments</label>
+                        <div class="col-sm-9 col-md-4">
+                            <form:textarea path="oversightComments" class="form-control" rows="3" maxlength="200" />
+                        </div>
                     </div>
                 </fieldset>
                 <fieldset>
@@ -116,15 +122,15 @@ Edit form for the volunteer data under the rbc status tab.
                             &nbsp;
                         </div>
                     <div class="form-group col-sm-9 col-md-10">
-                    <label class="checkbox">
-                        <form:checkbox path="reliefUK" /> Recommended
-                    </label>
+                        <label class="checkbox">
+                            <form:checkbox path="reliefUK" /> Recommended
+                        </label>
                     </div>
                     <div class="form-group">
-                    <label for="reliefUKComments" class="control-label col-sm-3 col-md-2">Comments</label>
-                    <div class="col-sm-9 col-md-10">
-                    <form:textarea path="reliefUKComments" class="form-control" rows="2" maxlength="50" />
-                    </div>
+                        <label for="reliefUKComments" class="control-label col-sm-3 col-md-2">Comments</label>
+                        <div class="col-sm-9 col-md-4">
+                            <form:textarea path="reliefUKComments" class="form-control" rows="2" maxlength="50" />
+                        </div>
                     </div>
                 </fieldset>
                 <fieldset>
@@ -138,19 +144,19 @@ Edit form for the volunteer data under the rbc status tab.
                     </label>
                     </div>
                     <div class="form-group">
-                    <label for="reliefAbroadComments" class="control-label col-sm-3 col-md-2">Comments</label>
-                    <div class="col-sm-9 col-md-10">
-                    <form:textarea path="reliefAbroadComments" class="form-control" rows="2" maxlength="50" />
-                    </div>
+                        <label for="reliefAbroadComments" class="control-label col-sm-3 col-md-2">Comments</label>
+                        <div class="col-sm-9 col-md-4">
+                            <form:textarea path="reliefAbroadComments" class="form-control" rows="2" maxlength="50" />
+                        </div>
                     </div>
                 </fieldset>
                 <fieldset>
                     <legend>HHC</legend>
                     <div class="form-group">
-                    <label for="hhcFormCode" class="control-label col-sm-3 col-md-2">Form code</label>
-                    <div class="col-sm-9 col-md-2">
-                    <form:input path="hhcFormCode" class="form-control" maxlength="15" />
-                    </div>
+                        <label for="hhcFormCode" class="control-label col-sm-3 col-md-2">Form code</label>
+                        <div class="col-sm-9 col-md-2">
+                            <form:input path="hhcFormCode" class="form-control" maxlength="15" />
+                        </div>
                     </div>
                 </fieldset>
                 <fieldset>
