@@ -15,7 +15,7 @@
         <h1>People</h1>
         <hr />
         <div class="entity-list-results">
-            <table class="table table-bordered table-condensed table-striped table-hover" id="person-list"
+            <table class="table table-bordered table-condensed table-striped table-hover" id="person-list">
                 <thead>
                     <tr>
                         <th>First Name</th>
