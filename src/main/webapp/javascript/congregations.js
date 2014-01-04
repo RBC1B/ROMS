@@ -90,7 +90,6 @@ $(document).ready(function() {
                 required: true
             },
             kingdomHallName: {
-                required: true,
                 remote: roms.common.validation.kingdomHall($("#kingdomHallName"), $("#kingdomHallId"))
             },
             circuitId: {
