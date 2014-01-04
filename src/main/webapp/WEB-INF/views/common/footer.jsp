@@ -18,7 +18,7 @@
                             </sec:authorize>
                         </ul>
                     </sec:authorize>
-                </div>  
+                </div>
                 <div class="col-xs-4">
                     <sec:authorize access="hasPermission('VOLUNTEER', 'READ') or hasPermission('SKILL', 'READ')">
                         <ul class="footer-nav">
@@ -43,7 +43,7 @@
                             </sec:authorize>
                         </ul>
                     </sec:authorize>
-                </div> 
+                </div>
                 <div class="col-xs-4">
                     <sec:authorize access="hasPermission('PROJECT', 'READ') or hasPermission('DATABASE', 'READ')">
                         <ul class="footer-nav">
@@ -66,8 +66,8 @@
         </div>
     </div>
 </footer>
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/jquery.validate.min.js"></script>
 <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
