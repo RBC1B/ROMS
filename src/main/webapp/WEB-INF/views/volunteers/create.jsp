@@ -45,15 +45,13 @@
                 <fieldset>
                     <div class="row">
                         <h3 class="text-left">1.(b) Gender</h3>
-                        <div class="col-md-4">
-                            <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="col-md-1">
                                 <label class="radio inline">
                                     <form:radiobutton path="gender" value="M" /> Male
                                 </label>
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="col-md-12">
+                            <div class="col-md-1">
                                 <label class="radio inline">
                                     <form:radiobutton path="gender" value="F" /> Female
                                 </label>
