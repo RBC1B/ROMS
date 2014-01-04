@@ -28,7 +28,7 @@
                         <th>Telephone</th>
                         <th>Work Phone</th>
                         <th>Comment</th>
-                        <th>Forms Updated</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -146,9 +146,7 @@
                             </td>
                             <td>
                                 <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
-                                    <div class="update-paperwork alert alert-info">
-                                        <a class="alert-link" data-update-url="<c:url value="${personchange.updateUri}" />">Paper Work Updated</a>
-                                    </div>
+                                    <a class="btn btn-edifice a-update-paperwork" data-update-url="<c:url value="${personchange.updateUri}" />">Paper Work Updated</a>
                                 </sec:authorize>
                             </td>
                         </tr>

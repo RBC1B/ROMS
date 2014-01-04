@@ -36,8 +36,9 @@ $(document).ready(function() {
             }
     );
 
-    $(".update-paperwork").click(function(){
-        var updateUrl = $("a", $(this)).data("update-url");
+    $(".a-update-paperwork").click(function(e){
+        e.preventDefault();
+        var updateUrl = $(this).data("update-url");
         $.ajax({
             url: updateUrl,
             type: 'PUT',
