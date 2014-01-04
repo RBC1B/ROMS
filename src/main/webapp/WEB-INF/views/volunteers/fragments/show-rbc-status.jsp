@@ -98,7 +98,7 @@ The contents of the rbc status tab.
             <c:otherwise><span class="icon-remove"></span></c:otherwise>
         </c:choose>
         <c:if test="${!empty volunteer.oversightComments}">
-            (${volunteer.oversightComments})
+            ${volunteer.oversightComments}
         </c:if>
     </dd>
     <dt>Relief UK:</dt>
@@ -108,7 +108,7 @@ The contents of the rbc status tab.
             <c:otherwise><span class="icon-remove"></span></c:otherwise>
         </c:choose>
         <c:if test="${!empty volunteer.reliefUKComments}">
-            (${volunteer.reliefUKComments})
+            ${volunteer.reliefUKComments}
         </c:if>
     </dd>
     <dt>Relief Abroad:</dt>
@@ -118,7 +118,7 @@ The contents of the rbc status tab.
             <c:otherwise><span class="icon-remove"></span></c:otherwise>
         </c:choose>
         <c:if test="${!empty volunteer.reliefAbroadComments}">
-            (${volunteer.reliefAbroadComments})
+            ${volunteer.reliefAbroadComments}
         </c:if>
     </dd>
     <dt>HHC Form code:</dt>
