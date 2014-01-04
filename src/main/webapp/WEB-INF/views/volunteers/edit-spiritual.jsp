@@ -15,7 +15,6 @@ Edit form for the volunteer data under the spiritual tab.
             <c:url var="formAction" value="${submitUri}" />
             <form:form class="form-horizontal" commandName="volunteerSpiritual" method="PUT" action="${formAction}">
                 <fieldset>
-                    <legend>Congregation and baptism details</legend>
                     <div class="form-group">
                         <label class="control-label col-sm-4 col-md-3">Congregation</label>
                         <div class="col-sm-8 col-md-3">
@@ -31,10 +30,9 @@ Edit form for the volunteer data under the spiritual tab.
                     </div>
                 </fieldset>
                 <fieldset>
-                    <legend>Congregational privileges</legend>
                     <div class="form-group">
                         <label class="control-label col-sm-4 col-md-3">Full time service</label>
-                        <div class="col-sm-4 col-md-5">
+                        <div class="col-sm-4 col-md-2">
                             <form:select class="form-control" path="fulltimeCode">
                                 <form:option value="" label="None" />
                                 <form:options items="${fulltimeValues}" />
@@ -43,7 +41,7 @@ Edit form for the volunteer data under the spiritual tab.
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-4 col-md-3">Appointment</label>
-                        <div class="col-sm-4 col-md-5">
+                        <div class="col-sm-4 col-md-2">
                             <form:select class="form-control" path="appointmentCode">
                                 <form:option value="" label="None (Publisher)" />
                                 <form:options items="${appointmentValues}" />
