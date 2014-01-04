@@ -270,9 +270,9 @@ public class VolunteersController {
         }
 
         Address address = new Address();
-        address.setStreet(form.getCounty());
+        address.setStreet(form.getStreet());
         address.setTown(form.getTown());
-        address.setCounty(form.getCounty());
+        // county is not set in the create volunteer form - it is not on the S-82 paper form
         address.setPostcode(form.getPostcode());
         volunteer.setAddress(address);
 
@@ -727,13 +727,11 @@ public class VolunteersController {
      * @param response HttpServletResponse
      * @throws IOException if the file cannot be read
      */
-    @RequestMapping(value = "{volunteerId}/imageProfile",
-            method = RequestMethod.GET)
-    public void showImage(@PathVariable Integer volunteerId,
-            HttpServletResponse response) throws IOException {
+    @RequestMapping(value = "{volunteerId}/imageProfile", method = RequestMethod.GET)
+    public void showImage(@PathVariable Integer volunteerId, HttpServletResponse response) throws IOException {
         String imageName = volunteerId + ".jpg";
         File file = new File(imageDirectories.getProperty(VOLUNTEER_IMAGE_DIRECTORY_KEY) + imageName);
-        //if the file doesnt exist
+        // if the file doesnt exist
         if (!file.exists()) {
             imageName = "default.jpg";
             file = new File(imageDirectories.getProperty(VOLUNTEER_IMAGE_DIRECTORY_KEY) + imageName);
@@ -787,7 +785,7 @@ public class VolunteersController {
         Address address = new Address();
         address.setStreet(form.getEmergencyContactStreet());
         address.setTown(form.getEmergencyContactTown());
-        address.setCounty(form.getEmergencyContactCounty());
+        // county is not set when creating a new contact in the create form
         address.setPostcode(form.getEmergencyContactPostcode());
         emergencyContact.setAddress(address);
 

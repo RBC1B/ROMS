@@ -47,7 +47,6 @@ public class VolunteerForm {
     @NotNull
     private Integer congregationId;
     private String congregationName;
-    private String county;
     private boolean elder;
     private String email;
     @NotNull
@@ -59,7 +58,6 @@ public class VolunteerForm {
     private Integer emergencyContactPersonId;
     private String emergencyContactTelephone;
     private String emergencyContactMobile;
-    private String emergencyContactCounty;
     @NotNull
     @Size(min = 2)
     private String emergencyContactStreet;
@@ -164,14 +162,6 @@ public class VolunteerForm {
 
     public void setEmergencyContactMobile(String emergencyContactMobile) {
         this.emergencyContactMobile = emergencyContactMobile;
-    }
-
-    public String getEmergencyContactCounty() {
-        return emergencyContactCounty;
-    }
-
-    public void setEmergencyContactCounty(String emergencyContactCounty) {
-        this.emergencyContactCounty = emergencyContactCounty;
     }
 
     public String getEmergencyContactStreet() {
@@ -332,14 +322,6 @@ public class VolunteerForm {
 
     public void setTown(String town) {
         this.town = town;
-    }
-
-    public String getCounty() {
-        return county;
-    }
-
-    public void setCounty(String county) {
-        this.county = county;
     }
 
     public String getPostcode() {

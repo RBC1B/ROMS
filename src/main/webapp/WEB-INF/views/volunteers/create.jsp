@@ -100,13 +100,6 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <form:input class="form-control" path="county" placeholder="County" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <form:input class="form-control" path="postcode" placeholder="Postcode" maxlength="10" />
@@ -303,13 +296,6 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <form:input class="form-control" path="emergencyContactTown" placeholder="Town" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <form:input class="form-control" path="emergencyContactCounty" placeholder="County" />
                                 </div>
                             </div>
                         </div>
