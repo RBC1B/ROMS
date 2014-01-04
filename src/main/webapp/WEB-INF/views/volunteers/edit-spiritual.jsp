@@ -27,7 +27,7 @@ Author: oliver.elder.esq
                     <div class="form-group">
                         <label class="control-label col-sm-4 col-md-3">Date of baptism</label>
                         <div class="col-sm-8 col-md-3">
-                            <form:input path="baptismDate" placeholder="15/03/1980" class="datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
+                            <form:input path="baptismDate" placeholder="dd/mm/yyyy" class="datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
                         </div>
                     </div>
                 </fieldset>

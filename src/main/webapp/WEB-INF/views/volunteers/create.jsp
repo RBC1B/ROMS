@@ -68,7 +68,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="birthDate">(a) Date of birth </label>
-                                    <form:input path="birthDate" placeholder="15/03/1980" class="form-control datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
+                                    <form:input path="birthDate" placeholder="dd/mm/yyyy" class="form-control datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
                                 </div>
                             </div>
                         </div>
@@ -76,7 +76,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="baptismDate">(b) Date of baptism</label>
-                                    <form:input path="baptismDate" placeholder="15/03/1980" class="form-control datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
+                                    <form:input path="baptismDate" placeholder="dd/mm/yyyy" class="form-control datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
                                 </div>
                             </div>
                         </div>
@@ -343,7 +343,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label">Form date:</label>
-                                    <form:input path="formDate" placeholder="15/03/1980" class="datepicker form-control" data-date-format="dd/mm/yy" />
+                                    <form:input path="formDate" placeholder="dd/mm/yyyy" class="datepicker form-control" data-date-format="dd/mm/yy" />
                                 </div>
                             </div>
                         </div>
