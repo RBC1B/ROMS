@@ -20,7 +20,7 @@
                             <th>Name</th>
                             <th>Street</th>
                             <th>Town</th>
-                            <th>Post Code</th>
+                            <th>Postcode</th>
                             <th>Action</th>
                         </tr>
                     </thead>
