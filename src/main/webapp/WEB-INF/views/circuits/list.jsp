@@ -18,16 +18,20 @@
                 <table class="table table-bordered table-condensed table-striped table-hover" id="circuit-list">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Name</th>
+                            <th>Overseer</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <c:forEach items="${circuits}" var="circuit">
                             <tr>
-                                <td>${circuit.circuitId}</td>
                                 <td>${circuit.name}</td>
+                                <td>
+                                    <c:if test="${not empty circuit.circuitOverseer}">
+                                        <a href="<c:url value='${circuit.circuitOverseer.uri}'/>">${circuit.circuitOverseer.displayName}</a>
+                                    </c:if>
+                                </td>
                                 <td>
                                     <ul class="list-inline">
                                         <li><a class="btn btn-success" href="<c:url value="/circuits/${circuit.circuitId}" />">View</a></li>
