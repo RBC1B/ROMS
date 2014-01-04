@@ -117,21 +117,21 @@
                     <div class="row">
                         <h3 class="text-left">4. Phones</h3>
                         <div class="col-md-4">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <form:input class="form-control" path="telephone" placeholder="Home phone"/>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <form:input class="form-control" path="workPhone" placeholder="Work phone"/>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <form:input class="form-control" path="mobile" placeholder="Mobile phone"/>
                                 </div>
