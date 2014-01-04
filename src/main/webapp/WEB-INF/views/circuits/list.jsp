@@ -13,7 +13,7 @@
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
             <h1>Circuits</h1>
-            <hr>
+            <hr />
             <div class="entity-list-results">
                 <table class="table table-bordered table-condensed table-striped table-hover" id="circuit-list">
                     <thead>
@@ -45,13 +45,13 @@
                     </tbody>
                 </table>
             </div>
-            <hr>
             <sec:authorize access="hasPermission('CIRCUIT', 'ADD')">
+                <hr />
                 <div class="entity-list-add-new">
                     <a class="btn btn-edifice" href="<c:url value="/circuits/new" />">Create new circuit</a>
                 </div>
-                <p>&nbsp;</p>
             </sec:authorize>
+            <br />
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
                 <li class="active">Circuits</li>

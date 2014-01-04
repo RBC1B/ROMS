@@ -11,7 +11,7 @@
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
             <h1>Projects</h1>
-            <hr>
+            <hr />
             <table class="table table-bordered table-condensed table-striped table-hover" id="project-list">
                 <thead>
                     <tr>
@@ -44,8 +44,8 @@
                     </c:forEach>
                 </tbody>
             </table>
-            <hr>
             <sec:authorize access="hasPermission('PROJECT', 'ADD')">
+                <hr />
                 <a class="btn btn-edifice" href="<c:url value="${newUri}" />" />Create new project</a>
             </sec:authorize>
             <br />

@@ -13,7 +13,7 @@
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container-fluid">
             <h1>Volunteer Experience</h1>
-            <hr>
+            <hr />
             <div class="entity-list-results">
                 <table class="table table-bordered table-condensed table-striped table-hover" id="volunteer-experience-list">
                     <thead>
@@ -30,10 +30,11 @@
                     <tbody>
                     </tbody>
                     <tfoot>
-                  </tfoot>
+                    </tfoot>
                 </table>
             </div>
-            <p>&nbsp;</p>
+
+            <br />
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
                 <li><a href="<c:url value="/volunteers" />">Volunteers</a></li>

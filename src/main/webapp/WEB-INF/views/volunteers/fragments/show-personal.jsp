@@ -73,6 +73,7 @@ The contents of the personal tab.
 </dd>
 </dl>
 <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
+    <hr />
     <a class="btn btn-edifice" href="<c:url value='${volunteer.editPersonalUri}' />">Edit</a>
 </sec:authorize>
 

@@ -14,7 +14,7 @@
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
             <h1>Skills</h1>
-            <hr>
+            <hr />
             <div class="entity-list-results">
                 <table class="table table-bordered table-condensed table-striped table-hover" id="skill-list">
                     <thead>
@@ -58,13 +58,14 @@
                     </tbody>
                 </table>
             </div>
-            <hr>
             <sec:authorize access="hasPermission('SKILL', 'ADD')">
+                <hr />
                 <div class="entity-list-add-new">
                     <a class="btn btn-edifice" href="<c:url value="${newUri}" />">Create new departmental skills</a>
                 </div>
             </sec:authorize>
-            <p>&nbsp;</p>
+
+            <br />
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
                 <li class="active">Skills</li>

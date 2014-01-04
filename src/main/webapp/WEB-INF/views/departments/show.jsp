@@ -62,10 +62,12 @@
                 </div>
             </div>
             <sec:authorize access="hasPermission('PROJECT', 'EDIT')">
+                <hr />
                 <a href="<c:url value='${department.editUri}' />" class="btn btn-edifice">Edit Department</a>
             </sec:authorize>
             <div class="clearfix"></div>
 
+            <br />
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
                 <li><a href="<c:url value="/department" />">Department</a></li>

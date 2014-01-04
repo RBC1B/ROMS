@@ -27,7 +27,7 @@
                 <h1>Create New Circuit</h1>
             </c:otherwise>
         </c:choose>
-        <hr>
+        <hr />
         <c:url var="formAction" value="${submitUri}" />
         <form:form commandName="circuitForm" method="${submitMethod}" action="${formAction}">
             <fieldset>

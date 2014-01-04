@@ -13,7 +13,7 @@
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
             <h1>Departments</h1>
-            <hr>
+            <hr />
             <div class="entity-list-results">
                 <table class="table table-bordered table-condensed table-striped table-hover" id="department-list">
                     <thead>
@@ -48,7 +48,8 @@
                     </tbody>
                 </table>
             </div>
-            <p>&nbsp;</p>
+
+            <br />
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
                 <li class="active">Departments</li>

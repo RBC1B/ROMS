@@ -52,11 +52,12 @@
                 <c:otherwise>Not set</c:otherwise>
             </c:choose>
             <sec:authorize access="hasPermission('CIRCUIT', 'EDIT')">
+                <hr />
                 <div class="entity-list-add-new">
                     <a class="btn btn-edifice" href="<c:url value="${circuit.editUri}" />">Edit Circuit</a>
                 </div>
             </sec:authorize>
-
+            <br />
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
                 <li><a href="<c:url value="/circuits" />">Circuits</a></li>

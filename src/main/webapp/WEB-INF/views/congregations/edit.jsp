@@ -25,7 +25,7 @@
                 <h1>Create New Congregation</h1>
             </c:otherwise>
         </c:choose>
-        <hr>
+        <hr />
         <c:url var="formAction" value="${submitUri}" />
         <form:form commandName="congregationForm" method="${submitMethod}" action="${formAction}">
             <fieldset>

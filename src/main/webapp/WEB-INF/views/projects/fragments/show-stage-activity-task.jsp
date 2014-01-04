@@ -84,7 +84,7 @@
                             </div>
                             </div>
                         <div class="clearfix"></div>
-                        <br>
+                        <br />
                         <strong>Comments:</strong>
                         <c:if test="${!empty task.comments}">
                             <p>${task.comments}</p>

@@ -27,7 +27,7 @@ Author     : oliver.elder.esq
                 <h1>Create New Kingdom Hall</h1>
             </c:otherwise>
         </c:choose>
-        <hr>
+        <hr />
         <c:url var="formAction" value="${submitUri}" />
         <form:form commandName="kingdomHallForm" method="${submitMethod}" action="${formAction}" role="form">
             <div class="row">

@@ -15,7 +15,7 @@
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
             <h1>Qualifications</h1>
-            <hr>
+            <hr />
             <table class="table table-bordered table-condensed table-striped table-hover" id="qualification-list">
                 <thead>
                     <tr>
@@ -41,9 +41,8 @@
                     </c:forEach>
                 </tbody>
             </table>
-            <hr>
             <sec:authorize access="hasPermission('SKILL', 'EDIT')">
-                <br />
+                <hr />
                 <a class="btn btn-edifice" href="<c:url value="${newUri}" />" />Create new qualification</a>
             </sec:authorize>
 

@@ -12,7 +12,7 @@
     <body>
             <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
             <h1>Dashboard</h1>
-            <hr>
+            <hr />
             <div class="row">
               <div class="well-edifice col-md-4 col-xs-6">
                   <div class="well">

@@ -15,7 +15,7 @@
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <h1>Person Information Changes/Updates</h1>
-        <hr>
+        <hr />
         <div class="entity-list-results">
             <table class="table table-bordered table-condensed table-striped table-hover" id="personchange-list">
                 <thead>
@@ -156,7 +156,8 @@
                 </tbody>
             </table>
         </div>
-        <p>&nbsp;</p>
+
+        <br />
         <ol class="breadcrumb">
             <li><a href="<c:url value="/" />">Edifice</a> <span class="divider"></span></li>
             <li class="active">Person Information Change</li>

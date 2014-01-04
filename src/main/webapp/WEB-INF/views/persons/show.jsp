@@ -11,7 +11,7 @@
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
             <h1>${person.forename} ${person.middleName} ${person.surname}</h1>
-            <hr>
+            <hr />
             <dl class="dl-horizontal">
                 <dt>Congregation:</dt>
                 <dd>
@@ -87,9 +87,11 @@
             </c:if>
 
             <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
+                <hr />
                 <a href="<c:url value='${person.editUri}' />" class="btn btn-edifice">Edit Person</a>
             </sec:authorize>
 
+            <br />
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
                 <li><a href="<c:url value="/persons" />">Persons</a></li>

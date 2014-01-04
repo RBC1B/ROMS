@@ -11,7 +11,7 @@
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <h1>Create New Project</h1>
-        <hr>
+        <hr />
         <c:url var="formAction" value="${submitUri}" />
         <form:form commandName="projectForm" method="${submitMethod}" action="${formAction}">
             <fieldset>

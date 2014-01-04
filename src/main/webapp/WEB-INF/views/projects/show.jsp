@@ -11,7 +11,7 @@
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
             <h1>Project #${project.projectId}: ${project.name}</h1>
-            <hr>
+            <hr />
             <dl class="dl-horizontal">
                 <dt>Type:</dt><dd>${project.type}</dd>
                 <dt>Status:</dt><dd>${project.status}</dd>
@@ -20,7 +20,8 @@
                 <li class="active"><a href="#stages" data-toggle="tab">Stages</a></li>
                 <li><a href="#details" data-toggle="tab">Details</a></li>
                 <li><a href="#contacts" data-toggle="tab">Contacts</a></li>
-            </ul><br>
+            </ul>
+            <br />
             <div class="tab-content">
                 <div class="tab-pane active" id="stages">
                     <!--div class="row"-->
@@ -49,6 +50,7 @@
                 </div>
             </div>
             <div class="clearfix"></div>
+            <br />
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
                 <li><a href="<c:url value="/projects" />">Projects</a></li>

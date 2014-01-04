@@ -10,7 +10,7 @@
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
             <h1>Kingdom Hall #${kingdomHall.kingdomHallId}: ${kingdomHall.name}</h1>
-            <hr>
+            <hr />
             <dl class="dl-horizontal">
                 <dt>Address:</dt>
                 <dd>
@@ -57,6 +57,7 @@
                 </dd>
             </dl>
 
+            <br />
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
                 <li><a href="<c:url value="/kingdom-halls" />">Kingdom Halls</a></li>

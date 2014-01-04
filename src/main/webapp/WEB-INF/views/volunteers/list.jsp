@@ -13,7 +13,7 @@
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
             <h1>Volunteers</h1>
-            <hr>
+            <hr />
             <div class="entity-list-results">
                 <table class="table table-bordered table-condensed table-striped table-hover" id="volunteer-list">
                     <thead>
@@ -31,13 +31,13 @@
                   </tfoot>
                 </table>
             </div>
-            <hr>
             <sec:authorize access="hasPermission('VOLUNTEER', 'ADD')">
+                <hr />
                 <div class="entity-list-add-new">
                     <a class="btn btn-edifice" href="<c:url value="${newUri}" />">Create new Volunteer</a>
                 </div>
-                <p>&nbsp;</p>
             </sec:authorize>
+            <br />
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
                 <li class="active">Volunteers</li>

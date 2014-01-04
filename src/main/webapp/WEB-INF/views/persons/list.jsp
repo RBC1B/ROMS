@@ -13,7 +13,7 @@
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <h1>People</h1>
-        <hr>
+        <hr />
         <div class="entity-list-results">
             <c:set var="editEnabled" value="false" />
             <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
@@ -35,7 +35,8 @@
                 </tbody>
             </table>
         </div>
-        <p>&nbsp;</p>
+
+        <br />
         <ol class="breadcrumb">
             <li><a href="<c:url value="/" />">Edifice</a></li>
             <li class="active">Persons</li>

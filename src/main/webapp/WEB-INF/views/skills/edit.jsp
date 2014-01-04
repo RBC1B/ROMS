@@ -28,7 +28,7 @@
                     <h1>Create New Skill</h1>
                 </c:otherwise>
             </c:choose>
-            <hr>
+            <hr />
             <c:url var="formAction" value="${submitUri}" />
             <form:form commandName="skillForm" method="${submitMethod}" action="${formAction}">
                 <div class="form">

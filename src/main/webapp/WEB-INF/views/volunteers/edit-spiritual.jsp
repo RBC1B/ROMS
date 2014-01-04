@@ -12,7 +12,7 @@ Author: oliver.elder.esq
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
             <h1>${forename} ${surname} - Spiritual Information</h1>
-            <hr>
+            <hr />
             <c:url var="formAction" value="${submitUri}" />
             <form:form class="form-horizontal" commandName="volunteerSpiritual" method="PUT" action="${formAction}">
                 <fieldset>

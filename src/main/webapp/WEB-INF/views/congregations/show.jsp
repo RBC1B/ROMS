@@ -86,9 +86,11 @@
                 </div>
             </div>
             <sec:authorize access="hasPermission('CONG', 'EDIT')">
+                <hr />
                 <a href="<c:url value='${congregation.editUri}' />" class="btn btn-edifice">Edit Congregation</a>
             </sec:authorize>
 
+            <br />
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
                 <li><a href="<c:url value="/congregations" />">Congregations</a></li>

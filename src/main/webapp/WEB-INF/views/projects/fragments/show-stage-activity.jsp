@@ -101,7 +101,7 @@
                                 <c:otherwise>Unassigned</c:otherwise>
                             </c:choose>
                         </div>
-                        <br>
+                        <br />
                         <div class="col-sm-12">
                             <c:choose>
                                 <c:when test="${!empty activity.comments}">

@@ -72,7 +72,7 @@
                                 <c:otherwise>&nbsp;</c:otherwise>
                             </c:choose>
                         </div>
-                        <br>
+                        <br />
                         <c:choose>
                             <c:when test="${!empty stage.activities}">
                                 <h3>Activities</h3>

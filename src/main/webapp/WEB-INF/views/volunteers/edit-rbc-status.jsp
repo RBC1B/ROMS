@@ -11,7 +11,7 @@ Edit form for the volunteer data under the rbc status tab.
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
             <h1>${forename} ${surname} - RBC Status Information</h1>
-            <hr>
+            <hr />
 
             <c:url var="formAction" value="${submitUri}" />
             <form:form class="form-horizontal" commandName="volunteerRbcStatus" method="PUT" action="${formAction}">

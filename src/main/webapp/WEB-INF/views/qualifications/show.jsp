@@ -12,7 +12,7 @@
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
             <h1>Qualification: ${qualification.name}</h1>
-            <hr>
+            <hr />
             <dl class="dl-horizontal">
                 <dt>Description:</dt>
                 <dd>
@@ -49,10 +49,12 @@
                 </div>
             </div>
             <sec:authorize access="hasPermission('SKILL', 'EDIT')">
+                <hr />
                 <a href="<c:url value='${qualification.editUri}' />" class="btn btn-edifice">Edit Qualification</a>
             </sec:authorize>
             <div class="clearfix"></div>
 
+            <br />
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
                 <li role="menuitem"><a href="<c:url value="/qualifications" />">Qualifications</a></li>

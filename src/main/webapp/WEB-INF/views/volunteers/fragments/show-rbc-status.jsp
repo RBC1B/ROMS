@@ -132,5 +132,6 @@ The contents of the rbc status tab.
     </dd>
 </dl>
 <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
+    <hr />
     <a class="btn btn-edifice" href="<c:url value='${volunteer.editRbcStatusUri}' />">Edit</a>
 </sec:authorize>

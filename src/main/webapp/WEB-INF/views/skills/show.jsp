@@ -11,7 +11,7 @@
 <body>
     <%@ include file="/WEB-INF/views/common/titlebar.jsp"%>
         <h1>Skill: ${skill.name}</h1>
-        <hr>
+        <hr />
         <dl class="dl-horizontal">
             <dt>Description:</dt>
             <dd>
@@ -55,6 +55,7 @@
             </dd>
         </dl>
         <sec:authorize access="hasPermission('SKILL', 'EDIT')">
+            <hr />
             <a href="<c:url value='${skill.editUri}' />" class="btn btn-edifice">Edit Skill</a>
         </sec:authorize>
         <div class="clearfix"></div>
@@ -86,6 +87,7 @@
             </div>
         </div>
 
+        <br />
         <ol class="breadcrumb">
             <li><a href="<c:url value="/" />">Edifice</a></li>
             <li><a href="<c:url value="/skills" />">Skills</a></li>

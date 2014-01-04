@@ -12,7 +12,7 @@
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container">
             <h1>Regional Building Committee Volunteer Application</h1>
-            <hr>
+            <hr />
             <c:url var="formAction" value="/volunteers" />
             <form:form class="form-horizontal" commandName="volunteer" method="POST" action="${formAction}">
                 <fieldset>
@@ -354,12 +354,14 @@
                         <input type="submit" class="btn btn-lg btn-success"/>
                     </div>
                 </fieldset>
-             </div> <!--container div-->
-                <ol class="breadcrumb">
-                    <li><a href="<c:url value="/" />">Edifice</a></li>
-                    <li role="menuitem"><a href="<c:url value="/kingdom-halls" />">Kingdom Halls</a></li>
-                    <li class="active">Edit</li>
-                </ol>
+            </div> <!--container div-->
+
+            <br />
+            <ol class="breadcrumb">
+                <li><a href="<c:url value="/" />">Edifice</a></li>
+                <li role="menuitem"><a href="<c:url value="/kingdom-halls" />">Kingdom Halls</a></li>
+                <li class="active">Edit</li>
+            </ol>
         </form:form>
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         <%@ include file="/WEB-INF/views/common/person-link-modal.jsp"%>

@@ -11,7 +11,7 @@ Edit form for the volunteer data under the personal tab.
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp"%>
         <h1>${forename} ${surname} - Personal Information</h1>
-        <hr>
+        <hr />
 
         <c:url var="formAction" value="${submitUri}" />
         <form:form class="form-horizontal" commandName="volunteerPersonal" method="PUT" action="${formAction}">
@@ -80,19 +80,22 @@ Edit form for the volunteer data under the personal tab.
                         </div>
                     </div>
                 </div>
-            </fieldset><br>
+            </fieldset>
+            <br/>
             <fieldset>
                 <legend>Gender</legend>
                 <form:select path="gender">
                     <form:option value="M">Male</form:option>
                     <form:option value="F">Female</form:option>
                 </form:select>
-            </fieldset><br>
+            </fieldset>
+            <br/>
             <fieldset>
                 <legend>Date of birth</legend>
                 <label for="birthDate">Date of birth</label>
                 <form:input class="datepicker" path="birthDate" placeholder="dd/mm/yyyy" />
-            </fieldset><br>
+            </fieldset>
+            <br/>
             <fieldset>
                 <legend>Marital status</legend>
                 <label for="maritalStatusCode">Status</label>
@@ -113,7 +116,8 @@ Edit form for the volunteer data under the personal tab.
                         <a class="btn btn-edifice btn-xs" href="#">Unlink</a>
                     </div>
                     <!--/div-->
-            </fieldset><br>
+            </fieldset>
+            <br/>
             <fieldset>
                 <button type="submit" class="btn btn-default btn-success">Submit</button>
             </fieldset>

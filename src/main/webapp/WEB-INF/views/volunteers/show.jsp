@@ -62,7 +62,7 @@
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 A badge cannot be generated until a birth date is set for ${volunteer.displayName}
             </div>
-            <hr>
+            <hr />
             <c:choose>
                 <c:when test="${!empty assignments}">
                     <h3>Team Roles</h3>
@@ -123,6 +123,8 @@
                 </div>
             </div>
             <div class="clearfix"></div>
+
+            <br />
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
                 <li><a href="<c:url value="/volunteers" />">Volunteers</a></li>

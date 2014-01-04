@@ -37,5 +37,6 @@ Author: oliver.elder.esq
     </dd>
 </dl>
 <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
+    <hr />
     <a class="btn btn-edifice" href="<c:url value='${volunteer.editSpiritualUri}' />">Edit</a>
 </sec:authorize>

@@ -25,7 +25,7 @@
                     <h1>Create New Qualification</h1>
                 </c:otherwise>
             </c:choose>
-            <hr>
+            <hr />
             <c:url var="formAction" value="${submitUri}" />
             <form:form commandName="qualificationForm" method="${submitMethod}" action="${formAction}">
                 <fieldset>

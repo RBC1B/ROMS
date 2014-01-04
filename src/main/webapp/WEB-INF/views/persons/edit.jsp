@@ -13,7 +13,7 @@
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
             <h1>Edit Person</h1>
-           <hr>
+            <hr />
             <c:url var="formAction" value="${submitUri}" />
             <form:form commandName="person" method="PUT" action="${formAction}">
                 <fieldset>
