@@ -52,7 +52,7 @@
                                 <li><a href="<c:url value="/projects" />">Projects</a></li>
                             </sec:authorize>
                             <sec:authorize access="hasPermission('DATABASE', 'READ')">
-                                <li><a href="<c:url value="/admin" />">Sys Admin</a></li>
+                                <li><a href="<c:url value="/admin" />">Admin</a></li>
                             </sec:authorize>
                         </ul>
                     </sec:authorize>
