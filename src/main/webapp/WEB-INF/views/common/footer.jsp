@@ -11,7 +11,7 @@
                                 <li role="menuitem"><a href="<c:url value="/circuits" />">Circuits</a></li>
                             </sec:authorize>
                             <sec:authorize access="hasPermission('KINGDOMHALL', 'READ')">
-                                <li role="menuitem"><a href="<c:url value="/kingdom-halls" />">Kingdom Halls</a></li>
+                                <li role="menuitem"><a href="<c:url value="/kingdom-halls" />">Kingdom halls</a></li>
                             </sec:authorize>
                             <sec:authorize access="hasPermission('CONG', 'READ')">
                                 <li role="menuitem"><a href="<c:url value="/congregations" />">Congregations</a></li>
@@ -29,6 +29,9 @@
                             <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
                               <li role="menuitem"><a href="<c:url value="/persons" />">Persons</a></li>
                             </sec:authorize>
+                            <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
+                                <li role="menuitem"><a href="<c:url value="/person-changes" />">Form updates</a></li>
+                        </sec:authorize>
                             <sec:authorize access="hasPermission('SKILL', 'READ')">
                                 <li role="menuitem"><a href="<c:url value="/qualifications" />">Qualifications</a></li>
                             </sec:authorize>

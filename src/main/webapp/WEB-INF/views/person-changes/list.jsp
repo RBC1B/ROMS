@@ -1,20 +1,17 @@
 <%--
-    Document   : list
-    Created on : Oct 3, 2013, 12:05:09 PM
-    Author     : ramindursingh
+    List the person changes that require paper form updates.
 --%>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<c:url var="formAction" value="/personchanges" />
 <html>
-    <c:set var="pageTitle" value="Changes/Updates to Person Information" />
+    <c:set var="pageTitle" value="Pending volunteer form updates" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <h1>Person Information Changes/Updates</h1>
+        <h1>Pending volunteer form updates</h1>
         <hr />
         <div class="entity-list-results">
             <table class="table table-bordered table-condensed table-striped table-hover" id="personchange-list">
@@ -146,7 +143,7 @@
                             </td>
                             <td>
                                 <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
-                                    <a class="btn btn-edifice a-update-paperwork" data-update-url="<c:url value="${personchange.updateUri}" />">Paper Work Updated</a>
+                                    <a class="btn btn-edifice a-update-paperwork" data-update-url="<c:url value="${personchange.updateUri}" />">Form updated</a>
                                 </sec:authorize>
                             </td>
                         </tr>
@@ -158,7 +155,7 @@
         <br />
         <ol class="breadcrumb">
             <li><a href="<c:url value="/" />">Edifice</a> <span class="divider"></span></li>
-            <li class="active">Person Information Change</li>
+            <li class="active">Form updates</li>
         </ol>
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         <script type="text/javascript" src="<c:url value='/javascript/person-changes.js' />" ></script>
