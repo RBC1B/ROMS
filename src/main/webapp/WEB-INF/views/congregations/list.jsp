@@ -30,15 +30,15 @@
                     <tbody>
                         <c:forEach items="${congregations}" var="congregation">
                             <tr>
-                                <td>${congregation.name}</td>
+                                <td><c:out value="${congregation.name}" /></td>
                                 <td>
                                     <c:if test="${not empty congregation.kingdomHall}">
-                                        <a href="<c:url value='${congregation.kingdomHall.uri}'/>">${congregation.kingdomHall.name}</a>
+                                        <a href="<c:url value='${congregation.kingdomHall.uri}'/>"><c:out value="${congregation.kingdomHall.name}" /></a>
                                     </c:if>
                                 </td>
                                 <td>
                                     <c:if test="${not empty congregation.circuit}">
-                                        <a href="<c:url value='${congregation.circuit.uri}'/>">${congregation.circuit.name}</a>
+                                        <a href="<c:url value='${congregation.circuit.uri}'/>"><c:out value="${congregation.circuit.name}" /></a>
                                     </c:if>
                                 </td>
                                 <td>${congregation.rbcRegion}</td>

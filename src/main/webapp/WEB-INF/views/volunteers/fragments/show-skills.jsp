@@ -1,6 +1,5 @@
 <%--
 The contents of the skills tab.
-Author: oliver.elder.esq
 --%>
 <h3>Skills</h3>
 <c:choose>
@@ -20,8 +19,8 @@ Author: oliver.elder.esq
             <tbody>
             <c:forEach items="${skills}" var="skill">
                 <tr>
-                    <td><span class="a-skill-description" data-original-title="${skill.description}"><a href="<c:url value="${skill.skill.uri}" />">${skill.skill.name}</a></span></td>
-                    <td><a href="<c:url value="${skill.department.uri}" />">${skill.department.name}</a></td>
+                    <td><span class="a-skill-description" data-original-title="${skill.description}"><a href="<c:url value="${skill.skill.uri}" />"><c:out value="${skill.skill.name}" /></a></span></td>
+                    <td><a href="<c:url value="${skill.department.uri}" />"><c:out value="${skill.department.name}" /></a></td>
                     <td>${skill.level}</td>
                     <td>
                 <c:choose>
@@ -31,8 +30,8 @@ Author: oliver.elder.esq
                     <c:otherwise>-</c:otherwise>
                 </c:choose>
                 </td>
-                <td>${skill.trainingResults}</td>
-                <td>${skill.comments}</td>
+                <td><c:out value="${skill.trainingResults}" /></td>
+                <td><c:out value="${skill.comments}" /></td>
                 <td>
                 <c:choose>
                     <c:when test="${skill.appearOnBadge}"><span class="icon-ok"></span></c:when>
@@ -65,10 +64,10 @@ Author: oliver.elder.esq
                 <tr>
                     <td>
                         <span class="a-qualification-description" data-original-title="${qualification.description}">
-                            <a href="<c:url value="${qualification.qualification.uri}" />">${qualification.qualification.name}</a>
+                            <a href="<c:url value="${qualification.qualification.uri}" />"><c:out value="${qualification.qualification.name}" /></a>
                         </span>
                     </td>
-                    <td>${qualification.comments}</td>
+                    <td><c:out value="${qualification.comments}" /></td>
                     <td>
                 <c:choose>
                     <c:when test="${qualification.appearOnBadge}"><span class="icon-ok"></span></c:when>
@@ -99,8 +98,8 @@ Author: oliver.elder.esq
             <tbody>
             <c:forEach items="${volunteer.trades}" var="trade">
                 <tr>
-                    <td>${trade.name}</td>
-                    <td>${trade.experienceDescription}</td>
+                    <td><c:out value="${trade.name}" /></td>
+                    <td><c:out value="${trade.experienceDescription}" /></td>
                     <td>${trade.experienceYears}</td>
                 </tr>
             </c:forEach>

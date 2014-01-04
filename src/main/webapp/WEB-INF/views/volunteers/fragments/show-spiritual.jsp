@@ -7,7 +7,7 @@ Author: oliver.elder.esq
     <dd>
         <c:choose>
             <c:when test="${!empty volunteer.congregation}">
-                <a href="<c:url value='${volunteer.congregation.uri}' />">${volunteer.congregation.name}</a>
+                <a href="<c:url value='${volunteer.congregation.uri}' />"><c:out value="${volunteer.congregation.name}" /></a>
             </c:when>
             <c:otherwise>-</c:otherwise>
         </c:choose>

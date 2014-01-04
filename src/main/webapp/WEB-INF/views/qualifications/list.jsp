@@ -25,8 +25,8 @@
                 <tbody>
                     <c:forEach items="${qualifications}" var="qualification">
                         <tr>
-                            <td>${qualification.name}</td>
-                            <td>${qualification.description}</td>
+                            <td><c:out value="${qualification.name}" /></td>
+                            <td><c:out value="${qualification.description}" /></td>
                             <td>
                                 <ul class="list-inline">
                                     <li><a class="btn btn-success" href="<c:url value="${qualification.uri}" />">View</a></li>

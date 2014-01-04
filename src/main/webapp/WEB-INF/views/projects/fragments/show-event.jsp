@@ -12,6 +12,6 @@ The contents of the project event.
         </a>
     </h4>
     <c:if test="${!empty event.comments}">
-        <p class="list-group-item-text">${event.comments}</p>
+        <p class="list-group-item-text"><c:out value="${event.comments}" /></p>
     </c:if>
 </div>

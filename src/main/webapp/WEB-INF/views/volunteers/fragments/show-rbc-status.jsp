@@ -26,11 +26,11 @@ The contents of the rbc status tab.
         <c:choose>
             <c:when test="${!empty volunteer.interviewerA  || !empty volunteer.interviewerB}">
                 <c:if test="${!empty volunteer.interviewerA}">
-                    <a href="<c:url value='${volunteer.interviewerA.uri}' />" >${volunteer.interviewerA.name}</a>
+                    <a href="<c:url value='${volunteer.interviewerA.uri}' />" ><c:out value="${volunteer.interviewerA.name}" /></a>
                 </c:if>
                 <c:if test="${!empty volunteer.interviewerA && !empty volunteer.interviewerB}">,</c:if>
                 <c:if test="${!empty volunteer.interviewerB}">
-                    <a href="<c:url value='${volunteer.interviewerB.uri}' />" >${volunteer.interviewerB.name}</a>
+                    <a href="<c:url value='${volunteer.interviewerB.uri}' />" ><c:out value="${volunteer.interviewerB.name}" /></a>
                 </c:if>
             </c:when>
             <c:otherwise>-</c:otherwise>
@@ -40,7 +40,7 @@ The contents of the rbc status tab.
     <dd>
         <c:choose>
             <c:when test="${!empty volunteer.interviewComments}">
-                ${volunteer.interviewComments}
+                <c:out value="${volunteer.interviewComments}" />
             </c:when>
             <c:otherwise>-</c:otherwise>
         </c:choose>
@@ -98,7 +98,7 @@ The contents of the rbc status tab.
             <c:otherwise><span class="icon-remove"></span></c:otherwise>
         </c:choose>
         <c:if test="${!empty volunteer.oversightComments}">
-            ${volunteer.oversightComments}
+            <c:out value="${volunteer.oversightComments}" />
         </c:if>
     </dd>
     <dt>Relief UK:</dt>
@@ -108,7 +108,7 @@ The contents of the rbc status tab.
             <c:otherwise><span class="icon-remove"></span></c:otherwise>
         </c:choose>
         <c:if test="${!empty volunteer.reliefUKComments}">
-            ${volunteer.reliefUKComments}
+            <c:out value="${volunteer.reliefUKComments}" />
         </c:if>
     </dd>
     <dt>Relief abroad:</dt>
@@ -118,7 +118,7 @@ The contents of the rbc status tab.
             <c:otherwise><span class="icon-remove"></span></c:otherwise>
         </c:choose>
         <c:if test="${!empty volunteer.reliefAbroadComments}">
-            ${volunteer.reliefAbroadComments}
+            <c:out value="${volunteer.reliefAbroadComments}" />
         </c:if>
     </dd>
     <dt>HHC form code:</dt>

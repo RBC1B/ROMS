@@ -24,10 +24,10 @@
                     <tbody>
                         <c:forEach items="${circuits}" var="circuit">
                             <tr>
-                                <td>${circuit.name}</td>
+                                <td><c:out value="${circuit.name}" /></td>
                                 <td>
                                     <c:if test="${not empty circuit.circuitOverseer}">
-                                        <a href="<c:url value='${circuit.circuitOverseer.uri}'/>">${circuit.circuitOverseer.displayName}</a>
+                                        <a href="<c:url value='${circuit.circuitOverseer.uri}'/>"><c:out value="${circuit.circuitOverseer.displayName}" /></a>
                                     </c:if>
                                 </td>
                                 <td>

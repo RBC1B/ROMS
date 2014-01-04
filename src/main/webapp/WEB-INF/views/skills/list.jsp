@@ -29,9 +29,9 @@
                 <tbody>
                     <c:forEach items="${skills}" var="skill">
                         <tr>
-                            <td>${skill.name}</td>
-                            <td><a href="<c:url value='${skill.department.uri}' />">${skill.department.name}</a></td>
-                            <td>${skill.description}</td>
+                            <td><c:out value="${skill.name}" /></td>
+                            <td><a href="<c:url value='${skill.department.uri}' />"><c:out value="${skill.department.name}" /></a></td>
+                            <td><c:out value="${skill.description}" /></td>
                             <td>
                                 <c:choose>
                                     <c:when test="${!empty skill.category.colour}">
@@ -42,7 +42,7 @@
                                     </c:otherwise>
                                 </c:choose>
                                 <div class="label label-default" style="background-color:${categoryColour}">
-                                    ${skill.category.name}
+                                    <c:out value="${skill.category.name}" />
                                 </div>
                             </td>
                             <td>

@@ -20,7 +20,7 @@
                 data-target="#collapse-stage-${stage.id}">
             <span class="glyphicon ${accordionIconClass}"></span>
         </button>
-        <div class="project-stage-type-name col-xs-4"><h4>${stage.type.name}: ${stage.type.description}</h4></div>
+        <div class="project-stage-type-name col-xs-4"><h4><c:out value="${stage.type.name}" />: <c:out value="${stage.type.description}" /></h4></div>
         <div class="project-stage-status col-xs-4"><h4>${stage.status}</h4></div>
         <div class="col-xs-2">
             <div class="project-counts">

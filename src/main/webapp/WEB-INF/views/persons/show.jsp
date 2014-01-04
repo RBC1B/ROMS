@@ -6,18 +6,18 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <c:set var="pageTitle">Person #${person.id}: ${person.displayName}</c:set>
+    <c:set var="pageTitle">Person #${person.id}: <c:out value='${person.displayName}' /></c:set>
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <h1>${person.forename} ${person.middleName} ${person.surname}</h1>
+        <h1><c:out value="${person.forename} ${person.middleName} ${person.surname}"/></h1>
         <hr />
         <dl class="dl-horizontal">
             <dt>Congregation:</dt>
             <dd>
                 <c:choose>
                     <c:when test="${!empty person.congregation}">
-                        <a href="<c:url value='${person.congregation.uri}' />">${person.congregation.name}</a>
+                        <a href="<c:url value='${person.congregation.uri}' />"><c:out value="${person.congregation.name}"/></a>
                     </c:when>
                     <c:otherwise>-</c:otherwise>
                 </c:choose>
@@ -83,7 +83,7 @@
         </dl>
         <c:if test="${!empty person.comments}">
             <h2>Comments</h2>
-            <p>${person.comments}</p>
+            <p><c:out value="${person.comments}" /></p>
         </c:if>
 
         <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
@@ -95,7 +95,7 @@
         <ol class="breadcrumb">
             <li><a href="<c:url value="/" />">Edifice</a></li>
             <li><a href="<c:url value="/persons" />">Persons</a></li>
-            <li class="active">#${person.id}: ${person.displayName}</li>
+            <li class="active">#${person.id}: <c:out value="${person.displayName}" /></li>
         </ol>
 
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>

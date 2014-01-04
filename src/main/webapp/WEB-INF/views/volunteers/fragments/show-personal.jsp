@@ -68,7 +68,7 @@ The contents of the personal tab.
 <dt>Marital status:</dt>
 <dd>${volunteer.maritalStatus}
 <c:if test="${!empty volunteer.spouse}">
-    (<a href="<c:url value='${volunteer.spouse.uri}' />" >${volunteer.spouse.displayName}</a>)
+    (<a href="<c:url value='${volunteer.spouse.uri}' />" ><c:out value="${volunteer.spouse.displayName}" /></a>)
 </c:if>
 </dd>
 </dl>
@@ -83,7 +83,7 @@ The contents of the personal tab.
         <dl class="dl-horizontal">
             <dt>Name:</dt>
             <dd>
-                <a href="<c:url value='${volunteer.emergencyContact.uri}' />">${volunteer.emergencyContact.displayName}</a>
+                <a href="<c:url value='${volunteer.emergencyContact.uri}' />"><c:out value="${volunteer.emergencyContact.displayName}" /></a>
             </dd>
             <dt>Relationship:</dt><dd>${volunteer.emergencyContactRelationship}</dd>
             <c:if test="${!empty volunteer.emergencyContact.email}">

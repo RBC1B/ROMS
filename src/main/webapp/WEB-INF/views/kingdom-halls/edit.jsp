@@ -8,7 +8,7 @@
 <html>
     <c:choose>
         <c:when test="${!empty kingdomHallForm.name}">
-            <c:set var="pageTitle" value="Edit kingdom hall - ${kingdomHallForm.name}" />
+            <c:set var="pageTitle" value="Edit kingdom hall - <c:out value='${kingdomHallForm.name}' />" />
         </c:when>
         <c:otherwise>
             <c:set var="pageTitle" value="Create new kingdom hall" />
@@ -19,7 +19,7 @@
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <c:choose>
             <c:when test="${!empty kingdomHallForm.name}">
-                <h1>Edit kingdom hall - ${kingdomHallForm.name}</h1>
+                <h1>Edit kingdom hall - <c:out value="${kingdomHallForm.name}" /></h1>
             </c:when>
             <c:otherwise>
                 <h1>Create new kingdom hall</h1>

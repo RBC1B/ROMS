@@ -6,7 +6,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <c:set var="pageTitle">Volunteer #${volunteer.id}: ${volunteer.displayName}</c:set>
+    <c:set var="pageTitle">Volunteer #${volunteer.id}: <c:out value='${volunteer.displayName}' /></c:set>
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
@@ -23,7 +23,7 @@
                      data-middle-name="${volunteer.middleName}"
                      data-surname="${volunteer.surname}">
                     <h1 class="media-heading">
-                        #${volunteer.id}: <span id="volunteer-full-name">${volunteer.forename} ${volunteer.middleName} ${volunteer.surname}</span>
+                        #${volunteer.id}: <span id="volunteer-full-name"><c:out value="${volunteer.forename} ${volunteer.middleName} ${volunteer.surname}" /></span>
                         <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
                             <a class="hide btn btn-edifice btn-xs" href="#">Edit</a>
                         </sec:authorize>
@@ -37,7 +37,7 @@
                     <div id="volunteer-comments" class="a-edit-hover">
                         <dt>Comments:</dt>
                         <dd>
-                            <span id="volunteer-comments-content">${volunteer.comments}</span>
+                            <span id="volunteer-comments-content"><c:out value="${volunteer.comments}" /></span>
                             <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
                                 <a class="hide btn btn-edifice btn-xs" href="#">Edit</a>
                             </sec:authorize>
@@ -53,14 +53,14 @@
             </c:when>
             <c:otherwise>
                 <button class="btn" type="button" data-title="Pdf Badge Generation Not Possible"
-                        data-content="A badge for ${volunteer.displayName} cannot be created until the
+                        data-content="A badge for <c:out value='${volunteer.displayName}' /> cannot be created until the
                         volunteer receives a departmental assignment"
                         id="disabled-badge-button">Generate badge</button><br />
             </c:otherwise>
         </c:choose>
         <div id="birth-date-badge-alert" class="alert alert-warning alert-dismissable" style="display: none;">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            A badge cannot be generated until a birth date is set for ${volunteer.displayName}
+            A badge cannot be generated until a birth date is set for <c:out value="${volunteer.displayName}" />
         </div>
         <hr />
         <c:choose>
@@ -80,8 +80,8 @@
                         <c:forEach items="${assignments}" var="assignment">
                             <tr>
                                 <td>${assignment.tradeNumber}</td>
-                                <td><a href="<c:url value="${assignment.department.uri}" />">${assignment.department.name}</a></td>
-                                <td><a href="<c:url value="${assignment.team.uri}" />">${assignment.team.name}</a></td>
+                                <td><a href="<c:url value="${assignment.department.uri}" />"><c:out value="${assignment.department.name}" /></a></td>
+                                <td><a href="<c:url value="${assignment.team.uri}" />"><c:out value="${assignment.team.name}" /></a></td>
                                 <td>${assignment.role}</td>
                                 <td><fmt:formatDate value="${assignment.assignedDate}" pattern="dd MMM yyyy" /></td>
                             </tr>
@@ -128,7 +128,7 @@
         <ol class="breadcrumb">
             <li><a href="<c:url value="/" />">Edifice</a></li>
             <li><a href="<c:url value="/volunteers" />">Volunteers</a></li>
-            <li class="active">#${volunteer.id}: ${volunteer.displayName}</li>
+            <li class="active">#${volunteer.id}: <c:out value="${volunteer.displayName}" /></li>
         </ol>
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         <%@ include file="fragments/show-name-edit-modal.jsp" %>

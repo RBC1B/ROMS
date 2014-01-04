@@ -6,7 +6,7 @@ The contents of the contacts tab.
     <dl class="dl-horizontal">
         <h3>${contact.role}</h3>
         <dt>Name:</dt>
-        <dd><a href="<c:url value='${contact.person.uri}' />">${contact.person.displayName}</a></dd>
+        <dd><a href="<c:url value='${contact.person.uri}' />"><c:out value="${contact.person.displayName}" /></a></dd>
         <dt>Email:</dt>
         <dd>
             <c:choose>

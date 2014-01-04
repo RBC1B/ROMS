@@ -25,15 +25,15 @@
                     <tbody>
                         <c:forEach items="${departments}" var="department">
                             <tr>
-                                <td>${department.name}</td>
+                                <td><c:out value="${department.name}" /></td>
                                 <td>
                                     <c:if test="${not empty department.superDepartment}">
-                                        <a href="<c:url value='${department.superDepartment.uri}'/>">${department.superDepartment.name}</a>
+                                        <a href="<c:url value='${department.superDepartment.uri}'/>"><c:out value="${department.superDepartment.name}" /></a>
                                     </c:if>
                                 </td>
                                 <td>
                                     <c:if test="${not empty department.overseer}">
-                                        <a href="<c:url value='${department.overseer.uri}'/>">${department.overseer.displayName}</a>
+                                        <a href="<c:url value='${department.overseer.uri}'/>"><c:out value="${department.overseer.displayName}" /></a>
                                     </c:if>
                                 </td>
                                 <td>

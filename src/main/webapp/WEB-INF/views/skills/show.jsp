@@ -6,23 +6,23 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
-<c:set var="pageTitle" value="Skill: ${skill.name}" />
+<c:set var="pageTitle" value="Skill: <c:out value='${skill.name}' />" />
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 <body>
     <%@ include file="/WEB-INF/views/common/titlebar.jsp"%>
-    <h1>Skill: ${skill.name}</h1>
+    <h1>Skill: <c:out value="${skill.name}" /></h1>
     <hr />
     <dl class="dl-horizontal">
         <dt>Description:</dt>
         <dd>
             <c:choose>
-                <c:when test="${!empty skill.description}">${skill.description}</c:when>
+                <c:when test="${!empty skill.description}"><c:out value="${skill.description}" /></c:when>
                 <c:otherwise>-</c:otherwise>
             </c:choose>
         </dd>
         <dt>Department</dt>
         <dd>
-            <a href="<c:url value='${skill.department.uri}' />">${skill.department.name}</a>
+            <a href="<c:url value='${skill.department.uri}' />"><c:out value="${skill.department.name}" /></a>
         </dd>
         <dt>Category:</dt>
         <dd>
@@ -37,7 +37,7 @@
                         </c:otherwise>
                     </c:choose>
                     <div class="skill-category-colour" style="background-color:${categoryColour}"></div>
-                    ${skill.category.name}
+                    <c:out value="${skill.category.name}" />
                 </c:when>
                 <c:otherwise>-</c:otherwise>
             </c:choose>
@@ -91,7 +91,7 @@
     <ol class="breadcrumb">
         <li><a href="<c:url value="/" />">Edifice</a></li>
         <li><a href="<c:url value="/skills" />">Skills</a></li>
-        <li>${skill.name}</li>
+        <li><c:out value="${skill.name}" /></li>
     </ol>
 
     <%@ include file="/WEB-INF/views/common/footer.jsp"%>

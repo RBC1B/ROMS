@@ -5,18 +5,18 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <c:set var="pageTitle" value="Department: ${department.name}" />
+    <c:set var="pageTitle" value="Department: <c:out value='${department.name}' />" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <h1>Department: ${department.name}</h1>
+        <h1>Department: <c:out value="${department.name}" /></h1>
         <hr />
         <dl class="dl-horizontal">
             <dt>Super department:</dt>
             <dd>
                 <c:choose>
                     <c:when test="${!empty department.superDepartment}">
-                        <a href="<c:url value='${department.superDepartment.uri}' />">${department.superDepartment.name}</a>
+                        <a href="<c:url value='${department.superDepartment.uri}' />"><c:out value="${department.superDepartment.name}" /></a>
                     </c:when>
                     <c:otherwise>-</c:otherwise>
                 </c:choose>
@@ -24,7 +24,7 @@
             <dt>Description:</dt>
             <dd>
                 <c:choose>
-                    <c:when test="${!empty department.description}">${department.description}</c:when>
+                    <c:when test="${!empty department.description}"><c:out value="${department.description}" /></c:when>
                     <c:otherwise>-</c:otherwise>
                 </c:choose>
             </dd>
@@ -71,7 +71,7 @@
         <ol class="breadcrumb">
             <li><a href="<c:url value="/" />">Edifice</a></li>
             <li><a href="<c:url value="/department" />">Department</a></li>
-            <li class="active">${department.name}</li>
+            <li class="active"><c:out value="${department.name}" /></li>
         </ol>
 
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>

@@ -25,10 +25,10 @@
                     <tbody>
                         <c:forEach items="${kingdomHalls}" var="kingdomHall">
                             <tr>
-                                <td>${kingdomHall.name}</td>
-                                <td>${kingdomHall.street}</td>
-                                <td>${kingdomHall.town}</td>
-                                <td>${kingdomHall.postcode}</td>
+                                <td><c:out value="${kingdomHall.name}" /></td>
+                                <td><c:out value="${kingdomHall.street}" /></td>
+                                <td><c:out value="${kingdomHall.town}" /></td>
+                                <td><c:out value="${kingdomHall.postcode}" /></td>
                                 <td>
                                     <ul class="list-inline">
                                         <li><a class="btn btn-success" href="<c:url value="${kingdomHall.uri}" />">View</a></li>

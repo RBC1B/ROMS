@@ -6,11 +6,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <c:set var="pageTitle">Project #${project.projectId}: ${project.name}</c:set>
+    <c:set var="pageTitle">Project #${project.projectId}: <c:out value='${project.name}' /></c:set>
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <h1>Project #${project.projectId}: ${project.name}</h1>
+        <h1>Project #${project.projectId}: <c:out value="${project.name}" /></h1>
         <hr />
         <dl class="dl-horizontal">
             <dt>Type:</dt><dd>${project.type}</dd>
@@ -54,7 +54,7 @@
         <ol class="breadcrumb">
             <li><a href="<c:url value="/" />">Edifice</a></li>
             <li><a href="<c:url value="/projects" />">Projects</a></li>
-            <li>#${project.projectId}: ${project.name}</li>
+            <li>#${project.projectId}: <c:out value="${project.name}" /></li>
         </ol>
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         <script type="text/javascript" src="<c:url value='/javascript/projects.js' />" ></script>

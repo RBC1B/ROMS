@@ -24,13 +24,13 @@
             <c:choose>
                 <c:when test="${!empty task.assignedUser}">
                     <a class="a-project-assignment" href="${task.assignedUser.uri}">
-                        ${task.assignedUser.name}
+                        <c:out value="${task.assignedUser.name}" />
                     </a>
                 </c:when>
                 <c:otherwise>Unassigned</c:otherwise>
             </c:choose>
         </div>
-        <div class="project-stage-type-name col-xs-4"><h4>${task.name}</h4></div>
+        <div class="project-stage-type-name col-xs-4"><h4><c:out value="${task.name}" /></h4></div>
         <div class="project-stage-status col-xs-2"><h4>${task.status}</h4></div>
         <div class="drag-move pull-right">
             <span class="glyphicon glyphicon-move"></span>
@@ -76,7 +76,7 @@
                                 <c:choose>
                                     <c:when test="${!empty task.assignedUser}">
                                         <a class="a-project-assignment" href="${task.assignedUser.uri}">
-                                            ${task.assignedUser.name}
+                                            <c:out value="${task.assignedUser.name}" />
                                         </a>
                                     </c:when>
                                     <c:otherwise>Unassigned</c:otherwise>
@@ -87,7 +87,7 @@
                         <br />
                         <strong>Comments:</strong>
                         <c:if test="${!empty task.comments}">
-                            <p>${task.comments}</p>
+                            <p><c:out value="${task.comments}" /></p>
                         </c:if>
                         <c:if test="${!empty task.events}">
                             <h3>Events</h3>

@@ -7,7 +7,7 @@ The contents of the department overseers tab.
     <dl class="dl-horizontal">
         <dt>Name:</dt>
         <dd>
-            <a href="<c:url value='${department.overseer.uri}' />">${department.overseer.displayName}</a>
+            <a href="<c:url value='${department.overseer.uri}' />"><c:out value="${department.overseer.displayName}" /></a>
         </dd>
         <dt>Email:</dt>
         <dd>
@@ -34,7 +34,7 @@ The contents of the department overseers tab.
     <dl class="dl-horizontal">
         <dt>Name:</dt>
         <dd>
-            <a href="<c:url value='${department.assistant.uri}' />">${department.assistant.displayName}</a>
+            <a href="<c:url value='${department.assistant.uri}' />"><c:out value="${department.assistant.displayName}" /></a>
         </dd>
         <dt>Email:</dt>
         <dd>

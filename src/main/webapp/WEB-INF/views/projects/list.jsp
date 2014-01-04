@@ -29,12 +29,12 @@
                 <c:forEach items="${projects}" var="project">
                     <tr>
                         <td>${project.projectId}</td>
-                        <td>${project.name}</td>
+                        <td><c:out value="${project.name}" /></td>
                         <td>${project.type}</td>
                         <td>${project.status}</td>
                         <td><fmt:formatDate value="${project.requestDate}" pattern="yyyy-MM-dd" /></td>
                         <td><fmt:formatDate value="${project.completedDate}" pattern="yyyy-MM-dd" /></td>
-                        <td><c:if test="${not empty project.contactPerson}"><a href="<c:url value='${project.contactPerson.uri}'/>">${project.contactPerson.name}</a></c:if></td>
+                        <td><c:if test="${not empty project.contactPerson}"><a href="<c:url value='${project.contactPerson.uri}'/>"><c:out value="${project.contactPerson.name}" /></a></c:if></td>
                         <td>
                             <ul class="list-inline">
                                 <li><a class="btn btn-success" href="<c:url value="${project.uri}" />">View</a></li>
