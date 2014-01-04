@@ -35,26 +35,23 @@ Edit form for the volunteer data under the personal tab.
                             </div>
                         </div>
                     </div>
-                    
 
                     <div class="form-group">
                         <div class="col-md-4">
-                            <div class="col-md-12"> 
+                            <div class="col-md-12">
                             <form:input class="form-control" path="mobile" maxlength="15" placeholder="Mobile phone" />
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-md-4">
-                            <div class="col-md-12"> 
+                            <div class="col-md-12">
                             <form:input class="form-control" path="workPhone" maxlength="15" placeholder="Work phone" />
                             </div>
                         </div>
                     </div>
                   </div>
             </fieldset>
-                            
-                            
             <fieldset>
                 <legend>Address</legend>
                 <div class="form-group">
@@ -113,7 +110,7 @@ Edit form for the volunteer data under the personal tab.
                     </div>
                     <div id="spouse-linked" class="hide">
                         Spouse: <span id="spouse-linked-text"></span>
-                        <a class="btn btn-primary btn-mini" href="#">Unlink</a>
+                        <a class="btn btn-edifice btn-xs" href="#">Unlink</a>
                     </div>
                     <!--/div-->
             </fieldset><br>

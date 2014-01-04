@@ -14,7 +14,8 @@
                 <img src="<c:url value='${volunteer.id}/imageProfile'/>" class="media-object img-thumbnail pull-left image" width="114px" height="143px" alt="volunteer image" />
                 <div id="popup" class="caption image-popup" style="display: none;">
                     <a href="#" id="image-link" style="color:white;">
-                        <p class="image-popup-text" style="font-size:13px"><b>Edit/Add Image</b></p></a> 
+                        <p class="image-popup-text" style="font-size:13px"><b>Edit/Add Image</b></p>
+                    </a>
                 </div>
                 <div class="media-body">
                     <div id="volunteer-name" class="a-edit-hover"
@@ -24,7 +25,7 @@
                         <h1 class="media-heading">
                             #${volunteer.id}: <span id="volunteer-full-name">${volunteer.forename} ${volunteer.middleName} ${volunteer.surname}</span>
                             <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
-                                <a class="hide btn btn-primary btn-mini" href="#">Edit</a>
+                                <a class="hide btn btn-edifice btn-xs" href="#">Edit</a>
                             </sec:authorize>
                         </h1>
                     </div>
@@ -38,7 +39,7 @@
                             <dd>
                                 <span id="volunteer-comments-content">${volunteer.comments}</span>
                                 <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
-                                    <a class="hide btn btn-primary btn-mini" href="#">Edit</a>
+                                    <a class="hide btn btn-edifice btn-xs" href="#">Edit</a>
                                 </sec:authorize>
                             </dd>
                         </div>

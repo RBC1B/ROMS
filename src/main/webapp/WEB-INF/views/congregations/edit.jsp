@@ -68,7 +68,7 @@
                     </div>
                     <div id="coordinator-linked" class="hide">
                         Coordinator: <span id="coordinator-linked-text"></span>
-                        <a class="btn btn-edifice btn-mini" href="#">Unlink</a>
+                        <a class="btn btn-edifice btn-xs" href="#">Unlink</a>
                     </div>
                 </div>
                 <div id="secretary">
@@ -81,7 +81,7 @@
                     </div>
                     <div id="secretary-linked" class="hide">
                         Secretary: <span id="secretary-linked-text"></span>
-                        <a class="btn btn-edifice btn-mini" href="#">Unlink</a>
+                        <a class="btn btn-edifice btn-xs" href="#">Unlink</a>
                     </div>
                 </div>
             </fieldset>

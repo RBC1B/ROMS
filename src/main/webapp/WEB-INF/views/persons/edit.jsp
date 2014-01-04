@@ -64,7 +64,7 @@
                     <form:textarea path="comments" rows="5" />
                 </fieldset>
                 <div class="form-actions">
-                    <input type="submit" class="btn btn-primary"/>
+                    <input type="submit" class="btn btn-edifice"/>
                 </div>
             </form:form>
 

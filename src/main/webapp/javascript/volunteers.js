@@ -582,10 +582,10 @@ $(document).ready(function() {
 
     $(".a-edit-hover").hover(
         function over() {
-            $(this).find("a").show();
+            $(this).find("a").removeClass("hide") ;
         },
         function out() {
-            $(this).find("a").hide();
+            $(this).find("a").addClass("hide");
         }
     );
 
@@ -672,7 +672,7 @@ $(document).ready(function() {
                 }
             },
             success: function() {
-                $("#volunteer-comments-content").html($("#volunteer-comments-modal-form input[name='comments']").val());
+                $("#volunteer-comments-content").html($("#volunteer-comments-modal-form textarea[name='comments']").val());
                 $('#volunteer-comments-modal').modal('hide');
             }
         });
