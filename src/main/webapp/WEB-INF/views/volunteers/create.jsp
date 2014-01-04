@@ -40,9 +40,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>                 
+                    </div>
                 </fieldset>
-                <fieldset>        
+                <fieldset>
                     <div class="row">
                         <h3 class="text-left">1.(b) Gender</h3>
                         <div class="col-md-4">
@@ -59,9 +59,9 @@
                                 </label>
                             </div>
                         </div>
-                    </div>        
+                    </div>
                 </fieldset>
-                <fieldset>  
+                <fieldset>
                     <div class="row">
                         <h3 class="text-left">2. Dates</h3>
                         <div class="col-md-4">
@@ -80,8 +80,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>        
-                </fieldset> 
+                    </div>
+                </fieldset>
                 <fieldset>
                     <div class="row">
                         <h3 class="text-left">3. Addresses</h3>
@@ -103,7 +103,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <form:input class="form-control" path="county" placeholder="County" />
-                                </div>   
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -141,9 +141,9 @@
                         </div>
                         <div class="col-md-4">
                             <div class="col-md-12">
-                                <div class="form-group"> 
+                                <div class="form-group">
                                     <form:input class="form-control" path="mobile" placeholder="Mobile"/>
-                                </div>   
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -164,7 +164,7 @@
                                     <form:checkbox path="ministerialServant" /> Ministerial&nbsp;Servant
                                 </label>
                             </div>
-                        </div>               
+                        </div>
                         <div class="col-md-4">
                             <div class="col-md-12">
                                 <label class="checkbox inline">
@@ -269,7 +269,7 @@
                     <div id="emergency-contact-linked" class="controls alert span10" style="display:none;">
                         <button type="button" class="close">Unlink</button>
                         Linked to an existing person in the database
-                    </div> 
+                    </div>
                 </fieldset>
 
                 <fieldset>
@@ -362,6 +362,7 @@
                 </ol>
         </form:form>
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+        <%@ include file="/WEB-INF/views/common/person-link-modal.jsp"%>
         <!-- mustache template used to display the person selection form -->
         <script id="volunteer-person-search-form" type="text/html" charset="utf-8">
             {{#existingPersonId}}
