@@ -143,7 +143,7 @@ roms.common.matchLinkedPerson = function (forename, surname, $personId, populate
  */
 roms.common.datatables = function($table, options) {
     $.extend( true, $.fn.dataTable.defaults, {
-        "sDom": "<'row'<'col-md-6 pull-right'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
+        "sDom": "<'row'<'col-md-3 pull-right'l><'col-md-3 col-md-offset-6'f>>rt<'row'<'col-md-6'i><'col-md-6'p>>",
         "sPaginationType": "bootstrap",
         "oLanguage": {
             "sLengthMenu": "_MENU_ records per page"
