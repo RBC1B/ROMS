@@ -257,7 +257,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="emergency-contact-linked" class="controls alert span10" style="display:none;">
+                    <div id="emergency-contact-linked" class="controls alert" style="display:none;">
                         <button type="button" class="close">Unlink</button>
                         Linked to an existing person in the database
                     </div>
@@ -308,12 +308,12 @@
                 </fieldset>
                 <fieldset>
                     <div class="row">
-                        <h3 class="text-left">9. Congregation</h3>
+                        <h3 class="text-left">Final Details</h3>
                         <div class="controls controls-row">
                             <div class="col-md-4">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <form:input class="form-control" path="congregationName" placeholder="Congregation name" autocomplete="off" />
+                                        <form:input class="form-control" path="congregationName" placeholder="Congregation" autocomplete="off" />
                                         <form:hidden path="congregationId" />
                                     </div>
                                 </div>
@@ -326,7 +326,7 @@
                         <div class="col-md-4">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label">Form date:</label>
+                                    <label class="control-label text-left">Form date:</label>
                                     <form:input path="formDate" placeholder="dd/mm/yyyy" class="datepicker form-control" data-date-format="dd/mm/yy" />
                                 </div>
                             </div>
