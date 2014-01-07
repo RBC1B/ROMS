@@ -35,8 +35,8 @@ Author: oliver.elder.esq
                 <td>${skill.comments}</td>
                 <td>
                 <c:choose>
-                    <c:when test="${skill.appearOnBadge}"><span class="icon-ok"></span></c:when>
-                    <c:otherwise><span class="icon-remove"></span></c:otherwise>
+                    <c:when test="${skill.appearOnBadge}"><span class="glyphicon glyphicon-ok"></span></c:when>
+                    <c:otherwise><span class="glyphicon glyphicon-remove"></span></c:otherwise>
                 </c:choose>
                 </td>
                 </tr>
@@ -71,8 +71,8 @@ Author: oliver.elder.esq
                     <td>${qualification.comments}</td>
                     <td>
                 <c:choose>
-                    <c:when test="${qualification.appearOnBadge}"><span class="icon-ok"></span></c:when>
-                    <c:otherwise><span class="icon-remove"></span></c:otherwise>
+                    <c:when test="${qualification.appearOnBadge}"><span class="glyphicon glyphicon-ok"></span></c:when>
+                    <c:otherwise><span class="glyphicon glyphicon-remove"></span></c:otherwise>
                 </c:choose>
                 </td>
                 </tr>
