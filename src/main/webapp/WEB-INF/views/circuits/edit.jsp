@@ -37,8 +37,8 @@
             <fieldset>
                 <legend>Circuit overseer details</legend>
                 <div class="controls controls-row">
-                    <div id="circuit-overseer-linked" class="controls alert" style="display:none;">
-                        <button type="button" class="close">Unlink</button>
+                    <div id="circuit-overseer-linked" class="alert alert-warning alert-dismissable" style="display:none;">
+                        <button type="button" class="close" data-dismiss="alert">Unlink</button>
                         Linked to an existing person in the database
                     </div>
                 </div>
@@ -65,28 +65,30 @@
                     <form:input path="telephone" maxlength="20" placeholder="Home phone"/>
                     <form:input path="mobile" maxlength="20" placeholder="Mobile phone"/>
                 </div>
-                <c:choose>
-                    <c:when test="${circuitForm.forename != null && circuitForm.surname != null}">
-                        <fieldset>
-                            <div class="controls controls-row">
-                                <div class="alert alert-info span9" id="edit-circuit-overseer-person" style="display:none;">
-                                    <p id="co-link">
-                                        <script id="edit-circuit-overseer-person-link" type="text/html" charset="utf-8">
-                                            Click this link if you would like to edit additional fields of the Circuit Overseer
-                                            <a href="<c:url value='/persons/{{personId}}/edit'/>"><b>{{forename}} {{surname}}</b>
-                                                </script>
+                <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
+                    <c:choose>
+                        <c:when test="${circuitForm.forename != null && circuitForm.surname != null}">
+                            <fieldset>
+                                <div class="controls controls-row">
+                                    <div class="alert alert-info span9" id="edit-circuit-overseer-person" style="display:none;">
+                                        <p id="co-link">
+                                            <script id="edit-circuit-overseer-person-link" type="text/html" charset="utf-8">
+                                                Click this link if you would like to edit additional fields of the Circuit Overseer
+                                                <a href="<c:url value='/persons/{{personId}}/edit'/>"><b>{{forename}} {{surname}}</b>
+                                            </script>
                                         </p>
                                     </div>
                                 </div>
                             </fieldset>
                         </c:when>
                     </c:choose>
-                    <div class="control-group">
-                        <div class="controls controls-row">
-                            <input type="submit" class="btn btn-edifice" />
-                        </div>
+                </sec:authorize>
+                <div class="control-group">
+                    <div class="controls controls-row">
+                        <input type="submit" class="btn btn-edifice" />
                     </div>
-                    <br />
+                </div>
+                <br />
                 </fieldset>
             </form:form>
 

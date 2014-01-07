@@ -82,20 +82,22 @@ $(document).ready(function() {
                     return;
                 }
 
-                data.existingPersonId = existingPersonId;
+                templateData = {};
+                templateData.existingPersonId = existingPersonId;
                 if ($oldForename.val()){
-                    data.existingPersonName = $oldForename.data('oldForename') + " " + $oldSurname.data('oldSurname');
+                    templateData.existingPersonName = $oldForename.data('oldForename') + " " + $oldSurname.data('oldSurname');
                 } else {
-                    data.existingPersonName = existingPersonName;
+                    templateData.existingPersonName = existingPersonName;
                 }
 
                 if (data) {
-                    data.matchedPersons = true;
+                    templateData.matchedPersons = true;
+                    templateData.results = data;
                 }
 
                 // Now to use mustache templating technique
-                var tpl = $("#circuit-overseer-link-form").html();
-                var html = Mustache.to_html(tpl, data);
+                var template = $("#circuit-overseer-link-form").html();
+                var html = Mustache.to_html(template, templateData);
                 // set modal body using class modal-body
                 $("#circuit-overseer-modal .modal-body").html(html)
                 var modalElement = $("#circuit-overseer-modal")
