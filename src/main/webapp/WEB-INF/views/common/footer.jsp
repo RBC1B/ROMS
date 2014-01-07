@@ -11,7 +11,7 @@
                                 <li role="menuitem"><a href="<c:url value="/circuits" />">Circuits</a></li>
                             </sec:authorize>
                             <sec:authorize access="hasPermission('KINGDOMHALL', 'READ')">
-                                <li role="menuitem"><a href="<c:url value="/kingdom-halls" />">Kingdom Halls</a></li>
+                                <li role="menuitem"><a href="<c:url value="/kingdom-halls" />">Kingdom halls</a></li>
                             </sec:authorize>
                             <sec:authorize access="hasPermission('CONG', 'READ')">
                                 <li role="menuitem"><a href="<c:url value="/congregations" />">Congregations</a></li>
@@ -29,6 +29,9 @@
                             <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
                               <li role="menuitem"><a href="<c:url value="/persons" />">Persons</a></li>
                             </sec:authorize>
+                            <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
+                                <li role="menuitem"><a href="<c:url value="/person-changes" />">Form updates</a></li>
+                        </sec:authorize>
                             <sec:authorize access="hasPermission('SKILL', 'READ')">
                                 <li role="menuitem"><a href="<c:url value="/qualifications" />">Qualifications</a></li>
                             </sec:authorize>
@@ -52,7 +55,7 @@
                                 <li><a href="<c:url value="/projects" />">Projects</a></li>
                             </sec:authorize>
                             <sec:authorize access="hasPermission('DATABASE', 'READ')">
-                                <li><a href="<c:url value="/admin" />">Sys Admin</a></li>
+                                <li><a href="<c:url value="/admin" />">Admin</a></li>
                             </sec:authorize>
                         </ul>
                     </sec:authorize>
@@ -66,8 +69,8 @@
         </div>
     </div>
 </footer>
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/jquery.validate.min.js"></script>
 <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>

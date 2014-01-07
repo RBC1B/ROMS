@@ -1,7 +1,5 @@
 <%--
-    Document   : PeopleList
-    Created on : 20-Sep-2012, 11:33:13
-    Author     : rahulsingh
+    List the persons - a combination of all volunteers, overseers, emergency contacts, etc.
 --%>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -13,29 +11,25 @@
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <h1>People</h1>
-        <hr>
+        <hr />
         <div class="entity-list-results">
-            <c:set var="editEnabled" value="false" />
-            <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
-                <c:set var="editEnabled" value="true" />
-            </sec:authorize>
-            <table
-                class="table table-bordered table-condensed table-striped table-hover"
-                id="person-list"
-                data-edit-enabled="${editEnabled}"
+            <table class="table table-bordered table-condensed table-striped table-hover" id="person-list">
                 <thead>
                     <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
+                        <th>Forename</th>
+                        <th>Surname</th>
                         <th>Congregation</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                 </tbody>
+                <tfoot>
+                </tfoot>
             </table>
         </div>
-        <p>&nbsp;</p>
+
+        <br />
         <ol class="breadcrumb">
             <li><a href="<c:url value="/" />">Edifice</a></li>
             <li class="active">Persons</li>

@@ -82,12 +82,7 @@ $(document).ready(function() {
     });
 
     // list
-    var listActionTemplate;
-    if ($('#person-list').data("editEnabled")) {
-        listActionTemplate = $("#list-action").html();
-    } else {
-        listActionTemplate = $("#read-only-list-action").html();
-    }
+    var listActionTemplate = $("#read-only-list-action").html();
 
     roms.common.datatables(
             $('#person-list'),

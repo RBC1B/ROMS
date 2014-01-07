@@ -23,6 +23,8 @@
  */
 package uk.org.rbc1b.roms.controller.circuit;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -61,7 +63,14 @@ public class CircuitsController {
     @RequestMapping(method = RequestMethod.GET)
     public String showCircuitList(ModelMap model) {
 
-        model.addAttribute("circuits", circuitDao.findCircuits());
+        List<Circuit> circuits = circuitDao.findCircuits();
+        List<CircuitModel> modelList = new ArrayList<CircuitModel>(circuits.size());
+
+        for (Circuit circuit : circuits) {
+            modelList.add(circuitModelFactory.generateCircuitModel(circuit));
+        }
+
+        model.addAttribute("circuits", modelList);
 
         return "circuits/list";
     }

@@ -34,6 +34,9 @@ input {
     padding:4px;
     margin:4px;
 }
+.text-left {
+    text-align: left!important;
+}
 /* Now some styling for additional classes created for use throughout the site */
 
 .btn-edifice {
@@ -232,8 +235,9 @@ div.span6>input[type=text] {
 /*****************************************************************************/
 div.dataTables_length label {
 	font-weight: normal;
-	float: left;
+	float: right;
 	text-align: left;
+        margin-top: 10px;
 }
 
 div.dataTables_length select {
@@ -435,6 +439,9 @@ div.DTFC_LeftFootWrapper table {
 .pagination {
     margin: 0;
     float: right;
+}
+.dataTables_length {
+    padding-top: 15px;
 }
 /*****************************************************************************/
 /* List views                                                                */

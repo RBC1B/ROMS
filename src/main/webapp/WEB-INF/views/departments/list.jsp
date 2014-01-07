@@ -1,7 +1,5 @@
 <%--
-    Document   : DepartmentlList
-    Created on : 30-Jun-2012, 13:19:18
-    Author     : oliver.elder.esq
+    List all departments.
 --%>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -13,13 +11,13 @@
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
             <h1>Departments</h1>
-            <hr>
+            <hr />
             <div class="entity-list-results">
                 <table class="table table-bordered table-condensed table-striped table-hover" id="department-list">
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Super Department</th>
+                            <th>Super department</th>
                             <th>Overseer</th>
                             <th>Action</th>
                         </tr>
@@ -27,15 +25,15 @@
                     <tbody>
                         <c:forEach items="${departments}" var="department">
                             <tr>
-                                <td>${department.name}</td>
+                                <td><c:out value="${department.name}" /></td>
                                 <td>
                                     <c:if test="${not empty department.superDepartment}">
-                                        <a href="<c:url value='${department.superDepartment.uri}'/>">${department.superDepartment.name}</a>
+                                        <a href="<c:url value='${department.superDepartment.uri}'/>"><c:out value="${department.superDepartment.name}" /></a>
                                     </c:if>
                                 </td>
                                 <td>
                                     <c:if test="${not empty department.overseer}">
-                                        <a href="<c:url value='${department.overseer.uri}'/>">${department.overseer.displayName}</a>
+                                        <a href="<c:url value='${department.overseer.uri}'/>"><c:out value="${department.overseer.displayName}" /></a>
                                     </c:if>
                                 </td>
                                 <td>
@@ -48,7 +46,8 @@
                     </tbody>
                 </table>
             </div>
-            <p>&nbsp;</p>
+
+            <br />
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
                 <li class="active">Departments</li>

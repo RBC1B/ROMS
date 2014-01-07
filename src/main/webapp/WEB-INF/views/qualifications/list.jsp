@@ -1,7 +1,5 @@
 <%--
-    Document   : QualificationsList
-    Created on : 23-Aug-2012, 20:22:25
-    Author     : Tina
+    List qualifications.
 --%>
 
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -15,7 +13,7 @@
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
             <h1>Qualifications</h1>
-            <hr>
+            <hr />
             <table class="table table-bordered table-condensed table-striped table-hover" id="qualification-list">
                 <thead>
                     <tr>
@@ -27,8 +25,8 @@
                 <tbody>
                     <c:forEach items="${qualifications}" var="qualification">
                         <tr>
-                            <td>${qualification.name}</td>
-                            <td>${qualification.description}</td>
+                            <td><c:out value="${qualification.name}" /></td>
+                            <td><c:out value="${qualification.description}" /></td>
                             <td>
                                 <ul class="list-inline">
                                     <li><a class="btn btn-success" href="<c:url value="${qualification.uri}" />">View</a></li>
@@ -41,9 +39,8 @@
                     </c:forEach>
                 </tbody>
             </table>
-            <hr>
             <sec:authorize access="hasPermission('SKILL', 'EDIT')">
-                <br />
+                <hr />
                 <a class="btn btn-edifice" href="<c:url value="${newUri}" />" />Create new qualification</a>
             </sec:authorize>
 

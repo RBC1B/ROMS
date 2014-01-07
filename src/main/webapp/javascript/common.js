@@ -103,19 +103,21 @@ roms.common.matchLinkedPerson = function (forename, surname, $personId, populate
         },
         success: function(data) {
             // no match, and no person linked. We don't show anything
-            if (!data && !existingPersonId) {
+            if ((!data || data.length == 0) && !existingPersonId) {
                 return;
             }
 
-            data.existingPersonId = existingPersonId;
-            data.existingPersonName = existingPersonName;
+            templateData = {};
+            templateData.existingPersonId = existingPersonId;
+            templateData.existingPersonName = existingPersonName;
 
-            if (data) {
-                data.matchedPersons = true;
+            if (!data || data.length == 0) {
+                templateData.matchedPersons = true;
+                templateData.results = data;
             }
 
             var template = $("#person-link-search-form").html();
-            var html = Mustache.to_html(template, data);
+            var html = Mustache.to_html(template, templateData);
 
             $("#person-link-modal .modal-body").html(html)
             var modalElement = $("#person-link-modal")
@@ -141,7 +143,7 @@ roms.common.matchLinkedPerson = function (forename, surname, $personId, populate
  */
 roms.common.datatables = function($table, options) {
     $.extend( true, $.fn.dataTable.defaults, {
-        "sDom": "<'row'<'col-md-6 pull-right'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
+        "sDom": "<'row'<'col-md-3 pull-right'l><'col-md-3 col-md-offset-6'f>>rt<'row'<'col-md-6'i><'col-md-6'p>>",
         "sPaginationType": "bootstrap",
         "oLanguage": {
             "sLengthMenu": "_MENU_ records per page"

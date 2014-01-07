@@ -7,8 +7,8 @@ The contents of the congregation members tab.
     <thead>
         <tr>
             <th>ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
+            <th>Forename</th>
+            <th>Surname</th>
             <th>Action</th>
         </tr>
     <thead />

@@ -1,6 +1,5 @@
 <%--
-Content of the model dialog used to add/edit a volunteer image
-Author: rahulsingh
+    Content of the model dialog used to add/edit a volunteer image
 --%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>

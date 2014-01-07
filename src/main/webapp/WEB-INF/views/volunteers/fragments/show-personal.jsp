@@ -65,24 +65,25 @@ The contents of the personal tab.
     <c:otherwise>-</c:otherwise>
 </c:choose>
 </dd>
-<dt>Marital Status:</dt>
+<dt>Marital status:</dt>
 <dd>${volunteer.maritalStatus}
 <c:if test="${!empty volunteer.spouse}">
-    (<a href="<c:url value='${volunteer.spouse.uri}' />" >${volunteer.spouse.displayName}</a>)
+    (<a href="<c:url value='${volunteer.spouse.uri}' />" ><c:out value="${volunteer.spouse.displayName}" /></a>)
 </c:if>
 </dd>
 </dl>
 <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
+    <hr />
     <a class="btn btn-edifice" href="<c:url value='${volunteer.editPersonalUri}' />">Edit</a>
 </sec:authorize>
 
-<h3>Emergency Contact</h3>
+<h3>Emergency contact</h3>
 <c:choose>
     <c:when test="${!empty volunteer.emergencyContact}">
         <dl class="dl-horizontal">
             <dt>Name:</dt>
             <dd>
-                <a href="<c:url value='${volunteer.emergencyContact.uri}' />">${volunteer.emergencyContact.displayName}</a>
+                <a href="<c:url value='${volunteer.emergencyContact.uri}' />"><c:out value="${volunteer.emergencyContact.displayName}" /></a>
             </dd>
             <dt>Relationship:</dt><dd>${volunteer.emergencyContactRelationship}</dd>
             <c:if test="${!empty volunteer.emergencyContact.email}">

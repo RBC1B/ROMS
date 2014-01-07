@@ -8,12 +8,12 @@ The contents of the department assignments tab.
             data-department-id="${department.departmentId}">
         <thead>
             <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
+                <th>Forename</th>
+                <th>Surname</th>
                 <th>Congregation</th>
                 <th>Team</th>
                 <th>Role</th>
-                <th>Trade No.</th>
+                <th>Trade no.</th>
                 <th>Assigned</th>
                 <th>Action</th>
             </tr>

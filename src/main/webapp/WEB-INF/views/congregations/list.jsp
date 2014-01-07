@@ -14,31 +14,31 @@
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
             <h1>Congregations</h1>
-            <hr>
+            <hr />
             <div class="entity-list-results">
                 <table class="table table-bordered table-condensed table-striped table-hover" id="congregation-list">
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Kingdom Hall</th>
+                            <th>Kingdom hall</th>
                             <th>Circuit</th>
                             <th>Region</th>
-                            <th>Sub Region</th>
+                            <th>Subregion</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <c:forEach items="${congregations}" var="congregation">
                             <tr>
-                                <td>${congregation.name}</td>
+                                <td><c:out value="${congregation.name}" /></td>
                                 <td>
                                     <c:if test="${not empty congregation.kingdomHall}">
-                                        <a href="<c:url value='${congregation.kingdomHall.uri}'/>">${congregation.kingdomHall.name}</a>
+                                        <a href="<c:url value='${congregation.kingdomHall.uri}'/>"><c:out value="${congregation.kingdomHall.name}" /></a>
                                     </c:if>
                                 </td>
                                 <td>
                                     <c:if test="${not empty congregation.circuit}">
-                                        <a href="<c:url value='${congregation.circuit.uri}'/>">${congregation.circuit.name}</a>
+                                        <a href="<c:url value='${congregation.circuit.uri}'/>"><c:out value="${congregation.circuit.name}" /></a>
                                     </c:if>
                                 </td>
                                 <td>${congregation.rbcRegion}</td>
@@ -56,13 +56,13 @@
                     </tbody>
                 </table>
             </div>
-            <hr>
             <sec:authorize access="hasPermission('CONG', 'ADD')">
+                <hr />
                 <div class="entity-list-add-new">
                     <a class="btn btn-edifice" href="<c:url value="${newUri}" />">Create new congregation</a>
                 </div>
             </sec:authorize>
-            <p>&nbsp;</p>
+            <br />
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
                 <li class="active">Congregations</li>

@@ -9,14 +9,14 @@ The contents of the department linked skills.
                 <th>Name</th>
                 <th>Description</th>
                 <th>Category</th>
-                <th>On Badge</th>
+                <th>On badge</th>
             </tr>
         </thead>
         <tbody>
             <c:forEach items="${skills}" var="skill">
                 <tr>
-                    <td>${skill.name}</td>
-                    <td><c:if test="${not empty skill.description}">${skill.description}</c:if></td>
+                    <td><c:out value="${skill.name}" /></td>
+                    <td><c:if test="${not empty skill.description}"><c:out value="${skill.description}" /></c:if></td>
                     <c:choose>
                         <c:when test="${not empty skill.category}">
                             <td>
@@ -29,7 +29,7 @@ The contents of the department linked skills.
                                     </c:otherwise>
                                 </c:choose>
                                 <div class="skill-category-colour" style="background-color:${categoryColour}"></div>
-                                ${skill.category.name}
+                                <c:out value="${skill.category.name}" />
                             </td>
                             <td>
                                 <c:choose>

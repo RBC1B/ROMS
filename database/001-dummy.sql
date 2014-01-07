@@ -82,7 +82,7 @@ insert into Person(Forename, Surname, Comments, BirthDate, UpdateTime, UpdatedBy
 values ('Leonard', 'Cohen', 'Like a Bird', '1997-11-12', NOW(), 0);
 
 insert into Person(Forename, Surname, Comments, BirthDate, UpdateTime, UpdatedBy)
-values ('Mike', 'Michael', 'Hard core volunteer', '1990-11-14', NOW(), 0);
+values ('Michelle', 'Michael', 'Hard core volunteer', '1990-11-14', NOW(), 0);
 
 insert into User(PersonId, UserName, Password, UpdateTime, UpdatedBy)
 values (1, 'RaminderSingh', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3', NOW(), 0);
@@ -453,7 +453,7 @@ EmergencyContactId, EmergencyContactRelationshipCode, Gender, MaritalStatusCode,
 InterviewerA, InterviewerB, InterviewComments, JoinedDate, FormDate, InterviewStatusCode, Oversight, OversightComments,
 ReliefUK, ReliefUKComments, ReliefAbroad, ReliefAbroadComments, HHCFormCode, BadgeIssueDate)
 values(10, 'RA', null, null, 'TFFTTTT',
-null, null, 'M', 'MR', null, null,
+null, null, 'F', 'MR', null, null,
 null, null, null, null, null, 'RI', false, null,
 false, null, false, null, null, null);
 

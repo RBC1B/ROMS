@@ -5,11 +5,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <c:set var="pageTitle" value="Congregation: ${congregation.name}" />
+    <c:set var="pageTitle" value="Congregation: <c:out value='${congregation.name}' />" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-            <h1>Congregation: ${congregation.name}</h1>
+            <h1>Congregation: <c:out value="${congregation.name}" /></h1>
             <hr />
             <dl class="dl-horizontal">
                 <dt>Number:</dt>
@@ -23,7 +23,7 @@
                 <dd>
                     <c:choose>
                         <c:when test="${!empty congregation.kingdomHall}">
-                            <a href="<c:url value='${congregation.kingdomHall.uri}' />">${congregation.kingdomHall.name}</a>
+                            <a href="<c:url value='${congregation.kingdomHall.uri}' />"><c:out value="${congregation.kingdomHall.name}" /></a>
                         </c:when>
                         <c:otherwise>-</c:otherwise>
                     </c:choose>
@@ -32,12 +32,12 @@
                 <dd>
                     <c:choose>
                         <c:when test="${!empty congregation.circuit}">
-                            <a href="<c:url value='${congregation.circuit.uri}' />">${congregation.circuit.name}</a>
+                            <a href="<c:url value='${congregation.circuit.uri}' />"><c:out value="${congregation.circuit.name}" /></a>
                         </c:when>
                         <c:otherwise>-</c:otherwise>
                     </c:choose>
                 </dd>
-                <dt>RBC Region:</dt>
+                <dt>RBC region:</dt>
                 <dd>
                     <c:choose>
                         <c:when test="${!empty congregation.rbcRegion}">
@@ -49,14 +49,14 @@
                 <dt>Publishers:</dt>
                 <dd>
                     <c:choose>
-                        <c:when test="${!empty congregation.publishers}">${congregation.publishers}</c:when>
+                        <c:when test="${!empty congregation.publishers}"><c:out value="${congregation.publishers}" /></c:when>
                         <c:otherwise>-</c:otherwise>
                     </c:choose>
                 </dd>
                 <dt>Attendance:</dt>
                 <dd>
                     <c:choose>
-                        <c:when test="${!empty congregation.attendance}">${congregation.attendance}</c:when>
+                        <c:when test="${!empty congregation.attendance}"><c:out value="${congregation.attendance}" /></c:when>
                         <c:otherwise>-</c:otherwise>
                     </c:choose>
                 </dd>
@@ -86,13 +86,15 @@
                 </div>
             </div>
             <sec:authorize access="hasPermission('CONG', 'EDIT')">
-                <a href="<c:url value='${congregation.editUri}' />" class="btn btn-edifice">Edit Congregation</a>
+                <hr />
+                <a href="<c:url value='${congregation.editUri}' />" class="btn btn-edifice">Edit congregation</a>
             </sec:authorize>
 
+            <br />
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
                 <li><a href="<c:url value="/congregations" />">Congregations</a></li>
-                <li class="active">${congregation.name}</li>
+                <li class="active"><c:out value="${congregation.name}" /></li>
             </ol>
 
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>

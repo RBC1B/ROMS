@@ -7,9 +7,9 @@ The contents of the project contacts tab.
         <dt>Telephone:</dt><dd>${project.telephone}</dd>
     </c:if>
     <c:if test="${project.contactPerson != null}">
-        <h3>Contact Person</h3>
+        <h3>Contact person</h3>
         <dt>Name:</dt>
-        <dd><a href="<c:url value='${project.contactPerson.uri}' />">${project.contactPerson.displayName}</a></dd>
+        <dd><a href="<c:url value='${project.contactPerson.uri}' />"><c:out value="${project.contactPerson.displayName}" /></a></dd>
         <dt>Email:</dt>
         <dd>
             <c:if test="${project.contactPerson.email != null}">
@@ -29,7 +29,7 @@ The contents of the project contacts tab.
     <c:if test="${project.coordinator != null}">
         <h3>Coordinator</h3>
         <dt>Name:</dt>
-        <dd><a href="<c:url value='${project.coordinator.uri}' />">${project.coordinator.displayName}</a></dd>
+        <dd><a href="<c:url value='${project.coordinator.uri}' />"><c:out value="${project.coordinator.displayName}" /></a></dd>
         <dt>Email:</dt>
         <dd>
             <c:if test="${project.coordinator.email != null}">

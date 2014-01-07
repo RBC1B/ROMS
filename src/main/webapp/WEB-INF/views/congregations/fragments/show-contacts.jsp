@@ -4,7 +4,9 @@ The contents of the contacts tab.
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:forEach items="${congregation.contacts}" var="contact">
     <dl class="dl-horizontal">
-        <h3><a href="<c:url value='${contact.person.uri}' />">${contact.person.displayName}</a> (${contact.role})</h3>
+        <h3>${contact.role}</h3>
+        <dt>Name:</dt>
+        <dd><a href="<c:url value='${contact.person.uri}' />"><c:out value="${contact.person.displayName}" /></a></dd>
         <dt>Email:</dt>
         <dd>
             <c:choose>

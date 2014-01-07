@@ -6,13 +6,13 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <c:set var="pageTitle" value="Create Volunteer" />
+    <c:set var="pageTitle" value="Create volunteer" />
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container">
-            <h1>Regional Building Committee Volunteer Application</h1>
-            <hr>
+            <h1>Regional building committee volunteer application</h1>
+            <hr />
             <c:url var="formAction" value="/volunteers" />
             <form:form class="form-horizontal" commandName="volunteer" method="POST" action="${formAction}">
                 <fieldset>
@@ -40,35 +40,33 @@
                                 </div>
                             </div>
                         </div>
-                    </div>                 
+                    </div>
                 </fieldset>
-                <fieldset>        
+                <fieldset>
                     <div class="row">
                         <h3 class="text-left">1.(b) Gender</h3>
-                        <div class="col-md-4">
-                            <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="col-md-1">
                                 <label class="radio inline">
                                     <form:radiobutton path="gender" value="M" /> Male
                                 </label>
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="col-md-12">
+                            <div class="col-md-1">
                                 <label class="radio inline">
                                     <form:radiobutton path="gender" value="F" /> Female
                                 </label>
                             </div>
                         </div>
-                    </div>        
+                    </div>
                 </fieldset>
-                <fieldset>  
+                <fieldset>
                     <div class="row">
                         <h3 class="text-left">2. Dates</h3>
                         <div class="col-md-4">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="birthDate">(a) Date of birth </label>
-                                    <form:input path="birthDate" placeholder="15/03/1980" class="form-control datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
+                                    <form:input path="birthDate" placeholder="dd/mm/yyyy" class="form-control datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
                                 </div>
                             </div>
                         </div>
@@ -76,12 +74,12 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="baptismDate">(b) Date of baptism</label>
-                                    <form:input path="baptismDate" placeholder="15/03/1980" class="form-control datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
+                                    <form:input path="baptismDate" placeholder="dd/mm/yyyy" class="form-control datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
                                 </div>
                             </div>
                         </div>
-                    </div>        
-                </fieldset> 
+                    </div>
+                </fieldset>
                 <fieldset>
                     <div class="row">
                         <h3 class="text-left">3. Addresses</h3>
@@ -97,13 +95,6 @@
                                 <div class="form-group">
                                     <form:input class="form-control" path="town" placeholder="Town" />
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <form:input class="form-control" path="county" placeholder="County" />
-                                </div>   
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -126,24 +117,24 @@
                     <div class="row">
                         <h3 class="text-left">4. Phones</h3>
                         <div class="col-md-4">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <form:input class="form-control" path="telephone" placeholder="Home phone"/>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <form:input class="form-control" path="workPhone" placeholder="Work phone"/>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="col-md-12">
-                                <div class="form-group"> 
-                                    <form:input class="form-control" path="mobile" placeholder="Mobile"/>
-                                </div>   
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <form:input class="form-control" path="mobile" placeholder="Mobile phone"/>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -161,10 +152,10 @@
                         <div class="col-md-4">
                             <div class="col-md-12">
                                 <label class="checkbox inline">
-                                    <form:checkbox path="ministerialServant" /> Ministerial&nbsp;Servant
+                                    <form:checkbox path="ministerialServant" /> Ministerial&nbsp;servant
                                 </label>
                             </div>
-                        </div>               
+                        </div>
                         <div class="col-md-4">
                             <div class="col-md-12">
                                 <label class="checkbox inline">
@@ -181,7 +172,7 @@
                         <div class="col-md-4">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <form:input class="form-control" path="spouseForename" placeholder="Spouse first name"/>
+                                    <form:input class="form-control" path="spouseForename" placeholder="Spouse forename"/>
                                 </div>
                             </div>
                         </div>
@@ -244,7 +235,7 @@
                         <div class="col-md-4">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <form:input class="form-control" path="emergencyContactForename" placeholder="Contact's first name"/>
+                                    <form:input class="form-control" path="emergencyContactForename" placeholder="Contact's forename"/>
                                 </div>
                             </div>
                         </div>
@@ -266,10 +257,10 @@
                             </div>
                         </div>
                     </div>
-                    <div id="emergency-contact-linked" class="controls alert span10" style="display:none;">
+                    <div id="emergency-contact-linked" class="controls alert" style="display:none;">
                         <button type="button" class="close">Unlink</button>
                         Linked to an existing person in the database
-                    </div> 
+                    </div>
                 </fieldset>
 
                 <fieldset>
@@ -284,7 +275,7 @@
                         <div class="col-md-4">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <form:input class="form-control" path="emergencyContactMobile" placeholder="Contact's Mobile"/>
+                                    <form:input class="form-control" path="emergencyContactMobile" placeholder="Contact's mobile"/>
                                 </div>
                             </div>
                         </div>
@@ -307,13 +298,6 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <form:input class="form-control" path="emergencyContactCounty" placeholder="County" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <form:input class="form-control" path="emergencyContactPostcode" maxlength="10" placeholder="Postcode" />
@@ -324,12 +308,12 @@
                 </fieldset>
                 <fieldset>
                     <div class="row">
-                        <h3 class="text-left">9. Congregation</h3>
+                        <h3 class="text-left">Final Details</h3>
                         <div class="controls controls-row">
                             <div class="col-md-4">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <form:input class="form-control" path="congregationName" placeholder="Congregation name" autocomplete="off" />
+                                        <form:input class="form-control" path="congregationName" placeholder="Congregation" autocomplete="off" />
                                         <form:hidden path="congregationId" />
                                     </div>
                                 </div>
@@ -342,8 +326,8 @@
                         <div class="col-md-4">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label">Form date:</label>
-                                    <form:input path="formDate" placeholder="15/03/1980" class="datepicker form-control" data-date-format="dd/mm/yy" />
+                                    <label class="control-label text-left">Form date:</label>
+                                    <form:input path="formDate" placeholder="dd/mm/yyyy" class="datepicker form-control" data-date-format="dd/mm/yy" />
                                 </div>
                             </div>
                         </div>
@@ -354,14 +338,17 @@
                         <input type="submit" class="btn btn-lg btn-success"/>
                     </div>
                 </fieldset>
-             </div> <!--container div-->
-                <ol class="breadcrumb">
-                    <li><a href="<c:url value="/" />">Edifice</a></li>
-                    <li role="menuitem"><a href="<c:url value="/kingdom-halls" />">Kingdom Halls</a></li>
-                    <li class="active">Edit</li>
-                </ol>
+            </div> <!--container div-->
+
+            <br />
+            <ol class="breadcrumb">
+                <li><a href="<c:url value="/" />">Edifice</a></li>
+                <li role="menuitem"><a href="<c:url value="/volunteers" />">Volunteers</a></li>
+                <li class="active">Edit</li>
+            </ol>
         </form:form>
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+        <%@ include file="/WEB-INF/views/common/person-link-modal.jsp"%>
         <!-- mustache template used to display the person selection form -->
         <script id="volunteer-person-search-form" type="text/html" charset="utf-8">
             {{#existingPersonId}}

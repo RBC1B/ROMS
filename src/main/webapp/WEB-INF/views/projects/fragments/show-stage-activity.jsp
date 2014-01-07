@@ -24,13 +24,13 @@
             <c:choose>
                 <c:when test="${!empty activity.assignedUser}">
                     <a class="a-project-assignment" href="${activity.assignedUser.uri}">
-                        ${activity.assignedUser.name}
+                        <c:out value="${activity.assignedUser.name}" />
                     </a>
                 </c:when>
                 <c:otherwise>Unassigned</c:otherwise>
             </c:choose>
         </div>
-        <div class="project-stage-type-name col-xs-4"><h4>${activity.type.name}: ${activity.type.description}</h4></div>
+        <div class="project-stage-type-name col-xs-4"><h4><c:out value="${activity.type.name}" />: <c:out value="${activity.type.description}" /></h4></div>
         <div class="project-stage-status col-xs-4"><h4>${activity.status}</h4></div>
         <div class="col-xs-2">
             <div class="project-counts">
@@ -95,18 +95,18 @@
                             <c:choose>
                                 <c:when test="${!empty activity.assignedUser}">
                                     <a class="a-project-assignment" href="${activity.assignedUser.uri}">
-                                        ${activity.assignedUser.name}
+                                        <c:out value="${activity.assignedUser.name}" />
                                     </a>
                                 </c:when>
                                 <c:otherwise>Unassigned</c:otherwise>
                             </c:choose>
                         </div>
-                        <br>
+                        <br />
                         <div class="col-sm-12">
                             <c:choose>
                                 <c:when test="${!empty activity.comments}">
                                     <strong>Comments:</strong>
-                                    <p>${activity.comments}</p>
+                                    <p><c:out value="${activity.comments}" /></p>
                                 </c:when>
                                 <c:otherwise>-</c:otherwise>
                             </c:choose>

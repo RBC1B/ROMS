@@ -5,7 +5,7 @@
     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">MENU
         <span class="sr-only">Toggle navigation</span>
     </button>
-    <a class="navbar-brand" href="<c:url value="/" />"><img src="<c:url value='/images/logo-brand.png' />" alt="edifice"></a>
+    <a class="navbar-brand" href="<c:url value="/" />"><img src="<c:url value='/images/logo-brand.png' />" alt="edifice" /></a>
     <!-- Everything you want minimised at 940px or less, place within here -->
     <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav">
@@ -17,7 +17,7 @@
                             <li role="menuitem"><a href="<c:url value="/circuits" />">Circuits</a></li>
                         </sec:authorize>
                         <sec:authorize access="hasPermission('KINGDOMHALL', 'READ')">
-                            <li role="menuitem"><a href="<c:url value="/kingdom-halls" />">Kingdom Halls</a></li>
+                            <li role="menuitem"><a href="<c:url value="/kingdom-halls" />">Kingdom halls</a></li>
                         </sec:authorize>
                         <sec:authorize access="hasPermission('CONG', 'READ')">
                             <li role="menuitem"><a href="<c:url value="/congregations" />">Congregations</a></li>
@@ -36,7 +36,7 @@
                             <li role="menuitem"><a href="<c:url value="/persons" />">Persons</a></li>
                         </sec:authorize>
                         <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
-                            <li role="menuitem"><a href="<c:url value="/person-changes" />">Changes/Updates to Persons</a></li>
+                            <li role="menuitem"><a href="<c:url value="/person-changes" />">Form updates</a></li>
                         </sec:authorize>
                         <sec:authorize access="hasPermission('SKILL', 'READ')">
                             <li role="menuitem"><a href="<c:url value="/qualifications" />">Qualifications</a></li>
@@ -68,7 +68,7 @@
                 <li><a href="<c:url value="/projects" />">Projects</a></li>
             </sec:authorize>
             <sec:authorize access="hasPermission('DATABASE', 'READ')">
-                <li><a href="<c:url value="/admin" />">Sys Admin</a></li>
+                <li><a href="<c:url value="/admin" />">Admin</a></li>
             </sec:authorize>
         </ul>
         <form class="navbar-form navbar-right">

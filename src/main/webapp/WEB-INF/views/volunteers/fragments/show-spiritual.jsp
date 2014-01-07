@@ -7,12 +7,12 @@ Author: oliver.elder.esq
     <dd>
         <c:choose>
             <c:when test="${!empty volunteer.congregation}">
-                <a href="<c:url value='${volunteer.congregation.uri}' />">${volunteer.congregation.name}</a>
+                <a href="<c:url value='${volunteer.congregation.uri}' />"><c:out value="${volunteer.congregation.name}" /></a>
             </c:when>
             <c:otherwise>-</c:otherwise>
         </c:choose>
     </dd>
-    <dt>Date of Baptism:</dt>
+    <dt>Date of baptism:</dt>
     <dd>
         <c:choose>
             <c:when test="${!empty volunteer.baptismDate}">
@@ -37,5 +37,6 @@ Author: oliver.elder.esq
     </dd>
 </dl>
 <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
+    <hr />
     <a class="btn btn-edifice" href="<c:url value='${volunteer.editSpiritualUri}' />">Edit</a>
 </sec:authorize>

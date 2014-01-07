@@ -24,13 +24,13 @@
             <c:choose>
                 <c:when test="${!empty task.assignedUser}">
                     <a class="a-project-assignment" href="${task.assignedUser.uri}">
-                        ${task.assignedUser.name}
+                        <c:out value="${task.assignedUser.name}" />
                     </a>
                 </c:when>
                 <c:otherwise>Unassigned</c:otherwise>
             </c:choose>
         </div>
-        <div class="project-stage-type-name col-xs-4"><h4>${task.name}</h4></div>
+        <div class="project-stage-type-name col-xs-4"><h4><c:out value="${task.name}" /></h4></div>
         <div class="project-stage-status col-xs-2"><h4>${task.status}</h4></div>
         <div class="drag-move pull-right">
             <span class="glyphicon glyphicon-move"></span>
@@ -55,12 +55,12 @@
                         </div>
                         <div class="col-sm-3">
                             <strong>Started:</strong>
-                                <c:choose>
-                                    <c:when test="${!empty task.startedTime}">
-                                        <fmt:formatDate value="${task.startedTime}" pattern="yyyy-MM-dd" />
-                                    </c:when>
-                                    <c:otherwise>&nbsp;</c:otherwise>
-                                </c:choose>
+                            <c:choose>
+                                <c:when test="${!empty task.startedTime}">
+                                    <fmt:formatDate value="${task.startedTime}" pattern="yyyy-MM-dd" />
+                                </c:when>
+                                <c:otherwise>&nbsp;</c:otherwise>
+                            </c:choose>
                         </div>
                         <div class="col-sm-3">
                             <strong>Completed:</strong>
@@ -76,7 +76,7 @@
                                 <c:choose>
                                     <c:when test="${!empty task.assignedUser}">
                                         <a class="a-project-assignment" href="${task.assignedUser.uri}">
-                                            ${task.assignedUser.name}
+                                            <c:out value="${task.assignedUser.name}" />
                                         </a>
                                     </c:when>
                                     <c:otherwise>Unassigned</c:otherwise>
@@ -84,10 +84,10 @@
                             </div>
                             </div>
                         <div class="clearfix"></div>
-                        <br>
+                        <br />
                         <strong>Comments:</strong>
                         <c:if test="${!empty task.comments}">
-                            <p>${task.comments}</p>
+                            <p><c:out value="${task.comments}" /></p>
                         </c:if>
                         <c:if test="${!empty task.events}">
                             <h3>Events</h3>
