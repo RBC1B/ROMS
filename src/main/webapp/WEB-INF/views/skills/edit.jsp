@@ -31,23 +31,29 @@
         <hr />
         <c:url var="formAction" value="${submitUri}" />
         <form:form commandName="skillForm" method="${submitMethod}" action="${formAction}">
-            <div class="form">
-                <fieldset class="container-fluid">
-                    <label>Name</label>
-                    <form:input path="name" maxlength="50" />
-                    <label>Department</label>
-                    <form:select path="departmentId">
-                        <form:options items="${departments}" itemValues="department" itemLabel="name" itemValue="departmentId" />
-                    </form:select>
-                    <label>Category</label>
-                    <form:select path="skillCategoryId">
-                        <form:options items="${categories}" itemValues="category" itemLabel="name" itemValue="skillCategoryId" />
-                    </form:select>
+                <fieldset>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>Name</label>
+                            <form:input path="name" maxlength="50" />
+                        </div>
+                        <div class="col-md-4">
+                            <label>Department</label>
+                            <form:select path="departmentId">
+                                <form:options items="${departments}" itemValues="department" itemLabel="name" itemValue="departmentId" />
+                            </form:select>
+                        </div>
+                        <div class="col-md-4">
+                            <label>Category</label>
+                            <form:select path="skillCategoryId">
+                              <form:options items="${categories}" itemValues="category" itemLabel="name" itemValue="skillCategoryId" />
+                            </form:select>
+                        </div>
+                    </div>
                     <label>Description</label>
                     <form:textarea path="description" rows="4" cols="50"/>
                 </fieldset>
-            </div>
-            <input type="submit" class="btn btn-edifice" />
+            <input type="submit" class="btn btn-success" />
         </form:form>
 
         <ol class="breadcrumb">
