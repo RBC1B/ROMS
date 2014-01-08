@@ -141,7 +141,6 @@ $(document).ready(function() {
                 required: true
             },
             email: {
-                required: true,
                 email: true
             },
             telephone: {
@@ -461,7 +460,6 @@ $(document).ready(function() {
                 required: true
             },
             email: {
-                required: true,
                 email: true
             },
             telephone: {
