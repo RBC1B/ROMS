@@ -23,7 +23,7 @@
                         <label for="forename">Forename</label>
                         <form:input path="forename" maxlength="50" />
                     </div>
-                    <div class="col-md-4">                    
+                    <div class="col-md-4">
                         <label for="middleName">Middle name</label>
                         <form:input path="middleName" maxlength="50" />
                     </div>
@@ -47,7 +47,7 @@
             <fieldset>
                 <h3>Contact</h3>
                 <div class="row">
-                    <div class="col-md-4">                
+                    <div class="col-md-4">
                         <label for="email">Email</label>
                         <form:input path="email" maxlength="50" />
                     </div>
@@ -74,11 +74,11 @@
                         <label for="street">Street</label>
                         <form:input path="street" maxlength="50"/>
                     </div>
-                    <div class="col-md-4">                  
+                    <div class="col-md-4">
                         <label for="town">Town</label>
                         <form:input path="town" maxlength="50" />
                     </div>
-                    <div class="col-md-4">                    
+                    <div class="col-md-4">
                         <label for="county">County</label>
                         <form:input path="county" maxlength="50" />
                     </div>
