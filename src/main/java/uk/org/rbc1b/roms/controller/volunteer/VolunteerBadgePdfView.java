@@ -88,7 +88,7 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
         addRBCRegionTitle(cb, "RBC London and Home Counties");
 
         addDepartment(cb, assignment);
-        addBigRectangle(cb);
+        addBigRectangle(cb, colourBand);
         addBadgeTitle(cb, "Kingdom Hall Construction");
     }
 
@@ -100,7 +100,7 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
      * @param colourBand of the volunteer's badge
      */
     private static void addBand(PdfContentByte content, VolunteerBadgeColour colourBand) {
-        content.roundRectangle(80, 700, 250, 9, 2.5f);
+        content.rectangle(79, 700, 252, 9);
         switch (colourBand) {
             case GREEN:
                 content.setColorFill(Color.GREEN);
@@ -119,13 +119,27 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
     }
 
     /**
-     * Creates the perimeter of the Rectangular Badge.
+     * Creates the perimeter and colour of the Rectangular Badge.
      *
      * @param content the Rectangle
+     * @param colour colour of the Rectangle
      */
-    private static void addBigRectangle(PdfContentByte content) {
+    private static void addBigRectangle(PdfContentByte content, VolunteerBadgeColour colour) {
         content.rectangle(80, 700, 250, -168);
-        content.setColorStroke(Color.BLACK);
+        switch (colour) {
+            case GREEN:
+                content.setColorStroke(Color.GREEN);
+                break;
+            case ORANGE:
+                content.setColorStroke(Color.ORANGE);
+                break;
+            case RED:
+                content.setColorStroke(Color.RED);
+                break;
+            default:
+                content.setColorStroke(Color.GRAY);
+                break;
+        }
         content.closePathStroke();
     }
 
