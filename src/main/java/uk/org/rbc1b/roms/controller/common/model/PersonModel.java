@@ -24,6 +24,7 @@
 package uk.org.rbc1b.roms.controller.common.model;
 
 import java.sql.Date;
+import org.apache.commons.lang3.StringUtils;
 import uk.org.rbc1b.roms.db.Address;
 
 /**
@@ -60,13 +61,13 @@ public class PersonModel {
      */
     public String getInitials() {
         StringBuilder builder = new StringBuilder();
-        if (forename != null && !forename.isEmpty()) {
+        if (StringUtils.isNotBlank(forename)) {
             builder.append(forename.charAt(0));
         }
-        if (middleName != null && !middleName.isEmpty()) {
+        if (StringUtils.isNotBlank(middleName)) {
             builder.append(middleName.charAt(0));
         }
-        if (surname != null && !surname.isEmpty()) {
+        if (StringUtils.isNotBlank(surname)) {
             builder.append(surname.charAt(0));
         }
         return builder.toString();
