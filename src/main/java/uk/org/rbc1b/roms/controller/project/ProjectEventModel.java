@@ -25,7 +25,7 @@ package uk.org.rbc1b.roms.controller.project;
 
 import java.util.Comparator;
 import java.util.Date;
-import uk.org.rbc1b.roms.controller.common.model.PersonModel;
+import uk.org.rbc1b.roms.controller.common.model.UserModel;
 
 /**
  * Generic model used for the project stage, activity and task events.
@@ -36,7 +36,7 @@ public class ProjectEventModel {
      */
     public static final ProjectEventModelCreateTimeComparator CREATE_TIME_COMPARATOR = new ProjectEventModelCreateTimeComparator();
     private Integer id;
-    private PersonModel createdBy;
+    private UserModel createdBy;
     private String comments;
     private Date createTime;
     private String type;
@@ -49,11 +49,11 @@ public class ProjectEventModel {
         this.id = id;
     }
 
-    public PersonModel getCreatedBy() {
+    public UserModel getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(PersonModel createdBy) {
+    public void setCreatedBy(UserModel createdBy) {
         this.createdBy = createdBy;
     }
 

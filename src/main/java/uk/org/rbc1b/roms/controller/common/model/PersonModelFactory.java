@@ -23,12 +23,14 @@
  */
 package uk.org.rbc1b.roms.controller.common.model;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.org.rbc1b.roms.controller.congregation.CongregationModelFactory;
 import uk.org.rbc1b.roms.db.Congregation;
 import uk.org.rbc1b.roms.db.CongregationDao;
 import uk.org.rbc1b.roms.db.Person;
+import uk.org.rbc1b.roms.db.PersonDao;
 import uk.org.rbc1b.roms.db.application.User;
 
 /**
@@ -41,6 +43,9 @@ public class PersonModelFactory {
     private static final String BASE_URI = "/persons/";
     @Autowired
     private CongregationDao congregationDao;
+
+    @Autowired
+    private PersonDao personDao;
 
     /**
      * Generate the uri used to access the person pages.
@@ -75,6 +80,7 @@ public class PersonModelFactory {
         model.setForename(person.getForename());
         model.setMiddleName(person.getMiddleName());
         model.setSurname(person.getSurname());
+        model.setInitials(calculatePersonInitials(person));
         model.setMobile(person.getMobile());
         model.setTelephone(person.getTelephone());
         model.setWorkPhone(person.getWorkPhone());
@@ -90,14 +96,18 @@ public class PersonModelFactory {
      * @param user user
      * @return model
      */
-    public EntityModel generateUserModel(User user) {
+    public UserModel generateUserModel(User user) {
         if (user == null) {
             return null;
         }
-        EntityModel model = new EntityModel();
+        UserModel model = new UserModel();
         model.setName(user.getUserName());
         model.setId(user.getPersonId());
         model.setUri(generateUri(user.getPersonId()));
+
+        Person person = personDao.findPerson(user.getPersonId());
+        model.setInitials(calculatePersonInitials(person));
+
         return model;
     }
 
@@ -116,4 +126,28 @@ public class PersonModelFactory {
         return congregationModel;
     }
 
+    /**
+     * Calculate the persons initials from their entered names.
+     * @param person person
+     * @return initials
+     */
+    private String calculatePersonInitials(Person person) {
+        StringBuilder builder = new StringBuilder();
+        if (StringUtils.isNotBlank(person.getForename())) {
+            builder.append(person.getForename().charAt(0));
+        }
+        if (StringUtils.isNotBlank(person.getMiddleName())) {
+            builder.append(person.getMiddleName().charAt(0));
+        }
+        if (StringUtils.isNotBlank(person.getSurname())) {
+            builder.append(person.getSurname().charAt(0));
+        }
+
+        // catch-all.. if person has managed to save an empty name, return a placeholder
+        if (builder.length() == 0) {
+            builder.append("XX");
+        }
+
+        return builder.toString();
+    }
 }

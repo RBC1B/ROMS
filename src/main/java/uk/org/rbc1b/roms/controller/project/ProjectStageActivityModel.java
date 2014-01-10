@@ -25,7 +25,7 @@ package uk.org.rbc1b.roms.controller.project;
 
 import java.util.Date;
 import java.util.List;
-import uk.org.rbc1b.roms.controller.common.model.EntityModel;
+import uk.org.rbc1b.roms.controller.common.model.UserModel;
 import uk.org.rbc1b.roms.db.project.ProjectStageActivityType;
 
 /**
@@ -34,7 +34,7 @@ import uk.org.rbc1b.roms.db.project.ProjectStageActivityType;
 public class ProjectStageActivityModel implements ProjectAction {
 
     private Integer id;
-    private EntityModel assignedUser;
+    private UserModel assignedUser;
     private String comments;
     private Date createdTime;
     private Date startedTime;
@@ -117,11 +117,11 @@ public class ProjectStageActivityModel implements ProjectAction {
         this.id = id;
     }
 
-    public EntityModel getAssignedUser() {
+    public UserModel getAssignedUser() {
         return assignedUser;
     }
 
-    public void setAssignedUser(EntityModel assignedUser) {
+    public void setAssignedUser(UserModel assignedUser) {
         this.assignedUser = assignedUser;
     }
 

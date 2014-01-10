@@ -26,8 +26,8 @@ package uk.org.rbc1b.roms.controller.volunteer;
 import java.sql.Date;
 import java.util.Map;
 import java.util.Set;
-import uk.org.rbc1b.roms.controller.common.model.EntityModel;
 import uk.org.rbc1b.roms.controller.common.model.PersonModel;
+import uk.org.rbc1b.roms.controller.common.model.UserModel;
 import uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTrade;
 
 /**
@@ -51,8 +51,8 @@ public class VolunteerModel extends PersonModel {
     private java.sql.Date joinedDate;
     private java.sql.Date badgeIssueDate;
     private java.sql.Date interviewDate;
-    private EntityModel interviewerA;
-    private EntityModel interviewerB;
+    private UserModel interviewerA;
+    private UserModel interviewerB;
     private String interviewComments;
     private Map<Integer, Boolean> availability;
     private boolean oversight;
@@ -194,19 +194,19 @@ public class VolunteerModel extends PersonModel {
         this.interviewDate = interviewDate;
     }
 
-    public EntityModel getInterviewerA() {
+    public UserModel getInterviewerA() {
         return interviewerA;
     }
 
-    public void setInterviewerA(EntityModel interviewerA) {
+    public void setInterviewerA(UserModel interviewerA) {
         this.interviewerA = interviewerA;
     }
 
-    public EntityModel getInterviewerB() {
+    public UserModel getInterviewerB() {
         return interviewerB;
     }
 
-    public void setInterviewerB(EntityModel interviewerB) {
+    public void setInterviewerB(UserModel interviewerB) {
         this.interviewerB = interviewerB;
     }
 

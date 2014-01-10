@@ -34,6 +34,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.org.rbc1b.roms.controller.common.model.EntityModel;
 import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
+import uk.org.rbc1b.roms.controller.common.model.UserModel;
 import uk.org.rbc1b.roms.controller.kingdomhall.KingdomHallModelFactory;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.PersonDao;
@@ -253,16 +254,11 @@ public class ProjectModelFactory {
         return generateUri(projectId) + "/activities/" + activityId + "/tasks";
     }
 
-    private EntityModel generateUserModel(Integer personId) {
+    private UserModel generateUserModel(Integer personId) {
         // we make use of the user dao caching, otherwise we would look these up first
         // to prevent duplicate lookups.
         User user = userDao.findUser(personId);
-
-        EntityModel userModel = new EntityModel();
-        userModel.setId(user.getPersonId());
-        userModel.setName(user.getUserName());
-        userModel.setUri(PersonModelFactory.generateUri(user.getPersonId()));
-        return userModel;
+        return personModelFactory.generateUserModel(user);
     }
 
     private List<ProjectStageActivityTaskModel> generateProjectStageActivityTasks(ProjectStageActivity activity,
@@ -271,8 +267,8 @@ public class ProjectModelFactory {
         Map<String, String> eventTypes = referenceDao.findProjectStageActivityTaskEventTypeValues();
 
         List<ProjectStageActivityTaskModel> modelList = new ArrayList<ProjectStageActivityTaskModel>();
-        List<ProjectStageActivityTask> tasks = projectDao.findProjectStageActivityTasks(activity.
-                getProjectStageActivityId());
+        List<ProjectStageActivityTask> tasks = projectDao.findProjectStageActivityTasks(activity
+                .getProjectStageActivityId());
         for (ProjectStageActivityTask task : tasks) {
 
             ProjectStageActivityTaskModel model = new ProjectStageActivityTaskModel();
@@ -299,20 +295,17 @@ public class ProjectModelFactory {
             modelList.add(model);
         }
 
-
         return modelList;
     }
 
     private ProjectEventModel createProjectEvent(Integer id, String type, Integer personId, Date createTime,
             String comments) {
 
-        Person person = personDao.findPerson(personId);
-
         ProjectEventModel model = new ProjectEventModel();
         model.setId(id);
         model.setType(type);
         model.setComments(comments);
-        model.setCreatedBy(personModelFactory.generatePersonModel(person));
+        model.setCreatedBy(generateUserModel(personId));
         model.setCreateTime(createTime);
         return model;
     }

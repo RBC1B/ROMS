@@ -629,6 +629,10 @@ div.project-count {
 .panel-stage .panel-heading  {
     background-color: #104A61;
     color: #fff;
+    padding: 6px;
+}
+.panel-activity {
+	margin-bottom: 12px;
 }
 .panel-activity .panel-body {
     border: 3px solid #1D83AE;
@@ -643,11 +647,11 @@ div.project-count {
     background-color: #25AAE1;
 }
 /* Custom panels for Project Activity Task stage */
-.a-project-assignment {
-    color: #fff!important;
-}
 .project-assignee {
-    margin: 10px 0; 
+    margin: 6px 0; 
+}
+.project-assignee a {
+    color: #fff!important; 
 }
 
 /*****************************************************************************/

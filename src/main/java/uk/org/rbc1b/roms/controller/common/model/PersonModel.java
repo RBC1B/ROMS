@@ -24,16 +24,12 @@
 package uk.org.rbc1b.roms.controller.common.model;
 
 import java.sql.Date;
-import org.apache.commons.lang3.StringUtils;
 import uk.org.rbc1b.roms.db.Address;
 
 /**
  * Model for a person, including links to their roles.
- *
- * @author oliver
  */
 public class PersonModel {
-
     private Integer id;
     private String uri;
     private String editUri;
@@ -42,6 +38,7 @@ public class PersonModel {
     private String forename;
     private String middleName;
     private String surname;
+    private String initials;
     private Address address;
     private String telephone;
     private String mobile;
@@ -54,23 +51,6 @@ public class PersonModel {
      */
     public String getDisplayName() {
         return forename + " " + surname;
-    }
-
-    /**
-     * @return the person display initials
-     */
-    public String getInitials() {
-        StringBuilder builder = new StringBuilder();
-        if (StringUtils.isNotBlank(forename)) {
-            builder.append(forename.charAt(0));
-        }
-        if (StringUtils.isNotBlank(middleName)) {
-            builder.append(middleName.charAt(0));
-        }
-        if (StringUtils.isNotBlank(surname)) {
-            builder.append(surname.charAt(0));
-        }
-        return builder.toString();
     }
 
     public Integer getId() {
@@ -135,6 +115,14 @@ public class PersonModel {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public String getInitials() {
+        return initials;
+    }
+
+    public void setInitials(String initials) {
+        this.initials = initials;
     }
 
     public Address getAddress() {

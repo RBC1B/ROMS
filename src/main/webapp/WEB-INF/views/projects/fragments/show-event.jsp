@@ -7,7 +7,7 @@ The contents of the project event.
         <fmt:formatDate value="${event.createTime}" pattern="yyyy-MM-dd HH:mm" />
         ${event.type}
         <a class="a-event-created-by" href="${event.createdBy.uri}"
-           data-toggle="tooltip" data-original-title="${event.createdBy.displayName}">
+           data-toggle="tooltip" data-original-title="${event.createdBy.name}">
             ${event.createdBy.initials}
         </a>
     </h4>

@@ -20,18 +20,19 @@
                 data-target="#collapse-stage-${stage.id}-activity-${activity.id}-task-${task.id}">
             <span class="glyphicon ${accordionIconClass}"></span>
         </button>
+        <div class="project-stage-type-name col-xs-4"><h4><c:out value="${task.name}" /></h4></div>
+        <div class="project-stage-status col-xs-2"><h4>${task.status}</h4></div>
         <div class="col-xs-2 project-assignee">
             <c:choose>
                 <c:when test="${!empty task.assignedUser}">
-                    <a class="a-project-assignment" href="${task.assignedUser.uri}">
-                        <c:out value="${task.assignedUser.name}" />
+                    <a class="a-project-assignment" href="${task.assignedUser.uri}"
+                        data-toggle="tooltip" data-original-title="${task.assignedUser.name}">
+                        <c:out value="${task.assignedUser.initials}" />
                     </a>
                 </c:when>
                 <c:otherwise>Unassigned</c:otherwise>
             </c:choose>
         </div>
-        <div class="project-stage-type-name col-xs-4"><h4><c:out value="${task.name}" /></h4></div>
-        <div class="project-stage-status col-xs-2"><h4>${task.status}</h4></div>
         <div class="drag-move pull-right">
             <span class="glyphicon glyphicon-move"></span>
         </div>
@@ -75,8 +76,9 @@
                             <div>
                                 <c:choose>
                                     <c:when test="${!empty task.assignedUser}">
-                                        <a class="a-project-assignment" href="${task.assignedUser.uri}">
-                                            <c:out value="${task.assignedUser.name}" />
+                                        <a class="a-project-assignment" href="${task.assignedUser.uri}"
+                                            data-toggle="tooltip" data-original-title="${task.assignedUser.name}">
+                                            <c:out value="${task.assignedUser.initials}" />
                                         </a>
                                     </c:when>
                                     <c:otherwise>Unassigned</c:otherwise>

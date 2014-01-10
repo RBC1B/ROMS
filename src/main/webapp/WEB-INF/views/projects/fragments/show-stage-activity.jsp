@@ -20,16 +20,6 @@
                 data-target="#collapse-stage-${stage.id}-activity-${activity.id}">
             <span class="glyphicon ${accordionIconClass}"></span>
         </button>
-        <div class="col-xs-1 project-assignee">
-            <c:choose>
-                <c:when test="${!empty activity.assignedUser}">
-                    <a class="a-project-assignment" href="${activity.assignedUser.uri}">
-                        <c:out value="${activity.assignedUser.name}" />
-                    </a>
-                </c:when>
-                <c:otherwise>Unassigned</c:otherwise>
-            </c:choose>
-        </div>
         <div class="project-stage-type-name col-xs-4"><h4><c:out value="${activity.type.name}" />: <c:out value="${activity.type.description}" /></h4></div>
         <div class="project-stage-status col-xs-4"><h4>${activity.status}</h4></div>
         <div class="col-xs-2">
@@ -47,6 +37,17 @@
                     <span class="badge badge-success">${activity.completedTaskCount}</span>
                 </div>
             </div>
+        </div>
+        <div class="col-xs-1 project-assignee">
+            <c:choose>
+                <c:when test="${!empty activity.assignedUser}">
+                    <a class="a-project-assignment" href="${activity.assignedUser.uri}"
+                        data-toggle="tooltip" data-original-title="${activity.assignedUser.name}">
+                        <c:out value="${activity.assignedUser.initials}" />
+                    </a>
+                </c:when>
+                <c:otherwise>Unassigned</c:otherwise>
+            </c:choose>
         </div>
         <div class="drag-move pull-right">
             <span class="glyphicon glyphicon-move"></span>
@@ -94,8 +95,9 @@
                         <div class="col-sm-3">
                             <c:choose>
                                 <c:when test="${!empty activity.assignedUser}">
-                                    <a class="a-project-assignment" href="${activity.assignedUser.uri}">
-                                        <c:out value="${activity.assignedUser.name}" />
+                                    <a class="a-project-assignment" href="${activity.assignedUser.uri}"
+                                        data-toggle="tooltip" data-original-title="${activity.assignedUser.name}">
+                                        <c:out value="${activity.assignedUser.initials}" />
                                     </a>
                                 </c:when>
                                 <c:otherwise>Unassigned</c:otherwise>
