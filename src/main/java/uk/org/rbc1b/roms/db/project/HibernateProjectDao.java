@@ -23,6 +23,9 @@
  */
 package uk.org.rbc1b.roms.db.project;
 
+import static uk.org.rbc1b.roms.db.project.ProjectStageSortable.ProjectStageOrderType.PROJECT_STAGE;
+import static uk.org.rbc1b.roms.db.project.ProjectStageSortable.ProjectStageOrderType.PROJECT_STAGE_ACTIVITY;
+import static uk.org.rbc1b.roms.db.project.ProjectStageSortable.ProjectStageOrderType.PROJECT_STAGE_ACTIVITY_TASK;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
@@ -40,7 +43,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 import uk.org.rbc1b.roms.db.common.MergeUtil;
-import static uk.org.rbc1b.roms.db.project.ProjectStageSortable.ProjectStageOrderType.*;
 
 /**
  * Implements ProjectDao.
@@ -49,6 +51,8 @@ import static uk.org.rbc1b.roms.db.project.ProjectStageSortable.ProjectStageOrde
  */
 @Repository
 public class HibernateProjectDao implements ProjectDao {
+    private static final String CREATED_STATUS_CODE = "CR";
+    private static final String CREATED_EVENT_CODE = "CR";
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -92,11 +96,14 @@ public class HibernateProjectDao implements ProjectDao {
 
     @Override
     public void createProject(Project project) {
+        project.setStatusCode(CREATED_STATUS_CODE);
 
         for (ProjectStage stage : project.getStages()) {
+            stage.setStatusCode(CREATED_STATUS_CODE);
             stage.setProject(project);
 
             for (ProjectStageActivity activity : stage.getActivities()) {
+                activity.setStatusCode(CREATED_STATUS_CODE);
                 activity.setProjectStage(stage);
             }
         }
@@ -104,6 +111,23 @@ public class HibernateProjectDao implements ProjectDao {
         Session session = this.sessionFactory.getCurrentSession();
 
         session.save(project);
+
+        // save events associated with the creation of the project objects
+        for (ProjectStage stage : project.getStages()) {
+            ProjectStageEvent projectStageEvent = new ProjectStageEvent();
+            projectStageEvent.setCreateTime(stage.getCreatedTime());
+            projectStageEvent.setProjectStage(stage);
+            projectStageEvent.setProjectStageEventTypeCode(CREATED_EVENT_CODE);
+            session.save(projectStageEvent);
+
+            for (ProjectStageActivity activity : stage.getActivities()) {
+                ProjectStageActivityEvent projectStageActivityEvent = new ProjectStageActivityEvent();
+                projectStageActivityEvent.setCreateTime(activity.getCreatedTime());
+                projectStageActivityEvent.setProjectStageActivity(activity);
+                projectStageActivityEvent.setProjectStageActivityEventTypeCode(CREATED_EVENT_CODE);
+                session.save(projectStageEvent);
+            }
+        }
 
         // save the stage orders in the order they are defined in the type map
         List<ProjectTypeStageType> stageTypes = findProjectTypeStageTypes(project.getProjectTypeId());
@@ -161,7 +185,8 @@ public class HibernateProjectDao implements ProjectDao {
             Hibernate.initialize(stage.getEvents());
         }
 
-        ProjectStageOrder.sortProjectStages(stages, filterProjectStageOrder(session, ProjectStageOrder.class, projectId, PROJECT_STAGE.getValue()));
+        ProjectStageOrder.sortProjectStages(stages,
+                filterProjectStageOrder(session, projectId, PROJECT_STAGE.getValue()));
 
         return stages;
     }
@@ -178,8 +203,8 @@ public class HibernateProjectDao implements ProjectDao {
             Hibernate.initialize(activity.getEvents());
         }
 
-        ProjectStageOrder.sortProjectStages(stageActivities, filterProjectStageOrder(session,
-                ProjectStageOrder.class, projectStageId, PROJECT_STAGE_ACTIVITY.getValue()));
+        ProjectStageOrder.sortProjectStages(stageActivities,
+                filterProjectStageOrder(session, projectStageId, PROJECT_STAGE_ACTIVITY.getValue()));
 
         return stageActivities;
     }
@@ -196,8 +221,8 @@ public class HibernateProjectDao implements ProjectDao {
             Hibernate.initialize(task.getEvents());
         }
 
-        ProjectStageOrder.sortProjectStages(stageActivityTasks, filterProjectStageOrder(session,
-                ProjectStageOrder.class, projectStageActivityId, PROJECT_STAGE_ACTIVITY_TASK.getValue()));
+        ProjectStageOrder.sortProjectStages(stageActivityTasks,
+                filterProjectStageOrder(session, projectStageActivityId, PROJECT_STAGE_ACTIVITY_TASK.getValue()));
 
         return stageActivityTasks;
     }
@@ -242,9 +267,10 @@ public class HibernateProjectDao implements ProjectDao {
     @Override
     public void updateProjectStageOrder(Integer projectId, Integer projectStageOrderTypeId, List<Integer> stageIds) {
         final Session session = this.sessionFactory.getCurrentSession();
-        List<ProjectStageOrder> incoming = ProjectStageOrder.createProjectStageOrders(projectId, projectStageOrderTypeId, stageIds);
+        List<ProjectStageOrder> incoming = ProjectStageOrder.createProjectStageOrders(projectId,
+                projectStageOrderTypeId, stageIds);
 
-        List<ProjectStageOrder> existing = filterProjectStageOrder(session, ProjectStageOrder.class, projectId, projectStageOrderTypeId);
+        List<ProjectStageOrder> existing = filterProjectStageOrder(session, projectId, projectStageOrderTypeId);
 
         MergeUtil.sortAndMerge(existing, incoming, new Comparator<ProjectStageOrder>() {
             @Override
@@ -261,7 +287,7 @@ public class HibernateProjectDao implements ProjectDao {
                 } else if (!ObjectUtils.equals(existingOrder.getPreviousProjectStageSortableId(),
                         incomingOrder.getPreviousProjectStageSortableId())
                         || !ObjectUtils.equals(existingOrder.getNextProjectStageSortableId(),
-                        incomingOrder.getNextProjectStageSortableId())) {
+                                incomingOrder.getNextProjectStageSortableId())) {
                     existingOrder.setNextProjectStageSortableId(incomingOrder.getNextProjectStageSortableId());
                     existingOrder.setPreviousProjectStageSortableId(incomingOrder.getPreviousProjectStageSortableId());
                     session.update(existingOrder);
@@ -307,19 +333,23 @@ public class HibernateProjectDao implements ProjectDao {
 
     @Override
     public void createTask(ProjectStageActivityTask task) {
-
         Session session = this.sessionFactory.getCurrentSession();
-
-        // task.setProjectStageActivity((ProjectStageActivity) session.get(ProjectStageActivity.class, task
-        // .getProjectStageActivity().getProjectStageActivityId()));
-
+        task.setStatusCode(CREATED_STATUS_CODE);
         session.save(task);
+
+        ProjectStageActivityTaskEvent event = new ProjectStageActivityTaskEvent();
+        event.setCreateTime(task.getCreatedTime());
+        event.setProjectStageActivityTask(task);
+        event.setProjectStageActivityTaskEventTypeCode(CREATED_STATUS_CODE);
+        session.save(event);
 
     }
 
-    private List<ProjectStageOrder> filterProjectStageOrder(Session session, Class type, Integer projectId, Integer projectStageOrderTypeId) {
+    @SuppressWarnings("unchecked")
+    private List<ProjectStageOrder> filterProjectStageOrder(Session session, Integer projectId,
+            Integer projectStageOrderTypeId) {
 
-        Criteria criteria = session.createCriteria(type);
+        Criteria criteria = session.createCriteria(ProjectStageOrder.class);
         criteria.add(Restrictions.eq("projectId", projectId));
         criteria.add(Restrictions.eq("projectStageOrderTypeId", projectStageOrderTypeId));
 

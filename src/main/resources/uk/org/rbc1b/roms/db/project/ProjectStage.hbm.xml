@@ -30,7 +30,7 @@ THE SOFTWARE.
         </id>
         <many-to-one name="project" column="ProjectId" not-null="true" />
         <many-to-one name="projectStageType" column="ProjectStageTypeId" not-null="true" />
-        <property name="statusCode" />
+        <property name="statusCode" not-null="true" />
         <property name="createdTime" not-null="true" />
         <property name="startedTime" />
         <property name="completedTime" />

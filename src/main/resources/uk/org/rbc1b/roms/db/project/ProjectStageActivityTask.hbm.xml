@@ -32,7 +32,7 @@ THE SOFTWARE.
         <many-to-one name="projectStageActivity" column="ProjectStageActivityId" not-null="true" />
         <property name="name" not-null="true" />
         <many-to-one name="assignedUser" column="AssignedUserId" />
-        <property name="statusCode" />
+        <property name="statusCode" not-null="true" />
         <property name="comments" />
         <property name="createdTime" not-null="true" />
         <property name="startedTime" />

@@ -25,14 +25,11 @@ package uk.org.rbc1b.roms.db.project;
 
 import java.io.Serializable;
 import java.util.Date;
-import org.hibernate.envers.Audited;
-import org.hibernate.envers.RelationTargetAuditMode;
 import uk.org.rbc1b.roms.db.CreateAuditable;
 
 /**
  * Events associated with the project stage activity tasks.
  */
-@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 public class ProjectStageActivityTaskEvent implements CreateAuditable, Serializable {
 
     private static final long serialVersionUID = -8934557962915966912L;

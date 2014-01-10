@@ -27,7 +27,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 import org.hibernate.envers.Audited;
-import org.hibernate.envers.RelationTargetAuditMode;
+import org.hibernate.envers.NotAudited;
 import uk.org.rbc1b.roms.db.UpdateAuditable;
 
 /**
@@ -145,12 +145,12 @@ public class ProjectStage implements UpdateAuditable, Serializable, ProjectStage
         this.activities = activities;
     }
 
-    @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
+    @NotAudited
     public Set<ProjectStageEvent> getEvents() {
         return events;
     }
 
-    @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
+    @NotAudited
     public void setEvents(Set<ProjectStageEvent> events) {
         this.events = events;
     }

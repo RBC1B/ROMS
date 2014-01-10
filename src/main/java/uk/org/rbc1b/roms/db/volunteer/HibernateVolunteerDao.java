@@ -168,7 +168,6 @@ public class HibernateVolunteerDao implements VolunteerDao {
         return criteria.list();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public Assignment findPrimaryAssignment(Integer volunteerId) {
         Session session = this.sessionFactory.getCurrentSession();

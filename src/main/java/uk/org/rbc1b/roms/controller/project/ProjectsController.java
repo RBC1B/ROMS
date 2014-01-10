@@ -23,6 +23,8 @@
  */
 package uk.org.rbc1b.roms.controller.project;
 
+import static uk.org.rbc1b.roms.db.project.ProjectStageSortable.ProjectStageOrderType.PROJECT_STAGE_ACTIVITY;
+import static uk.org.rbc1b.roms.db.project.ProjectStageSortable.ProjectStageOrderType.PROJECT_STAGE_ACTIVITY_TASK;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -66,7 +68,6 @@ import uk.org.rbc1b.roms.db.project.ProjectTypeStageType;
 import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
 import uk.org.rbc1b.roms.security.ROMSUserDetails;
-import static uk.org.rbc1b.roms.db.project.ProjectStageSortable.ProjectStageOrderType.*;
 
 /**
  * Control access to the underlying person data.
@@ -77,7 +78,6 @@ import static uk.org.rbc1b.roms.db.project.ProjectStageSortable.ProjectStageOrde
 @RequestMapping("/projects")
 public class ProjectsController {
 
-    private static final String CREATED_STATUS_CODE = "CR";
     @Autowired
     private KingdomHallDao kingdomHallDao;
     @Autowired
@@ -184,9 +184,11 @@ public class ProjectsController {
      */
     @RequestMapping(value = "{projectId}/stage-activity-task-order", method = RequestMethod.PUT, consumes = "application/x-www-form-urlencoded")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void reorderStageActivityTasks(@PathVariable Integer projectId, @RequestParam("idValues") String stageIdValues) {
+    public void reorderStageActivityTasks(@PathVariable Integer projectId,
+            @RequestParam("idValues") String stageIdValues) {
 
-        reorderStages(projectId, stageIdValues, "stage\\-\\d\\-activity\\-\\d\\-task\\-", PROJECT_STAGE_ACTIVITY_TASK.getValue());
+        reorderStages(projectId, stageIdValues, "stage\\-\\d\\-activity\\-\\d\\-task\\-",
+                PROJECT_STAGE_ACTIVITY_TASK.getValue());
     }
 
     private void reorderStages(Integer projectId, String stageIdValues, String regex, Integer projectStageOrderTypeId) {
@@ -252,7 +254,6 @@ public class ProjectsController {
         project.setPriority(projectForm.getPriority());
         project.setProjectTypeId(projectForm.getProjectTypeId());
         project.setRequestDate(DataConverterUtil.toDate(projectForm.getRequestDate()));
-        project.setStatusCode(CREATED_STATUS_CODE);
         project.setSupportingCongregation(projectForm.getSupportingCongregation());
         project.setVisitDate(DataConverterUtil.toDate(projectForm.getVisitDate()));
 
@@ -265,14 +266,12 @@ public class ProjectsController {
         for (ProjectTypeStageType projectTypeStageType : projectTypeStageTypes) {
             ProjectStage stage = new ProjectStage();
             stage.setProjectStageType(stageTypes.get(projectTypeStageType.getProjectStageTypeId()));
-            stage.setStatusCode(CREATED_STATUS_CODE);
 
             List<ProjectStageTypeActivityType> stageTypeActivityTypes = projectDao
                     .findProjectStageTypeActivityType(projectTypeStageType.getProjectStageTypeId());
             Set<ProjectStageActivity> activities = new HashSet<ProjectStageActivity>();
             for (ProjectStageTypeActivityType stageTypeActivityType : stageTypeActivityTypes) {
                 ProjectStageActivity activity = new ProjectStageActivity();
-                activity.setStatusCode(CREATED_STATUS_CODE);
                 activity.setProjectStageActivityType(activityTypes.get(stageTypeActivityType
                         .getProjectStageActivityTypeId()));
             }
@@ -321,7 +320,6 @@ public class ProjectsController {
         task.setComments(taskForm.getComments());
         task.setCreatedTime(new Date());
         task.setName(taskForm.getName());
-        task.setStatusCode(CREATED_STATUS_CODE);
 
         projectDao.createTask(task);
 

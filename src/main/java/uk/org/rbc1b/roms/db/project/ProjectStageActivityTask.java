@@ -27,7 +27,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 import org.hibernate.envers.Audited;
-import org.hibernate.envers.RelationTargetAuditMode;
+import org.hibernate.envers.NotAudited;
 import uk.org.rbc1b.roms.db.UpdateAuditable;
 import uk.org.rbc1b.roms.db.application.User;
 
@@ -136,12 +136,12 @@ public class ProjectStageActivityTask implements UpdateAuditable, Serializable, 
         this.completedTime = completedTime;
     }
 
-    @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
+    @NotAudited
     public Set<ProjectStageActivityTaskEvent> getEvents() {
         return events;
     }
 
-    @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
+    @NotAudited
     public void setEvents(Set<ProjectStageActivityTaskEvent> events) {
         this.events = events;
     }
