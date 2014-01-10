@@ -82,8 +82,8 @@ The contents of the rbc status tab.
             <c:forEach var="i" begin="0" end="6">
                 <td>
                 <c:choose>
-                    <c:when test="${volunteer.availability.get(i)}"><span class="icon-ok"></span></c:when>
-                    <c:otherwise><span class="icon-remove"></span></c:otherwise>
+                    <c:when test="${volunteer.availability.get(i)}"><span class="glyphicon glyphicon-ok"></span></c:when>
+                    <c:otherwise><span class="glyphicon glyphicon-remove"></span></c:otherwise>
                 </c:choose>
                 </td>
             </c:forEach>

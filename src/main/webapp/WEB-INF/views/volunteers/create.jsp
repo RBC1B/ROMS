@@ -216,13 +216,13 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="col-md-6">
-                                    <button type="button" class="btn btn-danger btn-xs trades-row-delete"><i class="icon-remove icon-white icon-align-center"></i>Remove</button>
+                                    <button type="button" class="btn btn-danger btn-xs trades-row-delete"><i class="glyphicon glyphicon-remove icon-white icon-align-center"></i>Remove</button>
                                 </div>
                             </div>
                         </div>
                         <div>
                             <div class="col-md-4">
-                                <button id="trades-row-add" type="button" class="btn btn-edifice btn-large"><i class="icon-plus"></i> Add trade</button>
+                                <button id="trades-row-add" type="button" class="btn btn-edifice btn-large"><i class="glyphicon glyphicon-plus"></i> Add trade</button>
                             </div>
                         </div>
                     </div>

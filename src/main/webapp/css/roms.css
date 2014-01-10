@@ -37,6 +37,9 @@ input {
 .text-left {
     text-align: left!important;
 }
+.icon-white {
+    color: #fff!important;
+}
 /* Now some styling for additional classes created for use throughout the site */
 
 .btn-edifice {

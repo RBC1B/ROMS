@@ -46,10 +46,10 @@
         <dd>
             <c:choose>
                 <c:when test="${!empty skill.category && skill.category.appearOnBadge}">
-                    <span class="icon-ok"></span>
+                    <span class="glyphicon glyphicon-ok"></span>
                 </c:when>
                 <c:otherwise>
-                    <span class="icon-remove"></span>
+                    <span class="glyphicon glyphicon-remove"></span>
                 </c:otherwise>
             </c:choose>
         </dd>
