@@ -1459,6 +1459,7 @@ insert into ProjectStatus (ProjectStatusCode, Name) values
     ('CP', 'Completed');
 
 insert into ProjectStageEventType (ProjectStageEventTypeCode, Name) values
+    ('CR', 'Created'),
     ('ST', 'Started'),
     ('CP', 'Completed'),
     ('RO', 'Reopened'),
@@ -1466,6 +1467,7 @@ insert into ProjectStageEventType (ProjectStageEventTypeCode, Name) values
     ('NT', 'Notes');
 
 insert into ProjectStageActivityEventType (ProjectStageActivityEventTypeCode, Name) values
+    ('CR', 'Created'),
     ('ST', 'Started'),
     ('CP', 'Completed'),
     ('RO', 'Reopened'),
@@ -1473,6 +1475,7 @@ insert into ProjectStageActivityEventType (ProjectStageActivityEventTypeCode, Na
     ('NT', 'Notes');
     
 insert into ProjectStageActivityTaskEventType (ProjectStageActivityTaskEventTypeCode, Name) values
+    ('CR', 'Created'),
     ('ST', 'Started'),
     ('CP', 'Completed'),
     ('RO', 'Reopened'),
