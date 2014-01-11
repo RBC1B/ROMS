@@ -29,51 +29,54 @@
         <c:url var="formAction" value="${submitUri}" />
         <form:form commandName="kingdomHallForm" method="${submitMethod}" action="${formAction}" role="form">
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-md-3">
                     <div class="form-group">
                         <label for="name">Name:</label>
-                        <div class="span3">
-                            <form:input path="name" class="form-control" placeholder="Kingdom Hall Name" maxlength="50" /><br />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <h4>Address:</h4>
-                        <label for="street">Street:</label>
-                        <div class="span3">
-                            <form:input path="street" class="form-control" placeholder="Kingdom Hall Street" maxlength="50" />
-                        </div>
-                        <label for="town">Town:</label>
-                        <div class="span2">
-                            <form:input path="town" class="form-control" placeholder="Kingdom Hall Town" maxlength="50" />
-                        </div>
-                        <label for="county">County:</label>
-                        <div class="span2">
-                            <form:input path="county" class="form-control" placeholder="Kingdom Hall County" maxlength="50" />
-                        </div>
-                        <label for="postcode">Postcode:</label>
-                        <div class="span2">
-                            <form:input path="postcode" class="form-control" placeholder="Kingdom Hall Postcode" maxlength="10" />
-                        </div>
+                        <form:input path="name" class="form-control" placeholder="Kingdom Hall Name" maxlength="50" /><br />
                     </div>
                 </div>
-                <div class="col-xs-6">
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">                        
+                        <h4>Address:</h4>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-md-3">
+                        <label for="street">Street:</label>
+                        <form:input path="street" class="form-control" placeholder="Kingdom Hall Street" maxlength="50" />
+                    </div>
+                    <div class="col-md-3">
+                        <label for="town">Town:</label>
+                        <form:input path="town" class="form-control" placeholder="Kingdom Hall Town" maxlength="50" />
+                    </div>
+                    <div class="col-md-3">
+                        <label for="county">County:</label>
+                        <form:input path="county" class="form-control" placeholder="Kingdom Hall County" maxlength="50" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="postcode">Postcode:</label>
+                        <form:input path="postcode" class="form-control" placeholder="Kingdom Hall Postcode" maxlength="10" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
                     <h4>Ownership details:</h4>
                     <div class="form-group">
                         <label for="ownershipTypeCode">Ownership type:</label>
-                        <div class="span2">
-                            <form:select style="width:175px" class="form-control" path="ownershipTypeCode">
-                                <form:option value="" label="None" />
-                                <form:options items="${ownershipValues}" />
-                            </form:select><br />
-                        </div>
-                        <form:hidden path="titleHoldingCongregationId" />
-                        <label for="titleHoldingCongregationName">Titleholder congregation:</label>
-                        <div class="span2">
-                            <form:input path="titleHoldingCongregationName" class="typeahead form-control" type="text" name="titleHoldingCongregationName" placeholder="Title Holder" maxlength="50" /><br />
-                        </div>
-                        <br />
-                        <input type="submit" class="btn btn-edifice"/>
+                        <form:select style="width:175px" class="form-control" path="ownershipTypeCode">
+                            <form:option value="" label="None" />
+                            <form:options items="${ownershipValues}" />
+                        </form:select><br />
                     </div>
+                    <form:hidden path="titleHoldingCongregationId" />
+                    <label for="titleHoldingCongregationName">Titleholder congregation:</label>
+                    <form:input path="titleHoldingCongregationName" class="typeahead form-control" type="text" name="titleHoldingCongregationName" placeholder="Title Holder" maxlength="50" /><br />
+                    <br />
+                    <input type="submit" class="btn btn-edifice"/>
                 </div>
             </div>
         </form:form>

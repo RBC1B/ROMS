@@ -47,6 +47,9 @@ input {
     color:#fff!important;
     border:0!important;
 }
+.btn-edifice:hover {
+    background-color: #08C;
+}
 .btn a:hover, .btn a:focus {
     color: #fff!important;
 }
