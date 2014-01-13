@@ -66,6 +66,16 @@ $(document).ready(function() {
         );
     });
 
+    $("input[name='gender']").change(function() {
+        if($(this).val() === 'F') {
+            $("input[name='elder']").hide();
+            $("input[name='ministerialServant']").hide();
+        } else if ($(this).val() === 'M') {
+            $("input[name='elder']").show();
+            $("input[name='ministerialServant']").show();
+        }
+    }); 
+
     // elder and ministerial values are exclusive
     $("input[name='elder']").change(function() {
         if($(this).is(':checked')) {
