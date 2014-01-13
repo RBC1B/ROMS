@@ -70,9 +70,15 @@ $(document).ready(function() {
         if($(this).val() === 'F') {
             $("input[name='elder']").hide();
             $("input[name='ministerialServant']").hide();
+            // hide Wife option from Emergency Contact Relationship
+            $("#emergencyRelationshipCode option[value='WF']").hide();
+            $("#emergencyRelationshipCode option[value='HB']").show(); 
         } else if ($(this).val() === 'M') {
             $("input[name='elder']").show();
             $("input[name='ministerialServant']").show();
+            // hide Husband option from the Emergency Contact Relationship
+            $("#emergencyRelationshipCode option[value='HB']").hide();
+            $("#emergencyRelationshipCode option[value='WF']").show();
         }
     }); 
 
