@@ -265,9 +265,10 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
     private static void addBarcode(PdfContentByte content, Integer id) throws DocumentException {
         Barcode39 barcode = new Barcode39();
         barcode.setCode(id.toString());
+        barcode.setBarHeight(6.0f);
         content.setColorFill(Color.BLACK);
         Image barcodeImage = barcode.createImageWithBarcode(content, null, null);
-        content.addImage(barcodeImage, 100, 0, 0, 35, 220, 536);
+        content.addImage(barcodeImage, 75, 0, 0, 35, 246, 536);
 
     }
 
