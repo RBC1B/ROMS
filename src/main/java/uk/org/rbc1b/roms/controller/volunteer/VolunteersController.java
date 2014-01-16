@@ -89,7 +89,7 @@ import uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTrade;
 public class VolunteersController {
 
     private static final String MARRIED_MARITAL_STATUS = "MR";
-    private static final String RBC_STATUS_ACTIVE = "AT";
+    private static final String RBC_STATUS_PENDING = "PD";
     private static final String INTERVIEW_STATUS_INVITE_DUE = "ID";
     private static final String FULLTIME_REGULAR_PIONEER = "RP";
     private static final String APPOINTMENT_ELDER = "EL";
@@ -316,7 +316,7 @@ public class VolunteersController {
             volunteer.setSpouse(spouse);
         }
 
-        volunteer.setRbcStatusCode(RBC_STATUS_ACTIVE);
+        volunteer.setRbcStatusCode(RBC_STATUS_PENDING);
         volunteer.setInterviewStatusCode(INTERVIEW_STATUS_INVITE_DUE);
 
         if (form.getTrades() != null) {
