@@ -9,7 +9,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <c:url var="formAction" value="${volunteer.editImageUri}" />
-            <form:form class="form" id="volunteer-image-modal-form" method="POST" action="${formAction}"
+            <form:form class="modal-form" id="volunteer-image-modal-form" method="POST" action="${formAction}"
                        enctype="multipart/form-data">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>

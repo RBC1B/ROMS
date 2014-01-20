@@ -203,6 +203,8 @@ public class VolunteersController {
         model.addAttribute("skills", volunteerModelFactory.generateVolunteerSkillsModel(skills));
         model.addAttribute("qualifications", volunteerModelFactory.generateVolunteerQualificationsModel(qualifications));
         model.addAttribute("badgeUri", VolunteerBadgePdfModelFactory.generateUri(volunteerId));
+        model.addAttribute("rbcStatusCodes", referenceDao.findRBCStatusValues().keySet());
+        model.addAttribute("rbcStatusValues", referenceDao.findRBCStatusValues().values());
 
         return "volunteers/show";
     }
@@ -628,6 +630,28 @@ public class VolunteersController {
         volunteerDao.updateVolunteer(volunteer);
 
         return "redirect:" + VolunteerModelFactory.generateUri(volunteer.getPersonId()) + "#!rbc-status";
+    }
+
+    /**
+     * Update the RBC interview status of a volunteer. This will be an AJAX
+     * request.
+     *
+     * @param volunteerId volunteer id
+     * @param rbcStatus rbc status to be passed in the request
+     * @throws NoSuchRequestHandlingMethodException if volunteer not found
+     */
+    @RequestMapping(value = "{volunteerId}/rbc-interview-status/edit", method = RequestMethod.PUT)
+    public void updateVolunteerRbcInterviewStatus(@PathVariable Integer volunteerId, @RequestParam("rbc-status") String rbcStatus)
+            throws NoSuchRequestHandlingMethodException {
+
+        Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
+
+        if (volunteer == null) {
+            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+        }
+
+        volunteer.setRbcStatusCode(rbcStatus);
+        volunteerDao.updateVolunteer(volunteer);
     }
 
     /**

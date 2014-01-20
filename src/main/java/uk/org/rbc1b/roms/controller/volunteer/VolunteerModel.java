@@ -68,6 +68,7 @@ public class VolunteerModel extends PersonModel {
     private String editPersonalUri;
     private String editRbcStatusUri;
     private String editImageUri;
+    private String editRbcInterviewStatusUri;
 
     /**
      * Determine if the volunteer is available on a given day of the week.
@@ -328,5 +329,13 @@ public class VolunteerModel extends PersonModel {
 
     public void setEditImageUri(String editImageUri) {
         this.editImageUri = editImageUri;
+    }
+
+    public String getEditRbcInterviewStatusUri() {
+        return editRbcInterviewStatusUri;
+    }
+
+    public void setEditRbcInterviewStatusUri(String editRbcInterviewStatusUri) {
+        this.editRbcInterviewStatusUri = editRbcInterviewStatusUri;
     }
 }

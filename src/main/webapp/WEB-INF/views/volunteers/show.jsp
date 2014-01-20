@@ -31,7 +31,17 @@
 
                 </div>
                 <dl class="dl-horizontal">
-                    <dt>Status:</dt><dd>${volunteer.status}</dd>
+                    <div id="volunteer-rbc-interview-status" class="a-edit-hover"
+                         data-status-codes="${rbcStatusCodes}"
+                         data-status-values="${rbcStatusValues}">
+                        <dt>Status:</dt>
+                        <dd>
+                            <span id="volunteer-rbc-interview-status-content"><c:out value="${volunteer.status}" /></span>
+                            <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
+                                <a class="hide btn btn-edifice btn-xs" href="#">Edit</a>
+                            </sec:authorize>
+                        </dd>
+                    </div>
                     <!-- we need to capture the dt,dd so that empty comments can be edited
                          but there is no wrapping object. Much complaints on the interwebs,
                          so this will have to do -->
@@ -134,6 +144,7 @@
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         <%@ include file="fragments/show-name-edit-modal.jsp" %>
         <%@ include file="fragments/show-comments-edit-modal.jsp" %>
+        <%@ include file="fragments/show-rbc-interview-status-edit-modal.jsp" %>
         <%@ include file="fragments/show-volunteer-image-edit-modal.jsp" %>
         <script type="text/javascript" src="<c:url value='/javascript/volunteers.js' />" ></script>
     </body>

@@ -692,6 +692,21 @@ $(document).ready(function() {
         });
         return false;
     });
+
+    $("#volunteer-rbc-interview-status a").on("click", function(e) {
+        e.preventDefault();
+
+        var rbcStatusCodes = $("#volunteer-rbc-interview-status").data("status-codes").slice(1, -1).split(", ");
+        var rbcStatusValues = $("#volunteer-rbc-interview-status").data("status-values").slice(1, -1).split(", ");
+
+        $.each(rbcStatusCodes, function(index, value) {
+            $("#rbcStatusSelect").append("<option value='" + value + "'>" + rbcStatusValues[index]
+                    + "</option>");
+        });
+
+        $('#volunteer-rbc-interview-status-modal').modal('show');
+
+    });
     
     $("#disabled-badge-button").popover({
         placement: 'right',
