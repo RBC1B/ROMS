@@ -183,8 +183,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="spouse-linked" class="controls alert span10" style="display:none;">
-                            <button type="button" class="close">Unlink</button>
+                        <div id="spouse-linked" class="alert alert-warning alert-dismissable span10" style="display:none;">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">Unlink</button>
                             Linked to an existing person in the database
                         </div>
                     </div>
@@ -257,8 +257,8 @@
                             </div>
                         </div>
                     </div>
-                    <div id="emergency-contact-linked" class="controls alert" style="display:none;">
-                        <button type="button" class="close">Unlink</button>
+                    <div id="emergency-contact-linked" class="alert alert-warning alert-dismissable" style="display:none;">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">Unlink</button>
                         Linked to an existing person in the database
                     </div>
                 </fieldset>
@@ -349,6 +349,7 @@
         </form:form>
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         <%@ include file="/WEB-INF/views/common/person-link-modal.jsp"%>
+        <%@ include file="/WEB-INF/views/common/mustache-person-link-search-form.jsp"%>
         <!-- mustache template used to display the person selection form -->
         <script id="volunteer-person-search-form" type="text/html" charset="utf-8">
             {{#existingPersonId}}
