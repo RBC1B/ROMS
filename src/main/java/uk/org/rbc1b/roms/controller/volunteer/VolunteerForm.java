@@ -58,10 +58,8 @@ public class VolunteerForm {
     private Integer emergencyContactPersonId;
     private String emergencyContactTelephone;
     private String emergencyContactMobile;
-    @NotNull
     @Size(min = 2)
     private String emergencyContactStreet;
-    @NotNull
     @Size(min = 2)
     private String emergencyContactTown;
     private String emergencyContactPostcode;

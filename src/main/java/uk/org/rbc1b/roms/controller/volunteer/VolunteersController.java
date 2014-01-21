@@ -803,6 +803,8 @@ public class VolunteersController {
 
     private Person createEmergencyContact(VolunteerForm form) {
         if (form.getEmergencyContactPersonId() != null) {
+            // NOTE: an existing person which is linked as emergency contact may
+            // have fields which are set to null.
             return personDao.findPerson(form.getEmergencyContactPersonId());
         }
 

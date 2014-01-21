@@ -94,12 +94,12 @@ $(document).ready(function() {
         }
     });
 
-    $("#spouse-linked a").click(function() {
+    $("#spouse-linked button.close").click(function() {
         populateSpouseFromPerson(null, null, null, $("#spousePersonId"));
     });
 
     $("#emergency-contact-linked button.close").click(function() {
-        populateEmergencyContactFromPerson(null, $("#emergencyContactPersonId"));
+        populateEmergencyContactFromPerson(null, null, null, $("#emergencyContactPersonId"));
     });
 
     // when adding a trades row, clone the last one, clear the values
@@ -415,7 +415,7 @@ $(document).ready(function() {
             $("#emergency-contact-additional-fields").hide("fast");
             $("#emergency-contact-linked").show("fast");
         } else {
-            $("#emergency-contact-additional-fields input").prop("disabled", false)
+            $("#emergency-contact-additional-fields input").prop("disabled", false);
             $("#emergency-contact-additional-fields").show("fast");
             $("#emergency-contact-linked").hide("fast");
         }

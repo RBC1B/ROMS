@@ -263,49 +263,51 @@
                     </div>
                 </fieldset>
 
-                <fieldset>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <form:input class="form-control" path="emergencyContactTelephone" placeholder="Contact's home phone"/>
+                <div id="emergency-contact-additional-fields">             
+                    <fieldset>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <form:input class="form-control" path="emergencyContactTelephone" placeholder="Contact's home phone"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <form:input class="form-control" path="emergencyContactMobile" placeholder="Contact's mobile"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <form:input class="form-control" path="emergencyContactMobile" placeholder="Contact's mobile"/>
+                    </fieldset>
+                    <fieldset>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <form:input class="form-control" path="emergencyContactStreet" placeholder="No & street" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <form:input class="form-control" path="emergencyContactTown" placeholder="Town" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <form:input class="form-control" path="emergencyContactPostcode" maxlength="10" placeholder="Postcode" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <form:input class="form-control" path="emergencyContactStreet" placeholder="No & street" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <form:input class="form-control" path="emergencyContactTown" placeholder="Town" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <form:input class="form-control" path="emergencyContactPostcode" maxlength="10" placeholder="Postcode" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </fieldset>
+                    </fieldset>
+                </div>
                 <fieldset>
                     <div class="row">
                         <h3 class="text-left">Final Details</h3>
