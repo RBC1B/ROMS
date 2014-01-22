@@ -906,10 +906,9 @@ create table ProjectStageActivityTask_AUD (
     ProjectStageActivityTaskId  bigint(20),
     REV                         int         not null,
     REVTYPE                     tinyint,
-    ProjectStageActivityId      bigint(20)  not null,
+    ProjectStageId              bigint(20)  not null,
     Name                        varchar(250),
     AssignedUserId              bigint(20)  not null,
-    StatusCode                  char(2)     not null,
     Comments                    varchar(1000),
     CreatedTime                 timestamp   not null,
     StartedTime                 timestamp   null,
@@ -1460,7 +1459,6 @@ insert into ProjectStatus (ProjectStatusCode, Name) values
     ('CP', 'Completed');
 
 insert into ProjectStageEventType (ProjectStageEventTypeCode, Name) values
-    ('CR', 'Created'),
     ('ST', 'Started'),
     ('CP', 'Completed'),
     ('RO', 'Reopened'),
@@ -1468,7 +1466,6 @@ insert into ProjectStageEventType (ProjectStageEventTypeCode, Name) values
     ('NT', 'Notes');
 
 insert into ProjectStageActivityEventType (ProjectStageActivityEventTypeCode, Name) values
-    ('CR', 'Created'),
     ('ST', 'Started'),
     ('CP', 'Completed'),
     ('RO', 'Reopened'),
@@ -1476,7 +1473,6 @@ insert into ProjectStageActivityEventType (ProjectStageActivityEventTypeCode, Na
     ('NT', 'Notes');
     
 insert into ProjectStageActivityTaskEventType (ProjectStageActivityTaskEventTypeCode, Name) values
-    ('CR', 'Created'),
     ('ST', 'Started'),
     ('CP', 'Completed'),
     ('RO', 'Reopened'),
