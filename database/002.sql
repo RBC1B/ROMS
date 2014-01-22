@@ -1,3 +1,5 @@
+use ROMS;
+
 -- corrections to the audit table
 -- since it is not currently used, we can drop and recreate it
 drop table ProjectStageActivityTask_AUD;
