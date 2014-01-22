@@ -627,6 +627,9 @@ div.project-count {
     border:0;
     color: #7f7f7f;
 }
+.panel-body > .col-sm-3 {
+    padding: 0px;
+}
 
 /* Custom panels for Project Stages */
 .panel-stage .panel-body {

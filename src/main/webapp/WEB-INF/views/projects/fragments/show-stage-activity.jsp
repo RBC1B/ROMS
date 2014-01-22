@@ -104,7 +104,6 @@
                             </c:choose>
                         </div>
                         <br />
-                        <div class="col-sm-12">
                             <c:choose>
                                 <c:when test="${!empty activity.comments}">
                                     <strong>Comments:</strong>
@@ -130,7 +129,6 @@
                                     data-user-id="${userId}"
                                     >
                                 <span class="glyphicon glyphicon-plus"></span> Add task</button>
-                        </div>
                         <c:if test="${!empty activity.events}">
                             <h3>Events</h3>
                             <div class="list-group">
