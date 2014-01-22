@@ -130,7 +130,7 @@
                                     >
                                 <span class="glyphicon glyphicon-plus"></span> Add task</button>
                         <c:if test="${!empty activity.events}">
-                            <h3>Events</h3>
+                            <h4>Events</h4>
                             <div class="list-group">
                                 <c:forEach var="event" items="${activity.events}">
                                     <%@ include file="show-event.jsp" %>
