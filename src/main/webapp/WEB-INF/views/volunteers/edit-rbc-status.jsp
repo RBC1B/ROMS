@@ -6,7 +6,7 @@ Edit form for the volunteer data under the rbc status tab.
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <c:set var="pageTitle" value="Edit ${forename} ${surname} RBC status information" />
+    <c:set var="pageTitle">Edit ${forename} ${surname} RBC status information</c:set>
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>

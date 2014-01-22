@@ -6,7 +6,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <c:set var="pageTitle">Project #${project.projectId}: <c:out value='${project.name}' /></c:set>
+    <c:set var="pageTitle">Project #${project.projectId} - ${project.name}</c:set>
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>

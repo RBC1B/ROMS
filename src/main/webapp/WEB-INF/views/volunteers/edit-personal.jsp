@@ -6,7 +6,7 @@ Edit form for the volunteer data under the personal tab.
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <c:set var="pageTitle" value="Edit ${forename} ${surname} personal information" />
+    <c:set var="pageTitle">Edit ${forename} ${surname} personal information</c:set>
     <%@ include file="/WEB-INF/views/common/header.jsp"%>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp"%>

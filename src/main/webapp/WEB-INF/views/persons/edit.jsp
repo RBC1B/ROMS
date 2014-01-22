@@ -1,14 +1,12 @@
 <%--
     Document   : PersonEdit
-    Created on : Feb 23, 2013, 2:08:09 PM
-    Author     : oliver
 --%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <c:set var="pageTitle" value="Edit person" />
+    <c:set var="pageTitle">Edit person</c:set>
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>

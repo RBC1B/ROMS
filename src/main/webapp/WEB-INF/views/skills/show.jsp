@@ -6,7 +6,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
-<c:set var="pageTitle" value="Skill: <c:out value='${skill.name}' />" />
+<c:set var="pageTitle">Skill - ${skill.name}</c:set>
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 <body>
     <%@ include file="/WEB-INF/views/common/titlebar.jsp"%>

@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <c:url var="formAction" value="/congregations" />
 <html>
-    <c:set var="pageTitle" value="Congregation" />
+    <c:set var="pageTitle">Congregation</c:set>
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>

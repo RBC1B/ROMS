@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <c:url var="formAction" value="/skills" />
 <html>
-    <c:set var="pageTitle" value="Departmental skills" />
+    <c:set var="pageTitle">Departmental skills</c:set>
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>

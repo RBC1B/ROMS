@@ -8,10 +8,10 @@
 <html>
     <c:choose>
         <c:when test="${!empty kingdomHallForm.name}">
-            <c:set var="pageTitle" value="Edit kingdom hall - <c:out value='${kingdomHallForm.name}' />" />
+            <c:set var="pageTitle">Edit kingdom hall - ${kingdomHallForm.name}</c:set>
         </c:when>
         <c:otherwise>
-            <c:set var="pageTitle" value="Create new kingdom hall" />
+            <c:set var="pageTitle">Create new kingdom hall</c:set>
         </c:otherwise>
     </c:choose>
     <%@ include file="/WEB-INF/views/common/header.jsp" %>

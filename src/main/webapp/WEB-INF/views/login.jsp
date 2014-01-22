@@ -6,7 +6,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <c:set var="pageTitle" value="Login" />
+    <c:set var="pageTitle">Login</c:set>
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body class="blueprints">
         <div class="container">

@@ -5,11 +5,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <c:set var="pageTitle" value="Kingdom hall #${kingdomHall.kingdomHallId}: <c:out value='${kingdomHall.name}' />" />
+    <c:set var="pageTitle">Kingdom hall - ${kingdomHall.name}</c:set>
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <h1>Kingdom hall #${kingdomHall.kingdomHallId}: <c:out value="${kingdomHall.name}" /></h1>
+        <h1>Kingdom hall: <c:out value="${kingdomHall.name}" /></h1>
         <hr />
         <dl class="dl-horizontal">
             <dt>Address:</dt>

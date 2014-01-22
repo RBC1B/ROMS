@@ -8,10 +8,10 @@
 <html>
     <c:choose>
         <c:when test="${!empty qualificationForm.name}">
-            <c:set var="pageTitle" value="Edit qualification" />
+            <c:set var="pageTitle">Edit qualification</c:set>
         </c:when>
         <c:otherwise>
-            <c:set var="pageTitle" value="Create new qualification" />
+            <c:set var="pageTitle">Create new qualification</c:set>
         </c:otherwise>
     </c:choose>
     <%@ include file="/WEB-INF/views/common/header.jsp" %>

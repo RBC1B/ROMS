@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <c:url var="formAction" value="/qualifications" />
 <html>
-    <c:set var="pageTitle" value="Qualifications" />
+    <c:set var="pageTitle">Qualifications</c:set>
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
