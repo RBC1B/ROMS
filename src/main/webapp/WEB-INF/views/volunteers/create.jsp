@@ -263,7 +263,7 @@
                     </div>
                 </fieldset>
 
-                <div id="emergency-contact-additional-fields">             
+                <div id="emergency-contact-additional-fields">
                     <fieldset>
                         <div class="row">
                             <div class="col-md-4">
