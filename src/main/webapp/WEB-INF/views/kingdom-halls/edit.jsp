@@ -38,7 +38,7 @@
             </div>
             <div class="form-group">
                 <div class="row">
-                    <div class="col-md-12">                        
+                    <div class="col-md-12">
                         <h4>Address:</h4>
                     </div>
                     <div class="clearfix"></div>
