@@ -70,9 +70,7 @@ import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
 import uk.org.rbc1b.roms.security.ROMSUserDetails;
 
 /**
- * Control access to the underlying person data.
- *
- * @author oliver
+ * Control access to the underlying project data.
  */
 @Controller
 @RequestMapping("/projects")

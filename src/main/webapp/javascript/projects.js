@@ -98,6 +98,9 @@ $(document).ready(function() {
         $modal.modal('show');
     });
     
+    $.fn.editable.defaults.ajaxOptions = {type: "PUT"};
+    $(".project-task-name").editable();
+    
     // project create/edit
     $("#kingdomHallName").typeahead({
         remote: roms.common.relativePath + '/kingdom-halls/search?name=%QUERY',

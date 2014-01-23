@@ -174,6 +174,16 @@ public interface ProjectDao {
     void updateProjectStageOrder(Integer projectId, Integer projectStageOrderTypeId, List<Integer> stageIds);
 
     /**
+     * Look up the stage activity task.
+     *
+     * @param taskId project stage activity task id
+     * @return task
+     */
+    @PreAuthorize("hasPermission('PROJECT', 'READ')")
+    @Transactional(readOnly = true)
+    ProjectStageActivityTask findTask(Integer taskId);
+
+    /**
      * Creates a new project task.
      *
      * @param task to create
@@ -181,4 +191,13 @@ public interface ProjectDao {
     @PreAuthorize("hasPermission('PROJECT','EDIT')")
     @Transactional
     void createTask(ProjectStageActivityTask task);
+
+    /**
+     * Updatrs a project task.
+     *
+     * @param task to update
+     */
+    @PreAuthorize("hasPermission('PROJECT','EDIT')")
+    @Transactional
+    void updateTask(ProjectStageActivityTask task);
 }

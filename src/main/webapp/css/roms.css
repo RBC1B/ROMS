@@ -14,7 +14,7 @@ body {
     min-height: 100%!important;
 }
 a, .nav li a, .navbar li a {
-    color:#25aae1!important;
+    color:#25aae1;
 }
 li a:hover, li a:focus {
     color:#ddd!important;
@@ -162,6 +162,15 @@ form label {
     font-size: 14px;
     line-height: 1.428571429;
     border: 1px solid transparent;
+}
+
+
+a.editable-click {
+	color: #ffffff;
+}
+
+.editable-popup .popover-title {
+	color: #333333;
 }
 
 /*****************************************************************************/

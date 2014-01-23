@@ -20,7 +20,14 @@
                 data-target="#collapse-stage-${stage.id}-activity-${activity.id}-task-${task.id}">
             <span class="glyphicon ${accordionIconClass}"></span>
         </button>
-        <div class="project-stage-type-name col-xs-4"><h4><c:out value="${task.name}" /></h4></div>
+        <div class="project-stage-type-name col-xs-4">
+            <h4><a href="#" class="project-task-name" data-type="text"
+                            data-pk="1"
+                            data-url="<c:url value='/project-tasks/${task.id}/name' />"
+                            data-title="Enter task name">
+                    <c:out value="${task.name}" />
+                </a></h4>
+        </div>
         <div class="project-stage-status col-xs-2"><h4>${task.status}</h4></div>
         <div class="col-xs-2 project-assignee">
             <c:choose>

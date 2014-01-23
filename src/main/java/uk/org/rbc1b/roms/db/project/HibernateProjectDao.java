@@ -332,6 +332,20 @@ public class HibernateProjectDao implements ProjectDao {
     }
 
     @Override
+    public ProjectStageActivityTask findTask(Integer taskId) {
+        ProjectStageActivityTask task = (ProjectStageActivityTask) this.sessionFactory.getCurrentSession().get(
+                ProjectStageActivityTask.class, taskId);
+
+        if (task == null) {
+            return null;
+        }
+
+        Hibernate.initialize(task.getEvents());
+
+        return task;
+    }
+
+    @Override
     public void createTask(ProjectStageActivityTask task) {
         Session session = this.sessionFactory.getCurrentSession();
         task.setStatusCode(CREATED_STATUS_CODE);
@@ -343,6 +357,11 @@ public class HibernateProjectDao implements ProjectDao {
         event.setProjectStageActivityTaskEventTypeCode(CREATED_STATUS_CODE);
         session.save(event);
 
+    }
+
+    @Override
+    public void updateTask(ProjectStageActivityTask task) {
+        this.sessionFactory.getCurrentSession().merge(task);
     }
 
     @SuppressWarnings("unchecked")
