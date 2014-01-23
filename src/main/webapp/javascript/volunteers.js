@@ -695,19 +695,43 @@ $(document).ready(function() {
 
     $("#volunteer-rbc-interview-status a").on("click", function(e) {
         e.preventDefault();
+        $("#rbcStatusSelect").find('option').remove().end();
 
         var rbcStatusCodes = $("#volunteer-rbc-interview-status").data("status-codes").slice(1, -1).split(", ");
         var rbcStatusValues = $("#volunteer-rbc-interview-status").data("status-values").slice(1, -1).split(", ");
 
         $.each(rbcStatusCodes, function(index, value) {
-            $("#rbcStatusSelect").append("<option value='" + value + "'>" + rbcStatusValues[index]
-                    + "</option>");
+            var html = "<option value='" + value + "'>" + rbcStatusValues[index] + "</option>";
+            $("#rbcStatusSelect").append(html);
         });
 
         $('#volunteer-rbc-interview-status-modal').modal('show');
 
     });
-    
+
+    $("#volunteer-rbc-interview-status-modal-form").submit(function() {
+        var $form = $(this);
+        // .serialize() to send the form input name-value pairs as params.
+        $.ajax({
+            url: $form.attr("action"),
+            data: $form.serialize(),
+            type: "POST",
+            statusCode: {
+                404: function() {
+                    alert("Volunteer not found");
+                },
+                500: function() {
+                    alert("Failed to update volunteer's RBC Interview Status");
+                }
+            },
+            success: function() {
+                $("#volunteer-rbc-interview-status-content").html($("#rbcStatusSelect").find(":selected").text());
+                $('#volunteer-rbc-interview-status-modal').modal('hide');
+            }
+        });
+        return false;
+    });
+
     $("#disabled-badge-button").popover({
         placement: 'right',
         trigger: 'hover',

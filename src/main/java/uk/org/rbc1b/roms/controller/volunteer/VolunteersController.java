@@ -637,11 +637,12 @@ public class VolunteersController {
      * request.
      *
      * @param volunteerId volunteer id
-     * @param rbcStatus rbc status to be passed in the request
+     * @param rbcStatusCode RBC status code to be passed in the request
      * @throws NoSuchRequestHandlingMethodException if volunteer not found
      */
-    @RequestMapping(value = "{volunteerId}/rbc-interview-status/edit", method = RequestMethod.PUT)
-    public void updateVolunteerRbcInterviewStatus(@PathVariable Integer volunteerId, @RequestParam("rbc-status") String rbcStatus)
+    @RequestMapping(value = "{volunteerId}/rbc-interview-status", method = RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateVolunteerRbcInterviewStatus(@PathVariable Integer volunteerId, @RequestParam("rbcStatusCode") String rbcStatusCode)
             throws NoSuchRequestHandlingMethodException {
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
@@ -650,7 +651,7 @@ public class VolunteersController {
             throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
         }
 
-        volunteer.setRbcStatusCode(rbcStatus);
+        volunteer.setRbcStatusCode(rbcStatusCode);
         volunteerDao.updateVolunteer(volunteer);
     }
 
