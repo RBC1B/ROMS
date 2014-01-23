@@ -831,10 +831,12 @@ public class VolunteersController {
             return personDao.findPerson(form.getSpousePersonId());
         }
 
-        // if the emergency contact is new too, see if it is the same person
-        if (emergencyContact.getPersonId() == null) {
+        // if the emergency contact is also new, see if it is the same person
+        if (form.getEmergencyContactPersonId() == null) {
             if (ObjectUtils.equals(emergencyContact.getForename(), form.getSpouseForename())
-                    && ObjectUtils.equals(emergencyContact.getSurname(), form.getSurname())) {
+                    && ObjectUtils.equals(emergencyContact.getSurname(), form.getSurname())
+                    && (ObjectUtils.equals(form.getEmergencyRelationshipCode(), "HB")
+                    || ObjectUtils.equals(form.getEmergencyRelationshipCode(), "WF"))) {
 
                 return emergencyContact;
             }
