@@ -37,7 +37,7 @@
                                     </c:if>
                                 </td>
                                 <td>
-                                    <ul class="inline list-actions">
+                                    <ul class="list-inline">
                                         <li><a class="btn btn-success" href="<c:url value="${department.uri}" />">View</a></li>
                                     </ul>
                                 </td>

@@ -34,7 +34,7 @@
                                     <ul class="list-inline">
                                         <li><a class="btn btn-success" href="<c:url value="/circuits/${circuit.circuitId}" />">View</a></li>
                                         <sec:authorize access="hasPermission('CIRCUIT', 'EDIT')">
-                                            <li><a class="list-action" href="<c:url value="/circuits/${circuit.circuitId}/edit" />">Edit</a></li>
+                                            <li><a href="<c:url value="/circuits/${circuit.circuitId}/edit" />">Edit</a></li>
                                         </sec:authorize>
                                     </ul>
                                 </td>

@@ -46,10 +46,10 @@
                                 </div>
                             </td>
                             <td>
-                                <ul class="inline list-actions">
+                                <ul class="list-inline">
                                     <li><a class="btn btn-success" href="<c:url value="${skill.uri}" />">View</a></li>
                                     <sec:authorize access="hasPermission('SKILL', 'EDIT')">
-                                        <li><a class="list-action" href="<c:url value="${skill.editUri}" />">Edit</a></li>
+                                        <li><a href="<c:url value="${skill.editUri}" />">Edit</a></li>
                                     </sec:authorize>
                                 </ul>
                             </td>

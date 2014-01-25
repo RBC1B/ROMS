@@ -31,7 +31,7 @@
                                 <ul class="list-inline">
                                     <li><a class="btn btn-success" href="<c:url value="${qualification.uri}" />">View</a></li>
                                     <sec:authorize access="hasPermission('SKILL', 'EDIT')">
-                                        <li><a class="list-action" href="<c:url value="${qualification.editUri}" />">Edit</a></li>
+                                        <li><a href="<c:url value="${qualification.editUri}" />">Edit</a></li>
                                     </sec:authorize>
                                 </ul>
                             </td>
