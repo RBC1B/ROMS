@@ -56,6 +56,12 @@
                 </c:choose>
             </dd>
         </dl>
+        <sec:authorize access="hasPermission('KINGDOMHALL', 'EDIT')">
+            <hr />
+            <div class="entity-list-add-new">
+                <a class="btn btn-edifice" href="<c:url value="${kingdomHall.editUri}" />">Edit Kingdom hall</a>
+            </div>
+        </sec:authorize>
 
         <br />
         <ol class="breadcrumb">
