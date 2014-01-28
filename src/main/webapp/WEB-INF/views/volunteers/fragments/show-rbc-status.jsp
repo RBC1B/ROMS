@@ -65,62 +65,48 @@ The contents of the rbc status tab.
     </dd>
     <dt>Availability:</dt>
     <dd>
-        <c:forEach var="i" begin="0" end="0">
-            <span>
-                <c:choose>
-                    <c:when test="${volunteer.availability.get(i)}"><span class="label label-success">Mon</span></c:when>
-                    <c:otherwise><span class="label label-danger">Mon</span></c:otherwise>
-                </c:choose>
-            </span>
-        </c:forEach>
-        <c:forEach var="i" begin="1" end="1">
-            <span>
-                <c:choose>
-                    <c:when test="${volunteer.availability.get(i)}"><span class="label label-success">Tue</span></c:when>
-                    <c:otherwise><span class="label label-danger">Tue</span></c:otherwise>
-                </c:choose>
-            </span>
-        </c:forEach>
-        <c:forEach var="i" begin="2" end="2">
-            <span>
-                <c:choose>
-                    <c:when test="${volunteer.availability.get(i)}"><span class="label label-success">Wed</span></c:when>
-                    <c:otherwise><span class="label label-danger">Wed</span></c:otherwise>
-                </c:choose>
-            </span>
-        </c:forEach>
-        <c:forEach var="i" begin="3" end="3">
-            <span>
-                <c:choose>
-                    <c:when test="${volunteer.availability.get(i)}"><span class="label label-success">Thu</span></c:when>
-                    <c:otherwise><span class="label label-danger">Thu</span></c:otherwise>
-                </c:choose>
-            </span>
-        </c:forEach>
-        <c:forEach var="i" begin="4" end="4">
-            <span>
-                <c:choose>
-                    <c:when test="${volunteer.availability.get(i)}"><span class="label label-success">Fri</span></c:when>
-                    <c:otherwise><span class="label label-danger">Fri</span></c:otherwise>
-                </c:choose>
-            </span>
-        </c:forEach>
-        <c:forEach var="i" begin="5" end="5">
-            <span>
-                <c:choose>
-                    <c:when test="${volunteer.availability.get(i)}"><span class="label label-success">Sat</span></c:when>
-                    <c:otherwise><span class="label label-danger">Sat</span></c:otherwise>
-                </c:choose>
-            </span>
-        </c:forEach>
-        <c:forEach var="i" begin="6" end="6">
-            <span>
-                <c:choose>
-                    <c:when test="${volunteer.availability.get(i)}"><span class="label label-success">Sun</span></c:when>
-                    <c:otherwise><span class="label label-danger">Sun</span></c:otherwise>
-                </c:choose>
-            </span>
-        </c:forEach>
+        <span>
+            <c:choose>
+                <c:when test="${volunteer.availability.get(0)}"><span class="label label-success">Mon</span></c:when>
+                <c:otherwise><span class="label label-danger">Mon</span></c:otherwise>
+            </c:choose>
+        </span>
+        <span>
+            <c:choose>
+                <c:when test="${volunteer.availability.get(1)}"><span class="label label-success">Tue</span></c:when>
+                <c:otherwise><span class="label label-danger">Tue</span></c:otherwise>
+            </c:choose>
+        </span>
+        <span>
+            <c:choose>
+                <c:when test="${volunteer.availability.get(2)}"><span class="label label-success">Wed</span></c:when>
+                <c:otherwise><span class="label label-danger">Wed</span></c:otherwise>
+            </c:choose>
+        </span>
+        <span>
+            <c:choose>
+                <c:when test="${volunteer.availability.get(3)}"><span class="label label-success">Thu</span></c:when>
+                <c:otherwise><span class="label label-danger">Thu</span></c:otherwise>
+            </c:choose>
+        </span>
+        <span>
+            <c:choose>
+                <c:when test="${volunteer.availability.get(4)}"><span class="label label-success">Fri</span></c:when>
+                <c:otherwise><span class="label label-danger">Fri</span></c:otherwise>
+            </c:choose>
+        </span>
+        <span>
+            <c:choose>
+                <c:when test="${volunteer.availability.get(5)}"><span class="label label-success">Sat</span></c:when>
+                <c:otherwise><span class="label label-danger">Sat</span></c:otherwise>
+            </c:choose>
+        </span>
+        <span>
+            <c:choose>
+                <c:when test="${volunteer.availability.get(6)}"><span class="label label-success">Sun</span></c:when>
+                <c:otherwise><span class="label label-danger">Sun</span></c:otherwise>
+            </c:choose>
+        </span>
     </dd>
     <dt>Oversight:</dt>
     <dd>
