@@ -261,10 +261,9 @@ public class VolunteersController {
             volunteer = volunteerDao.findVolunteer(form.getPersonId(), VOLUNTEER_DATA);
             if (volunteer == null) {
                 Person person = personDao.findPerson(form.getPersonId());
-                if (person == null) {
-                    volunteer = new Volunteer();
-                } else {
-                    volunteer = new Volunteer(person);
+                volunteer = new Volunteer();
+                if (person != null) {
+                    volunteer = volunteerDao.mergePersonIntoVolunteer(person, form.getGender());
                 }
             }
         } else {
@@ -288,13 +287,14 @@ public class VolunteersController {
         }
         volunteer.setEmail(form.getEmail());
         volunteer.setForename(form.getForename());
-        volunteer.setFormDate(DataConverterUtil.toSqlDate(form.getFormDate()));
         volunteer.setMiddleName(form.getMiddleName());
         volunteer.setSurname(form.getSurname());
         volunteer.setMobile(PhoneNumberFormatter.format(form.getMobile()));
         volunteer.setTelephone(PhoneNumberFormatter.format(form.getTelephone()));
         volunteer.setWorkPhone(PhoneNumberFormatter.format(form.getWorkPhone()));
+
         volunteer.setBaptismDate(DataConverterUtil.toSqlDate(form.getBaptismDate()));
+        volunteer.setFormDate(DataConverterUtil.toSqlDate(form.getFormDate()));
 
         if (form.isElder()) {
             volunteer.setAppointmentCode(APPOINTMENT_ELDER);
@@ -334,7 +334,11 @@ public class VolunteersController {
             }
         }
 
-        volunteerDao.createVolunteer(volunteer);
+        if (volunteer.getPersonId() == null) {
+            volunteerDao.createVolunteer(volunteer);
+        } else {
+            volunteerDao.updatePersonVolunteer(volunteer);
+        }
 
         return "redirect:" + VolunteerModelFactory.generateUri(volunteer.getPersonId());
     }

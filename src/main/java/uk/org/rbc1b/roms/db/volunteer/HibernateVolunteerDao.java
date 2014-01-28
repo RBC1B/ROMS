@@ -28,6 +28,7 @@ import java.util.Set;
 import org.apache.commons.collections.CollectionUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
@@ -40,6 +41,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Repository;
 import uk.org.rbc1b.roms.controller.common.SortDirection;
+import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.volunteer.department.Assignment;
 import uk.org.rbc1b.roms.db.volunteer.qualification.VolunteerQualification;
 import uk.org.rbc1b.roms.db.volunteer.skill.VolunteerSkill;
@@ -147,7 +149,6 @@ public class HibernateVolunteerDao implements VolunteerDao {
     @Override
     public void createVolunteer(Volunteer volunteer) {
         this.sessionFactory.getCurrentSession().save(volunteer);
-
     }
 
     @Override
@@ -156,6 +157,23 @@ public class HibernateVolunteerDao implements VolunteerDao {
         this.sessionFactory.getCurrentSession().merge(volunteer);
 
     }
+
+    @Override
+    public Volunteer mergePersonIntoVolunteer(Person person, String gender) {
+        SQLQuery query = this.sessionFactory.getCurrentSession().createSQLQuery("INSERT INTO Volunteer (PersonId, "
+                + "RbcStatusCode, Gender, InterviewStatusCode, Oversight, ReliefUk, ReliefAbroad) VALUES ("
+                + person.getPersonId() + ", 'PD', '" + gender + "', 'ID', 0, 0, 0)");
+        query.executeUpdate();
+        this.sessionFactory.getCurrentSession().flush();
+        return this.findVolunteer(person.getPersonId(), null);
+    }
+
+    @Override
+    @CacheEvict(value = "person.person", key = "#volunteer.personId")
+    public void updatePersonVolunteer(Volunteer volunteer) {
+        this.sessionFactory.getCurrentSession().saveOrUpdate(volunteer);
+    }
+
 
     @SuppressWarnings("unchecked")
     @Override
