@@ -693,26 +693,27 @@ $(document).ready(function() {
         return false;
     });
 
-    $("#volunteer-rbc-interview-status a").on("click", function(e) {
+    $("#volunteer-rbc-status-code a").on("click", function(e) {
         e.preventDefault();
         $("#rbcStatusSelect").find('option').remove().end();
 
-        var rbcStatusCodes = $("#volunteer-rbc-interview-status").data("status-codes").slice(1, -1).split(", ");
-        var rbcStatusValues = $("#volunteer-rbc-interview-status").data("status-values").slice(1, -1).split(", ");
+        var rbcStatusCodes = $("#volunteer-rbc-status-code").data("status-codes").slice(1, -1).split(", ");
+        var rbcStatusValues = $("#volunteer-rbc-status-code").data("status-values").slice(1, -1).split(", ");
 
         $.each(rbcStatusCodes, function(index, value) {
             var html = "<option value='" + value + "'>" + rbcStatusValues[index] + "</option>";
             $("#rbcStatusSelect").append(html);
         });
 
-        $('#volunteer-rbc-interview-status-modal').modal('show');
+        $('#volunteer-rbc-status-code-modal').modal('show');
 
     });
 
-    $("#volunteer-rbc-interview-status-modal-form").submit(function() {
+    $("#volunteer-rbc-status-code-modal-form").submit(function() {
         var $form = $(this);
         // .serialize() to send the form input name-value pairs as params.
         $.ajax({
+            // url can be obtained via the form action attribute passed to the JSP.
             url: $form.attr("action"),
             data: $form.serialize(),
             type: "POST",
@@ -725,8 +726,8 @@ $(document).ready(function() {
                 }
             },
             success: function() {
-                $("#volunteer-rbc-interview-status-content").html($("#rbcStatusSelect").find(":selected").text());
-                $('#volunteer-rbc-interview-status-modal').modal('hide');
+                $("#volunteer-rbc-status-code-content").html($("#rbcStatusSelect").find(":selected").text());
+                $('#volunteer-rbc-status-code-modal').modal('hide');
             }
         });
         return false;

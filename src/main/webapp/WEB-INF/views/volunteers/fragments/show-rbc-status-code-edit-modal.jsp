@@ -1,14 +1,14 @@
 <%--
-Content of the model dialog used to update the volunteer rbc interview status
+Content of the model dialog used to update the volunteer's rbc status code.
 --%>
-<div id="volunteer-rbc-interview-status-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="volunteer-rbc-interview-status-modal-label" aria-hidden="true">
+<div id="volunteer-rbc-status-code-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="volunteer-rbc-interview-status-modal-label" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <c:url var="formAction" value="${volunteer.editRbcInterviewStatusUri}" />
-            <form class="modal-form" id="volunteer-rbc-interview-status-modal-form" method="POST" action="${formAction}">
+            <c:url var="formAction" value="${volunteer.editRbcStatusCodeUri}" />
+            <form class="modal-form" id="volunteer-rbc-status-code-modal-form" method="POST" action="${formAction}">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h3 id="volunteer-rbc-interview-status-modal-label">Edit Volunteer RBC Status</h3>
+                    <h3 id="volunteer-rbc-status-code-modal-label">Edit Volunteer RBC Status</h3>
                 </div>
                 <div class="modal-body">
                     <fieldset>

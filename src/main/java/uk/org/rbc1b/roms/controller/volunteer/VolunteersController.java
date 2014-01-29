@@ -641,16 +641,18 @@ public class VolunteersController {
     }
 
     /**
-     * Update the RBC interview status of a volunteer. This will be an AJAX
-     * request.
+     * Update the RBC status code of a volunteer. Not to be confused with the
+     * volunteer's RBC status tab that appears on the volunteer show JSP. This
+     * will be an AJAX request.
      *
      * @param volunteerId volunteer id
      * @param rbcStatusCode RBC status code to be passed in the request
      * @throws NoSuchRequestHandlingMethodException if volunteer not found
+     *
      */
-    @RequestMapping(value = "{volunteerId}/rbc-interview-status", method = RequestMethod.PUT)
+    @RequestMapping(value = "{volunteerId}/rbc-status-code", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateVolunteerRbcInterviewStatus(@PathVariable Integer volunteerId, @RequestParam("rbcStatusCode") String rbcStatusCode)
+    public void updateVolunteerRbcStatusCode(@PathVariable Integer volunteerId, @RequestParam("rbcStatusCode") String rbcStatusCode)
             throws NoSuchRequestHandlingMethodException {
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
