@@ -11,7 +11,7 @@
                                 <li role="menuitem"><a href="<c:url value="/circuits" />">Circuits</a></li>
                             </sec:authorize>
                             <sec:authorize access="hasPermission('KINGDOMHALL', 'READ')">
-                                <li role="menuitem"><a href="<c:url value="/kingdom-halls" />">Kingdom halls</a></li>
+                                <li role="menuitem"><a href="<c:url value="/kingdom-halls" />">Kingdom Halls</a></li>
                             </sec:authorize>
                             <sec:authorize access="hasPermission('CONG', 'READ')">
                                 <li role="menuitem"><a href="<c:url value="/congregations" />">Congregations</a></li>

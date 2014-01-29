@@ -24,9 +24,9 @@
             </div>
             <div class="well-edifice col-md-4 col-xs-6">
                 <div class="well">
-                    <h3>Kingdom hall</h3>
+                    <h3>Kingdom Hall</h3>
                     <ul class="nav nav-tabs nav-stacked">
-                        <li>List of kingdom halls</li>
+                        <li>List of Kingdom Halls</li>
                     </ul>
                 </div>
             </div>

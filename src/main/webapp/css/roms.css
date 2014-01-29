@@ -692,3 +692,10 @@ div.project-count {
 .img-thumbnail {
     max-height: 143px;
 }
+
+/*****************************************************************************/
+/* Department Skills List view category colours                              */
+/*****************************************************************************/
+.category-colour-red {
+  color: #000;
+}
