@@ -216,7 +216,7 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="col-md-6">
-                                    <button type="button" class="btn btn-danger btn-xs trades-row-delete"><i class="glyphicon glyphicon-remove icon-white icon-align-center"></i>Remove</button>
+                                    <button type="button" class="btn btn-danger btn-xs trades-row-delete"><i class="glyphicon glyphicon-remove icon-white icon-align-center"></i>&nbsp;Remove</button>
                                 </div>
                             </div>
                         </div>

@@ -13,8 +13,11 @@ body {
     padding: 0 20px;
     min-height: 100%!important;
 }
-a, .nav li a, .navbar li a {
+a, .navbar-inverse .navbar-nav>li>a {
     color:#25aae1;
+}
+.navbar-inverse .navbar-nav>li>a {
+    font-weight: bold;
 }
 li a:hover, li a:focus {
     color:#ddd!important;
@@ -39,6 +42,9 @@ input {
 }
 .icon-white {
     color: #fff!important;
+}
+.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {
+    background-color: #25aae1;
 }
 /* Now some styling for additional classes created for use throughout the site */
 
@@ -221,7 +227,7 @@ a.editable-click {
     margin-right: 20px;
 }
 /*****************************************************************************/
-/* Form layout                                                               */
+/* General Form layout adjustments                                           */
 /*****************************************************************************/
 label.error {
     color: #b94a48;
@@ -552,9 +558,6 @@ ul.footer-nav, #footer-nav {
 ul.footer-nav {
     color:#999999;
     font-size: 14px;
-}
-ul.footer-nav a {
-    color:#999999;
 }
 ul.footer-nav a:hover {
     color:#ffffff;
