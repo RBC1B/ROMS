@@ -54,7 +54,7 @@ public class VolunteerModel extends PersonModel {
     private UserModel interviewerA;
     private UserModel interviewerB;
     private String interviewComments;
-    private Map<Integer, Boolean> availability;
+    private Map<Long, Boolean> availability;
     private boolean oversight;
     private String oversightComments;
     private boolean reliefAbroad;
@@ -219,11 +219,11 @@ public class VolunteerModel extends PersonModel {
         this.interviewComments = interviewComments;
     }
 
-    public Map<Integer, Boolean> getAvailability() {
+    public Map<Long, Boolean> getAvailability() {
         return availability;
     }
 
-    public void setAvailability(Map<Integer, Boolean> availability) {
+    public void setAvailability(Map<Long, Boolean> availability) {
         this.availability = availability;
     }
 

@@ -59,7 +59,7 @@ public class VolunteerModelFactory {
 
     private static final String BASE_URI = "/volunteers/";
     private static final Integer DAYS_PER_WEEK = 7;
-    private static final Map<Integer, Boolean> NO_AVAILABILITY = new HashMap<Integer, Boolean>();
+    private static final Map<Long, Boolean> NO_AVAILABILITY = new HashMap<Long, Boolean>();
     @Autowired
     private ReferenceDao referenceDao;
     @Autowired
@@ -74,7 +74,7 @@ public class VolunteerModelFactory {
     private QualificationDao qualificationDao;
 
     static {
-        for (int i = 0; i < DAYS_PER_WEEK; i++) {
+        for (long i = 0; i < DAYS_PER_WEEK; i++) {
             NO_AVAILABILITY.put(i, Boolean.FALSE);
         }
     }
@@ -206,14 +206,14 @@ public class VolunteerModelFactory {
         return congregationModel;
     }
 
-    private Map<Integer, Boolean> generateAvailability(String availability) {
+    private Map<Long, Boolean> generateAvailability(String availability) {
         if (availability == null || availability.length() != 7) {
             return NO_AVAILABILITY;
         }
 
-        Map<Integer, Boolean> availabilityMap = new HashMap<Integer, Boolean>(DAYS_PER_WEEK);
+        Map<Long, Boolean> availabilityMap = new HashMap<Long, Boolean>(DAYS_PER_WEEK);
         for (int i = 0; i < DAYS_PER_WEEK; i++) {
-            availabilityMap.put(i, availability.charAt(i) == 'T');
+            availabilityMap.put((long) i, availability.charAt(i) == 'T');
         }
         return availabilityMap;
     }
