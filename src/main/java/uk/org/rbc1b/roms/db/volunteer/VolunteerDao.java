@@ -87,12 +87,15 @@ public interface VolunteerDao {
     /**
      * Merge a person into a volunteer.
      * @param person person to be inserted as a volunteer
+     * @param rbcStatusCode rbc status code
      * @param gender gender
+     * @param interviewStatusCode interview status code
      * @return Volunteer volunteer
      */
     @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     @Transactional
-    Volunteer mergePersonIntoVolunteer(Person person, String gender);
+    Volunteer mergePersonIntoVolunteer(Person person, String rbcStatusCode, String gender,
+        String interviewStatusCode);
 
     /**
      * Only use when a Person has just been converted to a

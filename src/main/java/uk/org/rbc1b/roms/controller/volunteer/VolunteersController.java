@@ -261,9 +261,11 @@ public class VolunteersController {
             volunteer = volunteerDao.findVolunteer(form.getPersonId(), VOLUNTEER_DATA);
             if (volunteer == null) {
                 Person person = personDao.findPerson(form.getPersonId());
-                volunteer = new Volunteer();
                 if (person != null) {
-                    volunteer = volunteerDao.mergePersonIntoVolunteer(person, form.getGender());
+                    volunteer = volunteerDao.mergePersonIntoVolunteer(person, RBC_STATUS_PENDING,
+                            form.getGender(), INTERVIEW_STATUS_INVITE_DUE);
+                } else {
+                    volunteer = new Volunteer();
                 }
             }
         } else {
@@ -318,8 +320,10 @@ public class VolunteersController {
             volunteer.setSpouse(spouse);
         }
 
-        volunteer.setRbcStatusCode(RBC_STATUS_PENDING);
-        volunteer.setInterviewStatusCode(INTERVIEW_STATUS_INVITE_DUE);
+        if (volunteer.getRbcStatusCode() == null && volunteer.getInterviewStatusCode() == null) {
+            volunteer.setRbcStatusCode(RBC_STATUS_PENDING);
+            volunteer.setInterviewStatusCode(INTERVIEW_STATUS_INVITE_DUE);
+        }
 
         if (form.getTrades() != null) {
             Set<VolunteerTrade> volunteerTrades = new HashSet<VolunteerTrade>();

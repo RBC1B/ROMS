@@ -28,7 +28,7 @@ import java.util.Set;
 import org.apache.commons.collections.CollectionUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
-import org.hibernate.SQLQuery;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
@@ -159,10 +159,16 @@ public class HibernateVolunteerDao implements VolunteerDao {
     }
 
     @Override
-    public Volunteer mergePersonIntoVolunteer(Person person, String gender) {
-        SQLQuery query = this.sessionFactory.getCurrentSession().createSQLQuery("INSERT INTO Volunteer (PersonId, "
-                + "RbcStatusCode, Gender, InterviewStatusCode, Oversight, ReliefUk, ReliefAbroad) VALUES ("
-                + person.getPersonId() + ", 'PD', '" + gender + "', 'ID', 0, 0, 0)");
+    public Volunteer mergePersonIntoVolunteer(Person person, String rbcStatusCode, String gender,
+            String interviewStatusCode) {
+        Query query = this.sessionFactory.getCurrentSession().getNamedQuery("insertVolunteerFromPersonNativeSQL")
+                .setInteger("personId", person.getPersonId())
+                .setString("rbcStatusCode", rbcStatusCode)
+                .setString("gender", gender)
+                .setString("interviewStatusCode", interviewStatusCode)
+                .setBoolean("oversight", false)
+                .setBoolean("reliefUk", false)
+                .setBoolean("reliefAbroad", false);
         query.executeUpdate();
         this.sessionFactory.getCurrentSession().flush();
         return this.findVolunteer(person.getPersonId(), null);
@@ -173,7 +179,6 @@ public class HibernateVolunteerDao implements VolunteerDao {
     public void updatePersonVolunteer(Volunteer volunteer) {
         this.sessionFactory.getCurrentSession().saveOrUpdate(volunteer);
     }
-
 
     @SuppressWarnings("unchecked")
     @Override
@@ -282,5 +287,4 @@ public class HibernateVolunteerDao implements VolunteerDao {
         return criteria;
 
     }
-
 }

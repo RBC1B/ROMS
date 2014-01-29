@@ -57,4 +57,10 @@
             <one-to-many class="uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTrade" />
         </set>
     </joined-subclass>
+    
+    <sql-query name="insertVolunteerFromPersonNativeSQL">
+	<![CDATA[INSERT INTO Volunteer (PersonId, RbcStatusCode, Gender, InterviewStatusCode,
+                    Oversight, ReliefUk, ReliefAbroad) VALUES (:personId, :rbcStatusCode,
+                    :gender, :interviewStatusCode, :oversight, :reliefUk, :reliefAbroad)]]>
+    </sql-query>
 </hibernate-mapping>
