@@ -68,17 +68,23 @@ $(document).ready(function() {
 
     $("input[name='gender']").change(function() {
         if($(this).val() === 'F') {
-            $("input[name='elder']").hide();
-            $("input[name='ministerialServant']").hide();
-            // hide Wife option from Emergency Contact Relationship
-            $("#emergencyRelationshipCode option[value='WF']").hide();
-            $("#emergencyRelationshipCode option[value='HB']").show(); 
+            $("input[name='elder']").attr("disabled", true);
+            $("input[name='ministerialServant']").attr("disabled", true);
+            // remove Wife option from Emergency Contact Relationship 
+            // NOTE: .hide() for options may not work in some browsers
+            $("#emergencyRelationshipCode").find("option[value='WF']").remove();
+            if ($("#emergencyRelationshipCode option[value='HB']").length == 0) {
+                var husbandOption = $("<option value='HB'>Husband</option>");
+                husbandOption.insertAfter("#emergencyRelationshipCode option[value='FM']");
+            }
         } else if ($(this).val() === 'M') {
-            $("input[name='elder']").show();
-            $("input[name='ministerialServant']").show();
-            // hide Husband option from the Emergency Contact Relationship
-            $("#emergencyRelationshipCode option[value='HB']").hide();
-            $("#emergencyRelationshipCode option[value='WF']").show();
+            $("input[name='elder']").removeAttr("disabled");
+            $("input[name='ministerialServant']").removeAttr("disabled");
+            // remove Husband option from the Emergency Contact Relationship
+            $("#emergencyRelationshipCode").find("option[value='HB']").remove();
+            if ($("#emergencyRelationshipCode option[value='WF']").length == 0) {
+                $("#emergencyRelationshipCode").append("<option value='WF'>Wife</option>");
+            }
         }
     }); 
 
