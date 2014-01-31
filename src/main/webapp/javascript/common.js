@@ -248,9 +248,23 @@ roms.common.datatables = function($table, options) {
                         $('li:last', an[i]).removeClass('disabled');
                     }
                 }
-            }
+                //If all data fits into one page, hide the pagination and "Showing ? of ? Entries"
+                if (oPaging.iTotalPages <= 1) {
+                    $('.dataTables_paginate').hide();
+                    $('.dataTables_info').hide();
+                } else {
+                    $('.dataTables_paginate').show();
+                    $('.dataTables_info').show(); 
+                }
+                //If the number of rows are 5 or less, hide "... results per page"
+                if (oPaging.iTotal <= 5) {
+                    $('.dataTables_length').hide();
+                } else {
+                    $('.dataTables_length').show();                    
+                }
         }
-    } );
+    } });
+
 
     /*
      * TableTools Bootstrap compatibility
