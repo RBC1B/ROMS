@@ -1,0 +1,73 @@
+<Configure class="org.eclipse.jetty.server.Server">
+    <New id="dbPool" class="org.eclipse.jetty.plus.jndi.Resource">
+        <Arg></Arg>
+        <Arg>jdbc/_roms</Arg>
+        <Arg>
+            <New class="com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource">
+                <Set name="url">
+                    <SystemProperty name="edifice.datasource.url" default="jdbc:mysql://localhost:3306/ROMS" />
+                </Set>
+                <Set name="user">
+                    <SystemProperty name="edifice.datasource.user" default="root" />
+                </Set>
+                <Set name="password">
+                    <SystemProperty name="edifice.datasource.password" default="password" />
+                </Set>
+            </New>
+        </Arg>
+    </New>
+
+    <New id="txMgr" class="com.atomikos.icatch.jta.UserTransactionManager">
+        <Call name="init" />
+    </New>
+    <New id="txMgrResource" class="org.eclipse.jetty.plus.jndi.Resource">
+        <Arg></Arg>
+        <!-- <Arg>java:comp/UserTransactionManager</Arg> -->
+        <Arg>java:appserver/TransactionManager</Arg>
+        <Arg>
+            <Ref id="txMgr" />
+        </Arg>
+    </New>
+    <New id="tx" class="org.eclipse.jetty.plus.jndi.Transaction">
+        <Arg>
+            <New class="com.atomikos.icatch.jta.UserTransactionImp" />
+        </Arg>
+    </New>
+
+    <New id="mail" class="org.eclipse.jetty.plus.jndi.Resource">
+        <Arg></Arg>
+        <Arg>mail/EdificeMail</Arg>
+        <Arg>
+            <New class="org.eclipse.jetty.jndi.factories.MailSessionReference">
+                <Set name="user">
+                    <SystemProperty name="edifice.mail.user" default="unknown" />
+                </Set>
+                <Set name="password">
+                    <SystemProperty name="edifice.mail.password" default="unknown" />
+                </Set>
+                <Set name="properties">
+                    <New class="java.util.Properties">
+                        <Put name="mail.smtp.host">smtp.gmail.com</Put>
+                        <Put name="mail.from">
+                            <SystemProperty name="edifice.mail.from" default="unknown@gmail.com" />
+                        </Put>
+                        <Put name="mail.debug">
+                            <SystemProperty name="edifice.mail.debug" default="true" />
+                        </Put>
+                    </New>
+                </Set>
+            </New>
+        </Arg>
+    </New>
+    <New id="imagesResource" class="org.eclipse.jetty.plus.jndi.Resource">
+        <Arg></Arg>
+        <Arg>jndi/_images_directories</Arg>
+        <Arg>
+            <New class="java.util.Properties">
+                <Put name="volunteer.images.directory">
+                    <SystemProperty name="edifice.volunteer.images.directory" default="/" />
+                </Put>
+            </New>
+        </Arg>
+    </New>
+</Configure>
