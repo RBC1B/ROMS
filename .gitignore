@@ -3,5 +3,7 @@
 .project
 .settings
 .DF_Store
+tmlog*
+*tm1.epoch
 
 /target
