@@ -99,7 +99,7 @@ public class VolunteerBadgePdfModelFactory {
      * @return VolunteerBadgeColour the colour
      */
     public VolunteerBadgeColour generateColourBand(Volunteer volunteer) {
-        LocalDate birthDate = LocalDate.fromDateFields(volunteer.getBirthDate());
+        LocalDate birthDate = LocalDate.fromDateFields(volunteer.getPerson().getBirthDate());
         LocalDate now = new LocalDate();
         Years age = Years.yearsBetween(birthDate, now);
 

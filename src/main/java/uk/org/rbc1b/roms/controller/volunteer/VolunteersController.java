@@ -111,6 +111,7 @@ public class VolunteersController {
     private AssignmentModelFactory assignmentModelFactory;
     @Autowired
     private VolunteerBadgePdfModelFactory volunteerBadgePdfModelFactory;
+
     @Resource(name = "imageDirectories")
     private Properties imageDirectories;
 
@@ -260,41 +261,42 @@ public class VolunteersController {
         if (form.getPersonId() != null) {
             volunteer = volunteerDao.findVolunteer(form.getPersonId(), VOLUNTEER_DATA);
             if (volunteer == null) {
+                volunteer = new Volunteer();
                 Person person = personDao.findPerson(form.getPersonId());
                 if (person != null) {
-                    volunteer = volunteerDao.mergePersonIntoVolunteer(person, RBC_STATUS_PENDING,
-                            form.getGender(), INTERVIEW_STATUS_INVITE_DUE);
-                } else {
-                    volunteer = new Volunteer();
+                    volunteer.setPerson(person);
                 }
             }
         } else {
             volunteer = new Volunteer();
         }
 
+        // save/update the underlying person data
+        Person person = volunteer.getPerson();
+
         Address address = new Address();
         address.setStreet(form.getStreet());
         address.setTown(form.getTown());
         // county is not set in the create volunteer form - it is not on the S-82 paper form
         address.setPostcode(form.getPostcode());
-        volunteer.setAddress(address);
+        person.setAddress(address);
 
-        volunteer.setBirthDate(DataConverterUtil.toSqlDate(form.getBirthDate()));
+        person.setBirthDate(DataConverterUtil.toSqlDate(form.getBirthDate()));
 
-        Integer congregationId = volunteer.getCongregation() != null ? volunteer.getCongregation().getCongregationId()
-                : null;
+        Integer congregationId = person.getCongregation() != null ? person.getCongregation().getCongregationId() : null;
 
         if (ObjectUtils.notEqual(congregationId, form.getCongregationId())) {
-            volunteer.setCongregation(congregationDao.findCongregation(form.getCongregationId()));
+            person.setCongregation(congregationDao.findCongregation(form.getCongregationId()));
         }
-        volunteer.setEmail(form.getEmail());
-        volunteer.setForename(form.getForename());
-        volunteer.setMiddleName(form.getMiddleName());
-        volunteer.setSurname(form.getSurname());
-        volunteer.setMobile(PhoneNumberFormatter.format(form.getMobile()));
-        volunteer.setTelephone(PhoneNumberFormatter.format(form.getTelephone()));
-        volunteer.setWorkPhone(PhoneNumberFormatter.format(form.getWorkPhone()));
+        person.setEmail(form.getEmail());
+        person.setForename(form.getForename());
+        person.setMiddleName(form.getMiddleName());
+        person.setSurname(form.getSurname());
+        person.setMobile(PhoneNumberFormatter.format(form.getMobile()));
+        person.setTelephone(PhoneNumberFormatter.format(form.getTelephone()));
+        person.setWorkPhone(PhoneNumberFormatter.format(form.getWorkPhone()));
 
+        // save the volunteer specific data
         volunteer.setBaptismDate(DataConverterUtil.toSqlDate(form.getBaptismDate()));
         volunteer.setFormDate(DataConverterUtil.toSqlDate(form.getFormDate()));
 
@@ -329,7 +331,7 @@ public class VolunteersController {
             Set<VolunteerTrade> volunteerTrades = new HashSet<VolunteerTrade>();
             for (VolunteerTrade trade : form.getTrades()) {
                 if (StringUtils.isNotBlank(trade.getName())) {
-                    trade.setPerson(volunteer);
+                    trade.setVolunteer(volunteer);
                     volunteerTrades.add(trade);
                 }
             }
@@ -338,11 +340,7 @@ public class VolunteersController {
             }
         }
 
-        if (volunteer.getPersonId() == null) {
-            volunteerDao.createVolunteer(volunteer);
-        } else {
-            volunteerDao.updatePersonVolunteer(volunteer);
-        }
+        volunteerDao.createVolunteer(volunteer);
 
         return "redirect:" + VolunteerModelFactory.generateUri(volunteer.getPersonId());
     }
@@ -369,8 +367,8 @@ public class VolunteersController {
         form.setAppointmentCode(volunteer.getAppointmentCode());
         form.setBaptismDate(DataConverterUtil.toDateTime(volunteer.getBaptismDate()));
 
-        if (volunteer.getCongregation() != null) {
-            Congregation congregation = congregationDao.findCongregation(volunteer.getCongregation()
+        if (volunteer.getPerson().getCongregation() != null) {
+            Congregation congregation = congregationDao.findCongregation(volunteer.getPerson().getCongregation()
                     .getCongregationId());
             form.setCongregationName(congregation.getName());
             form.setCongregationId(congregation.getCongregationId());
@@ -379,8 +377,8 @@ public class VolunteersController {
         form.setFulltimeCode(volunteer.getFulltimeCode());
 
         model.addAttribute("volunteerSpiritual", form);
-        model.addAttribute("forename", volunteer.getForename());
-        model.addAttribute("surname", volunteer.getSurname());
+        model.addAttribute("forename", volunteer.getPerson().getForename());
+        model.addAttribute("surname", volunteer.getPerson().getSurname());
         model.addAttribute("fulltimeValues", referenceDao.findFulltimeValues());
         model.addAttribute("appointmentValues", referenceDao.findAppointmentValues());
         model.addAttribute("submitUri", VolunteerModelFactory.generateUri(volunteerId) + "/spiritual");
@@ -443,8 +441,8 @@ public class VolunteersController {
         form.setHhcFormCode(volunteer.getHhcFormCode());
 
         model.addAttribute("volunteerRbcStatus", form);
-        model.addAttribute("forename", volunteer.getForename());
-        model.addAttribute("surname", volunteer.getSurname());
+        model.addAttribute("forename", volunteer.getPerson().getForename());
+        model.addAttribute("surname", volunteer.getPerson().getSurname());
         model.addAttribute("submitUri", VolunteerModelFactory.generateUri(volunteerId) + "/rbc-status");
 
         return "volunteers/edit-rbc-status";
@@ -469,20 +467,23 @@ public class VolunteersController {
         }
 
         VolunteerPersonalForm form = new VolunteerPersonalForm();
-        form.setEmail(volunteer.getEmail());
-        form.setTelephone(volunteer.getTelephone());
-        form.setMobile(volunteer.getMobile());
-        form.setWorkPhone(volunteer.getWorkPhone());
-        if (volunteer.getAddress() != null) {
-            form.setStreet(volunteer.getAddress().getStreet());
-            form.setTown(volunteer.getAddress().getTown());
-            form.setCounty(volunteer.getAddress().getCounty());
-            form.setPostcode(volunteer.getAddress().getPostcode());
+
+        Person person = volunteer.getPerson();
+
+        form.setEmail(person.getEmail());
+        form.setTelephone(person.getTelephone());
+        form.setMobile(person.getMobile());
+        form.setWorkPhone(person.getWorkPhone());
+        if (person.getAddress() != null) {
+            form.setStreet(person.getAddress().getStreet());
+            form.setTown(person.getAddress().getTown());
+            form.setCounty(person.getAddress().getCounty());
+            form.setPostcode(person.getAddress().getPostcode());
         }
         form.setGender(volunteer.getGender());
 
-        if (volunteer.getBirthDate() != null) {
-            form.setBirthDate(new DateTime(volunteer.getBirthDate().getTime()));
+        if (person.getBirthDate() != null) {
+            form.setBirthDate(new DateTime(person.getBirthDate().getTime()));
         }
 
         form.setMaritalStatusCode(volunteer.getMaritalStatusCode());
@@ -494,8 +495,8 @@ public class VolunteersController {
 
         model.addAttribute("maritalStatusValues", referenceDao.findMaritalStatusValues());
         model.addAttribute("volunteerPersonal", form);
-        model.addAttribute("forename", volunteer.getForename());
-        model.addAttribute("surname", volunteer.getSurname());
+        model.addAttribute("forename", person.getForename());
+        model.addAttribute("surname", person.getSurname());
         model.addAttribute("submitUri", VolunteerModelFactory.generateUri(volunteerId) + "/personal");
 
         return "volunteers/edit-personal";
@@ -521,9 +522,11 @@ public class VolunteersController {
             throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
         }
 
-        volunteer.setForename(form.getForename());
-        volunteer.setMiddleName(form.getMiddleName());
-        volunteer.setSurname(form.getSurname());
+        Person person = volunteer.getPerson();
+
+        person.setForename(form.getForename());
+        person.setMiddleName(form.getMiddleName());
+        person.setSurname(form.getSurname());
 
         volunteerDao.updateVolunteer(volunteer);
     }
@@ -548,7 +551,7 @@ public class VolunteersController {
             throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
         }
 
-        volunteer.setComments(comments);
+        volunteer.getPerson().setComments(comments);
 
         volunteerDao.updateVolunteer(volunteer);
     }
@@ -575,9 +578,9 @@ public class VolunteersController {
         volunteer.setAppointmentCode(form.getAppointmentCode());
 
         if (form.getCongregationId() == null) {
-            volunteer.setCongregation(null);
+            volunteer.getPerson().setCongregation(null);
         } else {
-            volunteer.setCongregation(congregationDao.findCongregation(form.getCongregationId()));
+            volunteer.getPerson().setCongregation(congregationDao.findCongregation(form.getCongregationId()));
         }
 
         volunteerDao.updateVolunteer(volunteer);
@@ -652,8 +655,8 @@ public class VolunteersController {
      */
     @RequestMapping(value = "{volunteerId}/rbc-status-code", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateVolunteerRbcStatusCode(@PathVariable Integer volunteerId, @RequestParam("rbcStatusCode") String rbcStatusCode)
-            throws NoSuchRequestHandlingMethodException {
+    public void updateVolunteerRbcStatusCode(@PathVariable Integer volunteerId,
+            @RequestParam("rbcStatusCode") String rbcStatusCode) throws NoSuchRequestHandlingMethodException {
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
 
@@ -682,20 +685,22 @@ public class VolunteersController {
             throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
         }
 
+        Person person = volunteer.getPerson();
+
         Address address = new Address();
         address.setStreet(form.getStreet());
         address.setTown(form.getTown());
         address.setCounty(form.getCounty());
         address.setPostcode(form.getPostcode());
 
-        volunteer.setAddress(address);
-        volunteer.setBirthDate(DataConverterUtil.toSqlDate(form.getBirthDate()));
-        volunteer.setEmail(form.getEmail());
+        person.setAddress(address);
+        person.setBirthDate(DataConverterUtil.toSqlDate(form.getBirthDate()));
+        person.setEmail(form.getEmail());
         volunteer.setGender(form.getGender());
         volunteer.setMaritalStatusCode(form.getMaritalStatusCode());
-        volunteer.setMobile(PhoneNumberFormatter.format(form.getMobile()));
-        volunteer.setTelephone(PhoneNumberFormatter.format(form.getTelephone()));
-        volunteer.setWorkPhone(PhoneNumberFormatter.format(form.getWorkPhone()));
+        person.setMobile(PhoneNumberFormatter.format(form.getMobile()));
+        person.setTelephone(PhoneNumberFormatter.format(form.getTelephone()));
+        person.setWorkPhone(PhoneNumberFormatter.format(form.getWorkPhone()));
 
         if (form.getSpousePersonId() != null) {
             volunteer.setSpouse(personDao.findPerson(form.getSpousePersonId()));
@@ -762,10 +767,8 @@ public class VolunteersController {
      * @param response HttpServletResponse
      * @throws IOException if the file cannot be read
      */
-    @RequestMapping(value = "{volunteerId}/image",
-            method = RequestMethod.GET)
-    public void showImage(@PathVariable Integer volunteerId,
-            HttpServletResponse response) throws IOException {
+    @RequestMapping(value = "{volunteerId}/image", method = RequestMethod.GET)
+    public void showImage(@PathVariable Integer volunteerId, HttpServletResponse response) throws IOException {
         String imageName = volunteerId + ".jpg";
         File file = new File(imageDirectories.getProperty(VOLUNTEER_IMAGE_DIRECTORY_KEY) + imageName);
         // if the file doesnt exist
@@ -783,13 +786,13 @@ public class VolunteersController {
     }
 
     /**
-     * Handles the volunteer image upload.
-     *
-     * @param volunteerId id
-     * @param imageFile file to be uploaded
-     * @throws IOException if file cannot be written
-     * @return view
-     */
+    * Handles the volunteer image upload.
+    *
+    * @param volunteerId id
+    * @param imageFile file to be uploaded
+    * @throws IOException if file cannot be written
+    * @return view
+    */
     @RequestMapping(value = "{volunteerId}/image", method = RequestMethod.POST)
     public String handleImageUpload(@PathVariable Integer volunteerId,
             @RequestParam(value = "image", required = true) MultipartFile imageFile) throws IOException {
@@ -846,8 +849,8 @@ public class VolunteersController {
         if (form.getEmergencyContactPersonId() == null) {
             if (ObjectUtils.equals(emergencyContact.getForename(), form.getSpouseForename())
                     && ObjectUtils.equals(emergencyContact.getSurname(), form.getSurname())
-                    && (ObjectUtils.equals(form.getEmergencyRelationshipCode(), "HB")
-                    || ObjectUtils.equals(form.getEmergencyRelationshipCode(), "WF"))) {
+                    && (ObjectUtils.equals(form.getEmergencyRelationshipCode(), "HB") || ObjectUtils.equals(
+                            form.getEmergencyRelationshipCode(), "WF"))) {
 
                 return emergencyContact;
             }

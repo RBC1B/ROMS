@@ -23,10 +23,8 @@
  */
 package uk.org.rbc1b.roms.controller.project;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -59,7 +57,6 @@ import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 public class ProjectModelFactory {
 
     private static final String BASE_URI = "/projects";
-    private static final ProjectStageTaskModelComparator TASK_COMPARATOR = new ProjectStageTaskModelComparator();
     @Autowired
     private PersonModelFactory personModelFactory;
     @Autowired
@@ -225,8 +222,7 @@ public class ProjectModelFactory {
             model.setType(activityTypes.get(activity.getProjectStageActivityType().getProjectStageActivityTypeId()));
 
             model.setTasks(generateProjectStageActivityTasks(activity, statuses));
-            model.setCreateNewTaskUri(generateTaskUri(stage.getProject().getProjectId(),
-                    activity.getProjectStageActivityId()));
+            model.setCreateNewTaskUri("/project-activities/" + activity.getProjectStageActivityId() + "/tasks");
 
             List<ProjectEventModel> events = new ArrayList<ProjectEventModel>();
             for (ProjectStageActivityEvent event : activity.getEvents()) {
@@ -241,17 +237,6 @@ public class ProjectModelFactory {
 
         }
         return modelList;
-    }
-
-    /**
-     * Generate the uri used to access the project activity task.
-     *
-     * @param projectId project id
-     * @param activityId activity id
-     * @return uri
-     */
-    private String generateTaskUri(Integer projectId, Integer activityId) {
-        return generateUri(projectId) + "/activities/" + activityId + "/tasks";
     }
 
     private UserModel generateUserModel(Integer personId) {
@@ -310,17 +295,4 @@ public class ProjectModelFactory {
         return model;
     }
 
-    /**
-     * Task comparator, sort by task creation date.
-     */
-    private static class ProjectStageTaskModelComparator implements Comparator<ProjectStageActivityTaskModel>,
-            Serializable {
-
-        private static final long serialVersionUID = 5200865793008893390L;
-
-        @Override
-        public int compare(ProjectStageActivityTaskModel t, ProjectStageActivityTaskModel t1) {
-            return t.getCreatedTime().compareTo(t1.getCreatedTime());
-        }
-    }
 }

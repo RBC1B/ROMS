@@ -26,8 +26,8 @@ package uk.org.rbc1b.roms.db.volunteer.trade;
 import java.io.Serializable;
 import java.util.Date;
 import org.hibernate.envers.Audited;
-import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.UpdateAuditable;
+import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 
 /**
  * Captures the data entered by the volunteer in their form.
@@ -37,7 +37,7 @@ import uk.org.rbc1b.roms.db.UpdateAuditable;
 public class VolunteerTrade implements UpdateAuditable, Serializable {
     private static final long serialVersionUID = -4191236742163964643L;
     private Integer volunteerTradeId;
-    private Person person;
+    private Volunteer volunteer;
     private String name;
     private String experienceDescription;
     private Integer experienceYears;
@@ -52,12 +52,12 @@ public class VolunteerTrade implements UpdateAuditable, Serializable {
         this.volunteerTradeId = volunteerTradeId;
     }
 
-    public Person getPerson() {
-        return person;
+    public Volunteer getVolunteer() {
+        return volunteer;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setVolunteer(Volunteer volunteer) {
+        this.volunteer = volunteer;
     }
 
     public String getName() {

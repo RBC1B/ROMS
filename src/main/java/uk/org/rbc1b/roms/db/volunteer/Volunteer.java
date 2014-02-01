@@ -23,6 +23,7 @@
  */
 package uk.org.rbc1b.roms.db.volunteer;
 
+import java.io.Serializable;
 import java.util.Set;
 import org.hibernate.envers.Audited;
 import uk.org.rbc1b.roms.db.Person;
@@ -30,11 +31,14 @@ import uk.org.rbc1b.roms.db.application.User;
 import uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTrade;
 
 /**
- * @author oliver.elder.esq
+ * Volunteer can be viewed as a role of the person.
+ * The volunteer id is a foreign key on the person id
  */
 @Audited
-public class Volunteer extends Person {
+public class Volunteer implements Serializable {
     private static final long serialVersionUID = -8454242375027482447L;
+    private Person person;
+    private Integer personId;
     private String appointmentCode;
     private String availability; // 7 char string, representing T or F, Monday to Sunday
     private Person emergencyContact;
@@ -63,29 +67,34 @@ public class Volunteer extends Person {
     private Set<VolunteerTrade> trades;
 
     /**
-     * Default constructor.
+     * Constructor. Instantiate the linked person.
      */
     public Volunteer() {
-        // do nothing
+        person = new Person();
     }
 
     /**
-     * Instantiate a volunteer from the person.
-     * @param person underlying person to be extended
+     * Person, linked to the volunteer with the same foreign key.
+     * @return person
      */
-    public Volunteer(Person person) {
-        this.setPersonId(person.getPersonId());
-        this.setBirthDate(person.getBirthDate());
-        this.setCongregation(person.getCongregation());
-        this.setForename(person.getForename());
-        this.setMiddleName(person.getMiddleName());
-        this.setSurname(person.getSurname());
-        this.setAddress(person.getAddress());
-        this.setTelephone(person.getTelephone());
-        this.setMobile(person.getMobile());
-        this.setWorkPhone(person.getWorkPhone());
-        this.setEmail(person.getEmail());
-        this.setComments(person.getComments());
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    /**
+     * Primary key is the Person.personId (foreign key).
+     * @return volunteer id
+     */
+    public Integer getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(Integer personId) {
+        this.personId = personId;
     }
 
     public String getAppointmentCode() {
@@ -298,6 +307,6 @@ public class Volunteer extends Person {
 
     @Override
     public String toString() {
-        return "Volunteer{" + "personId=" + super.getPersonId() + '}';
+        return "Volunteer #" + personId;
     }
 }

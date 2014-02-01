@@ -22,16 +22,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -->
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:p="http://www.springframework.org/schema/p"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:aop="http://www.springframework.org/schema/aop"
-       xmlns:jee="http://www.springframework.org/schema/jee"
-       xmlns:sec="http://www.springframework.org/schema/security"
-       xmlns:cache="http://www.springframework.org/schema/cache"
-       xmlns:tx="http://www.springframework.org/schema/tx"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop" xmlns:jee="http://www.springframework.org/schema/jee"
+    xmlns:sec="http://www.springframework.org/schema/security" xmlns:cache="http://www.springframework.org/schema/cache"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
@@ -45,7 +41,7 @@ THE SOFTWARE.
     <jee:jndi-lookup id="dataSource" jndi-name="jdbc/_roms" />
 
     <bean id="hibernateSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
+        <property name="dataSource" ref="dataSource" />
         <property name="entityInterceptor">
             <bean class="uk.org.rbc1b.roms.db.AuditInterceptor" />
         </property>
@@ -55,7 +51,6 @@ THE SOFTWARE.
                 <prop key="hibernate.connection.characterEncoding">UTF-8</prop>
                 <prop key="hibernate.connection.charSet">UTF-8</prop>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-                <prop key="hibernate.show_sql">true</prop>
                 <prop key="current_session_context_class">thread</prop>
                 <prop key="hibernate.transaction.factory_class">org.hibernate.transaction.CMTTransactionFactory</prop>
                 <prop key="hibernate.transaction.jta.platform">org.hibernate.service.jta.platform.internal.SunOneJtaPlatform</prop>
@@ -106,6 +101,7 @@ THE SOFTWARE.
                 <value>uk/org/rbc1b/roms/db/volunteer/Skill.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/SkillCategory.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/Team.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/volunteer/Volunteer.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/VolunteerQualification.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/VolunteerSkill.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/VolunteerTrade.hbm.xml</value>
@@ -216,7 +212,9 @@ THE SOFTWARE.
 
     <!-- AOP Aspect -->
     <aop:aspectj-autoproxy />
-    <bean id="personAspect" class="uk.org.rbc1b.roms.aop.PersonAspect" />
+    <context:component-scan base-package="uk.org.rbc1b.roms.aop">
+        <context:include-filter type="annotation" expression="org.aspectj.lang.annotation.Aspect" />
+    </context:component-scan>
 
     <!-- FreeMarker Configuration -->
     <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
@@ -233,7 +231,7 @@ THE SOFTWARE.
 
     <!-- Scheduled Jobs -->
     <bean id="edificeMailer" class="uk.org.rbc1b.roms.service.EdificeMailer" />
-    <bean name="mailerJob" class="org.springframework.scheduling.quartz.JobDetailBean" >
+    <bean name="mailerJob" class="org.springframework.scheduling.quartz.JobDetailBean">
         <property name="jobClass" value="uk.org.rbc1b.roms.scheduled.MailerJob" />
         <property name="jobDataAsMap">
             <map>
@@ -243,7 +241,7 @@ THE SOFTWARE.
         </property>
     </bean>
     <bean id="personChangeChecker" class="uk.org.rbc1b.roms.service.PersonChangeChecker" />
-    <bean name="personChangesJob" class="org.springframework.scheduling.quartz.JobDetailBean" >
+    <bean name="personChangesJob" class="org.springframework.scheduling.quartz.JobDetailBean">
         <property name="jobClass" value="uk.org.rbc1b.roms.scheduled.PersonChangesJob" />
         <property name="jobDataAsMap">
             <map>
@@ -254,11 +252,11 @@ THE SOFTWARE.
     </bean>
 
     <!-- Cron Jobs -->
-    <bean id="mailCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean" >
+    <bean id="mailCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
         <property name="jobDetail" ref="mailerJob" />
         <property name="cronExpression" value="0 0/30 * * * ?" />
     </bean>
-    <bean id="personchangesCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean" >
+    <bean id="personchangesCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
         <property name="jobDetail" ref="personChangesJob" />
         <!-- Production setting for 1AM once a day -->
         <property name="cronExpression" value="0 0 01 * * ?" />

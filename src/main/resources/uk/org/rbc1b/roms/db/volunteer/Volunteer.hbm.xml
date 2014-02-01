@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="uk.org.rbc1b.roms.db.volunteer">
+    <class name="Volunteer" table="Volunteer">
+
+        <id name="personId" column="PersonId">
+            <generator class="foreign">
+                <param name="property">Person</param>
+            </generator>
+        </id>
+        <one-to-one name="Person" class="uk.org.rbc1b.roms.db.Person" constrained="true" />
+
+        <property name="rbcStatusCode" not-null="true" />
+        <property name="appointmentCode" />
+        <property name="fulltimeCode" />
+        <property length="7" name="availability" />
+        <many-to-one column="EmergencyContactId" name="emergencyContact" cascade="save-update" />
+        <property name="emergencyContactRelationshipCode" />
+        <property length="1" name="gender" not-null="true" />
+        <property name="maritalStatusCode" />
+        <many-to-one column="SpousePersonId" name="spouse" cascade="save-update" />
+        <property name="baptismDate" />
+        <property name="interviewDate" />
+        <many-to-one column="InterviewerA" name="interviewerA" />
+        <many-to-one column="InterviewerB" name="interviewerB" />
+        <property length="150" name="interviewComments" />
+        <property name="joinedDate" />
+        <property name="formDate" />
+        <property name="interviewStatusCode" not-null="true" />
+        <property name="oversight" not-null="true" />
+        <property length="50" name="oversightComments" />
+        <property name="reliefUK" not-null="true" />
+        <property length="50" name="reliefUKComments" />
+        <property name="reliefAbroad" not-null="true" />
+        <property length="50" name="reliefAbroadComments" />
+        <property column="HHCFormCode" length="15" name="hhcFormCode" />
+        <property name="badgeIssueDate" />
+
+        <set name="trades" inverse="true" cascade="all-delete-orphan">
+            <key column="personId" />
+            <one-to-many class="uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTrade" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -5,7 +5,7 @@
         <id name="volunteerTradeId" >
             <generator class="identity"/>
         </id>
-        <many-to-one name="person" column="PersonId" />
+        <many-to-one name="volunteer" column="PersonId" />
         <property name="name" length="250" not-null="true" />
         <property name="experienceDescription" />
         <property name="experienceYears" />

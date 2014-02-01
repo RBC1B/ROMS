@@ -26,8 +26,6 @@ package uk.org.rbc1b.roms.controller.project;
 import static uk.org.rbc1b.roms.db.project.ProjectStageSortable.ProjectStageOrderType.PROJECT_STAGE_ACTIVITY;
 import static uk.org.rbc1b.roms.db.project.ProjectStageSortable.ProjectStageOrderType.PROJECT_STAGE_ACTIVITY_TASK;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -35,10 +33,8 @@ import java.util.Set;
 import javax.validation.Valid;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -50,8 +46,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
-import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
 import uk.org.rbc1b.roms.controller.common.DataConverterUtil;
 import uk.org.rbc1b.roms.db.PersonDao;
 import uk.org.rbc1b.roms.db.application.UserDao;
@@ -60,7 +54,6 @@ import uk.org.rbc1b.roms.db.project.Project;
 import uk.org.rbc1b.roms.db.project.ProjectDao;
 import uk.org.rbc1b.roms.db.project.ProjectStage;
 import uk.org.rbc1b.roms.db.project.ProjectStageActivity;
-import uk.org.rbc1b.roms.db.project.ProjectStageActivityTask;
 import uk.org.rbc1b.roms.db.project.ProjectStageActivityType;
 import uk.org.rbc1b.roms.db.project.ProjectStageType;
 import uk.org.rbc1b.roms.db.project.ProjectStageTypeActivityType;
@@ -285,53 +278,4 @@ public class ProjectsController {
 
     }
 
-    /**
-     * Create the task.
-     *
-     * @param projectId containing project
-     * @param activityId containing activity
-     * @param taskForm form data
-     * @param uriBuilder uri builder
-     * @return response entity, including the location header to identify the
-     * added task
-     * @throws NoSuchRequestHandlingMethodException on failure to find the
-     * activity
-     */
-    @RequestMapping(value = "{projectId}/activities/{activityId}/tasks", method = RequestMethod.POST)
-    public ResponseEntity<Void> createTask(@PathVariable Integer projectId, @PathVariable Integer activityId,
-            @Valid ProjectTaskForm taskForm, UriComponentsBuilder uriBuilder)
-            throws NoSuchRequestHandlingMethodException {
-
-        ProjectStageActivity activity = projectDao.findProjectStageActivity(activityId);
-        if (activity == null) {
-            throw new NoSuchRequestHandlingMethodException("No project actvity with id [" + activityId + "]",
-                    this.getClass());
-        }
-
-        // further validation to make sure the activity is part of the project
-        // could be done here.
-
-        ProjectStageActivityTask task = new ProjectStageActivityTask();
-        task.setProjectStageActivity(activity);
-
-        task.setAssignedUser(userDao.findUser(taskForm.getAssignedUserId()));
-        task.setComments(taskForm.getComments());
-        task.setCreatedTime(new Date());
-        task.setName(taskForm.getName());
-
-        projectDao.createTask(task);
-
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("projectId", projectId);
-        params.put("activityId", activityId);
-        params.put("taskId", task.getProjectStageActivityTaskId());
-
-        UriComponents uriComponents = uriBuilder.path("/projects/{projectId}/activities/{activityId}/tasks/{taskId}")
-                .buildAndExpand(params);
-
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("Location", uriComponents.toUriString());
-        return new ResponseEntity<Void>(responseHeaders, HttpStatus.CREATED);
-
-    }
 }

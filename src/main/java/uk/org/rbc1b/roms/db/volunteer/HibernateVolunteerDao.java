@@ -60,7 +60,11 @@ public class HibernateVolunteerDao implements VolunteerDao {
     @Override
     public Volunteer findVolunteer(Integer volunteerId, Set<VolunteerData> data) {
         Volunteer volunteer = (Volunteer) this.sessionFactory.getCurrentSession().get(Volunteer.class, volunteerId);
-        if (volunteer != null && CollectionUtils.isNotEmpty(data)) {
+        if (volunteer == null) {
+            return null;
+        }
+        Hibernate.initialize(volunteer.getPerson());
+        if (CollectionUtils.isNotEmpty(data)) {
             if (data.contains(VolunteerData.SPOUSE)) {
                 Hibernate.initialize(volunteer.getSpouse());
             }
@@ -75,6 +79,7 @@ public class HibernateVolunteerDao implements VolunteerDao {
                 Hibernate.initialize(volunteer.getInterviewerB());
             }
         }
+
         return volunteer;
     }
 
@@ -109,21 +114,25 @@ public class HibernateVolunteerDao implements VolunteerDao {
     private Criteria createVolunteerSearchCriteria(VolunteerSearchCriteria searchCriteria, Session session) {
 
         Criteria criteria = session.createCriteria(Volunteer.class);
+        criteria.createAlias("Person", "person");
 
-        if (searchCriteria.getSearch() != null || "congregation.name".equals(searchCriteria.getSortValue())) {
-            criteria.createAlias("congregation", "congregation", JoinType.LEFT_OUTER_JOIN);
+        if (searchCriteria.getCongregationId() != null) {
+            criteria.createAlias("person.congregation", "congregation");
+        } else if (searchCriteria.getSearch() != null || "congregation.name".equals(searchCriteria.getSortValue())) {
+            criteria.createAlias("person.congregation", "congregation", JoinType.LEFT_OUTER_JOIN);
         }
 
         if (searchCriteria.getSearch() != null) {
             String searchValue = "%" + searchCriteria.getSearch() + "%";
 
-            criteria.add(Restrictions.or(Restrictions.like("forename", searchValue),
-                    Restrictions.like("middleName", searchValue), Restrictions.like("surname", searchValue),
-                    Restrictions.like("email", searchValue), Restrictions.like("congregation.name", searchValue)));
+            criteria.add(Restrictions.or(Restrictions.like("person.forename", searchValue),
+                    Restrictions.like("person.middleName", searchValue),
+                    Restrictions.like("person.surname", searchValue), Restrictions.like("person.email", searchValue),
+                    Restrictions.like("congregation.name", searchValue)));
         }
 
         if (searchCriteria.getCongregationId() != null) {
-            criteria.add(Restrictions.or(Restrictions.eq("congregation.congregationId",
+            criteria.add(Restrictions.or(Restrictions.eq("person.congregation.congregationId",
                     searchCriteria.getCongregationId())));
         }
 
@@ -148,27 +157,29 @@ public class HibernateVolunteerDao implements VolunteerDao {
 
     @Override
     public void createVolunteer(Volunteer volunteer) {
-        this.sessionFactory.getCurrentSession().save(volunteer);
+        Session session = this.sessionFactory.getCurrentSession();
+        if (volunteer.getPerson().getPersonId() != null) {
+            session.merge(volunteer.getPerson());
+        }
+
+        session.save(volunteer);
     }
 
     @Override
     @CacheEvict(value = "person.person", key = "#volunteer.personId")
     public void updateVolunteer(Volunteer volunteer) {
-        this.sessionFactory.getCurrentSession().merge(volunteer);
-
+        Session session = this.sessionFactory.getCurrentSession();
+        session.merge(volunteer.getPerson());
+        session.merge(volunteer);
     }
 
     @Override
     public Volunteer mergePersonIntoVolunteer(Person person, String rbcStatusCode, String gender,
             String interviewStatusCode) {
         Query query = this.sessionFactory.getCurrentSession().getNamedQuery("insertVolunteerFromPersonNativeSQL")
-                .setInteger("personId", person.getPersonId())
-                .setString("rbcStatusCode", rbcStatusCode)
-                .setString("gender", gender)
-                .setString("interviewStatusCode", interviewStatusCode)
-                .setBoolean("oversight", false)
-                .setBoolean("reliefUk", false)
-                .setBoolean("reliefAbroad", false);
+                .setInteger("personId", person.getPersonId()).setString("rbcStatusCode", rbcStatusCode)
+                .setString("gender", gender).setString("interviewStatusCode", interviewStatusCode)
+                .setBoolean("oversight", false).setBoolean("reliefUk", false).setBoolean("reliefAbroad", false);
         query.executeUpdate();
         this.sessionFactory.getCurrentSession().flush();
         return this.findVolunteer(person.getPersonId(), null);

@@ -23,14 +23,6 @@
  */
 package uk.org.rbc1b.roms.controller.volunteer;
 
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Image;
-import com.lowagie.text.PageSize;
-import com.lowagie.text.pdf.Barcode39;
-import com.lowagie.text.pdf.BaseFont;
-import com.lowagie.text.pdf.PdfContentByte;
-import com.lowagie.text.pdf.PdfWriter;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -40,6 +32,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.view.document.AbstractPdfView;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Image;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.pdf.Barcode39;
+import com.lowagie.text.pdf.BaseFont;
+import com.lowagie.text.pdf.PdfContentByte;
+import com.lowagie.text.pdf.PdfWriter;
 
 /**
  * View that builds the Volunteer Badge as a PDF.
@@ -84,7 +84,7 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
 
         addImage(cb, img);
         addBarcode(cb, volunteer.getPersonId());
-        addVolunteerName(cb, volunteer.formatDisplayName());
+        addVolunteerName(cb, volunteer.getPerson().formatDisplayName());
         addRBCRegionTitle(cb, "RBC London and Home Counties");
 
         addDepartment(cb, assignment);
@@ -102,18 +102,18 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
     private static void addBand(PdfContentByte content, VolunteerBadgeColour colourBand) {
         content.rectangle(79, 700, 252, 9);
         switch (colourBand) {
-            case GREEN:
-                content.setColorFill(Color.GREEN);
-                break;
-            case ORANGE:
-                content.setColorFill(Color.ORANGE);
-                break;
-            case RED:
-                content.setColorFill(Color.RED);
-                break;
-            default:
-                content.setColorFill(Color.GRAY);
-                break;
+        case GREEN:
+            content.setColorFill(Color.GREEN);
+            break;
+        case ORANGE:
+            content.setColorFill(Color.ORANGE);
+            break;
+        case RED:
+            content.setColorFill(Color.RED);
+            break;
+        default:
+            content.setColorFill(Color.GRAY);
+            break;
         }
         content.fill();
     }
@@ -127,18 +127,18 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
     private static void addBigRectangle(PdfContentByte content, VolunteerBadgeColour colour) {
         content.rectangle(80, 700, 250, -168);
         switch (colour) {
-            case GREEN:
-                content.setColorStroke(Color.GREEN);
-                break;
-            case ORANGE:
-                content.setColorStroke(Color.ORANGE);
-                break;
-            case RED:
-                content.setColorStroke(Color.RED);
-                break;
-            default:
-                content.setColorStroke(Color.GRAY);
-                break;
+        case GREEN:
+            content.setColorStroke(Color.GREEN);
+            break;
+        case ORANGE:
+            content.setColorStroke(Color.ORANGE);
+            break;
+        case RED:
+            content.setColorStroke(Color.RED);
+            break;
+        default:
+            content.setColorStroke(Color.GRAY);
+            break;
         }
         content.closePathStroke();
     }
@@ -245,7 +245,8 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
      * @param content to be added
      * @param rbcRegion RBC region
      */
-    private static void addRBCRegionTitle(PdfContentByte content, String rbcRegion) throws DocumentException, IOException {
+    private static void addRBCRegionTitle(PdfContentByte content, String rbcRegion) throws DocumentException,
+            IOException {
         content.beginText();
         content.moveText(90, 641);
 

@@ -31,7 +31,6 @@ import org.hibernate.envers.Audited;
  * The basic person identifier.
  * <p>
  * This can be extended to volunteers, users, and non RBC-overseers.
- * @author oliver.elder.esq
  */
 @Audited
 public class Person implements UpdateAuditable, Serializable {
@@ -174,6 +173,6 @@ public class Person implements UpdateAuditable, Serializable {
 
     @Override
     public String toString() {
-        return "Person{" + "personId=" + personId + '}';
+        return "Person #" + personId;
     }
 }

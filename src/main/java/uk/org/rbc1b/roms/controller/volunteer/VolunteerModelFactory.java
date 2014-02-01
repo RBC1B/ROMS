@@ -38,6 +38,7 @@ import uk.org.rbc1b.roms.controller.qualification.QualificationModelFactory;
 import uk.org.rbc1b.roms.controller.skill.SkillModelFactory;
 import uk.org.rbc1b.roms.db.Congregation;
 import uk.org.rbc1b.roms.db.CongregationDao;
+import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import uk.org.rbc1b.roms.db.volunteer.department.Department;
@@ -99,13 +100,16 @@ public class VolunteerModelFactory {
         VolunteerListModel model = new VolunteerListModel();
         model.setId(volunteer.getPersonId());
         model.setUri(generateUri(volunteer.getPersonId()));
-        if (volunteer.getCongregation() != null) {
-            model.setCongregation(generateCongregationModel(volunteer.getCongregation().getCongregationId()));
+
+        Person person = volunteer.getPerson();
+
+        if (person.getCongregation() != null) {
+            model.setCongregation(generateCongregationModel(person.getCongregation().getCongregationId()));
         }
-        model.setEmail(volunteer.getEmail());
-        model.setForename(volunteer.getForename());
-        model.setMiddleName(volunteer.getMiddleName());
-        model.setSurname(volunteer.getSurname());
+        model.setEmail(person.getEmail());
+        model.setForename(person.getForename());
+        model.setMiddleName(person.getMiddleName());
+        model.setSurname(person.getSurname());
 
         return model;
     }
@@ -122,19 +126,22 @@ public class VolunteerModelFactory {
         // person model info
         model.setId(volunteer.getPersonId());
         model.setUri(generateUri(volunteer.getPersonId()));
-        model.setAddress(volunteer.getAddress());
-        model.setBirthDate(volunteer.getBirthDate());
-        model.setComments(volunteer.getComments());
-        if (volunteer.getCongregation() != null) {
-            model.setCongregation(generateCongregationModel(volunteer.getCongregation().getCongregationId()));
+
+        Person person = volunteer.getPerson();
+
+        model.setAddress(person.getAddress());
+        model.setBirthDate(person.getBirthDate());
+        model.setComments(person.getComments());
+        if (person.getCongregation() != null) {
+            model.setCongregation(generateCongregationModel(person.getCongregation().getCongregationId()));
         }
-        model.setEmail(volunteer.getEmail());
-        model.setForename(volunteer.getForename());
-        model.setMiddleName(volunteer.getMiddleName());
-        model.setSurname(volunteer.getSurname());
-        model.setMobile(volunteer.getMobile());
-        model.setTelephone(volunteer.getTelephone());
-        model.setWorkPhone(volunteer.getWorkPhone());
+        model.setEmail(person.getEmail());
+        model.setForename(person.getForename());
+        model.setMiddleName(person.getMiddleName());
+        model.setSurname(person.getSurname());
+        model.setMobile(person.getMobile());
+        model.setTelephone(person.getTelephone());
+        model.setWorkPhone(person.getWorkPhone());
 
         // volunteer specific personal data
         model.setGender(volunteer.getGender());

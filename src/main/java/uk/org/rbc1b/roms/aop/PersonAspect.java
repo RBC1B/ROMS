@@ -82,17 +82,7 @@ public class PersonAspect {
      */
     @Before("volunteerChange(volunteer)")
     public void captureVolunteerChange(Volunteer volunteer) {
-        Person person = new Person();
-        person.setPersonId(volunteer.getPersonId());
-        person.setForename(volunteer.getForename());
-        person.setMiddleName(volunteer.getMiddleName());
-        person.setSurname(volunteer.getSurname());
-        person.setAddress(volunteer.getAddress());
-        person.setEmail(volunteer.getEmail());
-        person.setMobile(volunteer.getMobile());
-        person.setTelephone(volunteer.getTelephone());
-        person.setWorkPhone(volunteer.getWorkPhone());
-        this.saveChangesToPerson(person);
+        this.saveChangesToPerson(volunteer.getPerson());
     }
 
     /**
