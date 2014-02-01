@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Set;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
-import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.volunteer.department.Assignment;
 import uk.org.rbc1b.roms.db.volunteer.qualification.VolunteerQualification;
 import uk.org.rbc1b.roms.db.volunteer.skill.VolunteerSkill;
@@ -36,7 +35,6 @@ import uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTradeSearchCriteria;
 
 /**
  * Look up volunteer information.
- * @author rahulsingh
  */
 public interface VolunteerDao {
 
@@ -83,28 +81,6 @@ public interface VolunteerDao {
     @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     @Transactional
     void updateVolunteer(Volunteer volunteer);
-
-    /**
-     * Merge a person into a volunteer.
-     * @param person person to be inserted as a volunteer
-     * @param rbcStatusCode rbc status code
-     * @param gender gender
-     * @param interviewStatusCode interview status code
-     * @return Volunteer volunteer
-     */
-    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
-    @Transactional
-    Volunteer mergePersonIntoVolunteer(Person person, String rbcStatusCode, String gender,
-        String interviewStatusCode);
-
-    /**
-     * Only use when a Person has just been converted to a
-     * Volunteer and we need to save and update the volunteer fields.
-     * @param volunteer volunteer just been merged from a person
-     */
-    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
-    @Transactional
-    void updatePersonVolunteer(Volunteer volunteer);
 
     /**
      * Find the volunteer assignments.

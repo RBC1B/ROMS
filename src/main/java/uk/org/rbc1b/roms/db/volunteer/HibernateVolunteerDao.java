@@ -28,7 +28,6 @@ import java.util.Set;
 import org.apache.commons.collections.CollectionUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
@@ -41,7 +40,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Repository;
 import uk.org.rbc1b.roms.controller.common.SortDirection;
-import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.volunteer.department.Assignment;
 import uk.org.rbc1b.roms.db.volunteer.qualification.VolunteerQualification;
 import uk.org.rbc1b.roms.db.volunteer.skill.VolunteerSkill;
@@ -171,24 +169,6 @@ public class HibernateVolunteerDao implements VolunteerDao {
         Session session = this.sessionFactory.getCurrentSession();
         session.merge(volunteer.getPerson());
         session.merge(volunteer);
-    }
-
-    @Override
-    public Volunteer mergePersonIntoVolunteer(Person person, String rbcStatusCode, String gender,
-            String interviewStatusCode) {
-        Query query = this.sessionFactory.getCurrentSession().getNamedQuery("insertVolunteerFromPersonNativeSQL")
-                .setInteger("personId", person.getPersonId()).setString("rbcStatusCode", rbcStatusCode)
-                .setString("gender", gender).setString("interviewStatusCode", interviewStatusCode)
-                .setBoolean("oversight", false).setBoolean("reliefUk", false).setBoolean("reliefAbroad", false);
-        query.executeUpdate();
-        this.sessionFactory.getCurrentSession().flush();
-        return this.findVolunteer(person.getPersonId(), null);
-    }
-
-    @Override
-    @CacheEvict(value = "person.person", key = "#volunteer.personId")
-    public void updatePersonVolunteer(Volunteer volunteer) {
-        this.sessionFactory.getCurrentSession().saveOrUpdate(volunteer);
     }
 
     @SuppressWarnings("unchecked")
