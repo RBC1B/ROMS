@@ -144,11 +144,14 @@ public class HibernateProjectDao implements ProjectDao {
             stageOrders.add(stageOrder);
         }
 
-        // delete the last stage order next id
-        stageOrders.get(stageOrders.size() - 1).setNextProjectStageSortableId(null);
+        // delete the last stage order next id. Empty check should not be required
+        // once all project types have their activity mappings defined
+        if (!stageOrders.isEmpty()) {
+            stageOrders.get(stageOrders.size() - 1).setNextProjectStageSortableId(null);
 
-        for (ProjectStageOrder stageOrder : stageOrders) {
-            session.save(stageOrder);
+            for (ProjectStageOrder stageOrder : stageOrders) {
+                session.save(stageOrder);
+            }
         }
 
     }
