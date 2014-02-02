@@ -55,6 +55,7 @@ import uk.org.rbc1b.roms.db.project.ProjectDao;
 import uk.org.rbc1b.roms.db.project.ProjectStage;
 import uk.org.rbc1b.roms.db.project.ProjectStageActivity;
 import uk.org.rbc1b.roms.db.project.ProjectStageActivityType;
+import uk.org.rbc1b.roms.db.project.ProjectStageSortable.ProjectStageOrderType;
 import uk.org.rbc1b.roms.db.project.ProjectStageType;
 import uk.org.rbc1b.roms.db.project.ProjectStageTypeActivityType;
 import uk.org.rbc1b.roms.db.project.ProjectTypeStageType;
@@ -163,7 +164,7 @@ public class ProjectsController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void reorderStageActivities(@PathVariable Integer projectId, @RequestParam("idValues") String stageIdValues) {
 
-        reorderStages(projectId, stageIdValues, "stage\\-\\d\\-activity\\-", PROJECT_STAGE_ACTIVITY.getValue());
+        reorderStages(projectId, stageIdValues, "stage\\-\\d\\-activity\\-", PROJECT_STAGE_ACTIVITY);
     }
 
     /**
@@ -178,11 +179,11 @@ public class ProjectsController {
     public void reorderStageActivityTasks(@PathVariable Integer projectId,
             @RequestParam("idValues") String stageIdValues) {
 
-        reorderStages(projectId, stageIdValues, "stage\\-\\d\\-activity\\-\\d\\-task\\-",
-                PROJECT_STAGE_ACTIVITY_TASK.getValue());
+        reorderStages(projectId, stageIdValues, "stage\\-\\d\\-activity\\-\\d\\-task\\-", PROJECT_STAGE_ACTIVITY_TASK);
     }
 
-    private void reorderStages(Integer projectId, String stageIdValues, String regex, Integer projectStageOrderTypeId) {
+    private void reorderStages(Integer projectId, String stageIdValues, String regex,
+            ProjectStageOrderType projectStageOrderType) {
 
         String[] stageIdValueArray = StringUtils.split(stageIdValues, ',');
         List<Integer> stageIds = new ArrayList<Integer>();
@@ -191,7 +192,7 @@ public class ProjectsController {
             stageIds.add(stageId);
         }
 
-        projectDao.updateProjectStageOrder(projectId, projectStageOrderTypeId, stageIds);
+        projectDao.updateProjectStageOrder(projectId, projectStageOrderType.getValue(), stageIds);
     }
 
     /**
