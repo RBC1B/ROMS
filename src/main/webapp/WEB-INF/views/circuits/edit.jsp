@@ -55,13 +55,13 @@
                             <label>Name:</label>
                         </div>
                         <div class="col-md-3">
-                                <form:input path="surname" class="form-control" maxlength="50" placeholder="Surname"/>
-                        </div>
-                        <div class="col-md-3">
                                 <form:input path="forename" class="form-control" maxlength="50" placeholder="Forename"/>
                         </div>
                         <div class="col-md-3">
                                 <form:input path="middleName" class="form-control" maxlength="50" placeholder="Middle name" />
+                        </div>
+                        <div class="col-md-3">
+                                <form:input path="surname" class="form-control" maxlength="50" placeholder="Surname"/>
                         </div>
                     </div>
             </div>
