@@ -27,70 +27,121 @@
         </c:choose>
         <hr />
         <c:url var="formAction" value="${submitUri}" />
-        <form:form commandName="circuitForm" method="${submitMethod}" action="${formAction}">
+        <form:form commandName="circuitForm" method="${submitMethod}" action="${formAction}" role="form">
             <fieldset>
-                <legend>Circuit details</legend>
-                <label>Circuit name</label>
-                <form:input path="name" maxlength="50" />
-            </fieldset>
-            <br />
-            <fieldset>
-                <legend>Circuit overseer details</legend>
-                <div class="controls controls-row">
-                    <div id="circuit-overseer-linked" class="alert alert-warning alert-dismissable" style="display:none;">
-                        <button type="button" class="close" data-dismiss="alert">Unlink</button>
-                        Linked to an existing person in the database
-                    </div>
-                </div>
                 <form:hidden path="personId" />
-                <div class="control-group">
-                    <label>Name details:</label>
-                    <form:input path="forename" maxlength="50" placeholder="Forename"/>
-                    <form:input path="middleName" maxlength="50" placeholder="Middle name" />
-                    <form:input path="surname" maxlength="50" placeholder="Surname"/>
-                </div>
-                <div class="control-group">
-                    <label>Email:</label>
-                    <form:input path="email" maxlength="50" placeholder="Email"/>
-                </div>
-                <div class="control-group">
-                    <label>Address:</label>
-                    <form:input path="street" maxlength="70" placeholder="Street"/>
-                    <form:input path="town" maxlength="30" placeholder="Town"/>
-                    <form:input path="county" maxlength="50" placeholder="County"/>
-                    <form:input path="postcode" maxlength="10" placeholder="Postcode"/>
-                </div>
-                <div class="control-group">
-                    <label>Phones:</label>
-                    <form:input path="telephone" maxlength="20" placeholder="Home phone"/>
-                    <form:input path="mobile" maxlength="20" placeholder="Mobile phone"/>
-                </div>
-                <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
-                    <c:choose>
-                        <c:when test="${circuitForm.forename != null && circuitForm.surname != null}">
-                            <fieldset>
-                                <div class="controls controls-row">
-                                    <div class="alert alert-info span9" id="edit-circuit-overseer-person" style="display:none;">
-                                        <p id="co-link">
-                                            <script id="edit-circuit-overseer-person-link" type="text/html" charset="utf-8">
-                                                Click this link if you would like to edit additional fields of the Circuit Overseer
-                                                <a href="<c:url value='/persons/{{personId}}/edit'/>"><b>{{forename}} {{surname}}</b>
-                                            </script>
-                                        </p>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </c:when>
-                    </c:choose>
-                </sec:authorize>
-                <div class="control-group">
-                    <div class="controls controls-row">
-                        <input type="submit" class="btn btn-edifice" />
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <form:input path="name" class="form-control" placeholder="Circuit Name" maxlength="50" /><br />
+                        </div>
                     </div>
                 </div>
-                <br />
-                </fieldset>
-            </form:form>
+            </fieldset>
+            <fieldset>
+            <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Circuit overseer details</h3>
+                        </div>
+                        <div class="col-md-12">
+                            <div id="circuit-overseer-linked" class="alert alert-warning alert-dismissable" style="display:none;">
+                                <button type="button" class="close" data-dismiss="alert">Unlink</button>
+                                Linked to an existing person in the database
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label>Name:</label>
+                        </div>
+                        <div class="col-md-3">
+                                <form:input path="surname" class="form-control" maxlength="50" placeholder="Surname"/>
+                        </div>
+                        <div class="col-md-3">
+                                <form:input path="forename" class="form-control" maxlength="50" placeholder="Forename"/>
+                        </div>
+                        <div class="col-md-3">
+                                <form:input path="middleName" class="form-control" maxlength="50" placeholder="Middle name" />
+                        </div>
+                    </div>
+            </div>
+            <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4 class="text-left">Address:</h4>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="street">Street:</label>
+                            <form:input path="street" class="form-control" maxlength="70" placeholder="Street"/>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="town">Town:</label>
+                            <form:input path="town" class="form-control" maxlength="30" placeholder="Town"/>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="county">County:</label>
+                            <form:input path="county" class="form-control" maxlength="50" placeholder="County"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="postcode">Postcode:</label>
+                            <form:input path="postcode" class="form-control" maxlength="10" placeholder="Postcode"/>
+                        </div>
+                    </div>
+            </div>
+            <div class="form-group">
+                    <div class="row"> 
+                        <div class="col-md-12">
+                            <h4>Email:</h4>
+                        </div>
+                        <div class="col-md-3">
+                                <form:input path="email" class="form-control" maxlength="50" placeholder="Email"/>
+                        </div>
+                    </div>
+            </div>
+            <div class="form-group">
+                    <div class="row"> 
+                        <div class="col-md-12">
+                            <h4>Phone:</h4>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="telephone">Home phone:</label>
+                            <form:input path="telephone" class="form-control" maxlength="20" placeholder="Home phone"/>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="mobile">Mobile phone:</label>
+                            <form:input path="mobile" class="form-control" maxlength="20" placeholder="Mobile phone"/>
+                        </div>
+                        <div class="clearfix"></div>
+                        <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
+                            <c:choose>
+                                <c:when test="${circuitForm.forename != null && circuitForm.surname != null}">
+                                    <fieldset>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="alert alert-info col-md-9" id="edit-circuit-overseer-person" style="display:none;">
+                                                    <p id="co-link">
+                                                        <script id="edit-circuit-overseer-person-link" type="text/html" charset="utf-8">
+                                                            Click this link if you would like to edit additional fields of the Circuit Overseer
+                                                            <a href="<c:url value='/persons/{{personId}}/edit'/>"><b>{{forename}} {{surname}}</b>
+                                                        </script>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </c:when>
+                            </c:choose>
+                        </sec:authorize>
+                        <br />
+                        <div class="col-md-12">
+                            <input type="submit" class="btn btn-edifice"/>                            
+                        </div>  
+                    </div>
+                </div>
+            </fieldset>
+        </form:form>
 
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
