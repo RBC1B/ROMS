@@ -37,7 +37,6 @@ public class CongregationForm {
     @NotNull
     @Size(max = 50)
     private String number;
-    @NotNull
     private Integer kingdomHallId;
     private String kingdomHallName;
     @NotNull
