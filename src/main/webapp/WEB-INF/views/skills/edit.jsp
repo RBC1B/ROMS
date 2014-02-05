@@ -40,16 +40,16 @@
                 </div>
                 <div class="form-group">
                     <label for="departmentId" class="control-label col-sm-3 col-md-2">Department</label>
-                    <div class="col-sm-9 col-md-3">
-                        <form:select path="departmentId">
+                    <div class="col-sm-9 col-md-2">
+                        <form:select path="departmentId" class="form-control" >
                             <form:options items="${departments}" itemValues="department" itemLabel="name" itemValue="departmentId" />
                         </form:select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="skillCategoryId" class="control-label col-sm-3 col-md-2">Category</label>
-                    <div class="col-sm-9 col-md-3">
-                        <form:select path="skillCategoryId">
+                    <div class="col-sm-9 col-md-2">
+                        <form:select path="skillCategoryId" class="form-control" >
                             <form:options items="${categories}" itemValues="category" itemLabel="name" itemValue="skillCategoryId" />
                         </form:select>
                     </div>
@@ -57,7 +57,7 @@
                 <div class="form-group">
                     <label for="description" class="control-label col-sm-3 col-md-2">Description</label>
                     <div class="col-sm-9 col-md-3">
-                         <form:textarea path="description" rows="4" cols="50" />
+                         <form:textarea path="description" class="form-control" rows="4" cols="50" />
                     </div>
                 </div>
             </fieldset>

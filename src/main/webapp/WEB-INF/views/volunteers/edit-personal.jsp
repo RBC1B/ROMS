@@ -74,7 +74,7 @@ Edit form for the volunteer data under the personal tab.
                 <div class="form-group">
                     <label class="control-label col-sm-3 col-md-2">Gender</label>
                     <div class="col-sm-4 col-md-2">
-                        <form:select path="gender">
+                        <form:select path="gender" class="form-control" >
                             <form:option value="M">Male</form:option>
                             <form:option value="F">Female</form:option>
                         </form:select>
@@ -82,14 +82,14 @@ Edit form for the volunteer data under the personal tab.
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3 col-md-2">Date of birth</label>
-                    <div class="col-sm-9 col-md-3">
-                        <form:input path="birthDate" placeholder="dd/mm/yyyy" class="datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
+                    <div class="col-sm-4 col-md-2">
+                        <form:input path="birthDate" placeholder="dd/mm/yyyy" class="datepicker form-control" data-date-format="dd/mm/yy" type="text" value=""/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3 col-md-2">Marital status</label>
                     <div class="col-sm-4 col-md-2">
-                        <form:select path="maritalStatusCode">
+                        <form:select path="maritalStatusCode" class="form-control" >
                             <form:option value="" />
                             <form:options items="${maritalStatusValues}" />
                         </form:select>
@@ -123,8 +123,14 @@ Edit form for the volunteer data under the personal tab.
                         </div>
                     </div>
                 </div>
+            </fieldset>
             <fieldset>
-                <button type="submit" class="btn btn-default btn-success">Submit</button>
+                <div class="form-group">
+                    <label class="control-label col-sm-3 col-md-2"></label>
+                    <div class="col-sm-9 col-md-3">
+                        <button type="submit" class="btn btn-default btn-success">Submit</button>
+                    </div>
+                </div>
             </fieldset>
         </div>
     </form:form>

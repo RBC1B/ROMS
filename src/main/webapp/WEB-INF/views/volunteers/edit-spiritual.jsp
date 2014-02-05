@@ -18,14 +18,14 @@ Edit form for the volunteer data under the spiritual tab.
                 <div class="form-group">
                     <label class="control-label col-sm-4 col-md-3">Congregation</label>
                     <div class="col-sm-8 col-md-3">
-                        <form:input path="congregationName" placeholder="Congregation name" autocomplete="off" />
+                        <form:input path="congregationName" class="form-control" placeholder="Congregation name" autocomplete="off" />
                         <form:hidden path="congregationId" />
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-4 col-md-3">Date of baptism</label>
-                    <div class="col-sm-8 col-md-3">
-                        <form:input path="baptismDate" placeholder="dd/mm/yyyy" class="datepicker" data-date-format="dd/mm/yy" type="text" value=""/>
+                    <div class="col-sm-4 col-md-2">
+                        <form:input path="baptismDate" placeholder="dd/mm/yyyy" class="datepicker form-control" data-date-format="dd/mm/yy" type="text" value=""/>
                     </div>
                 </div>
             </fieldset>
@@ -50,7 +50,10 @@ Edit form for the volunteer data under the spiritual tab.
                 </div>
             </fieldset>
             <fieldset>
-                <button type="submit" class="btn btn-default btn-success">Submit</button>
+                <label class="control-label col-sm-4 col-md-3"></label>
+                <div class="col-sm-4 col-md-2">
+                    <button type="submit" class="btn btn-default btn-success">Submit</button>
+                </div>
             </fieldset>
         </form:form>
 

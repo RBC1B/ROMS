@@ -38,7 +38,7 @@
                 <div class="form-group">
                     <label for="description" class="control-label col-sm-3 col-md-2">Description</label>
                     <div class="col-sm-9 col-md-3">
-                         <form:textarea path="description" rows="4" cols="50" />
+                         <form:textarea path="description" class="form-control" rows="4" cols="50" />
                     </div>
                 </div>
             </fieldset>

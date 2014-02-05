@@ -31,15 +31,6 @@ li a:hover, li a:focus {
 legend {
     border-bottom:0;
 }
-input, textarea {
-    border-radius:4px;
-    border:1px solid #999999;
-    padding:4px;
-}
-textarea {
-	padding: 6px 12px;
-	color: #555;
-}
 .text-left {
     text-align: left!important;
 }
