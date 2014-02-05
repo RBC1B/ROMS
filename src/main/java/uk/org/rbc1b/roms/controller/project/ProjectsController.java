@@ -48,7 +48,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.controller.common.DataConverterUtil;
 import uk.org.rbc1b.roms.db.PersonDao;
+import uk.org.rbc1b.roms.db.application.User;
 import uk.org.rbc1b.roms.db.application.UserDao;
+import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHallDao;
 import uk.org.rbc1b.roms.db.project.Project;
 import uk.org.rbc1b.roms.db.project.ProjectDao;
@@ -221,6 +223,56 @@ public class ProjectsController {
     }
 
     /**
+     * Display the form to edit an existing project.
+     * @param projectId project identifier
+     * @param model mvc model
+     * @return view name
+     * @throws NoSuchRequestHandlingMethodException on failure ot find the project
+     */
+    @RequestMapping(value = "{projectId}/edit", method = RequestMethod.GET)
+    public String showEditProjectForm(@PathVariable Integer projectId, ModelMap model)
+            throws NoSuchRequestHandlingMethodException {
+
+        Project project = projectDao.findProject(projectId);
+        if (project == null) {
+            throw new NoSuchRequestHandlingMethodException("No project with id [" + projectId + "]", this.getClass());
+        }
+
+        // initialise the form bean
+        ProjectForm form = new ProjectForm();
+        form.setConstraints(project.getConstraints());
+
+        if (project.getCoordinator() != null) {
+            User user = userDao.findUser(project.getCoordinator().getPersonId());
+            form.setCoordinatorUserId(user.getPersonId());
+            form.setCoordinatorUserName(user.getUserName());
+        }
+
+        form.setEstimateCost(project.getEstimateCost());
+
+        if (project.getKingdomHall() != null) {
+            KingdomHall kingdomHall = kingdomHallDao.findKingdomHall(project.getKingdomHall().getKingdomHallId());
+            form.setKingdomHallId(project.getKingdomHall().getKingdomHallId());
+            form.setKingdomHallName(kingdomHall.getName());
+        }
+
+        form.setName(project.getName());
+        form.setPriority(project.getPriority());
+        form.setProjectTypeId(project.getProjectTypeId());
+
+        form.setRequestDate(DataConverterUtil.toDateTime(project.getRequestDate()));
+        form.setSupportingCongregation(project.getSupportingCongregation());
+        form.setVisitDate(DataConverterUtil.toDateTime(project.getVisitDate()));
+
+        model.addAttribute("projectForm", form);
+        model.addAttribute("submitUri", ProjectModelFactory.generateUri(projectId));
+        model.addAttribute("projectTypeName", referenceDao.findProjectTypeValues().get(project.getProjectTypeId()));
+        model.addAttribute("submitMethod", "PUT");
+
+        return "projects/edit";
+    }
+
+    /**
      * Creates a project, creating the default stages and activities for the
      * type.
      *
@@ -245,9 +297,9 @@ public class ProjectsController {
         project.setName(projectForm.getName());
         project.setPriority(projectForm.getPriority());
         project.setProjectTypeId(projectForm.getProjectTypeId());
-        project.setRequestDate(DataConverterUtil.toDate(projectForm.getRequestDate()));
+        project.setRequestDate(DataConverterUtil.toSqlDate(projectForm.getRequestDate()));
         project.setSupportingCongregation(projectForm.getSupportingCongregation());
-        project.setVisitDate(DataConverterUtil.toDate(projectForm.getVisitDate()));
+        project.setVisitDate(DataConverterUtil.toSqlDate(projectForm.getVisitDate()));
 
         Map<Integer, ProjectStageType> stageTypes = projectDao.findProjectStageTypes();
         Map<Integer, ProjectStageActivityType> activityTypes = projectDao.findProjectStageActivityTypes();

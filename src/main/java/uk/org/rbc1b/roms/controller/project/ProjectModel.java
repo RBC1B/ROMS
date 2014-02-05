@@ -31,10 +31,9 @@ import uk.org.rbc1b.roms.db.Address;
 
 /**
  * Model representing the project.
- *
- * @author oliver
  */
 public class ProjectModel {
+    private String editUri;
     private Address address;
     private String constraints;
     private Date completedDate;
@@ -52,6 +51,14 @@ public class ProjectModel {
     private String supportingCongregation;
     private String telephone;
     private Date visitDate;
+
+    public String getEditUri() {
+        return editUri;
+    }
+
+    public void setEditUri(String editUri) {
+        this.editUri = editUri;
+    }
 
     public Address getAddress() {
         return address;

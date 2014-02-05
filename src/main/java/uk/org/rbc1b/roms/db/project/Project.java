@@ -41,7 +41,7 @@ public class Project implements UpdateAuditable, Serializable {
     private static final long serialVersionUID = 9175072301683424474L;
     private Address address;
     private String constraints;
-    private Date completedDate;
+    private java.sql.Date completedDate;
     private Person contactPerson;
     private Person coordinator;
     private String estimateCost;
@@ -50,12 +50,12 @@ public class Project implements UpdateAuditable, Serializable {
     private Integer projectId;
     private Integer projectTypeId;
     private String priority;
-    private Date requestDate;
+    private java.sql.Date requestDate;
     private String statusCode;
     private Set<ProjectStage> stages;
     private String supportingCongregation;
     private String telephone;
-    private Date visitDate;
+    private java.sql.Date visitDate;
     private Set<ProjectWorkBrief> workBriefs;
     private Date updateTime;
     private Integer updatedBy;
@@ -87,11 +87,11 @@ public class Project implements UpdateAuditable, Serializable {
         this.address = address;
     }
 
-    public Date getCompletedDate() {
+    public java.sql.Date getCompletedDate() {
         return completedDate;
     }
 
-    public void setCompletedDate(Date completedDate) {
+    public void setCompletedDate(java.sql.Date completedDate) {
         this.completedDate = completedDate;
     }
 
@@ -167,11 +167,11 @@ public class Project implements UpdateAuditable, Serializable {
         this.projectTypeId = projectTypeId;
     }
 
-    public Date getRequestDate() {
+    public java.sql.Date getRequestDate() {
         return requestDate;
     }
 
-    public void setRequestDate(Date requestDate) {
+    public void setRequestDate(java.sql.Date requestDate) {
         this.requestDate = requestDate;
     }
 
@@ -207,11 +207,11 @@ public class Project implements UpdateAuditable, Serializable {
         this.telephone = telephone;
     }
 
-    public Date getVisitDate() {
+    public java.sql.Date getVisitDate() {
         return visitDate;
     }
 
-    public void setVisitDate(Date visitDate) {
+    public void setVisitDate(java.sql.Date visitDate) {
         this.visitDate = visitDate;
     }
 

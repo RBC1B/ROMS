@@ -153,6 +153,8 @@ public class ProjectModelFactory {
         model.setType(types.get(project.getProjectTypeId()));
         model.setVisitDate(project.getVisitDate());
 
+        model.setEditUri(generateUri(project.getProjectId()) + "/edit");
+
         return model;
     }
 
