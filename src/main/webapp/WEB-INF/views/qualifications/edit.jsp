@@ -27,14 +27,29 @@
         </c:choose>
         <hr />
         <c:url var="formAction" value="${submitUri}" />
-        <form:form commandName="qualificationForm" method="${submitMethod}" action="${formAction}">
+        <form:form class="form-horizontal" commandName="qualificationForm" method="${submitMethod}" action="${formAction}">
             <fieldset>
-                <label>Name</label>
-                <form:input path="name" maxlength="50" />
-                <label>Description</label>
-                <form:textarea path="description" rows="4" cols="50" />
+                <div class="form-group">
+                    <label for="name" class="control-label col-sm-3 col-md-2">Name</label>
+                    <div class="col-sm-9 col-md-3">
+                        <form:input path="name" class="form-control" maxlength="50" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description" class="control-label col-sm-3 col-md-2">Description</label>
+                    <div class="col-sm-9 col-md-3">
+                         <form:textarea path="description" rows="4" cols="50" />
+                    </div>
+                </div>
             </fieldset>
-            <input type="submit" class="btn btn-edifice" />
+            <fieldset>
+                <div class="form-group">
+                    <label class="control-label col-sm-3 col-md-2"></label>
+                    <div class="col-sm-9 col-md-3">
+                        <button type="submit" class="btn btn-default btn-success">Submit</button>
+                    </div>
+                </div>
+            </fieldset>
         </form:form>
 
         <ol class="breadcrumb">

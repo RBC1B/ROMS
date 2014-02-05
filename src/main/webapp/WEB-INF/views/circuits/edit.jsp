@@ -91,7 +91,7 @@
                     </div>
             </div>
             <div class="form-group">
-                    <div class="row"> 
+                    <div class="row">
                         <div class="col-md-12">
                             <h4>Email:</h4>
                         </div>
@@ -101,7 +101,7 @@
                     </div>
             </div>
             <div class="form-group">
-                    <div class="row"> 
+                    <div class="row">
                         <div class="col-md-12">
                             <h4>Phone:</h4>
                         </div>
@@ -136,8 +136,8 @@
                         </sec:authorize>
                         <br />
                         <div class="col-md-12">
-                            <input type="submit" class="btn btn-edifice"/>                            
-                        </div>  
+                            <input type="submit" class="btn btn-edifice"/>
+                        </div>
                     </div>
                 </div>
             </fieldset>

@@ -30,30 +30,45 @@
         </c:choose>
         <hr />
         <c:url var="formAction" value="${submitUri}" />
-        <form:form commandName="skillForm" method="${submitMethod}" action="${formAction}">
-                <fieldset>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label>Name</label>
-                            <form:input path="name" maxlength="50" />
-                        </div>
-                        <div class="col-md-4">
-                            <label>Department</label>
-                            <form:select path="departmentId">
-                                <form:options items="${departments}" itemValues="department" itemLabel="name" itemValue="departmentId" />
-                            </form:select>
-                        </div>
-                        <div class="col-md-4">
-                            <label>Category</label>
-                            <form:select path="skillCategoryId">
-                              <form:options items="${categories}" itemValues="category" itemLabel="name" itemValue="skillCategoryId" />
-                            </form:select>
-                        </div>
+        <form:form class="form-horizontal" commandName="skillForm" method="${submitMethod}" action="${formAction}">
+            <fieldset>
+                <div class="form-group">
+                    <label for="name" class="control-label col-sm-3 col-md-2">Name</label>
+                    <div class="col-sm-9 col-md-3">
+                        <form:input path="name" class="form-control" maxlength="50" />
                     </div>
-                    <label>Description</label>
-                    <form:textarea path="description" rows="4" cols="50"/>
-                </fieldset>
-            <input type="submit" class="btn btn-success" />
+                </div>
+                <div class="form-group">
+                    <label for="departmentId" class="control-label col-sm-3 col-md-2">Department</label>
+                    <div class="col-sm-9 col-md-3">
+                        <form:select path="departmentId">
+                            <form:options items="${departments}" itemValues="department" itemLabel="name" itemValue="departmentId" />
+                        </form:select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="skillCategoryId" class="control-label col-sm-3 col-md-2">Category</label>
+                    <div class="col-sm-9 col-md-3">
+                        <form:select path="skillCategoryId">
+                            <form:options items="${categories}" itemValues="category" itemLabel="name" itemValue="skillCategoryId" />
+                        </form:select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description" class="control-label col-sm-3 col-md-2">Description</label>
+                    <div class="col-sm-9 col-md-3">
+                         <form:textarea path="description" rows="4" cols="50" />
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group">
+                    <label class="control-label col-sm-3 col-md-2"></label>
+                    <div class="col-sm-9 col-md-3">
+                        <button type="submit" class="btn btn-default btn-success">Submit</button>
+                    </div>
+                </div>
+            </fieldset>
         </form:form>
 
         <ol class="breadcrumb">
