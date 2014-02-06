@@ -13,40 +13,87 @@
         <h1>Edit project</h1>
         <hr />
         <c:url var="formAction" value="${submitUri}" />
-        <form:form commandName="projectForm" method="${submitMethod}" action="${formAction}">
+        <form:form class="form-horizontal" commandName="projectForm" method="${submitMethod}" action="${formAction}">
             <fieldset>
-                <label>Name</label>
-                <form:input path="name" maxlength="50" />
-                <label>Type</label>
-                <!-- the type cannot be changed -->
-                <form:hidden path="projectTypeId" />
-                <p>${projectTypeName}</p>
-                <label>Coordinator</label>
-                <form:input path="coordinatorUserName" autocomplete="off" />
-                <form:hidden path="coordinatorUserId" />
+                <div class="form-group">
+                    <label for="name" class="control-label col-sm-3 col-md-2">Name</label>
+                    <div class="col-sm-9 col-md-3">
+                        <form:input path="name" class="form-control" maxlength="50" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="projectTypeId" class="control-label col-sm-3 col-md-2">Type</label>
+                    <div class="col-sm-9 col-md-3">
+                        <!-- the type cannot be changed -->
+                        <form:hidden path="projectTypeId" />
+                        <p>${projectTypeName}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="coordinatorUserName" class="control-label col-sm-3 col-md-2">Coordinator</label>
+                    <div class="col-sm-9 col-md-3">
+                        <form:hidden path="coordinatorUserId" />
+                        <form:input path="coordinatorUserName" class="form-control" maxlength="50" autocomplete="off" />
+                    </div>
+                </div>
             </fieldset>
             <fieldset>
-                <label>Kingdom hall</label>
-                <form:input path="kingdomHallName" autocomplete="off" />
-                <form:hidden path="kingdomHallId" />
-                <label>Supporting congregation</label>
-                <form:input path="supportingCongregation" maxlength="250" />
+                <div class="form-group">
+                    <label for="kingdomHallName" class="control-label col-sm-3 col-md-2">Kingdom Hall</label>
+                    <div class="col-sm-9 col-md-3">
+                        <form:hidden path="kingdomHallId" />
+                        <form:input path="kingdomHallName" class="form-control" maxlength="50" autocomplete="off" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="supportingCongregation" class="control-label col-sm-3 col-md-2">Supporting congregation</label>
+                    <div class="col-sm-9 col-md-3">
+                        <form:input path="supportingCongregation" class="form-control" maxlength="250" />
+                    </div>
+                </div>
             </fieldset>
             <fieldset>
-                <label>Request date</label>
-                <form:input path="requestDate" class="datepicker" />
-                <label>Visit Date</label>
-                <form:input path="visitDate" class="datepicker" />
+                <div class="form-group">
+                    <label for="requestDate" class="control-label col-sm-3 col-md-2">Request date</label>
+                    <div class="col-sm-4 col-md-2">
+                        <form:input path="requestDate" placeholder="dd/mm/yyyy" class="datepicker form-control" data-date-format="dd/mm/yy" type="text" value=""/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="visitDate" class="control-label col-sm-3 col-md-2">Visit Date</label>
+                    <div class="col-sm-4 col-md-2">
+                        <form:input path="visitDate" placeholder="dd/mm/yyyy" class="datepicker form-control" data-date-format="dd/mm/yy" type="text" value=""/>
+                    </div>
+                </div>
             </fieldset>
             <fieldset>
-                <label>Priority</label>
-                <form:input path="priority" maxlength="50" />
-                <label>Estimated cost</label>
-                <form:input path="estimateCost" maxlength="50" />
-                <label>Constraints</label>
-                <form:textarea path="constraints"  rows="4" cols="50" />
+                <div class="form-group">
+                    <label for="priority" class="control-label col-sm-3 col-md-2">Priority</label>
+                    <div class="col-sm-9 col-md-3">
+                        <form:input path="priority" class="form-control" maxlength="50" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="estimateCost" class="control-label col-sm-3 col-md-2">Estimated cost</label>
+                    <div class="col-sm-9 col-md-3">
+                        <form:input path="estimateCost" class="form-control" maxlength="50" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="estimateCost" class="control-label col-sm-3 col-md-2">Constraints</label>
+                    <div class="col-sm-9 col-md-3">
+                        <form:textarea path="constraints" class="form-control" rows="4" cols="50" />
+                    </div>
+                </div>
             </fieldset>
-            <input type="submit" class="btn btn-edifice"/>
+            <fieldset>
+                <div class="form-group">
+                    <label class="control-label col-sm-3 col-md-2"></label>
+                    <div class="col-sm-9 col-md-3">
+                        <button type="submit" class="btn btn-default btn-success">Submit</button>
+                    </div>
+                </div>
+            </fieldset>
         </form:form>
         <ol class="breadcrumb">
             <li><a href="<c:url value="/" />">Edifice</a></li>
