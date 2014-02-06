@@ -74,6 +74,15 @@ public interface ProjectDao {
     void createProject(Project project);
 
     /**
+     * Update an existing project, with the underlying default stages and activities.
+     *
+     * @param project to create
+     */
+    @PreAuthorize("hasPermission('PROJECT','EDIT')")
+    @Transactional
+    void updateProject(Project project);
+
+    /**
      * Look up the stage types mapped to the project type.
      *
      * @param projectTypeId project type

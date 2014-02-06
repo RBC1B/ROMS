@@ -265,6 +265,7 @@ public class ProjectsController {
         form.setVisitDate(DataConverterUtil.toDateTime(project.getVisitDate()));
 
         model.addAttribute("projectForm", form);
+        model.addAttribute("projectId", projectId);
         model.addAttribute("submitUri", ProjectModelFactory.generateUri(projectId));
         model.addAttribute("projectTypeName", referenceDao.findProjectTypeValues().get(project.getProjectTypeId()));
         model.addAttribute("submitMethod", "PUT");
@@ -283,23 +284,7 @@ public class ProjectsController {
     public String createProject(@Valid ProjectForm projectForm) {
 
         Project project = new Project();
-        project.setConstraints(projectForm.getConstraints());
-
-        if (projectForm.getCoordinatorUserId() != null) {
-            project.setCoordinator(personDao.findPerson(projectForm.getCoordinatorUserId()));
-        }
-
-        project.setEstimateCost(projectForm.getEstimateCost());
-
-        if (projectForm.getKingdomHallId() != null) {
-            project.setKingdomHall(kingdomHallDao.findKingdomHall(projectForm.getKingdomHallId()));
-        }
-        project.setName(projectForm.getName());
-        project.setPriority(projectForm.getPriority());
-        project.setProjectTypeId(projectForm.getProjectTypeId());
-        project.setRequestDate(DataConverterUtil.toSqlDate(projectForm.getRequestDate()));
-        project.setSupportingCongregation(projectForm.getSupportingCongregation());
-        project.setVisitDate(DataConverterUtil.toSqlDate(projectForm.getVisitDate()));
+        populateProjectFromFormData(project, projectForm);
 
         Map<Integer, ProjectStageType> stageTypes = projectDao.findProjectStageTypes();
         Map<Integer, ProjectStageActivityType> activityTypes = projectDao.findProjectStageActivityTypes();
@@ -331,4 +316,46 @@ public class ProjectsController {
 
     }
 
+    /**
+     * Update the core details of an existing project.
+     * @param projectId project id
+     * @param projectForm projectForm bean
+     * @return view name
+     * @throws NoSuchRequestHandlingMethodException on failure to find the project
+     */
+    @RequestMapping(value = "{projectId}", method = RequestMethod.PUT)
+    public String updateProject(@PathVariable Integer projectId, @Valid ProjectForm projectForm)
+            throws NoSuchRequestHandlingMethodException {
+
+        Project project = projectDao.findProject(projectId);
+        if (project == null) {
+            throw new NoSuchRequestHandlingMethodException("No project with id [" + projectId + "]", this.getClass());
+        }
+
+        populateProjectFromFormData(project, projectForm);
+
+        projectDao.updateProject(project);
+
+        return "redirect:" + ProjectModelFactory.generateUri(project.getProjectId());
+    }
+
+    private void populateProjectFromFormData(Project project, ProjectForm projectForm) {
+        project.setConstraints(projectForm.getConstraints());
+
+        if (projectForm.getCoordinatorUserId() != null) {
+            project.setCoordinator(personDao.findPerson(projectForm.getCoordinatorUserId()));
+        }
+
+        project.setEstimateCost(projectForm.getEstimateCost());
+
+        if (projectForm.getKingdomHallId() != null) {
+            project.setKingdomHall(kingdomHallDao.findKingdomHall(projectForm.getKingdomHallId()));
+        }
+        project.setName(projectForm.getName());
+        project.setPriority(projectForm.getPriority());
+        project.setProjectTypeId(projectForm.getProjectTypeId());
+        project.setRequestDate(DataConverterUtil.toSqlDate(projectForm.getRequestDate()));
+        project.setSupportingCongregation(projectForm.getSupportingCongregation());
+        project.setVisitDate(DataConverterUtil.toSqlDate(projectForm.getVisitDate()));
+    }
 }

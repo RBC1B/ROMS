@@ -13,7 +13,8 @@
         <h1>Edit project</h1>
         <hr />
         <c:url var="formAction" value="${submitUri}" />
-        <form:form class="form-horizontal" commandName="projectForm" method="${submitMethod}" action="${formAction}">
+        <form:form class="form-horizontal" commandName="projectForm" method="${submitMethod}" action="${formAction}"
+            data-project-id="${projectId}">
             <fieldset>
                 <div class="form-group">
                     <label for="name" class="control-label col-sm-3 col-md-2">Name</label>

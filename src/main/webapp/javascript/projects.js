@@ -146,7 +146,12 @@ $(document).ready(function() {
                     },
                     dataFilter: function(rawData) {
                         // if we return an empty string, we didn't match an existing project name
-                        return rawData == "";
+                        if (rawData == "") {
+                            return true;
+                        }
+                        // otherwise, compare it to the existing project value if set
+                        var currentProjectId = $("#projectForm").data("project-id");
+                        return rawData == currentProjectId;
                     }
                 }
             },

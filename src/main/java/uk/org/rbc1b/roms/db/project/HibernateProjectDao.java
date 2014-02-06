@@ -156,6 +156,11 @@ public class HibernateProjectDao implements ProjectDao {
 
     }
 
+    @Override
+    public void updateProject(Project project) {
+        this.sessionFactory.getCurrentSession().merge(project);
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public List<ProjectTypeStageType> findProjectTypeStageTypes(Integer projectTypeId) {
