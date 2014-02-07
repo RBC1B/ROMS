@@ -33,7 +33,7 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="name">Name:</label>
+                            <label for="name">Name</label>
                             <form:input path="name" class="form-control" placeholder="Circuit Name" maxlength="50" /><br />
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <label>Name:</label>
+                            <label>Name</label>
                         </div>
                         <div class="col-md-3">
                                 <form:input path="forename" class="form-control" maxlength="50" placeholder="Forename"/>
@@ -68,24 +68,24 @@
             <div class="form-group">
                     <div class="row">
                         <div class="col-md-12">
-                            <h4 class="text-left">Address:</h4>
+                            <h4 class="text-left">Address</h4>
                         </div>
                         <div class="col-md-3">
-                            <label for="street">Street:</label>
+                            <label for="street">Street</label>
                             <form:input path="street" class="form-control" maxlength="70" placeholder="Street"/>
                         </div>
                         <div class="col-md-3">
-                            <label for="town">Town:</label>
+                            <label for="town">Town</label>
                             <form:input path="town" class="form-control" maxlength="30" placeholder="Town"/>
                         </div>
                         <div class="col-md-3">
-                            <label for="county">County:</label>
+                            <label for="county">County</label>
                             <form:input path="county" class="form-control" maxlength="50" placeholder="County"/>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-3">
-                            <label for="postcode">Postcode:</label>
+                            <label for="postcode">Postcode</label>
                             <form:input path="postcode" class="form-control" maxlength="10" placeholder="Postcode"/>
                         </div>
                     </div>
@@ -93,7 +93,7 @@
             <div class="form-group">
                     <div class="row">
                         <div class="col-md-12">
-                            <h4>Email:</h4>
+                            <h4>Email</h4>
                         </div>
                         <div class="col-md-3">
                                 <form:input path="email" class="form-control" maxlength="50" placeholder="Email"/>
@@ -103,14 +103,14 @@
             <div class="form-group">
                     <div class="row">
                         <div class="col-md-12">
-                            <h4>Phone:</h4>
+                            <h4>Phone</h4>
                         </div>
                         <div class="col-md-3">
-                            <label for="telephone">Home phone:</label>
+                            <label for="telephone">Home phone</label>
                             <form:input path="telephone" class="form-control" maxlength="20" placeholder="Home phone"/>
                         </div>
                         <div class="col-md-3">
-                            <label for="mobile">Mobile phone:</label>
+                            <label for="mobile">Mobile phone</label>
                             <form:input path="mobile" class="form-control" maxlength="20" placeholder="Mobile phone"/>
                         </div>
                         <div class="clearfix"></div>

@@ -165,7 +165,6 @@
         <li><a href="<c:url value="/congregations" />">Congregations</a></li>
         <li class="active">Edit Congregation</li>
     </ol>
-        <!--cols="50" -->
     <%@ include file="/WEB-INF/views/common/footer.jsp"%>
     <%@ include file="/WEB-INF/views/common/mustache-person-link-search-form.jsp"%>
     <%@ include file="/WEB-INF/views/common/person-link-modal.jsp"%>
