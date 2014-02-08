@@ -1,0 +1,45 @@
+#!/bin/bash
+## Combine all the schema changes and dummy data in integer order
+## and pass into the mysql client to create the database tables
+
+if [ "$#" -ne 1 ]; 
+    then echo "Usage: $0 [database user name]"
+fi
+
+BASEDIR=$(dirname $0)
+COMBINED="$BASEDIR/all-schema-changes.sql"
+
+## create the combined schema changes file
+echo "" > $COMBINED
+
+## concatenate the schema changes and dummy data into the single file
+for INDEX in {1..30}; do
+    if [ $INDEX -lt 10 ]
+    then
+        FILE="$BASEDIR/00"
+    else
+        FILE="$BASEDIR/0"
+    fi
+    SCHEMAFILE="$FILE$INDEX.sql"
+    DUMMYFILE="$FILE$INDEX-dummy.sql"
+    if [ -f $SCHEMAFILE ]
+    then
+        echo "Adding: $SCHEMAFILE"
+        echo "START TRANSACTION;" >> $COMBINED
+        cat $SCHEMAFILE >> $COMBINED
+        echo "COMMIT;" >> $COMBINED
+    fi
+    if [ -f $DUMMYFILE ]
+    then
+        echo "Adding: $DUMMYFILE"
+        echo "START TRANSACTION;" >> $COMBINED
+        cat $DUMMYFILE >> $COMBINED
+        echo "COMMIT;" >> $COMBINED
+    fi
+done
+echo "Running: mysql -u $1 -p < $COMBINED"
+
+mysql -u $1 -p --verbose < $COMBINED
+
+rm $COMBINED
+
