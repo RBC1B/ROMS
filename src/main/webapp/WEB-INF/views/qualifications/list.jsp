@@ -39,7 +39,7 @@
                     </c:forEach>
                 </tbody>
             </table>
-            <sec:authorize access="hasPermission('SKILL', 'EDIT')">
+            <sec:authorize access="hasPermission('SKILL', 'ADD')">
                 <hr />
                 <a class="btn btn-edifice" href="<c:url value="${newUri}" />" />Create new qualification</a>
             </sec:authorize>
