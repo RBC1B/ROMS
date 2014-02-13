@@ -90,7 +90,6 @@ public class VolunteersController {
 
     private static final String MARRIED_MARITAL_STATUS = "MR";
     private static final String RBC_STATUS_PENDING = "PD";
-    private static final String INTERVIEW_STATUS_INVITE_DUE = "ID";
     private static final String FULLTIME_REGULAR_PIONEER = "RP";
     private static final String APPOINTMENT_ELDER = "EL";
     private static final String APPOINTMENT_MINISTERIAL_SERVANT = "MS";
@@ -322,10 +321,7 @@ public class VolunteersController {
             volunteer.setSpouse(spouse);
         }
 
-        if (volunteer.getRbcStatusCode() == null && volunteer.getInterviewStatusCode() == null) {
-            volunteer.setRbcStatusCode(RBC_STATUS_PENDING);
-            volunteer.setInterviewStatusCode(INTERVIEW_STATUS_INVITE_DUE);
-        }
+        volunteer.setRbcStatusCode(RBC_STATUS_PENDING);
 
         if (form.getTrades() != null) {
             Set<VolunteerTrade> volunteerTrades = new HashSet<VolunteerTrade>();
@@ -406,7 +402,6 @@ public class VolunteersController {
         VolunteerRbcStatusForm form = new VolunteerRbcStatusForm();
 
         form.setFormDate(DataConverterUtil.toDateTime(volunteer.getFormDate()));
-        form.setInterviewDate(DataConverterUtil.toDateTime(volunteer.getInterviewDate()));
 
         if (volunteer.getInterviewerA() != null) {
             form.setInterviewerAPersonId(volunteer.getInterviewerA().getPersonId());
@@ -607,7 +602,6 @@ public class VolunteersController {
         }
 
         volunteer.setFormDate(DataConverterUtil.toSqlDate(form.getFormDate()));
-        volunteer.setInterviewDate(DataConverterUtil.toSqlDate(form.getInterviewDate()));
 
         if (form.getInterviewerAPersonId() != null) {
             User user = new User();

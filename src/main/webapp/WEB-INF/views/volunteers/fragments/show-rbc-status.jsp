@@ -12,15 +12,6 @@ The contents of the rbc status tab.
             <c:otherwise>-</c:otherwise>
         </c:choose>
     </dd>
-    <dt>Interview date:</dt>
-    <dd>
-        <c:choose>
-            <c:when test="${!empty volunteer.interviewDate}">
-                <fmt:formatDate value="${volunteer.interviewDate}" pattern="dd MMM yyyy" />
-            </c:when>
-            <c:otherwise>-</c:otherwise>
-        </c:choose>
-    </dd>
     <dt>Interviewers:</dt>
     <dd>
         <c:choose>

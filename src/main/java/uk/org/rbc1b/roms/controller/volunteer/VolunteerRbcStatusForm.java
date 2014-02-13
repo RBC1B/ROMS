@@ -36,7 +36,6 @@ public class VolunteerRbcStatusForm {
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private DateTime formDate;
     @DateTimeFormat(pattern = "dd/MM/yyyy")
-    private DateTime interviewDate;
     private Integer interviewerAPersonId;
     private String interviewerAUserName;
     private Integer interviewerBPersonId;
@@ -67,14 +66,6 @@ public class VolunteerRbcStatusForm {
 
     public void setFormDate(DateTime formDate) {
         this.formDate = formDate;
-    }
-
-    public DateTime getInterviewDate() {
-        return interviewDate;
-    }
-
-    public void setInterviewDate(DateTime interviewDate) {
-        this.interviewDate = interviewDate;
     }
 
     public Integer getInterviewerAPersonId() {

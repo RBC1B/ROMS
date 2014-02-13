@@ -49,7 +49,7 @@ public interface ReferenceDao {
     /**
      * @return ordered map of interview status values
      */
-    Map<String, String> findInterviewStatusValues();
+    Map<String, String> findVolunteerInterviewStatusValues();
 
     /**
      * @return ordered map of full time service values

@@ -47,13 +47,11 @@ public class Volunteer implements Serializable {
     private String gender; // M or F
     private String maritalStatusCode;
     private java.sql.Date baptismDate;
-    private java.sql.Date interviewDate;
     private User interviewerA;
     private User interviewerB;
     private String interviewComments;
     private java.sql.Date joinedDate;
     private java.sql.Date formDate;
-    private String interviewStatusCode;
     private boolean oversight;
     private String oversightComments;
     private String rbcStatusCode;
@@ -183,22 +181,6 @@ public class Volunteer implements Serializable {
 
     public void setInterviewComments(String interviewComments) {
         this.interviewComments = interviewComments;
-    }
-
-    public java.sql.Date getInterviewDate() {
-        return interviewDate;
-    }
-
-    public void setInterviewDate(java.sql.Date interviewDate) {
-        this.interviewDate = interviewDate;
-    }
-
-    public String getInterviewStatusCode() {
-        return interviewStatusCode;
-    }
-
-    public void setInterviewStatusCode(String interviewStatusCode) {
-        this.interviewStatusCode = interviewStatusCode;
     }
 
     public User getInterviewerA() {

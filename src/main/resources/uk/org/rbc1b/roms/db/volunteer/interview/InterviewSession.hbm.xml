@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="uk.org.rbc1b.roms.db.volunteer.interview">
+    <class name="InterviewSession" table="InterviewSession">
+        <id name="interviewSessionId">
+            <generator class="identity" />
+        </id>
+
+        <many-to-one class="uk.org.rbc1b.roms.db.kingdomhall.KingdomHall" column="KingdomHallId" name="kingdomHall" />
+
+        <property name="date" />
+        <property name="time" length="4" />
+        <property name="comments" length="250" />
+        <property name="updateTime" not-null="true" />
+        <property name="updatedBy" not-null="true" />
+    </class>
+</hibernate-mapping>

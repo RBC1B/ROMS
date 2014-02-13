@@ -105,6 +105,8 @@ THE SOFTWARE.
                 <value>uk/org/rbc1b/roms/db/volunteer/VolunteerQualification.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/VolunteerSkill.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/VolunteerTrade.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/volunteer/interview/InterviewSession.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/volunteer/interview/VolunteerInterviewSession.hbm.xml</value>
             </list>
         </property>
     </bean>
@@ -127,7 +129,7 @@ THE SOFTWARE.
                     <property name="name" value="reference.rbcStatus" />
                 </bean>
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
-                    <property name="name" value="reference.interviewStatus" />
+                    <property name="name" value="reference.volunteerInterviewStatus" />
                 </bean>
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
                     <property name="name" value="reference.fulltime" />

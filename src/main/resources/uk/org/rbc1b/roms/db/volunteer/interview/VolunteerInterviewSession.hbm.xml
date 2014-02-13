@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="uk.org.rbc1b.roms.db.volunteer.interview">
+    <class name="VolunteerInterviewSession" table="VolunteerInterviewSession">
+        <id name="volunteerInterviewSessionId">
+            <generator class="identity" />
+        </id>
+
+        <many-to-one class="uk.org.rbc1b.roms.db.volunteer.interview.InterviewSession" column="InterviewSessionId"
+            name="interviewSession" not-null="true" />
+        <many-to-one class="uk.org.rbc1b.roms.db.volunteer.Volunteer" column="PersonId" name="volunteer"
+            not-null="true" />
+
+        <property name="volunteerInterviewStatusCode" length="2" not-null="true" />
+        <property name="comments" length="250" />
+        <property name="updateTime" not-null="true" />
+        <property name="updatedBy" not-null="true" />
+    </class>
+</hibernate-mapping>

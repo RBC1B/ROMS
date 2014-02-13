@@ -69,14 +69,9 @@ insert into VolunteerInterviewStatus (VolunteerInterviewStatusCode, Name) values
     ('CP', 'Completed'),
     ('NR', 'Not required');
 
--- clean up legacy volunteer information
-alter table Volunteer drop foreign key Volunteer_ibfk_10;
-alter table Volunteer drop column InterviewStatusCode;
-alter table Volunteer drop column InterviewDate;
-
--- the audit table maintains the old data, but should now be nullable
+-- make the interview status nullable, ready to be dropped in the cleanup
+alter table Volunteer modify InterviewStatusCode char(2);
 alter table Volunteer_AUD modify InterviewStatusCode char(2);
 
--- drop the old reference table
-drop table InterviewStatus;    
+    
     

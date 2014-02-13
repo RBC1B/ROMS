@@ -27,12 +27,6 @@ Edit form for the volunteer data under the rbc status tab.
             <fieldset>
                 <legend>Interview</legend>
                 <div class="form-group">
-                    <label for="interviewDate" class="control-label col-sm-3 col-md-2">Interview date</label>
-                    <div class="col-sm-9 col-md-2">
-                        <form:input path="interviewDate" class="datepicker form-control" data-date-format="dd/mm/yy" type="text" value=""/>
-                    </div>
-                </div>
-                <div class="form-group">
                     <label for="joinedDate" class="control-label col-sm-3 col-md-2">Joined date</label>
                     <div class="col-sm-9 col-md-2">
                         <form:input path="joinedDate" class="datepicker form-control" data-date-format="dd/mm/yy" type="text" value=""/>
