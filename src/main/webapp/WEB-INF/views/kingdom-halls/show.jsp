@@ -9,7 +9,7 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <h1>Kingdom hall: <c:out value="${kingdomHall.name}" /></h1>
+        <h1>Kingdom Hall: <c:out value="${kingdomHall.name}" /></h1>
         <hr />
         <dl class="dl-horizontal">
             <dt>Address:</dt>
@@ -66,7 +66,7 @@
         <br />
         <ol class="breadcrumb">
             <li><a href="<c:url value="/" />">Edifice</a></li>
-            <li><a href="<c:url value="/kingdom-halls" />">Kingdom halls</a></li>
+            <li><a href="<c:url value="/kingdom-halls" />">Kingdom Halls</a></li>
             <li class="active">#${kingdomHall.kingdomHallId}: <c:out value="${kingdomHall.name}" /></li>
         </ol>
 
