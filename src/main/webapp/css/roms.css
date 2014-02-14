@@ -18,6 +18,7 @@ a, .navbar-inverse .navbar-nav>li>a {
 }
 .navbar-inverse .navbar-nav>li>a {
     font-weight: bold;
+    padding-top:20px!important;
 }
 li a:hover, li a:focus {
     color:#ddd!important;
@@ -74,7 +75,7 @@ legend {
     margin: 0 -20px;
 }
 .navbar ul li a {
-    padding-top:20px!important;
+    
 }
 .navbar ul li ul li a {
     padding-top:0px!important;
