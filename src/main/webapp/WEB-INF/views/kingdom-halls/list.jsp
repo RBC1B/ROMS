@@ -9,7 +9,7 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-            <h1>Kingdom halls</h1>
+            <h1>Kingdom Halls</h1>
             <hr />
             <div class="entity-list-results">
                 <table class="table table-bordered table-condensed table-striped table-hover" id="kingdom-hall-list">
@@ -45,14 +45,14 @@
             <sec:authorize access="hasPermission('KINGDOMHALL', 'ADD')">
                 <hr />
                 <div class="entity-list-add-new">
-                    <a class="btn btn-edifice" href="<c:url value="${newUri}" />">Create new kingdom hall</a>
+                    <a class="btn btn-edifice" href="<c:url value="${newUri}" />">Create new Kingdom Hall</a>
                 </div>
             </sec:authorize>
 
             <br />
             <ol class="breadcrumb">
                 <li><a href="<c:url value="/" />">Edifice</a></li>
-                <li class="active">Kingdom halls</li>
+                <li class="active">Kingdom Halls</li>
             </ol>
             <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         <script type="text/javascript" src="<c:url value='/javascript/kingdom-halls.js' />" ></script>
