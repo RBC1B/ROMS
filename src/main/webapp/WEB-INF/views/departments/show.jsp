@@ -72,7 +72,7 @@
         <br />
         <ol class="breadcrumb">
             <li><a href="<c:url value="/" />">Edifice</a></li>
-            <li><a href="<c:url value="/department" />">Department</a></li>
+            <li><a href="<c:url value="/departments" />">Department</a></li>
             <li class="active"><c:out value="${department.name}" /></li>
         </ol>
 
