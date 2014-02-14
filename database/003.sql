@@ -4,8 +4,8 @@ use ROMS;
 create table InterviewSession (
     InterviewSessionId  bigint(20)  not null    auto_increment,
     KingdomHallId       bigint(20),
-    Date                date,
-    Time                varchar(4), /* HHmm format */
+    Date                date        not null,
+    Time                varchar(4)  not null, /* HHmm format */
     Comments            varchar(250),
     UpdateTime          timestamp   not null,
     UpdatedBy           bigint(20)  not null,

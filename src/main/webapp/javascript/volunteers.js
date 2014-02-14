@@ -796,5 +796,20 @@ $(document).ready(function() {
         $('#volunteer-image-modal').modal('hide');
     });
     
+    // volunteer interview sessions
+    roms.common.datatables(
+        $("#volunteer-interview-session-list"),
+        {
+            "iDisplayLength": 10,
+            "aaSorting": [[ 0, "desc" ]],
+            "aoColumnDefs": [
+                {
+                    'bSortable': false,
+                    'aTargets': [4]
+                }
+            ]
+        });
+    
+    
     
 });

@@ -8,8 +8,8 @@
 
         <many-to-one class="uk.org.rbc1b.roms.db.kingdomhall.KingdomHall" column="KingdomHallId" name="kingdomHall" />
 
-        <property name="date" />
-        <property name="time" length="4" />
+        <property name="date" not-null="true" />
+        <property name="time" length="4" not-null="true" />
         <property name="comments" length="250" />
         <property name="updateTime" not-null="true" />
         <property name="updatedBy" not-null="true" />
