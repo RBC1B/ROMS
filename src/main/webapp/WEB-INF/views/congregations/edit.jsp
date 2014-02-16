@@ -27,137 +27,170 @@
     </c:choose>
     <hr />
     <c:url var="formAction" value="${submitUri}" />
-    <form:form commandName="congregationForm" method="${submitMethod}" action="${formAction}">
+    <form:form class="form-horizontal" commandName="congregationForm" method="${submitMethod}" action="${formAction}">
         <fieldset>
             <div class="form-group">
-                <div class="row">
-                    <div class="col-md-3">
-                        <label for="name">Congregation name</label>
-                        <form:input path="name" class="form-control" placeholder="Congregation Name" maxlength="50" />                        
-                    </div>
-                    <div class="col-md-3">
-                        <label for="number">Number</label>
-                        <form:input path="number" class="form-control" placeholder="Number" maxlength="10" />
-                    </div>
-                    <div class="col-md-3">
-                        <label for="kingdomHallName">Kingdom Hall</label>
-                        <form:input path="kingdomHallName" class="form-control" placeholder="Kingdom Hall name"/>
-                        <form:hidden path="kingdomHallId" />
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-md-3">
-                        <label for="circuitId">Circuit</label>
-                        <form:select class="form-control" path="circuitId">
-                            <form:option value="" label="None" />
-                            <form:options items="${circuits}" itemValue="circuitId" itemLabel="name" />
-                        </form:select>
-                    </div>
-                    <div class="col-md-3">
-                        <label for="rbcRegionId">RBC region</label>
-                        <form:select class="form-control" path="rbcRegionId">
-                            <form:option value="" label="None" />
-                            <form:options items="${rbcRegions}" />
-                        </form:select>
-                    </div>
-                    <div class="col-md-3">
-                        <label for="rbcSubRegionId">RBC subregion</label>
-                        <form:select class="form-control" path="rbcSubRegionId">
-                            <form:option value="" />
-                            <form:options items="${rbcSubRegions}" />
-                        </form:select>
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-md-3">
-                        <label for="publishers">Publishers</label>
-                        <form:input path="publishers" class="form-control" placeholder="Publisher number" maxlength="10" />
-                    </div>
-                    <div class="col-md-3">
-                        <label>Attendance</label>
-                        <form:input path="attendance" class="form-control" placeholder="Attendance number" maxlength="10" />
-                    </div>
+                <label class="control-label col-sm-3 col-md-2" for="name">Congregation Name</label>
+                <div class="col-sm-9 col-md-3">
+                    <form:input path="name" class="form-control" placeholder="Congregation Name" maxlength="50" />
                 </div>
             </div>
-            <br />
-        </fieldset>
-        <fieldset>
             <div class="form-group">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h4>Contacts</h4>
-                    </div>
-                    <div id="coordinator">
-                        <form:hidden path="coordinatorPersonId" />
-                        <!-- use style display:none since the div is dynamically shown, based on the defined coordinator -->
-                        <div id="coordinator-unlinked" style="display:none">
-                            <div class="col-md-3">
-                                <label for="coordinatorForename">Coordinator forename</label>
-                                <form:input path="coordinatorForename" class="form-control" maxlength="50" />
-                            </div>
-                            <div class="col-md-3">
-                                <label for="coordinatorForename">Coordinator surname</label>
-                                <form:input path="coordinatorSurname" class="form-control" maxlength="50" />
-                            </div>
-                        </div>
-                        <!-- use style display:none since the div is dynamically shown, based on the defined coordinator -->
-                        <div id="coordinator-linked" class="col-md-6" style="display:none">
-                            Coordinator: <span id="coordinator-linked-text"></span>
-                            <a class="btn btn-edifice btn-xs" href="#">Unlink</a>
-                        </div>                    
-                    </div>
-                    <div class="clearfix"></div><br />
-                    <div id="secretary">
-                        <form:hidden path="secretaryPersonId" />
-                        <!-- use style display:none since the div is dynamically shown, based on the defined secretary -->
-                        <div id="secretary-unlinked" style="display:none">
-                            <div class="col-md-3">
-                                <label for="secretaryForename">Secretary forename</label>
-                                <form:input path="secretaryForename" class="form-control" maxlength="50" />
-                            </div>
-                            <div class="col-md-3">
-                                <label for="secretaryForename">Secretary surname</label>
-                                <form:input path="secretarySurname" class="form-control" maxlength="50" />
-                            </div>
-                        </div>
-                        <!-- use style display:none since the div is dynamically shown, based on the defined secretary -->
-                        <div id="secretary-linked" class="col-md-6" style="display:none">
-                            Secretary: <span id="secretary-linked-text"></span>
-                            <a class="btn btn-edifice btn-xs" href="#">Unlink</a>
-                        </div>
-                    </div>
+                <label class="control-label col-sm-3 col-md-2" for="number">Number</label>
+                <div class="col-sm-9 col-md-3">
+                    <form:input path="number" class="form-control" placeholder="Number" maxlength="10" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3 col-md-2" for="KingdomHallName">Kingdom Hall</label>
+                <div class="col-sm-9 col-md-3">
+                    <form:input path="kingdomHallName" class="form-control" placeholder="Kingdom Hall name"/>
+                    <form:hidden path="kingdomHallId" />                    
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3 col-md-2" for="circuitId">Circuit</label>
+                <div class="col-sm-4 col-md-3">
+                    <form:select class="form-control" path="circuitId">
+                        <form:option value="" label="None" />
+                        <form:options items="${circuits}" itemValue="circuitId" itemLabel="name" />
+                    </form:select>                    
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3 col-md-2" for="rbcRegionId">RBC region</label>
+                <div class="col-sm-4 col-md-3">
+                    <form:select class="form-control" path="rbcRegionId">
+                        <form:option value="" label="None" />
+                        <form:options items="${rbcRegions}" />
+                    </form:select>                    
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3 col-md-2" for="rbcSubRegionId">RBC subregion</label>
+                <div class="col-sm-4 col-md-2">
+                    <form:select class="form-control" path="rbcSubRegionId">
+                        <form:option value="" />
+                        <form:options items="${rbcSubRegions}" />
+                    </form:select>                    
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3 col-md-2" for="publishers">Publishers</label>
+                <div class="col-sm-9 col-md-3">
+                    <form:input path="publishers" class="form-control" placeholder="Publisher number" maxlength="10" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3 col-md-2" for="attendance">Attendance</label>
+                <div class="col-sm-9 col-md-3">
+                    <form:input path="attendance" class="form-control" placeholder="Attendance number" maxlength="10" />
                 </div>
             </div>
         </fieldset>
         <fieldset>
             <div class="form-group">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h4>Strategy</h4>
+                <label class="control-label col-sm-3 col-md-2"></label>
+                <div class="col-sm-9 col-md-3">
+                    <h4 class="text-left">Contacts</h4>
+                </div>
+            </div>
+            <div id="coordinator">
+                <form:hidden path="coordinatorPersonId" />
+                <!-- use style display:none since the div is dynamically shown, based on the defined coordinator -->
+                <div id="coordinator-unlinked" style="display:none">
+                    <div class="form-group">
+                        <label class="control-label col-sm-3 col-md-2" for="coordinatorForenamae">Coordinator forename</label>
+                        <div class="col-sm-9 col-md-3">
+                            <form:input path="coordinatorForename" class="form-control" maxlength="50" />
+                        </div>
                     </div>
-                    <div class="col-md-3">
-                        <label for="funds">Funds</label>
-                        <form:input path="funds" class="form-control" maxlength="50" />
+                    <div class="form-group">
+                        <label class="control-label col-sm-3 col-md-2" for="coordinatorSurname">Coordinator surname</label>
+                        <div class="col-sm-9 col-md-3">
+                            <form:input path="coordinatorSurname" class="form-control" maxlength="50" />
+                        </div>
                     </div>
-                    <div class="col-md-3">
-                        <label for="loans">Loans</label>
-                        <form:input path="loans" class="form-control" maxlength="10" />
+                </div>
+                <!-- use style display:none since the div is dynamically shown, based on the defined coordinator -->
+                <div id="coordinator-linked" class="form-group" style="display:none">
+                    <div class="col-sm-3 col-md-2 text-right">
+                        <strong>Coordinator</strong>
                     </div>
-                    <div class="col-md-3">
-                        <label for="monthlyIncome">Monthly income</label>
-                        <form:input path="monthlyIncome" class="form-control" maxlength="10" />
+                    <div class="col-sm-9 col-md-3">
+                        <span id="coordinator-linked-text"></span>
+                        <a class="btn btn-edifice btn-xs" href="#">Unlink</a>
                     </div>
-                    <div class="clearfix"></div>
-                    <div class="col-md-6">
-                        <label for="strategy">Strategy</label>
-                        <form:textarea path="strategy" class="form-control" rows="4" />
+                </div>
+            </div><br />
+            <div id="secretary">
+                <form:hidden path="secretaryPersonId" />
+                <!-- use style display:none since the div is dynamically shown, based on the defined secretary -->
+                <div id="secretary-unlinked" style="display:none">
+                    <div class="form-group">
+                        <label class="control-label col-sm-3 col-md-2" for="secretaryForename">Secretary forename</label>
+                        <div class="col-sm-9 col-md-3">
+                            <form:input path="secretaryForename" class="form-control" maxlength="50" />
+                        </div>
                     </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3 col-md-2" for="secretarySurname">Secretary surname</label>
+                        <div class="col-sm-9 col-md-3">
+                            <form:input path="secretarySurname" class="form-control" maxlength="50" />
+                        </div>
+                    </div>
+                </div>
+                <!-- use style display:none since the div is dynamically shown, based on the defined secretary -->
+                <div id="secretary-linked" class="form-group" style="display:none">
+                    <div class="col-sm-3 col-md-2 text-right">
+                        <strong>Secretary</strong>
+                    </div>
+                    <div class="col-sm-9 col-md-3">
+                        <span id="secretary-linked-text"></span>
+                        <a class="btn btn-edifice btn-xs" href="#">Unlink</a>
+                    </div>
+                </div>
+            </div>   
+        </fieldset>
+        <fieldset>
+            <div class="form-group">
+                <label class="control-label col-sm-3 col-md-2"></label>
+                <div class="col-sm-9 col-md-3">
+                    <h4 class="text-left">Strategy</h4>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3 col-md-2" for="funds">Funds</label>
+                <div class="col-sm-9 col-md-3">
+                    <form:input path="funds" class="form-control" maxlength="50" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3 col-md-2" for="loans">Loans</label>
+                <div class="col-sm-9 col-md-3">
+                    <form:input path="loans" class="form-control" maxlength="10" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3 col-md-2" for="monthlyIncome">Monthly income</label>
+                <div class="col-sm-9 col-md-3">
+                    <form:input path="monthlyIncome" class="form-control" maxlength="10" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3 col-md-2" for="strategy">Strategy</label>
+                <div class="col-sm-9 col-md-3">
+                    <form:textarea path="strategy" class="form-control" rows="4" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3 col-md-2"></label>
+                <div class="col-sm-9 col-md-3">
+                    <input type="submit" class="btn btn-edifice" />
                 </div>
             </div>
         </fieldset>
-        <input type="submit" class="btn btn-edifice" />
+        
     </form:form>
 
     <ol class="breadcrumb">
