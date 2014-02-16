@@ -27,117 +27,123 @@
         </c:choose>
         <hr />
         <c:url var="formAction" value="${submitUri}" />
-        <form:form commandName="circuitForm" method="${submitMethod}" action="${formAction}" role="form">
+        <form:form class="form-horizontal" commandName="circuitForm" method="${submitMethod}" action="${formAction}" role="form">
             <fieldset>
                 <form:hidden path="personId" />
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <form:input path="name" class="form-control" placeholder="Circuit Name" maxlength="50" /><br />
-                        </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3 col-md-2" for="name">Name</label>
+                    <div class="col-sm-9 col-md-3">
+                        <form:input path="name" class="form-control" placeholder="Circuit Name" maxlength="50" /><br />
                     </div>
                 </div>
             </fieldset>
             <fieldset>
-            <div class="form-group">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h3>Circuit overseer details</h3>
-                        </div>
-                        <div class="col-md-12">
-                            <div id="circuit-overseer-linked" class="alert alert-warning alert-dismissable" style="display:none;">
-                                <button type="button" class="close" data-dismiss="alert">Unlink</button>
-                                Linked to an existing person in the database
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <label>Name</label>
-                        </div>
-                        <div class="col-md-3">
-                                <form:input path="forename" class="form-control" maxlength="50" placeholder="Forename"/>
-                        </div>
-                        <div class="col-md-3">
-                                <form:input path="middleName" class="form-control" maxlength="50" placeholder="Middle name" />
-                        </div>
-                        <div class="col-md-3">
-                                <form:input path="surname" class="form-control" maxlength="50" placeholder="Surname"/>
-                        </div>
+                <div class="col-md-12">
+                    <h3>Circuit overseer details</h3>
+                </div>
+                <div class="col-md-12">
+                    <div id="circuit-overseer-linked" class="alert alert-warning alert-dismissable" style="display:none;">
+                        <button type="button" class="close" data-dismiss="alert">Unlink</button>
+                        Linked to an existing person in the database
                     </div>
-            </div>
-            <div class="form-group">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h4 class="text-left">Address</h4>
-                        </div>
-                        <div class="col-md-3">
-                            <label for="street">Street</label>
-                            <form:input path="street" class="form-control" maxlength="70" placeholder="Street"/>
-                        </div>
-                        <div class="col-md-3">
-                            <label for="town">Town</label>
-                            <form:input path="town" class="form-control" maxlength="30" placeholder="Town"/>
-                        </div>
-                        <div class="col-md-3">
-                            <label for="county">County</label>
-                            <form:input path="county" class="form-control" maxlength="50" placeholder="County"/>
-                        </div>
+                </div>
+                <div class="col-md-10 col-md-offset-2 col-sm-9 col-sm-offset-3">
+                    <h4 class="text-left">Name</h4>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3 col-md-2" for="forename">Forename</label>
+                    <div class="col-sm-9 col-md-3">
+                        <form:input path="forename" class="form-control" maxlength="50" placeholder="Forename"/>
                     </div>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <label for="postcode">Postcode</label>
-                            <form:input path="postcode" class="form-control" maxlength="10" placeholder="Postcode"/>
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3 col-md-2" for="middleName">Middle Name</label>
+                    <div class="col-sm-9 col-md-3">
+                        <form:input path="middleName" class="form-control" maxlength="50" placeholder="Middle name" />
                     </div>
-            </div>
-            <div class="form-group">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h4>Email</h4>
-                        </div>
-                        <div class="col-md-3">
-                                <form:input path="email" class="form-control" maxlength="50" placeholder="Email"/>
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3 col-md-2" for="surname">Surname</label>
+                    <div class=" col-sm-9 col-md-3">
+                        <form:input path="surname" class="form-control" maxlength="50" placeholder="Surname"/>
                     </div>
-            </div>
-            <div class="form-group">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h4>Phone</h4>
-                        </div>
-                        <div class="col-md-3">
-                            <label for="telephone">Home phone</label>
-                            <form:input path="telephone" class="form-control" maxlength="20" placeholder="Home phone"/>
-                        </div>
-                        <div class="col-md-3">
-                            <label for="mobile">Mobile phone</label>
-                            <form:input path="mobile" class="form-control" maxlength="20" placeholder="Mobile phone"/>
-                        </div>
-                        <div class="clearfix"></div>
-                        <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
-                            <c:choose>
-                                <c:when test="${circuitForm.forename != null && circuitForm.surname != null}">
-                                    <fieldset>
-                                        <div class="form-group">
-                                            <div class="row">
-                                                <div class="alert alert-info col-md-9" id="edit-circuit-overseer-person" style="display:none;">
-                                                    <p id="co-link">
-                                                        <script id="edit-circuit-overseer-person-link" type="text/html" charset="utf-8">
-                                                            Click this link if you would like to edit additional fields of the Circuit Overseer
-                                                            <a href="<c:url value='/persons/{{personId}}/edit'/>"><b>{{forename}} {{surname}}</b>
-                                                        </script>
-                                                    </p>
-                                                </div>
+                </div>
+                <div class="col-md-offset-2 col-md-10 col-sm-offset-3 col-sm-9">
+                    <h4 class="text-left">Address</h4>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3 col-md-2" for="street">Street</label>
+                    <div class="col-sm-9 col-md-3">
+                        <form:input path="street" class="form-control" maxlength="70" placeholder="Street"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3 col-md-2" for="town">Town</label>
+                    <div class="col-sm-9 col-md-3">
+                        <form:input path="town" class="form-control" maxlength="30" placeholder="Town"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3 col-md-2" for="county">County</label>
+                    <div class="col-sm-9 col-md-3">
+                        <form:input path="county" class="form-control" maxlength="50" placeholder="County"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3 col-md-2" for="postcode">Postcode</label>
+                    <div class="col-sm-9 col-md-3">
+                        <form:input path="postcode" class="form-control" maxlength="10" placeholder="Postcode"/>
+                    </div>
+                </div><br />
+                <div class="col-sm-offset-3 col-sm-9 col-md-offset-2 col-md-10">
+                    <h4 class="text-left">Contact details</h4>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3 col-md-2" for="email">Email</label>
+                    <div class="col-sm-9 col-md-3">
+                        <form:input path="email" class="form-control" maxlength="50" placeholder="Email"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3 col-md-2" for="telephone">Home phone</label>
+                    <div class="col-sm-9 col-md-3">
+                        <form:input path="telephone" class="form-control" maxlength="20" placeholder="Home phone"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3 col-md-2" for="mobile">Mobile phone</label>
+                    <div class="col-sm-9 col-md-3">
+                        <form:input path="mobile" class="form-control" maxlength="20" placeholder="Mobile phone"/>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="form-group">
+                    <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
+                        <c:choose>
+                            <c:when test="${circuitForm.forename != null && circuitForm.surname != null}">
+                                <fieldset>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="alert alert-info col-md-9" id="edit-circuit-overseer-person" style="display:none;">
+                                                <p id="co-link">
+                                                    <script id="edit-circuit-overseer-person-link" type="text/html" charset="utf-8">
+                                                        Click this link if you would like to edit additional fields of the Circuit Overseer
+                                                        <a href="<c:url value='/persons/{{personId}}/edit'/>"><b>{{forename}} {{surname}}</b>
+                                                    </script>
+                                                </p>
                                             </div>
                                         </div>
-                                    </fieldset>
-                                </c:when>
-                            </c:choose>
-                        </sec:authorize>
-                        <br />
-                        <div class="col-md-12">
-                            <input type="submit" class="btn btn-edifice"/>
-                        </div>
+                                    </div>
+                                </fieldset>
+                            </c:when>
+                        </c:choose>
+                    </sec:authorize>
+                <br />
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3 col-md-2"></label>
+                    <div class="col-sm-9 col-md-2">
+                        <input type="submit" class="btn btn-edifice"/>
                     </div>
                 </div>
             </fieldset>
