@@ -70,6 +70,17 @@ insert into VolunteerInterviewStatus (VolunteerInterviewStatusCode, Name) values
     ('CP', 'Completed'),
     ('NR', 'Not required');
 
+-- create interview sessions based on currently stored interview dates
+insert into InterviewSession(Date, Time, Comments, UpdateTime, UpdatedBy)
+select distinct(Volunteer.InterviewDate), '1200', 'Retrospectively added', CURRENT_TIMESTAMP, 0
+from Volunteer
+where Volunteer.InterviewDate is not null;  
+
+insert into VolunteerInterviewSession(InterviewSessionId, PersonId, VolunteerInterviewStatusCode, Comments, UpdateTime, UpdatedBy)
+select InterviewSession.InterviewSessionId, Volunteer.PersonId, 'CP', 'Retrospectively added', CURRENT_TIMESTAMP, 0
+from InterviewSession
+inner join Volunteer on Volunteer.InterviewDate = InterviewSession.Date;
+
 -- make the interview status nullable, ready to be dropped in the cleanup
 alter table Volunteer modify InterviewStatusCode char(2);
 alter table Volunteer_AUD modify InterviewStatusCode char(2);
