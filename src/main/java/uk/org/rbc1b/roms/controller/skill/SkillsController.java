@@ -35,6 +35,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.controller.LoggingHandlerExceptionResolver;
 import uk.org.rbc1b.roms.db.volunteer.department.DepartmentDao;
@@ -79,6 +81,23 @@ public class SkillsController {
     }
 
     /**
+     * Skill search, making partial (prefix) matches on the skill name.
+     *
+     * @param name full name prefix to match against skill name
+     * @return model containing the list of skills
+     */
+    @RequestMapping(value = "search", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public List<SkillModel> findSkills(@RequestParam(value = "name", required = true) String name) {
+        List<Skill> skills = skillDao.findSkills(name);
+        List<SkillModel> modelList = new ArrayList<SkillModel>(skills.size());
+        for (Skill skill : skills) {
+            modelList.add(skillModelFactory.generateSkillModel(skill));
+        }
+        return modelList;
+    }
+
+    /**
      * Display a specified skill.
      * @param skillId skill id (primary key)
      * @param model mvc model
@@ -114,6 +133,7 @@ public class SkillsController {
             throw new NoSuchRequestHandlingMethodException("No Skill #" + skillId, this.getClass());
         }
         SkillForm form = new SkillForm();
+        form.setSkillId(skill.getSkillId());
         form.setName(skill.getName());
         form.setDepartmentId(skill.getDepartment().getDepartmentId());
         form.setDescription(skill.getDescription());

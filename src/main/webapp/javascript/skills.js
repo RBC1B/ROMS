@@ -28,7 +28,8 @@ $(document).ready(function() {
         rules:{
             name: {
                 minlength: 2,
-                required: true
+                required: true,
+                remote: uniqueSkillNameValidation($("#name"), $("#skillId"))
             },
             department: {
                 required: true
@@ -40,8 +41,38 @@ $(document).ready(function() {
                 maxlength: 250
             }
         },
+        messages: {
+            name: {
+                remote: "This skill name is already used"
+            }
+        },
         errorPlacement: roms.common.validatorErrorPlacement
     });
+    
+    function uniqueSkillNameValidation($nameInput, $idInput) {
+        return {
+            // check for an exact match. Populate the user id
+            url: roms.common.relativePath + "/skills/search",
+            contentType: "application/json",
+            dataType: "json",
+            data: {
+                name: function() {
+                    return $nameInput.val();
+                }
+            },
+            dataFilter: function(rawData) {
+                var data = JSON.parse(rawData)
+                // if we have a match, it must have the same id
+                if (data && data.length > 0 && data[0].name.toLowerCase() == $nameInput.val().toLowerCase() &&
+                        $idInput.val() != data[0].skillId) {
+                    return false;
+                } 
+                // no match
+                return true;
+            }
+        };
+    }
+    
     
     // details
     var listVolunteersActionTemplate = $("#read-only-list-action").html();

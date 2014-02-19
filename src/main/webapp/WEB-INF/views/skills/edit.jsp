@@ -36,6 +36,7 @@
                     <label for="name" class="control-label col-sm-3 col-md-2">Name</label>
                     <div class="col-sm-9 col-md-3">
                         <form:input path="name" class="form-control" maxlength="50" />
+                        <form:hidden path="skillId" />
                     </div>
                 </div>
                 <div class="form-group">

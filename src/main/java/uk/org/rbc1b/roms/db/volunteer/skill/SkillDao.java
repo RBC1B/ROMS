@@ -42,6 +42,15 @@ public interface SkillDao {
     Skill findSkill(Integer skillId);
 
     /**
+     * Find the skill with the prefix match name.
+     * @param name skill name
+     * @return skills
+     */
+    @PreAuthorize("hasPermission('SKILL', 'READ')")
+    @Transactional(readOnly = true)
+    List<Skill> findSkills(String name);
+
+    /**
      * Find all matching skills.
      * @param searchCriteria search criteria
      * @return list of matching skills

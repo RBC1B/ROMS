@@ -47,6 +47,14 @@ public class HibernateSkillDao implements SkillDao {
 
     @SuppressWarnings("unchecked")
     @Override
+    public List<Skill> findSkills(String name) {
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Skill.class);
+        criteria.add(Restrictions.like("name", name + "%"));
+        return criteria.list();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
     public List<Skill> findSkills(SkillSearchCriteria searchCriteria) {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Skill.class);
 
