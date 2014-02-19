@@ -45,6 +45,44 @@
         <div class="tab-content">
             <div class="tab-pane active" id="volunteers">
                 <div class="row-fluid">
+                    <div class="entity-list-results">
+                        <table class="table table-bordered table-condensed table-striped table-hover" id="session-volunteer-list">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Forename</th>
+                                    <th>Surname</th>
+                                    <th>Congregation</th>
+                                    <th>Region</th>
+                                    <th>Comments</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${volunteers}" var="volunteer">
+                                    <tr>
+                                        <td>${volunteer.id}</td>
+                                        <td><c:out value="${volunteer.forename}" /></td>
+                                        <td><c:out value="${volunteer.surname}" /></td>
+                                        <td>
+                                            <c:if test="${!empty volunteer.congregation}">
+                                                <a href="<c:url value='${volunteer.congregation.uri}' />"><c:out value="${volunteer.congregation.name}" /></a>
+                                            </c:if>
+                                        </td>
+                                        <td><c:out value="${volunteer.rbcSubRegion}" /></td>
+                                        <td><c:out value="${volunteer.comments}" /></td>
+                                        <td><c:out value="${volunteer.interviewStatus}" /></td>
+                                        <td>
+                                            <ul class="list-inline">
+                                                <li><a class="btn btn-success" href="<c:url value="${volunteer.uri}" />">View</a></li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

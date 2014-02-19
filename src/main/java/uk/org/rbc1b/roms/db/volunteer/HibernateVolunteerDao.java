@@ -41,6 +41,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Repository;
 import uk.org.rbc1b.roms.controller.common.SortDirection;
 import uk.org.rbc1b.roms.db.volunteer.department.Assignment;
+import uk.org.rbc1b.roms.db.volunteer.interview.VolunteerInterviewSession;
 import uk.org.rbc1b.roms.db.volunteer.qualification.VolunteerQualification;
 import uk.org.rbc1b.roms.db.volunteer.skill.VolunteerSkill;
 import uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTrade;
@@ -148,6 +149,15 @@ public class HibernateVolunteerDao implements VolunteerDao {
             qualificationCriteria.setProjection(Projections.property("personId"));
 
             criteria.add(Property.forName("personId").in(qualificationCriteria));
+        }
+
+        if (searchCriteria.getInterviewSessionId() != null) {
+            DetachedCriteria interviewCriteria = DetachedCriteria.forClass(VolunteerInterviewSession.class);
+            interviewCriteria.add(Restrictions.eq("interviewSession.interviewSessionId",
+                    searchCriteria.getInterviewSessionId()));
+            interviewCriteria.setProjection(Projections.property("volunteer.personId"));
+
+            criteria.add(Property.forName("personId").in(interviewCriteria));
         }
 
         return criteria;

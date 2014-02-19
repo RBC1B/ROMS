@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -73,6 +74,14 @@ public class HibernateInterviewSessionDao implements InterviewSessionDao {
             statusCounts.put(statusCode, count);
         }
         return sessionStatusCounts;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<VolunteerInterviewSession> findVolunteerInterviewSessions(Integer interviewSessionId) {
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(VolunteerInterviewSession.class);
+        criteria.add(Restrictions.eq("interviewSession.interviewSessionId", interviewSessionId));
+        return criteria.list();
     }
 
 }

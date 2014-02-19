@@ -24,8 +24,12 @@
 package uk.org.rbc1b.roms.controller.volunteer.interview;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -33,8 +37,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
+import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
+import uk.org.rbc1b.roms.controller.volunteer.VolunteerModelFactory;
+import uk.org.rbc1b.roms.db.Congregation;
+import uk.org.rbc1b.roms.db.CongregationDao;
+import uk.org.rbc1b.roms.db.Person;
+import uk.org.rbc1b.roms.db.reference.ReferenceDao;
+import uk.org.rbc1b.roms.db.volunteer.Volunteer;
+import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
+import uk.org.rbc1b.roms.db.volunteer.VolunteerSearchCriteria;
 import uk.org.rbc1b.roms.db.volunteer.interview.InterviewSession;
 import uk.org.rbc1b.roms.db.volunteer.interview.InterviewSessionDao;
+import uk.org.rbc1b.roms.db.volunteer.interview.VolunteerInterviewSession;
 
 /**
  * Handler the volunteer interview session and invitations.
@@ -42,12 +56,25 @@ import uk.org.rbc1b.roms.db.volunteer.interview.InterviewSessionDao;
 @Controller
 @RequestMapping(value = "/interview-sessions")
 public class InterviewSessionsController {
+    private static final Logger LOG = LoggerFactory.getLogger(InterviewSessionsController.class);
 
     @Autowired
     private InterviewSessionDao interviewSessionDao;
 
     @Autowired
     private InterviewSessionModelFactory interviewSessionModelFactory;
+
+    @Autowired
+    private VolunteerDao volunteerDao;
+
+    @Autowired
+    private CongregationDao congregationDao;
+
+    @Autowired
+    private PersonModelFactory personModelFactory;
+
+    @Autowired
+    private ReferenceDao referenceDao;
 
     /**
      * Display a list of volunteer interview sessions.
@@ -96,8 +123,61 @@ public class InterviewSessionsController {
                 sessionVolunteerCounts.get(interviewSessionId));
 
         model.addAttribute("interviewSession", sessionModel);
+        model.addAttribute("volunteers", generateVolunterList(interviewSessionId));
         model.addAttribute("listUri", InterviewSessionModelFactory.generateUri(null));
         return "volunteers/interview-sessions/show";
+    }
+
+    private List<VolunteerInterviewSessionModel> generateVolunterList(Integer interviewSessionId) {
+
+        List<VolunteerInterviewSession> volunteerInterviewSessions = interviewSessionDao
+                .findVolunteerInterviewSessions(interviewSessionId);
+        if (volunteerInterviewSessions.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        VolunteerSearchCriteria volunteerSearchCriteria = new VolunteerSearchCriteria();
+        volunteerSearchCriteria.setInterviewSessionId(interviewSessionId);
+        List<Volunteer> volunteers = volunteerDao.findVolunteers(volunteerSearchCriteria);
+
+        Map<Integer, Volunteer> volunteerMap = new HashMap<Integer, Volunteer>();
+        for (Volunteer volunteer : volunteers) {
+            volunteerMap.put(volunteer.getPersonId(), volunteer);
+        }
+
+        Map<String, String> interviewStatusValues = referenceDao.findVolunteerInterviewStatusValues();
+
+        List<VolunteerInterviewSessionModel> modelList = new ArrayList<VolunteerInterviewSessionModel>();
+        for (VolunteerInterviewSession volunteerInterviewSession : volunteerInterviewSessions) {
+            Volunteer volunteer = volunteerMap.get(volunteerInterviewSession.getVolunteer().getPersonId());
+            if (volunteer == null) {
+                LOG.error("Failed to look up Volunteer #{}, linked to InterviewSession #{}", volunteerInterviewSession
+                        .getVolunteer().getPersonId(), interviewSessionId);
+                continue;
+            }
+
+            VolunteerInterviewSessionModel model = new VolunteerInterviewSessionModel();
+            model.setComments(volunteerInterviewSession.getComments());
+
+            Person person = volunteer.getPerson();
+            if (person.getCongregation() != null) {
+                Congregation congregation = congregationDao.findCongregation(person.getCongregation()
+                        .getCongregationId());
+
+                model.setCongregation(personModelFactory.generateCongregationModel(congregation));
+                if (congregation.getRbcRegionId() != null) {
+                    model.setRbcSubRegion(referenceDao.findRbcSubRegionValues().get(congregation.getRbcSubRegionId()));
+                }
+            }
+            model.setId(person.getPersonId());
+            model.setForename(person.getForename());
+            model.setSurname(person.getSurname());
+            model.setInterviewStatus(interviewStatusValues.get(volunteerInterviewSession
+                    .getVolunteerInterviewStatusCode()));
+            model.setUri(VolunteerModelFactory.generateUri(person.getPersonId()));
+            modelList.add(model);
+        }
+        return modelList;
     }
 
 }

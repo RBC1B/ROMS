@@ -32,12 +32,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.org.rbc1b.roms.controller.common.model.EntityModel;
 import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
-import uk.org.rbc1b.roms.controller.congregation.CongregationModelFactory;
 import uk.org.rbc1b.roms.controller.department.DepartmentModelFactory;
 import uk.org.rbc1b.roms.controller.qualification.QualificationModelFactory;
 import uk.org.rbc1b.roms.controller.skill.SkillModelFactory;
-import uk.org.rbc1b.roms.db.Congregation;
-import uk.org.rbc1b.roms.db.CongregationDao;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
@@ -65,8 +62,6 @@ public class VolunteerModelFactory {
     private ReferenceDao referenceDao;
     @Autowired
     private PersonModelFactory personModelFactory;
-    @Autowired
-    private CongregationDao congregationDao;
     @Autowired
     private SkillDao skillDao;
     @Autowired
@@ -104,7 +99,8 @@ public class VolunteerModelFactory {
         Person person = volunteer.getPerson();
 
         if (person.getCongregation() != null) {
-            model.setCongregation(generateCongregationModel(person.getCongregation().getCongregationId()));
+            model.setCongregation(personModelFactory.generateCongregationModel(person.getCongregation()
+                    .getCongregationId()));
         }
         model.setEmail(person.getEmail());
         model.setForename(person.getForename());
@@ -133,7 +129,8 @@ public class VolunteerModelFactory {
         model.setBirthDate(person.getBirthDate());
         model.setComments(person.getComments());
         if (person.getCongregation() != null) {
-            model.setCongregation(generateCongregationModel(person.getCongregation().getCongregationId()));
+            model.setCongregation(personModelFactory.generateCongregationModel(person.getCongregation()
+                    .getCongregationId()));
         }
         model.setEmail(person.getEmail());
         model.setForename(person.getForename());
@@ -196,21 +193,6 @@ public class VolunteerModelFactory {
         model.setEditRbcStatusCodeUri(generateUri(volunteer.getPersonId()) + "/rbc-status-code");
 
         return model;
-    }
-
-    private EntityModel generateCongregationModel(Integer congregationId) {
-        if (congregationId == null) {
-            return null;
-        }
-
-        Congregation congregation = congregationDao.findCongregation(congregationId);
-
-        EntityModel congregationModel = new EntityModel();
-        congregationModel.setId(congregation.getCongregationId());
-        congregationModel.setName(congregation.getName());
-        congregationModel.setUri(CongregationModelFactory.generateUri(congregation.getCongregationId()));
-
-        return congregationModel;
     }
 
     private Map<Long, Boolean> generateAvailability(String availability) {

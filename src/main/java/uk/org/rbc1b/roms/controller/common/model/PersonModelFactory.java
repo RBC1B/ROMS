@@ -111,13 +111,26 @@ public class PersonModelFactory {
         return model;
     }
 
-    private EntityModel generateCongregationModel(Integer congregationId) {
+    /**
+     * Generate the simplified entity model to represent the volunteer congregation.
+     * @param congregationId congregation id
+     * @return entity model
+     */
+    public EntityModel generateCongregationModel(Integer congregationId) {
         if (congregationId == null) {
             return null;
         }
 
         Congregation congregation = congregationDao.findCongregation(congregationId);
+        return generateCongregationModel(congregation);
+    }
 
+    /**
+     * Generate the simplified entity model to represent the volunteer congregation.
+     * @param congregation congregation
+     * @return entity model
+     */
+    public EntityModel generateCongregationModel(Congregation congregation) {
         EntityModel congregationModel = new EntityModel();
         congregationModel.setId(congregation.getCongregationId());
         congregationModel.setName(congregation.getName());

@@ -810,6 +810,17 @@ $(document).ready(function() {
             ]
         });
     
-    
+    // volunteer interview sessions
+    roms.common.datatables(
+        $("#session-volunteer-list"),
+        {
+            "iDisplayLength": 50,
+            "aoColumnDefs": [
+                {
+                    'bSortable': false,
+                    'aTargets': [7]
+                }
+            ]
+        });
     
 });

@@ -33,6 +33,7 @@ public class VolunteerSearchCriteria extends AbstractSearchCriteria {
     private Integer congregationId;
     private Integer skillId;
     private Integer qualificationId;
+    private Integer interviewSessionId;
 
     @Override
     public VolunteerSearchCriteria clone() {
@@ -50,6 +51,14 @@ public class VolunteerSearchCriteria extends AbstractSearchCriteria {
 
     public void setCongregationId(Integer congregationId) {
         this.congregationId = congregationId;
+    }
+
+    public Integer getInterviewSessionId() {
+        return interviewSessionId;
+    }
+
+    public void setInterviewSessionId(Integer interviewSessionId) {
+        this.interviewSessionId = interviewSessionId;
     }
 
     public Integer getQualificationId() {
