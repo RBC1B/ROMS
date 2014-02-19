@@ -38,6 +38,9 @@
                         <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
                             <li role="menuitem"><a href="<c:url value="/person-changes" />">Form updates</a></li>
                         </sec:authorize>
+                        <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
+                            <li role="menuitem"><a href="<c:url value="/interview-sessions" />">Interview sessions</a></li>
+                        </sec:authorize>
                         <sec:authorize access="hasPermission('SKILL', 'READ')">
                             <li role="menuitem"><a href="<c:url value="/qualifications" />">Qualifications</a></li>
                         </sec:authorize>
