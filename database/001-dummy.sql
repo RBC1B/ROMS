@@ -48,8 +48,8 @@ alter table VolunteerQualification AUTO_INCREMENT=1;
 alter table PersonChange AUTO_INCREMENT=1;
 alter table Person AUTO_INCREMENT=1;
 
-insert into Person(Forename, Surname, Street, Comments, UpdateTime, UpdatedBy)
-values ('Ramindur', 'Singh', '9 The Alders', 'Test user account', NOW(), 0);
+insert into Person(Forename, Surname, Street, Comments, BirthDate, UpdateTime, UpdatedBy)
+values ('Ramindur', 'Singh', '9 The Alders', 'Test user account', '1965-05-12', NOW(), 0);
 
 insert into Person(Forename, MiddleName, Surname,
                     Street, Town, County, Postcode,
