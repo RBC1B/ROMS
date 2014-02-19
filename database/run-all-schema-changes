@@ -14,7 +14,7 @@ COMBINED="$BASEDIR/all-schema-changes.sql"
 echo "" > $COMBINED
 
 ## concatenate the schema changes and dummy data into the single file
-for INDEX in {1..2}; do
+for INDEX in {1..50}; do
     if [ $INDEX -lt 10 ]
     then
         FILE="$BASEDIR/00"
