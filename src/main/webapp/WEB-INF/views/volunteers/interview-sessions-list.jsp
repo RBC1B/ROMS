@@ -33,8 +33,8 @@
                                     <a href="<c:url value='${interviewSession.kingdomHall.uri}' />"><c:out value="${interviewSession.kingdomHall.name}" /></a>
                                 </c:if>
                             </td>
-                            <td></td>
-                            <td></td>
+                            <td>${interviewSession.invitedVolunteerCount}</td>
+                            <td>${interviewSession.confirmedVolunteerCount}</td>
                             <td>
                                 <ul class="list-inline">
                                     <li><a class="btn btn-success" href="<c:url value="${interviewSession.uri}" />">View</a></li>

@@ -24,6 +24,7 @@
 package uk.org.rbc1b.roms.db.volunteer.interview;
 
 import java.util.List;
+import java.util.Map;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -37,4 +38,11 @@ public interface InterviewSessionDao {
      */
     @Transactional(readOnly = true)
     List<InterviewSession> findInterviewSessions();
+
+    /**
+     * Find the number of volunteers for each given status for each session.
+     * @return map of interview status volunteer counts, keyed against the session id
+     */
+    @Transactional(readOnly = true)
+    Map<Integer, Map<String, Integer>> findInterviewSessionVolunteerCounts();
 }

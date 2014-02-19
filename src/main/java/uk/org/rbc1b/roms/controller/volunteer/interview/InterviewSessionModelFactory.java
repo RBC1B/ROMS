@@ -23,6 +23,7 @@
  */
 package uk.org.rbc1b.roms.controller.volunteer.interview;
 
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.org.rbc1b.roms.controller.common.model.EntityModel;
@@ -30,6 +31,7 @@ import uk.org.rbc1b.roms.controller.kingdomhall.KingdomHallModelFactory;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHallDao;
 import uk.org.rbc1b.roms.db.volunteer.interview.InterviewSession;
+import uk.org.rbc1b.roms.db.volunteer.interview.VolunteerInterviewSession;
 
 /**
  * Create interview session models.
@@ -53,9 +55,11 @@ public class InterviewSessionModelFactory {
     /**
      * Create an interview session model.
      * @param interviewSession session
+     * @param volunteerStatusCounts map of volunteer counts, mapped by interview status code
      * @return model
      */
-    public InterviewSessionModel generateInterviewSessionModel(InterviewSession interviewSession) {
+    public InterviewSessionModel generateInterviewSessionModel(InterviewSession interviewSession,
+            Map<String, Integer> volunteerStatusCounts) {
 
         if (interviewSession == null) {
             return null;
@@ -77,6 +81,21 @@ public class InterviewSessionModelFactory {
         }
 
         model.setUri(generateUri(interviewSession.getInterviewSessionId()));
+
+        if (volunteerStatusCounts != null) {
+            int invitedCount = 0;
+            int confirmedCount = 0;
+
+            for (Map.Entry<String, Integer> entry : volunteerStatusCounts.entrySet()) {
+                invitedCount += entry.getValue();
+                if (entry.getKey().equals(VolunteerInterviewSession.CONFIRMED_INTERVIEW_STATUS_CODE)
+                        || entry.getKey().equals(VolunteerInterviewSession.COMPLETED_INTERVIEW_STATUS_CODE)) {
+                    confirmedCount += entry.getValue();
+                }
+            }
+            model.setInvitedVolunteerCount(invitedCount);
+            model.setConfirmedVolunteerCount(confirmedCount);
+        }
 
         return model;
     }

@@ -32,6 +32,8 @@ import uk.org.rbc1b.roms.db.volunteer.Volunteer;
  * Link between a volunteer and the interview session they were invited to.
  */
 public class VolunteerInterviewSession implements UpdateAuditable, Serializable {
+    public static final String CONFIRMED_INTERVIEW_STATUS_CODE = "CF";
+    public static final String COMPLETED_INTERVIEW_STATUS_CODE = "CP";
     private static final long serialVersionUID = -5602798115958399326L;
     private Integer volunteerInterviewSessionId;
     private InterviewSession interviewSession;

@@ -25,6 +25,7 @@ package uk.org.rbc1b.roms.controller.volunteer.interview;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -56,10 +57,13 @@ public class InterviewSessionsController {
     public String showInterviewSessionList(ModelMap model) {
 
         List<InterviewSession> sessions = interviewSessionDao.findInterviewSessions();
+        Map<Integer, Map<String, Integer>> sessionVolunteerCounts = interviewSessionDao
+                .findInterviewSessionVolunteerCounts();
 
         List<InterviewSessionModel> modelList = new ArrayList<InterviewSessionModel>(sessions.size());
         for (InterviewSession session : sessions) {
-            modelList.add(interviewSessionModelFactory.generateInterviewSessionModel(session));
+            modelList.add(interviewSessionModelFactory.generateInterviewSessionModel(session,
+                    sessionVolunteerCounts.get(session.getInterviewSessionId())));
         }
 
         model.addAttribute("interviewSessions", modelList);

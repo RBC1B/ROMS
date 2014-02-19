@@ -36,6 +36,8 @@ public class InterviewSessionModel {
     private String time;
     private String comments;
     private String uri;
+    private int invitedVolunteerCount;
+    private int confirmedVolunteerCount;
 
     /**
      * Simplistic time formatter, returning the time in HH:mm format.
@@ -86,6 +88,22 @@ public class InterviewSessionModel {
 
     public void setUri(String uri) {
         this.uri = uri;
+    }
+
+    public int getInvitedVolunteerCount() {
+        return invitedVolunteerCount;
+    }
+
+    public void setInvitedVolunteerCount(int invitedVolunteerCount) {
+        this.invitedVolunteerCount = invitedVolunteerCount;
+    }
+
+    public int getConfirmedVolunteerCount() {
+        return confirmedVolunteerCount;
+    }
+
+    public void setConfirmedVolunteerCount(int confirmedVolunteerCount) {
+        this.confirmedVolunteerCount = confirmedVolunteerCount;
     }
 
 }

@@ -64,6 +64,7 @@ create table VolunteerInterviewSession_AUD (
 
 insert into VolunteerInterviewStatus (VolunteerInterviewStatusCode, Name) values
     ('IT', 'Invited'),
+    ('CF', 'Confirmed'),
     ('CC', 'Cancelled'),
     ('NS', 'No-Show'),
     ('CP', 'Completed'),

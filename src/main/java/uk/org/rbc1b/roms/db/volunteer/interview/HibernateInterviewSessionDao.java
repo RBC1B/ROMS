@@ -23,7 +23,9 @@
  */
 package uk.org.rbc1b.roms.db.volunteer.interview;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,28 @@ public class HibernateInterviewSessionDao implements InterviewSessionDao {
     public List<InterviewSession> findInterviewSessions() {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(InterviewSession.class);
         return criteria.list();
+    }
+
+    @Override
+    public Map<Integer, Map<String, Integer>> findInterviewSessionVolunteerCounts() {
+        Map<Integer, Map<String, Integer>> sessionStatusCounts = new HashMap<Integer, Map<String, Integer>>();
+        @SuppressWarnings("unchecked")
+        List<Object[]> results = this.sessionFactory.getCurrentSession().getNamedQuery("findSessionCountsByStatus")
+                .list();
+        for (Object[] result : results) {
+            Integer sessionId = (Integer) result[0];
+
+            Map<String, Integer> statusCounts = sessionStatusCounts.get(sessionId);
+            if (statusCounts == null) {
+                statusCounts = new HashMap<String, Integer>();
+                sessionStatusCounts.put(sessionId, statusCounts);
+            }
+
+            String statusCode = (String) result[1];
+            Integer count = (Integer) result[2];
+            statusCounts.put(statusCode, count);
+        }
+        return sessionStatusCounts;
     }
 
 }
