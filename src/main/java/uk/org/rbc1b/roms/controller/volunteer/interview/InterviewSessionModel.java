@@ -36,6 +36,7 @@ public class InterviewSessionModel {
     private String time;
     private String comments;
     private String uri;
+    private String editUri;
     private int invitedVolunteerCount;
     private int confirmedVolunteerCount;
 
@@ -88,6 +89,14 @@ public class InterviewSessionModel {
 
     public void setUri(String uri) {
         this.uri = uri;
+    }
+
+    public String getEditUri() {
+        return editUri;
+    }
+
+    public void setEditUri(String editUri) {
+        this.editUri = editUri;
     }
 
     public int getInvitedVolunteerCount() {

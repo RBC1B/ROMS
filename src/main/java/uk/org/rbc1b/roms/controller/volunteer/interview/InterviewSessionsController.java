@@ -29,8 +29,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.db.volunteer.interview.InterviewSession;
 import uk.org.rbc1b.roms.db.volunteer.interview.InterviewSessionDao;
 
@@ -68,6 +70,34 @@ public class InterviewSessionsController {
 
         model.addAttribute("interviewSessions", modelList);
         model.addAttribute("newUri", InterviewSessionModelFactory.generateUri(null) + "new");
-        return "volunteers/interview-sessions-list";
+        return "volunteers/interview-sessions/list";
     }
+
+    /**
+     * Show an individual interview session details.
+     * @param interviewSessionId id
+     * @param model model
+     * @return view name
+     * @throws NoSuchRequestHandlingMethodException  on failure to find the interview session
+     */
+    @RequestMapping(value = "{interviewSessionId}", method = RequestMethod.GET)
+    public String showInterviewSession(@PathVariable Integer interviewSessionId, ModelMap model)
+            throws NoSuchRequestHandlingMethodException {
+        InterviewSession session = interviewSessionDao.findInterviewSession(interviewSessionId);
+        if (session == null) {
+            throw new NoSuchRequestHandlingMethodException("No session with id [" + interviewSessionId + "]",
+                    this.getClass());
+        }
+
+        Map<Integer, Map<String, Integer>> sessionVolunteerCounts = interviewSessionDao
+                .findInterviewSessionVolunteerCounts();
+
+        InterviewSessionModel sessionModel = interviewSessionModelFactory.generateInterviewSessionModel(session,
+                sessionVolunteerCounts.get(interviewSessionId));
+
+        model.addAttribute("interviewSession", sessionModel);
+        model.addAttribute("listUri", InterviewSessionModelFactory.generateUri(null));
+        return "volunteers/interview-sessions/show";
+    }
+
 }

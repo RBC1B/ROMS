@@ -40,6 +40,14 @@ public interface InterviewSessionDao {
     List<InterviewSession> findInterviewSessions();
 
     /**
+     * Get a single interview sessions.
+     * @param interviewSessionId primary key
+     * @return interview session
+     */
+    @Transactional(readOnly = true)
+    InterviewSession findInterviewSession(Integer interviewSessionId);
+
+    /**
      * Find the number of volunteers for each given status for each session.
      * @return map of interview status volunteer counts, keyed against the session id
      */

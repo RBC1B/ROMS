@@ -81,6 +81,7 @@ public class InterviewSessionModelFactory {
         }
 
         model.setUri(generateUri(interviewSession.getInterviewSessionId()));
+        model.setEditUri(generateUri(interviewSession.getInterviewSessionId()) + "/edit");
 
         if (volunteerStatusCounts != null) {
             int invitedCount = 0;

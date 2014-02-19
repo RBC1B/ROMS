@@ -48,6 +48,12 @@ public class HibernateInterviewSessionDao implements InterviewSessionDao {
     }
 
     @Override
+    public InterviewSession findInterviewSession(Integer interviewSessionId) {
+        return (InterviewSession) this.sessionFactory.getCurrentSession().get(InterviewSession.class,
+                interviewSessionId);
+    }
+
+    @Override
     public Map<Integer, Map<String, Integer>> findInterviewSessionVolunteerCounts() {
         Map<Integer, Map<String, Integer>> sessionStatusCounts = new HashMap<Integer, Map<String, Integer>>();
         @SuppressWarnings("unchecked")
