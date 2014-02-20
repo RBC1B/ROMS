@@ -374,7 +374,9 @@ $(document).ready(function() {
             contentType: "application/json",
             dataType: 'json',
             success: function(data) {
-                $("#birthDate").val(data.birthDate);
+                if (data.birthDate) {
+                    $("#birthDate").val($.datepicker.formatDate('dd/mm/yy', new Date(data.birthDate)));
+                }
                 $("input[name='middleName']").val(data.middleName);
                 $("input[name='telephone']").val(data.telephone);
                 $("input[name='mobile']").val(data.mobile);
