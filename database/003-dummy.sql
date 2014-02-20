@@ -10,4 +10,4 @@ insert into VolunteerInterviewSession (InterviewSessionId, PersonId, VolunteerIn
 values 
     (1, 6, 'IT', null, '2014-02-13 18:27:00', 0),
     (1, 8, 'CC', 'Washing his hair that day', '2014-02-13 18:27:00', 0),
-    (2, 9, 'CP', 'Was not wearing socks!', '2014-02-13 18:27:00', 0)    
+    (2, 9, 'CP', 'Was not wearing socks!', '2014-02-13 18:27:00', 0);
