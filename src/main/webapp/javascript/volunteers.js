@@ -389,7 +389,6 @@ $(document).ready(function() {
                 if (data.address) {
                     $("input[name='street']").val(data.address.street);
                     $("input[name='town']").val(data.address.town);
-                    $("input[name='county']").val(data.address.county);
                     $("input[name='postcode']").val(data.address.postcode);
                 }
             }
