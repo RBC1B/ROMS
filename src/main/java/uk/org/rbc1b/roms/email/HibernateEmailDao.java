@@ -21,38 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.db;
+package uk.org.rbc1b.roms.email;
 
 import java.util.List;
-import org.springframework.transaction.annotation.Transactional;
+import org.hibernate.Criteria;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 /**
- * Accesses the Email table.
+ * Implements email table DAO.
  *
  */
-public interface EmailDao {
+@Repository
+public class HibernateEmailDao implements EmailDao {
 
-    /**
-     * Gets a list of emails.
-     *
-     * @return emails list or null if there is none
-     */
-    @Transactional
-    List<Email> findAll();
+    @Autowired
+    private SessionFactory sessionFactory;
 
-    /**
-     * Saves an email to the table.
-     *
-     * @param email the email to save
-     */
-    @Transactional
-    void save(Email email);
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Email> findAll() {
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Email.class);
+        return criteria.addOrder(Order.asc("emailId")).list();
+    }
 
-    /**
-     * Deletes a row from the table.
-     *
-     * @param email the email to delete
-     */
-    @Transactional
-    void delete(Email email);
+    @SuppressWarnings("unchecked")
+    @Override
+    public void save(Email email) {
+        if (email != null) {
+            this.sessionFactory.getCurrentSession().save(email);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void delete(Email email) {
+        if (email != null) {
+            this.sessionFactory.getCurrentSession().delete(email);
+        }
+    }
+
 }

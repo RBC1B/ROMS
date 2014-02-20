@@ -21,31 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.db;
+package uk.org.rbc1b.roms.email;
 
 import java.util.List;
-import org.springframework.transaction.annotation.Transactional;
+import org.hibernate.Criteria;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 /**
- * Dao for MailRecipient table.
+ * Implementation of MailRecipientDao.
  */
-public interface MailRecipientDao {
+@Repository
+public class HibernateMailRecipientDao implements MailRecipientDao {
 
-    /**
-     * Gets a list of mail recipients by mail type id.
-     *
-     * @param mailTypeId the mail type id
-     * @return List of mail recipients
-     */
-    @Transactional
-    List<MailRecipient> getRecipientByMailTypeId(Integer mailTypeId);
+    @Autowired
+    private SessionFactory sessionFactory;
 
-    /**
-     * Gets a list of mail recipient by mail code.
-     *
-     * @param mailCode the mail code
-     * @return list of mail recipients
-     */
-    @Transactional
-    List<MailRecipient> getRecipientByMailCode(String mailCode);
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<MailRecipient> getRecipientByMailTypeId(Integer mailTypeId) {
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(MailRecipient.class);
+        criteria.add(Restrictions.eq("mailType.mailTypeId", mailTypeId));
+        return criteria.list();
+    }
+
+    // TO DO: This needs fixing.
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<MailRecipient> getRecipientByMailCode(String mailCode) {
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(MailRecipient.class);
+        criteria.add(Restrictions.like("mailType.mailCode", mailCode));
+        return criteria.list();
+    }
 }

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="uk.org.rbc1b.roms.db">
-  <class name="uk.org.rbc1b.roms.db.EmailAttachment" table="EmailAttachment">
+  <class name="uk.org.rbc1b.roms.email.EmailAttachment" table="EmailAttachment">
     <id name="emailAttachmentId">
       <generator class="identity"/>
     </id>
     <many-to-one column="EmailId" name="email" not-null="true"/>
-    <property name="filename" length="100" />
-    <property name="fileType" length="15" />
+    <property length="100" name="filename"/>
+    <property length="15" name="fileType"/>
     <property name="attachment" type="blob"/>
   </class>
 </hibernate-mapping>

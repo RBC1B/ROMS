@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="uk.org.rbc1b.roms.email.MailRecipient">
+    <id name="mailRecipientId">
+      <generator class="identity"/>
+    </id>
+    <many-to-one class="uk.org.rbc1b.roms.email.MailType" column="MailTypeId" lazy="false" name="mailType" not-null="true"/>
+    <many-to-one class="uk.org.rbc1b.roms.db.Person" column="PersonId" name="person" not-null="true"/>
+  </class>
+</hibernate-mapping>

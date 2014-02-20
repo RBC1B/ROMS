@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="uk.org.rbc1b.roms.db">
-  <class name="uk.org.rbc1b.roms.db.Email" table="Email">
+  <class name="uk.org.rbc1b.roms.email.Email" table="Email">
     <id name="emailId">
       <generator class="identity"/>
     </id>
@@ -10,7 +10,7 @@
     <property length="1000" name="text"/>
     <set inverse="true" lazy="false" name="emailAttachments">
       <key column="emailId" not-null="true"/>
-      <one-to-many class="uk.org.rbc1b.roms.db.EmailAttachment"/>
+      <one-to-many class="uk.org.rbc1b.roms.email.EmailAttachment"/>
     </set>
   </class>
 </hibernate-mapping>

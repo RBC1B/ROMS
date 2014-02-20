@@ -32,9 +32,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
-import uk.org.rbc1b.roms.db.Email;
-import uk.org.rbc1b.roms.db.EmailAttachment;
-import uk.org.rbc1b.roms.db.EmailDao;
+import uk.org.rbc1b.roms.email.Email;
+import uk.org.rbc1b.roms.email.EmailAttachment;
+import uk.org.rbc1b.roms.email.EmailDao;
 
 /**
  * Edifice Mailer that sends out emails.

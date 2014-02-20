@@ -21,60 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.db;
+package uk.org.rbc1b.roms.email;
 
-import java.io.Serializable;
+import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
- *
- * @author ramindursingh
+ * Dao for MailRecipient table.
  */
-public class MailRecipient implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-    private Integer mailRecipientId;
-    private MailType mailType;
-    private Person person;
+public interface MailRecipientDao {
 
     /**
-     * @return the mailRecipientId
+     * Gets a list of mail recipients by mail type id.
+     *
+     * @param mailTypeId the mail type id
+     * @return List of mail recipients
      */
-    public Integer getMailRecipientId() {
-        return mailRecipientId;
-    }
+    @Transactional
+    List<MailRecipient> getRecipientByMailTypeId(Integer mailTypeId);
 
     /**
-     * @param mailRecipientId the mailRecipientId to set
+     * Gets a list of mail recipient by mail code.
+     *
+     * @param mailCode the mail code
+     * @return list of mail recipients
      */
-    public void setMailRecipientId(Integer mailRecipientId) {
-        this.mailRecipientId = mailRecipientId;
-    }
-
-    /**
-     * @return the mailType
-     */
-    public MailType getMailType() {
-        return mailType;
-    }
-
-    /**
-     * @param mailType the mailType to set
-     */
-    public void setMailType(MailType mailType) {
-        this.mailType = mailType;
-    }
-
-    /**
-     * @return the person
-     */
-    public Person getPerson() {
-        return person;
-    }
-
-    /**
-     * @param person the person to set
-     */
-    public void setPerson(Person person) {
-        this.person = person;
-    }
+    @Transactional
+    List<MailRecipient> getRecipientByMailCode(String mailCode);
 }

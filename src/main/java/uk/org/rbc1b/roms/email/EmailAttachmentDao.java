@@ -21,38 +21,48 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.db;
+
+package uk.org.rbc1b.roms.email;
 
 import java.util.List;
-import org.hibernate.Criteria;
-import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+
+import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Implementation of MailRecipientDao.
+ * Accesses the EmailAttachment table.
  */
-@Repository
-public class HibernateMailRecipientDao implements MailRecipientDao {
+public interface EmailAttachmentDao {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    /**
+     * Gets a list of email attachments.
+     *
+     * @return emailAttachments list or null if there is none
+     */
+    @Transactional(readOnly = true)
+    List<EmailAttachment> findAll();
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<MailRecipient> getRecipientByMailTypeId(Integer mailTypeId) {
-        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(MailRecipient.class);
-        criteria.add(Restrictions.eq("mailType.mailTypeId", mailTypeId));
-        return criteria.list();
-    }
+    /**
+     * Gets a list of email attachments by email id.
+     *
+     * @param email the email for which to get the attachments
+     * @return emailAttachments list or null if there is none
+     */
+    @Transactional(readOnly = true)
+    List<EmailAttachment> findByEmail(Email email);
 
-    // TO DO: This needs fixing.
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<MailRecipient> getRecipientByMailCode(String mailCode) {
-        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(MailRecipient.class);
-        criteria.add(Restrictions.like("mailType.mailCode", mailCode));
-        return criteria.list();
-    }
+    /**
+     * Saves an emailAttachment to the table.
+     *
+     * @param emailAttachment the email attachment to save
+     */
+    @Transactional
+    void save(EmailAttachment emailAttachment);
+
+    /**
+     * Deletes a row from the table.
+     *
+     * @param emailAttachment the email attachment to delete
+     */
+    @Transactional
+    void delete(EmailAttachment emailAttachment);
 }

@@ -21,48 +21,60 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+package uk.org.rbc1b.roms.email;
 
-package uk.org.rbc1b.roms.db;
-
-import java.util.List;
-
-import org.springframework.transaction.annotation.Transactional;
+import java.io.Serializable;
 
 /**
- * Accesses the EmailAttachment table.
+ *
+ * @author ramindursingh
  */
-public interface EmailAttachmentDao {
+public class MailType implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    private Integer mailTypeId;
+    private String mailCode;
+    private String description;
 
     /**
-     * Gets a list of email attachments.
-     *
-     * @return emailAttachments list or null if there is none
+     * @return the mailTypeId
      */
-    @Transactional(readOnly = true)
-    List<EmailAttachment> findAll();
+    public Integer getMailTypeId() {
+        return mailTypeId;
+    }
 
     /**
-     * Gets a list of email attachments by email id.
-     *
-     * @param email the email for which to get the attachments
-     * @return emailAttachments list or null if there is none
+     * @param mailTypeId the mailTypeId to set
      */
-    @Transactional(readOnly = true)
-    List<EmailAttachment> findByEmail(Email email);
+    public void setMailTypeId(Integer mailTypeId) {
+        this.mailTypeId = mailTypeId;
+    }
 
     /**
-     * Saves an emailAttachment to the table.
-     *
-     * @param emailAttachment the email attachment to save
+     * @return the mailCode
      */
-    @Transactional
-    void save(EmailAttachment emailAttachment);
+    public String getMailCode() {
+        return mailCode;
+    }
 
     /**
-     * Deletes a row from the table.
-     *
-     * @param emailAttachment the email attachment to delete
+     * @param mailCode the mailCode to set
      */
-    @Transactional
-    void delete(EmailAttachment emailAttachment);
+    public void setMailCode(String mailCode) {
+        this.mailCode = mailCode;
+    }
+
+    /**
+     * @return the description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

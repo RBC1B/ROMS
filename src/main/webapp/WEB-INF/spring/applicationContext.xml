@@ -35,6 +35,7 @@ THE SOFTWARE.
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <context:component-scan base-package="uk.org.rbc1b.roms.db" />
+    <context:component-scan base-package="uk.org.rbc1b.roms.email" />
     <context:component-scan base-package="uk.org.rbc1b.roms.security" />
     <context:component-scan base-package="uk.org.rbc1b.roms.service" />
 

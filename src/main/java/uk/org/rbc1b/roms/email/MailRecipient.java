@@ -21,60 +21,61 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.db;
+package uk.org.rbc1b.roms.email;
 
 import java.io.Serializable;
+import uk.org.rbc1b.roms.db.Person;
 
 /**
  *
  * @author ramindursingh
  */
-public class MailType implements Serializable {
+public class MailRecipient implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private Integer mailTypeId;
-    private String mailCode;
-    private String description;
+    private Integer mailRecipientId;
+    private MailType mailType;
+    private Person person;
 
     /**
-     * @return the mailTypeId
+     * @return the mailRecipientId
      */
-    public Integer getMailTypeId() {
-        return mailTypeId;
+    public Integer getMailRecipientId() {
+        return mailRecipientId;
     }
 
     /**
-     * @param mailTypeId the mailTypeId to set
+     * @param mailRecipientId the mailRecipientId to set
      */
-    public void setMailTypeId(Integer mailTypeId) {
-        this.mailTypeId = mailTypeId;
+    public void setMailRecipientId(Integer mailRecipientId) {
+        this.mailRecipientId = mailRecipientId;
     }
 
     /**
-     * @return the mailCode
+     * @return the mailType
      */
-    public String getMailCode() {
-        return mailCode;
+    public MailType getMailType() {
+        return mailType;
     }
 
     /**
-     * @param mailCode the mailCode to set
+     * @param mailType the mailType to set
      */
-    public void setMailCode(String mailCode) {
-        this.mailCode = mailCode;
+    public void setMailType(MailType mailType) {
+        this.mailType = mailType;
     }
 
     /**
-     * @return the description
+     * @return the person
      */
-    public String getDescription() {
-        return description;
+    public Person getPerson() {
+        return person;
     }
 
     /**
-     * @param description the description to set
+     * @param person the person to set
      */
-    public void setDescription(String description) {
-        this.description = description;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 }
