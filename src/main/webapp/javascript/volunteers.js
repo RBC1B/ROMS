@@ -383,7 +383,8 @@ $(document).ready(function() {
                 $("input[name='workPhone']").val(data.workPhone);
                 $("input[name='email']").val(data.email);
                 if(data.congregation) {
-                    $("input[name='congregationId']").val(data.congregation.congregationId);
+                    $("input[name='congregationId']").val(data.congregation.id);
+                    $("input[name='congregationName']").val(data.congregation.name);
                 }
                 if (data.address) {
                     $("input[name='street']").val(data.address.street);

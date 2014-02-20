@@ -255,10 +255,10 @@ public class PersonsController {
      */
     @RequestMapping(value = "{personId}/reference", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public Person showAjaxPerson(@PathVariable Integer personId) throws NoSuchRequestHandlingMethodException {
+    public PersonModel showAjaxPerson(@PathVariable Integer personId) throws NoSuchRequestHandlingMethodException {
         Person person = fetchPerson(personId);
 
-        return person;
+        return personModelFactory.generatePersonModel(person);
     }
 
     /**
