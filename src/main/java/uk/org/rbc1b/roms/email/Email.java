@@ -23,7 +23,6 @@
  */
 package uk.org.rbc1b.roms.email;
 
-import java.util.Set;
 import java.io.Serializable;
 
 /**
@@ -38,7 +37,6 @@ public class Email implements Serializable {
     private String recipient;
     private String subject;
     private String text;
-    private Set<EmailAttachment> emailAttachments;
 
     /**
      * @return the emailId
@@ -98,20 +96,5 @@ public class Email implements Serializable {
      */
     public void setText(String text) {
         this.text = text;
-    }
-
-    /**
-     * @return the emailAttachments
-     */
-    public Set<EmailAttachment> getEmailAttachments() {
-        return emailAttachments;
-    }
-
-    /**
-     * @param emailAttachments
-     *            the emailAttachments to set
-     */
-    public void setEmailAttachments(Set<EmailAttachment> emailAttachments) {
-        this.emailAttachments = emailAttachments;
     }
 }

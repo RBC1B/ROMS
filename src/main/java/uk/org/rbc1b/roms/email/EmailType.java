@@ -23,36 +23,43 @@
  */
 package uk.org.rbc1b.roms.email;
 
-import java.util.List;
-import org.hibernate.Criteria;
-import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import java.io.Serializable;
 
 /**
- * Implementation of MailRecipientDao.
+ *
+ *
  */
-@Repository
-public class HibernateMailRecipientDao implements MailRecipientDao {
+public class EmailType implements Serializable {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    private static final long serialVersionUID = 1L;
+    private String emailCode;
+    private String description;
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<MailRecipient> getRecipientByMailTypeId(Integer mailTypeId) {
-        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(MailRecipient.class);
-        criteria.add(Restrictions.eq("mailType.mailTypeId", mailTypeId));
-        return criteria.list();
+    /**
+     * @return the emailCode
+     */
+    public String getEmailCode() {
+        return emailCode;
     }
 
-    // TO DO: This needs fixing.
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<MailRecipient> getRecipientByMailCode(String mailCode) {
-        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(MailRecipient.class);
-        criteria.add(Restrictions.like("mailType.mailCode", mailCode));
-        return criteria.list();
+    /**
+     * @param emailCode the emailCode to set
+     */
+    public void setEmailCode(String emailCode) {
+        this.emailCode = emailCode;
+    }
+
+    /**
+     * @return the description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

@@ -34,8 +34,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import uk.org.rbc1b.roms.email.Email;
 import uk.org.rbc1b.roms.email.EmailDao;
-import uk.org.rbc1b.roms.email.MailRecipient;
-import uk.org.rbc1b.roms.email.MailRecipientDao;
+import uk.org.rbc1b.roms.email.EmailRecipient;
+import uk.org.rbc1b.roms.email.EmailRecipientDao;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.PersonChange;
 import uk.org.rbc1b.roms.db.PersonChangeDao;
@@ -50,8 +50,7 @@ import freemarker.template.TemplateException;
 @Component
 public class PersonChangeChecker {
 
-    // private static final String RECIPIENT_SEARCH = "Volunteer Update";
-    private static final Integer RECIPIENT_ID = 1;
+    private static final String VOLUNTEER_UPDATE = "VU";
     private static final String EMAIL_TEMPLATE = "EmailForPersonChanges.ftl";
     private static final String SUBJECT = "Volunteer Information Changes";
     @Autowired
@@ -61,7 +60,7 @@ public class PersonChangeChecker {
     @Autowired
     private EmailDao emailDao;
     @Autowired
-    private MailRecipientDao mailRecipientDao;
+    private EmailRecipientDao mailRecipientDao;
     @Autowired
     private FreeMarkerConfigurer freemarkerConfig;
 
@@ -74,9 +73,8 @@ public class PersonChangeChecker {
     public void checkIfOutstandingChanges() throws IOException, TemplateException {
         List<PersonChange> personChangeList = personChangeDao.findPersonChangeNotUpdated();
         if (!personChangeList.isEmpty()) {
-            // We really should use RECIPIENT_SEARCH rather than ID to find the list!
-            List<MailRecipient> mailRecipients = mailRecipientDao.getRecipientByMailTypeId(RECIPIENT_ID);
-            for (MailRecipient mailRecipient : mailRecipients) {
+            List<EmailRecipient> mailRecipients = mailRecipientDao.getRecipientByEmailCode(VOLUNTEER_UPDATE);
+            for (EmailRecipient mailRecipient : mailRecipients) {
                 Map<String, Person> model = new HashMap<String, Person>();
                 Person person = personDao.findPerson(mailRecipient.getPerson().getPersonId());
                 model.put("person", person);

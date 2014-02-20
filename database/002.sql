@@ -28,3 +28,29 @@ insert into ProjectStageActivityEventType (ProjectStageActivityEventTypeCode, Na
 
 insert into ProjectStageActivityTaskEventType (ProjectStageActivityTaskEventTypeCode, Name) values ('CR', 'Created');
 
+-- Clean up Email related tables
+create table EmailType(
+    EmailCode               varchar(2)      not null,
+    Description             varchar(150),
+    primary key (EmailCode)
+)engine=InnoDB;
+
+insert into EmailType (EmailCode, Description) values
+    ('VU','Volunteer Information Update'),
+    ('TU','Training Information update');
+
+create table EmailRecipient(
+    EmailRecipientId        bigint(20)      not null     auto_increment,
+    EmailCode               varchar(2)      not null,
+    PersonId                bigint(20)      not null,
+    primary key (EmailRecipientId),
+    constraint unique (EmailCode, PersonId),
+    foreign key (EmailCode) references EmailType(EmailCode) on delete cascade,
+    foreign key (PersonId) references Person(PersonId) on delete cascade
+)engine=InnoDB;
+
+drop table MailRecipient;
+
+drop table MailType;
+
+drop table EmailAttachment;

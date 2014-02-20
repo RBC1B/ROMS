@@ -8,9 +8,5 @@
     <property length="250" name="recipient"/>
     <property length="250" name="subject"/>
     <property length="1000" name="text"/>
-    <set inverse="true" lazy="false" name="emailAttachments">
-      <key column="emailId" not-null="true"/>
-      <one-to-many class="uk.org.rbc1b.roms.email.EmailAttachment"/>
-    </set>
   </class>
 </hibernate-mapping>

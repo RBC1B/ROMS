@@ -23,59 +23,20 @@
  */
 package uk.org.rbc1b.roms.email;
 
-import java.io.Serializable;
-import uk.org.rbc1b.roms.db.Person;
+import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
- *
- * @author ramindursingh
+ * Dao for EmailRecipient table.
  */
-public class MailRecipient implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-    private Integer mailRecipientId;
-    private MailType mailType;
-    private Person person;
+public interface EmailRecipientDao {
 
     /**
-     * @return the mailRecipientId
+     * Gets a list of mail recipient by mail code.
+     *
+     * @param emailCode the mail code
+     * @return list of mail recipients
      */
-    public Integer getMailRecipientId() {
-        return mailRecipientId;
-    }
-
-    /**
-     * @param mailRecipientId the mailRecipientId to set
-     */
-    public void setMailRecipientId(Integer mailRecipientId) {
-        this.mailRecipientId = mailRecipientId;
-    }
-
-    /**
-     * @return the mailType
-     */
-    public MailType getMailType() {
-        return mailType;
-    }
-
-    /**
-     * @param mailType the mailType to set
-     */
-    public void setMailType(MailType mailType) {
-        this.mailType = mailType;
-    }
-
-    /**
-     * @return the person
-     */
-    public Person getPerson() {
-        return person;
-    }
-
-    /**
-     * @param person the person to set
-     */
-    public void setPerson(Person person) {
-        this.person = person;
-    }
+    @Transactional
+    List<EmailRecipient> getRecipientByEmailCode(String emailCode);
 }

@@ -21,48 +21,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package uk.org.rbc1b.roms.email;
 
 import java.util.List;
-
-import org.springframework.transaction.annotation.Transactional;
+import org.hibernate.Criteria;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 /**
- * Accesses the EmailAttachment table.
+ * Implementation of EmailRecipientDao.
  */
-public interface EmailAttachmentDao {
+@Repository
+public class HibernateEmailRecipientDao implements EmailRecipientDao {
 
-    /**
-     * Gets a list of email attachments.
-     *
-     * @return emailAttachments list or null if there is none
-     */
-    @Transactional(readOnly = true)
-    List<EmailAttachment> findAll();
+    @Autowired
+    private SessionFactory sessionFactory;
 
-    /**
-     * Gets a list of email attachments by email id.
-     *
-     * @param email the email for which to get the attachments
-     * @return emailAttachments list or null if there is none
-     */
-    @Transactional(readOnly = true)
-    List<EmailAttachment> findByEmail(Email email);
-
-    /**
-     * Saves an emailAttachment to the table.
-     *
-     * @param emailAttachment the email attachment to save
-     */
-    @Transactional
-    void save(EmailAttachment emailAttachment);
-
-    /**
-     * Deletes a row from the table.
-     *
-     * @param emailAttachment the email attachment to delete
-     */
-    @Transactional
-    void delete(EmailAttachment emailAttachment);
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<EmailRecipient> getRecipientByEmailCode(String emailCode) {
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(EmailRecipient.class);
+        criteria.add(Restrictions.like("emailType.emailCode", emailCode));
+        return criteria.list();
+    }
 }

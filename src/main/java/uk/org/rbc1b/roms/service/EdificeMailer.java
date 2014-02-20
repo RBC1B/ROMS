@@ -24,8 +24,6 @@
 package uk.org.rbc1b.roms.service;
 
 import java.util.List;
-import java.util.Set;
-
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +31,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 import uk.org.rbc1b.roms.email.Email;
-import uk.org.rbc1b.roms.email.EmailAttachment;
 import uk.org.rbc1b.roms.email.EmailDao;
 
 /**
@@ -60,8 +57,6 @@ public class EdificeMailer {
             helper.setTo(email.getRecipient());
             helper.setSubject(email.getSubject());
             helper.setText(email.getText());
-            Set<EmailAttachment> emailAttachments = email.getEmailAttachments();
-            /* Still to do */
             this.mailGateway.send(mimeMessage);
             this.emailDao.delete(email);
         }
