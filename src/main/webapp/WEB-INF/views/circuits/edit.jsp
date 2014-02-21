@@ -39,16 +39,13 @@
             </fieldset>
             <fieldset>
                 <div class="col-md-12">
-                    <h3>Circuit overseer details</h3>
-                </div>
-                <div class="col-md-12">
                     <div id="circuit-overseer-linked" class="alert alert-warning alert-dismissable" style="display:none;">
                         <button type="button" class="close" data-dismiss="alert">Unlink</button>
                         Linked to an existing person in the database
                     </div>
                 </div>
                 <div class="col-md-10 col-md-offset-2 col-sm-9 col-sm-offset-3">
-                    <h4 class="text-left">Name</h4>
+                    <h4 class="text-left">CO Name</h4>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3 col-md-2" for="forename">Forename</label>
@@ -69,7 +66,7 @@
                     </div>
                 </div>
                 <div class="col-md-offset-2 col-md-10 col-sm-offset-3 col-sm-9">
-                    <h4 class="text-left">Address</h4>
+                    <h4 class="text-left">CO Address</h4>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3 col-md-2" for="street">Street</label>
@@ -96,7 +93,7 @@
                     </div>
                 </div><br />
                 <div class="col-sm-offset-3 col-sm-9 col-md-offset-2 col-md-10">
-                    <h4 class="text-left">Contact details</h4>
+                    <h4 class="text-left">CO Contact details</h4>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3 col-md-2" for="email">Email</label>
