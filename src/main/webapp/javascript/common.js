@@ -256,11 +256,17 @@ roms.common.datatables = function($table, options) {
                     $('.dataTables_paginate').show();
                     $('.dataTables_info').show(); 
                 }
-                //If the number of rows are 5 or less, hide "... results per page"
+                //If the number of rows are 5 or less, hide "... results per page" and Search box
                 if (oPaging.iTotal <= 5) {
                     $('.dataTables_length').hide();
+                    $('.dataTables_filter').hide();
                 } else {
-                    $('.dataTables_length').show();                    
+                    $('.dataTables_length').show();                
+                }
+                if (oPaging.iFilteredTotal <= 5)    {
+                    $('.dataTables_filter').hide();                    
+                } else {
+                    $('.dataTables_filter').show();                    
                 }
         }
     } });
