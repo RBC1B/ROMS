@@ -26,6 +26,7 @@ package uk.org.rbc1b.roms.db.volunteer.interview;
 import java.util.List;
 import java.util.Map;
 import org.springframework.transaction.annotation.Transactional;
+import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 
 /**
  * Access the volunteer interview session information.
@@ -69,5 +70,17 @@ public interface InterviewSessionDao {
      */
     @Transactional(readOnly = true)
     List<VolunteerInterviewSession> findVolunteerInterviewSessions(Integer interviewSessionId);
+
+    /**
+     * Find the list of all volunteers who are eligible for an interview session.
+     * To be elligible they have to be
+     * <ul>
+     *      <li>Pending or active</li>
+     *      <li>Not completed, confirmed or invited to another session</li>
+     * </ul>
+     * @return list of volunteers
+     */
+    @Transactional(readOnly = true)
+    List<Volunteer> findInterviewSessionEligibleVolunteers();
 
 }

@@ -27,9 +27,15 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.org.rbc1b.roms.controller.common.model.EntityModel;
+import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
 import uk.org.rbc1b.roms.controller.kingdomhall.KingdomHallModelFactory;
+import uk.org.rbc1b.roms.controller.volunteer.VolunteerModelFactory;
+import uk.org.rbc1b.roms.db.Congregation;
+import uk.org.rbc1b.roms.db.CongregationDao;
+import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHallDao;
+import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import uk.org.rbc1b.roms.db.volunteer.interview.InterviewSession;
 import uk.org.rbc1b.roms.db.volunteer.interview.VolunteerInterviewSession;
 
@@ -42,6 +48,12 @@ public class InterviewSessionModelFactory {
 
     @Autowired
     private KingdomHallDao kingdomHallDao;
+
+    @Autowired
+    private CongregationDao congregationDao;
+
+    @Autowired
+    private PersonModelFactory personModelFactory;
 
     /**
      * Generate the uri used to access the interview session pages.
@@ -104,4 +116,41 @@ public class InterviewSessionModelFactory {
 
         return model;
     }
+
+    /**
+     * Generate the model for a volunteer associated with an interview session.
+     * @param volunteer volunteer
+     * @param volunteerInterviewSession mapped session, optional
+     * @param interviewStatusValues reference data
+     * @param rbcSubRegionValues reference data
+     * @return model
+     */
+    public VolunteerInterviewSessionModel generateVolunteerInterviewSessionModel(Volunteer volunteer,
+            VolunteerInterviewSession volunteerInterviewSession, Map<String, String> interviewStatusValues,
+            Map<Integer, String> rbcSubRegionValues) {
+        VolunteerInterviewSessionModel model = new VolunteerInterviewSessionModel();
+
+        Person person = volunteer.getPerson();
+        if (person.getCongregation() != null) {
+            Congregation congregation = congregationDao.findCongregation(person.getCongregation().getCongregationId());
+
+            model.setCongregation(personModelFactory.generateCongregationModel(congregation));
+            if (congregation.getRbcRegionId() != null) {
+                model.setRbcSubRegion(rbcSubRegionValues.get(congregation.getRbcSubRegionId()));
+            }
+        }
+        model.setId(person.getPersonId());
+        model.setForename(person.getForename());
+        model.setSurname(person.getSurname());
+        model.setUri(VolunteerModelFactory.generateUri(person.getPersonId()));
+
+        if (volunteerInterviewSession != null) {
+            model.setComments(volunteerInterviewSession.getComments());
+            model.setInterviewStatus(interviewStatusValues.get(volunteerInterviewSession
+                    .getVolunteerInterviewStatusCode()));
+        }
+
+        return model;
+    }
+
 }

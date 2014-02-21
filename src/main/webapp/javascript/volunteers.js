@@ -825,4 +825,18 @@ $(document).ready(function() {
             ]
         });
     
+    // volunteer interview session invitation
+    roms.common.datatables(
+        $("#session-invitation-list"),
+        {
+            "iDisplayLength": 100,
+            "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]],
+            "aoColumnDefs": [
+                {
+                    'bSortable': false,
+                    'aTargets': [7]
+                }
+            ]
+        });
+    
 });

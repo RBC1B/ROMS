@@ -23,6 +23,7 @@
  */
 package uk.org.rbc1b.roms.db.volunteer.interview;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import uk.org.rbc1b.roms.db.Person;
+import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 
 /**
  * Hibernate implementation of the interview session dao.
@@ -96,6 +99,25 @@ public class HibernateInterviewSessionDao implements InterviewSessionDao {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(VolunteerInterviewSession.class);
         criteria.add(Restrictions.eq("interviewSession.interviewSessionId", interviewSessionId));
         return criteria.list();
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Volunteer> findInterviewSessionEligibleVolunteers() {
+
+        // sooo... a Criteria becomes unreadable (and we don't need the flexibility),
+        // the Hql attempts hit hibernate's "computer says no" wall,
+        // and the sql doesn't know how to inner join the volunteer to the person. This will do.
+        List<Object[]> results = this.sessionFactory.getCurrentSession().getNamedQuery("findSessionEligibleVolunteers")
+                .list();
+
+        List<Volunteer> volunteers = new ArrayList<Volunteer>(results.size());
+        for (Object[] result : results) {
+            Volunteer volunteer = (Volunteer) result[0];
+            volunteer.setPerson((Person) result[1]);
+            volunteers.add(volunteer);
+        }
+        return volunteers;
     }
 
 }

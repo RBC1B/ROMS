@@ -38,10 +38,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
-import uk.org.rbc1b.roms.controller.volunteer.VolunteerModelFactory;
-import uk.org.rbc1b.roms.db.Congregation;
 import uk.org.rbc1b.roms.db.CongregationDao;
-import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
@@ -146,6 +143,7 @@ public class InterviewSessionsController {
         }
 
         Map<String, String> interviewStatusValues = referenceDao.findVolunteerInterviewStatusValues();
+        Map<Integer, String> rbcSubRegionValues = referenceDao.findRbcSubRegionValues();
 
         List<VolunteerInterviewSessionModel> modelList = new ArrayList<VolunteerInterviewSessionModel>();
         for (VolunteerInterviewSession volunteerInterviewSession : volunteerInterviewSessions) {
@@ -156,26 +154,8 @@ public class InterviewSessionsController {
                 continue;
             }
 
-            VolunteerInterviewSessionModel model = new VolunteerInterviewSessionModel();
-            model.setComments(volunteerInterviewSession.getComments());
-
-            Person person = volunteer.getPerson();
-            if (person.getCongregation() != null) {
-                Congregation congregation = congregationDao.findCongregation(person.getCongregation()
-                        .getCongregationId());
-
-                model.setCongregation(personModelFactory.generateCongregationModel(congregation));
-                if (congregation.getRbcRegionId() != null) {
-                    model.setRbcSubRegion(referenceDao.findRbcSubRegionValues().get(congregation.getRbcSubRegionId()));
-                }
-            }
-            model.setId(person.getPersonId());
-            model.setForename(person.getForename());
-            model.setSurname(person.getSurname());
-            model.setInterviewStatus(interviewStatusValues.get(volunteerInterviewSession
-                    .getVolunteerInterviewStatusCode()));
-            model.setUri(VolunteerModelFactory.generateUri(person.getPersonId()));
-            modelList.add(model);
+            modelList.add(interviewSessionModelFactory.generateVolunteerInterviewSessionModel(volunteer,
+                    volunteerInterviewSession, interviewStatusValues, rbcSubRegionValues));
         }
         return modelList;
     }
@@ -208,11 +188,20 @@ public class InterviewSessionsController {
         InterviewSessionModel sessionModel = interviewSessionModelFactory.generateInterviewSessionModel(session,
                 sessionVolunteerCounts);
 
+        List<Volunteer> volunteers = interviewSessionDao.findInterviewSessionEligibleVolunteers();
+        Map<String, String> interviewStatusValues = referenceDao.findVolunteerInterviewStatusValues();
+        Map<Integer, String> rbcSubRegionValues = referenceDao.findRbcSubRegionValues();
+
+        List<VolunteerInterviewSessionModel> volunteerModeList = new ArrayList<VolunteerInterviewSessionModel>();
+        for (Volunteer volunteer : volunteers) {
+            volunteerModeList.add(interviewSessionModelFactory.generateVolunteerInterviewSessionModel(volunteer, null,
+                    interviewStatusValues, rbcSubRegionValues));
+        }
+
         model.addAttribute("interviewSession", sessionModel);
-        model.addAttribute("volunteers", generateVolunterList(interviewSessionId));
+        model.addAttribute("volunteers", volunteerModeList);
         model.addAttribute("listUri", InterviewSessionModelFactory.generateUri(null));
         return "volunteers/interview-sessions/invitations";
-
     }
 
 }

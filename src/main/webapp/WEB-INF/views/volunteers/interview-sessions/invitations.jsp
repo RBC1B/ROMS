@@ -19,6 +19,45 @@
             <dt>Invited:</dt>
             <dd>${interviewSession.getAttendingVolunteerCount()} (${interviewSession.declinedVolunteerCount} declined)</dd>
         </dl>
+        <div class="row-fluid">
+            <div class="entity-list-results">
+                <table class="table table-bordered table-condensed table-striped table-hover" id="session-invitation-list">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Forename</th>
+                            <th>Surname</th>
+                            <th>Congregation</th>
+                            <th>Region</th>
+                            <th>Comments</th>
+                            <th>Status</th>
+                            <th>Invite</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${volunteers}" var="volunteer">
+                            <tr>
+                                <td>${volunteer.id}</td>
+                                <td><c:out value="${volunteer.forename}" /></td>
+                                <td><c:out value="${volunteer.surname}" /></td>
+                                <td>
+                                    <c:if test="${!empty volunteer.congregation}">
+                                        <a href="<c:url value='${volunteer.congregation.uri}' />"><c:out value="${volunteer.congregation.name}" /></a>
+                                    </c:if>
+                                </td>
+                                <td><c:out value="${volunteer.rbcSubRegion}" /></td>
+                                <td><c:out value="${volunteer.comments}" /></td>
+                                <td><c:out value="${volunteer.interviewStatus}" /></td>
+                                <td>
+                                    <input class="a-invite" type="checkbox" />
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
         <ol class="breadcrumb">
             <li><a href="<c:url value="/" />">Edifice</a></li>
             <li><a href="<c:url value="${listUri}" />">Interview Sessions</a></li>

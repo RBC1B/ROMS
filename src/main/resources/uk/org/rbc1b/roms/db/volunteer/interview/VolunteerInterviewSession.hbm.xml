@@ -16,20 +16,40 @@
         <property name="updateTime" not-null="true" />
         <property name="updatedBy" not-null="true" />
     </class>
+    <sql-query name="findSessionEligibleVolunteers">
+        <return alias="Volunteer" class="uk.org.rbc1b.roms.db.volunteer.Volunteer"/>
+        <return alias="Person" class="uk.org.rbc1b.roms.db.Person"/>
+        <![CDATA[
+select      Volunteer.*, Person.*
+from        Volunteer
+inner join  Person on Person.PersonId = Volunteer.PersonId
+where       Volunteer.rbcStatusCode in ('AT', 'PD')
+and not exists (
+            select  1
+            from    VolunteerInterviewSession
+            where   VolunteerInterviewSession.PersonId = Volunteer.PersonId
+            and     VolunteerInterviewSession.VolunteerInterviewStatusCode in ('IT', 'CF', 'CP', 'NR')
+)
+        ]]>
+    </sql-query>
     <sql-query name="findAllSessionCountsByStatus">
         <return-scalar column="interviewSessionId" type="int" />
         <return-scalar column="volunteerInterviewStatusCode" type="string" />
         <return-scalar column="volunteerCount" type="int" />
+            <![CDATA[
 select  InterviewSessionId, VolunteerInterviewStatusCode, count(*) as volunteerCount
 from    VolunteerInterviewSession
 group by InterviewSessionId, VolunteerInterviewStatusCode
+            ]]>
     </sql-query>
     <sql-query name="findSessionCountsByStatus">
         <return-scalar column="volunteerInterviewStatusCode" type="string" />
         <return-scalar column="volunteerCount" type="int" />
+            <![CDATA[
 select  VolunteerInterviewStatusCode, count(*) as volunteerCount
 from    VolunteerInterviewSession
 where   InterviewSessionId = :id
 group by VolunteerInterviewStatusCode
+]]>
     </sql-query>
 </hibernate-mapping>
