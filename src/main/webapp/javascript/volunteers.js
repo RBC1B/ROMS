@@ -834,9 +834,63 @@ $(document).ready(function() {
             "aoColumnDefs": [
                 {
                     'bSortable': false,
-                    'aTargets': [7]
+                    'aTargets': [0]
                 }
             ]
         });
+    
+    $(".a-invite-all").on("click", function() {
+        var checked = $(this).prop("checked");
+        $(".a-invite-all").prop({
+            checked: checked,
+            indeterminate: false
+        });
+        $invite = $(".a-invite");
+        $invite.prop("checked", checked)
+        if (checked) {
+            $invite.closest("tr").addClass('success');
+        } else {
+            $invite.closest("tr").removeClass('success');
+        }
+    });
+    
+    $(".a-invite").on("click", function() {
+        var checked = $(this).prop("checked");
+        $(this).toggleClass('success');
+        // if we have just checked the checkbox
+        if (checked) {
+            $(this).closest("tr").addClass('success');
+            
+            // if all the volunteers are checked, the invite alls should be checked
+            if (!$(".a-invite:not(:checked)").length > 0) {
+                $(".a-invite-all").prop({
+                    checked: true,
+                    indeterminate: false
+                });
+            } else {
+                // at least some are checked, so indeterminate
+                $(".a-invite-all").prop({
+                    checked: true,
+                    indeterminate: true
+                });
+            }            
+        } else {
+            $(this).closest("tr").removeClass('success');
+            
+            // if none of the volunteers are checked, the invite alls should be unchecked
+            if (!$(".a-invite:checked").length > 0) {
+                $(".a-invite-all").prop({
+                    checked: false,
+                    indeterminate: false
+                });
+            } else {
+                // some of them are checked, the invite alls are indeterminate
+                $(".a-invite-all").prop({
+                    checked: true,
+                    indeterminate: true
+                });
+            }
+        }
+    });
     
 });

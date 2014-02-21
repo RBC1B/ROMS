@@ -16,28 +16,34 @@
         <h1><c:out value="${pageTitle}" /></h1>
         <hr />
         <dl class="dl-horizontal">
-            <dt>Invited:</dt>
+            <dt>Already invited:</dt>
             <dd>${interviewSession.getAttendingVolunteerCount()} (${interviewSession.declinedVolunteerCount} declined)</dd>
         </dl>
         <div class="row-fluid">
+            <div class="pull-left">
+                <label>
+                    <input type="checkbox" name="inviteAll" class="a-invite-all"> Invite all
+                </label>
+            </div>
             <div class="entity-list-results">
                 <table class="table table-bordered table-condensed table-striped table-hover" id="session-invitation-list">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>Invite</th>
                             <th>Forename</th>
                             <th>Surname</th>
                             <th>Congregation</th>
                             <th>Region</th>
                             <th>Comments</th>
                             <th>Status</th>
-                            <th>Invite</th>
                         </tr>
                     </thead>
                     <tbody>
                         <c:forEach items="${volunteers}" var="volunteer">
                             <tr>
-                                <td>${volunteer.id}</td>
+                                <td>
+                                    <input class="a-invite" type="checkbox" />
+                                </td>
                                 <td><c:out value="${volunteer.forename}" /></td>
                                 <td><c:out value="${volunteer.surname}" /></td>
                                 <td>
@@ -48,16 +54,21 @@
                                 <td><c:out value="${volunteer.rbcSubRegion}" /></td>
                                 <td><c:out value="${volunteer.comments}" /></td>
                                 <td><c:out value="${volunteer.interviewStatus}" /></td>
-                                <td>
-                                    <input class="a-invite" type="checkbox" />
-                                </td>
                             </tr>
                         </c:forEach>
                     </tbody>
                 </table>
             </div>
+            <div class="pull-left">
+                <label>
+                    <input type="checkbox" name="inviteAll" class="a-invite-all"> Invite all
+                </label>
+            </div>
+            <div class="pull-right">
+                <a class="btn btn-lg btn-success" href="#">Invite</a>
+            </div>
         </div>
-
+        <div class="clearfix"></div>
         <ol class="breadcrumb">
             <li><a href="<c:url value="/" />">Edifice</a></li>
             <li><a href="<c:url value="${listUri}" />">Interview Sessions</a></li>
