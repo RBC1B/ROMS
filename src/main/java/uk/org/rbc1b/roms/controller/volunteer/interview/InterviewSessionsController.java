@@ -116,11 +116,11 @@ public class InterviewSessionsController {
                     this.getClass());
         }
 
-        Map<Integer, Map<String, Integer>> sessionVolunteerCounts = interviewSessionDao
-                .findInterviewSessionVolunteerCounts();
+        Map<String, Integer> sessionVolunteerCounts = interviewSessionDao
+                .findInterviewSessionVolunteerCounts(interviewSessionId);
 
         InterviewSessionModel sessionModel = interviewSessionModelFactory.generateInterviewSessionModel(session,
-                sessionVolunteerCounts.get(interviewSessionId));
+                sessionVolunteerCounts);
 
         model.addAttribute("interviewSession", sessionModel);
         model.addAttribute("volunteers", generateVolunterList(interviewSessionId));
@@ -178,6 +178,41 @@ public class InterviewSessionsController {
             modelList.add(model);
         }
         return modelList;
+    }
+
+    /**
+     * Show the list of those who may be invited to the interview session.
+     * @param interviewSessionId session id
+     * @param model model
+     * @return view name
+     * @throws NoSuchRequestHandlingMethodException on failure to find the session
+     */
+    @RequestMapping(value = "{interviewSessionId}/invitations", method = RequestMethod.GET)
+    public String showInvitationList(@PathVariable Integer interviewSessionId, ModelMap model)
+            throws NoSuchRequestHandlingMethodException {
+
+        InterviewSession session = interviewSessionDao.findInterviewSession(interviewSessionId);
+        if (session == null) {
+            throw new NoSuchRequestHandlingMethodException("No session with id [" + interviewSessionId + "]",
+                    this.getClass());
+        }
+
+        // we can't invite more people if the session has already happened
+        if (session.isInPast()) {
+            return "redirect:/interview-sessions/" + interviewSessionId;
+        }
+
+        Map<String, Integer> sessionVolunteerCounts = interviewSessionDao
+                .findInterviewSessionVolunteerCounts(interviewSessionId);
+
+        InterviewSessionModel sessionModel = interviewSessionModelFactory.generateInterviewSessionModel(session,
+                sessionVolunteerCounts);
+
+        model.addAttribute("interviewSession", sessionModel);
+        model.addAttribute("volunteers", generateVolunterList(interviewSessionId));
+        model.addAttribute("listUri", InterviewSessionModelFactory.generateUri(null));
+        return "volunteers/interview-sessions/invitations";
+
     }
 
 }

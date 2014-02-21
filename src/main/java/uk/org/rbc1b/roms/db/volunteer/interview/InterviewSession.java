@@ -26,6 +26,9 @@ package uk.org.rbc1b.roms.db.volunteer.interview;
 import java.io.Serializable;
 import java.util.Date;
 import org.hibernate.envers.Audited;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import uk.org.rbc1b.roms.controller.common.DataConverterUtil;
 import uk.org.rbc1b.roms.db.UpdateAuditable;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 
@@ -42,6 +45,15 @@ public class InterviewSession implements UpdateAuditable, Serializable {
     private String comments;
     private Date updateTime;
     private Integer updatedBy;
+
+    /**
+     * @return true if the session isin the past.
+     */
+    public boolean isInPast() {
+        DateTime today = LocalDate.now().toDateTimeAtStartOfDay();
+        DateTime sessionDate = DataConverterUtil.toDateTime(date);
+        return today.isAfter(sessionDate);
+    }
 
     public Integer getInterviewSessionId() {
         return interviewSessionId;

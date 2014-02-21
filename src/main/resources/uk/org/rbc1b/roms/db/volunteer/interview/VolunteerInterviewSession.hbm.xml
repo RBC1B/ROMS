@@ -16,13 +16,20 @@
         <property name="updateTime" not-null="true" />
         <property name="updatedBy" not-null="true" />
     </class>
-    <sql-query name="findSessionCountsByStatus">
+    <sql-query name="findAllSessionCountsByStatus">
         <return-scalar column="interviewSessionId" type="int" />
         <return-scalar column="volunteerInterviewStatusCode" type="string" />
         <return-scalar column="volunteerCount" type="int" />
-select InterviewSessionId, VolunteerInterviewStatusCode, count(*) as volunteerCount
-from VolunteerInterviewSession
-group by
-InterviewSessionId, VolunteerInterviewStatusCode
+select  InterviewSessionId, VolunteerInterviewStatusCode, count(*) as volunteerCount
+from    VolunteerInterviewSession
+group by InterviewSessionId, VolunteerInterviewStatusCode
+    </sql-query>
+    <sql-query name="findSessionCountsByStatus">
+        <return-scalar column="volunteerInterviewStatusCode" type="string" />
+        <return-scalar column="volunteerCount" type="int" />
+select  VolunteerInterviewStatusCode, count(*) as volunteerCount
+from    VolunteerInterviewSession
+where   InterviewSessionId = :id
+group by VolunteerInterviewStatusCode
     </sql-query>
 </hibernate-mapping>

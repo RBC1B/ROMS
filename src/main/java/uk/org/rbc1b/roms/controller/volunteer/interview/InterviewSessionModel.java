@@ -39,6 +39,7 @@ public class InterviewSessionModel {
     private String editUri;
     private int invitedVolunteerCount;
     private int confirmedVolunteerCount;
+    private int declinedVolunteerCount;
 
     /**
      * Simplistic time formatter, returning the time in HH:mm format.
@@ -49,6 +50,14 @@ public class InterviewSessionModel {
             return null;
         }
         return time.substring(0, 2) + ":" + time.substring(2);
+    }
+
+    /**
+     * Return the number of volunteers who have been invited and have not declined.
+     * @return count
+     */
+    public int getAttendingVolunteerCount() {
+        return invitedVolunteerCount - declinedVolunteerCount;
     }
 
     public EntityModel getKingdomHall() {
@@ -99,20 +108,54 @@ public class InterviewSessionModel {
         this.editUri = editUri;
     }
 
+    /**
+     * Count of volunteers who have been invited to the session (including those who have declined).
+     * @return count
+     */
     public int getInvitedVolunteerCount() {
         return invitedVolunteerCount;
     }
 
+    /**
+     * Count of volunteers who have been invited to the session (including those who have declined).
+     * @param invitedVolunteerCount count
+     */
     public void setInvitedVolunteerCount(int invitedVolunteerCount) {
         this.invitedVolunteerCount = invitedVolunteerCount;
     }
 
+    /**
+     * Count of volunteers are confirmed to attend (or completed - have attended) the session.
+     * @return count
+     */
     public int getConfirmedVolunteerCount() {
         return confirmedVolunteerCount;
     }
 
+    /**
+     * Count of volunteers are confirmed to attend (or completed - have attended) the session.
+     * @param confirmedVolunteerCount count
+     */
     public void setConfirmedVolunteerCount(int confirmedVolunteerCount) {
         this.confirmedVolunteerCount = confirmedVolunteerCount;
+    }
+
+    /**
+     * Count of volunteers who were invited, but who have declined (or are no-shows,
+     * or not required to attend after all).
+     * @return count
+     */
+    public int getDeclinedVolunteerCount() {
+        return declinedVolunteerCount;
+    }
+
+    /**
+     * Count of volunteers who were invited, but who have declined (or are no-shows,
+     * or not required to attend after all).
+     * @param declinedVolunteerCount count
+     */
+    public void setDeclinedVolunteerCount(int declinedVolunteerCount) {
+        this.declinedVolunteerCount = declinedVolunteerCount;
     }
 
 }

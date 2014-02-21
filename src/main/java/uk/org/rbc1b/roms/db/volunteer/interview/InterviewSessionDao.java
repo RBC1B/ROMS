@@ -55,6 +55,14 @@ public interface InterviewSessionDao {
     Map<Integer, Map<String, Integer>> findInterviewSessionVolunteerCounts();
 
     /**
+     * Find the number of volunteers for each given status for a session.
+     * @param interviewSessionId session id
+     * @return map of interview status volunteer counts
+     */
+    @Transactional(readOnly = true)
+    Map<String, Integer> findInterviewSessionVolunteerCounts(Integer interviewSessionId);
+
+    /**
      * Find all the volunteers linked to the interview session.
      * @param interviewSessionId session id
      * @return list of {@code VolunteerInterviewSession} instances

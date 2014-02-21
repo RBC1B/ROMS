@@ -58,7 +58,7 @@ public class HibernateInterviewSessionDao implements InterviewSessionDao {
     public Map<Integer, Map<String, Integer>> findInterviewSessionVolunteerCounts() {
         Map<Integer, Map<String, Integer>> sessionStatusCounts = new HashMap<Integer, Map<String, Integer>>();
         @SuppressWarnings("unchecked")
-        List<Object[]> results = this.sessionFactory.getCurrentSession().getNamedQuery("findSessionCountsByStatus")
+        List<Object[]> results = this.sessionFactory.getCurrentSession().getNamedQuery("findAllSessionCountsByStatus")
                 .list();
         for (Object[] result : results) {
             Integer sessionId = (Integer) result[0];
@@ -74,6 +74,20 @@ public class HibernateInterviewSessionDao implements InterviewSessionDao {
             statusCounts.put(statusCode, count);
         }
         return sessionStatusCounts;
+    }
+
+    @Override
+    public Map<String, Integer> findInterviewSessionVolunteerCounts(Integer interviewSessionId) {
+        @SuppressWarnings("unchecked")
+        List<Object[]> results = this.sessionFactory.getCurrentSession().getNamedQuery("findSessionCountsByStatus")
+                .setParameter("id", interviewSessionId).list();
+        Map<String, Integer> statusCounts = new HashMap<String, Integer>();
+        for (Object[] result : results) {
+            String statusCode = (String) result[0];
+            Integer count = (Integer) result[1];
+            statusCounts.put(statusCode, count);
+        }
+        return statusCounts;
     }
 
     @SuppressWarnings("unchecked")

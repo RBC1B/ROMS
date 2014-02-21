@@ -86,16 +86,20 @@ public class InterviewSessionModelFactory {
         if (volunteerStatusCounts != null) {
             int invitedCount = 0;
             int confirmedCount = 0;
+            int declinedCount = 0;
 
             for (Map.Entry<String, Integer> entry : volunteerStatusCounts.entrySet()) {
                 invitedCount += entry.getValue();
                 if (entry.getKey().equals(VolunteerInterviewSession.CONFIRMED_INTERVIEW_STATUS_CODE)
                         || entry.getKey().equals(VolunteerInterviewSession.COMPLETED_INTERVIEW_STATUS_CODE)) {
                     confirmedCount += entry.getValue();
+                } else if (!entry.getKey().equals(VolunteerInterviewSession.INVITED_INTERVIEW_STATUS_CODE)) {
+                    declinedCount += entry.getValue();
                 }
             }
             model.setInvitedVolunteerCount(invitedCount);
             model.setConfirmedVolunteerCount(confirmedCount);
+            model.setDeclinedVolunteerCount(declinedCount);
         }
 
         return model;
