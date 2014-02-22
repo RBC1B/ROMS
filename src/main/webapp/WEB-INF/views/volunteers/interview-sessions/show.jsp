@@ -38,6 +38,10 @@
             </dd>
         </dl>
         <div class="clearfix"></div>
+        <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
+            <a href="<c:url value='${interviewSession.editUri}' />" class="btn btn-edifice">Edit Interview Session</a>
+            <div class="clearfix"></div>
+        </sec:authorize>
         <br />
         <ul class="nav nav-tabs">
             <li class="active"><a href="#volunteers" data-toggle="tab">Volunteers</a></li>
@@ -84,14 +88,14 @@
                         </table>
                     </div>
                 </div>
+                <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
+                    <hr />
+                    <c:if test="${!empty interviewSession.invitationsUri}">
+                        <a href="<c:url value='${interviewSession.invitationsUri}' />" class="btn btn-edifice">Invite Volunteers</a>
+                    </c:if>
+                </sec:authorize>
             </div>
         </div>
-        <!--
-        <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
-            <hr />
-            <a href="<c:url value='${interviewSession.editUri}' />" class="btn btn-edifice">Edit Interview Session</a>
-        </sec:authorize>
-         -->
 
         <br />
         <ol class="breadcrumb">
