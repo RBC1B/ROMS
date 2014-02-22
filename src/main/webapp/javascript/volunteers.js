@@ -840,6 +840,7 @@ $(document).ready(function() {
         }).prop('selected', true);
         
         $("form", $modalElement).prop('action', roms.common.relativePath + $("td.a-volunteer-id", $row).data("uri"));
+        $("form", $modalElement).data("volunteer-id", $("td.a-volunteer-id", $row).html());
         
         $modalElement.modal('show');
     });
@@ -860,6 +861,21 @@ $(document).ready(function() {
             },
             success: function() {
                 // update the data in the table
+                var $table = $("#session-volunteer-list");
+                var volunteerId = $form.data("volunteer-id");
+                
+                var $row = null;
+                $("tr",$table).each(function() {
+                    if ($("td.a-volunteer-id", $(this)).html() == volunteerId) {
+                        $row = $(this);
+                    }
+                });
+                
+                var comments = $("textarea[name='comments']", $form).val();
+                $("td.a-volunteer-comments", $row).html(comments)
+                
+                var status = $("select[name='interviewStatusCode'] option:selected", $form).text();
+                $("td.a-volunteer-interview-status", $row).html(status);
                 
                 $('#volunteer-invitation-modal').modal('hide');
             }
