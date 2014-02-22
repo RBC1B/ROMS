@@ -104,6 +104,17 @@ public class HibernateInterviewSessionDao implements InterviewSessionDao {
     }
 
     @Override
+    public VolunteerInterviewSession findVolunteerInterviewSession(Integer volunteerInterviewSessionId) {
+        return (VolunteerInterviewSession) this.sessionFactory.getCurrentSession().get(VolunteerInterviewSession.class,
+                volunteerInterviewSessionId);
+    }
+
+    @Override
+    public void updateVolunteerInterviewSession(VolunteerInterviewSession volunteerInterviewSession) {
+        this.sessionFactory.getCurrentSession().merge(volunteerInterviewSession);
+    }
+
+    @Override
     public void addVolunteerInterviewSessions(Set<Integer> volunteerIds, Integer interviewSessionId) {
         Session session = this.sessionFactory.getCurrentSession();
 

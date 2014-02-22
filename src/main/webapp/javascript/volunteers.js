@@ -826,9 +826,45 @@ $(document).ready(function() {
         });
     
     $(".a-volunteer-edit").on("click", function(){
-        var modalElement = $("#volunteer-invitation-modal")
+        var $modalElement = $("#volunteer-invitation-modal")
 
-        modalElement.modal('show');
+        // initialise the values
+        var $row = $(this).closest("tr")
+        var comments = $("td.a-volunteer-comments", $row).html();
+        $("textarea[name='comments']", $modalElement).val(comments);
+        
+        var interviewStatus = $("td.a-volunteer-interview-status", $row).html();
+        $("select[name='interviewStatusCode'] option", $modalElement).filter(function() {
+            //may want to use $.trim in here
+            return $(this).text() == interviewStatus; 
+        }).prop('selected', true);
+        
+        $("form", $modalElement).prop('action', roms.common.relativePath + $("td.a-volunteer-id", $row).data("uri"));
+        
+        $modalElement.modal('show');
+    });
+    
+    $("#volunteer-invitation-modal-form").submit(function() {
+        var $form = $(this);
+        $.ajax({
+            url: $form.attr("action"),
+            data: $form.serialize(),
+            type: "POST",
+            statusCode: {
+                404: function() {
+                    alert("Volunteer invitation not found");
+                },
+                500: function() {
+                    alert("Failed to save volunteer interview status");
+                }
+            },
+            success: function() {
+                // update the data in the table
+                
+                $('#volunteer-invitation-modal').modal('hide');
+            }
+        });
+        return false;
     });
     
     // volunteer interview session invitation

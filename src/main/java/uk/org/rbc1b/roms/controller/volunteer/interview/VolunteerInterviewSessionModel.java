@@ -37,6 +37,7 @@ public class VolunteerInterviewSessionModel {
     private String comments;
     private String interviewStatus;
     private String uri;
+    private String volunteerUri;
 
     public Integer getId() {
         return id;
@@ -100,6 +101,14 @@ public class VolunteerInterviewSessionModel {
 
     public void setUri(String uri) {
         this.uri = uri;
+    }
+
+    public String getVolunteerUri() {
+        return volunteerUri;
+    }
+
+    public void setVolunteerUri(String volunteerUri) {
+        this.volunteerUri = volunteerUri;
     }
 
 }

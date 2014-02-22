@@ -33,12 +33,14 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.controller.common.DataConverterUtil;
 import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
@@ -252,4 +254,44 @@ public class InterviewSessionsController {
         return "redirect:/interview-sessions/" + interviewSessionId;
 
     }
+
+    /**
+     * Update information about an individual volunteer invitation.
+     * @param interviewSessionId session id
+     * @param volunteerInterviewSessionId volunteer invitation id
+     * @param interviewStatusCode updated status code
+     * @param comments comments
+     * @throws NoSuchRequestHandlingMethodException on failure to look up the session or invitation
+     */
+    @RequestMapping(value = "{interviewSessionId}/invitations/{volunteerInterviewSessionId}", method = RequestMethod.PUT)
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void updateVolunteerInvitation(@PathVariable Integer interviewSessionId,
+            @PathVariable Integer volunteerInterviewSessionId, @RequestParam String interviewStatusCode,
+            @RequestParam String comments) throws NoSuchRequestHandlingMethodException {
+
+        InterviewSession session = interviewSessionDao.findInterviewSession(interviewSessionId);
+        if (session == null) {
+            throw new NoSuchRequestHandlingMethodException("No session with id [" + interviewSessionId + "]",
+                    this.getClass());
+        }
+
+        VolunteerInterviewSession volunteerInterviewSession = interviewSessionDao
+                .findVolunteerInterviewSession(volunteerInterviewSessionId);
+        if (volunteerInterviewSession == null) {
+            throw new NoSuchRequestHandlingMethodException("No volunteer interview session with id ["
+                    + volunteerInterviewSessionId + "]", this.getClass());
+        }
+
+        if (!volunteerInterviewSession.getInterviewSession().getInterviewSessionId().equals(interviewSessionId)) {
+            throw new NoSuchRequestHandlingMethodException("Volunteer interview session #"
+                    + volunteerInterviewSessionId + " is not linked ot interview session #" + interviewSessionId,
+                    this.getClass());
+        }
+
+        volunteerInterviewSession.setComments(comments);
+        volunteerInterviewSession.setVolunteerInterviewStatusCode(interviewStatusCode);
+
+        interviewSessionDao.updateVolunteerInterviewSession(volunteerInterviewSession);
+    }
+
 }

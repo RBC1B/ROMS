@@ -11,6 +11,7 @@
                     <h3 id="volunteer-invitation-modal-label">Edit volunteer invitation status</h3>
                 </div>
                 <div class="modal-body">
+                    <input type="hidden" name="_method" value="PUT" />
                     <div class="form-group">
                         <label>Status</label>
                         <select class="form-control" name="interviewStatusCode">

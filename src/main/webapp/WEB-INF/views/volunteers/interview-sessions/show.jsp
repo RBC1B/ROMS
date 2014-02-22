@@ -65,9 +65,9 @@
                             <tbody>
                                 <c:forEach items="${volunteers}" var="volunteer">
                                     <tr>
-                                        <td>${volunteer.id}</td>
+                                        <td class="a-volunteer-id" data-uri="${volunteer.uri}">${volunteer.id}</td>
                                         <td>
-                                            <a href="<c:url value="${volunteer.uri}" />">
+                                            <a href="<c:url value="${volunteer.volunteerUri}" />">
                                                 <c:out value="${volunteer.surname}" />, <c:out value="${volunteer.forename}" />
                                             </a>
                                         </td>
@@ -77,8 +77,8 @@
                                             </c:if>
                                         </td>
                                         <td><c:out value="${volunteer.rbcSubRegion}" /></td>
-                                        <td><c:out value="${volunteer.comments}" /></td>
-                                        <td><c:out value="${volunteer.interviewStatus}" /></td>
+                                        <td class="a-volunteer-comments"><c:out value="${volunteer.comments}" /></td>
+                                        <td class="a-volunteer-interview-status"><c:out value="${volunteer.interviewStatus}" /></td>
                                         <td>
                                             <ul class="list-inline">
                                                 <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">

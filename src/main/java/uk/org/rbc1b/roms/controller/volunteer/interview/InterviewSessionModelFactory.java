@@ -147,7 +147,9 @@ public class InterviewSessionModelFactory {
         model.setId(person.getPersonId());
         model.setForename(person.getForename());
         model.setSurname(person.getSurname());
-        model.setUri(VolunteerModelFactory.generateUri(person.getPersonId()));
+        model.setUri(generateUri(volunteerInterviewSession.getInterviewSession().getInterviewSessionId())
+                + "/invitations/" + volunteerInterviewSession.getVolunteerInterviewSessionId());
+        model.setVolunteerUri(VolunteerModelFactory.generateUri(person.getPersonId()));
 
         if (volunteerInterviewSession != null) {
             model.setComments(volunteerInterviewSession.getComments());
