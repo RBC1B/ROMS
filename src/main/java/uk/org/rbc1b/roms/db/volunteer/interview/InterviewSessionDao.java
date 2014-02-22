@@ -25,6 +25,7 @@ package uk.org.rbc1b.roms.db.volunteer.interview;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.springframework.transaction.annotation.Transactional;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 
@@ -70,6 +71,14 @@ public interface InterviewSessionDao {
      */
     @Transactional(readOnly = true)
     List<VolunteerInterviewSession> findVolunteerInterviewSessions(Integer interviewSessionId);
+
+    /**
+     * Invite volunteers to an interview.
+     * @param volunteerIds volunteer ids
+     * @param interviewSessionId session
+     */
+    @Transactional
+    void addVolunteerInterviewSessions(Set<Integer> volunteerIds, Integer interviewSessionId);
 
     /**
      * Find the list of all volunteers who are eligible for an interview session.

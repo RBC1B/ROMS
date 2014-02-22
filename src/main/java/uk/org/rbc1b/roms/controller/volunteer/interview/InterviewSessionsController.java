@@ -26,8 +26,10 @@ package uk.org.rbc1b.roms.controller.volunteer.interview;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +38,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
+import uk.org.rbc1b.roms.controller.common.DataConverterUtil;
 import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
 import uk.org.rbc1b.roms.db.CongregationDao;
 import uk.org.rbc1b.roms.db.reference.ReferenceDao;
@@ -201,7 +205,50 @@ public class InterviewSessionsController {
         model.addAttribute("interviewSession", sessionModel);
         model.addAttribute("volunteers", volunteerModeList);
         model.addAttribute("listUri", InterviewSessionModelFactory.generateUri(null));
+        model.addAttribute("viewUri", InterviewSessionModelFactory.generateUri(interviewSessionId));
         return "volunteers/interview-sessions/invitations";
     }
 
+    /**
+     * Submit a list of volunteers to be invited to the session.
+     * @param interviewSessionId session id
+     * @param volunteerIdsParam volunteer ids to be invited
+     * @return redirect
+     * @throws NoSuchRequestHandlingMethodException on failure to find the session
+     */
+    @RequestMapping(value = "{interviewSessionId}/invitations", method = RequestMethod.POST)
+    public String submitInvitationList(@PathVariable Integer interviewSessionId,
+            @RequestParam(value = "volunteerIds") String volunteerIdsParam) throws NoSuchRequestHandlingMethodException {
+
+        Set<Integer> volunteerIds = new HashSet<Integer>();
+        for (String volunteerId : volunteerIdsParam.split(",")) {
+            volunteerIds.add(DataConverterUtil.toInteger(volunteerId));
+        }
+
+        InterviewSession session = interviewSessionDao.findInterviewSession(interviewSessionId);
+        if (session == null) {
+            throw new NoSuchRequestHandlingMethodException("No session with id [" + interviewSessionId + "]",
+                    this.getClass());
+        }
+
+        // we can't invite more people if the session has already happened
+        if (session.isInPast()) {
+            throw new IllegalStateException("Interview session #" + interviewSessionId + " is in the past.");
+        }
+
+        List<VolunteerInterviewSession> existingInterviewSessions = interviewSessionDao
+                .findVolunteerInterviewSessions(interviewSessionId);
+
+        Set<Integer> existingVolunteerIds = new HashSet<Integer>();
+        for (VolunteerInterviewSession existingInterviewSession : existingInterviewSessions) {
+            existingVolunteerIds.add(existingInterviewSession.getVolunteer().getPersonId());
+        }
+
+        volunteerIds.removeAll(existingVolunteerIds);
+
+        interviewSessionDao.addVolunteerInterviewSessions(volunteerIds, interviewSessionId);
+
+        return "redirect:/interview-sessions/" + interviewSessionId;
+
+    }
 }

@@ -862,7 +862,7 @@ $(document).ready(function() {
             $(this).closest("tr").addClass('success');
             
             // if all the volunteers are checked, the invite alls should be checked
-            if (!$(".a-invite:not(:checked)").length > 0) {
+            if ($(".a-invite:not(:checked)").length == 0) {
                 $(".a-invite-all").prop({
                     checked: true,
                     indeterminate: false
@@ -878,7 +878,7 @@ $(document).ready(function() {
             $(this).closest("tr").removeClass('success');
             
             // if none of the volunteers are checked, the invite alls should be unchecked
-            if (!$(".a-invite:checked").length > 0) {
+            if ($(".a-invite:checked").length == 0) {
                 $(".a-invite-all").prop({
                     checked: false,
                     indeterminate: false
@@ -891,6 +891,24 @@ $(document).ready(function() {
                 });
             }
         }
+    });
+    
+    $("#invite-volunteers").on("click", function() {
+        // if none of the volunteers are selected, show an error message
+        var $selected = $(".a-invite:checked");
+        if ($selected.length == 0) {
+            $("#invite-volunteers-error").removeClass("hide");
+            return false;
+        }
+        
+        var volunteerIds = [];
+        $selected.each(function(i, el) {
+            volunteerIds.push($(this).data("volunteer-id"));
+        });
+        
+        $("input[name='volunteerIds']").val(volunteerIds);
+        $("#invite-volunteer-form").submit();
+        
     });
     
 });

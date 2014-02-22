@@ -42,7 +42,7 @@
                         <c:forEach items="${volunteers}" var="volunteer">
                             <tr>
                                 <td>
-                                    <input class="a-invite" type="checkbox" />
+                                    <input class="a-invite" type="checkbox" data-volunteer-id="${volunteer.id}" />
                                 </td>
                                 <td><c:out value="${volunteer.forename}" /></td>
                                 <td><c:out value="${volunteer.surname}" /></td>
@@ -65,14 +65,27 @@
                 </label>
             </div>
             <div class="pull-right">
-                <a class="btn btn-lg btn-success" href="#">Invite</a>
+                <form id="invite-volunteer-form" method="POST" action="">
+                    <input type="hidden" name="volunteerIds" />
+                    <button id="invite-volunteers" class="btn btn-lg btn-success" href="#">Invite</button>
+                </form>
+            </div>
+            <div class="clearfix"></div>
+            <div id="invite-volunteers-error" class="hide">
+                <br />
+                <div class="alert alert-danger">
+                    <h4>No volunteers selected</h4>
+                    <p>Use the checkboxes to select the volunteers to invite,
+                        or return to the <a href="<c:url value="${viewUri}" />">interview session details</a></p>
+                </div>
             </div>
         </div>
         <div class="clearfix"></div>
         <ol class="breadcrumb">
             <li><a href="<c:url value="/" />">Edifice</a></li>
             <li><a href="<c:url value="${listUri}" />">Interview Sessions</a></li>
-            <li class="active"><c:out value="${pageTitle}" /></li>
+            <li><a href="<c:url value="${viewUri}" />">${pageTitle}</a></li>
+            <li class="active">Invitations</li>
         </ol>
 
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>

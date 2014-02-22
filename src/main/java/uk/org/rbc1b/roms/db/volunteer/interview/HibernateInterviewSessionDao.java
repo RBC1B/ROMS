@@ -27,7 +27,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,6 +101,23 @@ public class HibernateInterviewSessionDao implements InterviewSessionDao {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(VolunteerInterviewSession.class);
         criteria.add(Restrictions.eq("interviewSession.interviewSessionId", interviewSessionId));
         return criteria.list();
+    }
+
+    @Override
+    public void addVolunteerInterviewSessions(Set<Integer> volunteerIds, Integer interviewSessionId) {
+        Session session = this.sessionFactory.getCurrentSession();
+
+        InterviewSession interviewSession = (InterviewSession) session.get(InterviewSession.class, interviewSessionId);
+
+        for (Integer volunteerId : volunteerIds) {
+            VolunteerInterviewSession volunteerInterviewSession = new VolunteerInterviewSession();
+            volunteerInterviewSession.setInterviewSession(interviewSession);
+            volunteerInterviewSession.setVolunteer((Volunteer) session.get(Volunteer.class, volunteerId));
+            volunteerInterviewSession
+                    .setVolunteerInterviewStatusCode(VolunteerInterviewSession.INVITED_INTERVIEW_STATUS_CODE);
+            session.save(volunteerInterviewSession);
+        }
+
     }
 
     @Override

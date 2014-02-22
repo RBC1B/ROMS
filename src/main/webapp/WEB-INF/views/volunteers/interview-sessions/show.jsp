@@ -86,10 +86,12 @@
                 </div>
             </div>
         </div>
+        <!--
         <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
             <hr />
             <a href="<c:url value='${interviewSession.editUri}' />" class="btn btn-edifice">Edit Interview Session</a>
         </sec:authorize>
+         -->
 
         <br />
         <ol class="breadcrumb">
