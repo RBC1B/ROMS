@@ -820,10 +820,16 @@ $(document).ready(function() {
             "aoColumnDefs": [
                 {
                     'bSortable': false,
-                    'aTargets': [7]
+                    'aTargets': [6]
                 }
             ]
         });
+    
+    $(".a-volunteer-edit").on("click", function(){
+        var modalElement = $("#volunteer-invitation-modal")
+
+        modalElement.modal('show');
+    });
     
     // volunteer interview session invitation
     roms.common.datatables(

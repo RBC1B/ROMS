@@ -54,8 +54,7 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Forename</th>
-                                    <th>Surname</th>
+                                    <th>Name</th>
                                     <th>Congregation</th>
                                     <th>Region</th>
                                     <th>Comments</th>
@@ -67,8 +66,11 @@
                                 <c:forEach items="${volunteers}" var="volunteer">
                                     <tr>
                                         <td>${volunteer.id}</td>
-                                        <td><c:out value="${volunteer.forename}" /></td>
-                                        <td><c:out value="${volunteer.surname}" /></td>
+                                        <td>
+                                            <a href="<c:url value="${volunteer.uri}" />">
+                                                <c:out value="${volunteer.surname}" />, <c:out value="${volunteer.forename}" />
+                                            </a>
+                                        </td>
                                         <td>
                                             <c:if test="${!empty volunteer.congregation}">
                                                 <a href="<c:url value='${volunteer.congregation.uri}' />"><c:out value="${volunteer.congregation.name}" /></a>
@@ -79,7 +81,9 @@
                                         <td><c:out value="${volunteer.interviewStatus}" /></td>
                                         <td>
                                             <ul class="list-inline">
-                                                <li><a class="btn btn-success" href="<c:url value="${volunteer.uri}" />">View</a></li>
+                                                <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
+                                                    <li><a class="btn btn-edifice a-volunteer-edit" href="#">Edit</a></li>
+                                                </sec:authorize>
                                             </ul>
                                         </td>
                                     </tr>
@@ -104,6 +108,7 @@
             <li class="active"><c:out value="${pageTitle}" /></li>
         </ol>
 
+        <%@ include file="fragments/edit-volunteer-invitation-modal.jsp" %>
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         <script type="text/javascript" src="<c:url value='/javascript/volunteers.js' />" ></script>
     </body>

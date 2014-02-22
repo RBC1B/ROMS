@@ -30,8 +30,7 @@
                     <thead>
                         <tr>
                             <th>Invite</th>
-                            <th>Forename</th>
-                            <th>Surname</th>
+                            <th>Name</th>
                             <th>Congregation</th>
                             <th>Region</th>
                             <th>Comments</th>
@@ -44,8 +43,11 @@
                                 <td>
                                     <input class="a-invite" type="checkbox" data-volunteer-id="${volunteer.id}" />
                                 </td>
-                                <td><c:out value="${volunteer.forename}" /></td>
-                                <td><c:out value="${volunteer.surname}" /></td>
+                                <td>
+                                    <a href="<c:url value="${volunteer.uri}" />">
+                                        <c:out value="${volunteer.surname}" />, <c:out value="${volunteer.forename}" />
+                                    </a>
+                                </td>
                                 <td>
                                     <c:if test="${!empty volunteer.congregation}">
                                         <a href="<c:url value='${volunteer.congregation.uri}' />"><c:out value="${volunteer.congregation.name}" /></a>

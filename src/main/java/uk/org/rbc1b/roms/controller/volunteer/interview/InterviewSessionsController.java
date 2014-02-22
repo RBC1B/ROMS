@@ -125,6 +125,7 @@ public class InterviewSessionsController {
 
         model.addAttribute("interviewSession", sessionModel);
         model.addAttribute("volunteers", generateVolunterList(interviewSessionId));
+        model.addAttribute("interviewStatusValues", referenceDao.findVolunteerInterviewStatusValues());
         model.addAttribute("listUri", InterviewSessionModelFactory.generateUri(null));
         return "volunteers/interview-sessions/show";
     }
