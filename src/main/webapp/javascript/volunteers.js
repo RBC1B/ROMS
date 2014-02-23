@@ -825,22 +825,10 @@ $(document).ready(function() {
             ]
         });
     
+    // show modal form when editing the volunteer interview status
     $(".a-volunteer-edit").on("click", function(){
         var $modalElement = $("#volunteer-invitation-modal")
-
-        // initialise the values
-        var $row = $(this).closest("tr")
-        var comments = $("td.a-volunteer-comments", $row).html();
-        $("textarea[name='comments']", $modalElement).val(comments);
-        
-        var interviewStatus = $("td.a-volunteer-interview-status", $row).html();
-        $("select[name='interviewStatusCode'] option", $modalElement).filter(function() {
-            //may want to use $.trim in here
-            return $(this).text() == interviewStatus; 
-        }).prop('selected', true);
-        
-        $("form", $modalElement).prop('action', roms.common.relativePath + $("td.a-volunteer-id", $row).data("uri"));
-        $("form", $modalElement).data("volunteer-id", $("td.a-volunteer-id", $row).html());
+        initialiseVolunteerInvitationModalForm($modalElement, $(this));
         
         $modalElement.modal('show');
     });
@@ -877,7 +865,7 @@ $(document).ready(function() {
                 // show/hide the completed button if the status is set to invited
                 // the button is not included in the dom is the session date is in the future
                 // so no check required here
-                $selectedStatus.val() == 'IT'?$(".a-volunteer-completed", $row).show():$(".a-volunteer-completed", $row).hide()
+                $selectedStatus.val() == 'CF'?$(".a-volunteer-completed", $row).show():$(".a-volunteer-completed", $row).hide()
                 
                 var dataTable = $table.dataTable();
                 dataTable.fnUpdate($selectedStatus.text(), $row, 5, 0);
@@ -891,6 +879,41 @@ $(document).ready(function() {
         });
         return false;
     });
+    
+    $("a.a-volunteer-completed").on("click", function() {
+        // not the prettiest implementation, but mark the interview completed by 
+        // submitting it through the modal form
+        var $modalElement = $("#volunteer-invitation-modal")
+        initialiseVolunteerInvitationModalForm($modalElement, $(this));
+        
+        // explicitly set the status to completed
+        $("select[name='interviewStatusCode']", $modalElement).val('CP')
+        
+        $("#volunteer-invitation-modal-form").submit();
+        
+        // open the volunteer page in a new form
+        var $volunteerCell = $("td.a-volunteer-id", $(this).closest("tr"));
+        var editRbsStatusUri =  $volunteerCell.data("edit-rbc-status-uri");
+        var volunteerId = $volunteerCell.html();
+        window.open(roms.common.relativePath + editRbsStatusUri,'_blank_' + volunteerId);
+    });
+    
+    function initialiseVolunteerInvitationModalForm($modalElement, $button) {
+        // initialise the values
+        var $row = $button.closest("tr")
+        var comments = $("td.a-volunteer-comments", $row).html();
+        $("textarea[name='comments']", $modalElement).val(comments);
+        
+        var interviewStatus = $("td.a-volunteer-interview-status", $row).html();
+        $("select[name='interviewStatusCode'] option", $modalElement).filter(function() {
+            //may want to use $.trim in here
+            return $(this).text() == interviewStatus; 
+        }).prop('selected', true);
+        
+        $("form", $modalElement).prop('action', roms.common.relativePath + $("td.a-volunteer-id", $row).data("uri"));
+        $("form", $modalElement).data("volunteer-id", $("td.a-volunteer-id", $row).html());
+    }
+    
     
     // volunteer interview session invitation
     roms.common.datatables(

@@ -65,7 +65,9 @@
                             <tbody>
                                 <c:forEach items="${volunteers}" var="volunteer">
                                     <tr>
-                                        <td class="a-volunteer-id" data-uri="${volunteer.uri}">${volunteer.id}</td>
+                                        <td class="a-volunteer-id"
+                                            data-uri="${volunteer.uri}"
+                                            data-edit-rbc-status-uri="${volunteer.volunteerEditRbcStatusUri}">${volunteer.id}</td>
                                         <td>
                                             <a href="<c:url value="${volunteer.volunteerUri}" />">
                                                 <c:out value="${volunteer.surname}" />, <c:out value="${volunteer.forename}" />
@@ -87,9 +89,9 @@
                                                     <li><a class="btn btn-edifice a-volunteer-edit" href="#">Edit</a></li>
                                                     <c:if test="${interviewSession.todayOrInPast == true}">
                                                         <li>
-                                                            <!-- the completed button is hidden unless the status is invited -->
+                                                            <!-- the completed button is hidden unless the status is confirmed -->
                                                             <!-- this value can be changed dynamically, so the button is in the DOM -->
-                                                            <a <c:if test="${volunteer.interviewStatusCode != 'IT'}">style="display:none"</c:if>
+                                                            <a <c:if test="${volunteer.interviewStatusCode != 'CF'}">style="display:none"</c:if>
                                                                 class="btn btn-edifice a-volunteer-completed" href="#">Completed
                                                             </a>
                                                         </li>

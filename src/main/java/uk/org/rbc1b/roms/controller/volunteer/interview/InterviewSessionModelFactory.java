@@ -151,6 +151,7 @@ public class InterviewSessionModelFactory {
         model.setUri(generateUri(volunteerInterviewSession.getInterviewSession().getInterviewSessionId())
                 + "/invitations/" + volunteerInterviewSession.getVolunteerInterviewSessionId());
         model.setVolunteerUri(VolunteerModelFactory.generateUri(person.getPersonId()));
+        model.setVolunteerEditRbcStatusUri(VolunteerModelFactory.generateUri(person.getPersonId()) + "/rbc-status/edit");
 
         if (volunteerInterviewSession != null) {
             model.setComments(volunteerInterviewSession.getComments());
