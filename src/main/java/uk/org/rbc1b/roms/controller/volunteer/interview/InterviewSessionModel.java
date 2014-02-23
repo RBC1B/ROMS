@@ -33,6 +33,7 @@ public class InterviewSessionModel {
 
     private EntityModel kingdomHall;
     private java.sql.Date date;
+    private boolean todayOrInPast;
     private String time;
     private String comments;
     private String uri;
@@ -59,6 +60,14 @@ public class InterviewSessionModel {
      */
     public int getAttendingVolunteerCount() {
         return invitedVolunteerCount - declinedVolunteerCount;
+    }
+
+    public boolean isTodayOrInPast() {
+        return todayOrInPast;
+    }
+
+    public void setTodayOrInPast(boolean todayOrInPast) {
+        this.todayOrInPast = todayOrInPast;
     }
 
     public EntityModel getKingdomHall() {

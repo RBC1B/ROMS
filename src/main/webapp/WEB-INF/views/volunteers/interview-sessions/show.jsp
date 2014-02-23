@@ -73,7 +73,9 @@
                                         </td>
                                         <td>
                                             <c:if test="${!empty volunteer.congregation}">
-                                                <a href="<c:url value='${volunteer.congregation.uri}' />"><c:out value="${volunteer.congregation.name}" /></a>
+                                                <a href="<c:url value='${volunteer.congregation.uri}' />">
+                                                    <c:out value="${volunteer.congregation.name}" />
+                                                </a>
                                             </c:if>
                                         </td>
                                         <td><c:out value="${volunteer.rbcSubRegion}" /></td>
@@ -83,6 +85,15 @@
                                             <ul class="list-inline">
                                                 <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
                                                     <li><a class="btn btn-edifice a-volunteer-edit" href="#">Edit</a></li>
+                                                    <c:if test="${interviewSession.todayOrInPast == true}">
+                                                        <li>
+                                                            <!-- the completed button is hidden unless the status is invited -->
+                                                            <!-- this value can be changed dynamically, so the button is in the DOM -->
+                                                            <a <c:if test="${volunteer.interviewStatusCode != 'IT'}">style="display:none"</c:if>
+                                                                class="btn btn-edifice a-volunteer-completed" href="#">Completed
+                                                            </a>
+                                                        </li>
+                                                    </c:if>
                                                 </sec:authorize>
                                             </ul>
                                         </td>

@@ -55,6 +55,15 @@ public class InterviewSession implements UpdateAuditable, Serializable {
         return today.isAfter(sessionDate);
     }
 
+    /**
+     * @return true if the session is today.
+     */
+    public boolean isToday() {
+        DateTime today = LocalDate.now().toDateTimeAtStartOfDay();
+        DateTime sessionDate = DataConverterUtil.toDateTime(date);
+        return today.isEqual(sessionDate.toDateMidnight());
+    }
+
     public Integer getInterviewSessionId() {
         return interviewSessionId;
     }

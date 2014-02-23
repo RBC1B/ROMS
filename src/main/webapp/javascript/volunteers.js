@@ -872,14 +872,19 @@ $(document).ready(function() {
                     }
                 });
                 
+                var $selectedStatus = $("select[name='interviewStatusCode'] option:selected", $form);
+
+                // show/hide the completed button if the status is set to invited
+                // the button is not included in the dom is the session date is in the future
+                // so no check required here
+                $selectedStatus.val() == 'IT'?$(".a-volunteer-completed", $row).show():$(".a-volunteer-completed", $row).hide()
+                
                 var dataTable = $table.dataTable();
+                dataTable.fnUpdate($selectedStatus.text(), $row, 5, 0);
                 
                 var comments = $("textarea[name='comments']", $form).val();
-                dataTable.fnUpdate(comments, $row, 4, 0);
-                
-                var status = $("select[name='interviewStatusCode'] option:selected", $form).text();
                 // we set the table to refresh since this is the last cell update
-                dataTable.fnUpdate(status, $row, 5, 1);
+                dataTable.fnUpdate(comments, $row, 4, 0);
                 
                 $('#volunteer-invitation-modal').modal('hide');
             }

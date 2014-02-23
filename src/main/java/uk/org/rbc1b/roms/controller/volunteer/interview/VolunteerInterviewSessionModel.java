@@ -36,6 +36,7 @@ public class VolunteerInterviewSessionModel {
     private String rbcSubRegion;
     private String comments;
     private String interviewStatus;
+    private String interviewStatusCode;
     private String uri;
     private String volunteerUri;
 
@@ -93,6 +94,14 @@ public class VolunteerInterviewSessionModel {
 
     public void setInterviewStatus(String interviewStatus) {
         this.interviewStatus = interviewStatus;
+    }
+
+    public String getInterviewStatusCode() {
+        return interviewStatusCode;
+    }
+
+    public void setInterviewStatusCode(String interviewStatusCode) {
+        this.interviewStatusCode = interviewStatusCode;
     }
 
     public String getUri() {

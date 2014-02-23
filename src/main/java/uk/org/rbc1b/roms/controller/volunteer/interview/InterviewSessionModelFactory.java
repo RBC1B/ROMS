@@ -81,6 +81,7 @@ public class InterviewSessionModelFactory {
         model.setComments(interviewSession.getComments());
         model.setDate(interviewSession.getDate());
         model.setTime(interviewSession.getTime());
+        model.setTodayOrInPast(interviewSession.isInPast() || interviewSession.isToday());
 
         if (interviewSession.getKingdomHall() != null && interviewSession.getKingdomHall().getKingdomHallId() != null) {
             KingdomHall kingdomHall = kingdomHallDao.findKingdomHall(interviewSession.getKingdomHall()
@@ -155,6 +156,7 @@ public class InterviewSessionModelFactory {
             model.setComments(volunteerInterviewSession.getComments());
             model.setInterviewStatus(interviewStatusValues.get(volunteerInterviewSession
                     .getVolunteerInterviewStatusCode()));
+            model.setInterviewStatusCode(volunteerInterviewSession.getVolunteerInterviewStatusCode());
         }
 
         return model;
