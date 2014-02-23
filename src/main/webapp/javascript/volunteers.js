@@ -867,15 +867,19 @@ $(document).ready(function() {
                 var $row = null;
                 $("tr",$table).each(function() {
                     if ($("td.a-volunteer-id", $(this)).html() == volunteerId) {
-                        $row = $(this);
+                        $row = $(this)[0];
+                        return false;
                     }
                 });
                 
+                var dataTable = $table.dataTable();
+                
                 var comments = $("textarea[name='comments']", $form).val();
-                $("td.a-volunteer-comments", $row).html(comments)
+                dataTable.fnUpdate(comments, $row, 4, 0);
                 
                 var status = $("select[name='interviewStatusCode'] option:selected", $form).text();
-                $("td.a-volunteer-interview-status", $row).html(status);
+                // we set the table to refresh since this is the last cell update
+                dataTable.fnUpdate(status, $row, 5, 1);
                 
                 $('#volunteer-invitation-modal').modal('hide');
             }
