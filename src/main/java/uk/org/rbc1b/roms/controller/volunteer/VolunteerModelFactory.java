@@ -33,13 +33,19 @@ import org.springframework.stereotype.Component;
 import uk.org.rbc1b.roms.controller.common.model.EntityModel;
 import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
 import uk.org.rbc1b.roms.controller.department.DepartmentModelFactory;
+import uk.org.rbc1b.roms.controller.kingdomhall.KingdomHallModelFactory;
 import uk.org.rbc1b.roms.controller.qualification.QualificationModelFactory;
 import uk.org.rbc1b.roms.controller.skill.SkillModelFactory;
+import uk.org.rbc1b.roms.controller.volunteer.interview.InterviewSessionModelFactory;
 import uk.org.rbc1b.roms.db.Person;
+import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
+import uk.org.rbc1b.roms.db.kingdomhall.KingdomHallDao;
 import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import uk.org.rbc1b.roms.db.volunteer.department.Department;
 import uk.org.rbc1b.roms.db.volunteer.department.DepartmentDao;
+import uk.org.rbc1b.roms.db.volunteer.interview.InterviewSession;
+import uk.org.rbc1b.roms.db.volunteer.interview.VolunteerInterviewSession;
 import uk.org.rbc1b.roms.db.volunteer.qualification.Qualification;
 import uk.org.rbc1b.roms.db.volunteer.qualification.QualificationDao;
 import uk.org.rbc1b.roms.db.volunteer.qualification.VolunteerQualification;
@@ -68,6 +74,8 @@ public class VolunteerModelFactory {
     private DepartmentDao departmentDao;
     @Autowired
     private QualificationDao qualificationDao;
+    @Autowired
+    private KingdomHallDao kingdomHallDao;
 
     static {
         for (long i = 0; i < DAYS_PER_WEEK; i++) {
@@ -291,4 +299,31 @@ public class VolunteerModelFactory {
 
         return modelList;
     }
+
+    /**
+     * Generate the model to display an interview a volunteer has been invited to.
+     * @param interview interview
+     * @param session session
+     * @return model
+     */
+    public VolunteerInterviewModel generateVolunteerInterviewModel(VolunteerInterviewSession interview,
+            InterviewSession session) {
+        VolunteerInterviewModel model = new VolunteerInterviewModel();
+        model.setComments(interview.getComments());
+        model.setDate(session.getDate());
+        model.setStatus(referenceDao.findVolunteerInterviewStatusValues().get(
+                interview.getVolunteerInterviewStatusCode()));
+
+        if (session.getKingdomHall() != null && session.getKingdomHall().getKingdomHallId() != null) {
+            KingdomHall kingdomHall = kingdomHallDao.findKingdomHall(session.getKingdomHall().getKingdomHallId());
+            EntityModel kingdomHallModel = new EntityModel();
+            kingdomHallModel.setId(kingdomHall.getKingdomHallId());
+            kingdomHallModel.setName(kingdomHall.getName());
+            kingdomHallModel.setUri(KingdomHallModelFactory.generateUri(kingdomHall.getKingdomHallId()));
+            model.setKingdomHall(kingdomHallModel);
+        }
+        model.setSessionUri(InterviewSessionModelFactory.generateUri(session.getInterviewSessionId()));
+        return model;
+    }
+
 }

@@ -73,6 +73,14 @@ public interface InterviewSessionDao {
     List<VolunteerInterviewSession> findVolunteerInterviewSessions(Integer interviewSessionId);
 
     /**
+     * Find all the interview sessions for a given volunteer.
+     * @param volunteerId volunteer id
+     * @return list of {@code VolunteerInterviewSession} instances
+     */
+    @Transactional(readOnly = true)
+    List<VolunteerInterviewSession> findVolunteerInterviewSessionsByVolunteer(Integer volunteerId);
+
+    /**
      * Find an individual volunteer interview.
      * @param volunteerInterviewSessionId volunteer interview id
      * @return {@code VolunteerInterviewSession} instance

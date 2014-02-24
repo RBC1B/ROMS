@@ -12,6 +12,43 @@ The contents of the rbc status tab.
             <c:otherwise>-</c:otherwise>
         </c:choose>
     </dd>
+</dl>
+
+<c:choose>
+    <c:when test="${empty interviews}">
+        <div class="alert alert-danger">No interview invitations</div>
+    </c:when>
+    <c:otherwise>
+        <div class="entity-list-results">
+            <table class="table table-bordered table-condensed table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Session</th>
+                        <th>Comments</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="${interviews}" var="interview">
+                        <tr>
+                            <td>
+                                <a href="<c:url value='${interview.sessionUri}' />">
+                                    <!-- missing line break to preserve spacing around comma -->
+                                    <fmt:formatDate value="${interview.date}" pattern="yyyy-MM-dd" /><c:if test="${!empty interview.kingdomHall}">,
+                                        <c:out value="${interview.kingdomHall.name}" />
+                                    </c:if>
+                                </a>
+                            </td>
+                            <td>${interview.comments}</td>
+                            <td>${interview.status}</td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
+    </c:otherwise>
+</c:choose>
+<dl class="dl-horizontal">
     <dt>Interviewers:</dt>
     <dd>
         <c:choose>

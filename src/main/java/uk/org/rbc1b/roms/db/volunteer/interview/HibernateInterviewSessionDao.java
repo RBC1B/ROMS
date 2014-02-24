@@ -103,6 +103,14 @@ public class HibernateInterviewSessionDao implements InterviewSessionDao {
         return criteria.list();
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<VolunteerInterviewSession> findVolunteerInterviewSessionsByVolunteer(Integer volunteerId) {
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(VolunteerInterviewSession.class);
+        criteria.add(Restrictions.eq("volunteer.personId", volunteerId));
+        return criteria.list();
+    }
+
     @Override
     public VolunteerInterviewSession findVolunteerInterviewSession(Integer volunteerInterviewSessionId) {
         return (VolunteerInterviewSession) this.sessionFactory.getCurrentSession().get(VolunteerInterviewSession.class,

@@ -33,6 +33,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
@@ -77,6 +78,9 @@ import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao.VolunteerData;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerSearchCriteria;
 import uk.org.rbc1b.roms.db.volunteer.department.Assignment;
+import uk.org.rbc1b.roms.db.volunteer.interview.InterviewSession;
+import uk.org.rbc1b.roms.db.volunteer.interview.InterviewSessionDao;
+import uk.org.rbc1b.roms.db.volunteer.interview.VolunteerInterviewSession;
 import uk.org.rbc1b.roms.db.volunteer.qualification.VolunteerQualification;
 import uk.org.rbc1b.roms.db.volunteer.skill.VolunteerSkill;
 import uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTrade;
@@ -110,6 +114,8 @@ public class VolunteersController {
     private AssignmentModelFactory assignmentModelFactory;
     @Autowired
     private VolunteerBadgePdfModelFactory volunteerBadgePdfModelFactory;
+    @Autowired
+    private InterviewSessionDao interviewSessionDao;
 
     @Resource(name = "imageDirectories")
     private Properties imageDirectories;
@@ -202,6 +208,8 @@ public class VolunteersController {
         model.addAttribute("assignments", generateAssignments(assignments));
         model.addAttribute("skills", volunteerModelFactory.generateVolunteerSkillsModel(skills));
         model.addAttribute("qualifications", volunteerModelFactory.generateVolunteerQualificationsModel(qualifications));
+        model.addAttribute("interviews", generateInterviewsModel(volunteerId));
+
         model.addAttribute("badgeUri", VolunteerBadgePdfModelFactory.generateUri(volunteerId));
         model.addAttribute("rbcStatusCodes", referenceDao.findRBCStatusValues().keySet());
         model.addAttribute("rbcStatusValues", referenceDao.findRBCStatusValues().values());
@@ -225,6 +233,30 @@ public class VolunteersController {
             modelList.add(assignmentModelFactory.generateAssignmentModel(assignment));
         }
 
+        return modelList;
+    }
+
+    private List<VolunteerInterviewModel> generateInterviewsModel(Integer volunteerId) {
+        List<VolunteerInterviewSession> interviews = interviewSessionDao
+                .findVolunteerInterviewSessionsByVolunteer(volunteerId);
+        if (CollectionUtils.isEmpty(interviews)) {
+            return null;
+        }
+
+        List<VolunteerInterviewModel> modelList = new ArrayList<VolunteerInterviewModel>();
+        for (VolunteerInterviewSession interview : interviews) {
+            InterviewSession session = interviewSessionDao.findInterviewSession(interview.getInterviewSession()
+                    .getInterviewSessionId());
+            modelList.add(volunteerModelFactory.generateVolunteerInterviewModel(interview, session));
+        }
+
+        Collections.sort(modelList, new Comparator<VolunteerInterviewModel>() {
+            @Override
+            public int compare(VolunteerInterviewModel model1, VolunteerInterviewModel model2) {
+                return model2.getDate().compareTo(model1.getDate());
+            }
+
+        });
         return modelList;
     }
 
