@@ -828,6 +828,43 @@ $(document).ready(function() {
         $modalElement.modal('show');
     });
     
+    // interview session edit form
+    $("#kingdomHallName").typeahead({
+        remote: roms.common.relativePath + '/kingdom-halls/search?name=%QUERY',
+        valueKey: 'name'
+    });
+
+    // we always clear the kingdom hall id on change.
+    // it will be re-calculated in validation
+    $("#kingdomHallName").change(function() {
+        $("#kingdomHallId").val(null);
+    });
+    
+    $('#interviewSessionForm').validate({
+        rules:{
+            date: {
+                required: true
+            },
+            time: {
+                required: true
+            },
+            kingdomHallName: {
+                required: true,
+                remote: roms.common.validation.kingdomHall($("#kingdomHallName"), $("#kingdomHallId"))
+            },
+            conments: {
+                maxlength: 250
+            }
+        },
+        messages: {
+            kingdomHallName: {
+                remote: "Please provide the name of an existing kingdom hall"
+            }
+        },
+        errorPlacement: roms.common.validatorErrorPlacement
+    });
+    
+    
     $("#volunteer-invitation-modal-form").submit(function() {
         var $form = $(this);
         $.ajax({

@@ -45,6 +45,8 @@ import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMeth
 import uk.org.rbc1b.roms.controller.common.DataConverterUtil;
 import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
 import uk.org.rbc1b.roms.db.CongregationDao;
+import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
+import uk.org.rbc1b.roms.db.kingdomhall.KingdomHallDao;
 import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
@@ -78,6 +80,9 @@ public class InterviewSessionsController {
 
     @Autowired
     private ReferenceDao referenceDao;
+
+    @Autowired
+    private KingdomHallDao kingdomHallDao;
 
     /**
      * Display a list of volunteer interview sessions.
@@ -186,7 +191,7 @@ public class InterviewSessionsController {
 
         // we can't invite more people if the session has already happened
         if (session.isInPast()) {
-            return "redirect:/interview-sessions/" + interviewSessionId;
+            return "redirect:" + InterviewSessionModelFactory.generateUri(interviewSessionId);
         }
 
         Map<String, Integer> sessionVolunteerCounts = interviewSessionDao
@@ -251,7 +256,7 @@ public class InterviewSessionsController {
 
         interviewSessionDao.addVolunteerInterviewSessions(volunteerIds, interviewSessionId);
 
-        return "redirect:/interview-sessions/" + interviewSessionId;
+        return "redirect:" + InterviewSessionModelFactory.generateUri(interviewSessionId);
 
     }
 
@@ -292,6 +297,40 @@ public class InterviewSessionsController {
         volunteerInterviewSession.setVolunteerInterviewStatusCode(interviewStatusCode);
 
         interviewSessionDao.updateVolunteerInterviewSession(volunteerInterviewSession);
+    }
+
+    /**
+     * @param interviewSessionId primary key
+     * @param model model
+     * @return view
+     * @throws NoSuchRequestHandlingMethodException on failure to find the session
+     */
+    @RequestMapping(value = "{interviewSessionId}/edit", method = RequestMethod.GET)
+    public String showEditInterviewSessionForm(@PathVariable Integer interviewSessionId, ModelMap model)
+            throws NoSuchRequestHandlingMethodException {
+        InterviewSession session = interviewSessionDao.findInterviewSession(interviewSessionId);
+        if (session == null) {
+            throw new NoSuchRequestHandlingMethodException("No session with id [" + interviewSessionId + "]",
+                    this.getClass());
+        }
+
+        InterviewSessionForm form = new InterviewSessionForm();
+        form.setComments(session.getComments());
+        form.setDate(DataConverterUtil.toDateTime(session.getDate()));
+        form.setTime(session.getTime());
+
+        if (session.getKingdomHall() != null && session.getKingdomHall().getKingdomHallId() != null) {
+            KingdomHall kingdomHall = kingdomHallDao.findKingdomHall(session.getKingdomHall().getKingdomHallId());
+            form.setKingdomHallId(kingdomHall.getKingdomHallId());
+            form.setKingdomHallName(kingdomHall.getName());
+        }
+
+        model.addAttribute("interviewSessionForm", form);
+        model.addAttribute("listUri", InterviewSessionModelFactory.generateUri(null));
+        model.addAttribute("submitUri", InterviewSessionModelFactory.generateUri(interviewSessionId));
+        model.addAttribute("submitMethod", "PUT");
+        return "volunteers/interview-sessions/edit";
+
     }
 
 }
