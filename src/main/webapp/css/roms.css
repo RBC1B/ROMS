@@ -475,6 +475,10 @@ ul.list-inline {
     margin-top: 9px;
 }
 
+.label-disabled {
+    color: darkgrey;
+}
+
 #trades-row-add {
     margin-left: 3px;
 }

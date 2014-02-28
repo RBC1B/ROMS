@@ -70,6 +70,8 @@ $(document).ready(function() {
         if($(this).val() === 'F') {
             $("input[name='elder']").attr("disabled", true);
             $("input[name='ministerialServant']").attr("disabled", true);
+            $("#elderLabel").addClass('label-disabled');
+            $("#ministerialServantLabel").addClass('label-disabled');
             // remove Wife option from Emergency Contact Relationship 
             // NOTE: .hide() for options may not work in some browsers
             $("#emergencyRelationshipCode").find("option[value='WF']").remove();
@@ -80,6 +82,8 @@ $(document).ready(function() {
         } else if ($(this).val() === 'M') {
             $("input[name='elder']").removeAttr("disabled");
             $("input[name='ministerialServant']").removeAttr("disabled");
+             $("#elderLabel").removeClass('label-disabled');
+            $("#ministerialServantLabel").removeClass('label-disabled');
             // remove Husband option from the Emergency Contact Relationship
             $("#emergencyRelationshipCode").find("option[value='HB']").remove();
             if ($("#emergencyRelationshipCode option[value='WF']").length == 0) {

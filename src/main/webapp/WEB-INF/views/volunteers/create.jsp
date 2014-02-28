@@ -144,14 +144,14 @@
                         <h3 class="text-left">5. Current privileges</h3>
                         <div class="col-md-4">
                             <div class="col-md-12">
-                                <label class="checkbox inline">
+                                <label id="elderLabel" class="checkbox inline">
                                     <form:checkbox path="elder" /> Elder
                                 </label>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="col-md-12">
-                                <label class="checkbox inline">
+                                <label id="ministerialServantLabel" class="checkbox inline">
                                     <form:checkbox path="ministerialServant" /> Ministerial&nbsp;servant
                                 </label>
                             </div>
