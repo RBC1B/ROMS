@@ -211,8 +211,7 @@ public class VolunteersController {
         model.addAttribute("interviews", generateInterviewsModel(volunteerId));
 
         model.addAttribute("badgeUri", VolunteerBadgePdfModelFactory.generateUri(volunteerId));
-        model.addAttribute("rbcStatusCodes", referenceDao.findRBCStatusValues().keySet());
-        model.addAttribute("rbcStatusValues", referenceDao.findRBCStatusValues().values());
+        model.addAttribute("rbcStatusCodes", referenceDao.findRBCStatusValues());
 
         return "volunteers/show";
     }

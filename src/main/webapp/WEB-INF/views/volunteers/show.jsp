@@ -31,9 +31,7 @@
 
                 </div>
                 <dl class="dl-horizontal">
-                    <div id="volunteer-rbc-status-code" class="a-edit-hover"
-                         data-status-codes="${rbcStatusCodes}"
-                         data-status-values="${rbcStatusValues}">
+                    <div id="volunteer-rbc-status-code" class="a-edit-hover">
                         <dt>Status:</dt>
                         <dd>
                             <span id="volunteer-rbc-status-code-content"><c:out value="${volunteer.status}" /></span>

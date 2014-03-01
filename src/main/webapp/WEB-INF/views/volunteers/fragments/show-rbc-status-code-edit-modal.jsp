@@ -1,7 +1,7 @@
 <%--
 Content of the model dialog used to update the volunteer's rbc status code.
 --%>
-<div id="volunteer-rbc-status-code-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="volunteer-rbc-interview-status-modal-label" aria-hidden="true">
+<div id="volunteer-rbc-status-code-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="volunteer-rbc-status-code-modal-label" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <c:url var="formAction" value="${volunteer.editRbcStatusCodeUri}" />
@@ -13,9 +13,14 @@ Content of the model dialog used to update the volunteer's rbc status code.
                 <div class="modal-body">
                     <fieldset>
                         <input type="hidden" name="_method" value="PUT" />
-                        <label for="rbcStatusCode">RBC Status</label>
-                        <select id="rbcStatusSelect" style="width:175px" class="form-control" name="rbcStatusCode">
-                        </select>
+                        <label for="rbcStatusSelect">RBC Status</label>
+                        <div class="col-md-6">
+                            <select id="rbcStatusSelect" class="form-control" name="rbcStatusCode">
+                                <c:forEach items="${rbcStatusCodes}" var="rbcStatusCode" varStatus="status">
+                                    <option value="${rbcStatusCode.key}">${rbcStatusCode.value}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
                     </fieldset>
                 </div>
                 <div class="modal-footer">

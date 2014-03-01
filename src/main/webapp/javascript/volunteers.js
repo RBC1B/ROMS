@@ -707,15 +707,6 @@ $(document).ready(function() {
 
     $("#volunteer-rbc-status-code a").on("click", function(e) {
         e.preventDefault();
-        $("#rbcStatusSelect").find('option').remove().end();
-
-        var rbcStatusCodes = $("#volunteer-rbc-status-code").data("status-codes").slice(1, -1).split(", ");
-        var rbcStatusValues = $("#volunteer-rbc-status-code").data("status-values").slice(1, -1).split(", ");
-
-        $.each(rbcStatusCodes, function(index, value) {
-            var html = "<option value='" + value + "'>" + rbcStatusValues[index] + "</option>";
-            $("#rbcStatusSelect").append(html);
-        });
 
         $('#volunteer-rbc-status-code-modal').modal('show');
 
@@ -734,7 +725,7 @@ $(document).ready(function() {
                     alert("Volunteer not found");
                 },
                 500: function() {
-                    alert("Failed to update volunteer's RBC Interview Status");
+                    alert("Failed to update volunteer's RBC Status");
                 }
             },
             success: function() {
