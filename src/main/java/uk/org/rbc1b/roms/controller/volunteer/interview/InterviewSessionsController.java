@@ -301,6 +301,44 @@ public class InterviewSessionsController {
     }
 
     /**
+     * Show form to create a new interview session.
+     * @param model model
+     * @return view
+     */
+    @RequestMapping(value = "new", method = RequestMethod.GET)
+    public String showEditInterviewSessionForm(ModelMap model) {
+
+        InterviewSessionForm form = new InterviewSessionForm();
+
+        model.addAttribute("interviewSessionForm", form);
+        model.addAttribute("listUri", InterviewSessionModelFactory.generateUri(null));
+        model.addAttribute("submitUri", InterviewSessionModelFactory.generateUri(null));
+        model.addAttribute("submitMethod", "POST");
+        return "volunteers/interview-sessions/edit";
+
+    }
+
+    /**
+     * Create a new session.
+     * @param interviewSessionForm updated session data
+     * @return redirect
+     */
+    @RequestMapping(method = RequestMethod.POST)
+    public String createInterviewSession(@Valid InterviewSessionForm interviewSessionForm) {
+        InterviewSession session = new InterviewSession();
+
+        session.setComments(interviewSessionForm.getComments());
+        session.setDate(DataConverterUtil.toSqlDate(interviewSessionForm.getDate()));
+        session.setKingdomHall(kingdomHallDao.findKingdomHall(interviewSessionForm.getKingdomHallId()));
+        session.setTime(InterviewSessionModelFactory.parseDisplayTime(interviewSessionForm.getTime()));
+
+        interviewSessionDao.createInterviewSession(session);
+
+        return "redirect:" + InterviewSessionModelFactory.generateUri(session.getInterviewSessionId());
+
+    }
+
+    /**
      * @param interviewSessionId primary key
      * @param model model
      * @return view
@@ -342,7 +380,7 @@ public class InterviewSessionsController {
      * @throws NoSuchRequestHandlingMethodException on failure to find the session
      */
     @RequestMapping(value = "{interviewSessionId}", method = RequestMethod.PUT)
-    public String updateInterviewSessionForm(@PathVariable Integer interviewSessionId,
+    public String updateInterviewSession(@PathVariable Integer interviewSessionId,
             @Valid InterviewSessionForm interviewSessionForm) throws NoSuchRequestHandlingMethodException {
         InterviewSession session = interviewSessionDao.findInterviewSession(interviewSessionId);
         if (session == null) {

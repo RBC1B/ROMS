@@ -60,6 +60,11 @@ public class HibernateInterviewSessionDao implements InterviewSessionDao {
     }
 
     @Override
+    public void createInterviewSession(InterviewSession interviewSession) {
+        this.sessionFactory.getCurrentSession().save(interviewSession);
+    }
+
+    @Override
     public void updateInterviewSession(InterviewSession interviewSession) {
         this.sessionFactory.getCurrentSession().merge(interviewSession);
     }

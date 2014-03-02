@@ -26,6 +26,7 @@ package uk.org.rbc1b.roms.db.volunteer.interview;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 
@@ -38,6 +39,7 @@ public interface InterviewSessionDao {
      * Get all interview sessions.
      * @return List of sessions
      */
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional(readOnly = true)
     List<InterviewSession> findInterviewSessions();
 
@@ -46,6 +48,7 @@ public interface InterviewSessionDao {
      * @param interviewSessionId primary key
      * @return interview session
      */
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional(readOnly = true)
     InterviewSession findInterviewSession(Integer interviewSessionId);
 
@@ -53,6 +56,15 @@ public interface InterviewSessionDao {
      * Update an interview session.
      * @param interviewSession session
      */
+    @PreAuthorize("hasPermission('VOLUNTEER', 'ADD')")
+    @Transactional
+    void createInterviewSession(InterviewSession interviewSession);
+
+    /**
+     * Update an interview session.
+     * @param interviewSession session
+     */
+    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     @Transactional
     void updateInterviewSession(InterviewSession interviewSession);
 
@@ -60,6 +72,7 @@ public interface InterviewSessionDao {
      * Find the number of volunteers for each given status for each session.
      * @return map of interview status volunteer counts, keyed against the session id
      */
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional(readOnly = true)
     Map<Integer, Map<String, Integer>> findInterviewSessionVolunteerCounts();
 
@@ -68,6 +81,7 @@ public interface InterviewSessionDao {
      * @param interviewSessionId session id
      * @return map of interview status volunteer counts
      */
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional(readOnly = true)
     Map<String, Integer> findInterviewSessionVolunteerCounts(Integer interviewSessionId);
 
@@ -76,6 +90,7 @@ public interface InterviewSessionDao {
      * @param interviewSessionId session id
      * @return list of {@code VolunteerInterviewSession} instances
      */
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional(readOnly = true)
     List<VolunteerInterviewSession> findVolunteerInterviewSessions(Integer interviewSessionId);
 
@@ -84,6 +99,7 @@ public interface InterviewSessionDao {
      * @param volunteerId volunteer id
      * @return list of {@code VolunteerInterviewSession} instances
      */
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional(readOnly = true)
     List<VolunteerInterviewSession> findVolunteerInterviewSessionsByVolunteer(Integer volunteerId);
 
@@ -92,6 +108,7 @@ public interface InterviewSessionDao {
      * @param volunteerInterviewSessionId volunteer interview id
      * @return {@code VolunteerInterviewSession} instance
      */
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional(readOnly = true)
     VolunteerInterviewSession findVolunteerInterviewSession(Integer volunteerInterviewSessionId);
 
@@ -100,6 +117,7 @@ public interface InterviewSessionDao {
      * @param volunteerIds volunteer ids
      * @param interviewSessionId session
      */
+    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     @Transactional
     void addVolunteerInterviewSessions(Set<Integer> volunteerIds, Integer interviewSessionId);
 
@@ -107,6 +125,7 @@ public interface InterviewSessionDao {
      * Update an existing interview session.
      * @param volunteerInterviewSession volunteer interview session
      */
+    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     @Transactional
     void updateVolunteerInterviewSession(VolunteerInterviewSession volunteerInterviewSession);
 
@@ -119,6 +138,7 @@ public interface InterviewSessionDao {
      * </ul>
      * @return list of volunteers
      */
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional(readOnly = true)
     List<Volunteer> findInterviewSessionEligibleVolunteers();
 
