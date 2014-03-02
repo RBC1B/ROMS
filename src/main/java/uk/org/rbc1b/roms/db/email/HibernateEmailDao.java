@@ -21,61 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.email;
+package uk.org.rbc1b.roms.db.email;
 
-import java.io.Serializable;
-import uk.org.rbc1b.roms.db.Person;
+import java.util.List;
+import org.hibernate.Criteria;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 /**
+ * Implements email table DAO.
  *
- * @author ramindursingh
  */
-public class EmailRecipient implements Serializable {
+@Repository
+public class HibernateEmailDao implements EmailDao {
 
-    private static final long serialVersionUID = 1L;
-    private Integer emailRecipientId;
-    private EmailType emailType;
-    private Person person;
+    @Autowired
+    private SessionFactory sessionFactory;
 
-    /**
-     * @return the emailRecipientId
-     */
-    public Integer getEmailRecipientId() {
-        return emailRecipientId;
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Email> findAll() {
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Email.class);
+        return criteria.addOrder(Order.asc("emailId")).list();
     }
 
-    /**
-     * @param emailRecipientId the emailRecipientId to set
-     */
-    public void setEmailRecipientId(Integer emailRecipientId) {
-        this.emailRecipientId = emailRecipientId;
+    @SuppressWarnings("unchecked")
+    @Override
+    public void save(Email email) {
+        if (email != null) {
+            this.sessionFactory.getCurrentSession().save(email);
+        }
     }
 
-    /**
-     * @return the emailType
-     */
-    public EmailType getEmailType() {
-        return emailType;
+    @SuppressWarnings("unchecked")
+    @Override
+    public void delete(Email email) {
+        if (email != null) {
+            this.sessionFactory.getCurrentSession().delete(email);
+        }
     }
 
-    /**
-     * @param emailType the emailType to set
-     */
-    public void setEmailType(EmailType emailType) {
-        this.emailType = emailType;
-    }
-
-    /**
-     * @return the person
-     */
-    public Person getPerson() {
-        return person;
-    }
-
-    /**
-     * @param person the person to set
-     */
-    public void setPerson(Person person) {
-        this.person = person;
-    }
 }

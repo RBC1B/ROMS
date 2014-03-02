@@ -32,14 +32,14 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
-import uk.org.rbc1b.roms.email.Email;
-import uk.org.rbc1b.roms.email.EmailDao;
-import uk.org.rbc1b.roms.email.EmailRecipient;
-import uk.org.rbc1b.roms.email.EmailRecipientDao;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.PersonChange;
 import uk.org.rbc1b.roms.db.PersonChangeDao;
 import uk.org.rbc1b.roms.db.PersonDao;
+import uk.org.rbc1b.roms.db.email.Email;
+import uk.org.rbc1b.roms.db.email.EmailDao;
+import uk.org.rbc1b.roms.db.email.EmailRecipient;
+import uk.org.rbc1b.roms.db.email.EmailRecipientDao;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -51,7 +51,7 @@ import freemarker.template.TemplateException;
 public class PersonChangeChecker {
 
     private static final String VOLUNTEER_UPDATE = "VU";
-    private static final String EMAIL_TEMPLATE = "EmailForPersonChanges.ftl";
+    private static final String EMAIL_TEMPLATE = "person-changes.ftl";
     private static final String SUBJECT = "Volunteer Information Changes";
     @Autowired
     private PersonChangeDao personChangeDao;
@@ -60,9 +60,9 @@ public class PersonChangeChecker {
     @Autowired
     private EmailDao emailDao;
     @Autowired
-    private EmailRecipientDao mailRecipientDao;
+    private EmailRecipientDao emailRecipientDao;
     @Autowired
-    private FreeMarkerConfigurer freemarkerConfig;
+    private FreeMarkerConfigurer emailFreemarkerConfigurer;
 
     /**
      * Checks if there are changes in the PersonChanges table.
@@ -72,23 +72,23 @@ public class PersonChangeChecker {
      */
     public void checkIfOutstandingChanges() throws IOException, TemplateException {
         List<PersonChange> personChangeList = personChangeDao.findPersonChangeNotUpdated();
-        if (!personChangeList.isEmpty()) {
-            List<EmailRecipient> mailRecipients = mailRecipientDao.getRecipientByEmailCode(VOLUNTEER_UPDATE);
-            for (EmailRecipient mailRecipient : mailRecipients) {
-                Map<String, Person> model = new HashMap<String, Person>();
-                Person person = personDao.findPerson(mailRecipient.getPerson().getPersonId());
-                model.put("person", person);
-                Configuration conf = freemarkerConfig.getConfiguration();
-                Template template = conf.getTemplate(EMAIL_TEMPLATE);
-                Writer out = new StringWriter();
-                template.process(model, out);
-                Email email = new Email();
-                email.setRecipient(person.getEmail());
-                email.setSubject(SUBJECT);
-                email.setText(out.toString());
-                emailDao.save(email);
-            }
+        if (personChangeList.isEmpty()) {
+            return;
+        }
+        List<EmailRecipient> mailRecipients = emailRecipientDao.getRecipientByEmailCode(VOLUNTEER_UPDATE);
+        for (EmailRecipient mailRecipient : mailRecipients) {
+            Map<String, Person> model = new HashMap<String, Person>();
+            Person person = personDao.findPerson(mailRecipient.getPerson().getPersonId());
+            model.put("person", person);
+            Configuration conf = emailFreemarkerConfigurer.getConfiguration();
+            Template template = conf.getTemplate(EMAIL_TEMPLATE);
+            Writer out = new StringWriter();
+            template.process(model, out);
+            Email email = new Email();
+            email.setRecipient(person.getEmail());
+            email.setSubject(SUBJECT);
+            email.setText(out.toString());
+            emailDao.save(email);
         }
     }
-
 }

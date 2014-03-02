@@ -21,80 +21,61 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.email;
+package uk.org.rbc1b.roms.db.email;
 
 import java.io.Serializable;
+import uk.org.rbc1b.roms.db.Person;
 
 /**
- * An object that defines an email. There is no sender address as this is set by
- * the JavaMail JNDI session.
+ *
+ * @author ramindursingh
  */
+public class EmailRecipient implements Serializable {
 
-public class Email implements Serializable {
-
-    private static final long serialVersionUID = -1589295278670347715L;
-    private Integer emailId;
-    private String recipient;
-    private String subject;
-    private String text;
+    private static final long serialVersionUID = 1L;
+    private Integer emailRecipientId;
+    private EmailType emailType;
+    private Person person;
 
     /**
-     * @return the emailId
+     * @return the emailRecipientId
      */
-    public Integer getEmailId() {
-        return emailId;
+    public Integer getEmailRecipientId() {
+        return emailRecipientId;
     }
 
     /**
-     * @param emailId
-     *            the emailId to set
+     * @param emailRecipientId the emailRecipientId to set
      */
-    public void setEmailId(Integer emailId) {
-        this.emailId = emailId;
+    public void setEmailRecipientId(Integer emailRecipientId) {
+        this.emailRecipientId = emailRecipientId;
     }
 
     /**
-     * @return the recipient
+     * @return the emailType
      */
-    public String getRecipient() {
-        return recipient;
+    public EmailType getEmailType() {
+        return emailType;
     }
 
     /**
-     * @param recipient
-     *            the recipient to set
+     * @param emailType the emailType to set
      */
-    public void setRecipient(String recipient) {
-        this.recipient = recipient;
+    public void setEmailType(EmailType emailType) {
+        this.emailType = emailType;
     }
 
     /**
-     * @return the subject
+     * @return the person
      */
-    public String getSubject() {
-        return subject;
+    public Person getPerson() {
+        return person;
     }
 
     /**
-     * @param subject
-     *            the subject to set
+     * @param person the person to set
      */
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    /**
-     * @return the text
-     */
-    public String getText() {
-        return text;
-    }
-
-    /**
-     * @param text
-     *            the text to set
-     */
-    public void setText(String text) {
-        this.text = text;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 }

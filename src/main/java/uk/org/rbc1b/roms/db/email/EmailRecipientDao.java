@@ -21,45 +21,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.email;
+package uk.org.rbc1b.roms.db.email;
 
-import java.io.Serializable;
+import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
- *
- *
+ * Dao for EmailRecipient table.
  */
-public class EmailType implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-    private String emailCode;
-    private String description;
+public interface EmailRecipientDao {
 
     /**
-     * @return the emailCode
+     * Gets a list of mail recipient by mail code.
+     *
+     * @param emailCode the mail code
+     * @return list of mail recipients
      */
-    public String getEmailCode() {
-        return emailCode;
-    }
-
-    /**
-     * @param emailCode the emailCode to set
-     */
-    public void setEmailCode(String emailCode) {
-        this.emailCode = emailCode;
-    }
-
-    /**
-     * @return the description
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * @param description the description to set
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    @Transactional
+    List<EmailRecipient> getRecipientByEmailCode(String emailCode);
 }

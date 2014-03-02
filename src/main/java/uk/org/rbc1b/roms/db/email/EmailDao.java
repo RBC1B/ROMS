@@ -21,22 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.email;
+package uk.org.rbc1b.roms.db.email;
 
 import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Dao for EmailRecipient table.
+ * Accesses the Email table.
+ *
  */
-public interface EmailRecipientDao {
+public interface EmailDao {
 
     /**
-     * Gets a list of mail recipient by mail code.
+     * Gets a list of emails.
      *
-     * @param emailCode the mail code
-     * @return list of mail recipients
+     * @return emails list or null if there is none
      */
     @Transactional
-    List<EmailRecipient> getRecipientByEmailCode(String emailCode);
+    List<Email> findAll();
+
+    /**
+     * Saves an email to the table.
+     *
+     * @param email the email to save
+     */
+    @Transactional
+    void save(Email email);
+
+    /**
+     * Deletes a row from the table.
+     *
+     * @param email the email to delete
+     */
+    @Transactional
+    void delete(Email email);
 }

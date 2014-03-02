@@ -21,46 +21,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.email;
+package uk.org.rbc1b.roms.db.email;
 
-import java.util.List;
-import org.hibernate.Criteria;
-import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Order;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import java.io.Serializable;
 
 /**
- * Implements email table DAO.
+ *
  *
  */
-@Repository
-public class HibernateEmailDao implements EmailDao {
+public class EmailType implements Serializable {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    private static final long serialVersionUID = 1L;
+    private String emailCode;
+    private String description;
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<Email> findAll() {
-        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Email.class);
-        return criteria.addOrder(Order.asc("emailId")).list();
+    /**
+     * @return the emailCode
+     */
+    public String getEmailCode() {
+        return emailCode;
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public void save(Email email) {
-        if (email != null) {
-            this.sessionFactory.getCurrentSession().save(email);
-        }
+    /**
+     * @param emailCode the emailCode to set
+     */
+    public void setEmailCode(String emailCode) {
+        this.emailCode = emailCode;
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public void delete(Email email) {
-        if (email != null) {
-            this.sessionFactory.getCurrentSession().delete(email);
-        }
+    /**
+     * @return the description
+     */
+    public String getDescription() {
+        return description;
     }
 
+    /**
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }
