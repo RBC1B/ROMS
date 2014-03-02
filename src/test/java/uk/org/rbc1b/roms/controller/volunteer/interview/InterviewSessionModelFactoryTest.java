@@ -27,19 +27,35 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 /**
- * Test the {@code InterviewSessionModel}.
+ * Test the {@code InterviewSessionModelFactory}.
  */
-public class InterviewSessionModelTest {
+public class InterviewSessionModelFactoryTest {
     /**
      * Test formatTime.
      */
     @Test
     public void testFormatTime() {
-        InterviewSessionModel model = new InterviewSessionModel();
-        assertEquals(null, model.formatTime());
+        assertEquals(null, InterviewSessionModelFactory.formatDisplayTime(null));
+        assertEquals("15:23", InterviewSessionModelFactory.formatDisplayTime("1523"));
 
-        model.setTime("1523");
-        assertEquals("15:23", model.formatTime());
+    }
+
+    /**
+     * Test parseTime.
+     */
+    @Test
+    public void testParseTime() {
+        assertEquals(null, InterviewSessionModelFactory.parseDisplayTime(null));
+        assertEquals("1523", InterviewSessionModelFactory.parseDisplayTime("15:23"));
+
+    }
+
+    /**
+     * Test parseTime.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testParseInvalidTimeTooShort() {
+        assertEquals("1523", InterviewSessionModelFactory.parseDisplayTime("1523"));
 
     }
 

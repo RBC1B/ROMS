@@ -30,6 +30,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -317,7 +318,7 @@ public class InterviewSessionsController {
         InterviewSessionForm form = new InterviewSessionForm();
         form.setComments(session.getComments());
         form.setDate(DataConverterUtil.toDateTime(session.getDate()));
-        form.setTime(session.getTime());
+        form.setTime(InterviewSessionModelFactory.formatDisplayTime(session.getTime()));
 
         if (session.getKingdomHall() != null && session.getKingdomHall().getKingdomHallId() != null) {
             KingdomHall kingdomHall = kingdomHallDao.findKingdomHall(session.getKingdomHall().getKingdomHallId());
@@ -330,6 +331,33 @@ public class InterviewSessionsController {
         model.addAttribute("submitUri", InterviewSessionModelFactory.generateUri(interviewSessionId));
         model.addAttribute("submitMethod", "PUT");
         return "volunteers/interview-sessions/edit";
+
+    }
+
+    /**
+     * Update an existing session.
+     * @param interviewSessionId session id
+     * @param interviewSessionForm updated session data
+     * @return redirect
+     * @throws NoSuchRequestHandlingMethodException on failure to find the session
+     */
+    @RequestMapping(value = "{interviewSessionId}", method = RequestMethod.PUT)
+    public String updateInterviewSessionForm(@PathVariable Integer interviewSessionId,
+            @Valid InterviewSessionForm interviewSessionForm) throws NoSuchRequestHandlingMethodException {
+        InterviewSession session = interviewSessionDao.findInterviewSession(interviewSessionId);
+        if (session == null) {
+            throw new NoSuchRequestHandlingMethodException("No session with id [" + interviewSessionId + "]",
+                    this.getClass());
+        }
+
+        session.setComments(interviewSessionForm.getComments());
+        session.setDate(DataConverterUtil.toSqlDate(interviewSessionForm.getDate()));
+        session.setKingdomHall(kingdomHallDao.findKingdomHall(interviewSessionForm.getKingdomHallId()));
+        session.setTime(InterviewSessionModelFactory.parseDisplayTime(interviewSessionForm.getTime()));
+
+        interviewSessionDao.updateInterviewSession(session);
+
+        return "redirect:" + InterviewSessionModelFactory.generateUri(interviewSessionId);
 
     }
 

@@ -17,7 +17,7 @@
         <hr />
         <dl class="dl-horizontal">
             <dt>Time:</dt>
-            <dd>${interviewSession.formatTime()}</dd>
+            <dd>${interviewSession.time}</dd>
             <dt>Kingdom hall:</dt>
             <dd>
                 <c:choose>

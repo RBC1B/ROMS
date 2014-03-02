@@ -32,6 +32,18 @@ $(document).ready(function() {
         yearRange: "-70:+0"
     });
     
+    
+    $('.datetimepicker-dateonly').datetimepicker({
+        format: 'DD/MM/YYYY',
+        pickTime: false
+    });
+    
+    $('.datetimepicker-timeonly').datetimepicker({
+        format: 'HH:mm',
+        pickDate: false
+    });
+    
+    
     $("#congregationName").typeahead({
         remote: roms.common.relativePath + '/congregations/search?name=%QUERY',
         valueKey: 'name'

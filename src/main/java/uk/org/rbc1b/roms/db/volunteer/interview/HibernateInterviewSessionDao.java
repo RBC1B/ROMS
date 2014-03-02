@@ -60,6 +60,11 @@ public class HibernateInterviewSessionDao implements InterviewSessionDao {
     }
 
     @Override
+    public void updateInterviewSession(InterviewSession interviewSession) {
+        this.sessionFactory.getCurrentSession().merge(interviewSession);
+    }
+
+    @Override
     public Map<Integer, Map<String, Integer>> findInterviewSessionVolunteerCounts() {
         Map<Integer, Map<String, Integer>> sessionStatusCounts = new HashMap<Integer, Map<String, Integer>>();
         @SuppressWarnings("unchecked")

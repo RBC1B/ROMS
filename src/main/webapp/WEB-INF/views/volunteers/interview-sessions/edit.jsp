@@ -25,13 +25,13 @@
             <div class="form-group">
                 <label class="control-label col-sm-3 col-md-2" for="name">Date</label>
                 <div class="col-sm-9 col-md-3">
-                    <form:input path="date" placeholder="dd/mm/yyyy" class="datepicker form-control" data-date-format="dd/mm/yy" type="text" value=""/>
+                    <form:input path="date" placeholder="dd/mm/yyyy" class="datetimepicker-dateonly form-control" type="text" value=""/>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-3 col-md-2" for="time">Time</label>
                 <div class="col-sm-9 col-md-3">
-                    <form:input path="time" class="form-control" placeholder="hh:mm" maxlength="5" />
+                    <form:input path="time" class="datetimepicker-timeonly form-control" placeholder="hh:mm" maxlength="5" />
                 </div>
             </div>
             <div class="form-group">

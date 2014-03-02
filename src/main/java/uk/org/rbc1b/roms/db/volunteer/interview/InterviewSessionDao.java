@@ -50,6 +50,13 @@ public interface InterviewSessionDao {
     InterviewSession findInterviewSession(Integer interviewSessionId);
 
     /**
+     * Update an interview session.
+     * @param interviewSession session
+     */
+    @Transactional
+    void updateInterviewSession(InterviewSession interviewSession);
+
+    /**
      * Find the number of volunteers for each given status for each session.
      * @return map of interview status volunteer counts, keyed against the session id
      */

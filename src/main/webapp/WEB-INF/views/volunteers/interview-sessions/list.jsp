@@ -38,6 +38,9 @@
                             <td>
                                 <ul class="list-inline">
                                     <li><a class="btn btn-success" href="<c:url value="${interviewSession.uri}" />">View</a></li>
+                                    <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
+                                        <li><a href="<c:url value="${interviewSession.editUri}" />">Edit</a></li>
+                                    </sec:authorize>
                                 </ul>
                             </td>
                         </tr>

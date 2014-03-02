@@ -44,17 +44,6 @@ public class InterviewSessionModel {
     private int declinedVolunteerCount;
 
     /**
-     * Simplistic time formatter, returning the time in HH:mm format.
-     * @return formatted time
-     */
-    public String formatTime() {
-        if (time == null) {
-            return null;
-        }
-        return time.substring(0, 2) + ":" + time.substring(2);
-    }
-
-    /**
      * Return the number of volunteers who have been invited and have not declined.
      * @return count
      */

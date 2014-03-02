@@ -65,6 +65,34 @@ public class InterviewSessionModelFactory {
     }
 
     /**
+     * Simplistic time formatter, returning the time in HH:mm format.
+     * @param time unformatted time, in HHmm format
+     * @return formatted time
+     */
+    public static String formatDisplayTime(String time) {
+        if (time == null) {
+            return null;
+        }
+        return time.substring(0, 2) + ":" + time.substring(2);
+    }
+
+    /**
+     * Simplistic time parser, returning the time in HHmm format.
+     * @param time formatted time, in HH:mm format
+     * @return formatted time
+     */
+    public static String parseDisplayTime(String time) {
+        if (time == null) {
+            return null;
+        }
+        if (time.length() < 5) {
+            throw new IllegalArgumentException("Invalid time string [" + time + "]");
+        }
+
+        return time.substring(0, 2) + time.substring(3);
+    }
+
+    /**
      * Create an interview session model.
      * @param interviewSession session
      * @param volunteerStatusCounts map of volunteer counts, mapped by interview status code
@@ -80,7 +108,7 @@ public class InterviewSessionModelFactory {
         InterviewSessionModel model = new InterviewSessionModel();
         model.setComments(interviewSession.getComments());
         model.setDate(interviewSession.getDate());
-        model.setTime(interviewSession.getTime());
+        model.setTime(formatDisplayTime(interviewSession.getTime()));
         model.setTodayOrInPast(interviewSession.isInPast() || interviewSession.isToday());
 
         if (interviewSession.getKingdomHall() != null && interviewSession.getKingdomHall().getKingdomHallId() != null) {
