@@ -47,7 +47,6 @@ import uk.org.rbc1b.roms.db.PersonDao;
 import uk.org.rbc1b.roms.db.email.Email;
 import uk.org.rbc1b.roms.db.email.EmailDao;
 import uk.org.rbc1b.roms.db.email.EmailRecipient;
-import uk.org.rbc1b.roms.db.email.EmailRecipientDao;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -68,8 +67,6 @@ public class PersonChangesScheduledService {
     private PersonDao personDao;
     @Autowired
     private EmailDao emailDao;
-    @Autowired
-    private EmailRecipientDao emailRecipientDao;
     @Autowired
     private FreeMarkerConfigurer emailFreemarkerConfigurer;
 
@@ -92,7 +89,7 @@ public class PersonChangesScheduledService {
         if (personChangeList.isEmpty()) {
             return;
         }
-        List<EmailRecipient> mailRecipients = emailRecipientDao.getRecipientByEmailCode(VOLUNTEER_UPDATE);
+        List<EmailRecipient> mailRecipients = emailDao.getRecipientByEmailCode(VOLUNTEER_UPDATE);
         for (EmailRecipient mailRecipient : mailRecipients) {
             try {
                 createEmailForRecipient(mailRecipient);

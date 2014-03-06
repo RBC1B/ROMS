@@ -55,4 +55,13 @@ public interface EmailDao {
      */
     @Transactional
     void delete(Email email);
+
+    /**
+     * Gets a list of mail recipient by mail code.
+     *
+     * @param emailCode the mail code
+     * @return list of mail recipients
+     */
+    @Transactional(readOnly = true)
+    List<EmailRecipient> getRecipientByEmailCode(String emailCode);
 }

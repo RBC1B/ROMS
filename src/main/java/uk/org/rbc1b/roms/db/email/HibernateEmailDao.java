@@ -27,6 +27,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -57,4 +58,11 @@ public class HibernateEmailDao implements EmailDao {
         this.sessionFactory.getCurrentSession().delete(email);
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<EmailRecipient> getRecipientByEmailCode(String emailCode) {
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(EmailRecipient.class);
+        criteria.add(Restrictions.like("emailType.emailCode", emailCode));
+        return criteria.list();
+    }
 }
