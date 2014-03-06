@@ -97,4 +97,10 @@ public class Email implements Serializable {
     public void setText(String text) {
         this.text = text;
     }
+
+    @Override
+    public String toString() {
+        return "Email [emailId=" + emailId + ", recipient=" + recipient + ", subject=" + subject + "]";
+    }
+
 }

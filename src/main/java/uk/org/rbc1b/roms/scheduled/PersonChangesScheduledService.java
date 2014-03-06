@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2013 RBC1B.
+ * Copyright 2014 RBC1B.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.service;
+package uk.org.rbc1b.roms.scheduled;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -29,7 +29,15 @@ import java.io.Writer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import uk.org.rbc1b.roms.db.Person;
@@ -46,10 +54,11 @@ import freemarker.template.TemplateException;
 
 /**
  * Checks PersonChange table to see if there are any outstanding changes.
+ * Send out an email notification if required.
  */
 @Component
-public class PersonChangeChecker {
-
+public class PersonChangesScheduledService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PersonChangesScheduledService.class);
     private static final String VOLUNTEER_UPDATE = "VU";
     private static final String EMAIL_TEMPLATE = "person-changes.ftl";
     private static final String SUBJECT = "Volunteer Information Changes";
@@ -64,31 +73,50 @@ public class PersonChangeChecker {
     @Autowired
     private FreeMarkerConfigurer emailFreemarkerConfigurer;
 
+    @Autowired
+    private UserDetailsService userDetailsService;
+
     /**
-     * Checks if there are changes in the PersonChanges table.
-     *
-     * @throws IOException the IO exception reading template
-     * @throws TemplateException the template mapping
+     * Queue up emails if there are outstanding person form changes.
+     * Scheduled to run at 1am every day
      */
-    public void checkIfOutstandingChanges() throws IOException, TemplateException {
+    // @Scheduled(cron = "*/5 * * * * ?") Test setting
+    @Scheduled(cron = "0 0 01 * * ?")
+    public void checkIfOutstandingChanges() {
+        UserDetails system = userDetailsService.loadUserByUsername("System");
+        Authentication authentication = new UsernamePasswordAuthenticationToken(system, system.getUsername(),
+                system.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
         List<PersonChange> personChangeList = personChangeDao.findPersonChangeNotUpdated();
         if (personChangeList.isEmpty()) {
             return;
         }
         List<EmailRecipient> mailRecipients = emailRecipientDao.getRecipientByEmailCode(VOLUNTEER_UPDATE);
         for (EmailRecipient mailRecipient : mailRecipients) {
-            Map<String, Person> model = new HashMap<String, Person>();
-            Person person = personDao.findPerson(mailRecipient.getPerson().getPersonId());
-            model.put("person", person);
-            Configuration conf = emailFreemarkerConfigurer.getConfiguration();
-            Template template = conf.getTemplate(EMAIL_TEMPLATE);
-            Writer out = new StringWriter();
-            template.process(model, out);
-            Email email = new Email();
-            email.setRecipient(person.getEmail());
-            email.setSubject(SUBJECT);
-            email.setText(out.toString());
-            emailDao.save(email);
+            try {
+                createEmailForRecipient(mailRecipient);
+            } catch (IOException e) {
+                LOGGER.error("Failed to send parseon change notification email", e);
+            } catch (TemplateException e) {
+                LOGGER.error("Failed to send parseon change notification email", e);
+            }
         }
     }
+
+    private void createEmailForRecipient(EmailRecipient mailRecipient) throws IOException, TemplateException {
+        Map<String, Person> model = new HashMap<String, Person>();
+        Person person = personDao.findPerson(mailRecipient.getPerson().getPersonId());
+        model.put("person", person);
+        Configuration conf = emailFreemarkerConfigurer.getConfiguration();
+        Template template = conf.getTemplate(EMAIL_TEMPLATE);
+        Writer out = new StringWriter();
+        template.process(model, out);
+        Email email = new Email();
+        email.setRecipient(person.getEmail());
+        email.setSubject(SUBJECT);
+        email.setText(out.toString());
+        emailDao.save(email);
+    }
+
 }

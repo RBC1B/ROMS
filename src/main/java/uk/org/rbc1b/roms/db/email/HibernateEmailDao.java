@@ -47,20 +47,14 @@ public class HibernateEmailDao implements EmailDao {
         return criteria.addOrder(Order.asc("emailId")).list();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void save(Email email) {
-        if (email != null) {
-            this.sessionFactory.getCurrentSession().save(email);
-        }
+        this.sessionFactory.getCurrentSession().save(email);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void delete(Email email) {
-        if (email != null) {
-            this.sessionFactory.getCurrentSession().delete(email);
-        }
+        this.sessionFactory.getCurrentSession().delete(email);
     }
 
 }
