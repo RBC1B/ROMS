@@ -37,7 +37,7 @@ public interface EmailDao {
      *
      * @return emails list or null if there is none
      */
-    @Transactional
+    @Transactional(readOnly = true)
     List<Email> findAll();
 
     /**
