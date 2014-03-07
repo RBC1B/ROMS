@@ -23,6 +23,10 @@
  */
 package uk.org.rbc1b.roms.db;
 
+import java.util.ArrayList;
+import java.util.List;
+import org.apache.commons.lang.StringUtils;
+
 /**
  * Shared component that defines the postal address of a person, hall or
  * project.
@@ -35,6 +39,26 @@ public class Address {
     private String town;
     private String county;
     private String postcode;
+
+    /**
+     * @return the full address in comma separated form
+     */
+    public String format() {
+        List<String> fragments = new ArrayList<String>();
+        if (street != null) {
+            fragments.add(street);
+        }
+        if (town != null) {
+            fragments.add(town);
+        }
+        if (county != null) {
+            fragments.add(county);
+        }
+        if (postcode != null) {
+            fragments.add(postcode);
+        }
+        return StringUtils.join(fragments, ", ");
+    }
 
     public String getCounty() {
         return county;

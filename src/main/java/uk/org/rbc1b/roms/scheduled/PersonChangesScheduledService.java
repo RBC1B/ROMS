@@ -24,8 +24,6 @@
 package uk.org.rbc1b.roms.scheduled;
 
 import java.io.IOException;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +37,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.PersonChange;
@@ -48,7 +47,6 @@ import uk.org.rbc1b.roms.db.email.Email;
 import uk.org.rbc1b.roms.db.email.EmailDao;
 import uk.org.rbc1b.roms.db.email.EmailRecipient;
 import freemarker.template.Configuration;
-import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
 /**
@@ -94,25 +92,26 @@ public class PersonChangesScheduledService {
             try {
                 createEmailForRecipient(mailRecipient);
             } catch (IOException e) {
-                LOGGER.error("Failed to send parseon change notification email", e);
+                LOGGER.error("Failed to send person change notification email", e);
             } catch (TemplateException e) {
-                LOGGER.error("Failed to send parseon change notification email", e);
+                LOGGER.error("Failed to send person change notification email", e);
             }
         }
     }
 
     private void createEmailForRecipient(EmailRecipient mailRecipient) throws IOException, TemplateException {
+        Configuration conf = emailFreemarkerConfigurer.getConfiguration();
+
         Map<String, Person> model = new HashMap<String, Person>();
         Person person = personDao.findPerson(mailRecipient.getPerson().getPersonId());
         model.put("person", person);
-        Configuration conf = emailFreemarkerConfigurer.getConfiguration();
-        Template template = conf.getTemplate(EMAIL_TEMPLATE);
-        Writer out = new StringWriter();
-        template.process(model, out);
+
+        String text = FreeMarkerTemplateUtils.processTemplateIntoString(conf.getTemplate(EMAIL_TEMPLATE), model);
+
         Email email = new Email();
         email.setRecipient(person.getEmail());
         email.setSubject(SUBJECT);
-        email.setText(out.toString());
+        email.setText(text);
         emailDao.save(email);
     }
 

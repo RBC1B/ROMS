@@ -176,12 +176,13 @@ public class InterviewSessionModelFactory {
         model.setId(person.getPersonId());
         model.setForename(person.getForename());
         model.setSurname(person.getSurname());
-        model.setUri(generateUri(volunteerInterviewSession.getInterviewSession().getInterviewSessionId())
-                + "/invitations/" + volunteerInterviewSession.getVolunteerInterviewSessionId());
+
         model.setVolunteerUri(VolunteerModelFactory.generateUri(person.getPersonId()));
         model.setVolunteerEditRbcStatusUri(VolunteerModelFactory.generateUri(person.getPersonId()) + "/rbc-status/edit");
 
         if (volunteerInterviewSession != null) {
+            model.setUri(generateUri(volunteerInterviewSession.getInterviewSession().getInterviewSessionId())
+                    + "/invitations/" + volunteerInterviewSession.getVolunteerInterviewSessionId());
             model.setComments(volunteerInterviewSession.getComments());
             model.setInterviewStatus(interviewStatusValues.get(volunteerInterviewSession
                     .getVolunteerInterviewStatusCode()));

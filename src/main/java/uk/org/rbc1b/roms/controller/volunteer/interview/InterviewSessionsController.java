@@ -23,6 +23,7 @@
  */
 package uk.org.rbc1b.roms.controller.volunteer.interview;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -37,15 +38,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import uk.org.rbc1b.roms.controller.common.DataConverterUtil;
 import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
 import uk.org.rbc1b.roms.db.CongregationDao;
+import uk.org.rbc1b.roms.db.email.Email;
+import uk.org.rbc1b.roms.db.email.EmailDao;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHallDao;
 import uk.org.rbc1b.roms.db.reference.ReferenceDao;
@@ -55,6 +60,8 @@ import uk.org.rbc1b.roms.db.volunteer.VolunteerSearchCriteria;
 import uk.org.rbc1b.roms.db.volunteer.interview.InterviewSession;
 import uk.org.rbc1b.roms.db.volunteer.interview.InterviewSessionDao;
 import uk.org.rbc1b.roms.db.volunteer.interview.VolunteerInterviewSession;
+import freemarker.template.Configuration;
+import freemarker.template.TemplateException;
 
 /**
  * Handler the volunteer interview session and invitations.
@@ -62,6 +69,9 @@ import uk.org.rbc1b.roms.db.volunteer.interview.VolunteerInterviewSession;
 @Controller
 @RequestMapping(value = "/interview-sessions")
 public class InterviewSessionsController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(InterviewSessionsController.class);
+    private static final String INVITATION_EMAIL_TEMPLATE = "volunteer-interview-session-invitation.ftl";
+    private static final String INVITATION_EMAIL_SUBJECT = "RBC induction interview";
     private static final Logger LOG = LoggerFactory.getLogger(InterviewSessionsController.class);
 
     @Autowired
@@ -84,6 +94,12 @@ public class InterviewSessionsController {
 
     @Autowired
     private KingdomHallDao kingdomHallDao;
+
+    @Autowired
+    private FreeMarkerConfigurer emailFreemarkerConfigurer;
+
+    @Autowired
+    private EmailDao emailDao;
 
     /**
      * Display a list of volunteer interview sessions.
@@ -245,6 +261,11 @@ public class InterviewSessionsController {
             throw new IllegalStateException("Interview session #" + interviewSessionId + " is in the past.");
         }
 
+        if (session.getKingdomHall() == null || session.getKingdomHall().getKingdomHallId() == null) {
+            throw new IllegalStateException("Interview session #" + interviewSessionId
+                    + " does not have a kingdom hall defined.");
+        }
+
         List<VolunteerInterviewSession> existingInterviewSessions = interviewSessionDao
                 .findVolunteerInterviewSessions(interviewSessionId);
 
@@ -257,7 +278,55 @@ public class InterviewSessionsController {
 
         interviewSessionDao.addVolunteerInterviewSessions(volunteerIds, interviewSessionId);
 
+        KingdomHall kingdomHall = kingdomHallDao.findKingdomHall(session.getKingdomHall().getKingdomHallId());
+
+        for (Integer volunteerId : volunteerIds) {
+            scheduleInterviewInvitationEmail(session, kingdomHall, volunteerId);
+        }
+
         return "redirect:" + InterviewSessionModelFactory.generateUri(interviewSessionId);
+
+    }
+
+    private void scheduleInterviewInvitationEmail(InterviewSession session, KingdomHall kingdomHall, Integer volunteerId) {
+
+        Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, null);
+        if (volunteer.getPerson().getEmail() == null) {
+            LOGGER.error("Volunteer #{} does not have an email address defined", volunteer.getPersonId());
+            return;
+        }
+
+        Configuration conf = emailFreemarkerConfigurer.getConfiguration();
+
+        Map<String, Object> model = new HashMap<String, Object>();
+
+        model.put("sessionDate", session.getDate());
+        model.put("sessionTime", InterviewSessionModelFactory.formatDisplayTime(session.getTime()));
+        model.put("kingdomHallName", kingdomHall.getName());
+        model.put("kingdomHallAddress", kingdomHall.getAddress());
+        model.put("volunteer", volunteer);
+
+        if (volunteer.getPerson().getCongregation() != null
+                && volunteer.getPerson().getCongregation().getCongregationId() != null) {
+            model.put("volunteerCongregationName",
+                    congregationDao.findCongregation(volunteer.getPerson().getCongregation().getCongregationId())
+                            .getName());
+        }
+
+        try {
+            String text = FreeMarkerTemplateUtils.processTemplateIntoString(
+                    conf.getTemplate(INVITATION_EMAIL_TEMPLATE), model);
+
+            Email email = new Email();
+            email.setRecipient(volunteer.getPerson().getEmail());
+            email.setSubject(INVITATION_EMAIL_SUBJECT);
+            email.setText(text);
+            emailDao.save(email);
+        } catch (IOException e) {
+            LOGGER.error("Failed to volunteer interview invitation email", e);
+        } catch (TemplateException e) {
+            LOGGER.error("Failed to volunteer interview invitation email", e);
+        }
 
     }
 
