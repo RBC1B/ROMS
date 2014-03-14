@@ -37,6 +37,7 @@ THE SOFTWARE.
     <context:component-scan base-package="uk.org.rbc1b.roms.controller" />
 
     <mvc:resources mapping="/images/**" location="/images/" cache-period="31556926" /> <!-- 1 year -->
+    <mvc:resources mapping="/css/thirdparty/**" location="/css/thirdparty/" cache-period="31556926" /> <!-- 1 year -->
     <mvc:resources mapping="/css/**" location="/css/" cache-period="3600" /> <!-- 1 hour -->
     <mvc:resources mapping="/favicon.ico" location="/images/favicon.ico" cache-period="31556926" /> <!-- 1 year -->
     <mvc:resources mapping="/javascript/thirdparty/**" location="/javascript/thirdparty/" cache-period="31556926" /> <!-- 1 year -->
