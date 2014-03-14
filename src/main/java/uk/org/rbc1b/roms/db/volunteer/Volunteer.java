@@ -54,6 +54,7 @@ public class Volunteer implements Serializable {
     private java.sql.Date formDate;
     private boolean oversight;
     private String oversightComments;
+    private boolean photoProvided;
     private String rbcStatusCode;
     private boolean reliefUK;
     private String reliefUKComments;
@@ -229,6 +230,14 @@ public class Volunteer implements Serializable {
 
     public void setOversightComments(String oversightComments) {
         this.oversightComments = oversightComments;
+    }
+
+    public boolean isPhotoProvided() {
+        return photoProvided;
+    }
+
+    public void setPhotoProvided(boolean photoProvided) {
+        this.photoProvided = photoProvided;
     }
 
     public String getRbcStatusCode() {

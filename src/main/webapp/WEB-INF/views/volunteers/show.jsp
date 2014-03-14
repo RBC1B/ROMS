@@ -11,11 +11,21 @@
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="media">
-            <img src="<c:url value='${volunteer.id}/image'/>" class="media-object img-thumbnail pull-left image" width="114px" height="143px" alt="volunteer image" />
-            <div id="popup" class="caption image-popup" style="display: none;">
-                <a href="#" id="image-link" style="color:white;">
-                    <p class="image-popup-text" style="font-size:13px"><b>Edit/Add image</b></p>
-                </a>
+            <c:choose>
+                <c:when test="${volunteer.photoProvided}">
+                    <c:set var="volunteerImagePath"><c:url value='${volunteer.id}/image' /></c:set>
+                    <c:set var="volunteerImageUpdateText">Change image</c:set>
+                </c:when>
+                <c:otherwise>
+                    <c:set var="volunteerImagePath"><c:url value='/images/default-volunteer-image.jpg' /></c:set>
+                    <c:set var="volunteerImageUpdateText">Add image</c:set>
+                </c:otherwise>
+            </c:choose>
+            <div id="volunteer-image">
+                <img src="${volunteerImagePath}" class="media-object pull-left" alt="volunteer image" />
+                <div id="volunteer-image-edit" class="caption" style="display: none;">
+                    <a href="#">${volunteerImageUpdateText}</a>
+                </div>
             </div>
             <div class="media-body">
                 <div id="volunteer-name" class="a-edit-hover"

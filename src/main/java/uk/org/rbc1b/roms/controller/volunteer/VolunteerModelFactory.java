@@ -155,6 +155,7 @@ public class VolunteerModelFactory {
         if (volunteer.getMaritalStatusCode() != null) {
             model.setMaritalStatus(referenceDao.findMaritalStatusValues().get(volunteer.getMaritalStatusCode()));
         }
+        model.setPhotoProvided(volunteer.isPhotoProvided());
 
         // spiritual data
         if (volunteer.getAppointmentCode() != null) {

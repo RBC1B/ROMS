@@ -786,27 +786,31 @@ public class VolunteersController {
     }
 
     /**
-     * Get volunteer image .
+     * Get volunteer image.
+     * <p>This assumes we have already checked the volunteer object to ensure it exists
+     * and that it expects to have an image defined.
      *
      * @param volunteerId id
      * @param response HttpServletResponse
      * @throws IOException if the file cannot be read
+     * @throws NoSuchRequestHandlingMethodException when the image file is not found
      */
     @RequestMapping(value = "{volunteerId}/image", method = RequestMethod.GET)
-    public void showImage(@PathVariable Integer volunteerId, HttpServletResponse response) throws IOException {
+    public void showImage(@PathVariable Integer volunteerId, HttpServletResponse response) throws IOException,
+            NoSuchRequestHandlingMethodException {
         String imageName = volunteerId + ".jpg";
         File file = new File(imageDirectories.getProperty(VOLUNTEER_IMAGE_DIRECTORY_KEY) + imageName);
-        // if the file doesnt exist
+
         if (!file.exists()) {
-            imageName = "default.jpg";
-            file = new File(imageDirectories.getProperty(VOLUNTEER_IMAGE_DIRECTORY_KEY) + imageName);
+            throw new NoSuchRequestHandlingMethodException("Volunteer #" + volunteerId
+                    + " does not have an image defined", this.getClass());
         }
 
         OutputStream out = response.getOutputStream();
         response.setHeader("Content-Disposition", "attachment; filename=\"" + imageName + "\"");
         response.setContentType("image/jpeg");
         BufferedInputStream in = new BufferedInputStream(new FileInputStream(file));
-        int copy = FileCopyUtils.copy(in, out);
+        FileCopyUtils.copy(in, out);
         out.flush();
     }
 

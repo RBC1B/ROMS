@@ -790,14 +790,15 @@ $(document).ready(function() {
         }
     );
     
-    $('img').mouseout(function() {
-        $('#popup').fadeOut('slow');
-    })
-    .mouseover(function() {
-        $('#popup').fadeIn(2000);
-    });
+    $('#volunteer-image')
+        .mouseleave(function() {
+            $('#volunteer-image-edit').fadeOut();
+        })
+        .mouseenter(function() {
+            $('#volunteer-image-edit').fadeIn();
+        });
     
-    $('#image-link').click(function(){
+    $('#volunteer-image-edit a').click(function(){
         $('#volunteer-image-modal').modal('show');
     });
     

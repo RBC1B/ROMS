@@ -55,6 +55,7 @@ public class VolunteerModel extends PersonModel {
     private UserModel interviewerB;
     private String interviewComments;
     private Map<Long, Boolean> availability;
+    private boolean photoProvided;
     private boolean oversight;
     private String oversightComments;
     private boolean reliefAbroad;
@@ -225,6 +226,14 @@ public class VolunteerModel extends PersonModel {
 
     public void setAvailability(Map<Long, Boolean> availability) {
         this.availability = availability;
+    }
+
+    public boolean isPhotoProvided() {
+        return photoProvided;
+    }
+
+    public void setPhotoProvided(boolean photoProvided) {
+        this.photoProvided = photoProvided;
     }
 
     public boolean isOversight() {

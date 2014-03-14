@@ -85,5 +85,6 @@ inner join Volunteer on Volunteer.InterviewDate = InterviewSession.Date;
 alter table Volunteer modify InterviewStatusCode char(2);
 alter table Volunteer_AUD modify InterviewStatusCode char(2);
 
-    
+-- add a volunteer image column
+alter table Volunteer add PhotoProvided     boolean     not null  default 0;    
     
