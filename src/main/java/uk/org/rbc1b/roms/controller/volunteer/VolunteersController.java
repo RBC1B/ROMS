@@ -210,7 +210,10 @@ public class VolunteersController {
         model.addAttribute("qualifications", volunteerModelFactory.generateVolunteerQualificationsModel(qualifications));
         model.addAttribute("interviews", generateInterviewsModel(volunteerId));
 
-        model.addAttribute("badgeUri", VolunteerBadgePdfModelFactory.generateUri(volunteerId));
+        if (volunteer.isPhotoProvided() && volunteer.getPerson().getBirthDate() != null && assignments != null) {
+            model.addAttribute("badgeUri", VolunteerBadgePdfModelFactory.generateUri(volunteerId));
+        }
+
         model.addAttribute("rbcStatusCodes", referenceDao.findRBCStatusValues());
 
         return "volunteers/show";

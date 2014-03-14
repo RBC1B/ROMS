@@ -751,17 +751,10 @@ $(document).ready(function() {
     $("#disabled-badge-button").popover({
         placement: 'right',
         trigger: 'hover',
+        html: true,
         title: $(this).data("title"),
         content: $(this).data("content")
     });
-    
-    if ($.trim($("#birth-date").text()) === '-') {
-        $("#badge-button").click(function(e) {
-            e.preventDefault();
-            $("#birth-date-badge-alert").before("<br />");
-            $("#birth-date-badge-alert").show();
-        });
-    }
     
     // volunteers experience list
     var volunteerExperienceListActionTemplate = $("#read-only-list-action").html();
