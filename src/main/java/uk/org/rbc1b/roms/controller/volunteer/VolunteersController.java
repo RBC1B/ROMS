@@ -824,19 +824,27 @@ public class VolunteersController {
     * @param imageFile file to be uploaded
     * @throws IOException if file cannot be written
     * @return view
+     * @throws NoSuchRequestHandlingMethodException on failure to find the volunteer
     */
     @RequestMapping(value = "{volunteerId}/image", method = RequestMethod.POST)
     public String handleImageUpload(@PathVariable Integer volunteerId,
-            @RequestParam(value = "image", required = true) MultipartFile imageFile) throws IOException {
+            @RequestParam(value = "image", required = true) MultipartFile imageFile) throws IOException,
+            NoSuchRequestHandlingMethodException {
 
-        saveImage(volunteerId + ".jpg", imageFile);
+        Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, EnumSet.of(VolunteerData.INTERVIEWER));
+        if (volunteer == null) {
+            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+        }
+
+        String filename = volunteerId + ".jpg";
+
+        File file = new File(imageDirectories.getProperty(VOLUNTEER_IMAGE_DIRECTORY_KEY) + filename);
+        FileUtils.writeByteArrayToFile(file, imageFile.getBytes());
+
+        volunteer.setPhotoProvided(true);
+        volunteerDao.updateVolunteer(volunteer);
 
         return "redirect:" + VolunteerModelFactory.generateUri(volunteerId);
-    }
-
-    private void saveImage(String filename, MultipartFile image) throws IOException {
-        File file = new File(imageDirectories.getProperty(VOLUNTEER_IMAGE_DIRECTORY_KEY) + filename);
-        FileUtils.writeByteArrayToFile(file, image.getBytes());
     }
 
     private String generateAvailability(boolean... availabilityDays) {
