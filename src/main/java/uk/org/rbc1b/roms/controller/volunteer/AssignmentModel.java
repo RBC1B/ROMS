@@ -40,6 +40,7 @@ public class AssignmentModel {
     private Date assignedDate;
     private String tradeNumber;
     private EntityModel team;
+    private String uri;
 
     public Integer getId() {
         return id;
@@ -96,4 +97,13 @@ public class AssignmentModel {
     public void setTeam(EntityModel team) {
         this.team = team;
     }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
 }

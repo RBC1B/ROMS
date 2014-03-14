@@ -593,6 +593,20 @@ $(document).ready(function() {
 
     // display
     roms.common.datatables(
+        $("#volunteer-assignments"),
+        {
+            "iDisplayLength": 10,
+            "aaSorting": [[ 0, "asc" ]],
+            "aoColumnDefs": [
+                {
+                    'bSortable': false,
+                    'aTargets': [5]
+                }
+            ]
+        }
+    );
+    
+    roms.common.datatables(
         $("#volunteer-skills-experience"),
         {
             "iDisplayLength": 10

@@ -81,7 +81,7 @@
         <c:choose>
             <c:when test="${!empty assignments}">
                 <h3>Team roles</h3>
-                <table class="table table-bordered table-condensed table-striped table-hover">
+                <table class="table table-bordered table-condensed table-striped table-hover" id="volunteer-assignments">
                     <thead>
                         <tr>
                             <th>Trade no.</th>
@@ -89,6 +89,7 @@
                             <th>Team</th>
                             <th>Role</th>
                             <th>Assigned</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -99,6 +100,14 @@
                                 <td><a href="<c:url value="${assignment.team.uri}" />"><c:out value="${assignment.team.name}" /></a></td>
                                 <td>${assignment.role}</td>
                                 <td><fmt:formatDate value="${assignment.assignedDate}" pattern="dd MMM yyyy" /></td>
+                                <td>
+                                    <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
+                                        <ul class="list-inline">
+                                            <li><a class="a-edit-assignment" href="<c:url value="${assignment.uri}" />">Edit</a></li>
+                                            <li><a class="a-delete-assignment" href="<c:url value="${assignment.uri}" />">Delete</a></li>
+                                        </ul>
+                                    </sec:authorize>
+                                </td>
                             </tr>
                         </c:forEach>
                     </tbody>

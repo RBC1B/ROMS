@@ -88,7 +88,8 @@ public class AssignmentModelFactory {
             model.setTeam(createTeamModel(departmentDao.findTeam(assignment.getTeam().getTeamId())));
         }
         model.setTradeNumber(referenceDao.findTradeNumbers().get(assignment.getTradeNumberId()));
-
+        model.setUri(VolunteerModelFactory.generateUri(assignment.getPerson().getPersonId()) + "/assignment/"
+                + assignment.getAssignmentId());
         return model;
     }
 

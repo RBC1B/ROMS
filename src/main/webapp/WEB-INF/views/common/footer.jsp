@@ -83,4 +83,5 @@
 <script type="text/javascript" src="<c:url value='/javascript/thirdparty/jquery.form.v20131121.min.js' />" ></script>
 <script type="text/javascript" src="<c:url value='/javascript/thirdparty/moment-2.5.1.min.js' />"></script>
 <script type="text/javascript" src="<c:url value='/javascript/thirdparty/bootstrap-datetimepicker-2.1.30.min.js' />"></script>
+<script type="text/javascript" src="<c:url value='/javascript/thirdparty/bootstrap-confirmation-1.0.1.js' />"></script>
 <script type="text/javascript" src="<c:url value='/javascript/common.js' />"></script>
