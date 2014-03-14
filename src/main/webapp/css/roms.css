@@ -654,6 +654,7 @@ div.project-count {
     position: relative;
     height: 143px;
     width: 114px;
+    margin-right: 10px
 }
 
 #volunteer-image-edit {
@@ -663,13 +664,16 @@ div.project-count {
     width: 104px;
 }
 
-#volunteer-image-edit>a {
-	color: white;
+#volunteer-image-edit p {
     background: rgb(0, 0, 0);
     opacity: 0.7;
     padding: 4px;
     font-size: 13px;
     font-weight: bold;
+}
+
+#volunteer-image-edit a {
+    color: white;
 }
 
 /*****************************************************************************/

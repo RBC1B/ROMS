@@ -24,7 +24,7 @@
             <div id="volunteer-image">
                 <img src="${volunteerImagePath}" class="media-object pull-left" alt="volunteer image" />
                 <div id="volunteer-image-edit" class="caption" style="display: none;">
-                    <a href="#">${volunteerImageUpdateText}</a>
+                    <p><a href="#">${volunteerImageUpdateText}</a></p>
                 </div>
             </div>
             <div class="media-body">
