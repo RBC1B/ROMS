@@ -680,5 +680,8 @@ div.project-count {
 /* Department Skills List view category colours                              */
 /*****************************************************************************/
 .category-colour-red {
-  color: #000;
+  background-color: #ff7f7f;
+}
+.category-colour-green {
+  background-color: #7fbf7f;
 }

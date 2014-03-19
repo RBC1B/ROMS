@@ -5,6 +5,7 @@
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <c:url var="formAction" value="/skills" />
@@ -35,13 +36,13 @@
                             <td>
                                 <c:choose>
                                     <c:when test="${!empty skill.category.colour}">
-                                        <c:set var="categoryColour" value="${skill.category.colour}" />
+                                        <c:set var="categoryColour" value="${fn:toLowerCase(skill.category.colour)}" />
                                     </c:when>
                                     <c:otherwise>
                                         <c:set var="categoryColour" value="white" />
                                     </c:otherwise>
                                 </c:choose>
-                                <div class="label label-default" style="background-color:${categoryColour}">
+                                <div class="label label-default category-colour-${categoryColour}">
                                     <c:out value="${skill.category.name}" />
                                 </div>
                             </td>

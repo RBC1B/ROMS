@@ -4,6 +4,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <c:set var="pageTitle">Skill - ${skill.name}</c:set>
@@ -27,20 +28,16 @@
         <dt>Category:</dt>
         <dd>
             <c:choose>
-                <c:when test="${!empty skill.category}">
-                    <c:choose>
-                        <c:when test="${!empty skill.category.colour}">
-                            <c:set var="categoryColour" value="${skill.category.colour}" />
-                        </c:when>
-                        <c:otherwise>
-                            <c:set var="categoryColour" value="white" />
-                        </c:otherwise>
-                    </c:choose>
-                    <div class="skill-category-colour" style="background-color:${categoryColour}"></div>
-                    <c:out value="${skill.category.name}" />
+                <c:when test="${!empty skill.category.colour}">
+                    <c:set var="categoryColour" value="${fn:toLowerCase(skill.category.colour)}" />
                 </c:when>
-                <c:otherwise>-</c:otherwise>
+                <c:otherwise>
+                    <c:set var="categoryColour" value="white" />
+                </c:otherwise>
             </c:choose>
+            <div class="label label-default category-colour-${categoryColour}">
+                <c:out value="${skill.category.name}" />
+            </div>
         </dd>
         <dt>Appear on badge?:</dt>
         <dd>
