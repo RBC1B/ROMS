@@ -175,13 +175,24 @@ roms.common.datatables = function($table, options) {
     $.extend( $.fn.dataTableExt.oPagination, {
         "bootstrap": {
             "fnInit": function( oSettings, nPaging, fnDraw ) {
-                var oLang = oSettings.oLanguage.oPaginate;
+                var oLang = oSettings.oLanguage.oPaginate;            
                 var fnClickHandler = function ( e ) {
                     e.preventDefault();
                     if ( oSettings.oApi._fnPageChange(oSettings, e.data.action) ) {
                         fnDraw( oSettings );
                     }
                 };
+                //var oPaging = oSettings.oInstance.fnPagingInfo();
+                //Search box and "... records per page" hide themselves if total records are 5 or less.
+                //This will not be influenced by filtering.
+                //if (oPaging.iTotal <= 5)    {
+                //   $('.dataTables_filter').hide();
+                //    $('.dataTables_length').hide();
+                //} else  {
+                //    $('.dataTables_filter').show();
+                //    $('.dataTables_length').show();
+                //}
+                //alert(oPaging.iTotal);
 
                 $(nPaging).append(
                     '<ul class="pagination">'+
@@ -247,19 +258,21 @@ roms.common.datatables = function($table, options) {
                     } else {
                         $('li:last', an[i]).removeClass('disabled');
                     }
-                }
+                }    
                 //If all data fits into one page, hide the pagination and "Showing ? of ? Entries"
                 if (oPaging.iTotalPages <= 1) {
                     $('.dataTables_paginate').hide();
                     $('.dataTables_info').hide();
                 } else {
-                    $('.dataTables_paginate').show();
-                    $('.dataTables_info').show(); 
+                   $('.dataTables_paginate').show();
+                   $('.dataTables_info').show(); 
                 }
-                //If the number of rows are 5 or less, hide "... records per page" and Search box
-                if (oPaging.iTotal <= 5) {
-                    $('.dataTables_length').hide();
+                if (oPaging.iTotal <= 5)    {
                     $('.dataTables_filter').hide();
+                    $('.dataTables_length').hide();
+                } else  {
+                    $('.dataTables_filter').show();
+                    $('.dataTables_length').show();
                 }
         }
     } });
@@ -304,7 +317,6 @@ roms.common.datatables = function($table, options) {
 
     // create the table
     $table.dataTable(options);
-
 }
 
 roms.common.persistentTabs = function() {
