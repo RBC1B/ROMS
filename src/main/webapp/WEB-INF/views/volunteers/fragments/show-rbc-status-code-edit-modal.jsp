@@ -1,6 +1,7 @@
 <%--
 Content of the model dialog used to update the volunteer's rbc status code.
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div id="volunteer-rbc-status-code-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="volunteer-rbc-status-code-modal-label" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -17,7 +18,14 @@ Content of the model dialog used to update the volunteer's rbc status code.
                         <div class="col-md-6">
                             <select id="rbcStatusSelect" class="form-control" name="rbcStatusCode">
                                 <c:forEach items="${rbcStatusCodes}" var="rbcStatusCode" varStatus="status">
-                                    <option value="${rbcStatusCode.key}">${rbcStatusCode.value}</option>
+                                    <c:choose>
+                                        <c:when test="${volunteer.status eq rbcStatusCode.value}">
+                                            <option value="${rbcStatusCode.key}" selected="selected">${rbcStatusCode.value}</option>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <option value="${rbcStatusCode.key}">${rbcStatusCode.value}</option>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </c:forEach>
                             </select>
                         </div>
