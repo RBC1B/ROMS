@@ -78,7 +78,7 @@ $(document).ready(function() {
             },
             success: function(data) {
                 // no response and no person id
-                if (!data && !existingPersonId) {
+                if ($.isEmptyObject(data) && !existingPersonId) {
                     return;
                 }
 
@@ -136,14 +136,11 @@ $(document).ready(function() {
                     }
                     $("input[name='telephone']").val(data.telephone);
                     $("input[name='mobile']").val(data.mobile);
-
-                    var tpl = $("#edit-circuit-overseer-person-link").html();
-                    var html = Mustache.to_html(tpl, data);
-                    $('#co-link').html(html);
-                    $("#edit-circuit-overseer-person").show('fast');
                 }
             });
+
             $personId.val(selectedPersonId);
+
         } else {
             $('#circuit-overseer-linked').hide('fast');
             // reset the form
@@ -157,7 +154,6 @@ $(document).ready(function() {
             $("input[name='telephone']").val('');
             $("input[name='mobile']").val('');
 
-            $('#edit-circuit-overseer-person').hide('fast');
         }
     }
 

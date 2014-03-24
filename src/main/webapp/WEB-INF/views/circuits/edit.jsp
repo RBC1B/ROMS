@@ -113,30 +113,6 @@
                         <form:input path="mobile" class="form-control" maxlength="20" placeholder="Mobile phone"/>
                     </div>
                 </div>
-                <div class="clearfix"></div>
-                <div class="form-group">
-                    <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
-                        <c:choose>
-                            <c:when test="${circuitForm.forename != null && circuitForm.surname != null}">
-                                <fieldset>
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="alert alert-info col-md-9" id="edit-circuit-overseer-person" style="display:none;">
-                                                <p id="co-link">
-                                                    <script id="edit-circuit-overseer-person-link" type="text/html" charset="utf-8">
-                                                        Click this link if you would like to edit additional fields of the Circuit Overseer
-                                                        <a href="<c:url value='/persons/{{personId}}/edit'/>"><b>{{forename}} {{surname}}</b>
-                                                    </script>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                            </c:when>
-                        </c:choose>
-                    </sec:authorize>
-                <br />
-                </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3 col-md-2"></label>
                     <div class="col-sm-9 col-md-2">
