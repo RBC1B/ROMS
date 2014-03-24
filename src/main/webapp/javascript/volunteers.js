@@ -318,7 +318,7 @@ $(document).ready(function() {
             },
             success: function(data) {
                 // no match, and no person linked. We don't show anything
-                if (!data && !existingPersonId) {
+                if ((!data || data.length === 0) && !existingPersonId) {
                     return;
                 }
 
