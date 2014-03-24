@@ -94,7 +94,7 @@ $(document).ready(function() {
         } else if ($(this).val() === 'M') {
             $("input[name='elder']").removeAttr("disabled");
             $("input[name='ministerialServant']").removeAttr("disabled");
-             $("#elderLabel").removeClass('label-disabled');
+            $("#elderLabel").removeClass('label-disabled');
             $("#ministerialServantLabel").removeClass('label-disabled');
             // remove Husband option from the Emergency Contact Relationship
             $("#emergencyRelationshipCode").find("option[value='HB']").remove();
