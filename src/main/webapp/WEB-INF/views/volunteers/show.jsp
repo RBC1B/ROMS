@@ -104,7 +104,11 @@
                                     <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
                                         <ul class="list-inline">
                                             <li><a class="a-edit-assignment" href="<c:url value="${assignment.uri}" />">Edit</a></li>
-                                            <li><a class="a-delete-assignment" href="<c:url value="${assignment.uri}" />">Delete</a></li>
+                                            <li><a class="a-delete-assignment"
+                                                    data-href="<c:url value="${assignment.uri}" />"
+                                                    href="<c:url value="${assignment.uri}" />">
+                                                Delete</a>
+                                            </li>
                                         </ul>
                                     </sec:authorize>
                                 </td>

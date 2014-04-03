@@ -605,7 +605,17 @@ $(document).ready(function() {
             ]
         }
     );
-    
+
+    $('.a-delete-assignment').confirmation({
+        placement: 'top',
+        singleton: true,
+        popout: true,
+        onConfirm: function() {
+            alert("yo");
+            return false;
+        }
+    });
+
     roms.common.datatables(
         $("#volunteer-skills-experience"),
         {

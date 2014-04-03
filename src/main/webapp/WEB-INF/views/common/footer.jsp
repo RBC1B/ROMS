@@ -72,16 +72,16 @@
         </div>
     </div>
 </footer>
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-<script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/jquery.validate.min.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 <script type="text/javascript" src="<c:url value='/javascript/thirdparty/mustache-0.7.2.js' />"></script>
 <script type="text/javascript" src="<c:url value='/javascript/thirdparty/typeahead-0.9.3.min.js' />" ></script>
 <script type="text/javascript" src="<c:url value='/javascript/thirdparty/jquery.form.v20131121.min.js' />" ></script>
 <script type="text/javascript" src="<c:url value='/javascript/thirdparty/moment-2.5.1.min.js' />"></script>
 <script type="text/javascript" src="<c:url value='/javascript/thirdparty/bootstrap-datetimepicker-2.1.30.min.js' />"></script>
-<script type="text/javascript" src="<c:url value='/javascript/thirdparty/bootstrap-confirmation-1.0.1.js' />"></script>
+<script type="text/javascript" src="<c:url value='/javascript/thirdparty/bootstrap-confirmation-1.0.0.js' />"></script>
 <script type="text/javascript" src="<c:url value='/javascript/common.js' />"></script>
