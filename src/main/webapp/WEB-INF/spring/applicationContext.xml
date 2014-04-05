@@ -55,6 +55,7 @@ THE SOFTWARE.
                 <prop key="current_session_context_class">thread</prop>
                 <prop key="hibernate.transaction.factory_class">org.hibernate.transaction.CMTTransactionFactory</prop>
                 <prop key="hibernate.transaction.jta.platform">org.hibernate.service.jta.platform.internal.SunOneJtaPlatform</prop>
+                <prop key="org.hibernate.envers.store_data_at_delete">true</prop>
             </props>
         </property>
         <property name="mappingResources">
