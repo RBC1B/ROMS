@@ -170,4 +170,9 @@ public class HibernateDepartmentDao implements DepartmentDao {
         return criteria;
     }
 
+    @Override
+    public void deleteAssignment(Assignment assignment) {
+        this.sessionFactory.getCurrentSession().delete(assignment);
+    }
+
 }

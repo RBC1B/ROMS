@@ -105,8 +105,8 @@
                                         <ul class="list-inline">
                                             <li><a class="a-edit-assignment" href="<c:url value="${assignment.uri}" />">Edit</a></li>
                                             <li><a class="a-delete-assignment"
-                                                    data-href="<c:url value="${assignment.uri}" />"
-                                                    href="<c:url value="${assignment.uri}" />">
+                                                    data-ajax-url="<c:url value="${assignment.uri}" />"
+                                                    href="#">
                                                 Delete</a>
                                             </li>
                                         </ul>

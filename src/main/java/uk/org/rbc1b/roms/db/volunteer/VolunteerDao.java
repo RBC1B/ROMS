@@ -137,6 +137,14 @@ public interface VolunteerDao {
     int findVolunteerTradesCount(VolunteerTradeSearchCriteria searchCriteria);
 
     /**
+     * Delete a volunteer linked trade.
+     * @param volunteerTrade volunteer trade
+     */
+    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
+    @Transactional
+    void deleteVolunteerTrade(VolunteerTrade volunteerTrade);
+
+    /**
      * Additional data to pull in when generating the volunteer details.
      */
     public static enum VolunteerData {

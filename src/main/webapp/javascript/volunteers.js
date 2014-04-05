@@ -605,17 +605,46 @@ $(document).ready(function() {
             ]
         }
     );
-
+    
     $('.a-delete-assignment').confirmation({
         placement: 'top',
         singleton: true,
         popout: true,
-        onConfirm: function() {
-            alert("yo");
-            return false;
+        onConfirm: function(event, element) {
+            event.preventDefault();
+            $.ajax({
+                url: $(element).data("ajax-url"),
+                type: "POST",
+                data: {
+                    _method: "delete"
+                },
+                statusCode: {
+                    404: function() {
+                        alert("Volunteer assignment not found");
+                    },
+                    500: function() {
+                        alert("Failed to delete volunteer assignment");
+                    }
+                },
+                success: function() {
+                    deleteDataTablesRow($(element));
+                }
+            });
         }
     });
 
+    /**
+     * Delete a row in a datables row
+     * @param $element the action element in the row to be deleted
+     */
+    function deleteDataTablesRow($element) {
+        var $row = $element.closest("tr")[0];
+        var $table = $element.closest("table");
+        
+        var dataTable = $table.dataTable();
+        dataTable.fnDeleteRow($row);
+    }
+    
     roms.common.datatables(
         $("#volunteer-skills-experience"),
         {

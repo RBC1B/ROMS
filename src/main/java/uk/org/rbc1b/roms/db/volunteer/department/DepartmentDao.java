@@ -86,4 +86,11 @@ public interface DepartmentDao {
     @Transactional(readOnly = true)
     int findAssignmentsCount(AssignmentSearchCriteria searchCriteria);
 
+    /**
+     * Delete a volunteer assignment.
+     * @param assignment assignment
+     */
+    @Transactional
+    void deleteAssignment(Assignment assignment);
+
 }

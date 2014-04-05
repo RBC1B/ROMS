@@ -288,4 +288,11 @@ public class HibernateVolunteerDao implements VolunteerDao {
         return criteria;
 
     }
+
+    @Override
+    public void deleteVolunteerTrade(VolunteerTrade volunteerTrade) {
+        this.sessionFactory.getCurrentSession().delete(volunteerTrade);
+
+    }
+
 }

@@ -78,6 +78,7 @@ import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao.VolunteerData;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerSearchCriteria;
 import uk.org.rbc1b.roms.db.volunteer.department.Assignment;
+import uk.org.rbc1b.roms.db.volunteer.department.DepartmentDao;
 import uk.org.rbc1b.roms.db.volunteer.interview.InterviewSession;
 import uk.org.rbc1b.roms.db.volunteer.interview.InterviewSessionDao;
 import uk.org.rbc1b.roms.db.volunteer.interview.VolunteerInterviewSession;
@@ -116,7 +117,8 @@ public class VolunteersController {
     private VolunteerBadgePdfModelFactory volunteerBadgePdfModelFactory;
     @Autowired
     private InterviewSessionDao interviewSessionDao;
-
+    @Autowired
+    private DepartmentDao departmentDao;
     @Resource(name = "imageDirectories")
     private Properties imageDirectories;
 
@@ -907,4 +909,35 @@ public class VolunteersController {
         spouse.setSurname(form.getSpouseSurname());
         return spouse;
     }
+
+    /**
+     * Delete a department assignment linked to a volunteer.
+     * @param volunteerId volunteer id
+     * @param assignmentId linked volunteer department assignment id
+     * @throws NoSuchRequestHandlingMethodException if either the volunteer assignment is not found
+     */
+    @RequestMapping(value = "{volunteerId}/assignment/{assignmentId}", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteVolunteerAssignment(@PathVariable Integer volunteerId, @PathVariable Integer assignmentId)
+            throws NoSuchRequestHandlingMethodException {
+
+        List<Assignment> assignments = volunteerDao.findAssignments(volunteerId);
+
+        Assignment volunteerAssignment = null;
+        if (assignments != null) {
+            for (Assignment assignment : assignments) {
+                if (assignment.getAssignmentId().equals(assignmentId)) {
+                    volunteerAssignment = assignment;
+                }
+            }
+        }
+
+        if (volunteerAssignment == null) {
+            throw new NoSuchRequestHandlingMethodException("Volunteer #" + volunteerId
+                    + " is not linked to assignment #" + assignmentId, this.getClass());
+        }
+
+        departmentDao.deleteAssignment(volunteerAssignment);
+    }
+
 }

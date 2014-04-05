@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<hibernate-mapping  package="uk.org.rbc1b.roms.db.volunteer.department">
+<hibernate-mapping package="uk.org.rbc1b.roms.db.volunteer.department">
     <class name="Assignment" table="Assignment">
-        <id name="assignmentId" >
-            <generator class="identity"/>
+        <id name="assignmentId">
+            <generator class="identity" />
         </id>
 
         <many-to-one name="person" column="PersonId" not-null="true" />
-        <property name="departmentId" />
+        <property name="departmentId" not-null="true" />
         <many-to-one name="role" column="assignmentRoleCode" not-null="true" />
-        <property name="assignedDate" />
-        <property name="tradeNumberId" />
+        <property name="assignedDate" not-null="true" />
+        <property name="tradeNumberId" not-null="true" />
         <many-to-one name="team" column="TeamId" />
-        <property name="updateTime" not-null="true"  />
-        <property name="updatedBy" not-null="true"  />
+        <property name="updateTime" not-null="true" />
+        <property name="updatedBy" not-null="true" />
     </class>
 </hibernate-mapping>
