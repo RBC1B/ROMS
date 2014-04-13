@@ -17,15 +17,8 @@ Content of the model dialog used to update the volunteer's rbc status code.
                         <label for="rbcStatusSelect">RBC Status</label>
                         <div class="col-md-6">
                             <select id="rbcStatusSelect" class="form-control" name="rbcStatusCode">
-                                <c:forEach items="${rbcStatusCodes}" var="rbcStatusCode" varStatus="status">
-                                    <c:choose>
-                                        <c:when test="${volunteer.status eq rbcStatusCode.value}">
-                                            <option value="${rbcStatusCode.key}" selected="selected">${rbcStatusCode.value}</option>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <option value="${rbcStatusCode.key}">${rbcStatusCode.value}</option>
-                                        </c:otherwise>
-                                    </c:choose>
+                                <c:forEach items="${rbcStatusCodes}" var="rbcStatusCode">
+                                    <option value="${rbcStatusCode.key}">${rbcStatusCode.value}</option>
                                 </c:forEach>
                             </select>
                         </div>

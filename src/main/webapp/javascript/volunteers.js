@@ -775,6 +775,11 @@ $(document).ready(function() {
 
         $('#volunteer-rbc-status-code-modal').modal('show');
 
+        var currentRbcStatusCode = $('#volunteer-rbc-status-code-content').text();
+        $('#rbcStatusSelect option').each(function() {
+           this.selected = (this.text == currentRbcStatusCode); 
+        });
+
     });
 
     $("#volunteer-rbc-status-code-modal-form").submit(function() {
