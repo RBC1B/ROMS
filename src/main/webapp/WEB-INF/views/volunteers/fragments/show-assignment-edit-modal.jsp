@@ -14,7 +14,7 @@ Content of the model dialog used to update the volunteer's assignment status cod
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Department</label>
                         <input type="hidden" name="departmentId" />
-                        <input class="form-control" type="text" name="departmentName" maxlength="250" readonly="true" />
+                        <input class="form-control" type="text" name="departmentName" maxlength="250" />
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Trade number</label>

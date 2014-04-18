@@ -78,7 +78,9 @@ import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao.VolunteerData;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerSearchCriteria;
 import uk.org.rbc1b.roms.db.volunteer.department.Assignment;
+import uk.org.rbc1b.roms.db.volunteer.department.AssignmentRole;
 import uk.org.rbc1b.roms.db.volunteer.department.DepartmentDao;
+import uk.org.rbc1b.roms.db.volunteer.department.Team;
 import uk.org.rbc1b.roms.db.volunteer.interview.InterviewSession;
 import uk.org.rbc1b.roms.db.volunteer.interview.InterviewSessionDao;
 import uk.org.rbc1b.roms.db.volunteer.interview.VolunteerInterviewSession;
@@ -924,6 +926,43 @@ public class VolunteersController {
     public void deleteVolunteerAssignment(@PathVariable Integer volunteerId, @PathVariable Integer assignmentId)
             throws NoSuchRequestHandlingMethodException {
 
+        Assignment volunteerAssignment = findAssignment(volunteerId, assignmentId);
+
+        departmentDao.deleteAssignment(volunteerAssignment);
+    }
+
+    /**
+     * Update a department assignment linked to a volunteer.
+     * @param volunteerId volunteer id
+     * @param assignmentId linked volunteer department assignment id
+     * @param form updated data
+     * @throws NoSuchRequestHandlingMethodException if either the volunteer assignment is not found
+     */
+    @RequestMapping(value = "{volunteerId}/assignment/{assignmentId}", method = RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateVolunteerAssignment(@PathVariable Integer volunteerId, @PathVariable Integer assignmentId,
+            @Valid VolunteerAssignmentForm form) throws NoSuchRequestHandlingMethodException {
+
+        Assignment volunteerAssignment = findAssignment(volunteerId, assignmentId);
+        // we don't change the person or the department
+        volunteerAssignment.setAssignedDate(DataConverterUtil.toSqlDate(form.getAssignedDate()));
+
+        AssignmentRole role = new AssignmentRole();
+        role.setAssignmentRoleCode(form.getAssignmentRoleCode());
+
+        volunteerAssignment.setRole(role);
+
+        Team team = new Team();
+        team.setTeamId(form.getTeamId());
+
+        volunteerAssignment.setTeam(team);
+        volunteerAssignment.setTradeNumberId(form.getTradeNumberId());
+
+        departmentDao.updateAssignment(volunteerAssignment);
+    }
+
+    private Assignment findAssignment(Integer volunteerId, Integer assignmentId)
+            throws NoSuchRequestHandlingMethodException {
         List<Assignment> assignments = volunteerDao.findAssignments(volunteerId);
 
         Assignment volunteerAssignment = null;
@@ -939,8 +978,7 @@ public class VolunteersController {
             throw new NoSuchRequestHandlingMethodException("Volunteer #" + volunteerId
                     + " is not linked to assignment #" + assignmentId, this.getClass());
         }
-
-        departmentDao.deleteAssignment(volunteerAssignment);
+        return volunteerAssignment;
     }
 
 }

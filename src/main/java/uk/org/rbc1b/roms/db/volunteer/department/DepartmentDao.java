@@ -93,4 +93,11 @@ public interface DepartmentDao {
     @Transactional
     void deleteAssignment(Assignment assignment);
 
+    /**
+     * Delete a volunteer assignment.
+     * @param assignment assignment
+     */
+    @Transactional
+    void updateAssignment(Assignment assignment);
+
 }

@@ -175,4 +175,9 @@ public class HibernateDepartmentDao implements DepartmentDao {
         this.sessionFactory.getCurrentSession().delete(assignment);
     }
 
+    @Override
+    public void updateAssignment(Assignment assignment) {
+        this.sessionFactory.getCurrentSession().update(assignment);
+    }
+
 }

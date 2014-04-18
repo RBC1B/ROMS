@@ -615,6 +615,10 @@ $(document).ready(function() {
         
         var departmentName = $(".a-assignment-department a", $tableRow).html();
         $("input[name='departmentName']", $modalForm).val(departmentName);
+        $("input[name='departmentName']", $modalForm).prop("readonly", true);
+        
+        // set a dummy value for the id. We ignore it in a put
+        $("input[name='departmentId']", $modalForm).val("-1");
         
         var tradeNumber = $(".a-assignment-trade-number", $tableRow).html();
         $("select[name='tradeNumberId'] option:contains('" + tradeNumber + "')", $modalForm).prop("selected", true);
@@ -628,6 +632,35 @@ $(document).ready(function() {
         var date = $(".a-assignment-date", $tableRow).html();
         var picker = $("input[name='assignedDate']").data('DateTimePicker');
         picker.setDate(moment(date, "DD/MM/YYYY"));
+        picker.setEndDate(new Date());
+        
+        $modalForm.validate({
+            rules: {
+                assignedDate: {
+                    required: true
+                }
+            },
+            submitHandler :function(form) {
+                $.ajax({
+                    url: $(form).attr("action"),
+                    data: $(form).serialize(),
+                    type: "PUT",
+                    statusCode: {
+                        404: function() {
+                            alert("Volunteer assignment not found");
+                        },
+                        500: function() {
+                            alert("Failed to save volunteer assignment");
+                        }
+                    },
+                    success: function() {
+                        updateVolunteerName();
+                        $('#volunteer-assignment-modal').modal('hide');
+                    }
+                });
+            },
+            errorPlacement: roms.common.validatorErrorPlacement
+        });
         
         $('#volunteer-assignment-modal').modal('show');
     });

@@ -24,7 +24,7 @@
 package uk.org.rbc1b.roms.db.volunteer.department;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.RelationTargetAuditMode;
 import uk.org.rbc1b.roms.db.Person;
@@ -41,17 +41,17 @@ public class Assignment implements UpdateAuditable, Serializable {
     private Person person;
     private Integer departmentId;
     private AssignmentRole role;
-    private Date assignedDate;
+    private java.sql.Date assignedDate;
     private Integer tradeNumberId;
     private Team team;
     private Date updateTime;
     private Integer updatedBy;
 
-    public Date getAssignedDate() {
+    public java.sql.Date getAssignedDate() {
         return assignedDate;
     }
 
-    public void setAssignedDate(Date assignedDate) {
+    public void setAssignedDate(java.sql.Date assignedDate) {
         this.assignedDate = assignedDate;
     }
 
