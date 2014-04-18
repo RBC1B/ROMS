@@ -127,7 +127,7 @@
         <ul class="nav nav-tabs">
             <li class="active"><a href="#personal" data-toggle="tab">Personal</a></li>
             <li><a href="#spiritual" data-toggle="tab">Spiritual</a></li>
-            <li><a href="#skills" data-toggle="tab">Skills</a></li>
+            <li><a href="#skills" data-toggle="tab">Skills &amp; Experience</a></li>
             <li><a href="#rbc-status" data-toggle="tab">RBC status</a></li>
         </ul>
         <div class="tab-content">
