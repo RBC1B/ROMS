@@ -118,6 +118,7 @@
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         <%@ include file="fragments/show-name-edit-modal.jsp" %>
         <%@ include file="fragments/show-comments-edit-modal.jsp" %>
+        <%@ include file="fragments/show-assignment-edit-modal.jsp" %>
         <%@ include file="fragments/show-rbc-status-code-edit-modal.jsp" %>
         <%@ include file="fragments/show-volunteer-image-edit-modal.jsp" %>
         <script type="text/javascript" src="<c:url value='/javascript/volunteers.js' />" ></script>

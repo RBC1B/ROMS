@@ -217,6 +217,9 @@ public class VolunteersController {
         }
 
         model.addAttribute("rbcStatusCodes", referenceDao.findRBCStatusValues());
+        model.addAttribute("tradeNumbers", referenceDao.findTradeNumbers());
+        model.addAttribute("teams", referenceDao.findTeams());
+        model.addAttribute("assignmentRoles", referenceDao.findAssignmentRoleValues());
 
         return "volunteers/show";
     }

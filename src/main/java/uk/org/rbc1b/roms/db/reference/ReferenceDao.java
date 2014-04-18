@@ -67,6 +67,11 @@ public interface ReferenceDao {
     Map<Integer, String> findTradeNumbers();
 
     /**
+     * @return ordered map of team values
+     */
+    Map<Integer, String> findTeams();
+
+    /**
      * @return ordered map of hall ownership type values
      */
     Map<String, String> findKingdomHallOwnershipTypeValues();

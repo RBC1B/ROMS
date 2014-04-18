@@ -1,6 +1,5 @@
 <%--
 Content of the model dialog used to update the volunteer comments
-Author: oliver.elder.esq
 --%>
 <div id="volunteer-comments-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="volunteer-comments-modal-label" aria-hidden="true">
     <div class="modal-dialog">

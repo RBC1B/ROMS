@@ -606,6 +606,33 @@ $(document).ready(function() {
         }
     );
     
+    $(".a-edit-assignment").on("click", function(e) {
+        e.preventDefault();
+        
+        var $tableRow = $(this).parents("tr");
+        var $modalForm = $('#volunteer-assignment-modal-form');
+        $modalForm.prop("action", $(this).prop("href"));
+        
+        var departmentName = $(".a-assignment-department a", $tableRow).html();
+        $("input[name='departmentName']", $modalForm).val(departmentName);
+        
+        var tradeNumber = $(".a-assignment-trade-number", $tableRow).html();
+        $("select[name='tradeNumberId'] option:contains('" + tradeNumber + "')", $modalForm).prop("selected", true);
+        
+        var team = $(".a-assignment-team a", $tableRow).html();
+        $("select[name='teamId'] option:contains('" + team + "')", $modalForm).prop("selected", true);
+        
+        var role = $(".a-assignment-role", $tableRow).html();
+        $("select[name='assignmentRoleCode'] option:contains('" + role + "')", $modalForm).prop("selected", true);
+        
+        var date = $(".a-assignment-date", $tableRow).html();
+        var picker = $("input[name='assignedDate']").data('DateTimePicker');
+        picker.setDate(moment(date, "DD/MM/YYYY"));
+        
+        $('#volunteer-assignment-modal').modal('show');
+    });
+    
+    
     $('.a-delete-assignment').confirmation({
         placement: 'top',
         singleton: true,

@@ -18,13 +18,13 @@ The volunteer department links.
         <tbody>
             <c:forEach items="${assignments}" var="assignment">
                 <tr>
-                    <td>${assignment.tradeNumber}</td>
-                    <td><a href="<c:url value="${assignment.department.uri}" />"><c:out
+                    <td class="a-assignment-trade-number">${assignment.tradeNumber}</td>
+                    <td class="a-assignment-department"><a href="<c:url value="${assignment.department.uri}" />"><c:out
                                 value="${assignment.department.name}" /></a></td>
-                    <td><a href="<c:url value="${assignment.team.uri}" />"><c:out
+                    <td class="a-assignment-team"><a href="<c:url value="${assignment.team.uri}" />"><c:out
                                 value="${assignment.team.name}" /></a></td>
-                    <td>${assignment.role}</td>
-                    <td><fmt:formatDate value="${assignment.assignedDate}" pattern="dd MMM yyyy" /></td>
+                    <td class="a-assignment-role">${assignment.role}</td>
+                    <td class="a-assignment-date"><fmt:formatDate value="${assignment.assignedDate}" pattern="dd/MM/yyyy" /></td>
                     <td><sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
                             <ul class="list-inline">
                                 <li><a class="a-edit-assignment" href="<c:url value="${assignment.uri}" />">Edit</a></li>
