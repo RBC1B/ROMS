@@ -628,6 +628,11 @@ $(document).ready(function() {
                 },
                 success: function() {
                     deleteDataTablesRow($(element));
+                    // if this was the last row, hide the table
+                    if ($("#volunteer-assignments .dataTables_empty").length) {
+                        $("#volunteer-with-assignments").hide();
+                        $("#volunteer-without-assignments").show();
+                    }
                 }
             });
         }
