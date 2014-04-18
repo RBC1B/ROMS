@@ -17,7 +17,7 @@ The volunteer department links.
         </thead>
         <tbody>
             <c:forEach items="${assignments}" var="assignment">
-                <tr>
+                <tr data-assignment-id="${assignment.id}">
                     <td class="a-assignment-trade-number">${assignment.tradeNumber}</td>
                     <td class="a-assignment-department"><a href="<c:url value="${assignment.department.uri}" />"><c:out
                                 value="${assignment.department.name}" /></a></td>

@@ -612,6 +612,7 @@ $(document).ready(function() {
         var $tableRow = $(this).parents("tr");
         var $modalForm = $('#volunteer-assignment-modal-form');
         $modalForm.prop("action", $(this).prop("href"));
+        $modalForm.data("assignment-id", $tableRow.data("assignment-id"));
         
         var departmentName = $(".a-assignment-department a", $tableRow).html();
         $("input[name='departmentName']", $modalForm).val(departmentName);
@@ -654,7 +655,7 @@ $(document).ready(function() {
                         }
                     },
                     success: function() {
-                        updateVolunteerName();
+                        updateVolunteerAssignment();
                         $('#volunteer-assignment-modal').modal('hide');
                     }
                 });
@@ -664,6 +665,27 @@ $(document).ready(function() {
         
         $('#volunteer-assignment-modal').modal('show');
     });
+    
+    function updateVolunteerAssignment() {
+        var $form = $('#volunteer-assignment-modal-form');
+        var formAssignmentId = $form.data("assignment-id"); 
+        
+        var $table = $("#volunteer-assignments");
+        var $row = null;
+        $("tr",$table).each(function() {
+            var assignmentId = $(this).data("assignment-id"); 
+            if (assignmentId == formAssignmentId) {
+                $row = $(this)[0];
+                return false;
+            }
+        });
+        
+        var dataTable = $table.dataTable();
+        dataTable.fnUpdate($("select[name='tradeNumberId'] option:selected", $form).text(), $row, 0, 0);
+        dataTable.fnUpdate($("select[name='teamId'] option:selected", $form).text(), $row, 2, 0);
+        dataTable.fnUpdate($("select[name='assignmentRoleCode'] option:selected", $form).text(), $row, 3, 0);
+        dataTable.fnUpdate($("input[name='assignedDate']", $form).val(), $row, 4, 0);
+    }
     
     
     $('.a-delete-assignment').confirmation({
