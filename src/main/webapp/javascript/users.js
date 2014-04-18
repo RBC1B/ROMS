@@ -1,7 +1,7 @@
-/*
+/* 
  * The MIT License
  *
- * Copyright 2013 RBC1B.
+ * Copyright 2014 RBC1B.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,50 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.db.application;
 
-import java.util.List;
-import org.springframework.transaction.annotation.Transactional;
-
-/**
- * Look up application user information.
- *
- * @author oliver.elder.esq
- */
-public interface UserDao {
-
-    /**
-     * Look up the user by name. Include the user permissions.
-     *
-     * @param userName user name
-     * @return user
-     */
-    @Transactional(readOnly = true)
-    User findUserAndPermissions(String userName);
-
-    /**
-     * Look up the user by name. We do a prefix match on the name.
-     *
-     * @param userName user name
-     * @return users
-     */
-    @Transactional(readOnly = true)
-    List<User> findUsers(String userName);
-
-    /**
-     * Look up the user by id.
-     *
-     * @param userId user id
-     * @return user
-     */
-    @Transactional(readOnly = true)
-    User findUser(Integer userId);
-
-    /**
-     * Find all users on the system.
-     *
-     * @return users
-     */
-    @Transactional(readOnly = true)
-    List<User> findAllUsers();
-}
+$(document).ready(function() {
+ 
+    // list
+    roms.common.datatables(
+        $('#user-list'),
+        {
+            "iDisplayLength": 10,
+            "aoColumnDefs": [
+            {
+                'bSortable': false,
+                'aTargets': [ 2 ]
+            }
+            ]
+        }
+        );
+});

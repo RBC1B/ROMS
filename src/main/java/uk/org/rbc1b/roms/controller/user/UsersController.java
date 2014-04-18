@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,6 +46,26 @@ public class UsersController {
 
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private UserModelFactory userModelFactory;
+
+    /**
+     * Display the list of users.
+     *
+     * @param model mvc model
+     * @return view
+     */
+    @RequestMapping(method = RequestMethod.GET)
+    public String showUserList(ModelMap model) {
+        List<User> users = userDao.findAllUsers();
+        List<UserModel> modelList = new ArrayList<UserModel>();
+        for (User user : users) {
+            modelList.add(userModelFactory.generateUserModel(user));
+        }
+        model.addAttribute("users", modelList);
+        model.addAttribute("newUri", UserModelFactory.generateUri(null) + "/new");
+        return "users/list";
+    }
 
     /**
      * User search, making partial (prefix) matches on the user name.
@@ -58,7 +79,6 @@ public class UsersController {
         List<User> users = userDao.findUsers(name);
         List<UserSearchResult> results = new ArrayList<UserSearchResult>(users.size());
         if (!users.isEmpty()) {
-
             for (User user : users) {
                 UserSearchResult result = new UserSearchResult();
                 result.setPersonId(user.getPersonId());
@@ -66,8 +86,6 @@ public class UsersController {
                 results.add(result);
             }
         }
-
         return results;
     }
-
 }

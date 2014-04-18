@@ -83,4 +83,11 @@ public class HibernateUserDao implements UserDao {
         return (User) this.sessionFactory.getCurrentSession().get(User.class, userId);
     }
 
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<User> findAllUsers() {
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(User.class);
+        criteria.add(Restrictions.gt("personId", 0));
+        return criteria.list();
+    }
 }

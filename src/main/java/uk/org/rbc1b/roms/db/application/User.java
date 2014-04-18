@@ -42,6 +42,7 @@ public class User implements UpdateAuditable, Serializable {
     private String password;
     private Date updateTime;
     private Integer updatedBy;
+    private boolean active;
 
     public Set<ApplicationAccess> getApplicationAccess() {
         return applicationAccess;
@@ -96,5 +97,19 @@ public class User implements UpdateAuditable, Serializable {
     @Override
     public String toString() {
         return "User{" + "personId=" + personId + '}';
+    }
+
+    /**
+     * @return the active
+     */
+    public boolean isActive() {
+        return active;
+    }
+
+    /**
+     * @param active the active to set
+     */
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

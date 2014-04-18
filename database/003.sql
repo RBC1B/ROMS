@@ -88,4 +88,6 @@ alter table Volunteer_AUD modify InterviewStatusCode char(2);
 -- add a volunteer image column
 alter table Volunteer add PhotoProvided     boolean     not null  default 0;
 alter table Volunteer_AUD add PhotoProvided boolean;
-    
+
+-- add the active column
+alter table User add Active boolean not null default true;

@@ -7,7 +7,7 @@
         </id>
         <property name="userName" />
         <property name="password" />
-
+        <property name="active" />
         <set name="applicationAccess" table="ApplicationAccess" inverse="true" >
             <key>
                 <column name="personId" not-null="true" />

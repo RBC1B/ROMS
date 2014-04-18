@@ -11,73 +11,80 @@
         <ul class="nav navbar-nav">
             <sec:authorize access="hasPermission('CIRCUIT', 'READ') or hasPermission('KINGDOMHALL', 'READ') or hasPermission('CONG', 'READ')">
                 <li class="dropdown"><a href="#" class="dropdown-toggle" id="dLabel" role="button"
-                    data-toggle="dropdown">Organisation <b class="caret"></b></a>
+                                        data-toggle="dropdown">Organisation <b class="caret"></b></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                         <sec:authorize access="hasPermission('CIRCUIT', 'READ')">
                             <li role="menuitem"><a href="<c:url value="/circuits" />">Circuits</a></li>
-                        </sec:authorize>
-                        <sec:authorize access="hasPermission('KINGDOMHALL', 'READ')">
+                            </sec:authorize>
+                            <sec:authorize access="hasPermission('KINGDOMHALL', 'READ')">
                             <li role="menuitem"><a href="<c:url value="/kingdom-halls" />">Kingdom Halls</a></li>
-                        </sec:authorize>
-                        <sec:authorize access="hasPermission('CONG', 'READ')">
+                            </sec:authorize>
+                            <sec:authorize access="hasPermission('CONG', 'READ')">
                             <li role="menuitem"><a href="<c:url value="/congregations" />">Congregations</a></li>
-                        </sec:authorize>
+                            </sec:authorize>
                     </ul>
                 </li>
             </sec:authorize>
             <sec:authorize access="hasPermission('VOLUNTEER', 'READ') or hasPermission('SKILL', 'READ')">
                 <li class="dropdown"><a href="#" class="dropdown-toggle" id="dLabel" role="button"
-                    data-toggle="dropdown">People <b class="caret"></b></a>
+                                        data-toggle="dropdown">People <b class="caret"></b></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                         <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
                             <li role="menuitem"><a href="<c:url value="/volunteers" />">Volunteers</a></li>
-                        </sec:authorize>
-                        <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
+                            </sec:authorize>
+                            <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
                             <li role="menuitem"><a href="<c:url value="/persons" />">Persons</a></li>
-                        </sec:authorize>
-                        <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
+                            </sec:authorize>
+                            <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
                             <li role="menuitem"><a href="<c:url value="/person-changes" />">Form updates</a></li>
-                        </sec:authorize>
-                        <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
+                            </sec:authorize>
+                            <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
                             <li role="menuitem"><a href="<c:url value="/interview-sessions" />">Interview sessions</a></li>
-                        </sec:authorize>
-                        <sec:authorize access="hasPermission('SKILL', 'READ')">
+                            </sec:authorize>
+                            <sec:authorize access="hasPermission('SKILL', 'READ')">
                             <li role="menuitem"><a href="<c:url value="/qualifications" />">Qualifications</a></li>
-                        </sec:authorize>
-                        <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
+                            </sec:authorize>
+                            <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
                             <li role="menuitem"><a href="<c:url value="/volunteer-experience" />">Experience</a></li>
-                        </sec:authorize>
-                        <sec:authorize access="hasPermission('SKILL', 'READ')">
+                            </sec:authorize>
+                            <sec:authorize access="hasPermission('SKILL', 'READ')">
                             <li role="menuitem"><a href="<c:url value="/skills" />">Skills</a></li>
-                        </sec:authorize>
+                            </sec:authorize>
                     </ul>
                 </li>
             </sec:authorize>
             <sec:authorize access="hasPermission('VOLUNTEER', 'READ') or hasPermission('SKILL', 'READ')">
                 <li class="dropdown"><a href="#" class="dropdown-toggle" id="dLabel" role="button"
-                    data-toggle="dropdown">Department <b class="caret"></b></a>
+                                        data-toggle="dropdown">Department <b class="caret"></b></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                         <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
                             <li><a href="<c:url value="/departments" />">Departments</a></li>
-                        </sec:authorize>
+                            </sec:authorize>
 
                         <sec:authorize access="hasPermission('SKILL', 'READ')">
                             <li><a href="<c:url value="/skills" />">Skills</a></li>
-                        </sec:authorize>
+                            </sec:authorize>
                     </ul>
                 </li>
             </sec:authorize>
             <sec:authorize access="hasPermission('PROJECT', 'READ')">
                 <li><a href="<c:url value="/projects" />">Projects</a></li>
-            </sec:authorize>
+                </sec:authorize>
             <sec:authorize access="hasPermission('DATABASE', 'READ')">
-                <li><a href="<c:url value="/admin" />">Admin</a></li>
+                <li class="dropdown"><a href="#" class="dropdown-toggle" id="dLabel" role="button"
+                                        data-toggle="dropdown">System Administration<b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <sec:authorize access="hasPermission('DATABASE', 'READ')">
+                            <li role="menuitem"><a href="<c:url value="/users" />">System Users</a></li>
+                        </sec:authorize>
+                    </ul>
+                </li>
             </sec:authorize>
         </ul>
         <form class="navbar-form navbar-right">
             <a class="btn btn-edifice" href="#" ><span class="glyphicon glyphicon-question-sign"></span>&nbsp;Help</a>&nbsp;
             <a class="btn btn-danger" href="<c:url value="/j_spring_security_logout" />" ><span class="glyphicon glyphicon-off"></span>&nbsp;Logout</a>&nbsp;
         </form>
-    <!-- Everything between parenthesis will be minimised at 940px or less -->
+        <!-- Everything between parenthesis will be minimised at 940px or less -->
     </div>
 </nav>
