@@ -5,8 +5,16 @@
         <id name="applicationAccessId" >
             <generator class="identity"/>
         </id>
-        <many-to-one name="person" column="PersonId" />
-        <many-to-one name="application" column="ApplicationId" />
+        <many-to-one class="uk.org.rbc1b.roms.db.Person"
+                        column="PersonId"
+                        name="person"
+                        lazy="false">
+        </many-to-one>
+        <many-to-one class="uk.org.rbc1b.roms.db.application.Application"
+                        column="ApplicationId"
+                        name="application"
+                        lazy="false">
+        </many-to-one>
         <property name="departmentAccess" />
         <property name="nonDepartmentAccess" />
         <property name="updateTime" not-null="true"  />

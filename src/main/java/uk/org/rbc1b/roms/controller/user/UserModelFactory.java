@@ -66,7 +66,7 @@ public class UserModelFactory {
         model.setActive(user.isActive());
         model.setUri(generateUri(user.getPersonId()));
         model.setEditUri(generateUri(user.getPersonId()) + "/edit");
-        model.setName(person.getSurname() + ", " + person.getForename());
+        model.setName(person.getForename() + " " + person.getSurname());
         model.setVolunteerUri(VOLUNTEER_BASE_URI + "/" + user.getPersonId());
         return model;
     }

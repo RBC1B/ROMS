@@ -24,14 +24,19 @@
 package uk.org.rbc1b.roms.controller.user;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
+import uk.org.rbc1b.roms.db.application.ApplicationAccess;
+import uk.org.rbc1b.roms.db.application.ApplicationAccessDao;
 import uk.org.rbc1b.roms.db.application.User;
 import uk.org.rbc1b.roms.db.application.UserDao;
 
@@ -44,10 +49,20 @@ import uk.org.rbc1b.roms.db.application.UserDao;
 @RequestMapping("/users")
 public class UsersController {
 
+    private static final HashMap<String, String> ACL = new HashMap<String, String>() {
+        {
+            put("R", "Read");
+            put("E", "Edit");
+            put("A", "Add");
+            put("D", "Delete");
+        }
+    };
     @Autowired
     private UserDao userDao;
     @Autowired
     private UserModelFactory userModelFactory;
+    @Autowired
+    private ApplicationAccessDao applicationAccessDao;
 
     /**
      * Display the list of users.
@@ -87,5 +102,27 @@ public class UsersController {
             }
         }
         return results;
+    }
+
+    /**
+     * Display a user.
+     *
+     * @param personId the person id
+     * @param model mvc model
+     * @return view
+     * @throws NoSuchRequestHandlingMethodException on failure to look up user
+     */
+    @RequestMapping(value = "{personId}", method = RequestMethod.GET)
+    public String showUser(@PathVariable Integer personId, ModelMap model)
+            throws NoSuchRequestHandlingMethodException {
+        User user = userDao.findUser(personId);
+        if (user == null) {
+            throw new NoSuchRequestHandlingMethodException("No User with ID:" + personId, this.getClass());
+        }
+        model.addAttribute("user", userModelFactory.generateUserModel(user));
+        List<ApplicationAccess> permissions = applicationAccessDao.findUserPermissions(personId);
+        model.addAttribute("permissions", permissions);
+        model.addAttribute("acls", ACL);
+        return "users/show";
     }
 }
