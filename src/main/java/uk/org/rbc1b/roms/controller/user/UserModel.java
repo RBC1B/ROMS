@@ -32,11 +32,11 @@ public class UserModel {
     private Integer personId;
     private String userName;
     private String password;
-    private String forename;
-    private String surname;
+    private String name;
     private String uri;
     private boolean active;
     private String editUri;
+    private String volunteerUri;
 
     /**
      * @return the personId
@@ -81,6 +81,20 @@ public class UserModel {
     }
 
     /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
      * @return the uri
      */
     public String getUri() {
@@ -92,20 +106,6 @@ public class UserModel {
      */
     public void setUri(String uri) {
         this.uri = uri;
-    }
-
-    /**
-     * @return the editUri
-     */
-    public String getEditUri() {
-        return editUri;
-    }
-
-    /**
-     * @param editUri the editUri to set
-     */
-    public void setEditUri(String editUri) {
-        this.editUri = editUri;
     }
 
     /**
@@ -123,30 +123,30 @@ public class UserModel {
     }
 
     /**
-     * @return the forename
+     * @return the editUri
      */
-    public String getForename() {
-        return forename;
+    public String getEditUri() {
+        return editUri;
     }
 
     /**
-     * @param forename the forename to set
+     * @param editUri the editUri to set
      */
-    public void setForename(String forename) {
-        this.forename = forename;
+    public void setEditUri(String editUri) {
+        this.editUri = editUri;
     }
 
     /**
-     * @return the surname
+     * @return the volunteerUri
      */
-    public String getSurname() {
-        return surname;
+    public String getVolunteerUri() {
+        return volunteerUri;
     }
 
     /**
-     * @param surname the surname to set
+     * @param volunteerUri the volunteerUri to set
      */
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setVolunteerUri(String volunteerUri) {
+        this.volunteerUri = volunteerUri;
     }
 }

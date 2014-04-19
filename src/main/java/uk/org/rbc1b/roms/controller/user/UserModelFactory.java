@@ -37,6 +37,7 @@ import uk.org.rbc1b.roms.db.application.User;
 public class UserModelFactory {
 
     private static final String BASE_URI = "/users";
+    private static final String VOLUNTEER_BASE_URI = "/volunteers";
     @Autowired
     private PersonDao personDao;
 
@@ -65,8 +66,8 @@ public class UserModelFactory {
         model.setActive(user.isActive());
         model.setUri(generateUri(user.getPersonId()));
         model.setEditUri(generateUri(user.getPersonId()) + "/edit");
-        model.setForename(person.getForename());
-        model.setSurname(person.getSurname());
+        model.setName(person.getSurname() + ", " + person.getForename());
+        model.setVolunteerUri(VOLUNTEER_BASE_URI + "/" + user.getPersonId());
         return model;
     }
 }

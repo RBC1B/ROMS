@@ -22,8 +22,7 @@
                 <thead>
                     <tr>
                         <th>User Name</th>
-                        <th>Forename</th>
-                        <th>Surname</th>
+                        <th>Name</th>
                         <th>Active</th>
                         <th>Action</th>
                     </tr>
@@ -32,19 +31,18 @@
                     <c:forEach items="${users}" var="user">
                         <tr>
                             <td><c:out value="${user.userName}" /></td>
-                            <td><c:out value="${user.forename}" /></td>
-                            <td><c:out value="${user.surname}" /></td>
-                            <td><c:out value="${user.active}" /></td>
-                            <td>
-                                <ul class="list-inline">
-                                    <li><a class="btn btn-success" href="<c:url value="${user.uri}" />">View</a></li>
-                                        <sec:authorize access="hasPermission('DATABASE', 'EDIT')">
-                                        <li><a href="<c:url value="${user.editUri}" />">Edit</a></li>
-                                        </sec:authorize>
-                                </ul>
-                            </td>
-                        </tr>
-                    </c:forEach>
+                            <td><a href="<c:url value="${user.volunteerUri}" />"><c:out value="${user.name}" /></a></td>
+                    <td><c:out value="${user.active}" /></td>
+                    <td>
+                        <ul class="list-inline">
+                            <li><a class="btn btn-success" href="<c:url value="${user.uri}" />">View</a></li>
+                                <sec:authorize access="hasPermission('DATABASE', 'EDIT')">
+                                <li><a href="<c:url value="${user.editUri}" />">Edit</a></li>
+                                </sec:authorize>
+                        </ul>
+                    </td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>
