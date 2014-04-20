@@ -6,7 +6,7 @@
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@taglib prefix="roms" uri="/WEB-INF/tld/roms.tld"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -28,16 +28,9 @@
             </dd>
         </dl>
         <dl class="dl-horizontal">
-            <dt>System Status:</dt>
+            <dt>User Status:</dt>
             <dd>
-                <c:choose>
-                    <c:when test="${user.active}">
-                        Active
-                    </c:when>
-                    <c:otherwise>
-                        Disabled
-                    </c:otherwise>
-                </c:choose>
+                <roms:userStatus status="${user.active}" />
             </dd>
         </dl>
         <div class="clearfix"></div>
@@ -61,8 +54,8 @@
                             <c:forEach items="${permissions}" var="permission">
                                 <tr>
                                     <td><c:out value="${permission.application.name}" /></td>
-                                    <td>${permission.departmentAccess}</td>
-                                    <td>${permission.nonDepartmentAccess}</td>
+                                    <td><roms:permission forValue="${permission.departmentAccess}" /></td>
+                                    <td><roms:permission forValue="${permission.nonDepartmentAccess}" /></td>
                                 </tr>
                             </c:forEach>
                         </tbody>

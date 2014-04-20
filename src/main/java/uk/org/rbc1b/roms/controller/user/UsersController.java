@@ -24,7 +24,6 @@
 package uk.org.rbc1b.roms.controller.user;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -49,14 +48,6 @@ import uk.org.rbc1b.roms.db.application.UserDao;
 @RequestMapping("/users")
 public class UsersController {
 
-    private static final HashMap<String, String> ACL = new HashMap<String, String>() {
-        {
-            put("R", "Read");
-            put("E", "Edit");
-            put("A", "Add");
-            put("D", "Delete");
-        }
-    };
     @Autowired
     private UserDao userDao;
     @Autowired
@@ -122,7 +113,7 @@ public class UsersController {
         model.addAttribute("user", userModelFactory.generateUserModel(user));
         List<ApplicationAccess> permissions = applicationAccessDao.findUserPermissions(personId);
         model.addAttribute("permissions", permissions);
-        model.addAttribute("acls", ACL);
+
         return "users/show";
     }
 }
