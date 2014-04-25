@@ -69,7 +69,7 @@ $(document).ready(function() {
                 phoneNumber: true,
                 mobilePhoneNumber: true
             },
-            workphone: {
+            workPhone: {
                 phoneNumber: true
             }
         },
