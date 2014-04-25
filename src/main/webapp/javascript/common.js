@@ -367,7 +367,7 @@ $(document).ready(function() {
             },
             dataFilter: function(rawData) {
                 var data = JSON.parse(rawData)
-                if (data && data[0].name == $nameInput.val()) {
+                if (data && data.length > 0 && data[0].name == $nameInput.val()) {
                     $idInput.val(data[0].id);
                     return true;
                 }

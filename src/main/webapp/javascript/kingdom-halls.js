@@ -72,17 +72,9 @@ $(document).ready(function() {
                 maxlength: 10,
                 required: true
             },
-            ownershipTypeCode: {
-                required: true
-            },
             titleHoldingCongregationName: {
-                required: true,
                 remote: roms.common.validation.congregation($("#titleHoldingCongregationName"),
                         $("#titleHoldingCongregationId"))
-            },
-            titleHoldingCongregationId: {
-                // which will have been updated after the remote AJAX call in common.js
-                required: true
             }
         },
         messages: {

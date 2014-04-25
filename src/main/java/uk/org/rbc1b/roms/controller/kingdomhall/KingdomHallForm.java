@@ -49,7 +49,6 @@ public class KingdomHallForm {
     private String postcode;
     private Integer titleHoldingCongregationId;
     private String titleHoldingCongregationName;
-    @NotNull
     @Size(max = 20)
     private String ownershipTypeCode;
 

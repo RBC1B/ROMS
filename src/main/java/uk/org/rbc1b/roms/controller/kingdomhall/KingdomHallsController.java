@@ -173,8 +173,8 @@ public class KingdomHallsController {
      * @return String view
      */
     @RequestMapping(value = "{kingdomHallId}", method = RequestMethod.PUT)
-    public String updateKingdomHall(@PathVariable Integer kingdomHallId,
-            @Valid KingdomHallForm kingdomHallForm) throws NoSuchRequestHandlingMethodException {
+    public String updateKingdomHall(@PathVariable Integer kingdomHallId, @Valid KingdomHallForm kingdomHallForm)
+            throws NoSuchRequestHandlingMethodException {
         KingdomHall kingdomHall = kingdomHallDao.findKingdomHall(kingdomHallId);
 
         if (kingdomHall == null) {
@@ -239,10 +239,12 @@ public class KingdomHallsController {
         address.setPostcode(kingdomHallForm.getPostcode());
         kingdomHall.setAddress(address);
 
-        Congregation titleHoldingCongregation = congregationDao.findCongregation(
-                kingdomHallForm.getTitleHoldingCongregationId());
+        if (kingdomHallForm.getTitleHoldingCongregationId() != null) {
+            Congregation titleHoldingCongregation = congregationDao.findCongregation(kingdomHallForm
+                    .getTitleHoldingCongregationId());
 
-        kingdomHall.setTitleHolder(titleHoldingCongregation);
+            kingdomHall.setTitleHolder(titleHoldingCongregation);
+        }
 
         kingdomHall.setOwnershipTypeCode(kingdomHallForm.getOwnershipTypeCode());
     }
