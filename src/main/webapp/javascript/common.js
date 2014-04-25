@@ -343,7 +343,7 @@ $(document).ready(function() {
             },
             dataFilter: function(rawData) {
                 var data = JSON.parse(rawData)
-                if (data && data[0].name == $nameInput.val()) {
+                if (data && data.length > 0 && data[0].name == $nameInput.val()) {
                     $idInput.val(data[0].id);
                     return true;
                 } 
@@ -391,7 +391,7 @@ $(document).ready(function() {
             },
             dataFilter: function(rawData) {
                 var data = JSON.parse(rawData)
-                if (data && data[0].userName == $nameInput.val()) {
+                if (data && data.length > 0 && data[0].userName == $nameInput.val()) {
                     $idInput.val(data[0].personId);
                     return true;
                 } 
