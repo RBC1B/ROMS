@@ -44,7 +44,7 @@
             <div class="form-group">
                 <label class="control-label col-sm-3 col-md-2" for="KingdomHallName">Kingdom Hall</label>
                 <div class="col-sm-9 col-md-3">
-                    <form:input path="kingdomHallName" class="form-control" placeholder="Kingdom Hall name"/>
+                    <form:input path="kingdomHallName" class="form-control" placeholder="Kingdom Hall name" size="50"/>
                     <form:hidden path="kingdomHallId" />
                 </div>
             </div>
