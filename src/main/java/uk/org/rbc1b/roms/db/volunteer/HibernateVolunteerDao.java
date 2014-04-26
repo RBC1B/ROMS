@@ -181,6 +181,12 @@ public class HibernateVolunteerDao implements VolunteerDao {
         session.merge(volunteer);
     }
 
+    @CacheEvict(value = "reference.qualification", key = "#volunteerQualification.volunteerQualificationId")
+    @Override
+    public void updateVolunteerQualification(VolunteerQualification volunteerQualification) {
+        this.sessionFactory.getCurrentSession().merge(volunteerQualification);
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public List<Assignment> findAssignments(Integer volunteerId) {
@@ -220,6 +226,16 @@ public class HibernateVolunteerDao implements VolunteerDao {
         criteria.add(Restrictions.eq("personId", volunteerId));
 
         return criteria.list();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public VolunteerQualification findQualification(Integer volunteerQualificationId) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(VolunteerQualification.class);
+        criteria.add(Restrictions.eq("volunteerQualificationId", volunteerQualificationId));
+
+        return (VolunteerQualification) criteria.uniqueResult();
     }
 
     @SuppressWarnings("unchecked")
@@ -294,5 +310,4 @@ public class HibernateVolunteerDao implements VolunteerDao {
         this.sessionFactory.getCurrentSession().delete(volunteerTrade);
 
     }
-
 }

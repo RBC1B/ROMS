@@ -32,13 +32,24 @@
                 <div class="form-group">
                     <label for="name" class="control-label col-sm-3 col-md-2">Name</label>
                     <div class="col-sm-9 col-md-3">
-                        <form:input path="name" class="form-control" maxlength="50" />
+                        <c:choose>
+                            <c:when test="${!empty qualificationForm.name}">
+                                <form:input path="name" class="form-control" maxlength="50" readonly="true" />
+                            </c:when>
+                            <c:otherwise>
+                                <%--<form:input path="name" class="form-control" maxlength="50" />--%>
+                                <form:select class="form-control" path="name">
+                                    <form:option value="" label="None" />
+                                    <form:options items="${ownershipValues}" />
+                                </form:select>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="description" class="control-label col-sm-3 col-md-2">Description</label>
                     <div class="col-sm-9 col-md-3">
-                         <form:textarea path="description" class="form-control" rows="4" cols="50" />
+                        <form:textarea path="description" class="form-control" rows="4" cols="50" maxlength="100" />
                     </div>
                 </div>
             </fieldset>

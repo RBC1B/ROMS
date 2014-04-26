@@ -36,10 +36,12 @@ import org.springframework.stereotype.Repository;
 
 /**
  * JBDC implementation of reference data dao.
+ *
  * @author oliver.elder.esq
  */
 @Repository
 public class JDBCReferenceDao implements ReferenceDao {
+
     private JdbcTemplate jdbcTemplate;
 
     @Override
@@ -165,6 +167,13 @@ public class JDBCReferenceDao implements ReferenceDao {
     public Map<Integer, String> findRbcSubRegionValues() {
         return findReferenceIdValues("SELECT RbcSubRegionId AS id, Name AS value "
                 + "FROM RbcSubRegion ORDER BY RbcSubRegionId");
+    }
+
+    @Override
+    @Cacheable("reference.qualification")
+    public Map<Integer, String> findQualificationValues() {
+        return findReferenceIdValues("SELECT QualificationId AS id, Name AS value "
+                + "FROM Qualification ORDER BY Name");
     }
 
     private Map<Integer, String> findReferenceIdValues(String sql) {

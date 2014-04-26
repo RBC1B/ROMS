@@ -31,19 +31,19 @@ $(document).ready(function() {
         maxDate: "0d",
         yearRange: "-70:+0"
     });
-    
-    
+
+
     $('.datetimepicker-dateonly').datetimepicker({
         format: 'DD/MM/YYYY',
         pickTime: false
     });
-    
+
     $('.datetimepicker-timeonly').datetimepicker({
         format: 'HH:mm',
         pickDate: false
     });
-    
-    
+
+
     $("#congregationName").typeahead({
         remote: roms.common.relativePath + '/congregations/search?name=%QUERY',
         valueKey: 'name'
@@ -61,25 +61,25 @@ $(document).ready(function() {
     });
 
     $("#spouseSurname").blur(function() {
-	roms.common.matchLinkedPerson(
-            $("#spouseForename").val(),
-            $("#spouseSurname").val(),
-            $("#spousePersonId"),
-            populateSpouseFromPerson
-        );
+        roms.common.matchLinkedPerson(
+                $("#spouseForename").val(),
+                $("#spouseSurname").val(),
+                $("#spousePersonId"),
+                populateSpouseFromPerson
+                );
     });
-    
+
     $("#emergencyContactSurname").blur(function() {
-	roms.common.matchLinkedPerson(
-            $("#emergencyContactForename").val(),
-            $("#emergencyContactSurname").val(),
-            $("#emergencyContactPersonId"),
-            populateEmergencyContactFromPerson
-        );
+        roms.common.matchLinkedPerson(
+                $("#emergencyContactForename").val(),
+                $("#emergencyContactSurname").val(),
+                $("#emergencyContactPersonId"),
+                populateEmergencyContactFromPerson
+                );
     });
 
     $("input[name='gender']").change(function() {
-        if($(this).val() === 'F') {
+        if ($(this).val() === 'F') {
             $("input[name='elder']").attr("disabled", true);
             $("input[name='ministerialServant']").attr("disabled", true);
             $("#elderLabel").addClass('label-disabled');
@@ -102,16 +102,16 @@ $(document).ready(function() {
                 $("#emergencyRelationshipCode").append("<option value='WF'>Wife</option>");
             }
         }
-    }); 
+    });
 
     // elder and ministerial values are exclusive
     $("input[name='elder']").change(function() {
-        if($(this).is(':checked')) {
+        if ($(this).is(':checked')) {
             $("input[name='ministerialServant']").prop("checked", false);
         }
     });
     $("input[name='ministerialServant']").change(function() {
-        if($(this).is(':checked')) {
+        if ($(this).is(':checked')) {
             $("input[name='elder']").prop("checked", false);
         }
     });
@@ -146,7 +146,7 @@ $(document).ready(function() {
 
     $.validator.addMethod("phoneNumber", roms.common.validatorPhoneNumber, "Please enter a valid phone number");
     $.validator.addMethod("mobilePhoneNumber", roms.common.validatorMobilePhoneNumber, "Please enter a valid mobile phone number");
-    
+
     $("#volunteer").validate({
         rules: {
             forename: {
@@ -229,7 +229,7 @@ $(document).ready(function() {
                 remote: "Please provide the name of an existing congregation"
             }
         },
-        submitHandler :function(form) {
+        submitHandler: function(form) {
             form.submit();
         },
         errorPlacement: roms.common.validatorErrorPlacement
@@ -246,12 +246,12 @@ $(document).ready(function() {
      */
     function initialiseTradeRow($row) {
         // limit inputs
-        $(".trade-experience-years", $row).numeric({ negative : false, decimal: false });
+        $(".trade-experience-years", $row).numeric({negative: false, decimal: false});
 
         // add validation. completely empty rows are allowed (ignored server side)
         // so the field is only required if other fields are populated
         $(".trade-experience-name", $row).rules("add", {
-                required: function() {
+            required: function() {
                 var result = false;
                 $("input", $row).each(function() {
                     if ($(this).val()) {
@@ -287,31 +287,31 @@ $(document).ready(function() {
      */
     function matchVolunteerPerson(forename, surname, $personId) {
 
-       if(!forename || !surname) {
-           return;
-       }
+        if (!forename || !surname) {
+            return;
+        }
 
-       var existingPersonName = $personId.data("full-name");
-       if (existingPersonName == forename + " " + surname) {
-           // no change in value
-           return;
-       }
-       findVolunteerPerson(forename, surname, $personId, existingPersonName);
+        var existingPersonName = $personId.data("full-name");
+        if (existingPersonName == forename + " " + surname) {
+            // no change in value
+            return;
+        }
+        findVolunteerPerson(forename, surname, $personId, existingPersonName);
 
-       $personId.data("full-name", forename + " " + surname);
+        $personId.data("full-name", forename + " " + surname);
     }
 
     /**
      * Look up the person matching the name and show a popover
      * to allow the user the select the match, if any
      */
-    function findVolunteerPerson(forename, surname, $personId, existingPersonName)  {
+    function findVolunteerPerson(forename, surname, $personId, existingPersonName) {
         var existingPersonId = $personId.val();
         $.ajax({
             url: roms.common.relativePath + '/persons/search',
             contentType: "application/json",
             dataType: 'json',
-            data:  {
+            data: {
                 forename: forename,
                 surname: surname,
                 checkVolunteer: true
@@ -361,7 +361,7 @@ $(document).ready(function() {
                 modalElement.modal('show')
 
                 // if they select the person id, set it to the hidden volunteer person id field
-                $("a.matched-person").on("click", function(event){
+                $("a.matched-person").on("click", function(event) {
                     populateVolunteerFromPerson($(this).data("person-id"), $personId);
                     modalElement.modal('hide')
                 });
@@ -386,7 +386,7 @@ $(document).ready(function() {
 
         // new person - pull the person data and populate the form.
         $.ajax({
-            url: roms.common.relativePath + '/persons/' + selectedPersonId  + "/reference",
+            url: roms.common.relativePath + '/persons/' + selectedPersonId + "/reference",
             contentType: "application/json",
             dataType: 'json',
             success: function(data) {
@@ -398,7 +398,7 @@ $(document).ready(function() {
                 $("input[name='mobile']").val(data.mobile);
                 $("input[name='workPhone']").val(data.workPhone);
                 $("input[name='email']").val(data.email);
-                if(data.congregation) {
+                if (data.congregation) {
                     $("input[name='congregationId']").val(data.congregation.id);
                     $("input[name='congregationName']").val(data.congregation.name);
                 }
@@ -420,7 +420,7 @@ $(document).ready(function() {
             data.surname = surname;
             var html = Mustache.to_html(template, data);
             $("#spouse-linked-text").html(html);
-            
+
             $("#spouse-linked").show("fast");
             $("#spouse-unlinked").hide("fast");
         } else {
@@ -448,32 +448,32 @@ $(document).ready(function() {
 
     // run the spouse display on page load
     populateSpouseFromPerson($("#spousePersonId").val(), $("#spouseSurname").val(), $("#spouseForename").val(), $("#spousePersonId"))
-    
-    
+
+
     // list
     var listActionTemplate = $("#list-action").html();
 
     roms.common.datatables(
-        $('#volunteer-list'),
-        {
-            "iDisplayLength": 10,
-            "bProcessing": true,
-            "bServerSide": true,
-            "sAjaxSource": roms.common.relativePath + '/volunteers',
-            "aoColumns": [
-                {   "sName": "ID", "mData": "id" },
-                {   "sName": "forename", "mData": "forename" },
-                {   "sName": "surname", "mData": "surname" },
-                {   "sName": "congregation", "mData": "congregation.name", "sDefaultContent": "" },
-                {   "sName": "action", "bSortable": false,
-                    "mData":
-                        function ( data, type, val ) {
-                            data.uriBase = roms.common.relativePath;
-                            return Mustache.to_html(listActionTemplate, data);
-                        }
-                }
-            ]
-        }
+            $('#volunteer-list'),
+            {
+                "iDisplayLength": 10,
+                "bProcessing": true,
+                "bServerSide": true,
+                "sAjaxSource": roms.common.relativePath + '/volunteers',
+                "aoColumns": [
+                    {"sName": "ID", "mData": "id"},
+                    {"sName": "forename", "mData": "forename"},
+                    {"sName": "surname", "mData": "surname"},
+                    {"sName": "congregation", "mData": "congregation.name", "sDefaultContent": ""},
+                    {"sName": "action", "bSortable": false,
+                        "mData":
+                                function(data, type, val) {
+                                    data.uriBase = roms.common.relativePath;
+                                    return Mustache.to_html(listActionTemplate, data);
+                                }
+                    }
+                ]
+            }
     );
 
     // edit
@@ -521,7 +521,7 @@ $(document).ready(function() {
         },
         errorPlacement: roms.common.validatorErrorPlacement
     });
-    
+
     $("#volunteerSpiritual").validate({
         rules: {
             baptismDate: {
@@ -540,20 +540,44 @@ $(document).ready(function() {
                 remote: "Please provide the name of an existing congregation"
             }
         },
-        submitHandler :function(form) {
+        submitHandler: function(form) {
             form.submit();
         },
         errorPlacement: roms.common.validatorErrorPlacement
     });
 
-    $("#clear-availability").on("click", function(event){
-       $(".availability").prop('checked', false);
-       return false;
+    $("#volunteerQualification").validate({
+        /*rules: {
+         baptismDate: {
+         required: true
+         },
+         congregationName: {
+         required: true,
+         remote: roms.common.validation.congregation($("#congregationName"), $("#congregationId"))
+         },
+         congregationId: {
+         required: true
+         }
+         },
+         messages: {
+         congregationName: {
+         remote: "Please provide the name of an existing congregation"
+         }
+         },*/
+        submitHandler: function(form) {
+            form.submit();
+        },
+        errorPlacement: roms.common.validatorErrorPlacement
     });
 
-    $("#set-availability").on("click", function(event){
-       $(".availability").prop('checked', true);
-       return false;
+    $("#clear-availability").on("click", function(event) {
+        $(".availability").prop('checked', false);
+        return false;
+    });
+
+    $("#set-availability").on("click", function(event) {
+        $(".availability").prop('checked', true);
+        return false;
     });
 
     // we always clear the person id on change.
@@ -585,7 +609,7 @@ $(document).ready(function() {
                 remote: "Please provide the name of an existing user"
             }
         },
-        submitHandler :function(form) {
+        submitHandler: function(form) {
             form.submit();
         },
         errorPlacement: roms.common.validatorErrorPlacement
@@ -593,55 +617,55 @@ $(document).ready(function() {
 
     // display
     roms.common.datatables(
-        $("#volunteer-assignments"),
-        {
-            "iDisplayLength": 10,
-            "aaSorting": [[ 0, "asc" ]],
-            "aoColumnDefs": [
-                {
-                    'bSortable': false,
-                    'aTargets': [5]
-                }
-            ]
-        }
+            $("#volunteer-assignments"),
+            {
+                "iDisplayLength": 10,
+                "aaSorting": [[0, "asc"]],
+                "aoColumnDefs": [
+                    {
+                        'bSortable': false,
+                        'aTargets': [5]
+                    }
+                ]
+            }
     );
-    
+
     $(".a-edit-assignment").on("click", function(e) {
         e.preventDefault();
-        
+
         var $tableRow = $(this).parents("tr");
         var $modalForm = $('#volunteer-assignment-modal-form');
         $modalForm.prop("action", $(this).prop("href"));
         $modalForm.data("assignment-id", $tableRow.data("assignment-id"));
-        
+
         var departmentName = $(".a-assignment-department a", $tableRow).html();
         $("input[name='departmentName']", $modalForm).val(departmentName);
         $("input[name='departmentName']", $modalForm).prop("readonly", true);
-        
+
         // set a dummy value for the id. We ignore it in a put
         $("input[name='departmentId']", $modalForm).val("-1");
-        
+
         var tradeNumber = $(".a-assignment-trade-number", $tableRow).html();
         $("select[name='tradeNumberId'] option:contains('" + tradeNumber + "')", $modalForm).prop("selected", true);
-        
+
         var team = $(".a-assignment-team a", $tableRow).html();
         $("select[name='teamId'] option:contains('" + team + "')", $modalForm).prop("selected", true);
-        
+
         var role = $(".a-assignment-role", $tableRow).html();
         $("select[name='assignmentRoleCode'] option:contains('" + role + "')", $modalForm).prop("selected", true);
-        
+
         var date = $(".a-assignment-date", $tableRow).html();
         var picker = $("input[name='assignedDate']").data('DateTimePicker');
         picker.setDate(moment(date, "DD/MM/YYYY"));
         picker.setEndDate(new Date());
-        
+
         $modalForm.validate({
             rules: {
                 assignedDate: {
                     required: true
                 }
             },
-            submitHandler :function(form) {
+            submitHandler: function(form) {
                 $.ajax({
                     url: $(form).attr("action"),
                     data: $(form).serialize(),
@@ -662,32 +686,32 @@ $(document).ready(function() {
             },
             errorPlacement: roms.common.validatorErrorPlacement
         });
-        
+
         $('#volunteer-assignment-modal').modal('show');
     });
-    
+
     function updateVolunteerAssignment() {
         var $form = $('#volunteer-assignment-modal-form');
-        var formAssignmentId = $form.data("assignment-id"); 
-        
+        var formAssignmentId = $form.data("assignment-id");
+
         var $table = $("#volunteer-assignments");
         var $row = null;
-        $("tr",$table).each(function() {
-            var assignmentId = $(this).data("assignment-id"); 
+        $("tr", $table).each(function() {
+            var assignmentId = $(this).data("assignment-id");
             if (assignmentId == formAssignmentId) {
                 $row = $(this)[0];
                 return false;
             }
         });
-        
+
         var dataTable = $table.dataTable();
         dataTable.fnUpdate($("select[name='tradeNumberId'] option:selected", $form).text(), $row, 0, 0);
         dataTable.fnUpdate($("select[name='teamId'] option:selected", $form).text(), $row, 2, 0);
         dataTable.fnUpdate($("select[name='assignmentRoleCode'] option:selected", $form).text(), $row, 3, 0);
         dataTable.fnUpdate($("input[name='assignedDate']", $form).val(), $row, 4, 0);
     }
-    
-    
+
+
     $('.a-delete-assignment').confirmation({
         placement: 'top',
         singleton: true,
@@ -727,30 +751,30 @@ $(document).ready(function() {
     function deleteDataTablesRow($element) {
         var $row = $element.closest("tr")[0];
         var $table = $element.closest("table");
-        
+
         var dataTable = $table.dataTable();
         dataTable.fnDeleteRow($row);
     }
-    
+
     roms.common.datatables(
-        $("#volunteer-skills-experience"),
-        {
-            "iDisplayLength": 10
-        }
+            $("#volunteer-skills-experience"),
+            {
+                "iDisplayLength": 10
+            }
     );
 
     roms.common.datatables(
-        $("#volunteer-skills-skills"),
-        {
-            "iDisplayLength": 10
-        }
+            $("#volunteer-skills-skills"),
+            {
+                "iDisplayLength": 10
+            }
     );
 
     roms.common.datatables(
-        $("#volunteer-skills-qualifications"),
-        {
-            "iDisplayLength": 10
-        }
+            $("#volunteer-skills-qualifications"),
+            {
+                "iDisplayLength": 10
+            }
     );
 
     $(".a-skill-description").tooltip();
@@ -759,12 +783,12 @@ $(document).ready(function() {
     roms.common.persistentTabs();
 
     $(".a-edit-hover").hover(
-        function over() {
-            $(this).find("a").removeClass("hide") ;
-        },
-        function out() {
-            $(this).find("a").addClass("hide");
-        }
+            function over() {
+                $(this).find("a").removeClass("hide");
+            },
+            function out() {
+                $(this).find("a").addClass("hide");
+            }
     );
 
     $("#volunteer-name a").on("click", function(e) {
@@ -791,7 +815,7 @@ $(document).ready(function() {
                 required: true
             }
         },
-        submitHandler :function(form) {
+        submitHandler: function(form) {
             $.ajax({
                 url: $(form).attr("action"),
                 data: $(form).serialize(),
@@ -864,7 +888,7 @@ $(document).ready(function() {
 
         var currentRbcStatusCode = $('#volunteer-rbc-status-code-content').text();
         $('#rbcStatusSelect option').each(function() {
-           this.selected = (this.text == currentRbcStatusCode); 
+            this.selected = (this.text == currentRbcStatusCode);
         });
 
     });
@@ -900,85 +924,85 @@ $(document).ready(function() {
         title: $(this).data("title"),
         content: $(this).data("content")
     });
-    
+
     // volunteers experience list
     var volunteerExperienceListActionTemplate = $("#read-only-list-action").html();
     roms.common.datatables(
-        $("#volunteer-experience-list"),
-        {
-            "iDisplayLength": 10,
-            "bProcessing": true,
-            "bServerSide": true,
-            "sAjaxSource": roms.common.relativePath + '/volunteer-experience',
-            "aoColumns": [
-                {   "sName": "person.forename", "mData": "person.forename" },
-                {   "sName": "person.surname", "mData": "person.surname" },
-                {   "sName": "person.congregation", "mData": "person.congregation.name", "sDefaultContent": "" },
-                {   "sName": "name", "mData": "name", "sDefaultContent": "" },
-                {   "sName": "experienceDescription", "mData": "experienceDescription", "sDefaultContent": "" },
-                {   "sName": "experienceYears", "mData": "experienceYears", "sDefaultContent": "" },
-                {   "sName": "action", "bSortable": false,
-                    "mData":
-                        function ( data, type, val ) {
-                            data.person.uriBase = roms.common.relativePath;
-                            return Mustache.to_html(volunteerExperienceListActionTemplate, data.person);
-                        }
-                }
-            ]            
-        }
+            $("#volunteer-experience-list"),
+            {
+                "iDisplayLength": 10,
+                "bProcessing": true,
+                "bServerSide": true,
+                "sAjaxSource": roms.common.relativePath + '/volunteer-experience',
+                "aoColumns": [
+                    {"sName": "person.forename", "mData": "person.forename"},
+                    {"sName": "person.surname", "mData": "person.surname"},
+                    {"sName": "person.congregation", "mData": "person.congregation.name", "sDefaultContent": ""},
+                    {"sName": "name", "mData": "name", "sDefaultContent": ""},
+                    {"sName": "experienceDescription", "mData": "experienceDescription", "sDefaultContent": ""},
+                    {"sName": "experienceYears", "mData": "experienceYears", "sDefaultContent": ""},
+                    {"sName": "action", "bSortable": false,
+                        "mData":
+                                function(data, type, val) {
+                                    data.person.uriBase = roms.common.relativePath;
+                                    return Mustache.to_html(volunteerExperienceListActionTemplate, data.person);
+                                }
+                    }
+                ]
+            }
     );
-    
+
     $('#volunteer-image')
-        .mouseleave(function() {
-            $('#volunteer-image-edit').fadeOut();
-        })
-        .mouseenter(function() {
-            $('#volunteer-image-edit').fadeIn();
-        });
-    
-    $('#volunteer-image-edit a').click(function(){
+            .mouseleave(function() {
+        $('#volunteer-image-edit').fadeOut();
+    })
+            .mouseenter(function() {
+        $('#volunteer-image-edit').fadeIn();
+    });
+
+    $('#volunteer-image-edit a').click(function() {
         $('#volunteer-image-modal').modal('show');
     });
-    
-    $('#submit-image').on("click", function(){
+
+    $('#submit-image').on("click", function() {
         $('#volunteer-image-modal').modal('hide');
     });
-    
+
     // volunteer interview sessions
     roms.common.datatables(
-        $("#volunteer-interview-session-list"),
-        {
-            "iDisplayLength": 10,
-            "aaSorting": [[ 0, "desc" ]],
-            "aoColumnDefs": [
-                {
-                    'bSortable': false,
-                    'aTargets': [4]
-                }
-            ]
-        });
-    
+            $("#volunteer-interview-session-list"),
+            {
+                "iDisplayLength": 10,
+                "aaSorting": [[0, "desc"]],
+                "aoColumnDefs": [
+                    {
+                        'bSortable': false,
+                        'aTargets': [4]
+                    }
+                ]
+            });
+
     // volunteer interview sessions
     roms.common.datatables(
-        $("#session-volunteer-list"),
-        {
-            "iDisplayLength": 50,
-            "aoColumnDefs": [
-                {
-                    'bSortable': false,
-                    'aTargets': [6]
-                }
-            ]
-        });
-    
+            $("#session-volunteer-list"),
+            {
+                "iDisplayLength": 50,
+                "aoColumnDefs": [
+                    {
+                        'bSortable': false,
+                        'aTargets': [6]
+                    }
+                ]
+            });
+
     // show modal form when editing the volunteer interview status
-    $(".a-volunteer-edit").on("click", function(){
+    $(".a-volunteer-edit").on("click", function() {
         var $modalElement = $("#volunteer-invitation-modal")
         initialiseVolunteerInvitationModalForm($modalElement, $(this));
-        
+
         $modalElement.modal('show');
     });
-    
+
     // interview session edit form
     $("#kingdomHallName").typeahead({
         remote: roms.common.relativePath + '/kingdom-halls/search?name=%QUERY',
@@ -990,9 +1014,9 @@ $(document).ready(function() {
     $("#kingdomHallName").change(function() {
         $("#kingdomHallId").val(null);
     });
-    
+
     $('#interviewSessionForm').validate({
-        rules:{
+        rules: {
             date: {
                 required: true
             },
@@ -1014,8 +1038,8 @@ $(document).ready(function() {
         },
         errorPlacement: roms.common.validatorErrorPlacement
     });
-    
-    
+
+
     $("#volunteer-invitation-modal-form").submit(function() {
         var $form = $(this);
         $.ajax({
@@ -1034,84 +1058,84 @@ $(document).ready(function() {
                 // update the data in the table
                 var $table = $("#session-volunteer-list");
                 var volunteerId = $form.data("volunteer-id");
-                
+
                 var $row = null;
-                $("tr",$table).each(function() {
+                $("tr", $table).each(function() {
                     if ($("td.a-volunteer-id", $(this)).html() == volunteerId) {
                         $row = $(this)[0];
                         return false;
                     }
                 });
-                
+
                 var $selectedStatus = $("select[name='interviewStatusCode'] option:selected", $form);
 
                 // show/hide the completed button if the status is set to invited
                 // the button is not included in the dom is the session date is in the future
                 // so no check required here
-                $selectedStatus.val() == 'CF'?$(".a-volunteer-completed", $row).show():$(".a-volunteer-completed", $row).hide()
-                
+                $selectedStatus.val() == 'CF' ? $(".a-volunteer-completed", $row).show() : $(".a-volunteer-completed", $row).hide()
+
                 var dataTable = $table.dataTable();
                 dataTable.fnUpdate($selectedStatus.text(), $row, 5, 0);
-                
+
                 var comments = $("textarea[name='comments']", $form).val();
                 // we set the table to refresh since this is the last cell update
                 dataTable.fnUpdate(comments, $row, 4, 0);
-                
+
                 $('#volunteer-invitation-modal').modal('hide');
             }
         });
         return false;
     });
-    
+
     $("a.a-volunteer-completed").on("click", function() {
         // not the prettiest implementation, but mark the interview completed by 
         // submitting it through the modal form
         var $modalElement = $("#volunteer-invitation-modal")
         initialiseVolunteerInvitationModalForm($modalElement, $(this));
-        
+
         // explicitly set the status to completed
         $("select[name='interviewStatusCode']", $modalElement).val('CP')
-        
+
         $("#volunteer-invitation-modal-form").submit();
-        
+
         // open the volunteer page in a new form
         var $volunteerCell = $("td.a-volunteer-id", $(this).closest("tr"));
-        var editRbsStatusUri =  $volunteerCell.data("edit-rbc-status-uri");
+        var editRbsStatusUri = $volunteerCell.data("edit-rbc-status-uri");
         var volunteerId = $volunteerCell.html();
-        window.open(roms.common.relativePath + editRbsStatusUri,'_blank_' + volunteerId);
+        window.open(roms.common.relativePath + editRbsStatusUri, '_blank_' + volunteerId);
     });
-    
+
     function initialiseVolunteerInvitationModalForm($modalElement, $button) {
         // initialise the values
         var $row = $button.closest("tr")
         var comments = $("td.a-volunteer-comments", $row).html();
         $("textarea[name='comments']", $modalElement).val(comments);
-        
+
         var interviewStatus = $("td.a-volunteer-interview-status", $row).html();
         $("select[name='interviewStatusCode'] option", $modalElement).filter(function() {
             //may want to use $.trim in here
-            return $(this).text() == interviewStatus; 
+            return $(this).text() == interviewStatus;
         }).prop('selected', true);
-        
+
         $("form", $modalElement).prop('action', roms.common.relativePath + $("td.a-volunteer-id", $row).data("uri"));
         $("form", $modalElement).data("volunteer-id", $("td.a-volunteer-id", $row).html());
     }
-    
-    
+
+
     // volunteer interview session invitation
     roms.common.datatables(
-        $("#session-invitation-list"),
-        {
-            "iDisplayLength": 100,
-            "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]],
-            "aoColumnDefs": [
-                {
-                    'bSortable': false,
-                    'aTargets': [0]
-                }
-            ]
-        });
-    
+            $("#session-invitation-list"),
+            {
+                "iDisplayLength": 100,
+                "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]],
+                "aoColumnDefs": [
+                    {
+                        'bSortable': false,
+                        'aTargets': [0]
+                    }
+                ]
+            });
+
     $(".a-invite-all").on("click", function() {
         var checked = $(this).prop("checked");
         $(".a-invite-all").prop({
@@ -1126,14 +1150,14 @@ $(document).ready(function() {
             $invite.closest("tr").removeClass('success');
         }
     });
-    
+
     $(".a-invite").on("click", function() {
         var checked = $(this).prop("checked");
         $(this).toggleClass('success');
         // if we have just checked the checkbox
         if (checked) {
             $(this).closest("tr").addClass('success');
-            
+
             // if all the volunteers are checked, the invite alls should be checked
             if ($(".a-invite:not(:checked)").length == 0) {
                 $(".a-invite-all").prop({
@@ -1146,10 +1170,10 @@ $(document).ready(function() {
                     checked: true,
                     indeterminate: true
                 });
-            }            
+            }
         } else {
             $(this).closest("tr").removeClass('success');
-            
+
             // if none of the volunteers are checked, the invite alls should be unchecked
             if ($(".a-invite:checked").length == 0) {
                 $(".a-invite-all").prop({
@@ -1165,7 +1189,7 @@ $(document).ready(function() {
             }
         }
     });
-    
+
     $("#invite-volunteers").on("click", function() {
         // if none of the volunteers are selected, show an error message
         var $selected = $(".a-invite:checked");
@@ -1173,15 +1197,15 @@ $(document).ready(function() {
             $("#invite-volunteers-error").removeClass("hide");
             return false;
         }
-        
+
         var volunteerIds = [];
         $selected.each(function(i, el) {
             volunteerIds.push($(this).data("volunteer-id"));
         });
-        
+
         $("input[name='volunteerIds']").val(volunteerIds);
         $("#invite-volunteer-form").submit();
-        
+
     });
-    
+
 });

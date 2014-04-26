@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2013 RBC1B.
+ * Copyright 2014 RBC1B.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,44 +23,14 @@
  */
 package uk.org.rbc1b.roms.controller.volunteer;
 
-import uk.org.rbc1b.roms.controller.common.model.EntityModel;
-
 /**
  *
- * @author rhioli
+ * @author David Maggio
  */
-public class VolunteerQualificationModel {
+public class VolunteerQualificationForm {
 
-    private Integer id;
-    private String description;
-    private EntityModel qualification;
     private String comments;
-    private boolean appearOnBadge;
-    private String editUri;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public EntityModel getQualification() {
-        return qualification;
-    }
-
-    public void setQualification(EntityModel qualification) {
-        this.qualification = qualification;
-    }
+    private Integer qualificationId;
 
     public String getComments() {
         return comments;
@@ -70,19 +40,11 @@ public class VolunteerQualificationModel {
         this.comments = comments;
     }
 
-    public boolean isAppearOnBadge() {
-        return appearOnBadge;
+    public Integer getQualificationId() {
+        return qualificationId;
     }
 
-    public void setAppearOnBadge(boolean appearOnBadge) {
-        this.appearOnBadge = appearOnBadge;
-    }
-
-    public String getEditUri() {
-        return this.editUri;
-    }
-
-    public void setEditUri(String editUri) {
-        this.editUri = editUri;
+    public void setQualificationId(Integer qualificationId) {
+        this.qualificationId = qualificationId;
     }
 }

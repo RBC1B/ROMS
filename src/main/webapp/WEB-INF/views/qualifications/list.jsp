@@ -12,44 +12,44 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-            <h1>Qualifications</h1>
-            <hr />
-            <table class="table table-bordered table-condensed table-striped table-hover" id="qualification-list">
-                <thead>
+        <h1>Qualifications</h1>
+        <hr />
+        <table class="table table-bordered table-condensed table-striped table-hover" id="qualification-list">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach items="${qualifications}" var="qualification">
                     <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach items="${qualifications}" var="qualification">
-                        <tr>
-                            <td><c:out value="${qualification.name}" /></td>
-                            <td><c:out value="${qualification.description}" /></td>
-                            <td>
-                                <ul class="list-inline">
-                                    <li><a class="btn btn-success" href="<c:url value="${qualification.uri}" />">View</a></li>
+                        <td><c:out value="${qualification.name}" /></td>
+                        <td><c:out value="${qualification.description}" /></td>
+                        <td>
+                            <ul class="list-inline">
+                                <li><a class="btn btn-success" href="<c:url value="${qualification.uri}" />">View</a></li>
                                     <sec:authorize access="hasPermission('SKILL', 'EDIT')">
-                                        <li><a href="<c:url value="${qualification.editUri}" />">Edit</a></li>
+                                    <li><a href="<c:url value="${qualification.editUri}" />">Edit</a></li>
                                     </sec:authorize>
-                                </ul>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-            <sec:authorize access="hasPermission('SKILL', 'ADD')">
-                <hr />
-                <a class="btn btn-edifice" href="<c:url value="${newUri}" />" />Create new qualification</a>
-            </sec:authorize>
+                            </ul>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+        <sec:authorize access="hasPermission('SKILL', 'ADD')">
+            <hr />
+            <a class="btn btn-edifice" href="<c:url value="${newUri}" />" />Create new qualification</a>
+        </sec:authorize>
 
-            <br />
-            <ol class="breadcrumb">
-                <li><a href="<c:url value="/" />">Edifice</a></li>
-                <li class="active">Qualifications</li>
-            </ol>
-            <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-            <script type="text/javascript" src="<c:url value='/javascript/qualifications.js' />" ></script>
-    </body>
+    <br />
+    <ol class="breadcrumb">
+        <li><a href="<c:url value="/" />">Edifice</a></li>
+        <li class="active">Qualifications</li>
+    </ol>
+    <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+    <script type="text/javascript" src="<c:url value='/javascript/qualifications.js' />" ></script>
+</body>
 </html>

@@ -295,6 +295,8 @@ public class VolunteerModelFactory {
             qualificationModel.setUri(QualificationModelFactory.generateUri(qualification.getQualificationId()));
 
             model.setQualification(qualificationModel);
+            model.setEditUri(volunteerQualification.getPersonId() + "/qualifications/"
+                    + volunteerQualification.getVolunteerQualificationId() + "/edit");
 
             modelList.add(model);
         }
@@ -303,7 +305,9 @@ public class VolunteerModelFactory {
     }
 
     /**
-     * Generate the model to display an interview a volunteer has been invited to.
+     * Generate the model to display an interview a volunteer has been invited
+     * to.
+     *
      * @param interview interview
      * @param session session
      * @return model
@@ -327,5 +331,4 @@ public class VolunteerModelFactory {
         model.setSessionUri(InterviewSessionModelFactory.generateUri(session.getInterviewSessionId()));
         return model;
     }
-
 }

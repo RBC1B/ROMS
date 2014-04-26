@@ -227,6 +227,38 @@ public class VolunteersController {
     }
 
     /**
+     * Displays a Volunteers Qualification for editing.
+     *
+     * @param volunteerQualificationId skill ID to edit
+     * @param model mvc model
+     * @return view name
+     * @throws NoSuchRequestHandlingMethodException on failure to find the skill
+     */
+    @RequestMapping(value = "{volunteerId}/qualifications/{volunteerQualificationId}/edit", method = RequestMethod.GET)
+    public String showEditVolunteerQualificationForm(@PathVariable Integer volunteerQualificationId, ModelMap model)
+            throws NoSuchRequestHandlingMethodException {
+
+        VolunteerQualification volunteerQualification = volunteerDao.findQualification(volunteerQualificationId);
+        if (volunteerQualification == null) {
+            throw new NoSuchRequestHandlingMethodException("No volunteer qualification #" + volunteerQualificationId + " found", this.getClass());
+        }
+
+        Volunteer volunteer = volunteerDao.findVolunteer(volunteerQualification.getPersonId(), EnumSet.noneOf(VolunteerData.class));
+
+        VolunteerQualificationForm form = new VolunteerQualificationForm();
+        form.setComments(volunteerQualification.getComments());
+        form.setQualificationId(volunteerQualification.getQualificationId());
+
+        model.addAttribute("volunteerQualification", form);
+        model.addAttribute("forename", volunteer.getPerson().getForename());
+        model.addAttribute("surname", volunteer.getPerson().getSurname());
+        model.addAttribute("qualificationValues", referenceDao.findQualificationValues());
+        model.addAttribute("submitUri", VolunteerModelFactory.generateUri(volunteerQualification.getVolunteerQualificationId()) + "/qualifications");
+
+        return "volunteers/edit-qualification";
+    }
+
+    /**
      * Generate the models for the volunteer assignments.
      *
      * @param assignments assignments
@@ -264,7 +296,6 @@ public class VolunteersController {
             public int compare(VolunteerInterviewModel model1, VolunteerInterviewModel model2) {
                 return model2.getDate().compareTo(model1.getDate());
             }
-
         });
         return modelList;
     }
@@ -626,6 +657,31 @@ public class VolunteersController {
     }
 
     /**
+     * Update the volunteer qualification information.
+     *
+     * @param volunteerQualificationId volunteer qualification Id to edit
+     * @param form form data
+     * @return view name (redirect)
+     * @throws NoSuchRequestHandlingMethodException if volunteer is not found
+     */
+    @RequestMapping(value = "{volunteerQualificationId}/qualifications", method = RequestMethod.PUT)
+    public String updateVolunteerQualification(@PathVariable Integer volunteerQualificationId, @Valid VolunteerQualificationForm form)
+            throws NoSuchRequestHandlingMethodException {
+
+        VolunteerQualification volunteerQualification = volunteerDao.findQualification(volunteerQualificationId);
+        if (volunteerQualification == null) {
+            throw new NoSuchRequestHandlingMethodException("No volunteer qualification #" + volunteerQualificationId + " found", this.getClass());
+        }
+
+        volunteerQualification.setComments(form.getComments());
+        volunteerQualification.setQualificationId(form.getQualificationId());
+
+        volunteerDao.updateVolunteerQualification(volunteerQualification);
+
+        return "redirect:" + VolunteerModelFactory.generateUri(volunteerQualification.getPersonId()) + "#!skills";
+    }
+
+    /**
      * Update the volunteer RBC status.
      *
      * @param volunteerId volunteer id to edit
@@ -797,13 +853,14 @@ public class VolunteersController {
 
     /**
      * Get volunteer image.
-     * <p>This assumes we have already checked the volunteer object to ensure it exists
-     * and that it expects to have an image defined.
+     * <p>This assumes we have already checked the volunteer object to ensure it
+     * exists and that it expects to have an image defined.
      *
      * @param volunteerId id
      * @param response HttpServletResponse
      * @throws IOException if the file cannot be read
-     * @throws NoSuchRequestHandlingMethodException when the image file is not found
+     * @throws NoSuchRequestHandlingMethodException when the image file is not
+     * found
      */
     @RequestMapping(value = "{volunteerId}/image", method = RequestMethod.GET)
     public void showImage(@PathVariable Integer volunteerId, HttpServletResponse response) throws IOException,
@@ -825,14 +882,15 @@ public class VolunteersController {
     }
 
     /**
-    * Handles the volunteer image upload.
-    *
-    * @param volunteerId id
-    * @param imageFile file to be uploaded
-    * @throws IOException if file cannot be written
-    * @return view
-     * @throws NoSuchRequestHandlingMethodException on failure to find the volunteer
-    */
+     * Handles the volunteer image upload.
+     *
+     * @param volunteerId id
+     * @param imageFile file to be uploaded
+     * @throws IOException if file cannot be written
+     * @return view
+     * @throws NoSuchRequestHandlingMethodException on failure to find the
+     * volunteer
+     */
     @RequestMapping(value = "{volunteerId}/image", method = RequestMethod.POST)
     public String handleImageUpload(@PathVariable Integer volunteerId,
             @RequestParam(value = "image", required = true) MultipartFile imageFile) throws IOException,
@@ -897,7 +955,7 @@ public class VolunteersController {
             if (ObjectUtils.equals(emergencyContact.getForename(), form.getSpouseForename())
                     && ObjectUtils.equals(emergencyContact.getSurname(), form.getSurname())
                     && (ObjectUtils.equals(form.getEmergencyRelationshipCode(), "HB") || ObjectUtils.equals(
-                            form.getEmergencyRelationshipCode(), "WF"))) {
+                    form.getEmergencyRelationshipCode(), "WF"))) {
 
                 return emergencyContact;
             }
@@ -917,9 +975,11 @@ public class VolunteersController {
 
     /**
      * Delete a department assignment linked to a volunteer.
+     *
      * @param volunteerId volunteer id
      * @param assignmentId linked volunteer department assignment id
-     * @throws NoSuchRequestHandlingMethodException if either the volunteer assignment is not found
+     * @throws NoSuchRequestHandlingMethodException if either the volunteer
+     * assignment is not found
      */
     @RequestMapping(value = "{volunteerId}/assignment/{assignmentId}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -933,10 +993,12 @@ public class VolunteersController {
 
     /**
      * Update a department assignment linked to a volunteer.
+     *
      * @param volunteerId volunteer id
      * @param assignmentId linked volunteer department assignment id
      * @param form updated data
-     * @throws NoSuchRequestHandlingMethodException if either the volunteer assignment is not found
+     * @throws NoSuchRequestHandlingMethodException if either the volunteer
+     * assignment is not found
      */
     @RequestMapping(value = "{volunteerId}/assignment/{assignmentId}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -980,5 +1042,4 @@ public class VolunteersController {
         }
         return volunteerAssignment;
     }
-
 }
