@@ -65,6 +65,7 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
 
         Volunteer volunteer = (Volunteer) model.get("volunteer");
         VolunteerBadgeColour colourBand = (VolunteerBadgeColour) model.get("colourBand");
+        @SuppressWarnings("unchecked")
         Set<String> skillsSet = (Set<String>) model.get("skillsSet");
         String assignment = (String) model.get("assignment");
         document.open();

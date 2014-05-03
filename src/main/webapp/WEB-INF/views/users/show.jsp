@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : show
     Created on : Apr 19, 2014, 1:57:11 PM
     Author     : ramindursingh
@@ -26,8 +26,6 @@
                     <c:otherwise>-</c:otherwise>
                 </c:choose>
             </dd>
-        </dl>
-        <dl class="dl-horizontal">
             <dt>User Status:</dt>
             <dd>
                 <roms:userStatus status="${user.active}" />

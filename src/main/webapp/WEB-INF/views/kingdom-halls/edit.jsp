@@ -86,7 +86,7 @@
                 <div class="col-sm-9 col-md-2">
                     <input type="submit" class="btn btn-edifice"/>
                 </div>
-            </div>    
+            </div>
             </fieldset>
         </form:form>
 

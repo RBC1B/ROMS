@@ -26,16 +26,13 @@ package uk.org.rbc1b.roms.tags;
 import java.io.IOException;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
-import static javax.servlet.jsp.tagext.Tag.SKIP_BODY;
 import javax.servlet.jsp.tagext.TagSupport;
 
 /**
  * Translates user status to something meaningful.
- *
- * @author ramindursingh
  */
 public class UserStatus extends TagSupport {
-
+    private static final long serialVersionUID = 1L;
     private boolean status;
 
     /**

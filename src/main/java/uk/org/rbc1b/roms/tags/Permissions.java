@@ -24,10 +24,11 @@
 package uk.org.rbc1b.roms.tags;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
+import com.google.common.collect.ImmutableMap;
 
 /**
  * Custom tags for ACL permissions.
@@ -35,16 +36,10 @@ import javax.servlet.jsp.tagext.TagSupport;
  * @author ramindursingh
  */
 public class Permissions extends TagSupport {
-
-    private static final HashMap<String, String> ACL = new HashMap<String, String>() {
-        {
-            put("R", "Read Only");
-            put("E", "Edit Records");
-            put("A", "Add New Records");
-            put("D", "Delete Records");
-        }
-    };
     private static final long serialVersionUID = 1L;
+    private static final Map<String, String> ACL = ImmutableMap.of("R", "Read Only", "E", "Edit Records", "A",
+            "Add New Records", "D", "Delete Records");
+
     private String forValue;
 
     /**
