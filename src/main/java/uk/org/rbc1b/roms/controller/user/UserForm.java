@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2013 RBC1B.
+ * Copyright 2014 RBC1B.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,20 +23,81 @@
  */
 package uk.org.rbc1b.roms.controller.user;
 
-/**
- * Information about a user that matched the user search.
- *
- * @author oliver.elder.esq
- */
-public class UserSearchResult {
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
+/**
+ * Request form bean when creating or editing user.
+ *
+ */
+public class UserForm {
+
+    @NotNull
+    @Size(min = 7, max = 50)
+    private String userName;
+    @NotNull
+    @Size(min = 2, max = 50)
+    private String password1;
+    private String password2;
+    private Integer personId;
     private String forename;
     private String surname;
-    private String congregationName;
-    private String userName;
-    private Integer personId;
-    private boolean user;
-    private boolean volunteer;
+
+    /**
+     * @return the userName
+     */
+    public String getUserName() {
+        return userName;
+    }
+
+    /**
+     * @param userName the userName to set
+     */
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    /**
+     * @return the password1
+     */
+    public String getPassword1() {
+        return password1;
+    }
+
+    /**
+     * @param password1 the password1 to set
+     */
+    public void setPassword1(String password1) {
+        this.password1 = password1;
+    }
+
+    /**
+     * @return the password2
+     */
+    public String getPassword2() {
+        return password2;
+    }
+
+    /**
+     * @param password2 the password2 to set
+     */
+    public void setPassword2(String password2) {
+        this.password2 = password2;
+    }
+
+    /**
+     * @return the personId
+     */
+    public Integer getPersonId() {
+        return personId;
+    }
+
+    /**
+     * @param personId the personId to set
+     */
+    public void setPersonId(Integer personId) {
+        this.personId = personId;
+    }
 
     /**
      * @return the forename
@@ -64,75 +125,5 @@ public class UserSearchResult {
      */
     public void setSurname(String surname) {
         this.surname = surname;
-    }
-
-    /**
-     * @return the congregationName
-     */
-    public String getCongregationName() {
-        return congregationName;
-    }
-
-    /**
-     * @param congregationName the congregationName to set
-     */
-    public void setCongregationName(String congregationName) {
-        this.congregationName = congregationName;
-    }
-
-    /**
-     * @return the userName
-     */
-    public String getUserName() {
-        return userName;
-    }
-
-    /**
-     * @param userName the userName to set
-     */
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    /**
-     * @return the personId
-     */
-    public Integer getPersonId() {
-        return personId;
-    }
-
-    /**
-     * @param personId the personId to set
-     */
-    public void setPersonId(Integer personId) {
-        this.personId = personId;
-    }
-
-    /**
-     * @return the user
-     */
-    public boolean isUser() {
-        return user;
-    }
-
-    /**
-     * @param user the user to set
-     */
-    public void setUser(boolean user) {
-        this.user = user;
-    }
-
-    /**
-     * @return the volunteer
-     */
-    public boolean isVolunteer() {
-        return volunteer;
-    }
-
-    /**
-     * @param volunteer the volunteer to set
-     */
-    public void setVolunteer(boolean volunteer) {
-        this.volunteer = volunteer;
     }
 }

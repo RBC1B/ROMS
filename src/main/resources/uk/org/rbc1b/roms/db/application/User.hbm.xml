@@ -8,6 +8,8 @@
         <property name="userName" />
         <property name="password" />
         <property name="active" />
+        <property name="updatedBy" />
+        <property name="updateTime" not-null="true" />
         <set name="applicationAccess" table="ApplicationAccess" inverse="true" >
             <key>
                 <column name="personId" not-null="true" />

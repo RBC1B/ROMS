@@ -90,4 +90,16 @@ public class HibernateUserDao implements UserDao {
         criteria.add(Restrictions.gt("personId", 0));
         return criteria.list();
     }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public void updateUser(User user) {
+        this.sessionFactory.getCurrentSession().merge(user);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public void createUser(User user) {
+        this.sessionFactory.getCurrentSession().save(user);
+    }
 }

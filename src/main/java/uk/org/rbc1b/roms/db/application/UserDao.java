@@ -24,6 +24,7 @@
 package uk.org.rbc1b.roms.db.application;
 
 import java.util.List;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -65,6 +66,25 @@ public interface UserDao {
      *
      * @return users
      */
+    @PreAuthorize("hasPermission('DATABASE','READ')")
     @Transactional(readOnly = true)
     List<User> findAllUsers();
+
+    /**
+     * Updates a user.
+     *
+     * @param user the user to update
+     */
+    @PreAuthorize("hasPermission('DATABASE','EDIT')")
+    @Transactional
+    void updateUser(User user);
+
+    /**
+     * Adds a new user.
+     *
+     * @param user the user to create
+     */
+    @PreAuthorize("hasPermission('DATABASE','ADD')")
+    @Transactional
+    void createUser(User user);
 }
