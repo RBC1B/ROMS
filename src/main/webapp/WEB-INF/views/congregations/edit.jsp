@@ -54,7 +54,7 @@
                     <form:select class="form-control" path="circuitId">
                         <form:option value="" label="None" />
                         <form:options items="${circuits}" itemValue="circuitId" itemLabel="name" />
-                    </form:select>                    
+                    </form:select>
                 </div>
             </div>
             <div class="form-group">
@@ -63,7 +63,7 @@
                     <form:select class="form-control" path="rbcRegionId">
                         <form:option value="" label="None" />
                         <form:options items="${rbcRegions}" />
-                    </form:select>                    
+                    </form:select>
                 </div>
             </div>
             <div class="form-group">
@@ -72,7 +72,7 @@
                     <form:select class="form-control" path="rbcSubRegionId">
                         <form:option value="" />
                         <form:options items="${rbcSubRegions}" />
-                    </form:select>                    
+                    </form:select>
                 </div>
             </div>
             <div class="form-group">
@@ -150,7 +150,7 @@
                         <a class="btn btn-edifice btn-xs" href="#">Unlink</a>
                     </div>
                 </div>
-            </div>   
+            </div>
         </fieldset>
         <fieldset>
             <div class="form-group">
@@ -190,7 +190,6 @@
                 </div>
             </div>
         </fieldset>
-        
     </form:form>
 
     <ol class="breadcrumb">

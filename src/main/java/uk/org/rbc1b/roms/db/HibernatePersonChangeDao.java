@@ -41,7 +41,6 @@ public class HibernatePersonChangeDao implements PersonChangeDao {
     @Autowired
     private SessionFactory sessionFactory;
 
-    @SuppressWarnings("unchecked")
     @Override
     public PersonChange findPersonChange(Integer personChangeId) {
         return (PersonChange) this.sessionFactory.getCurrentSession().get(PersonChange.class, personChangeId);
@@ -66,24 +65,20 @@ public class HibernatePersonChangeDao implements PersonChangeDao {
     @SuppressWarnings("unchecked")
     @Override
     public List<PersonChange> findPersonChange() {
-        Session session = this.sessionFactory.getCurrentSession();
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(PersonChange.class);
         return criteria.list();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void updatePersonChange(PersonChange personChange) {
         this.sessionFactory.getCurrentSession().merge(personChange);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void savePersonChange(PersonChange personChange) {
         this.sessionFactory.getCurrentSession().save(personChange);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public Person getOldPerson(Integer personId, Person person) {
         Session session = this.sessionFactory.openSession();

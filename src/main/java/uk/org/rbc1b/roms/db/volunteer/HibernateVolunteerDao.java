@@ -228,7 +228,6 @@ public class HibernateVolunteerDao implements VolunteerDao {
         return criteria.list();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public VolunteerQualification findQualification(Integer volunteerQualificationId) {
         Session session = this.sessionFactory.getCurrentSession();
