@@ -23,51 +23,37 @@
  */
 package uk.org.rbc1b.roms.tags;
 
-import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.tagext.TagSupport;
 
 /**
- * Custom tags for acl permissions.
+ * Permissible permissions for Applications.
  *
  * @author ramindursingh
  */
-public class Permissions extends TagSupport {
+public class PermissionMap {
 
-    private static final long serialVersionUID = 1L;
-    private Map<String, String> acl = new PermissionMap().getAcl();
-    private String forValue;
+    private HashMap<String, String> acl;
 
     /**
-     * Converts acl permissions to specified type.
+     * Returns a map.
+     * Constructor.
+     */
+    public PermissionMap() {
+        acl = new HashMap<String, String>();
+        acl.put("N", "None - Select One");
+        acl.put("R", "Read Only");
+        acl.put("E", "Edit Records");
+        acl.put("A", "Add New Records");
+        acl.put("D", "Delete Records");
+    }
+
+    /**
+     * Returns the acl.
      *
-     * @return integer skip body
-     * @throws JspException the JSP exception
+     * @return the acl
      */
-    @Override
-    public int doStartTag() throws JspException {
-        try {
-            JspWriter out = pageContext.getOut();
-            out.print(acl.get(forValue));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return SKIP_BODY;
-    }
-
-    /**
-     * @return the forValue
-     */
-    public String getForValue() {
-        return forValue;
-    }
-
-    /**
-     * @param forValue the forValue to set
-     */
-    public void setForValue(String forValue) {
-        this.forValue = forValue;
+    public Map getAcl() {
+        return acl;
     }
 }

@@ -1,50 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<taglib
-    xmlns="http://java.sun.com/xml/ns/javaee"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
-    version="2.1">
-
-    <tlib-version>1.0</tlib-version>
-    <short-name>ROMS</short-name>
-    <uri>/WEB-INF/tld/roms.tld</uri>
-    <info>Custom tag library for ROMS/Edifice</info>
-
-    <tag>
-        <name>permission</name>
-        <tagclass>uk.org.rbc1b.roms.tags.Permissions</tagclass>
-        <bodycontent>empty</bodycontent>
-        <attribute>
-            <name>forValue</name>
-            <required>true</required>
-            <rtexprvalue>true</rtexprvalue>
-        </attribute>
-        <info>
+<taglib version="2.1" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
+  <tlib-version>1.0</tlib-version>
+  <short-name>ROMS</short-name>
+  <uri>/WEB-INF/tld/roms.tld</uri>
+  <info>Custom tag library for ROMS/Edifice</info>
+  <tag>
+    <name>permission</name>
+    <tagclass>uk.org.rbc1b.roms.tags.Permissions</tagclass>
+    <bodycontent>empty</bodycontent>
+    <attribute>
+      <name>forValue</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <info>
             Translates status codes to something meaningful:
             forValue:
-                R: Read Only
-                E: Edit Records
-                A: Add New Records
-                D: Delete Records
+            R: Read Only
+            E: Edit Records
+            A: Add New Records
+            D: Delete Records
         </info>
-    </tag>
-
-    <tag>
-        <name>userStatus</name>
-        <tagclass>uk.org.rbc1b.roms.tags.UserStatus</tagclass>
-        <bodycontent>empty</bodycontent>
-        <attribute>
-            <name>status</name>
-            <required>true</required>
-            <rtexprvalue>true</rtexprvalue>
-            <type>boolean</type>
-        </attribute>
-        <info>
+  </tag>
+  <tag>
+    <name>select</name>
+    <tag-class>uk.org.rbc1b.roms.tags.PermissionSelect</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+      <name>itemValue</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <name>selected</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <info>
+            Prints a drop-down menu for permissible permissions for applications.
+        </info>
+  </tag>
+  <tag>
+    <name>userStatus</name>
+    <tagclass>uk.org.rbc1b.roms.tags.UserStatus</tagclass>
+    <bodycontent>empty</bodycontent>
+    <attribute>
+      <name>status</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>boolean</type>
+    </attribute>
+    <info>
             Translates status codes to something meaningful:
             status:
-                true: Enabled
-                false: Disabled
+            true: Enabled
+            false: Disabled
         </info>
-    </tag>
-
+  </tag>
 </taglib>

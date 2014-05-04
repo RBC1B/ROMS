@@ -25,32 +25,39 @@ package uk.org.rbc1b.roms.tags;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Map.Entry;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 
 /**
- * Custom tags for acl permissions.
  *
  * @author ramindursingh
  */
-public class Permissions extends TagSupport {
+public class PermissionSelect extends TagSupport {
 
-    private static final long serialVersionUID = 1L;
     private Map<String, String> acl = new PermissionMap().getAcl();
-    private String forValue;
+    private String itemValue;
+    private String selected;
 
-    /**
-     * Converts acl permissions to specified type.
-     *
-     * @return integer skip body
-     * @throws JspException the JSP exception
-     */
     @Override
     public int doStartTag() throws JspException {
         try {
             JspWriter out = pageContext.getOut();
-            out.print(acl.get(forValue));
+            String selectOption = "<select>";
+            for (Entry<String, String> entry : acl.entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue();
+                if (getSelected().equalsIgnoreCase(key)) {
+                    selectOption = selectOption + "<option value='" + getItemValue() + "' selected>"
+                            + value + "</option>";
+                } else {
+                    selectOption = selectOption + "<option value='" + getItemValue() + "'>"
+                            + value + "</option>";
+                }
+            }
+            selectOption = selectOption + "</select>";
+            out.print(selectOption);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -58,16 +65,30 @@ public class Permissions extends TagSupport {
     }
 
     /**
-     * @return the forValue
+     * @return the itemValue
      */
-    public String getForValue() {
-        return forValue;
+    public String getItemValue() {
+        return itemValue;
     }
 
     /**
-     * @param forValue the forValue to set
+     * @param itemValue the itemValue to set
      */
-    public void setForValue(String forValue) {
-        this.forValue = forValue;
+    public void setItemValue(String itemValue) {
+        this.itemValue = itemValue;
+    }
+
+    /**
+     * @return the selected
+     */
+    public String getSelected() {
+        return selected;
+    }
+
+    /**
+     * @param selected the selected to set
+     */
+    public void setSelected(String selected) {
+        this.selected = selected;
     }
 }
