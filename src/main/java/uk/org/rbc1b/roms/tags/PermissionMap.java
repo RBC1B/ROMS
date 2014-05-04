@@ -23,8 +23,8 @@
  */
 package uk.org.rbc1b.roms.tags;
 
-import java.util.HashMap;
 import java.util.Map;
+import com.google.common.collect.ImmutableMap;
 
 /**
  * Permissible permissions for Applications.
@@ -33,20 +33,8 @@ import java.util.Map;
  */
 public class PermissionMap {
 
-    private HashMap<String, String> acl;
-
-    /**
-     * Returns a map.
-     * Constructor.
-     */
-    public PermissionMap() {
-        acl = new HashMap<String, String>();
-        acl.put("N", "None - Select One");
-        acl.put("R", "Read Only");
-        acl.put("E", "Edit Records");
-        acl.put("A", "Add New Records");
-        acl.put("D", "Delete Records");
-    }
+    private static final Map<String, String> ACL = ImmutableMap.of("N", "None", "R", "Read Only", "E", "Edit Records", "A",
+            "Add New Records", "D", "Delete Records");
 
     /**
      * Returns the acl.
@@ -54,6 +42,6 @@ public class PermissionMap {
      * @return the acl
      */
     public Map getAcl() {
-        return acl;
+        return ACL;
     }
 }
