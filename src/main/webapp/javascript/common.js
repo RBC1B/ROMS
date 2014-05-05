@@ -402,6 +402,31 @@ $(document).ready(function() {
         };
     }
     
+    roms.common.validation.department = function($nameInput, $idInput) {
+        return {
+            // check for an exact match. Populate the department id
+            url: roms.common.relativePath + "/departments/search",
+            contentType: "application/json",
+            dataType: "json",
+            data: {
+                name: function() {
+                    return $nameInput.val();
+                }
+            },
+            dataFilter: function(rawData) {
+                var data = JSON.parse(rawData)
+                if (data && data.length > 0 && data[0].name == $nameInput.val()) {
+                    $idInput.val(data[0].id);
+                    return true;
+                }
+                // no match - clear the stored id
+                $idInput.val(null);
+                return false;
+            }
+        };
+    }
+    
+    
 });
 
 // validation configuration

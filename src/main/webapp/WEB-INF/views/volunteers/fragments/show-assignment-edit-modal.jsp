@@ -12,8 +12,8 @@ Content of the model dialog used to update the volunteer's assignment status cod
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">Department</label>
                         <input type="hidden" name="departmentId" />
+                        <label class="col-sm-4 control-label">Department</label>
                         <input class="form-control" type="text" name="departmentName" maxlength="250" />
                     </div>
                     <div class="form-group">

@@ -48,12 +48,12 @@ public interface DepartmentDao {
     Department findDepartment(Integer departmentId);
 
     /**
-     * Find the department by name.
-     * @param name department name
+     * Find the department by search criteria.
+     * @param name partial department name
      * @return Department, or null if not found
      */
     @Transactional(readOnly = true)
-    Department findDepartmentByName(String name);
+    List<Department> findDepartments(String name);
 
     /**
      * Get all Departments.
@@ -85,6 +85,13 @@ public interface DepartmentDao {
      */
     @Transactional(readOnly = true)
     int findAssignmentsCount(AssignmentSearchCriteria searchCriteria);
+
+    /**
+     * Create a volunteer assignment.
+     * @param assignment assignment
+     */
+    @Transactional
+    void createAssignment(Assignment assignment);
 
     /**
      * Delete a volunteer assignment.

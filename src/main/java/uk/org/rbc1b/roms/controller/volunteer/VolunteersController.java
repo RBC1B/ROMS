@@ -49,7 +49,9 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.FileCopyUtils;
@@ -62,6 +64,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
+import org.springframework.web.util.UriComponentsBuilder;
 import uk.org.rbc1b.roms.controller.common.DataConverterUtil;
 import uk.org.rbc1b.roms.controller.common.PhoneNumberFormatter;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableResult;
@@ -240,10 +243,12 @@ public class VolunteersController {
 
         VolunteerQualification volunteerQualification = volunteerDao.findQualification(volunteerQualificationId);
         if (volunteerQualification == null) {
-            throw new NoSuchRequestHandlingMethodException("No volunteer qualification #" + volunteerQualificationId + " found", this.getClass());
+            throw new NoSuchRequestHandlingMethodException("No volunteer qualification #" + volunteerQualificationId
+                    + " found", this.getClass());
         }
 
-        Volunteer volunteer = volunteerDao.findVolunteer(volunteerQualification.getPersonId(), EnumSet.noneOf(VolunteerData.class));
+        Volunteer volunteer = volunteerDao.findVolunteer(volunteerQualification.getPersonId(),
+                EnumSet.noneOf(VolunteerData.class));
 
         VolunteerQualificationForm form = new VolunteerQualificationForm();
         form.setComments(volunteerQualification.getComments());
@@ -253,7 +258,9 @@ public class VolunteersController {
         model.addAttribute("forename", volunteer.getPerson().getForename());
         model.addAttribute("surname", volunteer.getPerson().getSurname());
         model.addAttribute("qualificationValues", referenceDao.findQualificationValues());
-        model.addAttribute("submitUri", VolunteerModelFactory.generateUri(volunteerQualification.getVolunteerQualificationId()) + "/qualifications");
+        model.addAttribute("submitUri",
+                VolunteerModelFactory.generateUri(volunteerQualification.getVolunteerQualificationId())
+                        + "/qualifications");
 
         return "volunteers/edit-qualification";
     }
@@ -665,12 +672,13 @@ public class VolunteersController {
      * @throws NoSuchRequestHandlingMethodException if volunteer is not found
      */
     @RequestMapping(value = "{volunteerQualificationId}/qualifications", method = RequestMethod.PUT)
-    public String updateVolunteerQualification(@PathVariable Integer volunteerQualificationId, @Valid VolunteerQualificationForm form)
-            throws NoSuchRequestHandlingMethodException {
+    public String updateVolunteerQualification(@PathVariable Integer volunteerQualificationId,
+            @Valid VolunteerQualificationForm form) throws NoSuchRequestHandlingMethodException {
 
         VolunteerQualification volunteerQualification = volunteerDao.findQualification(volunteerQualificationId);
         if (volunteerQualification == null) {
-            throw new NoSuchRequestHandlingMethodException("No volunteer qualification #" + volunteerQualificationId + " found", this.getClass());
+            throw new NoSuchRequestHandlingMethodException("No volunteer qualification #" + volunteerQualificationId
+                    + " found", this.getClass());
         }
 
         volunteerQualification.setComments(form.getComments());
@@ -955,7 +963,7 @@ public class VolunteersController {
             if (ObjectUtils.equals(emergencyContact.getForename(), form.getSpouseForename())
                     && ObjectUtils.equals(emergencyContact.getSurname(), form.getSurname())
                     && (ObjectUtils.equals(form.getEmergencyRelationshipCode(), "HB") || ObjectUtils.equals(
-                    form.getEmergencyRelationshipCode(), "WF"))) {
+                            form.getEmergencyRelationshipCode(), "WF"))) {
 
                 return emergencyContact;
             }
@@ -971,6 +979,53 @@ public class VolunteersController {
         spouse.setForename(form.getSpouseForename());
         spouse.setSurname(form.getSpouseSurname());
         return spouse;
+    }
+
+    /**
+     * Created a department assignment linked to a volunteer.
+     *
+     * @param volunteerId volunteer id
+     * @param form assignment information
+     * @param builder uri builder, for building the response header
+     * @return created status, with the assignment url
+     * @throws NoSuchRequestHandlingMethodException if either the volunteer
+     * assignment is not found
+     */
+    @RequestMapping(value = "{volunteerId}/assignment", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<Void> createVolunteerAssignment(@PathVariable Integer volunteerId,
+            @Valid VolunteerAssignmentForm form, UriComponentsBuilder builder)
+            throws NoSuchRequestHandlingMethodException {
+
+        Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, null);
+        if (volunteer == null) {
+            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+        }
+
+        Assignment volunteerAssignment = new Assignment();
+        volunteerAssignment.setAssignedDate(DataConverterUtil.toSqlDate(form.getAssignedDate()));
+        volunteerAssignment.setDepartmentId(form.getDepartmentId());
+        volunteerAssignment.setPerson(volunteer.getPerson());
+
+        AssignmentRole role = new AssignmentRole();
+        role.setAssignmentRoleCode(form.getAssignmentRoleCode());
+
+        volunteerAssignment.setRole(role);
+
+        Team team = new Team();
+        team.setTeamId(form.getTeamId());
+
+        volunteerAssignment.setTeam(team);
+
+        volunteerAssignment.setTradeNumberId(form.getTradeNumberId());
+
+        departmentDao.createAssignment(volunteerAssignment);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(builder.path("/volunteers/{volunteerId}/assignment/{assignmentId}")
+                .buildAndExpand(volunteerId, volunteerAssignment.getAssignmentId()).toUri());
+        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+
     }
 
     /**

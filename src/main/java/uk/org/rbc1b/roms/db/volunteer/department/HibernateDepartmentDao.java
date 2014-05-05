@@ -56,10 +56,13 @@ public class HibernateDepartmentDao implements DepartmentDao {
         return (Department) this.sessionFactory.getCurrentSession().get(Department.class, departmentId);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public Department findDepartmentByName(String name) {
+    public List<Department> findDepartments(String name) {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Department.class);
-        return (Department) criteria.add(Restrictions.naturalId().set("name", name)).setCacheable(true).uniqueResult();
+        criteria.add(Restrictions.like("name", "%" + name + "%"));
+        return criteria.list();
+
     }
 
     @SuppressWarnings("unchecked")
@@ -168,6 +171,11 @@ public class HibernateDepartmentDao implements DepartmentDao {
         }
 
         return criteria;
+    }
+
+    @Override
+    public void createAssignment(Assignment assignment) {
+        this.sessionFactory.getCurrentSession().save(assignment);
     }
 
     @Override

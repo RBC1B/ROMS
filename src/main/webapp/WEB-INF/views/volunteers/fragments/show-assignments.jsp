@@ -31,7 +31,8 @@ The volunteer department links.
                                 <li><a class="a-delete-assignment"
                                     data-ajax-url="<c:url value="${assignment.uri}" />" href="#"> Delete</a></li>
                             </ul>
-                        </sec:authorize></td>
+                        </sec:authorize>
+                    </td>
                 </tr>
             </c:forEach>
         </tbody>
@@ -41,3 +42,4 @@ The volunteer department links.
     <br />
     <div class="alert alert-warning">Volunteer is not assigned to any teams</div>
 </div>
+<a class="btn btn-edifice" href="<c:url value="${volunteer.editAssignmentUri}"/>" id="a-add-assignment">Add trade</a><br />

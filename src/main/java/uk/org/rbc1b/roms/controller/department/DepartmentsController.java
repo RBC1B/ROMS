@@ -34,6 +34,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableRequestData;
@@ -88,6 +89,28 @@ public class DepartmentsController {
         model.addAttribute("departments", modelList);
 
         return "departments/list";
+    }
+
+    /**
+     * Search for a department by name.
+     *
+     * @param name partial name match
+     * @return list of matching departments
+     */
+    @RequestMapping(value = "search", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public List<DepartmentSearchResult> findCongregations(@RequestParam(value = "name", required = true) String name) {
+        List<Department> departments = departmentDao.findDepartments(name);
+        List<DepartmentSearchResult> results = new ArrayList<DepartmentSearchResult>();
+        if (!departments.isEmpty()) {
+            for (Department department : departments) {
+                DepartmentSearchResult result = new DepartmentSearchResult();
+                result.setId(department.getDepartmentId());
+                result.setName(department.getName());
+                results.add(result);
+            }
+        }
+        return results;
     }
 
     /**

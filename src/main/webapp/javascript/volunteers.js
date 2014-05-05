@@ -744,8 +744,88 @@ $(document).ready(function() {
         }
     });
 
+    $('#a-add-assignment').on("click", function(event, element) {
+        event.preventDefault();
+        
+        var $modalForm = $('#volunteer-assignment-modal-form');
+        $modalForm.prop("action", $(this).prop("href"));
+        
+        $("input[name='departmentId']", $modalForm).val("");
+        $("input[name='departmentName']", $modalForm).val("");
+        
+        $("input[name='departmentName']").typeahead({
+            remote: roms.common.relativePath + '/departments/search?name=%QUERY',
+            valueKey: 'name'
+        });
+        
+        $("select[name='tradeNumberId'] option[value='1']", $modalForm).prop("selected", true);
+        $("select[name='teamId'] option[value='1']", $modalForm).prop("selected", true);
+        $("select[name='assignmentRoleCode'] option[value='VN']", $modalForm).prop("selected", true);
+        
+        $("input[name='assignedDate']").val(moment().format("DD/MM/YYYY"));
+        var picker = $("input[name='assignedDate']").data('DateTimePicker');
+        picker.setDate(moment(new Date(), "DD/MM/YYYY"));
+        picker.setEndDate(new Date());
+        
+        $modalForm.validate({
+            rules: {
+                departmentName: {
+                    required: true,
+                    remote: roms.common.validation.department($("input[name='departmentName']"),
+                            $("input[name='departmentId']"))
+                },
+                assignedDate: {
+                    required: true
+                }
+            },
+            messages: {
+                departmentName: {
+                    remote: "Please provide the name of a department"
+                }
+            },
+            submitHandler: function(form) {
+                $.ajax({
+                    url: $(form).attr("action"),
+                    data: $(form).serialize(),
+                    type: "POST",
+                    statusCode: {
+                        404: function() {
+                            alert("Volunteer assignment not found");
+                        },
+                        500: function() {
+                            alert("Failed to save volunteer assignment");
+                        }
+                    },
+                    success: function() {
+                        addVolunteerAssignment();
+                        $('#volunteer-assignment-modal').modal('hide');
+                    }
+                });
+            },
+            errorPlacement: roms.common.validatorErrorPlacement
+        });
+        $('#volunteer-assignment-modal').modal('show');
+    });
+
+    function addVolunteerAssignment() {
+        var $form = $('#volunteer-assignment-modal-form');
+
+        var dataTable = $("#volunteer-assignments").dataTable();
+        dataTable.fnAddData([
+            $("select[name='tradeNumberId'] option:selected", $form).text(),
+            $("input[name='departmentName']").val(),
+            $("select[name='teamId'] option:selected", $form).text(),
+            $("select[name='assignmentRoleCode'] option:selected", $form).text(),
+            $("input[name='assignedDate']", $form).val(),
+            ''
+        ]);
+        
+        $("#volunteer-with-assignments").show();
+        $("#volunteer-without-assignments").hide();
+    }
+    
     /**
-     * Delete a row in a datables row
+     * Delete a row in a datatables row
      * @param $element the action element in the row to be deleted
      */
     function deleteDataTablesRow($element) {
