@@ -6,6 +6,7 @@
       <generator class="identity"/>
     </id>
     <property length="250" name="recipient"/>
+    <property length="250" name="replyTo"/>
     <property length="250" name="subject"/>
     <property length="1000" name="text"/>
   </class>

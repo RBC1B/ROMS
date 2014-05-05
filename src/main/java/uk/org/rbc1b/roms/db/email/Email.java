@@ -35,65 +35,46 @@ public class Email implements Serializable {
     private static final long serialVersionUID = -1589295278670347715L;
     private Integer emailId;
     private String recipient;
+    private String replyTo;
     private String subject;
     private String text;
 
-    /**
-     * @return the emailId
-     */
     public Integer getEmailId() {
         return emailId;
     }
 
-    /**
-     * @param emailId
-     *            the emailId to set
-     */
     public void setEmailId(Integer emailId) {
         this.emailId = emailId;
     }
 
-    /**
-     * @return the recipient
-     */
     public String getRecipient() {
         return recipient;
     }
 
-    /**
-     * @param recipient
-     *            the recipient to set
-     */
     public void setRecipient(String recipient) {
         this.recipient = recipient;
     }
 
-    /**
-     * @return the subject
-     */
+    public String getReplyTo() {
+        return replyTo;
+    }
+
+    public void setReplyTo(String replyTo) {
+        this.replyTo = replyTo;
+    }
+
     public String getSubject() {
         return subject;
     }
 
-    /**
-     * @param subject
-     *            the subject to set
-     */
     public void setSubject(String subject) {
         this.subject = subject;
     }
 
-    /**
-     * @return the text
-     */
     public String getText() {
         return text;
     }
 
-    /**
-     * @param text
-     *            the text to set
-     */
     public void setText(String text) {
         this.text = text;
     }

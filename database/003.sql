@@ -92,3 +92,6 @@ alter table Volunteer_AUD add PhotoProvided boolean;
 -- add the active column
 alter table User add Active boolean not null default true;
 alter table User_AUD add Active boolean;
+
+-- add the email replyTo column
+alter table Email add ReplyTo varchar(250);

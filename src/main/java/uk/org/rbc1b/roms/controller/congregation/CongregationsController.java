@@ -167,21 +167,23 @@ public class CongregationsController {
         form.setMonthlyIncome(congregation.getMonthlyIncome());
         form.setStrategy(congregation.getStrategy());
 
-        if (congregation.getContacts() != null) {
-            for (CongregationContact contact : congregation.getContacts()) {
-                Person person = personDao.findPerson(contact.getPerson().getPersonId());
+        CongregationContact coordinator = congregation.findContact(CongregationContact.COORDINATOR_ROLE);
+        if (coordinator != null) {
+            Person person = personDao.findPerson(coordinator.getPerson().getPersonId());
+            if (person != null) {
+                form.setCoordinatorForename(person.getForename());
+                form.setCoordinatorSurname(person.getSurname());
+                form.setCoordinatorPersonId(person.getPersonId());
+            }
+        }
 
-                if (contact.getCongregationRoleCode().equals(CongregationContact.COORDINATOR_ROLE)) {
-                    form.setCoordinatorForename(person.getForename());
-                    form.setCoordinatorSurname(person.getSurname());
-                    form.setCoordinatorPersonId(person.getPersonId());
-                } else if (contact.getCongregationRoleCode().equals(CongregationContact.SECRETARY_ROLE)) {
-                    form.setSecretaryForename(person.getForename());
-                    form.setSecretarySurname(person.getSurname());
-                    form.setSecretaryPersonId(person.getPersonId());
-                } else {
-                    throw new IllegalStateException("Unknown congregation role: " + contact.getCongregationRoleCode());
-                }
+        CongregationContact secretary = congregation.findContact(CongregationContact.SECRETARY_ROLE);
+        if (secretary != null) {
+            Person person = personDao.findPerson(secretary.getPerson().getPersonId());
+            if (person != null) {
+                form.setSecretaryForename(person.getForename());
+                form.setSecretarySurname(person.getSurname());
+                form.setSecretaryPersonId(person.getPersonId());
             }
         }
 

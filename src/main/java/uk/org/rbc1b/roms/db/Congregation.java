@@ -61,6 +61,10 @@ public class Congregation implements UpdateAuditable, Serializable {
      * @return contact
      */
     public CongregationContact findContact(String congregationRoleCode) {
+        if (contacts == null) {
+            return null;
+        }
+
         for (CongregationContact contact : contacts) {
             if (contact.getCongregationRoleCode().equals(congregationRoleCode)) {
                 return contact;

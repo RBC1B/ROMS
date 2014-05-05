@@ -48,7 +48,11 @@ import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMeth
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import uk.org.rbc1b.roms.controller.common.DataConverterUtil;
 import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
+import uk.org.rbc1b.roms.db.Congregation;
+import uk.org.rbc1b.roms.db.CongregationContact;
 import uk.org.rbc1b.roms.db.CongregationDao;
+import uk.org.rbc1b.roms.db.Person;
+import uk.org.rbc1b.roms.db.PersonDao;
 import uk.org.rbc1b.roms.db.email.Email;
 import uk.org.rbc1b.roms.db.email.EmailDao;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
@@ -72,6 +76,7 @@ public class InterviewSessionsController {
     private static final Logger LOGGER = LoggerFactory.getLogger(InterviewSessionsController.class);
     private static final String INVITATION_EMAIL_TEMPLATE = "volunteer-interview-session-invitation.ftl";
     private static final String INVITATION_EMAIL_SUBJECT = "RBC induction interview";
+    private static final String INVITATION_EMAIL_ADDRESS = "rbc.lhr.interviews@gmail.com";
     private static final Logger LOG = LoggerFactory.getLogger(InterviewSessionsController.class);
 
     @Autowired
@@ -100,6 +105,9 @@ public class InterviewSessionsController {
 
     @Autowired
     private EmailDao emailDao;
+
+    @Autowired
+    private PersonDao personDao;
 
     /**
      * Display a list of volunteer interview sessions.
@@ -305,23 +313,46 @@ public class InterviewSessionsController {
         model.put("kingdomHallName", kingdomHall.getName());
         model.put("kingdomHallAddress", kingdomHall.getAddress());
         model.put("volunteer", volunteer);
+        model.put("replyEmailAddress", INVITATION_EMAIL_ADDRESS);
 
+        Congregation congregation = null;
         if (volunteer.getPerson().getCongregation() != null
                 && volunteer.getPerson().getCongregation().getCongregationId() != null) {
-            model.put("volunteerCongregationName",
-                    congregationDao.findCongregation(volunteer.getPerson().getCongregation().getCongregationId())
-                            .getName());
+            congregation = congregationDao
+                    .findCongregation(volunteer.getPerson().getCongregation().getCongregationId());
+        }
+
+        Person coordinator = null;
+        if (congregation != null) {
+            model.put("volunteerCongregationName", congregation.getName());
+
+            CongregationContact coordinatorContact = congregation.findContact(CongregationContact.COORDINATOR_ROLE);
+            if (coordinatorContact != null) {
+                coordinator = personDao.findPerson(coordinatorContact.getPerson().getPersonId());
+            }
         }
 
         try {
             String text = FreeMarkerTemplateUtils.processTemplateIntoString(
                     conf.getTemplate(INVITATION_EMAIL_TEMPLATE), model);
-
+            // send one email to the volunteer
             Email email = new Email();
             email.setRecipient(volunteer.getPerson().getEmail());
+            email.setReplyTo(INVITATION_EMAIL_ADDRESS);
             email.setSubject(INVITATION_EMAIL_SUBJECT);
             email.setText(text);
             emailDao.save(email);
+
+            // send another to the coordinator
+            if (coordinator != null && coordinator.getEmail() != null) {
+                email = new Email();
+                email.setRecipient(coordinator.getEmail());
+                email.setReplyTo(INVITATION_EMAIL_ADDRESS);
+                email.setSubject(volunteer.getPerson().formatDisplayName() + " " + INVITATION_EMAIL_SUBJECT);
+                email.setText(text);
+                emailDao.save(email);
+            }
+
         } catch (IOException e) {
             LOGGER.error("Failed to volunteer interview invitation email", e);
         } catch (TemplateException e) {
