@@ -630,7 +630,7 @@ $(document).ready(function() {
             }
     );
 
-    $(".a-edit-assignment").on("click", function(e) {
+    $("#volunteer-assignments").on("click", ".a-edit-assignment", function(e) {
         e.preventDefault();
 
         var $tableRow = $(this).parents("tr");
@@ -638,27 +638,31 @@ $(document).ready(function() {
         $modalForm.prop("action", $(this).prop("href"));
         $modalForm.data("assignment-id", $tableRow.data("assignment-id"));
 
-        var departmentName = $(".a-assignment-department a", $tableRow).html();
-        $("input[name='departmentName']", $modalForm).val(departmentName);
-        $("input[name='departmentName']", $modalForm).prop("readonly", true);
+        var departmentName = $("td:eq(1)", $tableRow).text();
+        var $departmentNameInput = $("input[name='departmentName']", $modalForm);
+        $departmentNameInput.val(departmentName);
+        $departmentNameInput.prop("readonly", true);
+        $departmentNameInput.typeahead('destroy');
 
         // set a dummy value for the id. We ignore it in a put
         $("input[name='departmentId']", $modalForm).val("-1");
 
-        var tradeNumber = $(".a-assignment-trade-number", $tableRow).html();
+        var tradeNumber = $("td:eq(0)", $tableRow).text();
         $("select[name='tradeNumberId'] option:contains('" + tradeNumber + "')", $modalForm).prop("selected", true);
 
-        var team = $(".a-assignment-team a", $tableRow).html();
+        var team = $("td:eq(2)", $tableRow).text();
         $("select[name='teamId'] option:contains('" + team + "')", $modalForm).prop("selected", true);
 
-        var role = $(".a-assignment-role", $tableRow).html();
+        var role = $("td:eq(3)", $tableRow).text();
         $("select[name='assignmentRoleCode'] option:contains('" + role + "')", $modalForm).prop("selected", true);
 
-        var date = $(".a-assignment-date", $tableRow).html();
+        var date = $("td:eq(4)", $tableRow).text();
         var picker = $("input[name='assignedDate']").data('DateTimePicker');
         picker.setDate(moment(date, "DD/MM/YYYY"));
         picker.setEndDate(new Date());
 
+        $modalForm.removeData("validator");
+        $modalForm.unbind("submit");
         $modalForm.validate({
             rules: {
                 assignedDate: {
@@ -710,8 +714,7 @@ $(document).ready(function() {
         dataTable.fnUpdate($("select[name='assignmentRoleCode'] option:selected", $form).text(), $row, 3, 0);
         dataTable.fnUpdate($("input[name='assignedDate']", $form).val(), $row, 4, 0);
     }
-
-
+    
     $('.a-delete-assignment').confirmation({
         placement: 'top',
         singleton: true,
@@ -751,9 +754,12 @@ $(document).ready(function() {
         $modalForm.prop("action", $(this).prop("href"));
         
         $("input[name='departmentId']", $modalForm).val("");
-        $("input[name='departmentName']", $modalForm).val("");
         
-        $("input[name='departmentName']").typeahead({
+        var $departmentNameInput = $("input[name='departmentName']", $modalForm);
+        $departmentNameInput.val("");
+        $departmentNameInput.prop("readonly", false);
+        
+        $departmentNameInput.typeahead({
             remote: roms.common.relativePath + '/departments/search?name=%QUERY',
             valueKey: 'name'
         });
@@ -767,6 +773,8 @@ $(document).ready(function() {
         picker.setDate(moment(new Date(), "DD/MM/YYYY"));
         picker.setEndDate(new Date());
         
+        $modalForm.removeData("validator");
+        $modalForm.unbind("submit");
         $modalForm.validate({
             rules: {
                 departmentName: {
@@ -796,8 +804,10 @@ $(document).ready(function() {
                             alert("Failed to save volunteer assignment");
                         }
                     },
-                    success: function() {
-                        addVolunteerAssignment();
+                    success: function(data, status, xhr) {
+                        var assignmentUri = xhr.getResponseHeader('Location')
+                        
+                        addVolunteerAssignment(assignmentUri);
                         $('#volunteer-assignment-modal').modal('hide');
                     }
                 });
@@ -807,9 +817,15 @@ $(document).ready(function() {
         $('#volunteer-assignment-modal').modal('show');
     });
 
-    function addVolunteerAssignment() {
+    function addVolunteerAssignment(assignmentUri) {
         var $form = $('#volunteer-assignment-modal-form');
 
+        var template = $("#volunteer-assignments-action-template").html();
+        templateData = {
+                "assignmentUri": roms.common.relativePath + assignmentUri
+        };
+        var actionHtml = Mustache.to_html(template, templateData);
+        
         var dataTable = $("#volunteer-assignments").dataTable();
         dataTable.fnAddData([
             $("select[name='tradeNumberId'] option:selected", $form).text(),
@@ -817,7 +833,7 @@ $(document).ready(function() {
             $("select[name='teamId'] option:selected", $form).text(),
             $("select[name='assignmentRoleCode'] option:selected", $form).text(),
             $("input[name='assignedDate']", $form).val(),
-            ''
+            actionHtml
         ]);
         
         $("#volunteer-with-assignments").show();
