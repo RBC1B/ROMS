@@ -30,7 +30,6 @@ import uk.org.rbc1b.roms.db.UpdateAuditable;
 
 /**
  * The skill owned by a volunteer. The Level indicates the competence.
- * @author oliver.elder.esq
  */
 @Audited
 public class VolunteerSkill implements UpdateAuditable, Serializable {

@@ -887,7 +887,7 @@ $(document).ready(function() {
                 success: function() {
                     deleteDataTablesRow($(element));
                     // if this was the last row, hide the table
-                    if ($("#volunteer-skills .dataTables_empty").length) {
+                    if ($("#volunteer-skills-skills .dataTables_empty").length) {
                         $("#volunteer-with-skills").hide();
                         $("#volunteer-without-skills").show();
                     }

@@ -218,6 +218,16 @@ public class HibernateVolunteerDao implements VolunteerDao {
         return criteria.list();
     }
 
+    @Override
+    public VolunteerSkill findSkill(Integer volunteerSkillId) {
+        return (VolunteerSkill) this.sessionFactory.getCurrentSession().get(VolunteerSkill.class, volunteerSkillId);
+    }
+
+    @Override
+    public void deleteSkill(VolunteerSkill volunteerSkill) {
+        this.sessionFactory.getCurrentSession().delete(volunteerSkill);
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public List<VolunteerQualification> findQualifications(Integer volunteerId) {

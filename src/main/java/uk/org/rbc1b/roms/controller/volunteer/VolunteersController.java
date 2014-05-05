@@ -1097,4 +1097,32 @@ public class VolunteersController {
         }
         return volunteerAssignment;
     }
+
+    /**
+     * Delete a department assignment linked to a volunteer.
+     *
+     * @param volunteerId volunteer id
+     * @param volunteerSkillId linked volunteer skill id
+     * @throws NoSuchRequestHandlingMethodException if either the volunteer
+     * skill is not found
+     */
+    @RequestMapping(value = "{volunteerId}/skills/{volunteerSkillId}", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteVolunteerSkill(@PathVariable Integer volunteerId, @PathVariable Integer volunteerSkillId)
+            throws NoSuchRequestHandlingMethodException {
+
+        VolunteerSkill volunteerSkill = volunteerDao.findSkill(volunteerSkillId);
+        if (volunteerSkill == null) {
+            throw new NoSuchRequestHandlingMethodException("Volunteer skill #" + volunteerSkillId + " is not found",
+                    this.getClass());
+        }
+
+        if (!volunteerSkill.getPersonId().equals(volunteerId)) {
+            throw new NoSuchRequestHandlingMethodException("Volunteer #" + volunteerId + " is not linked to skill #"
+                    + volunteerSkillId, this.getClass());
+        }
+
+        volunteerDao.deleteSkill(volunteerSkill);
+    }
+
 }

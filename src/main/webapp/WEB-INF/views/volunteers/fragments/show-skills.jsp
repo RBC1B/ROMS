@@ -2,62 +2,61 @@
 The contents of the skills tab.
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<h3>Skills</h3>
-<c:choose>
-    <c:when test="${!empty skills}">
-        <table id="volunteer-skills-skills" class="table table-bordered table-condensed table-striped table-hover">
-            <thead>
+<div id="volunteer-with-skills" <c:if test="${empty skills}">style="display: none"</c:if>>
+    <h3>Skills</h3>
+    <table id="volunteer-skills-skills" class="table table-bordered table-condensed table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Level</th>
+                <th>Training date</th>
+                <th>Training results</th>
+                <th>Comments</th>
+                <th>Badge</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <c:forEach items="${skills}" var="skill">
                 <tr>
-                    <th>Name</th>
-                    <th>Department</th>
-                    <th>Level</th>
-                    <th>Training date</th>
-                    <th>Training results</th>
-                    <th>Comments</th>
-                    <th>Badge</th>
-                    <th>Action</th>
+                    <td><span class="a-skill-description" data-original-title="${skill.description}"><a href="<c:url value="${skill.skill.uri}" />"><c:out value="${skill.skill.name}" /></a></span></td>
+                    <td><a href="<c:url value="${skill.department.uri}" />"><c:out value="${skill.department.name}" /></a></td>
+                    <td>${skill.level}</td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${!empty skill.trainingDate}">
+                                <fmt:formatDate value="${skill.trainingDate}" pattern="dd MMM yyyy" />
+                            </c:when>
+                            <c:otherwise>-</c:otherwise>
+                        </c:choose>
+                    </td>
+                    <td><c:out value="${skill.trainingResults}" /></td>
+                    <td><c:out value="${skill.comments}" /></td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${skill.appearOnBadge}"><span class="glyphicon glyphicon-ok"></span></c:when>
+                            <c:otherwise><span class="glyphicon glyphicon-remove"></span></c:otherwise>
+                        </c:choose>
+                    </td>
+                    <td>
+                        <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
+                            <ul class="list-inline">
+                                <li><a class="a-edit-skill" href="<c:url value="${skill.uri}" />">Edit</a></li>
+                                <li><a class="a-delete-skill"
+                                    data-ajax-url="<c:url value="${skill.uri}" />" href="#"> Delete</a></li>
+                            </ul>
+                        </sec:authorize>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                <c:forEach items="${skills}" var="skill">
-                    <tr>
-                        <td><span class="a-skill-description" data-original-title="${skill.description}"><a href="<c:url value="${skill.skill.uri}" />"><c:out value="${skill.skill.name}" /></a></span></td>
-                        <td><a href="<c:url value="${skill.department.uri}" />"><c:out value="${skill.department.name}" /></a></td>
-                        <td>${skill.level}</td>
-                        <td>
-                            <c:choose>
-                                <c:when test="${!empty skill.trainingDate}">
-                        <fmt:formatDate value="${skill.trainingDate}" pattern="dd MMM yyyy" />
-                    </c:when>
-                    <c:otherwise>-</c:otherwise>
-                </c:choose>
-            </td>
-            <td><c:out value="${skill.trainingResults}" /></td>
-            <td><c:out value="${skill.comments}" /></td>
-            <td>
-                <c:choose>
-                    <c:when test="${skill.appearOnBadge}"><span class="glyphicon glyphicon-ok"></span></c:when>
-                    <c:otherwise><span class="glyphicon glyphicon-remove"></span></c:otherwise>
-                </c:choose>
-            </td>
-            <td>
-                <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
-                    <ul class="list-inline">
-                        <li><a class="a-edit-skill" href="<c:url value="${skill.uri}" />">Edit</a></li>
-                        <li><a class="a-delete-skill"
-                            data-ajax-url="<c:url value="${skill.uri}" />" href="#"> Delete</a></li>
-                    </ul>
-                </sec:authorize>
-            </td>
-        </tr>
-    </c:forEach>
-</tbody>
-</table>
-</c:when>
-<c:otherwise>
-    <div class="alert alert-block">Volunteer has no defined skills</div>
-</c:otherwise>
-</c:choose>
+            </c:forEach>
+        </tbody>
+    </table>
+</div>
+<div id="volunteer-without-skills" <c:if test="${!empty skills}">style="display: none"</c:if>>
+    <br />
+    <div class="alert alert-warning">Volunteer has no defined skills</div>
+</div>
 
 <h3>Qualifications</h3>
 <c:choose>

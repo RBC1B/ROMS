@@ -118,6 +118,22 @@ public interface VolunteerDao {
     List<VolunteerSkill> findSkills(Integer volunteerId);
 
     /**
+     * Find the volunteer skill.
+     * @param volunteerSkillId primary key
+     * @return volunteer skill, or null if no match
+     */
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
+    @Transactional(readOnly = true)
+    VolunteerSkill findSkill(Integer volunteerSkillId);
+
+    /**
+     * Delete a volunteer skill.
+     * @param volunteerSkill linked skill
+     */
+    @Transactional
+    void deleteSkill(VolunteerSkill volunteerSkill);
+
+    /**
      * Find the volunteer qualifications.
      *
      * @param volunteerId id
