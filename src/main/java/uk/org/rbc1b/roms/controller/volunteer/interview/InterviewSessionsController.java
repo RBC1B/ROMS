@@ -338,21 +338,14 @@ public class InterviewSessionsController {
             // send one email to the volunteer
             Email email = new Email();
             email.setRecipient(volunteer.getPerson().getEmail());
+
+            if (coordinator != null && coordinator.getEmail() != null) {
+                email.setCc(coordinator.getEmail());
+            }
             email.setReplyTo(INVITATION_EMAIL_ADDRESS);
             email.setSubject(INVITATION_EMAIL_SUBJECT);
             email.setText(text);
             emailDao.save(email);
-
-            // send another to the coordinator
-            if (coordinator != null && coordinator.getEmail() != null) {
-                email = new Email();
-                email.setRecipient(coordinator.getEmail());
-                email.setReplyTo(INVITATION_EMAIL_ADDRESS);
-                email.setSubject(volunteer.getPerson().formatDisplayName() + " " + INVITATION_EMAIL_SUBJECT);
-                email.setText(text);
-                emailDao.save(email);
-            }
-
         } catch (IOException e) {
             LOGGER.error("Failed to volunteer interview invitation email", e);
         } catch (TemplateException e) {

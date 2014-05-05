@@ -33,11 +33,20 @@ import java.io.Serializable;
 public class Email implements Serializable {
 
     private static final long serialVersionUID = -1589295278670347715L;
+    private String cc;
     private Integer emailId;
     private String recipient;
     private String replyTo;
     private String subject;
     private String text;
+
+    public String getCc() {
+        return cc;
+    }
+
+    public void setCc(String cc) {
+        this.cc = cc;
+    }
 
     public Integer getEmailId() {
         return emailId;

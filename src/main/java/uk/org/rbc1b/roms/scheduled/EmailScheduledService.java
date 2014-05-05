@@ -68,8 +68,13 @@ public class EmailScheduledService {
     private void sendEmail(Email email) throws MessagingException {
         MimeMessage mimeMessage = this.mailGateway.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
-        helper.setReplyTo(email.getReplyTo());
+        if (email.getReplyTo() != null) {
+            helper.setReplyTo(email.getReplyTo());
+        }
         helper.setTo(email.getRecipient());
+        if (email.getCc() != null) {
+            helper.setCc(email.getCc());
+        }
         helper.setSubject(email.getSubject());
         helper.setText(email.getText());
         this.mailGateway.send(mimeMessage);
