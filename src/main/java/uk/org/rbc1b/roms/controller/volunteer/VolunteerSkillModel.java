@@ -42,6 +42,7 @@ public class VolunteerSkillModel {
     private java.sql.Date trainingDate;
     private String trainingResults;
     private boolean appearOnBadge;
+    private String uri;
 
     public Integer getId() {
         return id;
@@ -114,4 +115,13 @@ public class VolunteerSkillModel {
     public void setAppearOnBadge(boolean appearOnBadge) {
         this.appearOnBadge = appearOnBadge;
     }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
 }

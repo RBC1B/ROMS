@@ -863,7 +863,13 @@ $(document).ready(function() {
     roms.common.datatables(
             $("#volunteer-skills-skills"),
             {
-                "iDisplayLength": 10
+                "iDisplayLength": 10,
+                "aoColumnDefs": [
+                     {
+                         'bSortable': false,
+                         'aTargets': [7]
+                     }
+                 ]
             }
     );
 

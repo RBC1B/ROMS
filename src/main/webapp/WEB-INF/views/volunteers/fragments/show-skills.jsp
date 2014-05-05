@@ -15,6 +15,7 @@ The contents of the skills tab.
                     <th>Training results</th>
                     <th>Comments</th>
                     <th>Badge</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -38,6 +39,15 @@ The contents of the skills tab.
                     <c:when test="${skill.appearOnBadge}"><span class="glyphicon glyphicon-ok"></span></c:when>
                     <c:otherwise><span class="glyphicon glyphicon-remove"></span></c:otherwise>
                 </c:choose>
+            </td>
+            <td>
+                <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
+                    <ul class="list-inline">
+                        <li><a class="a-edit-skill" href="<c:url value="${skill.uri}" />">Edit</a></li>
+                        <li><a class="a-delete-skill"
+                            data-ajax-url="<c:url value="${skill.uri}" />" href="#"> Delete</a></li>
+                    </ul>
+                </sec:authorize>
             </td>
         </tr>
     </c:forEach>

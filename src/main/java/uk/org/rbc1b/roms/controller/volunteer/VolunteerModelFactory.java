@@ -256,6 +256,7 @@ public class VolunteerModelFactory {
             model.setSkill(skillModel);
             model.setTrainingDate(volunteerSkill.getTrainingDate());
             model.setTrainingResults(volunteerSkill.getTrainingResults());
+            model.setUri(generateUri(volunteerSkill.getPersonId()) + "/skills/" + volunteerSkill.getSkillId());
             modelList.add(model);
 
         }
