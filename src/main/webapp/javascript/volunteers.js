@@ -558,7 +558,6 @@ $(document).ready(function() {
          congregationId: {
          required: true
          }
-         },
          messages: {
          congregationName: {
          remote: "Please provide the name of an existing congregation"
@@ -715,7 +714,7 @@ $(document).ready(function() {
         dataTable.fnUpdate($("input[name='assignedDate']", $form).val(), $row, 4, 0);
     }
     
-    $('.a-delete-assignment').confirmation({
+    var deleteAssignmentConfirmationProperties = {
         placement: 'top',
         singleton: true,
         popout: true,
@@ -745,7 +744,8 @@ $(document).ready(function() {
                 }
             });
         }
-    });
+    };
+    $('.a-delete-assignment').confirmation(deleteAssignmentConfirmationProperties);
 
     $('#a-add-assignment').on("click", function(event, element) {
         event.preventDefault();
@@ -838,6 +838,7 @@ $(document).ready(function() {
         
         $("#volunteer-with-assignments").show();
         $("#volunteer-without-assignments").hide();
+        $('.a-delete-assignment').confirmation(deleteAssignmentConfirmationProperties);
     }
     
     /**
