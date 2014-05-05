@@ -615,6 +615,8 @@ $(document).ready(function() {
     });
 
     // display
+    
+    // volunteer assignments
     roms.common.datatables(
             $("#volunteer-assignments"),
             {
@@ -840,18 +842,6 @@ $(document).ready(function() {
         $("#volunteer-without-assignments").hide();
         $('.a-delete-assignment').confirmation(deleteAssignmentConfirmationProperties);
     }
-    
-    /**
-     * Delete a row in a datatables row
-     * @param $element the action element in the row to be deleted
-     */
-    function deleteDataTablesRow($element) {
-        var $row = $element.closest("tr")[0];
-        var $table = $element.closest("table");
-
-        var dataTable = $table.dataTable();
-        dataTable.fnDeleteRow($row);
-    }
 
     roms.common.datatables(
             $("#volunteer-skills-experience"),
@@ -860,6 +850,7 @@ $(document).ready(function() {
             }
     );
 
+    // volunteer skills
     roms.common.datatables(
             $("#volunteer-skills-skills"),
             {
@@ -873,6 +864,40 @@ $(document).ready(function() {
             }
     );
 
+    var deleteSkillConfirmationProperties = {
+        placement: 'top',
+        singleton: true,
+        popout: true,
+        onConfirm: function(event, element) {
+            event.preventDefault();
+            $.ajax({
+                url: $(element).data("ajax-url"),
+                type: "POST",
+                data: {
+                    _method: "delete"
+                },
+                statusCode: {
+                    404: function() {
+                        alert("Volunteer skill not found");
+                    },
+                    500: function() {
+                        alert("Failed to delete volunteer skill");
+                    }
+                },
+                success: function() {
+                    deleteDataTablesRow($(element));
+                    // if this was the last row, hide the table
+                    if ($("#volunteer-skills .dataTables_empty").length) {
+                        $("#volunteer-with-skills").hide();
+                        $("#volunteer-without-skills").show();
+                    }
+                }
+            });
+        }
+    };
+    $('.a-delete-skill').confirmation(deleteSkillConfirmationProperties);
+    
+    
     roms.common.datatables(
             $("#volunteer-skills-qualifications"),
             {

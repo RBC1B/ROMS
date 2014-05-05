@@ -309,6 +309,18 @@ roms.common.datatables = function($table, options) {
     $table.dataTable(options);
 }
 
+/**
+ * Delete a row in a datatables row
+ * @param $element the action element in the row to be deleted
+ */
+function deleteDataTablesRow($element) {
+    var $row = $element.closest("tr")[0];
+    var $table = $element.closest("table");
+
+    var dataTable = $table.dataTable();
+    dataTable.fnDeleteRow($row);
+}
+
 roms.common.persistentTabs = function() {
     if (location.hash.substr(0,2) == "#!") {
         $("a[href='#" + location.hash.substr(2) + "']").tab("show");
