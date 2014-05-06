@@ -25,8 +25,10 @@ package uk.org.rbc1b.roms.controller.user;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -220,13 +222,16 @@ public class UsersController {
      * Handles create user form.
      *
      * @param userForm the form input
+     * @param request the request
      * @return redirect to view
      */
     @RequestMapping(method = RequestMethod.POST)
-    public String createUser(@Valid UserForm userForm) {
+    public String createUser(@Valid UserForm userForm, HttpServletRequest request) {
         User user = new User();
+        Person theUser = new Person();
         if (userForm.getPersonId() != null) {
             user.setPersonId(userForm.getPersonId());
+            theUser = personDao.findPerson(userForm.getPersonId());
         }
         user.setActive(true);
         user.setUserName(userForm.getUserName());
@@ -239,9 +244,31 @@ public class UsersController {
         Date date = new Date();
         user.setUpdateTime(date);
 
-        LOGGER.error("Creating user:" + user.getUserName() + " Password:" + user.getPassword());
-        LOGGER.error("By:" + user.getUpdatedBy() + " at:" + user.getUpdateTime());
+        user.setApplicationAccess(null);
         userDao.createUser(user);
+
+        /*
+         * We are only going to use non departmental access to set both dept and
+         * non-dept to the same code.
+         * If the access is 'N' then we do not add to the set.
+         */
+        List<Application> applications = applicationDao.getApplications();
+        HashSet<ApplicationAccess> applicationAccess = new HashSet<ApplicationAccess>();
+        for (Application application : applications) {
+            ApplicationAccess appAccess = new ApplicationAccess();
+            appAccess.setPerson(theUser);
+            appAccess.setApplication(application);
+            appAccess.setUpdateTime(date);
+            appAccess.setUpdatedBy(me.getPersonId());
+            String allAccess = application.getCode().toLowerCase() + "All";
+            Character nondeptAccessCode = request.getParameter(allAccess).charAt(0);
+            if (nondeptAccessCode != 'N') {
+                appAccess.setDepartmentAccess(nondeptAccessCode);
+                appAccess.setNonDepartmentAccess(nondeptAccessCode);
+                applicationAccess.add(appAccess);
+            }
+        }
+        applicationAccessDao.saveApplicationAccess(applicationAccess);
 
         return "redirect:" + UserModelFactory.generateUri(user.getPersonId());
     }

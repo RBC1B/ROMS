@@ -44,15 +44,15 @@ public class PermissionSelect extends TagSupport {
     public int doStartTag() throws JspException {
         try {
             JspWriter out = pageContext.getOut();
-            String selectOption = "<select>";
+            String selectOption = "<select name='" + getItemValue() + "'>";
             for (Entry<String, String> entry : acl.entrySet()) {
                 String key = entry.getKey();
                 String value = entry.getValue();
                 if (getSelected().equalsIgnoreCase(key)) {
-                    selectOption = selectOption + "<option value='" + getItemValue() + "' selected>"
+                    selectOption = selectOption + "<option value='" + value + "' selected>"
                             + value + "</option>";
                 } else {
-                    selectOption = selectOption + "<option value='" + getItemValue() + "'>"
+                    selectOption = selectOption + "<option value='" + value + "'>"
                             + value + "</option>";
                 }
             }

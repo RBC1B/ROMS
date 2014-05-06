@@ -24,7 +24,9 @@
 package uk.org.rbc1b.roms.db.application;
 
 import java.util.List;
+import java.util.Set;
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,5 +48,14 @@ public class HibernateApplicationAccessDao implements ApplicationAccessDao {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(ApplicationAccess.class);
         criteria.add(Restrictions.eq("person.personId", personId));
         return criteria.list();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void saveApplicationAccess(Set<ApplicationAccess> applicationAccess) {
+        Session session = sessionFactory.getCurrentSession();
+        for (ApplicationAccess appAccess : applicationAccess) {
+            session.save(appAccess);
+        }
     }
 }

@@ -24,6 +24,8 @@
 package uk.org.rbc1b.roms.db.application;
 
 import java.util.List;
+import java.util.Set;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -32,6 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author ramindursingh
  */
 public interface ApplicationAccessDao {
+
     /**
      * Look up permission by person id.
      *
@@ -40,4 +43,13 @@ public interface ApplicationAccessDao {
      */
     @Transactional(readOnly = true)
     List<ApplicationAccess> findUserPermissions(Integer personId);
+
+    /**
+     * Saves application access.
+     *
+     * @param applicationAccess set
+     */
+    @PreAuthorize("hasPermission('DATABASE', 'ADD')")
+    @Transactional
+    void saveApplicationAccess(Set<ApplicationAccess> applicationAccess);
 }
