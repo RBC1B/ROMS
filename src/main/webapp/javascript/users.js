@@ -37,31 +37,52 @@ $(document).ready(function() {
                 ]
             }
     );
-/*
-    // Disable fields until we have a valid user
-    $("#userName").attr("disabled", "disabled");
-    $("#password1").attr("disabled", "disabled");
-    $("#password2").attr("disabled", "disabled");
 
-    // Get User
-    $("#surname").blur(function() {
-        findUserByName(
-                $("#forename").val(),
-                $("#surname").val(),
-                $("#personId"),
-                populateUserFromPerson
-                );
+    // Password strength meter
+    $("#password1").change(function() {
+        "use strict";
+        var options = {};
+        options.ui = {
+            container: "#pwd-container",
+            viewports: {
+                progress: ".pwstrength_viewport_progress",
+                verdict: ".pwstrength_viewport_verdict"
+            }
+        };
+        options.common = {
+            zxcvbn: true,
+            minChar: 7,
+            usernameField: "#userName",
+            bootstrap2: false,
+            showPopover: true
+        };
+        $(':password').pwstrength(options);
     });
-
-    function populateUserFromPerson(selectedPersonId, forename, surname, $personId) {
-        if (selectedPersonId) {
-            $("#volunteer-linked").show("fast");
-        } else {
-            $("#volunteer-linked").show("fast");
-        }
-        $personId.val(selectedPersonId);
-    }
-*/
+    /*
+     // Disable fields until we have a valid user
+     $("#userName").attr("disabled", "disabled");
+     $("#password1").attr("disabled", "disabled");
+     $("#password2").attr("disabled", "disabled");
+     
+     // Get User
+     $("#surname").blur(function() {
+     findUserByName(
+     $("#forename").val(),
+     $("#surname").val(),
+     $("#personId"),
+     populateUserFromPerson
+     );
+     });
+     
+     function populateUserFromPerson(selectedPersonId, forename, surname, $personId) {
+     if (selectedPersonId) {
+     $("#volunteer-linked").show("fast");
+     } else {
+     $("#volunteer-linked").show("fast");
+     }
+     $personId.val(selectedPersonId);
+     }
+     */
     /**
      * Match a person to a given forename and surname (exact match).
      * This assumes we have the person-link-search-form and person-link-modal elements on the page

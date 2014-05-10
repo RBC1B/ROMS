@@ -37,6 +37,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 public class PermissionSelect extends TagSupport {
 
     private Map<String, String> acl = new PermissionMap().getAcl();
+    private String className;
     private String itemValue;
     private String selected;
 
@@ -44,7 +45,7 @@ public class PermissionSelect extends TagSupport {
     public int doStartTag() throws JspException {
         try {
             JspWriter out = pageContext.getOut();
-            String selectOption = "<select name='" + getItemValue() + "'>";
+            String selectOption = "<select class='" + className + "' name='" + getItemValue() + "'>";
             for (Entry<String, String> entry : acl.entrySet()) {
                 String key = entry.getKey();
                 String value = entry.getValue();
@@ -90,5 +91,19 @@ public class PermissionSelect extends TagSupport {
      */
     public void setSelected(String selected) {
         this.selected = selected;
+    }
+
+    /**
+     * @return the className
+     */
+    public String getClassName() {
+        return className;
+    }
+
+    /**
+     * @param className the className to set
+     */
+    public void setClassName(String className) {
+        this.className = className;
     }
 }

@@ -67,7 +67,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" id="pwd-container">
                     <div class="col-md-4">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -84,30 +84,30 @@
                     </div>
                 </div>
             </fieldset>
-            
-                    <div class="row-fluid">
-                        <div id="user-volunteer-user" data-user-id="${user.personId}"></div>
-                        <table class="table table-bordered table-condensed table-striped table-hover" id="user-acl-list">
-                            <thead>
-                                <tr>
-                                    <th>Application</th>
-                                    <th>Department Access</th>
-                                    <th>Non-Department Access</th>
-                                </tr>
-                            <thead />
-                            <tbody>
-                                <c:forEach items="${applications}" var="application">
-                                    <tr>
-                                        <td><c:out value="${application.name}" /></td>
-                                        <td><roms:select selected="N" itemValue="${fn:toLowerCase(application.code)}Dept" /></td>
-                                        <td><roms:select selected="N" itemValue="${fn:toLowerCase(application.code)}All" /></td>
-                                    </tr>
-                                </c:forEach>
-                            </tbody>
-                            <tfoot>
-                            </tfoot>
-                        </table>
-                    </div>
+
+            <div class="row-fluid">
+                <div id="user-volunteer-user" data-user-id="${user.personId}"></div>
+                <table class="table table-bordered table-condensed table-striped table-hover" id="user-acl-list">
+                    <thead>
+                        <tr>
+                            <th>Application</th>
+                            <th>Department Access</th>
+                            <th>Non-Department Access</th>
+                        </tr>
+                    <thead />
+                    <tbody>
+                        <c:forEach items="${applications}" var="application">
+                            <tr>
+                                <td><c:out value="${application.name}" /></td>
+                                <td><roms:select className="form-control" selected="N" itemValue="${fn:toLowerCase(application.code)}Dept" /></td>
+                                <td><roms:select className="form-control" selected="N" itemValue="${fn:toLowerCase(application.code)}All" /></td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                    <tfoot>
+                    </tfoot>
+                </table>
+            </div>
             <fieldset>
                 <div class="col-sm-1 col-md-1">
                     <button type="submit" class="btn btn-default btn-success">Submit</button>
@@ -130,5 +130,7 @@
     </ol>
     <%@ include file="/WEB-INF/views/common/footer.jsp" %>
     <script type="text/javascript" src="<c:url value='/javascript/users.js' />" ></script>
+    <script type="text/javascript" src="<c:url value='/javascript/thirdparty/pwstrength.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/javascript/thirdparty/zxcvbn-async.js'/>"></script>
 </body>
 </html>

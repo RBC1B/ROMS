@@ -27,6 +27,11 @@
     <tag-class>uk.org.rbc1b.roms.tags.PermissionSelect</tag-class>
     <body-content>empty</body-content>
     <attribute>
+        <name>className</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
       <name>itemValue</name>
       <required>true</required>
       <rtexprvalue>true</rtexprvalue>
