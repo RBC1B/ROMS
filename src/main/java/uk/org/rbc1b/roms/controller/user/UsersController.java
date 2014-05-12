@@ -178,7 +178,7 @@ public class UsersController {
      * @param checkVolunteer if true, check if the user is a valid volunteer
      * @return model containing list of volunteers
      */
-    @RequestMapping(value = "search", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "searchVolunteer", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public List<UserSearchResult> findUsers(@RequestParam(value = "forename", required = true) String forename,
             @RequestParam(value = "surname", required = true) String surname,

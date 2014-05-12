@@ -23,6 +23,8 @@
  */
 
 $(document).ready(function() {
+    // Disable username fields on load
+    disableAll();
 
     // list
     roms.common.datatables(
@@ -38,51 +40,32 @@ $(document).ready(function() {
             }
     );
 
-    // Password strength meter
-    $("#password1").change(function() {
-        "use strict";
-        var options = {};
-        options.ui = {
-            container: "#pwd-container",
-            viewports: {
-                progress: ".pwstrength_viewport_progress",
-                verdict: ".pwstrength_viewport_verdict"
-            }
-        };
-        options.common = {
-            zxcvbn: true,
-            minChar: 7,
-            usernameField: "#userName",
-            bootstrap2: false,
-            showPopover: true
-        };
-        $(':password').pwstrength(options);
+// Unlinking a person should diable username/password
+    // Get User
+    $("#surname").blur(function() {
+        findUserByName(
+                $("#forename").val(),
+                $("#surname").val(),
+                $("#personId"),
+                populateUserFromPerson
+                );
     });
-    /*
-     // Disable fields until we have a valid user
-     $("#userName").attr("disabled", "disabled");
-     $("#password1").attr("disabled", "disabled");
-     $("#password2").attr("disabled", "disabled");
-     
-     // Get User
-     $("#surname").blur(function() {
-     findUserByName(
-     $("#forename").val(),
-     $("#surname").val(),
-     $("#personId"),
-     populateUserFromPerson
-     );
-     });
-     
-     function populateUserFromPerson(selectedPersonId, forename, surname, $personId) {
-     if (selectedPersonId) {
-     $("#volunteer-linked").show("fast");
-     } else {
-     $("#volunteer-linked").show("fast");
-     }
-     $personId.val(selectedPersonId);
-     }
-     */
+
+    function populateUserFromPerson(selectedPersonId, forename, surname, $personId) {
+        if (selectedPersonId) {
+            $("#volunteer-linked").show("fast");
+        } else {
+            $("#volunteer-linked").hide("fast");
+        }
+        $personId.val(selectedPersonId);
+        enableUserName();
+    }
+// Unlinking a person should disable username fields
+    $("#volunteer-linked .close").on("click", function() {
+        disableAll();
+    });
+
+
     /**
      * Match a person to a given forename and surname (exact match).
      * This assumes we have the person-link-search-form and person-link-modal elements on the page
@@ -107,7 +90,7 @@ $(document).ready(function() {
         var existingPersonId = $personId.val();
 
         $.ajax({
-            url: '/users/search',
+            url: '/users/searchVolunteer',
             contentType: "application/json",
             dataType: 'json',
             data: {
@@ -140,12 +123,104 @@ $(document).ready(function() {
 
                 // if they select the person id, set it to the hidden volunteer person id field
                 $("a.matched-person").on("click", function(event) {
-                    populateFunction($(this).data("person-id"), forename, surname, $personId);
+                    populateFunction($(this).data("personId"), forename, surname, $personId);
                     modalElement.modal('hide')
                 });
             }
         });
 
         $personId.data("full-name", forename + " " + surname);
+    }
+    // Handle username - TO DO AJAX calls to check if username exists
+    $("#userName").blur(function() {
+        var username = $("#userName").val();
+        if (username.length < 7) {
+            $("#username-already-exists").hide();
+            $("#username-too-small").show();
+        } else if (!checkUsername()) {
+            $("#username-too-small").hide();
+            $("#username-already-exists").show();
+        } else {
+            enablePassword();
+        }
+    });
+    //Checks if username exists - TO DO
+    function checkUsername() {
+        return true;
+    }
+
+    // TO DO
+    // Password handlers
+    // Password strength
+    $("#password1").change(function() {
+        "use strict";
+        var options = {};
+        options.ui = {
+            container: "#pwd-container",
+            viewports: {
+                progress: ".pwstrength_viewport_progress",
+                verdict: ".pwstrength_viewport_verdict"
+            }
+        };
+        options.common = {
+            zxcvbn: true,
+            minChar: 7,
+            usernameField: "#userName",
+            bootstrap2: false,
+            showPopover: true
+        };
+        $(':password').pwstrength(options);
+    });
+
+    $("#password2").blur(function() {
+        var password1 = $("#password1").val();
+        var password2 = $("#password2").val();
+        if (password1.length < 8) {
+            $("#password-not-matched").hide();
+            $("#password-too-small").show();
+            $("#password2").val('');
+            $("#password1").focus();
+        } else if (password1 != password2) {
+            $("#password-too-small").hide();
+            $("#password-not-matched").show();
+            $("#password2").focus();
+        } else {
+            enableAclSubmit();
+        }
+    });
+
+
+    // Disable/enable fields until we have a valid user
+    function disableAll() {
+        disableUserField();
+        disableAcl();
+        disableSubmit();
+    }
+
+    function disableUserField() {
+        $("#userName").prop("disabled", true);
+        $("#password1").prop("disabled", true);
+        $("#password2").prop("disabled", true);
+    }
+
+    function disableAcl() {
+        $("select").children().prop('disabled', true);
+    }
+
+    function disableSubmit() {
+        $("#submit-button").children().prop('disabled', true);
+    }
+
+    function enableUserName() {
+        $("#userName").removeAttr("disabled");
+    }
+
+    function enablePassword() {
+        $("#password1").removeAttr("disabled");
+        $("#password2").removeAttr("disabled");
+    }
+    function enableAclSubmit() {
+        $("select").children().prop('disabled', false);
+        $("#submit-button").children().prop('disabled', false);
     }
 });

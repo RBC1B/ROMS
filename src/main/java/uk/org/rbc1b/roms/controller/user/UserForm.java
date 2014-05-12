@@ -36,11 +36,16 @@ public class UserForm {
     @Size(min = 7, max = 50)
     private String userName;
     @NotNull
-    @Size(min = 2, max = 50)
+    @Size(min = 7, max = 50)
     private String password1;
+    @NotNull
+    @Size(min = 7, max = 50)
     private String password2;
+    @NotNull
     private Integer personId;
+    @NotNull
     private String forename;
+    @NotNull
     private String surname;
 
     /**
