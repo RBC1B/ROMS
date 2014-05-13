@@ -41,6 +41,10 @@ legend {
 .dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {
     background-color: #25aae1;
 }
+/* Twitter Typeahead overrides our display:block on input fields. This is to reset */
+.twitter-typeahead {
+    display: block!important;
+}
 /* Now some styling for additional classes created for use throughout the site */
 
 .btn-edifice {
