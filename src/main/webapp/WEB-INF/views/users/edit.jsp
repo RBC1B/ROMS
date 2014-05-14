@@ -78,14 +78,14 @@
                     <div class="col-md-4">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <form:input class="form-control" path="password1" maxlength="50" placeholder="Password"/>
+                                <form:password class="form-control" path="password1" maxlength="50" placeholder="Password"/>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <form:input class="form-control" path="password2" maxlength="50" placeholder="Confirm Password"/>
+                                <form:password class="form-control" path="password2" maxlength="50" placeholder="Confirm Password"/>
                             </div>
                         </div>
                     </div>
@@ -149,7 +149,5 @@
     <%@include file="/WEB-INF/views/common/mustache-person-link-search-form.jsp" %>
     <%@ include file="/WEB-INF/views/common/footer.jsp" %>
     <script type="text/javascript" src="<c:url value='/javascript/users.js' />" ></script>
-    <script type="text/javascript" src="<c:url value='/javascript/thirdparty/pwstrength.js'/>"></script>
-    <script type="text/javascript" src="<c:url value='/javascript/thirdparty/zxcvbn-async.js'/>"></script>
 </body>
 </html>

@@ -90,7 +90,7 @@ $(document).ready(function() {
         var existingPersonId = $personId.val();
 
         $.ajax({
-            url: '/users/searchVolunteer',
+            url: '/users/search-volunteer',
             contentType: "application/json",
             dataType: 'json',
             data: {
@@ -153,23 +153,7 @@ $(document).ready(function() {
     // Password handlers
     // Password strength
     $("#password1").change(function() {
-        "use strict";
-        var options = {};
-        options.ui = {
-            container: "#pwd-container",
-            viewports: {
-                progress: ".pwstrength_viewport_progress",
-                verdict: ".pwstrength_viewport_verdict"
-            }
-        };
-        options.common = {
-            zxcvbn: true,
-            minChar: 7,
-            usernameField: "#userName",
-            bootstrap2: false,
-            showPopover: true
-        };
-        $(':password').pwstrength(options);
+        
     });
 
     $("#password2").blur(function() {
