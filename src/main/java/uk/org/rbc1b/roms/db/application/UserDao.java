@@ -68,6 +68,7 @@ public interface UserDao {
      * @param username the username to lookup
      * @return boolean true if it exists
      */
+    @PreAuthorize("hasPermission('DATABASE','READ')")
     @Transactional(readOnly = true)
     boolean checkUserExist(String username);
 
