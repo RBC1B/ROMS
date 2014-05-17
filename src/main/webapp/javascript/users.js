@@ -137,23 +137,35 @@ $(document).ready(function() {
         if (username.length < 7) {
             $("#username-already-exists").hide();
             $("#username-too-small").show();
-        } else if (!checkUsername()) {
+        } else {
             $("#username-too-small").hide();
             $("#username-already-exists").show();
-        } else {
-            enablePassword();
+            $.ajax({
+                url: '/users/check-user',
+                contentType: "application/json",
+                dataType: 'json',
+                data: {
+                    username: username,
+                },
+                success: function(data) {
+                    if (data == true) {
+                        $("#username-already-exists").show();
+                        disablePassword();
+                    } else {
+                        $("#username-already-exists").hide();
+                        enablePassword();
+                    }
+                }
+            });
+            return true;
         }
     });
-    //Checks if username exists - TO DO
-    function checkUsername() {
-        return true;
-    }
 
     // TO DO
     // Password handlers
     // Password strength
     $("#password1").change(function() {
-        
+
     });
 
     $("#password2").blur(function() {

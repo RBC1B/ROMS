@@ -143,7 +143,6 @@ public class UsersController {
         model.addAttribute("user", userModelFactory.generateUserModel(user));
         List<ApplicationAccess> permissions = applicationAccessDao.findUserPermissions(personId);
         model.addAttribute("permissions", permissions);
-
         return "users/show";
     }
 
@@ -194,6 +193,19 @@ public class UsersController {
     }
 
     /**
+     * Checks if the username is already being used.
+     *
+     * @param username the username to check
+     * @return isUsed true or false
+     */
+    @RequestMapping(value = "check-user", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public boolean checkUsername(@RequestParam(value = "username", required = true) String username) {
+        LOGGER.error("Checking username: " + username);
+        return userDao.checkUserExist(username);
+    }
+
+    /**
      * Checks if the person is a valid volunteer.
      *
      * @param person the person to check
@@ -205,13 +217,10 @@ public class UsersController {
         result.setForename(person.getForename());
         result.setSurname(person.getSurname());
         result.setPersonId(person.getPersonId());
-
         if (person.getCongregation() != null) {
             Congregation congregation = congregationDao.findCongregation(person.getCongregation().getCongregationId());
-
             result.setCongregationName(congregation.getName());
         }
-
         if (checkVolunteer) {
             result.setVolunteer(volunteerDao.findVolunteer(person.getPersonId(), null) != null);
         }
@@ -236,14 +245,12 @@ public class UsersController {
         user.setActive(true);
         user.setUserName(userForm.getUserName());
         user.setPassword(getPasswordHash("", userForm.getPassword1()));
-
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String myUserName = userDetails.getUsername();
         User me = userDao.findUserAndPermissions(myUserName);
         user.setUpdatedBy(me.getPersonId());
         Date date = new Date();
         user.setUpdateTime(date);
-
         user.setApplicationAccess(null);
         userDao.createUser(user);
 
@@ -269,7 +276,6 @@ public class UsersController {
             }
         }
         applicationAccessDao.saveApplicationAccess(applicationAccess);
-
         return "redirect:" + UserModelFactory.generateUri(user.getPersonId());
     }
 

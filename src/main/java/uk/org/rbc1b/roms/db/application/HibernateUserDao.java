@@ -102,4 +102,11 @@ public class HibernateUserDao implements UserDao {
     public void createUser(User user) {
         this.sessionFactory.getCurrentSession().save(user);
     }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public boolean checkUserExist(String username) {
+        List<User> users = findUsers(username);
+        return !(users.isEmpty());
+    }
 }

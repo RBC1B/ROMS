@@ -62,6 +62,16 @@ public interface UserDao {
     User findUser(Integer userId);
 
     /**
+     * Look up the user by username. This needs to be protected to handle AJAX
+     * requests so that it does not leak information.
+     *
+     * @param username the username to lookup
+     * @return boolean true if it exists
+     */
+    @Transactional(readOnly = true)
+    boolean checkUserExist(String username);
+
+    /**
      * Find all users on the system.
      *
      * @return users
