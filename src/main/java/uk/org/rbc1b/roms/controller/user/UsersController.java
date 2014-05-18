@@ -55,6 +55,7 @@ import uk.org.rbc1b.roms.db.application.ApplicationAccessDao;
 import uk.org.rbc1b.roms.db.application.ApplicationDao;
 import uk.org.rbc1b.roms.db.application.User;
 import uk.org.rbc1b.roms.db.application.UserDao;
+import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
 import uk.org.rbc1b.roms.security.AccessLevel;
 import uk.org.rbc1b.roms.security.RomsPermissionEvaluator;
@@ -68,8 +69,8 @@ import uk.org.rbc1b.roms.tags.PermissionMap;
 @Controller
 @RequestMapping("/users")
 public class UsersController {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(UsersController.class);
+    private static final String ACTIVE_VOLUNTEER = "AT";
     @Autowired
     private UserDao userDao;
     @Autowired
@@ -201,7 +202,6 @@ public class UsersController {
     @RequestMapping(value = "check-user", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public boolean checkUsername(@RequestParam(value = "username", required = true) String username) {
-        LOGGER.error("Checking username: " + username);
         return userDao.checkUserExist(username);
     }
 
@@ -222,7 +222,19 @@ public class UsersController {
             result.setCongregationName(congregation.getName());
         }
         if (checkVolunteer) {
-            result.setVolunteer(volunteerDao.findVolunteer(person.getPersonId(), null) != null);
+            Volunteer volunteer = volunteerDao.findVolunteer(person.getPersonId(), null);
+            if (volunteer == null) {
+                result.setVolunteer(false);
+            } else {
+                result.setVolunteer(volunteer.getRbcStatusCode().equalsIgnoreCase(ACTIVE_VOLUNTEER));
+            }
+            User user = userDao.findUser(person.getPersonId());
+            if (user == null) {
+                result.setUser(false);
+            } else {
+                result.setUser(true);
+                result.setUserName(user.getUserName());
+            }
         }
         return result;
     }
@@ -253,7 +265,6 @@ public class UsersController {
         user.setUpdateTime(date);
         user.setApplicationAccess(null);
         userDao.createUser(user);
-
         /*
          * We are only going to use non departmental access to set both dept and
          * non-dept to the same code.

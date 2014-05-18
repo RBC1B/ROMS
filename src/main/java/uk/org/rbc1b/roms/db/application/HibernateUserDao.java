@@ -31,6 +31,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
@@ -99,6 +100,7 @@ public class HibernateUserDao implements UserDao {
 
     @Override
     @SuppressWarnings("unchecked")
+    @CacheEvict(value = "user.userId", allEntries = true)
     public void createUser(User user) {
         this.sessionFactory.getCurrentSession().save(user);
     }

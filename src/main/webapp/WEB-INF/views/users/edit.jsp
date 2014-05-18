@@ -67,12 +67,14 @@
                             </div>
                         </div>
                     </div>
-                    <div id="username-already-exists" class="alert alert-danger" style="display:none;">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">User name already exists</button>
-                    </div>
-                    <div id="username-too-small" class="alert alert-danger" style="display:none;">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">User name too small</button>
-                    </div>
+                </div>
+                <div id="username-already-exists" class="alert alert-danger alert-dismissable" style="display:none;">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    This username already exists in the system. Please use another username.
+                </div>
+                <div id="username-too-small" class="alert alert-danger alert-dismissable" style="display:none;">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    The username is too small, must be at least seven characters long.
                 </div>
                 <div class="row" id="pwd-container">
                     <div class="col-md-4">
@@ -89,12 +91,14 @@
                             </div>
                         </div>
                     </div>
-                    <div id="password-not-matched" class="alert alert-danger" style="display:none;">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">Password does not match</button>
-                    </div>
-                    <div id="password-too-small" class="alert alert-danger" style="display:none;">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">Password too small</button>
-                    </div>
+                </div>
+                <div id="password-not-matched" class="alert alert-danger alert-dismissable" style="display:none;">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    The passwords do not match.
+                </div>
+                <div id="password-too-small" class="alert alert-danger alert-dismissable" style="display:none;">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    The password is too small, must be at least seven characters long.
                 </div>
             </fieldset>
 
@@ -146,7 +150,7 @@
             </c:choose>
     </ol>
     <%@include file="/WEB-INF/views/common/person-link-modal.jsp" %>
-    <%@include file="/WEB-INF/views/common/mustache-person-link-search-form.jsp" %>
+    <%@include file="/WEB-INF/views/common/mustache-user-link-search-form.jsp" %>
     <%@ include file="/WEB-INF/views/common/footer.jsp" %>
     <script type="text/javascript" src="<c:url value='/javascript/users.js' />" ></script>
 </body>

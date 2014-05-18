@@ -96,7 +96,7 @@ $(document).ready(function() {
             data: {
                 forename: forename,
                 surname: surname,
-                checkVolunteer: false
+                checkVolunteer: true
             },
             success: function(data) {
                 // no match, and no person linked. We don't show anything
@@ -161,13 +161,6 @@ $(document).ready(function() {
         }
     });
 
-    // TO DO
-    // Password handlers
-    // Password strength
-    $("#password1").change(function() {
-
-    });
-
     $("#password2").blur(function() {
         var password1 = $("#password1").val();
         var password2 = $("#password2").val();
@@ -210,7 +203,10 @@ $(document).ready(function() {
     function enableUserName() {
         $("#userName").removeAttr("disabled");
     }
-
+    function disablePassword() {
+        $("#password1").prop("disabled", true);
+        $("#password2").prop("disabled", true);
+    }
     function enablePassword() {
         $("#password1").removeAttr("disabled");
         $("#password2").removeAttr("disabled");
