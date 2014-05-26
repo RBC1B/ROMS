@@ -33,15 +33,15 @@ import com.google.common.collect.ImmutableMap;
  */
 public class PermissionMap {
 
-    private static final Map<String, String> ACL = ImmutableMap.of("N", "None", "R", "Read Only", "E", "Edit Records", "A",
-            "Add New Records", "D", "Delete Records");
+    private static final Map<String, String> ACL = ImmutableMap.of("N", "None", "R", "Read Only", "E", "Edit Records",
+            "A", "Add New Records", "D", "Delete Records");
 
     /**
      * Returns the acl.
      *
      * @return the acl
      */
-    public Map getAcl() {
+    public Map<String, String> getAcl() {
         return ACL;
     }
 }

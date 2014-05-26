@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- * @author oliver.elder.esq
+ * Application home page.
  */
 @Controller
 @RequestMapping("/")

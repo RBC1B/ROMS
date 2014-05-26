@@ -30,8 +30,6 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -69,7 +67,6 @@ import uk.org.rbc1b.roms.tags.PermissionMap;
 @Controller
 @RequestMapping("/users")
 public class UsersController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(UsersController.class);
     private static final String ACTIVE_VOLUNTEER = "AT";
     @Autowired
     private UserDao userDao;
@@ -135,8 +132,7 @@ public class UsersController {
      * @throws NoSuchRequestHandlingMethodException on failure to look up user
      */
     @RequestMapping(value = "{personId}", method = RequestMethod.GET)
-    public String showUser(@PathVariable Integer personId, ModelMap model)
-            throws NoSuchRequestHandlingMethodException {
+    public String showUser(@PathVariable Integer personId, ModelMap model) throws NoSuchRequestHandlingMethodException {
         User user = userDao.findUser(personId);
         if (user == null) {
             throw new NoSuchRequestHandlingMethodException("No User with ID:" + personId, this.getClass());
@@ -266,9 +262,8 @@ public class UsersController {
         user.setApplicationAccess(null);
         userDao.createUser(user);
         /*
-         * We are only going to use non departmental access to set both dept and
-         * non-dept to the same code.
-         * If the access is 'N' then we do not add to the set.
+         * We are only going to use non departmental access to set both dept and non-dept to the same code. If the
+         * access is 'N' then we do not add to the set.
          */
         List<Application> applications = applicationDao.getApplications();
         HashSet<ApplicationAccess> applicationAccess = new HashSet<ApplicationAccess>();

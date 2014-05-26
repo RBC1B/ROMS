@@ -35,8 +35,8 @@ import javax.servlet.jsp.tagext.TagSupport;
  * @author ramindursingh
  */
 public class PermissionSelect extends TagSupport {
-
-    private Map<String, String> acl = new PermissionMap().getAcl();
+    private static final long serialVersionUID = 1L;
+    private final Map<String, String> acl = new PermissionMap().getAcl();
     private String className;
     private String itemValue;
     private String selected;
@@ -50,11 +50,9 @@ public class PermissionSelect extends TagSupport {
                 String key = entry.getKey();
                 String value = entry.getValue();
                 if (getSelected().equalsIgnoreCase(key)) {
-                    selectOption = selectOption + "<option value='" + value + "' selected>"
-                            + value + "</option>";
+                    selectOption = selectOption + "<option value='" + value + "' selected>" + value + "</option>";
                 } else {
-                    selectOption = selectOption + "<option value='" + value + "'>"
-                            + value + "</option>";
+                    selectOption = selectOption + "<option value='" + value + "'>" + value + "</option>";
                 }
             }
             selectOption = selectOption + "</select>";
