@@ -1501,5 +1501,124 @@ $(document).ready(function() {
         $("#invite-volunteer-form").submit();
 
     });
+    
+    // Volunteer Trade/Experience
+    var deleteExperienceConfirmationProperties = {
+        placement: 'top',
+        singleton: true,
+        popout: true,
+        onConfirm: function(event, element) {
+            event.preventDefault();
+            $.ajax({
+                url: $(element).data("ajax-url"),
+                type: "POST",
+                data: {
+                    _method: "delete"
+                },
+                statusCode: {
+                    404: function() {
+                        alert("Volunteer experience not found");
+                    },
+                    500: function() {
+                        alert("Failed to delete volunteer experience");
+                    }
+                },
+                success: function() {
+                    deleteDataTablesRow($(element));
+                    // if this was the last row, hide the table
+                    if ($("#volunteer-skills-experience .dataTables_empty").length) {
+                        $("#volunteer-with-experience").hide();
+                        $("#volunteer-without-experience").show();
+                    }
+                }
+            });
+        }
+    };
+    $('.a-delete-experience').confirmation(deleteExperienceConfirmationProperties);
+    
+    $('#a-add-experience').on("click", function(event, element) {
+        event.preventDefault();
+
+        var $modalForm = $('#volunteer-experience-modal-form');
+        $modalForm.prop("action", $(this).prop("href"));
+
+        $("input[name='volunteerTradeId']", $modalForm).val("");
+
+        var $nameInput = $("input[name='name']", $modalForm);
+        $nameInput.val("");
+        $nameInput.prop("readonly", false);
+
+        var $experienceDescription = $("input[name='experienceDescription']", $modalForm);
+        var $experienceYears = $("input[name='experienceYears']", $modalForm);
+
+        $modalForm.removeData("validator");
+        $modalForm.unbind("submit");
+        $modalForm.validate({
+            rules: {
+                name: {
+                    required: true
+                },
+                experienceDescription: {
+                    required: true
+                },
+                experienceYears: {
+                    required: true
+                }
+            },
+            messages: {
+                name: {
+                    remote: "Please provide a title for experience"
+                },
+                experienceDescription: {
+                    remote: "Please provide some description of the experience"
+                },
+                experienceYears: {
+                    remote: "Please provide the number of years"
+                }
+            },
+            submitHandler: function(form) {
+                $.ajax({
+                    url: $(form).attr("action"),
+                    data: $(form).serialize(),
+                    type: "POST",
+                    statusCode: {
+                        404: function() {
+                            alert("Volunteer experience not found");
+                        },
+                        500: function() {
+                            alert("Failed to save volunteer experience");
+                        }
+                    },
+                    success: function(data, status, xhr) {
+                        var experienceUri = xhr.getResponseHeader('Location');
+                        addVolunteerExperience(experienceUri);
+                        $('#volunteer-experience-modal').modal('hide');
+                    }
+                });
+            },
+            errorPlacement: roms.common.validatorErrorPlacement
+        });
+        $('#volunteer-experience-modal').modal('show');
+    });
+    
+     function addVolunteerExperience(experienceUri) {
+        var $form = $('#volunteer-experience-modal-form');
+        var template = $("#volunteer-experience-action-template").html();
+        templateData = {
+            "experienceUri": roms.common.relativePath + experienceUri
+        };
+        var actionHtml = Mustache.to_html(template, templateData);
+        var dataTable = $("#volunteer-experience").dataTable();
+        dataTable.fnAddData([
+            $("input[name='volunteerTradeId']").val(),
+            $("input[name='name']").val(),
+            $("input[name='experienceDescription']", $form).val(),
+            $("input[name='experienceYears']", $form).val(),
+            actionHtml
+        ]);
+        $("#volunteer-with-experience").show();
+        $("#volunteer-without-experience").hide();
+        $('.a-delete-experience').confirmation(deleteAssignmentConfirmationProperties);
+    }
 
 });

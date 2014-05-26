@@ -122,6 +122,7 @@
         <%@ include file="fragments/show-skill-edit-modal.jsp" %>
         <%@ include file="fragments/show-rbc-status-code-edit-modal.jsp" %>
         <%@ include file="fragments/show-volunteer-image-edit-modal.jsp" %>
+        <%@ include file="fragments/show-experience-edit-modal.jsp" %>
         <script type="text/javascript" src="<c:url value='/javascript/volunteers.js' />" ></script>
     </body>
 </html>
