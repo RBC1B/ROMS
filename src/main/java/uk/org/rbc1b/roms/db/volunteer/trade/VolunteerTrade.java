@@ -43,6 +43,7 @@ public class VolunteerTrade implements UpdateAuditable, Serializable {
     private Integer experienceYears;
     private Date updateTime;
     private Integer updatedBy;
+    private String editUri;
 
     public Integer getVolunteerTradeId() {
         return volunteerTradeId;
@@ -100,5 +101,19 @@ public class VolunteerTrade implements UpdateAuditable, Serializable {
 
     public void setUpdatedBy(Integer updatedBy) {
         this.updatedBy = updatedBy;
+    }
+
+    /**
+     * @return the editUri
+     */
+    public String getEditUri() {
+        return editUri;
+    }
+
+    /**
+     * @param editUri the editUri to set
+     */
+    public void setEditUri(String editUri) {
+        this.editUri = editUri;
     }
 }

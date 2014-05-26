@@ -119,6 +119,7 @@ public interface VolunteerDao {
 
     /**
      * Find the volunteer skill.
+     *
      * @param volunteerSkillId primary key
      * @return volunteer skill, or null if no match
      */
@@ -128,6 +129,7 @@ public interface VolunteerDao {
 
     /**
      * Delete a volunteer skill.
+     *
      * @param volunteerSkill linked skill
      */
     @Transactional
@@ -136,6 +138,7 @@ public interface VolunteerDao {
 
     /**
      * Update a volunteer skill.
+     *
      * @param volunteerSkill linked skill
      */
     @Transactional
@@ -144,6 +147,7 @@ public interface VolunteerDao {
 
     /**
      * Update a volunteer skill.
+     *
      * @param volunteerSkill linked skill
      */
     @Transactional
@@ -199,6 +203,15 @@ public interface VolunteerDao {
     @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     @Transactional
     void deleteVolunteerTrade(VolunteerTrade volunteerTrade);
+
+    /**
+     * Saves or updates a volunteer trade.
+     *
+     * @param volunteerTrade a trade to save
+     */
+    @PreAuthorize("hasPermission('VOLUNTEER','EDIT')")
+    @Transactional
+    void saveOrUpdateTrade(VolunteerTrade volunteerTrade);
 
     /**
      * Update an existing volunteer qualification.

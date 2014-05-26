@@ -329,4 +329,13 @@ public class HibernateVolunteerDao implements VolunteerDao {
         this.sessionFactory.getCurrentSession().delete(volunteerTrade);
 
     }
+
+    @Override
+    public void saveOrUpdateTrade(VolunteerTrade volunteerTrade) {
+        if (volunteerTrade.getVolunteerTradeId() != null) {
+            this.sessionFactory.getCurrentSession().merge(volunteerTrade);
+        } else {
+            this.sessionFactory.getCurrentSession().save(volunteerTrade);
+        }
+    }
 }
