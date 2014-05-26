@@ -2,11 +2,6 @@
 ## Combine all the schema changes and dummy data in integer order
 ## and pass into the mysql client to create the database tables
 
-if [ "$#" -ne 1 ]
-    then echo "Usage: $0 [database user name]"
-    exit 1
-fi
-
 BASEDIR=$(dirname $0)
 COMBINED="$BASEDIR/all-schema-changes.sql"
 
@@ -46,9 +41,15 @@ for INDEX in {1..50}; do
         echo "COMMIT;" >> $COMBINED
     fi
 done
-echo "Running: mysql -u $1 -p < $COMBINED"
 
-mysql -u $1 -p --verbose < $COMBINED
+if [ "$#" -lt 1 ]
+then
+    echo "Running: mysql < $COMBINED"
+    mysql -u --verbose < $COMBINED
+else
+    echo "Running: mysql -u $1 -p < $COMBINED"
+    mysql -u $1 -p --verbose < $COMBINED
+fi
 
 rm $COMBINED
 
