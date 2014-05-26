@@ -57,6 +57,15 @@ The contents of the skills tab.
     <br />
     <div class="alert alert-warning">Volunteer has no defined skills</div>
 </div>
+<sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
+    <a class="btn btn-edifice" href="<c:url value="${volunteer.editSkillUri}"/>" id="a-add-skill">Add skill</a><br />
+    <script id="volunteer-skills-action-template" type="text/html" charset="utf-8">
+        <ul class="list-inline">
+            <li><a class="a-edit-skill" href="{{skillUri}}">Edit</a></li>
+            <li><a class="a-delete-skill" data-ajax-url="{{skillUri}}" href="#"> Delete</a></li>
+        </ul>
+    </script>
+</sec:authorize>
 
 <h3>Qualifications</h3>
 <c:choose>

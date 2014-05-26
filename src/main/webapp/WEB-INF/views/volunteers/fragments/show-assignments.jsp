@@ -42,10 +42,12 @@ The volunteer department links.
     <br />
     <div class="alert alert-warning">Volunteer is not assigned to any teams</div>
 </div>
-<a class="btn btn-edifice" href="<c:url value="${volunteer.editAssignmentUri}"/>" id="a-add-assignment">Add trade</a><br />
-<script id="volunteer-assignments-action-template" type="text/html" charset="utf-8">
-    <ul class="list-inline">
-        <li><a class="a-edit-assignment" href="{{assignmentUri}}">Edit</a></li>
-        <li><a class="a-delete-assignment" data-ajax-url="{{assignmentUri}}" href="#"> Delete</a></li>
-    </ul>
-</script>
+<sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
+    <a class="btn btn-edifice" href="<c:url value="${volunteer.editAssignmentUri}"/>" id="a-add-assignment">Add trade</a><br />
+    <script id="volunteer-assignments-action-template" type="text/html" charset="utf-8">
+        <ul class="list-inline">
+            <li><a class="a-edit-assignment" href="{{assignmentUri}}">Edit</a></li>
+            <li><a class="a-delete-assignment" data-ajax-url="{{assignmentUri}}" href="#"> Delete</a></li>
+        </ul>
+    </script>
+</sec:authorize>

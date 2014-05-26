@@ -194,7 +194,8 @@ public class VolunteerModelFactory {
 
         model.setUri(generateUri(volunteer.getPersonId()));
         model.setEditNameUri(generateUri(volunteer.getPersonId()) + "/name");
-        model.setEditAssignmentUri(generateUri(volunteer.getPersonId()) + "/assignment");
+        model.setEditAssignmentUri(generateUri(volunteer.getPersonId()) + "/assignments");
+        model.setEditSkillUri(generateUri(volunteer.getPersonId()) + "/skills");
         model.setEditCommentsUri(generateUri(volunteer.getPersonId()) + "/comments");
         model.setEditSpiritualUri(generateUri(volunteer.getPersonId()) + "/spiritual/edit");
         model.setEditPersonalUri(generateUri(volunteer.getPersonId()) + "/personal/edit");

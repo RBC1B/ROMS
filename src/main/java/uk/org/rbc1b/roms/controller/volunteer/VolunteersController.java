@@ -1025,7 +1025,7 @@ public class VolunteersController {
      * @throws NoSuchRequestHandlingMethodException if either the volunteer
      * assignment is not found
      */
-    @RequestMapping(value = "{volunteerId}/assignment", method = RequestMethod.POST)
+    @RequestMapping(value = "{volunteerId}/assignments", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> createVolunteerAssignment(@PathVariable Integer volunteerId,
             @Valid VolunteerAssignmentForm form, UriComponentsBuilder builder)
@@ -1056,7 +1056,7 @@ public class VolunteersController {
         departmentDao.createAssignment(volunteerAssignment);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(builder.path("/volunteers/{volunteerId}/assignment/{assignmentId}")
+        headers.setLocation(builder.path("/volunteers/{volunteerId}/assignments/{assignmentId}")
                 .buildAndExpand(volunteerId, volunteerAssignment.getAssignmentId()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 
@@ -1070,7 +1070,7 @@ public class VolunteersController {
      * @throws NoSuchRequestHandlingMethodException if either the volunteer
      * assignment is not found
      */
-    @RequestMapping(value = "{volunteerId}/assignment/{assignmentId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "{volunteerId}/assignments/{assignmentId}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteVolunteerAssignment(@PathVariable Integer volunteerId, @PathVariable Integer assignmentId)
             throws NoSuchRequestHandlingMethodException {
@@ -1089,7 +1089,7 @@ public class VolunteersController {
      * @throws NoSuchRequestHandlingMethodException if either the volunteer
      * assignment is not found
      */
-    @RequestMapping(value = "{volunteerId}/assignment/{assignmentId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "{volunteerId}/assignments/{assignmentId}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateVolunteerAssignment(@PathVariable Integer volunteerId, @PathVariable Integer assignmentId,
             @Valid VolunteerAssignmentForm form) throws NoSuchRequestHandlingMethodException {
