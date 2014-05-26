@@ -112,29 +112,49 @@ The contents of the skills tab.
     </c:otherwise>
 </c:choose>
 
-<h3>Experience</h3>
-<c:choose>
-    <c:when test="${!empty volunteer.trades}">
+<div id="volunteer-with-experience" <c:if test="${empty trades}">style="display: none"</c:if>>
+        <h3>Experience</h3>
         <table id="volunteer-skills-experience" class="table table-bordered table-condensed table-striped table-hover">
             <thead>
                 <tr>
                     <th>Name</th>
                     <th>Description</th>
                     <th>Years</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                <c:forEach items="${volunteer.trades}" var="trade">
-                    <tr>
-                        <td><c:out value="${trade.name}" /></td>
-                        <td><c:out value="${trade.experienceDescription}" /></td>
-                        <td>${trade.experienceYears}</td>
-                    </tr>
-                </c:forEach>
-            </tbody>
-        </table>
-    </c:when>
-    <c:otherwise>
-        <div class="alert alert-block">Volunteer has no defined experience</div>
-    </c:otherwise>
-</c:choose>
+            <c:forEach items="${trades}" var="trade">
+                <tr>
+                    <td><c:out value="${trade.name}" /></td>
+                    <td><c:out value="${trade.experienceDescription}" /></td>
+                    <td>${trade.experienceYears}</td>
+                    <td>
+                        <ul class="list-inline">
+                            <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
+                                <li><a class="a-edit-experience"
+                                       href="<c:url value="${trade.uri}" />">Edit</a></li>
+                                <li><a class="a-delete-experience" 
+                                       data-ajax-url="<c:url value="${trade.uri}" />" href="<c:url value="#" />">Delete</a></li>
+                            </sec:authorize>
+                        </ul>
+                    </td>                    
+                </tr>
+            </c:forEach>
+        </tbody>
+    </table>
+</div>
+<div id="volunteer-without-experience"
+     <c:if test="${!empty trades}">style="display: none"</c:if> >
+         <br />
+         <div class="alert alert-warning">Volunteer has no defined experience</div>
+     </div>
+     <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
+         <a class="btn btn-edifice" href="<c:url value="${volunteer.editExperienceUri}"/>" id="a-add-experience">Add Experience</a><br />
+</sec:authorize>
+<script id="volunteer-experience-action-template" type="text/html" charset="utf-8">
+    <ul class="list-inline">
+        <li><a class="a-edit-experience" href="{{experienceUri}}">Edit</a></li>
+        <li><a class="a-delete-experience" data-ajax-url="{{experienceUri}}" href="#"> Delete</a></li>
+    </ul>
+</script>
