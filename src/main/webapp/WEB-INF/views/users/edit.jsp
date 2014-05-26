@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : edit
     Created on : Apr 20, 2014, 5:35:07 PM
     Author     : ramindursingh
@@ -53,7 +53,7 @@
                                 <form:input class="form-control" path="surname" maxlength="50" placeholder="Surname"/>
                             </div>
                         </div>
-                    </div>   
+                    </div>
                 </div>
                 <div id="volunteer-linked" class="alert alert-warning alert-dismissable" style="display:none;">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">Unlink</button>
