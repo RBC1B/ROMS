@@ -226,6 +226,7 @@ public class VolunteersController {
         model.addAttribute("assignments", generateAssignments(assignments));
         model.addAttribute("volunteerSkills", volunteerModelFactory.generateVolunteerSkillsModel(skills));
         model.addAttribute("qualifications", volunteerModelFactory.generateVolunteerQualificationsModel(qualifications));
+        model.addAttribute("trades", volunteerModelFactory.generateVolunteerTradesModel(volunteer.getTrades()));
         model.addAttribute("interviews", generateInterviewsModel(volunteerId));
 
         if (volunteer.isPhotoProvided() && volunteer.getPerson().getBirthDate() != null && assignments != null) {

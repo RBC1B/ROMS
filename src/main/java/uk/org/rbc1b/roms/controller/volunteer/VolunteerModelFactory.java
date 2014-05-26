@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -52,6 +53,7 @@ import uk.org.rbc1b.roms.db.volunteer.qualification.VolunteerQualification;
 import uk.org.rbc1b.roms.db.volunteer.skill.Skill;
 import uk.org.rbc1b.roms.db.volunteer.skill.SkillDao;
 import uk.org.rbc1b.roms.db.volunteer.skill.VolunteerSkill;
+import uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTrade;
 
 /**
  * Generate the volunteer model.
@@ -202,6 +204,7 @@ public class VolunteerModelFactory {
         model.setEditRbcStatusUri(generateUri(volunteer.getPersonId()) + "/rbc-status/edit");
         model.setEditImageUri(generateUri(volunteer.getPersonId()) + "/image");
         model.setEditRbcStatusCodeUri(generateUri(volunteer.getPersonId()) + "/rbc-status-code");
+        model.setEditExperienceUri(generateUri(volunteer.getPersonId()) + "/experience");
 
         return model;
     }
@@ -332,5 +335,30 @@ public class VolunteerModelFactory {
         }
         model.setSessionUri(InterviewSessionModelFactory.generateUri(session.getInterviewSessionId()));
         return model;
+    }
+
+    /**
+     * Generates the model to display volunteer trades.
+     *
+     * @param volunteerTrades a set of volunteer experience
+     * @return modelList the model list
+     */
+    public List<VolunteerTradeModel> generateVolunteerTradesModel(
+            Set<VolunteerTrade> volunteerTrades) {
+        if (CollectionUtils.isEmpty(volunteerTrades)) {
+            return null;
+        }
+        List<VolunteerTradeModel> modelList = new ArrayList<VolunteerTradeModel>(volunteerTrades.size());
+        for (VolunteerTrade volunteerTrade : volunteerTrades) {
+            VolunteerTradeModel model = new VolunteerTradeModel();
+            model.setId(volunteerTrade.getVolunteerTradeId());
+            model.setName(volunteerTrade.getName());
+            model.setExperienceDescription(volunteerTrade.getExperienceDescription());
+            model.setExperienceYears(volunteerTrade.getExperienceYears());
+            Integer volid = volunteerTrade.getVolunteer().getPersonId();
+            model.setUri(generateUri(volunteerTrade.getVolunteer().getPersonId()) + "/experience/" + volunteerTrade.getVolunteerTradeId());
+            modelList.add(model);
+        }
+        return modelList;
     }
 }
