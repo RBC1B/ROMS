@@ -45,7 +45,7 @@ done
 if [ "$#" -lt 1 ]
 then
     echo "Running: mysql < $COMBINED"
-    mysql -u --verbose < $COMBINED
+    mysql --verbose < $COMBINED
 else
     echo "Running: mysql -u $1 -p < $COMBINED"
     mysql -u $1 -p --verbose < $COMBINED
