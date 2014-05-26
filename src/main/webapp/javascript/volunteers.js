@@ -864,6 +864,68 @@ $(document).ready(function() {
             }
     );
 
+    $("#volunteer-skills-skills").on("click", ".a-edit-skill", function(e) {
+        e.preventDefault();
+        
+        var $tableRow = $(this).parents("tr");
+        var $modalForm = $('#volunteer-skill-modal-form');
+        $modalForm.prop("action", $(this).prop("href"));
+        
+        var skillName = $("td:eq(0)", $tableRow).text();
+        var departmentName = $("td:eq(1)", $tableRow).text();
+        var combined = departmentName + ": " + skillName;
+        $("select[name='skillId'] option:contains('" + combined + "')", $modalForm).prop("selected", true);
+        $("select[name='skillId']").prop("disabled", true);
+        
+        var skillLevel = $("td:eq(2)", $tableRow).text();
+        $("select[name='skillLevel'] option:contains('" + skillLevel + "')", $modalForm).prop("selected", true);
+        
+        var trainingDate = $("td:eq(3)", $tableRow).text();
+        var picker = $("input[name='trainingDate']").data('DateTimePicker');
+        picker.setDate(moment(trainingDate, "DD/MM/YYYY"));
+        picker.setEndDate(new Date());
+        
+        var trainingResults = $("td:eq(4)", $tableRow).text();
+        $("input[name='trainingResults']", $modalForm).val(trainingResults);
+        
+        var comments = $("td:eq(5)", $tableRow).text();
+        $("input[name='comments']", $modalForm).val(comments);
+        
+        $modalForm.removeData("validator");
+        $modalForm.unbind("submit");
+        
+        $modalForm.validate({
+            rules: {
+                trainingDate: {
+                    required: true
+                }
+            },
+            submitHandler: function(form) {
+                $.ajax({
+                    url: $(form).attr("action"),
+                    data: $(form).serialize(),
+                    type: "PUT",
+                    statusCode: {
+                        404: function() {
+                            alert("Volunteer assignment not found");
+                        },
+                        500: function() {
+                            alert("Failed to save volunteer assignment");
+                        }
+                    },
+                    success: function() {
+                        updateVolunteerSkill();
+                        $('#volunteer-skill-modal').modal('hide');
+                    }
+                });
+            },
+            errorPlacement: roms.common.validatorErrorPlacement
+        });
+
+        $('#volunteer-skill-modal').modal('show');
+    });
+    
+    
     var deleteSkillConfirmationProperties = {
         placement: 'top',
         singleton: true,
@@ -896,6 +958,29 @@ $(document).ready(function() {
         }
     };
     $('.a-delete-skill').confirmation(deleteSkillConfirmationProperties);
+    
+    
+    function updateVolunteerSkill() {
+        var $form = $('#volunteer-skill-modal-form');
+        
+        var formVolunteerSkillUri = $form.prop("action");
+
+        var $table = $("#volunteer-skills-skills");
+        var $row = null;
+        $("tr", $table).each(function() {
+            var volunteerSkillUri = $(".a-edit-skill", $(this)).prop("href"); 
+            if (volunteerSkillUri == formVolunteerSkillUri) {
+                $row = $(this)[0];
+                return false;
+            }
+        });
+
+        var dataTable = $table.dataTable();
+        dataTable.fnUpdate($("select[name='skillLevel'] option:selected", $form).text(), $row, 2, 0);
+        dataTable.fnUpdate($("input[name='trainingDate']", $form).val(), $row, 3, 0);
+        dataTable.fnUpdate($("input[name='trainingResults']", $form).val(), $row, 4, 0);
+        dataTable.fnUpdate($("input[name='comments']", $form).val(), $row, 4, 0);
+    }
     
     
     roms.common.datatables(

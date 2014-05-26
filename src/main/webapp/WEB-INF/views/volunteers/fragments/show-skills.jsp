@@ -2,7 +2,7 @@
 The contents of the skills tab.
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div id="volunteer-with-skills" <c:if test="${empty skills}">style="display: none"</c:if>>
+<div id="volunteer-with-skills" <c:if test="${empty volunteerSkills}">style="display: none"</c:if>>
     <h3>Skills</h3>
     <table id="volunteer-skills-skills" class="table table-bordered table-condensed table-striped table-hover">
         <thead>
@@ -18,7 +18,7 @@ The contents of the skills tab.
             </tr>
         </thead>
         <tbody>
-            <c:forEach items="${skills}" var="skill">
+            <c:forEach items="${volunteerSkills}" var="skill">
                 <tr>
                     <td><span class="a-skill-description" data-original-title="${skill.description}"><a href="<c:url value="${skill.skill.uri}" />"><c:out value="${skill.skill.name}" /></a></span></td>
                     <td><a href="<c:url value="${skill.department.uri}" />"><c:out value="${skill.department.name}" /></a></td>
@@ -26,7 +26,7 @@ The contents of the skills tab.
                     <td>
                         <c:choose>
                             <c:when test="${!empty skill.trainingDate}">
-                                <fmt:formatDate value="${skill.trainingDate}" pattern="dd MMM yyyy" />
+                                <fmt:formatDate value="${skill.trainingDate}" pattern="dd/MM/yyyy" />
                             </c:when>
                             <c:otherwise>-</c:otherwise>
                         </c:choose>
@@ -53,7 +53,7 @@ The contents of the skills tab.
         </tbody>
     </table>
 </div>
-<div id="volunteer-without-skills" <c:if test="${!empty skills}">style="display: none"</c:if>>
+<div id="volunteer-without-skills" <c:if test="${!empty volunteerSkills}">style="display: none"</c:if>>
     <br />
     <div class="alert alert-warning">Volunteer has no defined skills</div>
 </div>

@@ -35,8 +35,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import javax.annotation.Resource;
@@ -82,14 +84,21 @@ import uk.org.rbc1b.roms.db.volunteer.VolunteerDao.VolunteerData;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerSearchCriteria;
 import uk.org.rbc1b.roms.db.volunteer.department.Assignment;
 import uk.org.rbc1b.roms.db.volunteer.department.AssignmentRole;
+import uk.org.rbc1b.roms.db.volunteer.department.Department;
 import uk.org.rbc1b.roms.db.volunteer.department.DepartmentDao;
 import uk.org.rbc1b.roms.db.volunteer.department.Team;
 import uk.org.rbc1b.roms.db.volunteer.interview.InterviewSession;
 import uk.org.rbc1b.roms.db.volunteer.interview.InterviewSessionDao;
 import uk.org.rbc1b.roms.db.volunteer.interview.VolunteerInterviewSession;
 import uk.org.rbc1b.roms.db.volunteer.qualification.VolunteerQualification;
+import uk.org.rbc1b.roms.db.volunteer.skill.Skill;
+import uk.org.rbc1b.roms.db.volunteer.skill.SkillDao;
+import uk.org.rbc1b.roms.db.volunteer.skill.SkillSearchCriteria;
 import uk.org.rbc1b.roms.db.volunteer.skill.VolunteerSkill;
 import uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTrade;
+import com.google.common.base.Functions;
+import com.google.common.collect.ImmutableSortedMap;
+import com.google.common.collect.Ordering;
 
 /**
  * @author rahulsingh
@@ -124,6 +133,8 @@ public class VolunteersController {
     private InterviewSessionDao interviewSessionDao;
     @Autowired
     private DepartmentDao departmentDao;
+    @Autowired
+    private SkillDao skillDao;
     @Resource(name = "imageDirectories")
     private Properties imageDirectories;
 
@@ -213,7 +224,7 @@ public class VolunteersController {
 
         model.addAttribute("volunteer", volunteerModelFactory.generateVolunteerModel(volunteer));
         model.addAttribute("assignments", generateAssignments(assignments));
-        model.addAttribute("skills", volunteerModelFactory.generateVolunteerSkillsModel(skills));
+        model.addAttribute("volunteerSkills", volunteerModelFactory.generateVolunteerSkillsModel(skills));
         model.addAttribute("qualifications", volunteerModelFactory.generateVolunteerQualificationsModel(qualifications));
         model.addAttribute("interviews", generateInterviewsModel(volunteerId));
 
@@ -225,8 +236,31 @@ public class VolunteersController {
         model.addAttribute("tradeNumbers", referenceDao.findTradeNumbers());
         model.addAttribute("teams", referenceDao.findTeams());
         model.addAttribute("assignmentRoles", referenceDao.findAssignmentRoleValues());
+        model.addAttribute("skills", findSkills());
 
         return "volunteers/show";
+    }
+
+    /**
+     * @return reference map for all skills.
+     */
+    private Map<Integer, String> findSkills() {
+
+        List<Department> departments = departmentDao.findDepartments();
+        Map<Integer, String> departmentNames = new HashMap<Integer, String>();
+        for (Department department : departments) {
+            departmentNames.put(department.getDepartmentId(), department.getName());
+        }
+
+        List<Skill> skills = skillDao.findSkills(new SkillSearchCriteria());
+        Map<Integer, String> skillNames = new HashMap<Integer, String>(skills.size());
+        for (Skill skill : skills) {
+            String departmentName = departmentNames.get(skill.getDepartment().getDepartmentId());
+            skillNames.put(skill.getSkillId(), departmentName + ": " + skill.getName());
+        }
+
+        // return the map, sorted by the value (department + skill name)
+        return ImmutableSortedMap.copyOf(skillNames, Ordering.natural().onResultOf(Functions.forMap(skillNames)));
     }
 
     /**
