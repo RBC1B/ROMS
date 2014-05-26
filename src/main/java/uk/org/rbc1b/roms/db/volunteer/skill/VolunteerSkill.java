@@ -24,7 +24,7 @@
 package uk.org.rbc1b.roms.db.volunteer.skill;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import org.hibernate.envers.Audited;
 import uk.org.rbc1b.roms.db.UpdateAuditable;
 
@@ -39,16 +39,16 @@ public class VolunteerSkill implements UpdateAuditable, Serializable {
     private Integer skillId;
     private Integer level;
     private String comments;
-    private Date trainingDate;
+    private java.sql.Date trainingDate;
     private String trainingResults;
     private Date updateTime;
     private Integer updatedBy;
 
-    public Date getTrainingDate() {
+    public java.sql.Date getTrainingDate() {
         return trainingDate;
     }
 
-    public void setTrainingDate(Date trainingDate) {
+    public void setTrainingDate(java.sql.Date trainingDate) {
         this.trainingDate = trainingDate;
     }
 

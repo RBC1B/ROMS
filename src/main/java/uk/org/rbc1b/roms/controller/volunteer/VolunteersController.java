@@ -1159,4 +1159,32 @@ public class VolunteersController {
         volunteerDao.deleteSkill(volunteerSkill);
     }
 
+    /**
+     * Update a department skill linked to a volunteer.
+     *
+     * @param volunteerId volunteer id
+     * @param skillId linked volunteer department skill id
+     * @param form updated data
+     * @throws NoSuchRequestHandlingMethodException if either the volunteer
+     * skill is not found
+     */
+    @RequestMapping(value = "{volunteerId}/skills/{skillId}", method = RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateVolunteerSkill(@PathVariable Integer volunteerId, @PathVariable Integer skillId,
+            @Valid VolunteerSkillForm form) throws NoSuchRequestHandlingMethodException {
+
+        VolunteerSkill volunteerSkill = volunteerDao.findSkill(skillId);
+        if (volunteerSkill == null || !volunteerSkill.getPersonId().equals(volunteerId)) {
+            throw new NoSuchRequestHandlingMethodException("Volunteer #" + volunteerId + " is not linked to skill #"
+                    + skillId, this.getClass());
+        }
+
+        // we don't change the skill or department
+        volunteerSkill.setComments(form.getComments());
+        volunteerSkill.setLevel(form.getLevel());
+        volunteerSkill.setTrainingDate(DataConverterUtil.toSqlDate(form.getTrainingDate()));
+        volunteerSkill.setTrainingResults(form.getTrainingResults());
+
+        volunteerDao.updateSkill(volunteerSkill);
+    }
 }

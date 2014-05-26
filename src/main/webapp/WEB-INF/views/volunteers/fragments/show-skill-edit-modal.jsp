@@ -20,10 +20,10 @@ Content of the model dialog used to update the volunteer's skills.
                         </select>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">Skill level</label>
-                        <select class="form-control" name="skillLevel">
-                            <c:forEach begin="1" end="5" varStatus="skillLevel">
-                                <option value="${skillLevel.index}">${skillLevel.index}</option>
+                        <label class="col-sm-4 control-label">Level</label>
+                        <select class="form-control" name="level">
+                            <c:forEach begin="1" end="5" varStatus="level">
+                                <option value="${level.index}">${level.index}</option>
                             </c:forEach>
                         </select>
                     </div>

@@ -24,7 +24,7 @@
 package uk.org.rbc1b.roms.db.volunteer;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.RelationTargetAuditMode;
 import uk.org.rbc1b.roms.db.Person;
@@ -41,7 +41,7 @@ public class Attendance implements UpdateAuditable, Serializable {
     private Integer attendanceId;
     private Project project;
     private Person person;
-    private Date inviteDate;
+    private java.sql.Date inviteDate;
     private boolean ableToCome;
     private InvitationConfirmation invitationConfirmation;
     private Department department;
@@ -91,11 +91,11 @@ public class Attendance implements UpdateAuditable, Serializable {
         this.invitationConfirmation = invitationConfirmation;
     }
 
-    public Date getInviteDate() {
+    public java.sql.Date getInviteDate() {
         return inviteDate;
     }
 
-    public void setInviteDate(Date inviteDate) {
+    public void setInviteDate(java.sql.Date inviteDate) {
         this.inviteDate = inviteDate;
     }
 

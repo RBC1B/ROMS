@@ -23,7 +23,6 @@
  */
 package uk.org.rbc1b.roms.controller.volunteer;
 
-import java.sql.Date;
 import java.util.Map;
 import java.util.Set;
 import uk.org.rbc1b.roms.controller.common.model.PersonModel;
@@ -93,11 +92,11 @@ public class VolunteerModel extends PersonModel {
         this.appointment = appointment;
     }
 
-    public Date getBaptismDate() {
+    public java.sql.Date getBaptismDate() {
         return baptismDate;
     }
 
-    public void setBaptismDate(Date baptismDate) {
+    public void setBaptismDate(java.sql.Date baptismDate) {
         this.baptismDate = baptismDate;
     }
 
@@ -165,35 +164,35 @@ public class VolunteerModel extends PersonModel {
         this.trades = trades;
     }
 
-    public Date getFormDate() {
+    public java.sql.Date getFormDate() {
         return formDate;
     }
 
-    public void setFormDate(Date formDate) {
+    public void setFormDate(java.sql.Date formDate) {
         this.formDate = formDate;
     }
 
-    public Date getJoinedDate() {
+    public java.sql.Date getJoinedDate() {
         return joinedDate;
     }
 
-    public void setJoinedDate(Date joinedDate) {
+    public void setJoinedDate(java.sql.Date joinedDate) {
         this.joinedDate = joinedDate;
     }
 
-    public Date getBadgeIssueDate() {
+    public java.sql.Date getBadgeIssueDate() {
         return badgeIssueDate;
     }
 
-    public void setBadgeIssueDate(Date badgeIssueDate) {
+    public void setBadgeIssueDate(java.sql.Date badgeIssueDate) {
         this.badgeIssueDate = badgeIssueDate;
     }
 
-    public Date getInterviewDate() {
+    public java.sql.Date getInterviewDate() {
         return interviewDate;
     }
 
-    public void setInterviewDate(Date interviewDate) {
+    public void setInterviewDate(java.sql.Date interviewDate) {
         this.interviewDate = interviewDate;
     }
 

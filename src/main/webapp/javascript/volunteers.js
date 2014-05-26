@@ -877,8 +877,8 @@ $(document).ready(function() {
         $("select[name='skillId'] option:contains('" + combined + "')", $modalForm).prop("selected", true);
         $("select[name='skillId']").prop("disabled", true);
         
-        var skillLevel = $("td:eq(2)", $tableRow).text();
-        $("select[name='skillLevel'] option:contains('" + skillLevel + "')", $modalForm).prop("selected", true);
+        var level = $("td:eq(2)", $tableRow).text();
+        $("select[name='level'] option:contains('" + level + "')", $modalForm).prop("selected", true);
         
         var trainingDate = $("td:eq(3)", $tableRow).text();
         var picker = $("input[name='trainingDate']").data('DateTimePicker');
@@ -901,6 +901,8 @@ $(document).ready(function() {
                 }
             },
             submitHandler: function(form) {
+                // re-enable the skill id value so it is passed into the handler
+                $("select[name='skillId']").prop("disabled", false);
                 $.ajax({
                     url: $(form).attr("action"),
                     data: $(form).serialize(),
@@ -976,10 +978,10 @@ $(document).ready(function() {
         });
 
         var dataTable = $table.dataTable();
-        dataTable.fnUpdate($("select[name='skillLevel'] option:selected", $form).text(), $row, 2, 0);
+        dataTable.fnUpdate($("select[name='level'] option:selected", $form).text(), $row, 2, 0);
         dataTable.fnUpdate($("input[name='trainingDate']", $form).val(), $row, 3, 0);
         dataTable.fnUpdate($("input[name='trainingResults']", $form).val(), $row, 4, 0);
-        dataTable.fnUpdate($("input[name='comments']", $form).val(), $row, 4, 0);
+        dataTable.fnUpdate($("input[name='comments']", $form).val(), $row, 5, 0);
     }
     
     

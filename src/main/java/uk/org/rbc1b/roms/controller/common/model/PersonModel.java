@@ -23,7 +23,6 @@
  */
 package uk.org.rbc1b.roms.controller.common.model;
 
-import java.sql.Date;
 import uk.org.rbc1b.roms.db.Address;
 
 /**
@@ -77,11 +76,11 @@ public class PersonModel {
         this.editUri = editUri;
     }
 
-    public Date getBirthDate() {
+    public java.sql.Date getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(java.sql.Date birthDate) {
         this.birthDate = birthDate;
     }
 

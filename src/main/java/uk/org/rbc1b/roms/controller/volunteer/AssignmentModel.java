@@ -23,7 +23,6 @@
  */
 package uk.org.rbc1b.roms.controller.volunteer;
 
-import java.sql.Date;
 import uk.org.rbc1b.roms.controller.common.model.EntityModel;
 import uk.org.rbc1b.roms.controller.common.model.PersonModel;
 
@@ -37,7 +36,7 @@ public class AssignmentModel {
     private EntityModel department;
     private PersonModel person;
     private String role;
-    private Date assignedDate;
+    private java.sql.Date assignedDate;
     private String tradeNumber;
     private EntityModel team;
     private String uri;
@@ -74,11 +73,11 @@ public class AssignmentModel {
         this.role = role;
     }
 
-    public Date getAssignedDate() {
+    public java.sql.Date getAssignedDate() {
         return assignedDate;
     }
 
-    public void setAssignedDate(Date assignedDate) {
+    public void setAssignedDate(java.sql.Date assignedDate) {
         this.assignedDate = assignedDate;
     }
 

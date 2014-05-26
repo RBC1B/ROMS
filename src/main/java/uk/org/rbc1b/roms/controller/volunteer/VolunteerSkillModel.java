@@ -23,7 +23,6 @@
  */
 package uk.org.rbc1b.roms.controller.volunteer;
 
-import java.sql.Date;
 import uk.org.rbc1b.roms.controller.common.model.EntityModel;
 
 /**
@@ -92,11 +91,11 @@ public class VolunteerSkillModel {
         this.comments = comments;
     }
 
-    public Date getTrainingDate() {
+    public java.sql.Date getTrainingDate() {
         return trainingDate;
     }
 
-    public void setTrainingDate(Date trainingDate) {
+    public void setTrainingDate(java.sql.Date trainingDate) {
         this.trainingDate = trainingDate;
     }
 
