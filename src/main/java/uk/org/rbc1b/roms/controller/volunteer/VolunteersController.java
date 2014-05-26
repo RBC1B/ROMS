@@ -244,7 +244,7 @@ public class VolunteersController {
     /**
      * @return reference map for all skills.
      */
-    private Map<Integer, String> findSkills() {
+    private Map<Integer, DepartmentSkillNameModel> findSkills() {
 
         List<Department> departments = departmentDao.findDepartments();
         Map<Integer, String> departmentNames = new HashMap<Integer, String>();
@@ -253,10 +253,12 @@ public class VolunteersController {
         }
 
         List<Skill> skills = skillDao.findSkills(new SkillSearchCriteria());
-        Map<Integer, String> skillNames = new HashMap<Integer, String>(skills.size());
+        Map<Integer, DepartmentSkillNameModel> skillNames = new HashMap<Integer, DepartmentSkillNameModel>(
+                skills.size());
         for (Skill skill : skills) {
             String departmentName = departmentNames.get(skill.getDepartment().getDepartmentId());
-            skillNames.put(skill.getSkillId(), departmentName + ": " + skill.getName());
+
+            skillNames.put(skill.getSkillId(), new DepartmentSkillNameModel(departmentName, skill.getName()));
         }
 
         // return the map, sorted by the value (department + skill name)
@@ -1133,6 +1135,43 @@ public class VolunteersController {
     }
 
     /**
+     * Created a department skill linked to a volunteer.
+     *
+     * @param volunteerId volunteer id
+     * @param form skill information
+     * @param builder uri builder, for building the response header
+     * @return created status, with the skill url
+     * @throws NoSuchRequestHandlingMethodException if either the volunteer
+     * assignment is not found
+     */
+    @RequestMapping(value = "{volunteerId}/skills", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<Void> createVolunteerSkill(@PathVariable Integer volunteerId, @Valid VolunteerSkillForm form,
+            UriComponentsBuilder builder) throws NoSuchRequestHandlingMethodException {
+
+        Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, null);
+        if (volunteer == null) {
+            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+        }
+
+        VolunteerSkill volunteerSkill = new VolunteerSkill();
+        volunteerSkill.setComments(form.getComments());
+        volunteerSkill.setLevel(form.getLevel());
+        volunteerSkill.setPersonId(volunteerId);
+        volunteerSkill.setSkillId(form.getSkillId());
+        volunteerSkill.setTrainingDate(DataConverterUtil.toSqlDate(form.getTrainingDate()));
+        volunteerSkill.setTrainingResults(form.getTrainingResults());
+
+        volunteerDao.createSkill(volunteerSkill);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(builder.path("/volunteers/{volunteerId}/skills/{skillId}")
+                .buildAndExpand(volunteerId, volunteerSkill.getVolunteerSkillId()).toUri());
+        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+
+    }
+
+    /**
      * Delete a department assignment linked to a volunteer.
      *
      * @param volunteerId volunteer id
@@ -1187,4 +1226,5 @@ public class VolunteersController {
 
         volunteerDao.updateSkill(volunteerSkill);
     }
+
 }

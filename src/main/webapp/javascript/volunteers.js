@@ -909,10 +909,10 @@ $(document).ready(function() {
                     type: "PUT",
                     statusCode: {
                         404: function() {
-                            alert("Volunteer assignment not found");
+                            alert("Volunteer skill not found");
                         },
                         500: function() {
-                            alert("Failed to save volunteer assignment");
+                            alert("Failed to save volunteer skill");
                         }
                     },
                     success: function() {
@@ -984,6 +984,85 @@ $(document).ready(function() {
         dataTable.fnUpdate($("input[name='comments']", $form).val(), $row, 5, 0);
     }
     
+    $('#a-add-skill').on("click", function(event, element) {
+        event.preventDefault();
+        
+        var $modalForm = $('#volunteer-skill-modal-form');
+        $modalForm.prop("action", $(this).prop("href"));
+        
+        // clear the values
+        $("select[name='skillId'] option", $modalForm).prop("selected", false);
+        $("select[name='skillId']").prop("disabled", false);
+        $("select[name='level'] option[value='1']", $modalForm).prop("selected", true);
+        $("input[name='trainingResults']").val("");
+        $("input[name='comments']").val("");
+        
+        $("input[name='trainingDate']").val(moment().format("DD/MM/YYYY"));
+        var picker = $("input[name='trainingDate']").data('DateTimePicker');
+        picker.setEndDate(new Date());
+        
+        $modalForm.removeData("validator");
+        $modalForm.unbind("submit");
+        $modalForm.validate({
+            rules: {
+                skillId: {
+                    required: true
+                },
+                trainingDate: {
+                    required: true
+                }
+            },
+            submitHandler: function(form) {
+                $.ajax({
+                    url: $(form).attr("action"),
+                    data: $(form).serialize(),
+                    type: "POST",
+                    statusCode: {
+                        404: function() {
+                            alert("Volunteer skill not found");
+                        },
+                        500: function() {
+                            alert("Failed to save volunteer skill");
+                        }
+                    },
+                    success: function(data, status, xhr) {
+                        var skillUri = xhr.getResponseHeader('Location')
+                        
+                        addVolunteerSkill(skillUri);
+                        $('#volunteer-skill-modal').modal('hide');
+                    }
+                });
+            },
+            errorPlacement: roms.common.validatorErrorPlacement
+        });
+        $('#volunteer-skill-modal').modal('show');
+    });
+    
+    function addVolunteerSkill(skillUri) {
+        var $form = $('#volunteer-skill-modal-form');
+
+        var template = $("#volunteer-skills-action-template").html();
+        templateData = {
+            "skillUri": roms.common.relativePath + skillUri
+        };
+        var actionHtml = Mustache.to_html(template, templateData);
+        
+        var dataTable = $("#volunteer-skills-skills").dataTable();
+        dataTable.fnAddData([
+            $("select[name='skillId'] option:selected", $form).data("skill-name"),
+            $("select[name='skillId'] option:selected", $form).data("department-name"),
+            $("select[name='level'] option:selected", $form).text(),                 
+            $("input[name='trainingDate']", $form).val(),
+            $("input[name='trainingResults']", $form).val(),
+            $("input[name='comments']", $form).val(),
+            "",
+            actionHtml
+        ]);
+        
+        $("#volunteer-with-skills").show();
+        $("#volunteer-without-skills").hide();
+        $('.a-delete-skill').confirmation(deleteSkillConfirmationProperties);
+    }
     
     roms.common.datatables(
             $("#volunteer-skills-qualifications"),

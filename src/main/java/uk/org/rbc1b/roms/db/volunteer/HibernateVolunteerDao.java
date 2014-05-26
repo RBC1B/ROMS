@@ -233,6 +233,11 @@ public class HibernateVolunteerDao implements VolunteerDao {
         this.sessionFactory.getCurrentSession().merge(volunteerSkill);
     }
 
+    @Override
+    public void createSkill(VolunteerSkill volunteerSkill) {
+        this.sessionFactory.getCurrentSession().save(volunteerSkill);
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public List<VolunteerQualification> findQualifications(Integer volunteerId) {

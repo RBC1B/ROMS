@@ -143,6 +143,14 @@ public interface VolunteerDao {
     void updateSkill(VolunteerSkill volunteerSkill);
 
     /**
+     * Update a volunteer skill.
+     * @param volunteerSkill linked skill
+     */
+    @Transactional
+    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
+    void createSkill(VolunteerSkill volunteerSkill);
+
+    /**
      * Find the volunteer qualifications.
      *
      * @param volunteerId id

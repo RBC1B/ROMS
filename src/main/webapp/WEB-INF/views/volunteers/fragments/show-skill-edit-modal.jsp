@@ -14,8 +14,12 @@ Content of the model dialog used to update the volunteer's skills.
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Skill</label>
                         <select class="form-control" name="skillId">
+                            <option></option>
                             <c:forEach items="${skills}" var="skill">
-                                <option value="${skill.key}">${skill.value}</option>
+                                <option value="${skill.key}"
+                                        data-department-name="${skill.value.departmentName}"
+                                        data-skill-name="${skill.value.skillName}"
+                                        >${skill.value}</option>
                             </c:forEach>
                         </select>
                     </div>
