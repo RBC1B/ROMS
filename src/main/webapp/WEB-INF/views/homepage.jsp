@@ -1,65 +1,78 @@
 <%--
     Homepage dashboard.
 --%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <c:set var="pageTitle">RBC Online Management System for Construction</c:set>
-    <%@ include file="/WEB-INF/views/common/header.jsp" %>
-    <body>
-        <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <h1>Dashboard</h1>
-        <hr />
-        <div class="row">
-            <div class="well-edifice col-md-4 col-xs-6">
-                <div class="well">
-                    <!--Nested the well into another div with padding inside to give space between wells. Yoshi 09/10/13-->
-                    <h3>Organisations</h3>
-                    <ul class="nav nav-tabs nav-stacked">
-                        <li>Congregation</li>
-                        <li>Circuit</li>
-                    </ul>
+<c:set var="pageTitle">RBC Online Management System for Construction</c:set>
+<%@ include file="/WEB-INF/views/common/header.jsp"%>
+<body>
+    <%@ include file="/WEB-INF/views/common/titlebar.jsp"%>
+    <c:choose>
+        <c:when test="${!empty volunteer}">
+            <div class="media">
+                <c:choose>
+                    <c:when test="${volunteer.photoProvided}">
+                        <c:set var="volunteerImagePath">
+                            <c:url value='${volunteer.id}/image' />
+                        </c:set>
+                    </c:when>
+                    <c:otherwise>
+                        <c:set var="volunteerImagePath">
+                            <c:url value='/images/default-volunteer-image.jpg' />
+                        </c:set>
+                    </c:otherwise>
+                </c:choose>
+                <div id="volunteer-image">
+                    <img src="${volunteerImagePath}" class="media-object pull-left" alt="volunteer image" />
+                </div>
+                <div class="media-body">
+                    <h1 class="media-heading">
+                        #${volunteer.id}: <span id="volunteer-full-name"><c:out
+                                value="${volunteer.forename} ${volunteer.middleName} ${volunteer.surname}" /></span>
+                    </h1>
+                    <a href="<c:url value='${volunteer.uri}' />">Full details</a>
+                    <div id="volunteer-with-assignments" <c:if test="${empty assignments}">style="display: none"</c:if>>
+                        <table class="table table-bordered table-condensed table-striped table-hover" id="volunteer-assignments">
+                            <thead>
+                                <tr>
+                                    <th>Trade no.</th>
+                                    <th>Department</th>
+                                    <th>Team</th>
+                                    <th>Role</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${assignments}" var="assignment">
+                                    <tr>
+                                        <td>${assignment.tradeNumber}</td>
+                                        <td><a href="<c:url value="${assignment.department.uri}" />"><c:out
+                                                    value="${assignment.department.name}" /></a></td>
+                                        <td><a href="<c:url value="${assignment.team.uri}" />"><c:out
+                                                    value="${assignment.team.name}" /></a></td>
+                                        <td>${assignment.role}</td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="volunteer-without-assignments" <c:if test="${!empty assignments}">style="display: none"</c:if>>
+                        <br />
+                        <div class="alert alert-warning">Volunteer is not assigned to any teams</div>
+                    </div>
                 </div>
             </div>
-            <div class="well-edifice col-md-4 col-xs-6">
-                <div class="well">
-                    <h3>Kingdom Hall</h3>
-                    <ul class="nav nav-tabs nav-stacked">
-                        <li>List of Kingdom Halls</li>
-                    </ul>
-                </div>
+            <br />
+            <div class="clearfix"></div>
+        </c:when>
+        <c:otherwise>
+            <p>&nbsp;</p>
+            <div class="alert alert-danger">
+                <p>No volunteer is linked to your user account</p>
             </div>
-            <div class="well-edifice col-md-4 col-xs-6">
-                <div class="well">
-                    <h3>Projects</h3>
-                    <ul class="nav nav-tabs nav-stacked">
-                        <li>Project coordination</li>
-                        <li>Project design</li>
-                        <li>Upcoming projects</li>
-                    </ul>
-                </div>
-            </div>
-            <!--Made 2 rows into 1, so that, for smaller screen sizes, the "Projects" well doesn't stand on its own. Just to make it look better! Yoshi 09/10/13-->
-            <div class="well-edifice col-md-4 col-xs-6">
-                <div class="well">
-                    <h3>Volunteers</h3>
-                    <ul class="nav nav-tabs nav-stacked">
-                        <li>Contact details</li>
-                        <li>Skills & training</li>
-                        <li>Gate list</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="well-edifice col-md-4 col-xs-6">
-                <div class="well">
-                    <h3>My Profile</h3>
-                    <ul class="nav nav-tabs nav-stacked">
-                        <li>Ramindur</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-    </body>
+        </c:otherwise>
+    </c:choose>
+    <%@ include file="/WEB-INF/views/common/footer.jsp"%>
+</body>
 </html>
