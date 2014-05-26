@@ -1227,4 +1227,59 @@ public class VolunteersController {
         volunteerDao.updateSkill(volunteerSkill);
     }
 
+        /**
+     * Deletes volunteer trade/experience.
+     *
+     * @param volunteerId the volunteer id
+     * @param volunteerTradeId the volunteer trade id
+     * @throws NoSuchRequestHandlingMethodException the exception
+     */
+    @RequestMapping(value = "{volunteerId}/experience/{volunteerTradeId}", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteVolunteerExperience(@PathVariable Integer volunteerId, @PathVariable Integer volunteerTradeId)
+            throws NoSuchRequestHandlingMethodException {
+        Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, null);
+        for (VolunteerTrade trade : volunteer.getTrades()) {
+            if (trade.getVolunteerTradeId() == volunteerTradeId) {
+                volunteerDao.deleteVolunteerTrade(trade);
+            }
+        }
+    }
+
+    /**
+     * Creates the volunteer experience.
+     *
+     * @param volunteerId the volunteer id
+     * @param form the form data
+     * @param builder the builder
+     * @return response status
+     * @throws NoSuchRequestHandlingMethodException the exception
+     */
+    @RequestMapping(value = "{volunteerId}/experience", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<Void> createVolunteerExperience(@PathVariable Integer volunteerId,
+            @Valid VolunteerExperienceForm form, UriComponentsBuilder builder)
+            throws NoSuchRequestHandlingMethodException {
+
+        Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, null);
+        if (volunteer == null) {
+            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+        }
+
+        VolunteerTrade trade = new VolunteerTrade();
+        trade.setVolunteer(volunteer);
+        if (form.getVolunteerTradeId() != null) {
+            trade.setVolunteerTradeId(form.getVolunteerTradeId());
+        }
+        trade.setName(form.getName());
+        trade.setExperienceDescription(form.getExperienceDescription());
+        trade.setExperienceYears(Integer.parseInt(form.getExperienceYears()));
+        volunteerDao.saveOrUpdateTrade(trade);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(builder.path("/volunteers/{volunteerId}/experience/{experienceId}")
+                .buildAndExpand(volunteerId, trade.getVolunteerTradeId()).toUri());
+        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+
+    }
 }
