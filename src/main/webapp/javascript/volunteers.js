@@ -615,7 +615,7 @@ $(document).ready(function() {
     });
 
     // display
-    
+
     // volunteer assignments
     roms.common.datatables(
             $("#volunteer-assignments"),
@@ -715,7 +715,7 @@ $(document).ready(function() {
         dataTable.fnUpdate($("select[name='assignmentRoleCode'] option:selected", $form).text(), $row, 3, 0);
         dataTable.fnUpdate($("input[name='assignedDate']", $form).val(), $row, 4, 0);
     }
-    
+
     var deleteAssignmentConfirmationProperties = {
         placement: 'top',
         singleton: true,
@@ -751,30 +751,30 @@ $(document).ready(function() {
 
     $('#a-add-assignment').on("click", function(event, element) {
         event.preventDefault();
-        
+
         var $modalForm = $('#volunteer-assignment-modal-form');
         $modalForm.prop("action", $(this).prop("href"));
-        
+
         $("input[name='departmentId']", $modalForm).val("");
-        
+
         var $departmentNameInput = $("input[name='departmentName']", $modalForm);
         $departmentNameInput.val("");
         $departmentNameInput.prop("readonly", false);
-        
+
         $departmentNameInput.typeahead({
             remote: roms.common.relativePath + '/departments/search?name=%QUERY',
             valueKey: 'name'
         });
-        
+
         $("select[name='tradeNumberId'] option[value='1']", $modalForm).prop("selected", true);
         $("select[name='teamId'] option[value='1']", $modalForm).prop("selected", true);
         $("select[name='assignmentRoleCode'] option[value='VN']", $modalForm).prop("selected", true);
-        
+
         $("input[name='assignedDate']").val(moment().format("DD/MM/YYYY"));
         var picker = $("input[name='assignedDate']").data('DateTimePicker');
         picker.setDate(moment(new Date(), "DD/MM/YYYY"));
         picker.setEndDate(new Date());
-        
+
         $modalForm.removeData("validator");
         $modalForm.unbind("submit");
         $modalForm.validate({
@@ -808,7 +808,7 @@ $(document).ready(function() {
                     },
                     success: function(data, status, xhr) {
                         var assignmentUri = xhr.getResponseHeader('Location')
-                        
+
                         addVolunteerAssignment(assignmentUri);
                         $('#volunteer-assignment-modal').modal('hide');
                     }
@@ -824,10 +824,10 @@ $(document).ready(function() {
 
         var template = $("#volunteer-assignments-action-template").html();
         templateData = {
-                "assignmentUri": roms.common.relativePath + assignmentUri
+            "assignmentUri": roms.common.relativePath + assignmentUri
         };
         var actionHtml = Mustache.to_html(template, templateData);
-        
+
         var dataTable = $("#volunteer-assignments").dataTable();
         dataTable.fnAddData([
             $("select[name='tradeNumberId'] option:selected", $form).text(),
@@ -837,7 +837,7 @@ $(document).ready(function() {
             $("input[name='assignedDate']", $form).val(),
             actionHtml
         ]);
-        
+
         $("#volunteer-with-assignments").show();
         $("#volunteer-without-assignments").hide();
         $('.a-delete-assignment').confirmation(deleteAssignmentConfirmationProperties);
@@ -856,44 +856,44 @@ $(document).ready(function() {
             {
                 "iDisplayLength": 10,
                 "aoColumnDefs": [
-                     {
-                         'bSortable': false,
-                         'aTargets': [7]
-                     }
-                 ]
+                    {
+                        'bSortable': false,
+                        'aTargets': [7]
+                    }
+                ]
             }
     );
 
     $("#volunteer-skills-skills").on("click", ".a-edit-skill", function(e) {
         e.preventDefault();
-        
+
         var $tableRow = $(this).parents("tr");
         var $modalForm = $('#volunteer-skill-modal-form');
         $modalForm.prop("action", $(this).prop("href"));
-        
+
         var skillName = $("td:eq(0)", $tableRow).text();
         var departmentName = $("td:eq(1)", $tableRow).text();
         var combined = departmentName + ": " + skillName;
         $("select[name='skillId'] option:contains('" + combined + "')", $modalForm).prop("selected", true);
         $("select[name='skillId']").prop("disabled", true);
-        
+
         var level = $("td:eq(2)", $tableRow).text();
         $("select[name='level'] option:contains('" + level + "')", $modalForm).prop("selected", true);
-        
+
         var trainingDate = $("td:eq(3)", $tableRow).text();
         var picker = $("input[name='trainingDate']").data('DateTimePicker');
         picker.setDate(moment(trainingDate, "DD/MM/YYYY"));
         picker.setEndDate(new Date());
-        
+
         var trainingResults = $("td:eq(4)", $tableRow).text();
         $("input[name='trainingResults']", $modalForm).val(trainingResults);
-        
+
         var comments = $("td:eq(5)", $tableRow).text();
         $("input[name='comments']", $modalForm).val(comments);
-        
+
         $modalForm.removeData("validator");
         $modalForm.unbind("submit");
-        
+
         $modalForm.validate({
             rules: {
                 trainingDate: {
@@ -926,8 +926,8 @@ $(document).ready(function() {
 
         $('#volunteer-skill-modal').modal('show');
     });
-    
-    
+
+
     var deleteSkillConfirmationProperties = {
         placement: 'top',
         singleton: true,
@@ -960,17 +960,17 @@ $(document).ready(function() {
         }
     };
     $('.a-delete-skill').confirmation(deleteSkillConfirmationProperties);
-    
-    
+
+
     function updateVolunteerSkill() {
         var $form = $('#volunteer-skill-modal-form');
-        
+
         var formVolunteerSkillUri = $form.prop("action");
 
         var $table = $("#volunteer-skills-skills");
         var $row = null;
         $("tr", $table).each(function() {
-            var volunteerSkillUri = $(".a-edit-skill", $(this)).prop("href"); 
+            var volunteerSkillUri = $(".a-edit-skill", $(this)).prop("href");
             if (volunteerSkillUri == formVolunteerSkillUri) {
                 $row = $(this)[0];
                 return false;
@@ -983,24 +983,24 @@ $(document).ready(function() {
         dataTable.fnUpdate($("input[name='trainingResults']", $form).val(), $row, 4, 0);
         dataTable.fnUpdate($("input[name='comments']", $form).val(), $row, 5, 0);
     }
-    
+
     $('#a-add-skill').on("click", function(event, element) {
         event.preventDefault();
-        
+
         var $modalForm = $('#volunteer-skill-modal-form');
         $modalForm.prop("action", $(this).prop("href"));
-        
+
         // clear the values
         $("select[name='skillId'] option", $modalForm).prop("selected", false);
         $("select[name='skillId']").prop("disabled", false);
         $("select[name='level'] option[value='1']", $modalForm).prop("selected", true);
         $("input[name='trainingResults']").val("");
         $("input[name='comments']").val("");
-        
+
         $("input[name='trainingDate']").val(moment().format("DD/MM/YYYY"));
         var picker = $("input[name='trainingDate']").data('DateTimePicker');
         picker.setEndDate(new Date());
-        
+
         $modalForm.removeData("validator");
         $modalForm.unbind("submit");
         $modalForm.validate({
@@ -1027,7 +1027,7 @@ $(document).ready(function() {
                     },
                     success: function(data, status, xhr) {
                         var skillUri = xhr.getResponseHeader('Location')
-                        
+
                         addVolunteerSkill(skillUri);
                         $('#volunteer-skill-modal').modal('hide');
                     }
@@ -1037,7 +1037,7 @@ $(document).ready(function() {
         });
         $('#volunteer-skill-modal').modal('show');
     });
-    
+
     function addVolunteerSkill(skillUri) {
         var $form = $('#volunteer-skill-modal-form');
 
@@ -1046,24 +1046,24 @@ $(document).ready(function() {
             "skillUri": roms.common.relativePath + skillUri
         };
         var actionHtml = Mustache.to_html(template, templateData);
-        
+
         var dataTable = $("#volunteer-skills-skills").dataTable();
         dataTable.fnAddData([
             $("select[name='skillId'] option:selected", $form).data("skill-name"),
             $("select[name='skillId'] option:selected", $form).data("department-name"),
-            $("select[name='level'] option:selected", $form).text(),                 
+            $("select[name='level'] option:selected", $form).text(),
             $("input[name='trainingDate']", $form).val(),
             $("input[name='trainingResults']", $form).val(),
             $("input[name='comments']", $form).val(),
             "",
             actionHtml
         ]);
-        
+
         $("#volunteer-with-skills").show();
         $("#volunteer-without-skills").hide();
         $('.a-delete-skill').confirmation(deleteSkillConfirmationProperties);
     }
-    
+
     roms.common.datatables(
             $("#volunteer-skills-qualifications"),
             {
@@ -1501,7 +1501,7 @@ $(document).ready(function() {
         $("#invite-volunteer-form").submit();
 
     });
-    
+
     // Volunteer Trade/Experience
     var deleteExperienceConfirmationProperties = {
         placement: 'top',
@@ -1535,7 +1535,7 @@ $(document).ready(function() {
         }
     };
     $('.a-delete-experience').confirmation(deleteExperienceConfirmationProperties);
-    
+
     $('#a-add-experience').on("click", function(event, element) {
         event.preventDefault();
 
@@ -1548,13 +1548,13 @@ $(document).ready(function() {
         $("input[name='experienceYears']", $modalForm).val("");
 
         /*
-        var $nameInput = $("input[name='name']", $modalForm);
-        $nameInput.val("");
-        $nameInput.prop("readonly", false);
-
-        var $experienceDescription = $("input[name='experienceDescription']", $modalForm);
-        var $experienceYears = $("input[name='experienceYears']", $modalForm);
-        */
+         var $nameInput = $("input[name='name']", $modalForm);
+         $nameInput.val("");
+         $nameInput.prop("readonly", false);
+         
+         var $experienceDescription = $("input[name='experienceDescription']", $modalForm);
+         var $experienceYears = $("input[name='experienceYears']", $modalForm);
+         */
         $modalForm.removeData("validator");
         $modalForm.unbind("submit");
         $modalForm.validate({
@@ -1604,8 +1604,8 @@ $(document).ready(function() {
         });
         $('#volunteer-experience-modal').modal('show');
     });
-    
-     function addVolunteerExperience(experienceUri) {
+
+    function addVolunteerExperience(experienceUri) {
         var $form = $('#volunteer-experience-modal-form');
         var template = $("#volunteer-experience-action-template").html();
         templateData = {
@@ -1624,4 +1624,89 @@ $(document).ready(function() {
         $('.a-delete-experience').confirmation(deleteAssignmentConfirmationProperties);
     }
 
+    $("#volunteer-skills-experience").on("click", ".a-edit-experience", function(e) {
+        e.preventDefault();
+
+        var $tableRow = $(this).parents("tr");
+        var $modalForm = $('#volunteer-experience-modal-form');
+        $modalForm.prop("action", $(this).prop("href"));
+
+        var name = $("td:eq(0)", $tableRow).text();
+        var experienceDescription = $("td:eq(1)", $tableRow).text();
+        var experienceYears = $("td:eq(2)", $tableRow).text();
+
+        $("input[name='name']", $modalForm).val(name);
+        $("input[name='experienceDescription']", $modalForm).val(experienceDescription);
+        $("input[name='experienceYears']", $modalForm).val(experienceYears);
+
+        $modalForm.removeData("validator");
+        $modalForm.unbind("submit");
+
+        $modalForm.validate({
+            rules: {
+                name: {
+                    required: true
+                },
+                experienceDescription: {
+                    required: true
+                },
+                experienceYears: {
+                    required: true
+                }
+            },
+            messages: {
+                name: {
+                    remote: "Please provide a title for experience"
+                },
+                experienceDescription: {
+                    remote: "Please provide some description of the experience"
+                },
+                experienceYears: {
+                    remote: "Please provide the number of years"
+                }
+            },
+            submitHandler: function(form) {
+                $.ajax({
+                    url: $(form).attr("action"),
+                    data: $(form).serialize(),
+                    type: "PUT",
+                    statusCode: {
+                        404: function() {
+                            alert("Volunteer experience not found");
+                        },
+                        500: function() {
+                            alert("Failed to save volunteer experience");
+                        }
+                    },
+                    success: function() {
+                        updateVolunteerExperience();
+                        $('#volunteer-experience-modal').modal('hide');
+                    }
+                });
+            },
+            errorPlacement: roms.common.validatorErrorPlacement
+        });
+
+        $('#volunteer-experience-modal').modal('show');
+    });
+
+    function updateVolunteerExperience() {
+        var $form = $('#volunteer-experience-modal-form');
+
+        var formVolunteerExperiencelUri = $form.prop("action");
+
+        var $table = $("#volunteer-skills-experience");
+        var $row = null;
+        $("tr", $table).each(function() {
+            var volunteerExperiencelUri = $(".a-edit-experience", $(this)).prop("href");
+            if (volunteerExperiencelUri == formVolunteerExperiencelUri) {
+                $row = $(this)[0];
+                return false;
+            }
+        });
+        var dataTable = $table.dataTable();
+        dataTable.fnUpdate($("input[name='name']", $form).val(), $row, 0, 0);
+        dataTable.fnUpdate($("input[name='experienceDescription']", $form).val(), $row, 1, 0);
+        dataTable.fnUpdate($("input[name='experienceYears']", $form).val(), $row, 2, 0);
+    }
 });

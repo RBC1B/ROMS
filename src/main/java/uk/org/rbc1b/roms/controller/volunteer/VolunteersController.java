@@ -297,7 +297,7 @@ public class VolunteersController {
         model.addAttribute("qualificationValues", referenceDao.findQualificationValues());
         model.addAttribute("submitUri",
                 VolunteerModelFactory.generateUri(volunteerQualification.getVolunteerQualificationId())
-                        + "/qualifications");
+                + "/qualifications");
 
         return "volunteers/edit-qualification";
     }
@@ -1000,7 +1000,7 @@ public class VolunteersController {
             if (ObjectUtils.equals(emergencyContact.getForename(), form.getSpouseForename())
                     && ObjectUtils.equals(emergencyContact.getSurname(), form.getSurname())
                     && (ObjectUtils.equals(form.getEmergencyRelationshipCode(), "HB") || ObjectUtils.equals(
-                            form.getEmergencyRelationshipCode(), "WF"))) {
+                    form.getEmergencyRelationshipCode(), "WF"))) {
 
                 return emergencyContact;
             }
@@ -1228,7 +1228,7 @@ public class VolunteersController {
         volunteerDao.updateSkill(volunteerSkill);
     }
 
-        /**
+    /**
      * Deletes volunteer trade/experience.
      *
      * @param volunteerId the volunteer id
@@ -1279,5 +1279,32 @@ public class VolunteersController {
                 .buildAndExpand(volunteerId, trade.getVolunteerTradeId()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 
+    }
+
+    /**
+     * Updates a volunteer experience.
+     *
+     * @param volunteerId the volunteer id
+     * @param volunteerTradeId the volunteer trade id
+     * @param form the valid form data
+     * @param builder the builder
+     * @throws NoSuchRequestHandlingMethodException the exception
+     */
+    @RequestMapping(value = "{volunteerId}/experience/{volunteerTradeId}", method = RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateVolunteerExperience(@PathVariable Integer volunteerId, @PathVariable Integer volunteerTradeId,
+            @Valid VolunteerExperienceForm form, UriComponentsBuilder builder)
+            throws NoSuchRequestHandlingMethodException {
+        Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, null);
+        VolunteerTrade volunteerTrade = volunteerDao.findTrade(volunteerTradeId);
+        if (volunteer == null || volunteerTrade == null || volunteer.getPersonId() != volunteerTrade.getVolunteer().getPersonId()) {
+            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+        }
+
+        volunteerTrade.setName(form.getName());
+        volunteerTrade.setExperienceDescription(form.getExperienceDescription());
+        volunteerTrade.setExperienceYears(Integer.parseInt(form.getExperienceYears()));
+
+        volunteerDao.updateTrade(volunteerTrade);
     }
 }

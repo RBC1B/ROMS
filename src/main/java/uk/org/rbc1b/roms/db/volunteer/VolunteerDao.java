@@ -205,13 +205,32 @@ public interface VolunteerDao {
     void deleteVolunteerTrade(VolunteerTrade volunteerTrade);
 
     /**
-     * Saves or updates a volunteer trade.
+     * Saves a volunteer trade/experience.
      *
      * @param volunteerTrade a trade to save
      */
     @PreAuthorize("hasPermission('VOLUNTEER','EDIT')")
     @Transactional
     void createTrade(VolunteerTrade volunteerTrade);
+
+    /**
+     * Updates a volunteer trade/experience.
+     *
+     * @param volunteerTrade the trade experience to save
+     */
+    @PreAuthorize("hasPermission('VOLUNTEER','EDIT')")
+    @Transactional
+    void updateTrade(VolunteerTrade volunteerTrade);
+
+    /**
+     * Finds a volunteer trade/experience.
+     *
+     * @param volunteerTradeId the volunteer trade id
+     * @return volunteerTrade the trade
+     */
+    @PreAuthorize("hasPermission('VOLUNTEER','EDIT')")
+    @Transactional
+    VolunteerTrade findTrade(Integer volunteerTradeId);
 
     /**
      * Update an existing volunteer qualification.

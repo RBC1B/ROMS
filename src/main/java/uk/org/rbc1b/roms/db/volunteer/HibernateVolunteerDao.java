@@ -332,6 +332,18 @@ public class HibernateVolunteerDao implements VolunteerDao {
 
     @Override
     public void createTrade(VolunteerTrade volunteerTrade) {
-            this.sessionFactory.getCurrentSession().save(volunteerTrade);
+        this.sessionFactory.getCurrentSession().save(volunteerTrade);
+    }
+
+    @Override
+    public void updateTrade(VolunteerTrade volunteerTrade) {
+        this.sessionFactory.getCurrentSession().merge(volunteerTrade);
+    }
+
+    @Override
+    public VolunteerTrade findTrade(Integer volunteerTradeId) {
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(VolunteerTrade.class);
+        criteria.add(Restrictions.eq("volunteerTradeId", volunteerTradeId));
+        return (VolunteerTrade) criteria.uniqueResult();
     }
 }
