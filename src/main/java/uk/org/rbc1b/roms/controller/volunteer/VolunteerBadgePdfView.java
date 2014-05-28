@@ -30,93 +30,47 @@ import java.util.Map;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.web.servlet.view.document.AbstractPdfView;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
-import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Image;
-import com.lowagie.text.PageSize;
 import com.lowagie.text.pdf.Barcode39;
 import com.lowagie.text.pdf.BaseFont;
 import com.lowagie.text.pdf.PdfContentByte;
-import com.lowagie.text.pdf.PdfWriter;
+import com.lowagie.text.pdf.PdfStamper;
+import org.springframework.web.servlet.view.document.AbstractPdfStamperView;
 
 /**
  * View that builds the Volunteer Badge as a PDF.
  *
  * @author rahulsingh
  */
-public class VolunteerBadgePdfView extends AbstractPdfView {
+public class VolunteerBadgePdfView extends AbstractPdfStamperView {
 
     /**
      * Builds the PDF document of the badge.
      *
      * @param model model
-     * @param document document
-     * @param writer writer
+     * @param stamper pdf stamper allows us to edit existing pdfs
      * @param request http request
      * @param response http response
      * @throws DocumentException if not formed
      * @throws IOException if unable to read and render data
      */
     @Override
-    protected void buildPdfDocument(Map<String, Object> model, Document document, PdfWriter writer,
+    protected void mergePdfDocument(Map<String, Object> model, PdfStamper stamper,
             HttpServletRequest request, HttpServletResponse response) throws DocumentException, IOException {
 
         Volunteer volunteer = (Volunteer) model.get("volunteer");
-        VolunteerBadgeColour colourBand = (VolunteerBadgeColour) model.get("colourBand");
         @SuppressWarnings("unchecked")
         Set<String> skillsSet = (Set<String>) model.get("skillsSet");
+        PdfContentByte cb = stamper.getOverContent(1);
         String assignment = (String) model.get("assignment");
-        document.open();
-
-        document.setPageSize(PageSize.ID_1);
-
-        PdfContentByte cb = writer.getDirectContent();
-
-        addBand(cb, colourBand);
-        addSkillsTable(cb);
-
-        addSkills(cb, skillsSet);
 
         // Get image
         BufferedImage bufferedImage = (BufferedImage) model.get("bufferedImage");
         Image img = Image.getInstance(bufferedImage, null);
 
-        addImage(cb, img);
         addBarcode(cb, volunteer.getPersonId());
-        addVolunteerName(cb, volunteer.getPerson().formatDisplayName());
-        addRBCRegionTitle(cb, "RBC London and Home Counties");
-
-        addDepartment(cb, assignment);
-        addBigRectangle(cb, colourBand);
-        addBadgeTitle(cb, "Kingdom Hall Construction");
-    }
-
-    /**
-     * Creates a rectangular band to represent the access a volunteer has to the
-     * sites. Red means he is allowed to be in high-risk areas.
-     *
-     * @param content to added to the pdf
-     * @param colourBand of the volunteer's badge
-     */
-    private static void addBand(PdfContentByte content, VolunteerBadgeColour colourBand) {
-        content.rectangle(79, 700, 252, 9);
-        switch (colourBand) {
-        case GREEN:
-            content.setColorFill(Color.GREEN);
-            break;
-        case ORANGE:
-            content.setColorFill(Color.ORANGE);
-            break;
-        case RED:
-            content.setColorFill(Color.RED);
-            break;
-        default:
-            content.setColorFill(Color.GRAY);
-            break;
-        }
-        content.fill();
     }
 
     /**
@@ -128,18 +82,18 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
     private static void addBigRectangle(PdfContentByte content, VolunteerBadgeColour colour) {
         content.rectangle(80, 700, 250, -168);
         switch (colour) {
-        case GREEN:
-            content.setColorStroke(Color.GREEN);
-            break;
-        case ORANGE:
-            content.setColorStroke(Color.ORANGE);
-            break;
-        case RED:
-            content.setColorStroke(Color.RED);
-            break;
-        default:
-            content.setColorStroke(Color.GRAY);
-            break;
+            case GREEN:
+                content.setColorStroke(Color.GREEN);
+                break;
+            case ORANGE:
+                content.setColorStroke(Color.ORANGE);
+                break;
+            case RED:
+                content.setColorStroke(Color.RED);
+                break;
+            default:
+                content.setColorStroke(Color.GRAY);
+                break;
         }
         content.closePathStroke();
     }
@@ -266,17 +220,15 @@ public class VolunteerBadgePdfView extends AbstractPdfView {
      * @throws DocumentException
      * @throws IOException
      */
-    private static void addBarcode(PdfContentByte content, Integer id) throws DocumentException, IOException {
+    private static void addBarcode(PdfContentByte contentByte, Integer id) throws IOException, DocumentException {
         Barcode39 barcode = new Barcode39();
         BaseFont baseFont = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.WINANSI, BaseFont.EMBEDDED);
         barcode.setFont(baseFont);
         barcode.setSize(6);
         barcode.setCode(id.toString());
-        barcode.setBarHeight(6.0f);
-        content.setColorFill(Color.BLACK);
-        Image barcodeImage = barcode.createImageWithBarcode(content, null, null);
-        content.addImage(barcodeImage, 75, 0, 0, 35, 246, 536);
-
+        contentByte.setColorFill(Color.BLACK);
+        Image baecodeImg = barcode.createImageWithBarcode(contentByte, null, null);
+        contentByte.addImage(baecodeImg, 75, 0, 0, 35, 338, 344);
     }
 
     /**

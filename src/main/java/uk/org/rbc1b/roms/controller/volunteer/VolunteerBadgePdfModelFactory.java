@@ -92,13 +92,13 @@ public class VolunteerBadgePdfModelFactory {
     }
 
     /**
-     * Generate the colour band of the badge depending on the volunteer details
+     * Determines the colour of the badge depending on the volunteer details
      * such as their age and departmental assignment.
      *
      * @param volunteer volunteer
      * @return VolunteerBadgeColour the colour
      */
-    public VolunteerBadgeColour generateColourBand(Volunteer volunteer) {
+    public VolunteerBadgeColour determineBadgeColour(Volunteer volunteer) {
         LocalDate birthDate = LocalDate.fromDateFields(volunteer.getPerson().getBirthDate());
         LocalDate now = new LocalDate();
         Years age = Years.yearsBetween(birthDate, now);

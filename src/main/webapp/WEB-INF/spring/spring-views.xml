@@ -29,6 +29,18 @@ THE SOFTWARE.
                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:annotation-config/>
-    <bean id="volunteerBadgePdfView" class="uk.org.rbc1b.roms.controller.volunteer.VolunteerBadgePdfView"></bean>
+
+    <bean id="greenVolunteerBadgePdfView" class="uk.org.rbc1b.roms.controller.volunteer.VolunteerBadgePdfView">
+        <property name="url" value="/volunteer-badge-templates/rbc-badge-green.pdf" />
+    </bean>
+    <bean id="greyVolunteerBadgePdfView" class="uk.org.rbc1b.roms.controller.volunteer.VolunteerBadgePdfView">
+        <property name="url" value="/volunteer-badge-templates/rbc-badge-grey.pdf" />
+    </bean>
+    <bean id="orangeVolunteerBadgePdfView" class="uk.org.rbc1b.roms.controller.volunteer.VolunteerBadgePdfView">
+        <property name="url" value="/volunteer-badge-templates/rbc-badge-orange.pdf" />
+    </bean>
+    <bean id="redVolunteerBadgePdfView" class="uk.org.rbc1b.roms.controller.volunteer.VolunteerBadgePdfView">
+        <property name="url" value="/volunteer-badge-templates/rbc-badge-red.pdf" />
+    </bean>
 
 </beans>

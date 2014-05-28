@@ -99,6 +99,9 @@ import uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTrade;
 import com.google.common.base.Functions;
 import com.google.common.collect.ImmutableSortedMap;
 import com.google.common.collect.Ordering;
+import static uk.org.rbc1b.roms.controller.volunteer.VolunteerBadgeColour.GREEN;
+import static uk.org.rbc1b.roms.controller.volunteer.VolunteerBadgeColour.ORANGE;
+import static uk.org.rbc1b.roms.controller.volunteer.VolunteerBadgeColour.RED;
 
 /**
  * @author rahulsingh
@@ -870,16 +873,31 @@ public class VolunteersController {
     @RequestMapping(value = "{volunteerId}/rbc-{volunteerBadgeId}-badge.pdf", method = RequestMethod.GET)
     public ModelAndView produceVolunteerBadgePdf(@PathVariable Integer volunteerId,
             @PathVariable Integer volunteerBadgeId) throws IOException {
+
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
         if (volunteerId.equals(volunteerBadgeId)) {
-            ModelAndView modelAndView = new ModelAndView("volunteerBadgePdfView");
+            VolunteerBadgeColour badgeColour = volunteerBadgePdfModelFactory.determineBadgeColour(volunteer);
+            ModelAndView modelAndView = null;
+
+            switch (badgeColour) {
+                case GREEN:
+                    modelAndView = new ModelAndView("greenVolunteerBadgePdfView");
+                    break;
+                case RED:
+                    modelAndView = new ModelAndView("redVolunteerBadgePdfView");
+                    break;
+                case ORANGE:
+                    modelAndView = new ModelAndView("orangeVolunteerBadgePdfView");
+                    break;
+                default:
+                    modelAndView = new ModelAndView("greyVolunteerBadgePdfView");
+                    break;
+            }
 
             String assignment = volunteerBadgePdfModelFactory.generatePrimaryAssignment(volunteer);
             Set<String> skillsSet = volunteerBadgePdfModelFactory.generateSkillsSet(volunteer);
-            VolunteerBadgeColour colourBand = volunteerBadgePdfModelFactory.generateColourBand(volunteer);
 
             modelAndView.getModelMap().addAttribute("volunteer", volunteer);
-            modelAndView.getModelMap().addAttribute("colourBand", colourBand);
             modelAndView.getModelMap().addAttribute("skillsSet", skillsSet);
             modelAndView.getModelMap().addAttribute("assignment", assignment);
 
