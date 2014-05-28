@@ -1541,16 +1541,20 @@ $(document).ready(function() {
 
         var $modalForm = $('#volunteer-experience-modal-form');
         $modalForm.prop("action", $(this).prop("href"));
-
+        // clear the values
         $("input[name='volunteerTradeId']", $modalForm).val("");
+        $("input[name='name']", $modalForm).val("");
+        $("input[name='experienceDescription']", $modalForm).val("");
+        $("input[name='experienceYears']", $modalForm).val("");
 
+        /*
         var $nameInput = $("input[name='name']", $modalForm);
         $nameInput.val("");
         $nameInput.prop("readonly", false);
 
         var $experienceDescription = $("input[name='experienceDescription']", $modalForm);
         var $experienceYears = $("input[name='experienceYears']", $modalForm);
-
+        */
         $modalForm.removeData("validator");
         $modalForm.unbind("submit");
         $modalForm.validate({
@@ -1608,10 +1612,9 @@ $(document).ready(function() {
             "experienceUri": roms.common.relativePath + experienceUri
         };
         var actionHtml = Mustache.to_html(template, templateData);
-        var dataTable = $("#volunteer-experience").dataTable();
+        var dataTable = $("#volunteer-skills-experience").dataTable();
         dataTable.fnAddData([
-            $("input[name='volunteerTradeId']").val(),
-            $("input[name='name']").val(),
+            $("input[name='name']", $form).val(),
             $("input[name='experienceDescription']", $form).val(),
             $("input[name='experienceYears']", $form).val(),
             actionHtml

@@ -331,11 +331,7 @@ public class HibernateVolunteerDao implements VolunteerDao {
     }
 
     @Override
-    public void saveOrUpdateTrade(VolunteerTrade volunteerTrade) {
-        if (volunteerTrade.getVolunteerTradeId() != null) {
-            this.sessionFactory.getCurrentSession().merge(volunteerTrade);
-        } else {
+    public void createTrade(VolunteerTrade volunteerTrade) {
             this.sessionFactory.getCurrentSession().save(volunteerTrade);
-        }
     }
 }

@@ -1269,13 +1269,10 @@ public class VolunteersController {
 
         VolunteerTrade trade = new VolunteerTrade();
         trade.setVolunteer(volunteer);
-        if (form.getVolunteerTradeId() != null) {
-            trade.setVolunteerTradeId(form.getVolunteerTradeId());
-        }
         trade.setName(form.getName());
         trade.setExperienceDescription(form.getExperienceDescription());
         trade.setExperienceYears(Integer.parseInt(form.getExperienceYears()));
-        volunteerDao.saveOrUpdateTrade(trade);
+        volunteerDao.createTrade(trade);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(builder.path("/volunteers/{volunteerId}/experience/{experienceId}")

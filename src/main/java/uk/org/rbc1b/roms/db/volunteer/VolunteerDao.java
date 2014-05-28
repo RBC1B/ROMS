@@ -211,7 +211,7 @@ public interface VolunteerDao {
      */
     @PreAuthorize("hasPermission('VOLUNTEER','EDIT')")
     @Transactional
-    void saveOrUpdateTrade(VolunteerTrade volunteerTrade);
+    void createTrade(VolunteerTrade volunteerTrade);
 
     /**
      * Update an existing volunteer qualification.
