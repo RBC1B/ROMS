@@ -46,6 +46,8 @@ import org.springframework.web.servlet.view.document.AbstractPdfStamperView;
  */
 public class VolunteerBadgePdfView extends AbstractPdfStamperView {
 
+    private static final String BADGE_RBC_REGION = "RBC London and Home Counties";
+
     /**
      * Builds the PDF document of the badge.
      *
@@ -70,32 +72,11 @@ public class VolunteerBadgePdfView extends AbstractPdfStamperView {
         BufferedImage bufferedImage = (BufferedImage) model.get("bufferedImage");
         Image img = Image.getInstance(bufferedImage, null);
 
+        addImage(cb, img);
         addBarcode(cb, volunteer.getPersonId());
-    }
-
-    /**
-     * Creates the perimeter and colour of the Rectangular Badge.
-     *
-     * @param content the Rectangle
-     * @param colour colour of the Rectangle
-     */
-    private static void addBigRectangle(PdfContentByte content, VolunteerBadgeColour colour) {
-        content.rectangle(80, 700, 250, -168);
-        switch (colour) {
-            case GREEN:
-                content.setColorStroke(Color.GREEN);
-                break;
-            case ORANGE:
-                content.setColorStroke(Color.ORANGE);
-                break;
-            case RED:
-                content.setColorStroke(Color.RED);
-                break;
-            default:
-                content.setColorStroke(Color.GRAY);
-                break;
-        }
-        content.closePathStroke();
+        addVolunteerName(cb, volunteer.getPerson().formatDisplayName());
+        addDepartment(cb, assignment);
+        addRBCRegionFooter(cb);
     }
 
     /**
@@ -105,25 +86,7 @@ public class VolunteerBadgePdfView extends AbstractPdfStamperView {
      * @param img the image
      */
     private static void addImage(PdfContentByte content, Image img) throws DocumentException {
-        content.addImage(img, 75, 0, 0, 98, 247, 577);
-    }
-
-    /**
-     * Adds a title to the badge.
-     *
-     * @param content to be added
-     * @param title the title
-     */
-    private static void addBadgeTitle(PdfContentByte content, String title) throws DocumentException, IOException {
-        content.beginText();
-        content.moveText(141, 685);
-
-        BaseFont bf = BaseFont.createFont();
-        content.setFontAndSize(bf, 12);
-        content.setColorFill(Color.BLACK);
-        content.setTextRenderingMode(PdfContentByte.TEXT_RENDER_MODE_FILL_STROKE_CLIP);
-        content.showText(title);
-        content.endText();
+        content.addImage(img, 75, 0, 0, 88, 338, 383);
     }
 
     /**
@@ -184,10 +147,10 @@ public class VolunteerBadgePdfView extends AbstractPdfStamperView {
      */
     private static void addVolunteerName(PdfContentByte content, String name) throws DocumentException, IOException {
         content.beginText();
-        content.moveText(90, 670);
+        content.moveText(183, 470);
 
-        BaseFont bf = BaseFont.createFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1252, false);
-        content.setFontAndSize(bf, 11);
+        BaseFont bf = BaseFont.createFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1257, false);
+        content.setFontAndSize(bf, 16);
         content.setColorFill(Color.BLACK);
         content.showText(name);
         content.endText();
@@ -195,20 +158,20 @@ public class VolunteerBadgePdfView extends AbstractPdfStamperView {
 
     /**
      * Adds the RBC Region's title (e.g. London and the Home Counties) to the
-     * Badge.
+     * bottom of the badge.
      *
      * @param content to be added
      * @param rbcRegion RBC region
      */
-    private static void addRBCRegionTitle(PdfContentByte content, String rbcRegion) throws DocumentException,
+    private static void addRBCRegionFooter(PdfContentByte content) throws DocumentException,
             IOException {
         content.beginText();
-        content.moveText(90, 641);
+        content.moveText(183, 345);
 
         BaseFont bf = BaseFont.createFont();
         content.setFontAndSize(bf, 9);
         content.setColorFill(Color.DARK_GRAY);
-        content.showText("-" + rbcRegion);
+        content.showText(VolunteerBadgePdfView.BADGE_RBC_REGION);
         content.endText();
     }
 
@@ -241,11 +204,10 @@ public class VolunteerBadgePdfView extends AbstractPdfStamperView {
      */
     private static void addDepartment(PdfContentByte content, String department) throws DocumentException, IOException {
         content.beginText();
-        content.moveText(90, 653);
+        content.moveText(183, 453);
 
-        BaseFont bf = BaseFont.createFont();
-        content.setFontAndSize(bf, 10.5f);
-        content.setColorFill(Color.BLACK);
+        BaseFont bf = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1257, false);
+        content.setFontAndSize(bf, 14);
         content.showText(department);
         content.endText();
     }
