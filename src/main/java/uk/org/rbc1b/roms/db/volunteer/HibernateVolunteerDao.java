@@ -346,4 +346,14 @@ public class HibernateVolunteerDao implements VolunteerDao {
         criteria.add(Restrictions.eq("volunteerTradeId", volunteerTradeId));
         return (VolunteerTrade) criteria.uniqueResult();
     }
+
+    @Override
+    public void deleteVolunteerQualification(VolunteerQualification volunteerQualification) {
+        this.sessionFactory.getCurrentSession().delete(volunteerQualification);
+    }
+
+    @Override
+    public void createQualification(VolunteerQualification volunteerQualification) {
+        this.sessionFactory.getCurrentSession().save(volunteerQualification);
+    }
 }

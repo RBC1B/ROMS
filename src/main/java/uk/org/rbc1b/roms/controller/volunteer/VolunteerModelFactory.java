@@ -205,6 +205,7 @@ public class VolunteerModelFactory {
         model.setEditImageUri(generateUri(volunteer.getPersonId()) + "/image");
         model.setEditRbcStatusCodeUri(generateUri(volunteer.getPersonId()) + "/rbc-status-code");
         model.setEditExperienceUri(generateUri(volunteer.getPersonId()) + "/experience");
+        model.setEditQualificationUri(generateUri(volunteer.getPersonId()) + "/qualifications");
 
         return model;
     }
@@ -287,7 +288,7 @@ public class VolunteerModelFactory {
 
             model.setId(volunteerQualification.getVolunteerQualificationId());
 
-            model.setAppearOnBadge(true);
+            model.setAppearOnBadge(false);
             model.setComments(volunteerQualification.getComments());
 
             Qualification qualification = qualificationDao.findQualification(volunteerQualification
@@ -300,8 +301,8 @@ public class VolunteerModelFactory {
             qualificationModel.setUri(QualificationModelFactory.generateUri(qualification.getQualificationId()));
 
             model.setQualification(qualificationModel);
-            model.setEditUri(volunteerQualification.getPersonId() + "/qualifications/"
-                    + volunteerQualification.getVolunteerQualificationId() + "/edit");
+            model.setUri(volunteerQualification.getPersonId() + "/qualifications/"
+                    + volunteerQualification.getVolunteerQualificationId());
 
             modelList.add(model);
         }
