@@ -99,14 +99,9 @@ import uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTrade;
 import com.google.common.base.Functions;
 import com.google.common.collect.ImmutableSortedMap;
 import com.google.common.collect.Ordering;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import uk.org.rbc1b.roms.controller.qualification.QualificationModel;
 import static uk.org.rbc1b.roms.controller.volunteer.VolunteerBadgeColour.GREEN;
 import static uk.org.rbc1b.roms.controller.volunteer.VolunteerBadgeColour.ORANGE;
 import static uk.org.rbc1b.roms.controller.volunteer.VolunteerBadgeColour.RED;
-import uk.org.rbc1b.roms.db.volunteer.qualification.Qualification;
-import uk.org.rbc1b.roms.db.volunteer.qualification.QualificationDao;
 
 /**
  * @author rahulsingh
@@ -115,7 +110,6 @@ import uk.org.rbc1b.roms.db.volunteer.qualification.QualificationDao;
 @RequestMapping("/volunteers")
 public class VolunteersController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(VolunteersController.class);
     private static final String MARRIED_MARITAL_STATUS = "MR";
     private static final String RBC_STATUS_PENDING = "PD";
     private static final String FULLTIME_REGULAR_PIONEER = "RP";
@@ -144,8 +138,6 @@ public class VolunteersController {
     private DepartmentDao departmentDao;
     @Autowired
     private SkillDao skillDao;
-    @Autowired
-    private QualificationDao qualificationDao;
     @Resource(name = "imageDirectories")
     private Properties imageDirectories;
 
@@ -231,12 +223,12 @@ public class VolunteersController {
 
         List<Assignment> assignments = volunteerDao.findAssignments(volunteerId);
         List<VolunteerSkill> skills = volunteerDao.findSkills(volunteerId);
-        List<VolunteerQualification> volunteerQualifications = volunteerDao.findQualifications(volunteerId);
+        List<VolunteerQualification> qualifications = volunteerDao.findQualifications(volunteerId);
 
         model.addAttribute("volunteer", volunteerModelFactory.generateVolunteerModel(volunteer));
         model.addAttribute("assignments", generateAssignments(assignments));
         model.addAttribute("volunteerSkills", volunteerModelFactory.generateVolunteerSkillsModel(skills));
-        model.addAttribute("volunteerQualifications", volunteerModelFactory.generateVolunteerQualificationsModel(volunteerQualifications));
+        model.addAttribute("qualifications", volunteerModelFactory.generateVolunteerQualificationsModel(qualifications));
         model.addAttribute("trades", volunteerModelFactory.generateVolunteerTradesModel(volunteer.getTrades()));
         model.addAttribute("interviews", generateInterviewsModel(volunteerId));
 
@@ -249,25 +241,8 @@ public class VolunteersController {
         model.addAttribute("teams", referenceDao.findTeams());
         model.addAttribute("assignmentRoles", referenceDao.findAssignmentRoleValues());
         model.addAttribute("skills", findSkills());
-        model.addAttribute("qualifications", findQualifications());
 
         return "volunteers/show";
-    }
-
-    /**
-     * Creates a map for qualifications.
-     *
-     * @return reference map for all qualifications
-     */
-    private Map<Integer, QualificationModel> findQualifications() {
-        List<Qualification> qualifications = qualificationDao.findQualifications();
-        Map<Integer, QualificationModel> map = new HashMap<Integer, QualificationModel>();
-        for (Qualification qualification : qualifications) {
-            QualificationModel model = new QualificationModel();
-            model.setName(qualification.getName());
-            map.put(qualification.getQualificationId(), model);
-        }
-        return map;
     }
 
     /**
@@ -726,6 +701,32 @@ public class VolunteersController {
 
         return "redirect:" + VolunteerModelFactory.generateUri(volunteer.getPersonId()) + "#!spiritual";
 
+    }
+
+    /**
+     * Update the volunteer qualification information.
+     *
+     * @param volunteerQualificationId volunteer qualification Id to edit
+     * @param form form data
+     * @return view name (redirect)
+     * @throws NoSuchRequestHandlingMethodException if volunteer is not found
+     */
+    @RequestMapping(value = "{volunteerQualificationId}/qualifications", method = RequestMethod.PUT)
+    public String updateVolunteerQualification(@PathVariable Integer volunteerQualificationId,
+            @Valid VolunteerQualificationForm form) throws NoSuchRequestHandlingMethodException {
+
+        VolunteerQualification volunteerQualification = volunteerDao.findQualification(volunteerQualificationId);
+        if (volunteerQualification == null) {
+            throw new NoSuchRequestHandlingMethodException("No volunteer qualification #" + volunteerQualificationId
+                    + " found", this.getClass());
+        }
+
+        volunteerQualification.setComments(form.getComments());
+        volunteerQualification.setQualificationId(form.getQualificationId());
+
+        volunteerDao.updateVolunteerQualification(volunteerQualification);
+
+        return "redirect:" + VolunteerModelFactory.generateUri(volunteerQualification.getPersonId()) + "#!skills";
     }
 
     /**
@@ -1323,92 +1324,5 @@ public class VolunteersController {
         volunteerTrade.setExperienceYears(Integer.parseInt(form.getExperienceYears()));
 
         volunteerDao.updateTrade(volunteerTrade);
-    }
-
-    /**
-     * Update the volunteer qualification information.
-     * @param volunteerId  the volunteer id
-     * @param volunteerQualificationId volunteer qualification Id to edit
-     * @param form form data
-     * @throws NoSuchRequestHandlingMethodException if volunteer is not found
-     */
-    @RequestMapping(value = "{volunteerId}/qualifications/{volunteerQualificationId}", method = RequestMethod.PUT)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateVolunteerQualification(@PathVariable Integer volunteerId,
-            @PathVariable Integer volunteerQualificationId,
-            @Valid VolunteerQualificationForm form)
-            throws NoSuchRequestHandlingMethodException {
-
-        VolunteerQualification volunteerQualification = volunteerDao.findQualification(volunteerQualificationId);
-        if (volunteerQualification == null || volunteerQualification.getPersonId() != volunteerId) {
-            throw new NoSuchRequestHandlingMethodException("No volunteer qualification #" + volunteerQualificationId
-                    + " found", this.getClass());
-        }
-
-        volunteerQualification.setComments(form.getComments());
-        volunteerQualification.setQualificationId(form.getQualificationId());
-
-        volunteerDao.updateVolunteerQualification(volunteerQualification);
-    }
-
-    /**
-     * Delete a qualification linked to a volunteer.
-     *
-     * @param volunteerId volunteer id
-     * @param volunteerQualificationId linked volunteer qualification id
-     * @throws NoSuchRequestHandlingMethodException if either the volunteer
-     * qualification is not found
-     */
-    @RequestMapping(value = "{volunteerId}/qualifications/{volunteerQualificationId}", method = RequestMethod.DELETE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteVolunteerQualification(@PathVariable Integer volunteerId, @PathVariable Integer volunteerQualificationId)
-            throws NoSuchRequestHandlingMethodException {
-
-        VolunteerQualification volunteerQualification = volunteerDao.findQualification(volunteerQualificationId);
-        if (volunteerQualification == null) {
-            throw new NoSuchRequestHandlingMethodException("Volunteer qualification #" + volunteerQualificationId + " is not found",
-                    this.getClass());
-        }
-
-        if (!volunteerQualification.getPersonId().equals(volunteerId)) {
-            throw new NoSuchRequestHandlingMethodException("Volunteer #" + volunteerId + " is not linked to qualification #"
-                    + volunteerQualificationId, this.getClass());
-        }
-
-        volunteerDao.deleteVolunteerQualification(volunteerQualification);
-    }
-
-    /**
-     * Created a qualification linked to a volunteer.
-     *
-     * @param volunteerId volunteer id
-     * @param form qualification information
-     * @param builder uri builder, for building the response header
-     * @return created status, with the qualification url
-     * @throws NoSuchRequestHandlingMethodException if either the qualification
-     * is not found
-     */
-    @RequestMapping(value = "{volunteerId}/qualifications", method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<Void> createVolunteerQualification(@PathVariable Integer volunteerId, @Valid VolunteerQualificationForm form,
-            UriComponentsBuilder builder) throws NoSuchRequestHandlingMethodException {
-
-        Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, null);
-        if (volunteer == null) {
-            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
-        }
-
-        VolunteerQualification volunteerQualification = new VolunteerQualification();
-        volunteerQualification.setComments(form.getComments());
-        volunteerQualification.setPersonId(volunteerId);
-        volunteerQualification.setQualificationId(form.getQualificationId());
-
-        volunteerDao.createQualification(volunteerQualification);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(builder.path("/volunteers/{volunteerId}/qualifications/{qualificationId}")
-                .buildAndExpand(volunteerId, volunteerQualification.getVolunteerQualificationId()).toUri());
-        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
-
     }
 }

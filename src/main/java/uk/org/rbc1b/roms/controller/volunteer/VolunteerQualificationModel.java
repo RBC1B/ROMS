@@ -36,7 +36,7 @@ public class VolunteerQualificationModel {
     private EntityModel qualification;
     private String comments;
     private boolean appearOnBadge;
-    private String uri;
+    private String editUri;
 
     public Integer getId() {
         return id;
@@ -78,11 +78,11 @@ public class VolunteerQualificationModel {
         this.appearOnBadge = appearOnBadge;
     }
 
-    public String getUri() {
-        return this.uri;
+    public String getEditUri() {
+        return this.editUri;
     }
 
-    public void setUri(String uri) {
-        this.uri = uri;
+    public void setEditUri(String editUri) {
+        this.editUri = editUri;
     }
 }

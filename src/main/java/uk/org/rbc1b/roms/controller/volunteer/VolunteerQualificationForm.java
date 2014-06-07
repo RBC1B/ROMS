@@ -23,43 +23,28 @@
  */
 package uk.org.rbc1b.roms.controller.volunteer;
 
-import javax.validation.constraints.NotNull;
-
 /**
- * Volunteer Qualification form.
  *
+ * @author David Maggio
  */
 public class VolunteerQualificationForm {
 
-    @NotNull
-    private Integer qualificationId;
     private String comments;
+    private Integer qualificationId;
 
-    /**
-     * @return the qualificationId
-     */
-    public Integer getQualificationId() {
-        return qualificationId;
-    }
-
-    /**
-     * @param qualificationId the qualificationId to set
-     */
-    public void setQualificationId(Integer qualificationId) {
-        this.qualificationId = qualificationId;
-    }
-
-    /**
-     * @return the comments
-     */
     public String getComments() {
         return comments;
     }
 
-    /**
-     * @param comments the comments to set
-     */
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public Integer getQualificationId() {
+        return qualificationId;
+    }
+
+    public void setQualificationId(Integer qualificationId) {
+        this.qualificationId = qualificationId;
     }
 }

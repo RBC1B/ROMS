@@ -72,7 +72,6 @@ public class VolunteerModel extends PersonModel {
     private String editImageUri;
     private String editRbcStatusCodeUri;
     private String editExperienceUri;
-    private String editQualificationUri;
 
     /**
      * Determine if the volunteer is available on a given day of the week.
@@ -379,19 +378,5 @@ public class VolunteerModel extends PersonModel {
      */
     public void setEditExperienceUri(String editExperienceUri) {
         this.editExperienceUri = editExperienceUri;
-    }
-
-    /**
-     * @return the editQualificationUri
-     */
-    public String getEditQualificationUri() {
-        return editQualificationUri;
-    }
-
-    /**
-     * @param editQualificationUri the editQualificationUri to set
-     */
-    public void setEditQualificationUri(String editQualificationUri) {
-        this.editQualificationUri = editQualificationUri;
     }
 }

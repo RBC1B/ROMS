@@ -242,24 +242,6 @@ public interface VolunteerDao {
     void updateVolunteerQualification(VolunteerQualification volunteerQualification);
 
     /**
-     * Update an existing volunteer qualification.
-     *
-     * @param volunteerQualification a volunteer qualification to save
-     */
-    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
-    @Transactional
-    void deleteVolunteerQualification(VolunteerQualification volunteerQualification);
-
-    /**
-     * Update a volunteer skill.
-     *
-     * @param volunteerQualification qualification
-     */
-    @Transactional
-    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
-    void createQualification(VolunteerQualification volunteerQualification);
-
-    /**
      * Additional data to pull in when generating the volunteer details.
      */
     public static enum VolunteerData {
