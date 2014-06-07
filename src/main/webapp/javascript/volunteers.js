@@ -1547,14 +1547,6 @@ $(document).ready(function() {
         $("input[name='experienceDescription']", $modalForm).val("");
         $("input[name='experienceYears']", $modalForm).val("");
 
-        /*
-         var $nameInput = $("input[name='name']", $modalForm);
-         $nameInput.val("");
-         $nameInput.prop("readonly", false);
-         
-         var $experienceDescription = $("input[name='experienceDescription']", $modalForm);
-         var $experienceYears = $("input[name='experienceYears']", $modalForm);
-         */
         $modalForm.removeData("validator");
         $modalForm.unbind("submit");
         $modalForm.validate({
@@ -1709,4 +1701,189 @@ $(document).ready(function() {
         dataTable.fnUpdate($("input[name='experienceDescription']", $form).val(), $row, 1, 0);
         dataTable.fnUpdate($("input[name='experienceYears']", $form).val(), $row, 2, 0);
     }
+
+    // Volunteer Qualification
+    var deleteQualificationConfirmationProperties = {
+        placement: 'top',
+        singleton: true,
+        popout: true,
+        onConfirm: function(event, element) {
+            event.preventDefault();
+            $.ajax({
+                url: $(element).data("ajax-url"),
+                type: "POST",
+                data: {
+                    _method: "delete"
+                },
+                statusCode: {
+                    404: function() {
+                        alert("Volunteer qualification not found");
+                    },
+                    500: function() {
+                        alert("Failed to delete volunteer qualification");
+                    }
+                },
+                success: function() {
+                    deleteDataTablesRow($(element));
+                    // if this was the last row, hide the table
+                    if ($("#volunteer-skills-qualification .dataTables_empty").length) {
+                        $("#volunteer-with-qualification").hide();
+                        $("#volunteer-without-qualification").show();
+                    }
+                }
+            });
+        }
+    };
+
+    $('.a-delete-qualification').confirmation(deleteQualificationConfirmationProperties);
+
+    $('#a-add-qualification').on("click", function(event, element) {
+        event.preventDefault();
+
+        var $modalForm = $('#volunteer-qualification-modal-form');
+        $modalForm.prop("action", $(this).prop("href"));
+        // clear the values
+        $("input[name='volunteerQualificationId']", $modalForm).val("");
+        $("input[name='name']", $modalForm).val("");
+        $("input[name='comments']", $modalForm).val("");
+
+        $modalForm.removeData("validator");
+        $modalForm.unbind("submit");
+        $modalForm.validate({
+            rules: {
+                name: {
+                    required: true
+                },
+                comments: {
+                    required: true
+                }
+            },
+            messages: {
+                name: {
+                    remote: "Please select the qualification"
+                },
+                comments: {
+                    remote: "Please provide some description of the qualification"
+                }
+            },
+            submitHandler: function(form) {
+                $.ajax({
+                    url: $(form).attr("action"),
+                    data: $(form).serialize(),
+                    type: "POST",
+                    statusCode: {
+                        404: function() {
+                            alert("Volunteer qualification not found");
+                        },
+                        500: function() {
+                            alert("Failed to save volunteer qualification");
+                        }
+                    },
+                    success: function(data, status, xhr) {
+                        var qualificationUri = xhr.getResponseHeader('Location');
+                        addVolunteerQualification(qualificationUri);
+                        $('#volunteer-qualification-modal').modal('hide');
+                    }
+                });
+            },
+            errorPlacement: roms.common.validatorErrorPlacement
+        });
+        $('#volunteer-qualification-modal').modal('show');
+    });
+
+    function addVolunteerQualification(qualificationUri) {
+        var $form = $('#volunteer-qualification-modal-form');
+        var template = $("#volunteer-qualification-action-template").html();
+        templateData = {
+            "qualificationUri": roms.common.relativePath + qualificationUri
+        };
+        var actionHtml = Mustache.to_html(template, templateData);
+        var dataTable = $("#volunteer-skills-qualifications").dataTable();
+        dataTable.fnAddData([
+            $("select[name='qualificationId'] option:selected", $form).data("qualification-name"),
+            $("input[name='comments']", $form).val(),
+            "",
+            actionHtml
+        ]);
+        $("#volunteer-with-qualification").show();
+        $("#volunteer-without-qualification").hide();
+        $('.a-delete-qualification').confirmation(deleteAssignmentConfirmationProperties);
+    }
+
+    $("#volunteer-skills-qualifications").on("click", ".a-edit-qualification", function(e) {
+        e.preventDefault();
+
+        var $tableRow = $(this).parents("tr");
+        var $modalForm = $('#volunteer-qualification-modal-form');
+        $modalForm.prop("action", $(this).prop("href"));
+
+        var name = $("td:eq(0)", $tableRow).text();
+        name = name.trim();
+        var comments = $("td:eq(1)", $tableRow).text();
+        $("select[name='qualificationId'] option:contains('" + name + "')", $modalForm).prop("selected", true);
+        $("select[name='qualificationId']").prop("disabled", true);
+
+        $("input[name='name']", $modalForm).val(name);
+        $("input[name='comments']", $modalForm).val(comments);
+        $modalForm.removeData("validator");
+        $modalForm.unbind("submit");
+
+        $modalForm.validate({
+            rules: {
+                comments: {
+                    required: true
+                }
+            },
+            messages: {
+                name: {
+                    remote: "Please select a qualification"
+                },
+                comments: {
+                    remote: "Please provide some description of the qualification"
+                }
+            },
+            submitHandler: function(form) {
+                $("select[name='qualificationId'").prop("disabled", false);
+                $.ajax({
+                    url: $(form).attr("action"),
+                    data: $(form).serialize(),
+                    type: "PUT",
+                    statusCode: {
+                        404: function() {
+                            alert("Volunteer qualification not found");
+                        },
+                        500: function() {
+                            alert("Failed to save volunteer qualification");
+                        }
+                    },
+                    success: function() {
+                        updateVolunteerQualification();
+                        $('#volunteer-qualification-modal').modal('hide');
+                    }
+                });
+            },
+            errorPlacement: roms.common.validatorErrorPlacement
+        });
+
+        $('#volunteer-qualification-modal').modal('show');
+    });
+
+    function updateVolunteerQualification() {
+        var $form = $('#volunteer-qualification-modal-form');
+
+        var formVolunteerQualificationUri = $form.prop("action");
+
+        var $table = $("#volunteer-skills-qualifications");
+        var $row = null;
+        $("tr", $table).each(function() {
+            var volunteerQualificationUri = $(".a-edit-qualification", $(this)).prop("href");
+            if (volunteerQualificationUri == formVolunteerQualificationUri) {
+                $row = $(this)[0];
+                return false;
+            }
+        });
+        var dataTable = $table.dataTable();
+        dataTable.fnUpdate($("input[name='comments']", $form).val(), $row, 1, 0);
+    }
+
 });
