@@ -248,7 +248,7 @@ roms.common.datatables = function($table, options) {
                         $('li:last', an[i]).removeClass('disabled');
                     }
                 }
-                //If all data fits into one page, hide the pagination and "Showing ? of ? Entries"
+/*                //If all data fits into one page, hide the pagination and "Showing ? of ? Entries"
                 if (oPaging.iTotalPages <= 1) {
                     $('.dataTables_paginate').hide();
                     $('.dataTables_info').hide();
@@ -263,7 +263,7 @@ roms.common.datatables = function($table, options) {
                 } else  {
                     $('.dataTables_filter').show();
                     $('.dataTables_length').show();
-                }
+                } */
         }
     } });
 
