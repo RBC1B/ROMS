@@ -32,9 +32,12 @@ THE SOFTWARE.
 
     <http pattern="/login" security="none"/>
     <http pattern="/logout" security="none"/>
+    <http pattern="/update-contact" security="none" />
     <http pattern="/css/**" security="none"/>
     <http pattern="/images/**" security="none"/>
     <http pattern="/favicon.ico" security="none" />
+    <http pattern="/javascript/login.js" security="none" />
+    <http pattern="/javascript/thirdparty/**" security="none" />
 
     <http use-expressions="true">
         <intercept-url pattern="/**" access="isAuthenticated()" />
