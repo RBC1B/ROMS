@@ -39,6 +39,16 @@ import uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTradeSearchCriteria;
 public interface VolunteerDao {
 
     /**
+     * Find the volunteer with matching id. This has no security around it so
+     * that volunteers can update their details.
+     *
+     * @param personId the person id
+     * @return volunteer the volunteer
+     */
+    @Transactional(readOnly = true)
+    Volunteer findVolunteerById(Integer personId);
+
+    /**
      * Find the volunteer with matching id, or null with no match.
      *
      * @param volunteerId id

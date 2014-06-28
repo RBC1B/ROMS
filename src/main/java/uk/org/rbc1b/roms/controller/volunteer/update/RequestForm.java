@@ -23,8 +23,8 @@
  */
 package uk.org.rbc1b.roms.controller.volunteer.update;
 
-import org.joda.time.DateTime;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.joda.time.DateTime;
 
 /**
  * Update Contact Request form.

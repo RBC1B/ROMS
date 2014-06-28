@@ -56,7 +56,6 @@ $(document).ready(function() {
             birthDate: "Please enter your Date of Birth"
         },
         submitHandler: function(form) {
-            alert("submitting request to " + updateUrl);
             $.ajax({
                 url: updateUrl,
                 data: $(form).serialize(),
@@ -69,7 +68,7 @@ $(document).ready(function() {
                     403: function() {
                         alert("Your records do not match");
                     },
-                    500: function() {
+                    503: function() {
                         alert("Unable to send out an email - please contact Volunteer Department");
                     }
                 },

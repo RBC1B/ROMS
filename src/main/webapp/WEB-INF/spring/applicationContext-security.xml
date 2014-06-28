@@ -33,6 +33,8 @@ THE SOFTWARE.
     <http pattern="/login" security="none"/>
     <http pattern="/logout" security="none"/>
     <http pattern="/update-contact" security="none" />
+    <http pattern="/update-contact/**" security="none" />
+    <http pattern="/update/**" security="none" />
     <http pattern="/css/**" security="none"/>
     <http pattern="/images/**" security="none"/>
     <http pattern="/favicon.ico" security="none" />
