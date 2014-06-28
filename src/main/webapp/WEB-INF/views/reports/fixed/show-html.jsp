@@ -37,6 +37,10 @@
         </table>
     </div>
     <div class="clearfix"></div>
+    <hr />
+    <div class="entity-list-add-new">
+        <a class="btn btn-edifice" href="<c:url value="${report.csvUri}" />">Download</a>
+    </div>
     <br />
     <ol class="breadcrumb">
         <li><a href="<c:url value="/" />">Edifice</a></li>

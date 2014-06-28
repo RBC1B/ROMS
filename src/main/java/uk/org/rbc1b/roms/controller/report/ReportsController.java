@@ -23,6 +23,9 @@
  */
 package uk.org.rbc1b.roms.controller.report;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -31,6 +34,7 @@ import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceUtils;
@@ -42,6 +46,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.db.report.FixedReport;
 import uk.org.rbc1b.roms.db.report.ReportDao;
+import au.com.bytecode.opencsv.CSVWriter;
+import com.google.common.net.MediaType;
 
 /**
  * Handle data reports.
@@ -99,6 +105,51 @@ public class ReportsController {
         }
 
         return "reports/fixed/show-html";
+    }
+
+    /**
+     * Run a fixed report, returning the data in a downloadable csv format.
+     * @param reportId report id
+     * @param response servlet response to output the csv data to directly
+     * @throws NoSuchRequestHandlingMethodException on failure to find the report
+     * @throws IOException on failure to write to output stream
+     */
+    @RequestMapping(value = "fixed/{reportId}/csv", method = RequestMethod.GET, consumes = "text/csv", produces = "text/csv")
+    public void downloadCsvReport(@PathVariable Integer reportId, HttpServletResponse response)
+            throws NoSuchRequestHandlingMethodException, IOException {
+
+        FixedReport fixedReport = reportDao.findFixedReport(reportId);
+        if (fixedReport == null) {
+            throw new NoSuchRequestHandlingMethodException("No fixed report #" + reportId, this.getClass());
+        }
+
+        ReportResults reportResults;
+        try {
+            reportResults = extractResults(fixedReport.getQuery());
+        } catch (SQLException e) {
+            throw new IllegalStateException("Failed to extract report data. Message: [" + e.getMessage() + "]", e);
+        }
+
+        String[] headers = reportResults.columnNames.toArray(new String[reportResults.columnNames.size()]);
+
+        List<String[]> records = new ArrayList<String[]>();
+        for (List<String> reportRow : reportResults.resultRows) {
+            records.add(reportRow.toArray(new String[reportRow.size()]));
+        }
+
+        String fileName = "edifice-report-" + fixedReport.getName().replace(" ", "-").toLowerCase() + ".csv";
+
+        response.setContentType(MediaType.CSV_UTF_8.toString());
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+
+        OutputStream output = response.getOutputStream();
+        CSVWriter writer = new CSVWriter(new OutputStreamWriter(output), '\u0009');
+
+        writer.writeNext(headers);
+        writer.writeAll(records);
+
+        writer.close();
+
     }
 
     private FixedReportModel createFixedReportModel(FixedReport report) {
