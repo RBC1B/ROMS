@@ -689,3 +689,9 @@ div.project-count {
 .category-colour-green {
   background-color: #7fbf7f;
 }
+/*****************************************************************************/
+/* Login - Update Volunteer                                                  */
+/*****************************************************************************/
+#alert-update {
+    display:none;
+}
