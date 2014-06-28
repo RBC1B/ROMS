@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="uk.org.rbc1b.roms.db.report">
+    <class name="uk.org.rbc1b.roms.db.report.FixedReport" table="FixedReport">
+        <id name="fixedReportId">
+            <generator class="identity" />
+        </id>
+
+        <property length="100" name="name" unique="true" not-null="true" />
+        <property length="250" name="description" />
+        <property name="query" not-null="true" />
+        <property name="active" />
+
+        <property name="updateTime" />
+        <property name="updatedBy" />
+    </class>
+</hibernate-mapping>

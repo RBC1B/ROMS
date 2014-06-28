@@ -96,6 +96,8 @@ THE SOFTWARE.
                 <value>uk/org/rbc1b/roms/db/project/ProjectWorkBrief.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/project/WorkFeature.hbm.xml</value>
 
+                <value>uk/org/rbc1b/roms/db/report/FixedReport.hbm.xml</value>
+
                 <value>uk/org/rbc1b/roms/db/volunteer/Assignment.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/AssignmentRole.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/volunteer/Attendance.hbm.xml</value>
