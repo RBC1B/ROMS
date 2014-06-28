@@ -45,5 +45,6 @@
             <li class="active">Reports</li>
         </ol>
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+        <script type="text/javascript" src="<c:url value='/javascript/reports.js' />" ></script>
     </body>
 </html>
