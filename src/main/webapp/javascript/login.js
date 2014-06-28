@@ -56,6 +56,7 @@ $(document).ready(function() {
             birthDate: "Please enter your Date of Birth"
         },
         submitHandler: function(form) {
+            $("#alert-update").hide();
             $.ajax({
                 url: updateUrl,
                 data: $(form).serialize(),
@@ -63,17 +64,21 @@ $(document).ready(function() {
                 cache: false,
                 statusCode: {
                     302: function(){
-                        alert("Could not connect to the server");
+                        $("#alert-update").html("<p><b>Error: </b>Could not connect to the server.</p>");
+                        $("#alert-update").show();
                     },
                     403: function() {
-                        alert("Your records do not match");
+                        $("#alert-update").html("<p><b>Error: </b>Your records do not match.</p>");
+                        $("#alert-update").show();
                     },
                     503: function() {
-                        alert("Unable to send out an email - please contact Volunteer Department");
+                        $("#alert-update").html("<p><b>Error: </b>Unable to send out an email - please contact Volunteer Department.</p>");
+                        $("#alert-update").show();
                     }
                 },
                 success: function(data, status, xhr) {
                     alert("Submitted");
+                    $("#alert-update").hide();
                     $("#volunteer-contact-update").modal("hide");
                 }
             });

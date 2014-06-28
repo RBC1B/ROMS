@@ -8,6 +8,7 @@
                     <h4 class="modal-title" id="volunteer-contact-modal-form-label">Update Request</h4>
                 </div>
                 <div class="modal-body">
+                    <div class="alert alert-danger" style="display: none" id="alert-update"></div>
                     <div class="form-group">
                         <label for="personId" class="control-label">RBC ID Number</label>
                         <input id="personId" name="personId" type="text" class="form-control" placeholder="Your RBC ID Number" />
