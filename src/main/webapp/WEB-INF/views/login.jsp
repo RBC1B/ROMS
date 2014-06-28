@@ -9,7 +9,7 @@
     <c:set var="pageTitle">Login</c:set>
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body class="blueprints">
-        <div class="container">
+        <div class="container flex-container">
             <div class="col-md-6 well login-info">
                 <h1>Welcome to the new version of ROMS</h1>
                 <p><em>Edifice</em> Is a new version of the RBC Online Management System. You will need training to use this system. Please contact either the Training or IT Support department for training.</p>
@@ -18,12 +18,9 @@
                 <p>ROMS is still in use, but Volunteers is now read-only. Please use Edifice to update Volunteer details.</p>
                 <p><a class="btn btn-lg btn-edifice" href="https://roms.rbc-lhc.org.uk:1443">Login to old ROMS &raquo;</a></p>
                 <br />
-                <h3>Update your Contact Details</h3>
-                <p>If you wish to update your contact details, please click on the link below.</p>
-                <a id="update-contact" class="btn btn-lg btn-edifice" href="#">Update contact details</a>
             </div>
-
-            <div class="form-signin col-md-6">
+            <div class="col-md-6">
+            <div class="form-signin">
                 <form action="<c:url value='j_spring_security_check' />" method="POST">
                     <img src="<c:url value='/images/logo-login.png' />" alt="Edifice" />
                     <p class="title-quote">Edifice :- Origin from Latin <b>aedificum</b> from <b><i>aedis 'dwelling' + facere 'make' </i></b></p>
@@ -37,7 +34,13 @@
                         <input name="submit" class="btn btn-large btn-edifice" type="submit" value="Login"/>
                     </form>
                 </div>
+                <div class="form-signin">
+                    <h3>Update your Contact Details</h3>
+                    <p>If you wish to update your contact details, please click on the link below.</p>
+                    <a id="update-contact" class="btn btn-lg btn-edifice" href="#">Update contact details</a>
+                </div>
             </div>
+        </div>
         <%@ include file="show-contact-validation-modal.jsp" %>
         <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
         <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
