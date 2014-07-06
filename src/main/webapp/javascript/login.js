@@ -77,9 +77,9 @@ $(document).ready(function() {
                     }
                 },
                 success: function(data, status, xhr) {
-                    alert("Submitted");
                     $("#alert-update").hide();
                     $("#volunteer-contact-update").modal("hide");
+                    $("#volunteer-contact-update-success").modal("show");
                 }
             });
         }
