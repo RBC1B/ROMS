@@ -26,11 +26,15 @@
         </div>
         <div class="container">
             <div class="container">
-                    Contact Information for <c:out value="${contactUpdateModel.surname}"/>, <c:out value="${contactUpdateModel.forename}"/>
-                </div>
-            <form class="form-horizontal" commandName="contactUpdateModel" action="${submitUrl}" method="${submitMethod}">
+                Contact Information for <c:out value="${contactUpdateModel.surname}"/>, <c:out value="${contactUpdateModel.forename}"/>
+            </div>
+            <form id="contact-update-form" class="form-horizontal" commandName="contactUpdateModel" action="${submitUrl}" method="${submitMethod}">
                 <fieldset>
                     <form:hidden path="contactUpdateModel.personId" />
+                    <form:hidden path="contactUpdateModel.datetime" />
+                    <form:hidden path="contactUpdateModel.hash" />
+                    <form:hidden path="contactUpdateModel.forename" />
+                    <form:hidden path="contactUpdateModel.surname" />
                     <legend>Contacts</legend>
                     <div class="form-group">
                         <label for="email" class="control-label col-sm-3 col-md-2">Email</label>
@@ -88,12 +92,29 @@
                     <div class="form-group">
                         <label class="control-label col-sm-3 col-md-2"></label>
                         <div class="col-sm-9 col-md-3">
-                            <button type="reset" class="btn btn-danger">Cancel</button>
-                            <button type="submit" class="btn btn-default btn-success">Submit</button>
+                            <button id="cancel" type="reset" class="btn btn-danger">Cancel</button>
+                            <button id="submit" type="submit" class="btn btn-default btn-success">Submit</button>
                         </div>
                     </div>
                 </fieldset>
             </form>
+            <div class="alert alert-danger" id="alert-update"></div>
+        </div>
+        <div class="modal fade" id="volunteer-contact-update-success" tabindex="-1" role="dialog" aria-labelledby="volunteer-comments-modal-success-label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">x</button>
+                        <h4 class="modal-title" id="volunteer-contact-modal-form-label">Update Request</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-success"><p><strong>Success: </strong>Your request has been submitted. You will receive a confirmation email shortly.</p></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-edifice" aria-hidden="true" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="container">
             <p>Please note that from this page, only your contact details can be updated.</p>
@@ -108,7 +129,7 @@
         <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/additional-methods.min.js"></script>
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.0.0/js/bootstrap-datetimepicker.min.js"></script>
-        <script type="text/javascript" src="<c:url value='/javascript/update-contact.js' />" ></script>
         <script type="text/javascript" src="<c:url value='/javascript/thirdparty/phoneformat-574.js' />" ></script>
+        <script type="text/javascript" src="<c:url value='/javascript/update-contact.js' />" ></script>
     </body>
 </html>

@@ -44,6 +44,8 @@ public class ContactUpdateModelFactory {
     public ContactUpdateForm generateContactUpdateModel(Volunteer volunteer, String datetime, String hash) {
         ContactUpdateForm form = new ContactUpdateForm();
         form.setPersonId(volunteer.getPersonId());
+        form.setDatetime(datetime);
+        form.setHash(hash);
         form.setForename(volunteer.getPerson().getForename() == null ? "" : volunteer.getPerson().getForename());
         form.setSurname(volunteer.getPerson().getSurname() == null ? "" : volunteer.getPerson().getSurname());
         form.setStreet(volunteer.getPerson().getAddress().getStreet() == null ? "" : volunteer.getPerson().getAddress().getStreet());

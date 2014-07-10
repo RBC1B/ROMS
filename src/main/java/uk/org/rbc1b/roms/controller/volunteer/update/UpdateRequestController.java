@@ -35,10 +35,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
@@ -63,11 +70,14 @@ public class UpdateRequestController {
     private static final Logger LOGGER = LoggerFactory.getLogger(UpdateRequestController.class);
     private static final String BASE_URI = "/update-contact";
     private static final String UPDATE_REQUEST_TEMPLATE = "volunteer-contact-update-request.ftl";
+    private static final String POST_UPDATE_TEMPLATE = "volunteer-contact-update-confirmation.ftl";
     private static final String SUBJECT = "RBC (London & Home Counties) Volunteer Information Update";
     private static final int HTTPS_PORT = 443;
     private static final String EMAIL_PATTERN =
             "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+    private static final String DATETIMEFORMAT = "yyyyMMddHHmm";
+    private static final long MAXTIME = 86400000;
     @Autowired
     private VolunteerDao volunteerDao;
     @Autowired
@@ -76,6 +86,8 @@ public class UpdateRequestController {
     private FreeMarkerConfigurer emailFreemarkerConfigurer;
     @Autowired
     private ContactUpdateModelFactory contactUpdateModelFactory;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     /**
      * Accepts and checks requests for updating contact.
@@ -87,7 +99,6 @@ public class UpdateRequestController {
     @RequestMapping(method = RequestMethod.POST)
     public void acceptRequest(@Valid RequestForm requestForm,
             HttpServletResponse response, HttpServletRequest request) {
-        LOGGER.error("UpdateRequestController:" + requestForm.getPersonId() + requestForm.getBirthDate());
         Volunteer volunteer = volunteerDao.findVolunteerById(requestForm.getPersonId());
         Date birthDate = DataConverterUtil.toSqlDate(requestForm.getBirthDate());
         if (volunteer == null) {
@@ -121,7 +132,6 @@ public class UpdateRequestController {
     @RequestMapping(value = "/{personId}/{datetime}/{hash}/update", method = RequestMethod.GET)
     public String showVolunteerContact(@PathVariable Integer personId,
             @PathVariable String datetime, @PathVariable String hash, ModelMap model) {
-        LOGGER.error("UpdateRequestController: Update for " + personId + ", " + datetime + ", " + hash);
         String uri = BASE_URI + "/" + personId + "/" + datetime + "/" + hash;
         Volunteer volunteer = volunteerDao.findVolunteerById(personId);
         if (volunteer == null) {
@@ -129,8 +139,6 @@ public class UpdateRequestController {
         }
         if (checkWithinTime(datetime) && checkHash(volunteer, datetime, hash)) {
             ContactUpdateForm contactUpdateModel = contactUpdateModelFactory.generateContactUpdateModel(volunteer, datetime, hash);
-            LOGGER.error("Contact Update Request submitted for:" + contactUpdateModel.getSurname()
-                    + ", " + contactUpdateModel.getForename() + ":" + contactUpdateModel.getPersonId());
             model.addAttribute("contactUpdateModel", contactUpdateModel);
             model.addAttribute("submitUrl", uri);
             model.addAttribute("submitMethod", "POST");
@@ -147,18 +155,38 @@ public class UpdateRequestController {
      * @param datetime the date and time of the original request
      * @param hash the hash
      * @param response the HTTP response
-     * @param updateForm the updated contact form
+     * @param form the updated contact form
      */
     @RequestMapping(value = "/{personId}/{datetime}/{hash}", method = RequestMethod.POST)
     public void acceptUpdate(@PathVariable Integer personId,
-            @PathVariable String datetime, @PathVariable String hash, HttpServletResponse response, @Valid ContactUpdateForm updateForm) {
+            @PathVariable String datetime, @PathVariable String hash, HttpServletResponse response, @Valid ContactUpdateForm form) {
         LOGGER.error("UpdateRequestController: Contact Update Form for " + personId);
         Volunteer volunteer = volunteerDao.findVolunteerById(personId);
         if (volunteer == null) {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         } else {
             if (checkWithinTime(datetime) && checkHash(volunteer, datetime, hash)) {
-                LOGGER.error(updateForm.getForename() + " " + updateForm.getSurname());
+                volunteer.getPerson().setEmail(form.getEmail());
+                volunteer.getPerson().setTelephone(form.getTelephone());
+                volunteer.getPerson().setMobile(form.getMobile());
+                volunteer.getPerson().setWorkPhone(form.getWorkPhone());
+                volunteer.getPerson().getAddress().setStreet(form.getStreet());
+                volunteer.getPerson().getAddress().setTown(form.getTown());
+                volunteer.getPerson().getAddress().setCounty(form.getCounty());
+                volunteer.getPerson().getAddress().setPostcode(form.getPostcode());
+                try {
+                    UserDetails system = userDetailsService.loadUserByUsername("System");
+                    Authentication authentication = new UsernamePasswordAuthenticationToken(system, system.getUsername(),
+                            system.getAuthorities());
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                    volunteerDao.updateVolunteerByVolunteer(volunteer);
+                    preparePostUpdateEmail(volunteer);
+                    response.setStatus(HttpServletResponse.SC_OK);
+                } catch (IOException e) {
+                    response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
+                } catch (TemplateException e) {
+                    response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
+                }
             } else {
                 response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             }
@@ -171,9 +199,12 @@ public class UpdateRequestController {
      * @param datetime when the original request was sent
      * @return true or false if within 24 hours
      */
-    private boolean checkWithinTime(String datetime) {
+    private boolean checkWithinTime(String originalTime) {
         DateTime now = new DateTime();
-        return true;
+        DateTimeFormatter formatter = DateTimeFormat.forPattern(DATETIMEFORMAT);
+        DateTime then = formatter.parseDateTime(originalTime);
+        long difference = now.getMillis() - then.getMillis();
+        return MAXTIME > difference;
     }
 
     /**
@@ -185,7 +216,8 @@ public class UpdateRequestController {
      * @return true or false if correct
      */
     private boolean checkHash(Volunteer volunteer, String datetime, String hash) {
-        return true;
+        String token = getSecureToken(volunteer, datetime);
+        return token.compareTo(hash) == 0;
     }
 
     /**
@@ -223,6 +255,18 @@ public class UpdateRequestController {
         emailDao.save(email);
     }
 
+    private void preparePostUpdateEmail(Volunteer volunteer) throws IOException, TemplateException {
+        Configuration conf = emailFreemarkerConfigurer.getConfiguration();
+        Map<String, String> model = new HashMap<String, String>();
+        model.put("forename", volunteer.getPerson().getForename());
+        String text = FreeMarkerTemplateUtils.processTemplateIntoString(conf.getTemplate(POST_UPDATE_TEMPLATE), model);
+        Email email = new Email();
+        email.setRecipient(volunteer.getPerson().getEmail());
+        email.setSubject(SUBJECT + " - Confirmation");
+        email.setText(text);
+        emailDao.save(email);
+    }
+
     /**
      * Gets the secure URI for a given volunteer
      *
@@ -231,18 +275,13 @@ public class UpdateRequestController {
      * @return uri string
      */
     private String getSecureUri(HttpServletRequest request, Volunteer volunteer) {
-        String uri;
-        if (request.isSecure()) {
-            uri = "https://";
+        String uri = System.getProperty("uk.org.rbc1b.roms.uri");
+        if (uri == null || uri.isEmpty()) {
+            uri = request.getRequestURL().toString();
         } else {
-            uri = "http://";
+            uri = uri + request.getRequestURI();
         }
-        uri = uri + request.getServerName();
-        if (request.getServerPort() != HTTPS_PORT) {
-            uri = uri + ":" + request.getServerPort();
-        }
-        uri = uri + request.getRequestURI() + "/"
-                + volunteer.getPersonId() + "/";
+        uri = uri + "/" + volunteer.getPersonId() + "/";
         String datetime = getCurrentDateTime();
         uri = uri + datetime + "/";
         String token = getSecureToken(volunteer, datetime);
@@ -257,7 +296,7 @@ public class UpdateRequestController {
      */
     private String getCurrentDateTime() {
         DateTime datetime = new DateTime();
-        return datetime.toString("yyyyMMddHHmm");
+        return datetime.toString(DATETIMEFORMAT);
     }
 
     /**

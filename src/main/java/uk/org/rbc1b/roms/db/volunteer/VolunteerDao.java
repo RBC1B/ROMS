@@ -49,6 +49,15 @@ public interface VolunteerDao {
     Volunteer findVolunteerById(Integer personId);
 
     /**
+     * Update the volunteer. This has no security around it so that volunteers
+     * can update their contact details.
+     *
+     * @param volunteer  the volunteer to update
+     */
+    @Transactional
+    void updateVolunteerByVolunteer(Volunteer volunteer);
+
+    /**
      * Find the volunteer with matching id, or null with no match.
      *
      * @param volunteerId id

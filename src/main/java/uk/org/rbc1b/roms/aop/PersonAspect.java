@@ -65,6 +65,16 @@ public class PersonAspect {
     }
 
     /**
+     * Pointcut definition for volunteer update when volunteer updates their own.
+     * information
+     *
+     * @param volunteer the volunteer to capture
+     */
+    @Pointcut("execution(* uk.org.rbc1b.roms.db.volunteer.VolunteerDao.updateVolunteerByVolunteer(..)) && args(volunteer,..)")
+    public void volunteerUpdateByVolunteer(Volunteer volunteer) {
+    }
+
+    /**
      * Captures updates to Person table.
      *
      * @param person the person to save
@@ -72,7 +82,7 @@ public class PersonAspect {
      */
     @Before("personChange(person)")
     public void capturePersonChange(Person person) {
-        this.saveChangesToPerson(person);
+        this.saveChangesToPerson(person, false);
     }
 
     /**
@@ -82,15 +92,26 @@ public class PersonAspect {
      */
     @Before("volunteerChange(volunteer)")
     public void captureVolunteerChange(Volunteer volunteer) {
-        this.saveChangesToPerson(volunteer.getPerson());
+        this.saveChangesToPerson(volunteer.getPerson(), false);
+    }
+
+    /**
+     * Captures updates to Person table through volunteer update, by volunteer.
+     *
+     * @param volunteer the volunteer to update
+     */
+    @Before("volunteerUpdateByVolunteer(volunteer)")
+    public void captureVolunteerUpdateByVolunteer(Volunteer volunteer) {
+        this.saveChangesToPerson(volunteer.getPerson(), true);
     }
 
     /**
      * Saves a row in the PersonChange table.
      *
      * @param person the person to save to personChange table
+     * @param byVolunteer true if it is by the volunteer, else false
      */
-    public void saveChangesToPerson(Person person) {
+    public void saveChangesToPerson(Person person, boolean byVolunteer) {
         Person oldPerson = this.personChangeDao.getOldPerson(person.getPersonId(), person);
         PersonChange personChange = new PersonChange();
         personChange.setPersonId(person.getPersonId());
@@ -112,11 +133,14 @@ public class PersonAspect {
         personChange.setOldWorkPhone(oldPerson.getWorkPhone());
         java.util.Calendar calendar = java.util.Calendar.getInstance();
         personChange.setChangeDate(new Date(calendar.getTimeInMillis()));
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        String comment = "Updated by " + username + ".";
-        personChange.setComment(comment);
+        if (byVolunteer) {
+            personChange.setComment("Updated by the Volunteer.");
+        } else {
+            String username = SecurityContextHolder.getContext().getAuthentication().getName();
+            String comment = "Updated by " + username + ".";
+            personChange.setComment(comment);
+        }
         personChange.setFormUpdated(false);
         this.personChangeDao.savePersonChange(personChange);
     }
-
 }

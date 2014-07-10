@@ -67,6 +67,13 @@ public class HibernateVolunteerDao implements VolunteerDao {
     }
 
     @Override
+    @CacheEvict(value = "person.person", key = "#volunteer.personId")
+    public void updateVolunteerByVolunteer(Volunteer volunteer) {
+        Session session = this.sessionFactory.getCurrentSession();
+        session.merge(volunteer.getPerson());
+    }
+
+    @Override
     public Volunteer findVolunteer(Integer volunteerId, Set<VolunteerData> data) {
         Volunteer volunteer = (Volunteer) this.sessionFactory.getCurrentSession().get(Volunteer.class, volunteerId);
         if (volunteer == null) {

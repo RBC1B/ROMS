@@ -39,6 +39,7 @@ THE SOFTWARE.
     <http pattern="/images/**" security="none"/>
     <http pattern="/favicon.ico" security="none" />
     <http pattern="/javascript/login.js" security="none" />
+    <http pattern="/javascript/update-contact.js" security="none" />
     <http pattern="/javascript/thirdparty/**" security="none" />
 
     <http use-expressions="true">

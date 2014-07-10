@@ -30,6 +30,8 @@ package uk.org.rbc1b.roms.controller.volunteer.update;
 public class ContactUpdateForm {
 
     private Integer personId;
+    private String datetime;
+    private String hash;
     private String forename;
     private String surname;
     private String street;
@@ -193,5 +195,33 @@ public class ContactUpdateForm {
      */
     public void setWorkPhone(String workPhone) {
         this.workPhone = workPhone;
+    }
+
+    /**
+     * @return the datetime
+     */
+    public String getDatetime() {
+        return datetime;
+    }
+
+    /**
+     * @param datetime the datetime to set
+     */
+    public void setDatetime(String datetime) {
+        this.datetime = datetime;
+    }
+
+    /**
+     * @return the hash
+     */
+    public String getHash() {
+        return hash;
+    }
+
+    /**
+     * @param hash the hash to set
+     */
+    public void setHash(String hash) {
+        this.hash = hash;
     }
 }
