@@ -249,6 +249,8 @@ THE SOFTWARE.
 
     <!-- GlassFish Image Directory File Upload Support -->
     <jee:jndi-lookup id="imageDirectories" jndi-name="jndi/_images_directories" resource-ref="true"/>
+    <!-- Glassfish system properties used by edifice application -->
+    <jee:jndi-lookup id="edificeProperty" jndi-name="jndi/_edifice_property" resource-ref="true" />
     <bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver" />
 
 </beans>

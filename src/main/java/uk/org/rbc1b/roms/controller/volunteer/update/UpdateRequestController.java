@@ -29,8 +29,10 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -72,7 +74,8 @@ public class UpdateRequestController {
     private static final String UPDATE_REQUEST_TEMPLATE = "volunteer-contact-update-request.ftl";
     private static final String POST_UPDATE_TEMPLATE = "volunteer-contact-update-confirmation.ftl";
     private static final String SUBJECT = "RBC (London & Home Counties) Volunteer Information Update";
-    private static final int HTTPS_PORT = 443;
+    private static final String SECURITY_SALT = "security.salt";
+    private static final String SERVER_URL = "edifice.url";
     private static final String EMAIL_PATTERN =
             "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
@@ -88,6 +91,8 @@ public class UpdateRequestController {
     private ContactUpdateModelFactory contactUpdateModelFactory;
     @Autowired
     private UserDetailsService userDetailsService;
+    @Resource(name = "edificeProperty")
+    private Properties edificeProperty;
 
     /**
      * Accepts and checks requests for updating contact.
@@ -239,7 +244,7 @@ public class UpdateRequestController {
      * Prepares an email to send to the volunteer.
      *
      * @param volunteer the volunteer to send
-     * @param uri the URI
+     * @param url the URI
      * @throws exception for IO and template
      */
     private void prepareEmail(Volunteer volunteer, String uri) throws IOException, TemplateException {
@@ -272,21 +277,22 @@ public class UpdateRequestController {
      *
      * @param request the https request
      * @param volunteer the volunteer
-     * @return uri string
+     * @return url string
      */
     private String getSecureUri(HttpServletRequest request, Volunteer volunteer) {
-        String uri = System.getProperty("uk.org.rbc1b.roms.uri");
-        if (uri == null || uri.isEmpty()) {
-            uri = request.getRequestURL().toString();
+        String url = edificeProperty.getProperty(SERVER_URL);
+        if (url == null || url.isEmpty()) {
+            LOGGER.error("UpdateRequestController: JNDI property for this server's URL is not set.");
+            url = request.getRequestURL().toString();
         } else {
-            uri = uri + request.getRequestURI();
+            url = url + request.getRequestURI();
         }
-        uri = uri + "/" + volunteer.getPersonId() + "/";
+        url = url + "/" + volunteer.getPersonId() + "/";
         String datetime = getCurrentDateTime();
-        uri = uri + datetime + "/";
+        url = url + datetime + "/";
         String token = getSecureToken(volunteer, datetime);
-        uri = uri + token + "/update";
-        return uri;
+        url = url + token + "/update";
+        return url;
     }
 
     /**
@@ -307,10 +313,10 @@ public class UpdateRequestController {
      * @return token string
      */
     private String getSecureToken(Volunteer volunteer, String datetime) {
-        String salt = System.getProperty("uk.org.rbc1b.roms.security.salt");
-        if (salt == null) {
-            salt = "Not Set";
-            LOGGER.error("UpdateRequestController: System salt not set");
+        String salt = edificeProperty.getProperty(SECURITY_SALT);
+        if (salt == null || salt.isEmpty()) {
+            salt = "er9bhmbsaa5ppdnoQP";
+            LOGGER.error("UpdateRequestController: JNDI property for security salt is not set - will use default.");
         }
         String text = datetime + ":" + volunteer.getPersonId()
                 + volunteer.getPerson().getBirthDate().toString();

@@ -3,7 +3,7 @@ PLEASE DO NOT REPLY TO THIS EMAIL.
 
 Dear ${forename},
 
-Within the last hour, your contact details that the RBC (London and the Home Counties) hold about you were updated.
+Your request to update your contact details were successful.
 
 Please note that only contact details can be updated by this method. Any other information must be updated by contacting the Volunteers Service Department(VSD).
 
