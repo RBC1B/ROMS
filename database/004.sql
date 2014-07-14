@@ -11,3 +11,9 @@ create table FixedReport (
     primary key (FixedReportId),
     foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
+-- Create Report application
+insert into Application (Name, Code, Comments, UpdateTime, UpdatedBy) values
+('Reports', 'REPORT', 'Running database queries/reports', NOW(), 0);
+
+insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
+values (0, 10, 'D', 'D', NOW(), 0);

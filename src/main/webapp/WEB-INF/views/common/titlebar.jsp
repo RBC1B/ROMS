@@ -69,15 +69,18 @@
             </sec:authorize>
             <sec:authorize access="hasPermission('PROJECT', 'READ')">
                 <li><a href="<c:url value="/projects" />">Projects</a></li>
+                </sec:authorize>
+            <sec:authorize access="hasPermission('REPORT', 'READ')">
+                <li><a href="<c:url value="/reports/fixed" />">Reports</a></li>
             </sec:authorize>
-            <li><a href="<c:url value="/reports/fixed" />">Reports</a></li>
+
             <sec:authorize access="hasPermission('DATABASE', 'READ')">
                 <li class="dropdown"><a href="#" class="dropdown-toggle" id="dLabel" role="button"
                                         data-toggle="dropdown">System Administration<b class="caret"></b></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                         <sec:authorize access="hasPermission('DATABASE', 'READ')">
                             <li role="menuitem"><a href="<c:url value="/users" />">System Users</a></li>
-                        </sec:authorize>
+                            </sec:authorize>
                     </ul>
                 </li>
             </sec:authorize>
