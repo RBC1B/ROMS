@@ -1885,5 +1885,276 @@ $(document).ready(function() {
         var dataTable = $table.dataTable();
         dataTable.fnUpdate($("input[name='comments']", $form).val(), $row, 1, 0);
     }
+    
+   // volunteer emergency contacts 
+   roms.common.datatables(
+            $("#volunteer-emergency-contacts"),
+            {
+                "iDisplayLength": 10,
+                "aaSorting": [[0, "asc"]],
+                "aoColumnDefs": [
+                    {
+                        'bSortable': false,
+                        'aTargets': [5]
+                    }
+                ]
+            }
+    );
 
+    $("#volunteer-emergency-contacts").on("click", ".a-edit-emergency-contact", function(e) {
+        e.preventDefault();
+
+        var $tableRow = $(this).parents("tr");
+        var $modalForm = $('#volunteer-emergency-contact-modal-form');
+        $modalForm.prop("action", $(this).prop("href"));
+        var emergencyContactId = $tableRow.data("emergency-contact-id");
+        $modalForm.data("emergency-contact-id", emergencyContactId);
+
+        var $emergencyContactFirstNameInput = $("input[name='firstName']", $modalForm);
+        $emergencyContactFirstNameInput.val($tableRow.data("emergency-contact-forename"));
+        $emergencyContactFirstNameInput.prop("readonly", true);
+        $emergencyContactFirstNameInput.blur(null);
+
+        var $emergencyContactSurnameInput = $("input[name='surName']", $modalForm);
+        $emergencyContactSurnameInput.val($tableRow.data("emergency-contact-surname"));
+        $emergencyContactSurnameInput.prop("readonly", true);
+        $emergencyContactSurnameInput.blur(null);
+
+        // Setting contact - although cannot be changed anyway 
+        $("input[name='emergencyContactId']", $modalForm).val(emergencyContactId);
+
+        var relationshipCode = $("td:eq(1)", $tableRow).text();
+        $("select[name='relationshipCode'] option:contains('" + relationshipCode + "')", $modalForm).prop("selected", true);
+
+        $("#emergency-contact-home-phone").hide("fast");
+        $("#emergency-contact-mobile-phone").hide("fast");
+        $("#emergency-contact-work-phone").hide("fast");
+        
+        $modalForm.removeData("validator");
+        $modalForm.unbind("submit");
+        $modalForm.validate({
+            rules: {
+            },
+            submitHandler: function(form) {
+                $.ajax({
+                    url: $(form).attr("action"),
+                    data: $(form).serialize(),
+                    type: "PUT",
+                    statusCode: {
+                        404: function() {
+                            alert("Volunteer emergency contact not found");
+                        },
+                        500: function() {
+                            alert("Failed to save volunteer emergency contact");
+                        }
+                    },
+                    success: function() {
+                        updateVolunteerEmergencyContact();
+                        $('#volunteer-emergency-contact-modal').modal('hide');
+                    }
+                });
+            },
+            errorPlacement: roms.common.validatorErrorPlacement
+        });
+
+        $('#volunteer-emergency-contact-modal').modal('show');
+    });
+
+    function updateVolunteerEmergencyContact() {
+        var $form = $('#volunteer-emergency-contact-modal-form');
+        var formEmergencyContactId = $form.data("emergency-contact-id");
+
+        var $table = $("#volunteer-emergency-contacts");
+        var $row = null;
+        $("tr", $table).each(function() {
+            var emergencyContactId = $(this).data("emergency-contact-id");
+            if (emergencyContactId == formEmergencyContactId) {
+                $row = $(this)[0];
+                return false;
+            }
+        });
+
+        var dataTable = $table.dataTable();
+        dataTable.fnUpdate($("select[name='relationshipCode'] option:selected", $form).text(), $row, 1, 0);
+    }
+    
+    var deleteEmergencyContactConfirmationProperties = {
+        placement: 'top',
+        singleton: true,
+        popout: true,
+        onConfirm: function(event, element) {
+            event.preventDefault();
+            $.ajax({
+                url: $(element).data("ajax-url"),
+                type: "POST",
+                data: {
+                    _method: "delete"
+                },
+                statusCode: {
+                    404: function() {
+                        alert("Volunteer emergency contact not found");
+                    },
+                    500: function() {
+                        alert("Failed to delete volunteer emergency contact");
+                    }
+                },
+                success: function() {
+                    deleteDataTablesRow($(element));
+                    // if this was the last row, hide the table
+                    if ($("#volunteer-emergency-contacts .dataTables_empty").length) {
+                        $("#volunteer-with-emergency-contacts").hide();
+                        $("#volunteer-without-emergency-contacts").show();
+                    }
+                }
+            });
+        }
+    };
+    $('.a-delete-emergency-contact').confirmation(deleteEmergencyContactConfirmationProperties);
+
+    $('#a-add-emergency-contact').on("click", function(event, element) {
+        event.preventDefault();
+
+        var $modalForm = $('#volunteer-emergency-contact-modal-form');
+        $modalForm.prop("action", $(this).prop("href"));
+
+        var emergencyContactId = $("input[name='emergencyContactId']", $modalForm);
+        emergencyContactId.val("");
+
+        var $emergencyContactFirstNameInput = $("input[name='firstName']", $modalForm);
+        var $emergencyContactSurnameInput = $("input[name='surName']", $modalForm);
+
+        var blurFn = function() {
+            roms.common.matchLinkedPerson(
+                    $emergencyContactFirstNameInput.val(),
+                    $emergencyContactSurnameInput.val(),
+                    emergencyContactId,
+                    populateEmergencyContactFromModal
+                    );
+        };
+        
+        $emergencyContactFirstNameInput.val("");
+        $emergencyContactFirstNameInput.prop("readonly", false);
+        $emergencyContactFirstNameInput.blur(blurFn);
+        
+        $emergencyContactSurnameInput.val("");
+        $emergencyContactSurnameInput.prop("readonly", false);
+        $emergencyContactSurnameInput.blur(blurFn);
+
+        $("select[name='relationshipCode'] option[value='1']", $modalForm).prop("selected", true);
+
+        $("input[name='homePhone']", $modalForm).val("");
+        $("#emergency-contact-home-phone").show("fast");
+        $("input[name='mobilePhone']", $modalForm).val("");
+        $("#emergency-contact-mobile-phone").show("fast");
+        $("input[name='workPhone']", $modalForm).val("");
+        $("#emergency-contact-work-phone").show("fast");
+
+        $modalForm.removeData("validator");
+        $modalForm.unbind("submit");
+        $modalForm.validate({
+            rules: {
+                firstName: {
+                    required: true 
+                },
+                surName: {
+                    required: true 
+                }
+            },
+            messages: {
+                firstName: {
+                    remote: "Please provide the name of an emergency contact"
+                }
+            },
+            submitHandler: function(form) {
+                var id = emergencyContactId.val();
+                if (id == null || id == "") emergencyContactId.val("-1");
+                $.ajax({
+                    url: $(form).attr("action"),
+                    data: $(form).serialize(),
+                    type: "POST",
+                    statusCode: {
+                        404: function() {
+                            alert("Volunteer emergency contact not found");
+                        },
+                        500: function() {
+                            alert("Failed to save volunteer emergency contact");
+                        }
+                    },
+                    success: function(data, status, xhr) {
+                        var emergencyContactUri = xhr.getResponseHeader('Location');
+
+                        addVolunteerEmergencyContact(emergencyContactUri);
+                        $('#volunteer-emergency-contact-modal').modal('hide');
+                    }
+                });
+            },
+            errorPlacement: roms.common.validatorErrorPlacement
+        });
+        $('#volunteer-emergency-contact-modal').modal('show');
+    });
+
+    function populateEmergencyContactFromModal(selectedPersonId, forename, surname, $personId) {
+        if (selectedPersonId) {
+            $("#emergency-contact-home-phone").hide("fast");
+            $("#emergency-contact-mobile-phone").hide("fast");
+            $("#emergency-contact-work-phone").hide("fast");
+            
+            // Now I have the person Id, look up the correctly cased forename,
+            // surname and also the phone numbers
+            $.ajax({
+                url: roms.common.relativePath + '/persons/' + selectedPersonId + '/reference',
+                contentType: "application/json",
+                dataType: 'json',
+                success: function(data) {
+                    if (data && data.length !== 0) {
+                        var $form = $('#volunteer-emergency-contact-modal-form');
+                        $("input[name='homePhone']", $form).val(data.telephone);
+                        $("input[name='mobilePhone']", $form).val(data.mobile);
+                        $("input[name='workPhone']", $form).val(data.workPhone);
+                        $("input[name='firstName']", $form).val(data.forename);
+                        $("input[name='surName']", $form).val(data.surname);
+                    }
+                }
+            });
+        } else {
+            $("#emergency-contact-home-phone").show("fast");
+            $("#emergency-contact-mobile-phone").show("fast");
+            $("#emergency-contact-work-phone").show("fast");
+        }
+        $personId.val(selectedPersonId);
+    }
+
+    function addVolunteerEmergencyContact(emergencyContactUri) {
+        var $form = $('#volunteer-emergency-contact-modal-form');
+
+        var template = $("#volunteer-emergency-contacts-action-template").html();
+        templateData = {
+            "emergencyContactUri": roms.common.relativePath + emergencyContactUri
+        };
+        var actionHtml = Mustache.to_html(template, templateData);
+
+        var dataTable = $("#volunteer-emergency-contacts").dataTable();
+        var surName = $("input[name='surName']").val();
+        var firstName = $("input[name='firstName']").val();
+        var addId = dataTable.fnAddData([
+            firstName + " " + surName,
+            $("select[name='relationshipCode'] option:selected", $form).text(),
+            $("input[name='homePhone']", $form).val(),
+            $("input[name='mobilePhone']", $form).val(),
+            $("input[name='workPhone']", $form).val(),
+            actionHtml
+        ]);
+        // Pick up newly added row
+        var node = dataTable.fnSettings().aoData[addId[0]].nTr;
+        $(node).data("emergency-contact-surname", surName);
+        $(node).data("emergency-contact-forename", firstName);
+        var n = emergencyContactUri.lastIndexOf("/");
+        if (n > 0) { // finding the ID of contact for row identification
+            $(node).data("emergency-contact-id", emergencyContactUri.substring(n+1));
+        } 
+
+        $("#volunteer-with-emergency-contacts").show();
+        $("#volunteer-without-emergency-contacts").hide();
+        $('.a-delete-emergency-contact').confirmation(deleteEmergencyContactConfirmationProperties);
+    }
 });

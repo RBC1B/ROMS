@@ -64,6 +64,7 @@ public class VolunteerModel extends PersonModel {
     private String hhcFormCode;
     private String editNameUri;
     private String editAssignmentUri;
+    private String editEmergencyContactUri;
     private String editCommentsUri;
     private String editSkillUri;
     private String editSpiritualUri;
@@ -309,6 +310,14 @@ public class VolunteerModel extends PersonModel {
 
     public void setEditAssignmentUri(String editAssignmentUri) {
         this.editAssignmentUri = editAssignmentUri;
+    }
+
+    public String getEditEmergencyContactUri() {
+        return editEmergencyContactUri;
+    }
+
+    public void setEditEmergencyContactUri(String editEmergencyContactUri) {
+        this.editEmergencyContactUri = editEmergencyContactUri;
     }
 
     public String getEditCommentsUri() {

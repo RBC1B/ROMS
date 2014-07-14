@@ -77,33 +77,4 @@ The contents of the personal tab.
     <a class="btn btn-edifice" href="<c:url value='${volunteer.editPersonalUri}' />">Edit</a>
 </sec:authorize>
 
-<h3>Emergency contact</h3>
-<c:choose>
-    <c:when test="${!empty volunteer.emergencyContact}">
-        <dl class="dl-horizontal">
-            <dt>Name:</dt>
-            <dd>
-                <a href="<c:url value='${volunteer.emergencyContact.uri}' />"><c:out value="${volunteer.emergencyContact.displayName}" /></a>
-            </dd>
-            <dt>Relationship:</dt><dd>${volunteer.emergencyContactRelationship}</dd>
-            <c:if test="${!empty volunteer.emergencyContact.email}">
-                <dt>Email:</dt>
-                <dd>
-                    <a href="mailto:${volunteer.emergencyContact.email}">${volunteer.emergencyContact.email}</a>
-                </dd>
-            </c:if>
-            <c:if test="${!empty volunteer.emergencyContact.telephone}">
-                <dt>Home phone:</dt><dd>${volunteer.emergencyContact.telephone}</dd>
-            </c:if>
-            <c:if test="${!empty volunteer.emergencyContact.mobile}">
-                <dt>Mobile phone:</dt><dd>${volunteer.emergencyContact.mobile}</dd>
-            </c:if>
-            <c:if test="${!empty volunteer.emergencyContact.workPhone}">
-                <dt>Work phone:</dt><dd>${volunteer.emergencyContact.workPhone}</dd>
-            </c:if>
-        </dl>
-    </c:when>
-    <c:otherwise>
-        Not set
-    </c:otherwise>
-</c:choose>
+<%@ include file="show-emergency-contacts.jsp" %>

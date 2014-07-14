@@ -137,6 +137,8 @@ public class VolunteersController {
     @Autowired
     private AssignmentModelFactory assignmentModelFactory;
     @Autowired
+    private VolunteerEmergencyContactModelFactory volunteerEmergencyContactModelFactory;
+    @Autowired
     private VolunteerBadgePdfModelFactory volunteerBadgePdfModelFactory;
     @Autowired
     private InterviewSessionDao interviewSessionDao;
@@ -234,6 +236,8 @@ public class VolunteersController {
         List<VolunteerQualification> volunteerQualifications = volunteerDao.findQualifications(volunteerId);
 
         model.addAttribute("volunteer", volunteerModelFactory.generateVolunteerModel(volunteer));
+        model.addAttribute("emergencyContacts", generateEmergencyContacts(volunteer));
+        model.addAttribute("relationshipValues", referenceDao.findRelationshipValues());
         model.addAttribute("assignments", generateAssignments(assignments));
         model.addAttribute("volunteerSkills", volunteerModelFactory.generateVolunteerSkillsModel(skills));
         model.addAttribute("volunteerQualifications", volunteerModelFactory.generateVolunteerQualificationsModel(volunteerQualifications));
@@ -328,6 +332,29 @@ public class VolunteersController {
                 + "/qualifications");
 
         return "volunteers/edit-qualification";
+    }
+
+    /**
+     * Generate the models for the emergency contacts. At the moment, there is
+     * only one emergency contact an this is part of the volunteer record.
+     * Ultimately, there should be a one to many relationship so there can be
+     * multiple emergency contacts. This function acts as if there might be
+     * many, returning a list, even though there is currently only ever going to
+     * be one.
+     *
+     * @param volunteer volunteer containing the single current emergency
+     * contact
+     * @return model list
+     */
+    private List<VolunteerEmergencyContactModel> generateEmergencyContacts(Volunteer volunteer) {
+        Person emergencyContact = volunteer.getEmergencyContact();
+        List<VolunteerEmergencyContactModel> modelList =
+                new ArrayList<VolunteerEmergencyContactModel>(emergencyContact == null ? 0 : 1);
+        if (emergencyContact != null) {
+            modelList.add(volunteerEmergencyContactModelFactory.
+                    generateVolunteerEmergencyContactModel(volunteer));
+        }
+        return modelList;
     }
 
     /**
@@ -1153,6 +1180,103 @@ public class VolunteersController {
     }
 
     /**
+     * Created an emergency contact to a volunteer.
+     *
+     * @param volunteerId volunteer id
+     * @param form emergency contact information
+     * @param builder uri builder, for building the response header
+     * @return created status, with the emergency contact url
+     * @throws NoSuchRequestHandlingMethodException if the volunteer is not
+     * found
+     */
+    @RequestMapping(value = "{volunteerId}/emergencycontacts", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<Void> createVolunteerEmergencyContact(@PathVariable Integer volunteerId,
+            @Valid VolunteerEmergencyContactForm form, UriComponentsBuilder builder)
+            throws NoSuchRequestHandlingMethodException {
+
+        Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, null);
+        if (volunteer == null) {
+            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+        }
+
+        volunteer.setEmergencyContactRelationshipCode(form.getRelationshipCode());
+
+        Person emergencyContact;
+        int emergencyContactId = form.getEmergencyContactId();
+        if (emergencyContactId == -1) { // create a new Person
+            emergencyContact = new Person();
+
+            emergencyContact.setForename(form.getFirstName());
+            emergencyContact.setSurname(form.getSurName());
+            emergencyContact.setTelephone(PhoneNumberFormatter.format(form.getHomePhone()));
+            emergencyContact.setMobile(PhoneNumberFormatter.format(form.getMobilePhone()));
+            emergencyContact.setWorkPhone(PhoneNumberFormatter.format(form.getWorkPhone()));
+            personDao.createPerson(emergencyContact);
+        } else {
+            emergencyContact = personDao.findPerson(emergencyContactId);
+        }
+        volunteer.setEmergencyContact(emergencyContact);
+
+        volunteerDao.updateVolunteer(volunteer);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(builder.path("/volunteers/{volunteerId}/emergencycontacts/{emergencyContactId}")
+                .buildAndExpand(volunteerId, 1).toUri());
+        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+    }
+
+    /**
+     * Delete an emergency contact linked to a volunteer.
+     *
+     * @param volunteerId volunteer id
+     * @param emergencyContactId linked volunteer emergency contact id
+     * @throws NoSuchRequestHandlingMethodException if the volunteer is not
+     * found
+     */
+    @RequestMapping(value = "{volunteerId}/emergencycontacts/{emergencyContactId}", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteVolunteerEmergencyContact(@PathVariable Integer volunteerId,
+            @PathVariable Integer emergencyContactId)
+            throws NoSuchRequestHandlingMethodException {
+
+        Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, null);
+        if (volunteer == null) {
+            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+        }
+        volunteer.setEmergencyContact(null);
+        volunteer.setEmergencyContactRelationshipCode(null);
+
+        volunteerDao.updateVolunteer(volunteer);
+    }
+
+    /**
+     * Update an emergency contact linked to a volunteer.
+     *
+     * @param volunteerId volunteer id
+     * @param emergencyContactId linked volunteer emergency contact id
+     * @param form updated data
+     * @throws NoSuchRequestHandlingMethodException if the volunteer is not
+     * found
+     */
+    @RequestMapping(value = "{volunteerId}/emergencycontacts/{emergencyContactId}", method = RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateVolunteerEmergencyContact(@PathVariable Integer volunteerId,
+            @PathVariable Integer emergencyContactId,
+            @Valid VolunteerEmergencyContactForm form)
+            throws NoSuchRequestHandlingMethodException {
+
+        Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, null);
+        if (volunteer == null) {
+            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+        }
+
+        volunteer.setEmergencyContactRelationshipCode(form.getRelationshipCode());
+
+        volunteerDao.updateVolunteer(volunteer);
+    }
+
+    /**
      * Created a department skill linked to a volunteer.
      *
      * @param volunteerId volunteer id
@@ -1327,7 +1451,8 @@ public class VolunteersController {
 
     /**
      * Update the volunteer qualification information.
-     * @param volunteerId  the volunteer id
+     *
+     * @param volunteerId the volunteer id
      * @param volunteerQualificationId volunteer qualification Id to edit
      * @param form form data
      * @throws NoSuchRequestHandlingMethodException if volunteer is not found
