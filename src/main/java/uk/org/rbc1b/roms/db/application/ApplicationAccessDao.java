@@ -52,4 +52,13 @@ public interface ApplicationAccessDao {
     @PreAuthorize("hasPermission('DATABASE', 'ADD')")
     @Transactional
     void saveApplicationAccess(Set<ApplicationAccess> applicationAccess);
+
+    /**
+     * Deletes all ACLs for a person.
+     *
+     * @param personId the person id to delete
+     */
+    @PreAuthorize("hasPermission('DATABASE','DELETE')")
+    @Transactional
+    void deleteAclForPerson(Integer personId);
 }

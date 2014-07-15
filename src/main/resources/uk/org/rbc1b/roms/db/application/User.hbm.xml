@@ -10,7 +10,7 @@
         <property name="active" />
         <property name="updatedBy" />
         <property name="updateTime" not-null="true" />
-        <set name="applicationAccess" table="ApplicationAccess" inverse="true" >
+        <set name="applicationAccess" table="ApplicationAccess" inverse="true" lazy="false" >
             <key>
                 <column name="personId" not-null="true" />
             </key>

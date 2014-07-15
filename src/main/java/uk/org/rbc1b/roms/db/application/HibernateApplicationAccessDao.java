@@ -26,6 +26,7 @@ package uk.org.rbc1b.roms.db.application;
 import java.util.List;
 import java.util.Set;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -57,5 +58,13 @@ public class HibernateApplicationAccessDao implements ApplicationAccessDao {
         for (ApplicationAccess appAccess : applicationAccess) {
             session.save(appAccess);
         }
+    }
+
+    @Override
+    public void deleteAclForPerson(Integer personId) {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("delete from ApplicationAccess where PersonId = :UserId");
+        query.setParameter("UserId", personId);
+        query.executeUpdate();
     }
 }

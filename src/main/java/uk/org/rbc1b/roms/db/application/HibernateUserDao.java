@@ -32,7 +32,6 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -45,7 +44,6 @@ public class HibernateUserDao implements UserDao {
     private SessionFactory sessionFactory;
 
     @Override
-    @Cacheable("user.userName")
     public User findUserAndPermissions(String userName) {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(User.class);
         criteria.add(Restrictions.eq("userName", userName));
@@ -72,6 +70,7 @@ public class HibernateUserDao implements UserDao {
     @SuppressWarnings("unchecked")
     @Override
     public List<User> findUsers(String userName) {
+        this.sessionFactory.getCurrentSession().clear();
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(User.class);
         criteria.add(Restrictions.like("userName", userName + "%"));
         criteria.addOrder(Order.asc("userName"));
@@ -79,8 +78,8 @@ public class HibernateUserDao implements UserDao {
     }
 
     @Override
-    @Cacheable("user.userId")
     public User findUser(Integer userId) {
+        this.sessionFactory.getCurrentSession().clear();
         return (User) this.sessionFactory.getCurrentSession().get(User.class, userId);
     }
 
@@ -108,6 +107,7 @@ public class HibernateUserDao implements UserDao {
     @Override
     @SuppressWarnings("unchecked")
     public boolean checkUserExist(String username) {
+        this.sessionFactory.getCurrentSession().clear();
         List<User> users = findUsers(username);
         return !(users.isEmpty());
     }

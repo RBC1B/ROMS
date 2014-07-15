@@ -35,18 +35,15 @@ public class UserForm {
     @NotNull
     @Size(min = 7, max = 50)
     private String userName;
-    @NotNull
     @Size(min = 7, max = 50)
     private String password1;
-    @NotNull
     @Size(min = 7, max = 50)
     private String password2;
     @NotNull
     private Integer personId;
-    @NotNull
     private String forename;
-    @NotNull
     private String surname;
+    private boolean active;
 
     /**
      * @return the userName
@@ -130,5 +127,19 @@ public class UserForm {
      */
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    /**
+     * @return the active
+     */
+    public boolean isActive() {
+        return active;
+    }
+
+    /**
+     * @param active the active to set
+     */
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

@@ -33,74 +33,146 @@
         <hr />
         <c:url var="formAction" value="${submitUri}" />
         <form:form class="form-horizontal" commandName="userForm" method="${submitMethod}" action="${formAction}">
-            <fieldset>
-                <div class="form-group">
-                    <form:hidden class="form-control" path="personId" maxlength="10" placeholder="Person ID"/>
-
-                </div>
-                <div class="row">
-                    <h3 class="text-left">Volunteer</h3>
-                    <div class="col-md-4">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <form:input class="form-control" path="forename" maxlength="50" placeholder="First Name"/>
+            <c:choose>
+                <c:when test="${empty userForm.userName}">
+                    <fieldset>
+                        <div class="form-group">
+                            <form:hidden class="form-control" path="personId" maxlength="10" placeholder="Person ID"/>
+                        </div>
+                        <div class="row">
+                            <h3 class="text-left">Volunteer</h3>
+                            <div class="col-md-4">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <form:input class="form-control" path="forename" maxlength="50" placeholder="First Name"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <form:input class="form-control" path="surname" maxlength="50" placeholder="Surname"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="volunteer-linked" class="alert alert-warning alert-dismissable" style="display:none;">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">Unlink</button>
+                            Linked to an existing person in the database
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <form:input class="form-control" path="userName" maxlength="50" placeholder="Login Username"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="username-already-exists" class="alert alert-danger alert-dismissable" style="display:none;">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            This username already exists in the system. Please use another username.
+                        </div>          
+                        <div id="username-too-small" class="alert alert-danger alert-dismissable" style="display:none;">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            The username is too small, must be at least seven characters long.
+                        </div>
+                        <div class="row" id="pwd-container">
+                            <div class="col-md-4">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <form:password class="form-control" path="password1" maxlength="50" placeholder="Password"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <form:password class="form-control" path="password2" maxlength="50" placeholder="Confirm Password"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="password-not-matched" class="alert alert-danger alert-dismissable" style="display:none;">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            The passwords do not match.
+                        </div>
+                        <div id="password-too-small" class="alert alert-danger alert-dismissable" style="display:none;">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            The password is too small, must be at least seven characters long.
+                        </div>
+                    </fieldset>
+                </c:when>
+                <c:otherwise>
+                    <fieldset>
+                        <div class="form-group">
+                            <form:hidden class="form-control" path="personId" maxlength="10" placeholder="Person ID"/>
+                        </div>
+                        <div class="row">
+                            <h3 class="text-left">Volunteer</h3>
+                            <div class="col-md-4">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <form:input class="form-control" path="forename" maxlength="50" placeholder="First Name" readonly="true" />
+                                        <form:hidden class="form-control" path="forename" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <form:input class="form-control" path="surname" maxlength="50" placeholder="Surname" readonly="true" />
+                                        <form:hidden class="form-control" path="surname" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <form:input class="form-control" path="userName" maxlength="50" placeholder="Login Username" readonly="true" />
+                                        <form:hidden class="form-control" path="userName" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" id="pwd-container">
+                            <div class="col-md-4">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <form:password class="form-control" path="password1" maxlength="50" placeholder="Password - only click if changing password" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <form:password class="form-control" path="password2" maxlength="50" placeholder="Confirm password" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="password-not-matched" class="alert alert-danger alert-dismissable" style="display:none;">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            The passwords do not match.
+                        </div>
+                        <div id="password-too-small" class="alert alert-danger alert-dismissable" style="display:none;">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            The password is too small, must be at least seven characters long.
+                        </div>
+                    </fieldset>
+                    <div class="row" id="user-active">
+                        <div class="col-md-4">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <form:checkbox path="active"/>User Status Enabled
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <form:input class="form-control" path="surname" maxlength="50" placeholder="Surname"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="volunteer-linked" class="alert alert-warning alert-dismissable" style="display:none;">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">Unlink</button>
-                    Linked to an existing person in the database
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <form:input class="form-control" path="userName" maxlength="50" placeholder="Login Username"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="username-already-exists" class="alert alert-danger alert-dismissable" style="display:none;">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    This username already exists in the system. Please use another username.
-                </div>
-                <div id="username-too-small" class="alert alert-danger alert-dismissable" style="display:none;">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    The username is too small, must be at least seven characters long.
-                </div>
-                <div class="row" id="pwd-container">
-                    <div class="col-md-4">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <form:password class="form-control" path="password1" maxlength="50" placeholder="Password"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <form:password class="form-control" path="password2" maxlength="50" placeholder="Confirm Password"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="password-not-matched" class="alert alert-danger alert-dismissable" style="display:none;">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    The passwords do not match.
-                </div>
-                <div id="password-too-small" class="alert alert-danger alert-dismissable" style="display:none;">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    The password is too small, must be at least seven characters long.
-                </div>
-            </fieldset>
+                </c:otherwise>
+            </c:choose>
 
             <div class="row-fluid">
                 <div id="user-volunteer-user" data-user-id="${user.personId}"></div>
@@ -117,10 +189,10 @@
                             <tr>
                                 <td><c:out value="${application.name}" /></td>
                                 <td>
-                                    <roms:select className="form-control" selected="N" itemValue="${fn:toLowerCase(application.code)}Dept" />
+                                    <roms:select className="form-control" selected="${application.deptPermission}" itemValue="${fn:toLowerCase(application.code)}Dept" />
                                 </td>
                                 <td>
-                                    <roms:select className="form-control" selected="N" itemValue="${fn:toLowerCase(application.code)}All" />
+                                    <roms:select className="form-control" selected="${application.nonDeptPermission}" itemValue="${fn:toLowerCase(application.code)}All" />
                                 </td>
                             </tr>
                         </c:forEach>

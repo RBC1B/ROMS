@@ -23,8 +23,12 @@
  */
 
 $(document).ready(function() {
-    // Disable username fields on load
-    disableAll();
+    // Disable various fields on load up
+    if( $("#user-active").length ){
+        enableUserEdit();
+    }else{
+        disableAll();
+    }
 
     // list
     roms.common.datatables(
@@ -214,5 +218,10 @@ $(document).ready(function() {
     function enableAclSubmit() {
         $("select").children().prop('disabled', false);
         $("#submit-button").children().prop('disabled', false);
+    }
+    function enableUserEdit(){
+        $("#surname").prop("disabled", true);
+        $("#forename").prop("disabled", true);
+        $("#userName").prop("disabled", true);
     }
 });

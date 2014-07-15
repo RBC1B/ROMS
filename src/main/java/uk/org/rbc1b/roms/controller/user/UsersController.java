@@ -27,9 +27,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -57,7 +58,6 @@ import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
 import uk.org.rbc1b.roms.security.AccessLevel;
 import uk.org.rbc1b.roms.security.RomsPermissionEvaluator;
-import uk.org.rbc1b.roms.tags.PermissionMap;
 
 /**
  * Read/write ROMS users.
@@ -67,7 +67,11 @@ import uk.org.rbc1b.roms.tags.PermissionMap;
 @Controller
 @RequestMapping("/users")
 public class UsersController {
+
     private static final String ACTIVE_VOLUNTEER = "AT";
+    private static final String NONDEPARTMENT = "All";
+    private static final String DEPARTMENT = "Dept";
+    private static final Logger LOGGER = LoggerFactory.getLogger(UsersController.class);
     @Autowired
     private UserDao userDao;
     @Autowired
@@ -156,12 +160,12 @@ public class UsersController {
                     "Database application add permission is required to show the new user form");
         }
         List<Application> applications = applicationDao.getApplications();
-        Map<String, String> permissions = new PermissionMap().getAcl();
-        model.addAttribute("permissions", permissions);
-        model.addAttribute("applications", applications);
+
+        model.addAttribute("applications", ApplicationAccessFormFactory.generateApplicationAccessForm(applications, null));
         model.addAttribute("userForm", new UserForm());
         model.addAttribute("submitUri", UserModelFactory.generateUri(null));
         model.addAttribute("submitMethod", "POST");
+
         return "users/edit";
     }
 
@@ -253,36 +257,98 @@ public class UsersController {
         user.setActive(true);
         user.setUserName(userForm.getUserName());
         user.setPassword(getPasswordHash("", userForm.getPassword1()));
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String myUserName = userDetails.getUsername();
-        User me = userDao.findUserAndPermissions(myUserName);
+
+        User me = getMyUser();
         user.setUpdatedBy(me.getPersonId());
         Date date = new Date();
         user.setUpdateTime(date);
         user.setApplicationAccess(null);
         userDao.createUser(user);
-        /*
-         * We are only going to use non departmental access to set both dept and non-dept to the same code. If the
-         * access is 'N' then we do not add to the set.
-         */
-        List<Application> applications = applicationDao.getApplications();
-        HashSet<ApplicationAccess> applicationAccess = new HashSet<ApplicationAccess>();
-        for (Application application : applications) {
-            ApplicationAccess appAccess = new ApplicationAccess();
-            appAccess.setPerson(theUser);
-            appAccess.setApplication(application);
-            appAccess.setUpdateTime(date);
-            appAccess.setUpdatedBy(me.getPersonId());
-            String allAccess = application.getCode().toLowerCase() + "All";
-            Character nondeptAccessCode = request.getParameter(allAccess).charAt(0);
-            if (nondeptAccessCode != 'N') {
-                appAccess.setDepartmentAccess(nondeptAccessCode);
-                appAccess.setNonDepartmentAccess(nondeptAccessCode);
-                applicationAccess.add(appAccess);
-            }
-        }
-        applicationAccessDao.saveApplicationAccess(applicationAccess);
+
+        saveAcl(user.getPersonId(), request, me);
+        LOGGER.error("UsersController: Created Edifice User:" + user.getUserName());
+
         return "redirect:" + UserModelFactory.generateUri(user.getPersonId());
+    }
+
+    /**
+     * Handles requests to update a user.
+     *
+     * @param personId the user to update
+     * @param model the MVC model
+     * @return the jsp page to display
+     * @throws NoSuchRequestHandlingMethodException if the user does not exist
+     * @throws ForbiddenRequestException if access is not granted to the user
+     */
+    @RequestMapping(value = "{personId}/edit", method = RequestMethod.GET)
+    public String showUserForm(@PathVariable Integer personId, ModelMap model)
+            throws NoSuchRequestHandlingMethodException, ForbiddenRequestException {
+        User user = userDao.findUser(personId);
+        if (user == null) {
+            throw new NoSuchRequestHandlingMethodException("No User with ID:" + personId, this.getClass());
+        }
+        if (!RomsPermissionEvaluator.hasPermission(uk.org.rbc1b.roms.security.Application.DATABASE, AccessLevel.EDIT)) {
+            throw new ForbiddenRequestException(
+                    "Database application edit permission is required to show the edit user form");
+        }
+        List<Application> applications = applicationDao.getApplications();
+        UserForm userForm = createUserFormForCurrentUser(user);
+
+        model.addAttribute("userForm", userForm);
+        model.addAttribute("applications", ApplicationAccessFormFactory.generateApplicationAccessForm(applications, user.getApplicationAccess()));
+        model.addAttribute("submitUri", UserModelFactory.generateUri(personId));
+        model.addAttribute("submitMethod", "PUT");
+        model.addAttribute("user", userModelFactory.generateUserModel(user));
+
+        return "users/edit";
+    }
+
+    /**
+     * Saves an update to a user.
+     *
+     * @param personId the person
+     * @param userForm a valid user form
+     * @param request the http request
+     * @return redirect
+     */
+    @RequestMapping(value = "{personId}", method = RequestMethod.PUT)
+    public String saveUserUpdate(@PathVariable Integer personId, @Valid UserForm userForm, HttpServletRequest request) {
+        User me = getMyUser();
+        // Three things we could do: 1. disable user, 2. change password, 3. update acl
+        if (userForm.isActive()) {
+            if (userForm.getPassword1() != null && !userForm.getPassword1().isEmpty()) {
+                LOGGER.error("UsersController: Updating password for: " + userForm.getUserName());
+                savePassword(userForm, me);
+            }
+            LOGGER.error("UsersController: Updating ACL for: " + userForm.getUserName());
+            enableUser(personId, me, true);
+            deleteAcl(personId, me);
+            saveAcl(personId, request, me);
+        } else {
+            LOGGER.error("UsersController: Disabling user: " + userForm.getUserName());
+            deleteAcl(personId, me);
+            enableUser(personId, me, false);
+        }
+        return "redirect:" + UserModelFactory.generateUri(personId);
+    }
+
+    /**
+     * Creates a user form for editing a user.
+     *
+     * @param user the user to update
+     * @param applications list of ALL applications
+     * @param permissions the Map of permissions
+     * @return form the UserForm
+     */
+    private UserForm createUserFormForCurrentUser(User user) {
+        Person person = personDao.findPerson(user.getPersonId());
+        UserForm form = new UserForm();
+        form.setPersonId(user.getPersonId());
+        form.setUserName(user.getUserName());
+        form.setForename(person.getForename());
+        form.setSurname(person.getSurname());
+        form.setActive(user.isActive());
+        return form;
     }
 
     /**
@@ -301,5 +367,97 @@ public class UsersController {
             hash = encoder.encodePassword(password, salt);
         }
         return hash;
+    }
+
+    /**
+     * Gets the current user logged in.
+     *
+     * @return user the user object
+     */
+    private User getMyUser() {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String myUserName = userDetails.getUsername();
+        User me = userDao.findUserAndPermissions(myUserName);
+        return me;
+    }
+
+    /**
+     * Saves the user's password only.
+     *
+     * @param form the userForm
+     * @param me the updater
+     */
+    private void savePassword(UserForm form, User me) {
+        User user = userDao.findUser(form.getPersonId());
+        user.setUpdatedBy(me.getPersonId());
+        user.setUpdateTime(new Date());
+        user.setPassword(getPasswordHash("", form.getPassword1()));
+        userDao.updateUser(user);
+    }
+
+    /**
+     * Saves a person's acl list. We are only going to use non departmental
+     * access to set both dept and non-dept to the same code. If the access is
+     * 'N' then we do not add to the set.
+     *
+     * @param request http request
+     */
+    private void saveAcl(Integer personId, HttpServletRequest request, User me) {
+        List<Application> applications = applicationDao.getApplications();
+        Person person = personDao.findPerson(personId);
+        HashSet<ApplicationAccess> applicationAccess = new HashSet<ApplicationAccess>();
+        for (Application application : applications) {
+            ApplicationAccess appAccess = new ApplicationAccess();
+            appAccess.setPerson(person);
+            appAccess.setApplication(application);
+            appAccess.setUpdateTime(new Date());
+            appAccess.setUpdatedBy(me.getPersonId());
+            String allAccess = application.getCode().toLowerCase() + NONDEPARTMENT;
+            Character nonDeptAccessCode = request.getParameter(allAccess).charAt(0);
+            if (nonDeptAccessCode != 'N') {
+                appAccess.setDepartmentAccess(nonDeptAccessCode);
+                appAccess.setNonDepartmentAccess(nonDeptAccessCode);
+                applicationAccess.add(appAccess);
+            }
+        }
+        applicationAccessDao.saveApplicationAccess(applicationAccess);
+        User user = userDao.findUser(personId);
+        user.setApplicationAccess(applicationAccess);
+        userDao.updateUser(user);
+    }
+
+    /**
+     * Deletes existing acls for a user.
+     *
+     * @param personId for whom the acl will be deleted
+     */
+    private void deleteAcl(Integer personId, User me) {
+        User user = userDao.findUser(personId);
+        user.setApplicationAccess(null);
+        user.setUpdateTime(new Date());
+        user.setUpdatedBy(me.getPersonId());
+        applicationAccessDao.deleteAclForPerson(personId);
+        userDao.updateUser(user);
+    }
+
+    /**
+     * Enables/Disables a user.
+     *
+     * @param personId the user to disable
+     * @param me the one making the change
+     * @param enable true if enabled, else false
+     */
+    private void enableUser(Integer personId, User me, boolean enable) {
+        User user = userDao.findUser(personId);
+        if (user.isActive() != enable) {
+            user.setActive(enable);
+            user.setApplicationAccess(null);
+            user.setUpdateTime(new Date());
+            user.setUpdatedBy(me.getPersonId());
+            if (!enable) {
+                user.setPassword("INVALID");
+            }
+            userDao.updateUser(user);
+        }
     }
 }
