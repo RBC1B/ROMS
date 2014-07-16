@@ -28,5 +28,5 @@ package uk.org.rbc1b.roms.security;
  * An application is a section of the site
  */
 public enum Application {
-    ATTENDANCE, CIRCUIT, CONG, DATABASE, KINGDOMHALL, PROJECT, SKILL, USER, VOLUNTEER, REPORT
+    ATTENDANCE, CIRCUIT, CONG, DATABASE, KINGDOMHALL, PROJECT, SKILL, USER, VOLUNTEER, REPORT, PERSON
 }

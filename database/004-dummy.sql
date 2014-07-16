@@ -11,4 +11,6 @@ group by Skill.SkillId, Skill.Name, Department.Name
 order by Department.Name, Skill.Name', CURRENT_TIMESTAMP, 0);
 
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (1, 10, 'D', 'D', NOW(), 0);
+values
+(1, 10, 'D', 'D', NOW(), 0),
+(1, 11, 'D', 'D', NOW(), 0);

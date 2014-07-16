@@ -38,7 +38,7 @@
             </dd>
         </dl>
         <div class="clearfix"></div>
-        <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
+        <sec:authorize access="hasPermission('PERSON', 'EDIT')">
             <a href="<c:url value='${interviewSession.editUri}' />" class="btn btn-edifice">Edit Interview Session</a>
             <div class="clearfix"></div>
         </sec:authorize>
@@ -85,7 +85,7 @@
                                         <td class="a-volunteer-interview-status"><c:out value="${volunteer.interviewStatus}" /></td>
                                         <td>
                                             <ul class="list-inline">
-                                                <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
+                                                <sec:authorize access="hasPermission('PERSON', 'EDIT')">
                                                     <li><a class="btn btn-edifice a-volunteer-edit" href="#">Edit</a></li>
                                                     <c:if test="${interviewSession.todayOrInPast == true}">
                                                         <li>
@@ -105,7 +105,7 @@
                         </table>
                     </div>
                 </div>
-                <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
+                <sec:authorize access="hasPermission('PERSON', 'EDIT')">
                     <hr />
                     <c:if test="${!empty interviewSession.invitationsUri}">
                         <a href="<c:url value='${interviewSession.invitationsUri}' />" class="btn btn-edifice">Invite Volunteers</a>

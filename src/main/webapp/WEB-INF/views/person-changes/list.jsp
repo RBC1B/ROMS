@@ -142,7 +142,7 @@
                                 <c:out value="${personchange.comment}" />
                             </td>
                             <td>
-                                <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
+                                <sec:authorize access="hasPermission('PERSON', 'EDIT')">
                                     <a class="btn btn-edifice a-update-paperwork" data-update-url="<c:url value="${personchange.updateUri}" />">Form updated</a>
                                 </sec:authorize>
                             </td>

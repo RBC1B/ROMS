@@ -13,7 +13,10 @@ create table FixedReport (
 )engine=InnoDB;
 -- Create Report application
 insert into Application (Name, Code, Comments, UpdateTime, UpdatedBy) values
-('Reports', 'REPORT', 'Running database queries/reports', NOW(), 0);
-
+('Reports', 'REPORT', 'Running database queries/reports', NOW(), 0),
+('Persons', 'PERSON', 'Access to non-volunteers and volunteers', NOW(), 0);
+-- Grant access to System account for Report and Person
 insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepartmentAccess, UpdateTime, UpdatedBy)
-values (0, 10, 'D', 'D', NOW(), 0);
+values
+(0, 10, 'D', 'D', NOW(), 0),
+(0, 11, 'D', 'D', NOW(), 0);

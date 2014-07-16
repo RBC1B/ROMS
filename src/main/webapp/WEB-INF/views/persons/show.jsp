@@ -86,7 +86,7 @@
             <p><c:out value="${person.comments}" /></p>
         </c:if>
 
-        <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
+        <sec:authorize access="hasPermission('PERSON', 'EDIT')">
             <hr />
             <a href="<c:url value='${person.editUri}' />" class="btn btn-edifice">Edit Person</a>
         </sec:authorize>

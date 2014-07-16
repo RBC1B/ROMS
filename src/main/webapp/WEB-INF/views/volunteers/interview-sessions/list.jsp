@@ -38,7 +38,7 @@
                             <td>
                                 <ul class="list-inline">
                                     <li><a class="btn btn-success" href="<c:url value="${interviewSession.uri}" />">View</a></li>
-                                    <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
+                                    <sec:authorize access="hasPermission('PERSON', 'EDIT')">
                                         <li><a href="<c:url value="${interviewSession.editUri}" />">Edit</a></li>
                                     </sec:authorize>
                                 </ul>
@@ -48,7 +48,7 @@
                 </tbody>
             </table>
         </div>
-        <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
+        <sec:authorize access="hasPermission('PERSON', 'EDIT')">
             <hr />
             <div class="entity-list-add-new">
                 <a class="btn btn-edifice" href="<c:url value="${newUri}" />">Create new session</a>
