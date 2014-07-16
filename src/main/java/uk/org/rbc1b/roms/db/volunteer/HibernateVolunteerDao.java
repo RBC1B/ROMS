@@ -176,6 +176,8 @@ public class HibernateVolunteerDao implements VolunteerDao {
 
             criteria.add(Property.forName("personId").in(interviewCriteria));
         }
+        criteria.add(Restrictions.not(Restrictions.eq("rbcStatusCode", "DN")));
+        criteria.add(Restrictions.not(Restrictions.eq("rbcStatusCode", "IA")));
 
         return criteria;
     }
