@@ -66,6 +66,10 @@ import uk.org.rbc1b.roms.db.volunteer.interview.InterviewSessionDao;
 import uk.org.rbc1b.roms.db.volunteer.interview.VolunteerInterviewSession;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import uk.org.rbc1b.roms.db.application.User;
+import uk.org.rbc1b.roms.db.application.UserDao;
 
 /**
  * Handler the volunteer interview session and invitations.
@@ -73,41 +77,34 @@ import freemarker.template.TemplateException;
 @Controller
 @RequestMapping(value = "/interview-sessions")
 public class InterviewSessionsController {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(InterviewSessionsController.class);
     private static final String INVITATION_EMAIL_TEMPLATE = "volunteer-interview-session-invitation.ftl";
     private static final String INVITATION_EMAIL_SUBJECT = "RBC induction interview";
     private static final String INVITATION_EMAIL_ADDRESS = "rbc.lhr.interviews@gmail.com";
     private static final Logger LOG = LoggerFactory.getLogger(InterviewSessionsController.class);
-
     @Autowired
     private InterviewSessionDao interviewSessionDao;
-
     @Autowired
     private InterviewSessionModelFactory interviewSessionModelFactory;
-
     @Autowired
     private VolunteerDao volunteerDao;
-
     @Autowired
     private CongregationDao congregationDao;
-
     @Autowired
     private PersonModelFactory personModelFactory;
-
     @Autowired
     private ReferenceDao referenceDao;
-
     @Autowired
     private KingdomHallDao kingdomHallDao;
-
     @Autowired
     private FreeMarkerConfigurer emailFreemarkerConfigurer;
-
     @Autowired
     private EmailDao emailDao;
-
     @Autowired
     private PersonDao personDao;
+    @Autowired
+    private UserDao userDao;
 
     /**
      * Display a list of volunteer interview sessions.
@@ -135,10 +132,12 @@ public class InterviewSessionsController {
 
     /**
      * Show an individual interview session details.
+     *
      * @param interviewSessionId id
      * @param model model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException  on failure to find the interview session
+     * @throws NoSuchRequestHandlingMethodException on failure to find the
+     * interview session
      */
     @RequestMapping(value = "{interviewSessionId}", method = RequestMethod.GET)
     public String showInterviewSession(@PathVariable Integer interviewSessionId, ModelMap model)
@@ -199,10 +198,12 @@ public class InterviewSessionsController {
 
     /**
      * Show the list of those who may be invited to the interview session.
+     *
      * @param interviewSessionId session id
      * @param model model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException on failure to find the session
+     * @throws NoSuchRequestHandlingMethodException on failure to find the
+     * session
      */
     @RequestMapping(value = "{interviewSessionId}/invitations", method = RequestMethod.GET)
     public String showInvitationList(@PathVariable Integer interviewSessionId, ModelMap model)
@@ -244,10 +245,12 @@ public class InterviewSessionsController {
 
     /**
      * Submit a list of volunteers to be invited to the session.
+     *
      * @param interviewSessionId session id
      * @param volunteerIdsParam volunteer ids to be invited
      * @return redirect
-     * @throws NoSuchRequestHandlingMethodException on failure to find the session
+     * @throws NoSuchRequestHandlingMethodException on failure to find the
+     * session
      */
     @RequestMapping(value = "{interviewSessionId}/invitations", method = RequestMethod.POST)
     public String submitInvitationList(@PathVariable Integer interviewSessionId,
@@ -304,6 +307,8 @@ public class InterviewSessionsController {
             return;
         }
 
+        Person me = getMyDetails();
+
         Configuration conf = emailFreemarkerConfigurer.getConfiguration();
 
         Map<String, Object> model = new HashMap<String, Object>();
@@ -313,7 +318,7 @@ public class InterviewSessionsController {
         model.put("kingdomHallName", kingdomHall.getName());
         model.put("kingdomHallAddress", kingdomHall.getAddress());
         model.put("volunteer", volunteer);
-        model.put("replyEmailAddress", INVITATION_EMAIL_ADDRESS);
+        model.put("person", me);
 
         Congregation congregation = null;
         if (volunteer.getPerson().getCongregation() != null
@@ -342,7 +347,7 @@ public class InterviewSessionsController {
             if (coordinator != null && coordinator.getEmail() != null) {
                 email.setCc(coordinator.getEmail());
             }
-            email.setReplyTo(INVITATION_EMAIL_ADDRESS);
+            email.setReplyTo(me.getEmail());
             email.setSubject(INVITATION_EMAIL_SUBJECT);
             email.setText(text);
             emailDao.save(email);
@@ -356,11 +361,13 @@ public class InterviewSessionsController {
 
     /**
      * Update information about an individual volunteer invitation.
+     *
      * @param interviewSessionId session id
      * @param volunteerInterviewSessionId volunteer invitation id
      * @param interviewStatusCode updated status code
      * @param comments comments
-     * @throws NoSuchRequestHandlingMethodException on failure to look up the session or invitation
+     * @throws NoSuchRequestHandlingMethodException on failure to look up the
+     * session or invitation
      */
     @RequestMapping(value = "{interviewSessionId}/invitations/{volunteerInterviewSessionId}", method = RequestMethod.PUT)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
@@ -395,6 +402,7 @@ public class InterviewSessionsController {
 
     /**
      * Show form to create a new interview session.
+     *
      * @param model model
      * @return view
      */
@@ -413,6 +421,7 @@ public class InterviewSessionsController {
 
     /**
      * Create a new session.
+     *
      * @param interviewSessionForm updated session data
      * @return redirect
      */
@@ -435,7 +444,8 @@ public class InterviewSessionsController {
      * @param interviewSessionId primary key
      * @param model model
      * @return view
-     * @throws NoSuchRequestHandlingMethodException on failure to find the session
+     * @throws NoSuchRequestHandlingMethodException on failure to find the
+     * session
      */
     @RequestMapping(value = "{interviewSessionId}/edit", method = RequestMethod.GET)
     public String showEditInterviewSessionForm(@PathVariable Integer interviewSessionId, ModelMap model)
@@ -467,10 +477,12 @@ public class InterviewSessionsController {
 
     /**
      * Update an existing session.
+     *
      * @param interviewSessionId session id
      * @param interviewSessionForm updated session data
      * @return redirect
-     * @throws NoSuchRequestHandlingMethodException on failure to find the session
+     * @throws NoSuchRequestHandlingMethodException on failure to find the
+     * session
      */
     @RequestMapping(value = "{interviewSessionId}", method = RequestMethod.PUT)
     public String updateInterviewSession(@PathVariable Integer interviewSessionId,
@@ -492,4 +504,16 @@ public class InterviewSessionsController {
 
     }
 
+    /**
+     * Gets the current user's logged in person object.
+     *
+     * @return person the user's person object
+     */
+    private Person getMyDetails() {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String myUserName = userDetails.getUsername();
+        User me = userDao.findUserAndPermissions(myUserName);
+        Person myDetails = personDao.findPerson(me.getPersonId());
+        return myDetails;
+    }
 }

@@ -20,3 +20,6 @@ insert into ApplicationAccess(PersonId, ApplicationId, DepartmentAccess, NonDepa
 values
 (0, 10, 'D', 'D', NOW(), 0),
 (0, 11, 'D', 'D', NOW(), 0);
+
+-- Increase size of Email table text to 4000
+alter table Email modify Text varchar(4000);
