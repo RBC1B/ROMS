@@ -6,4 +6,5 @@
     <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="<c:url value='/css/thirdparty/bootstrap-datetimepicker-2.1.30.min.css' />" />
     <link rel="stylesheet" type="text/css" href="<c:url value='/css/roms.css' />" />
+    <meta name="viewport" content="initial-scale=1">
 </head>
