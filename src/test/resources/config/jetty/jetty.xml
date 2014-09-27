@@ -70,4 +70,12 @@
             </New>
         </Arg>
     </New>
+    <New id="edificeProperty" class="org.eclipse.jetty.plus.jndi.Resource">
+        <Arg></Arg>
+        <Arg>jndi/_edifice_property</Arg>
+        <Arg>
+            <New class="java.util.Properties">
+            </New>
+        </Arg>
+    </New>
 </Configure>
