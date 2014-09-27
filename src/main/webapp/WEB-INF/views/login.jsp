@@ -36,6 +36,13 @@
                     </form>
                 </div>
                 <div class="form-signin">
+                    <h3>Help & Support</h3>
+                    <a class="btn btn-lg btn-edifice" href="/WEB-INF/views/help/help-index.jsp">Help Page</a>
+                        <p> You can Email support for assistance using
+                            <a href="mailto:edifice.help@gmail.com">Edifice.Help@Gmail.Com</a>
+                        </p>
+                </div>
+                <div class="form-signin">
                     <h3>Update your Contact Details</h3>
                     <p>If you wish to update your contact details, please click on the link below.</p>
                     <a id="update-contact" class="btn btn-lg btn-edifice" href="#">Update contact details</a>
