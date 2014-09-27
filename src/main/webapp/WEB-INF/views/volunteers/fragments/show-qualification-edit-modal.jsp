@@ -25,7 +25,7 @@
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Comments</label>
-                        <input class="form-control" type="text" name="comments" maxlength="250" />
+                        <input class="form-control" type="text" name="comments" maxlength="100" />
                     </div>
                 </div>
                 <div class="modal-footer">

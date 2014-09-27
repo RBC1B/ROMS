@@ -1831,7 +1831,8 @@ $(document).ready(function() {
         $modalForm.validate({
             rules: {
                 comments: {
-                    required: true
+                    required: true,
+                    maxlength: 100
                 }
             },
             messages: {
