@@ -44,7 +44,7 @@ $(document).ready(function() {
             }
     );
 
-// Unlinking a person should diable username/password
+    // Unlinking a person should disable username/password
     // Get User
     $("#surname").blur(function() {
         findUserByName(
@@ -64,7 +64,7 @@ $(document).ready(function() {
         $personId.val(selectedPersonId);
         enableUserName();
     }
-// Unlinking a person should disable username fields
+    // Unlinking a person should disable username fields
     $("#volunteer-linked .close").on("click", function() {
         disableAll();
     });
@@ -94,7 +94,7 @@ $(document).ready(function() {
         var existingPersonId = $personId.val();
 
         $.ajax({
-            url: '/users/search-volunteer',
+            url: roms.common.relativePath + '/users/search-volunteer',
             contentType: "application/json",
             dataType: 'json',
             data: {
@@ -135,7 +135,7 @@ $(document).ready(function() {
 
         $personId.data("full-name", forename + " " + surname);
     }
-    // Handle username - TO DO AJAX calls to check if username exists
+    // Handle username
     $("#userName").blur(function() {
         var username = $("#userName").val();
         if (username.length < 7) {
@@ -145,7 +145,7 @@ $(document).ready(function() {
             $("#username-too-small").hide();
             $("#username-already-exists").show();
             $.ajax({
-                url: '/users/check-user',
+                url: roms.common.relativePath + '/users/check-user',
                 contentType: "application/json",
                 dataType: 'json',
                 data: {
