@@ -1,14 +1,15 @@
+<!DOCTYPE html>
 <%--
     Login form for users who are not authenticated.
 --%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 <html>
     <c:set var="pageTitle">Login</c:set>
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body class="blueprints">
+        <div id="relative-path" data-relative-path="<c:url value="/" />"></div>
         <div class="container flex-container">
             <div class="col-md-6 well login-info">
                 <h1>Welcome to the new version of ROMS</h1>
@@ -48,6 +49,7 @@
         <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/additional-methods.min.js"></script>
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.0.0/js/bootstrap-datetimepicker.min.js"></script>
+        <script type="text/javascript" src="<c:url value='/javascript/common.js' />"></script>
         <script type="text/javascript" src="<c:url value='/javascript/login.js' />" ></script>
     </body>
 </html>

@@ -2,7 +2,7 @@
 <div class="modal fade" id="volunteer-contact-update" tabindex="-1" role="dialog" aria-labelledby="volunteer-comments-modal-label" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="/update-contact" method="post" id="update-contact-form">
+            <form action="#" method="post" id="update-contact-form">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">x</button>
                     <h4 class="modal-title" id="volunteer-contact-modal-form-label">Update Request</h4>

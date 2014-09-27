@@ -38,8 +38,6 @@ $(document).ready(function() {
         $("#volunteer-contact-update").modal("hide");
     });
 
-    var updateUrl = $("#update-contact-form").attr("action");
-    
     $("#update-contact-form").validate({
         debug: true,
         rules: {
@@ -58,7 +56,7 @@ $(document).ready(function() {
         submitHandler: function(form) {
             $("#alert-update").hide();
             $.ajax({
-                url: updateUrl,
+                url: roms.common.relativePath + '/update-contact',
                 data: $(form).serialize(),
                 type: "post",
                 cache: false,
