@@ -1744,6 +1744,7 @@ $(document).ready(function() {
         $modalForm.prop("action", $(this).prop("href"));
         // clear the values
         $("input[name='volunteerQualificationId']", $modalForm).val("");
+        $("select[name='qualificationId']").prop("disabled", false);
         $("input[name='name']", $modalForm).val("");
         $("input[name='comments']", $modalForm).val("");
 
