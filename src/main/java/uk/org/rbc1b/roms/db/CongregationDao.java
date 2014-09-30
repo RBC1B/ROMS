@@ -45,7 +45,7 @@ public interface CongregationDao {
      * @param congregationId congregation id
      * @return Congregation, or null if no matching instance
      */
-    @PreAuthorize("hasPermission('CONG','READ')")
+    @PreAuthorize("hasPermission('CONG','READ') or hasPermission('VOLUNTEER', 'READ')")
     @Transactional(readOnly = true)
     Congregation findCongregation(Integer congregationId);
 
