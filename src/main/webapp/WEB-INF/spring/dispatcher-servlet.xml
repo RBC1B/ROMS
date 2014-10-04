@@ -73,7 +73,7 @@ THE SOFTWARE.
                 <bean class="org.springframework.http.converter.StringHttpMessageConverter" />
                 <bean class="org.springframework.http.converter.FormHttpMessageConverter" />
                 <bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter" />
-                <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
             </list>
         </property>
     </bean>

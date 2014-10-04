@@ -47,9 +47,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -71,6 +73,7 @@ import uk.org.rbc1b.roms.controller.common.DataConverterUtil;
 import uk.org.rbc1b.roms.controller.common.PhoneNumberFormatter;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableResult;
 import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
+import uk.org.rbc1b.roms.controller.qualification.QualificationModel;
 import uk.org.rbc1b.roms.db.Address;
 import uk.org.rbc1b.roms.db.Congregation;
 import uk.org.rbc1b.roms.db.CongregationDao;
@@ -90,6 +93,8 @@ import uk.org.rbc1b.roms.db.volunteer.department.Team;
 import uk.org.rbc1b.roms.db.volunteer.interview.InterviewSession;
 import uk.org.rbc1b.roms.db.volunteer.interview.InterviewSessionDao;
 import uk.org.rbc1b.roms.db.volunteer.interview.VolunteerInterviewSession;
+import uk.org.rbc1b.roms.db.volunteer.qualification.Qualification;
+import uk.org.rbc1b.roms.db.volunteer.qualification.QualificationDao;
 import uk.org.rbc1b.roms.db.volunteer.qualification.VolunteerQualification;
 import uk.org.rbc1b.roms.db.volunteer.skill.Skill;
 import uk.org.rbc1b.roms.db.volunteer.skill.SkillDao;
@@ -99,14 +104,6 @@ import uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTrade;
 import com.google.common.base.Functions;
 import com.google.common.collect.ImmutableSortedMap;
 import com.google.common.collect.Ordering;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import uk.org.rbc1b.roms.controller.qualification.QualificationModel;
-import static uk.org.rbc1b.roms.controller.volunteer.VolunteerBadgeColour.GREEN;
-import static uk.org.rbc1b.roms.controller.volunteer.VolunteerBadgeColour.ORANGE;
-import static uk.org.rbc1b.roms.controller.volunteer.VolunteerBadgeColour.RED;
-import uk.org.rbc1b.roms.db.volunteer.qualification.Qualification;
-import uk.org.rbc1b.roms.db.volunteer.qualification.QualificationDao;
 
 /**
  * @author rahulsingh
@@ -240,7 +237,8 @@ public class VolunteersController {
         model.addAttribute("relationshipValues", referenceDao.findRelationshipValues());
         model.addAttribute("assignments", generateAssignments(assignments));
         model.addAttribute("volunteerSkills", volunteerModelFactory.generateVolunteerSkillsModel(skills));
-        model.addAttribute("volunteerQualifications", volunteerModelFactory.generateVolunteerQualificationsModel(volunteerQualifications));
+        model.addAttribute("volunteerQualifications",
+                volunteerModelFactory.generateVolunteerQualificationsModel(volunteerQualifications));
         model.addAttribute("trades", volunteerModelFactory.generateVolunteerTradesModel(volunteer.getTrades()));
         model.addAttribute("interviews", generateInterviewsModel(volunteerId));
 
@@ -329,7 +327,7 @@ public class VolunteersController {
         model.addAttribute("qualificationValues", referenceDao.findQualificationValues());
         model.addAttribute("submitUri",
                 VolunteerModelFactory.generateUri(volunteerQualification.getVolunteerQualificationId())
-                + "/qualifications");
+                        + "/qualifications");
 
         return "volunteers/edit-qualification";
     }
@@ -348,11 +346,10 @@ public class VolunteersController {
      */
     private List<VolunteerEmergencyContactModel> generateEmergencyContacts(Volunteer volunteer) {
         Person emergencyContact = volunteer.getEmergencyContact();
-        List<VolunteerEmergencyContactModel> modelList =
-                new ArrayList<VolunteerEmergencyContactModel>(emergencyContact == null ? 0 : 1);
+        List<VolunteerEmergencyContactModel> modelList = new ArrayList<VolunteerEmergencyContactModel>(
+                emergencyContact == null ? 0 : 1);
         if (emergencyContact != null) {
-            modelList.add(volunteerEmergencyContactModelFactory.
-                    generateVolunteerEmergencyContactModel(volunteer));
+            modelList.add(volunteerEmergencyContactModelFactory.generateVolunteerEmergencyContactModel(volunteer));
         }
         return modelList;
     }
@@ -906,18 +903,18 @@ public class VolunteersController {
             ModelAndView modelAndView = null;
 
             switch (badgeColour) {
-                case GREEN:
-                    modelAndView = new ModelAndView("greenVolunteerBadgePdfView");
-                    break;
-                case RED:
-                    modelAndView = new ModelAndView("redVolunteerBadgePdfView");
-                    break;
-                case ORANGE:
-                    modelAndView = new ModelAndView("orangeVolunteerBadgePdfView");
-                    break;
-                default:
-                    modelAndView = new ModelAndView("greyVolunteerBadgePdfView");
-                    break;
+            case GREEN:
+                modelAndView = new ModelAndView("greenVolunteerBadgePdfView");
+                break;
+            case RED:
+                modelAndView = new ModelAndView("redVolunteerBadgePdfView");
+                break;
+            case ORANGE:
+                modelAndView = new ModelAndView("orangeVolunteerBadgePdfView");
+                break;
+            default:
+                modelAndView = new ModelAndView("greyVolunteerBadgePdfView");
+                break;
             }
 
             String assignment = volunteerBadgePdfModelFactory.generatePrimaryAssignment(volunteer);
@@ -1044,7 +1041,7 @@ public class VolunteersController {
             if (ObjectUtils.equals(emergencyContact.getForename(), form.getSpouseForename())
                     && ObjectUtils.equals(emergencyContact.getSurname(), form.getSurname())
                     && (ObjectUtils.equals(form.getEmergencyRelationshipCode(), "HB") || ObjectUtils.equals(
-                    form.getEmergencyRelationshipCode(), "WF"))) {
+                            form.getEmergencyRelationshipCode(), "WF"))) {
 
                 return emergencyContact;
             }
@@ -1237,8 +1234,7 @@ public class VolunteersController {
     @RequestMapping(value = "{volunteerId}/emergencycontacts/{emergencyContactId}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteVolunteerEmergencyContact(@PathVariable Integer volunteerId,
-            @PathVariable Integer emergencyContactId)
-            throws NoSuchRequestHandlingMethodException {
+            @PathVariable Integer emergencyContactId) throws NoSuchRequestHandlingMethodException {
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, null);
         if (volunteer == null) {
@@ -1262,8 +1258,7 @@ public class VolunteersController {
     @RequestMapping(value = "{volunteerId}/emergencycontacts/{emergencyContactId}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateVolunteerEmergencyContact(@PathVariable Integer volunteerId,
-            @PathVariable Integer emergencyContactId,
-            @Valid VolunteerEmergencyContactForm form)
+            @PathVariable Integer emergencyContactId, @Valid VolunteerEmergencyContactForm form)
             throws NoSuchRequestHandlingMethodException {
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, null);
@@ -1438,7 +1433,8 @@ public class VolunteersController {
             throws NoSuchRequestHandlingMethodException {
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, null);
         VolunteerTrade volunteerTrade = volunteerDao.findTrade(volunteerTradeId);
-        if (volunteer == null || volunteerTrade == null || volunteer.getPersonId() != volunteerTrade.getVolunteer().getPersonId()) {
+        if (volunteer == null || volunteerTrade == null
+                || volunteer.getPersonId() != volunteerTrade.getVolunteer().getPersonId()) {
             throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
         }
 
@@ -1460,8 +1456,7 @@ public class VolunteersController {
     @RequestMapping(value = "{volunteerId}/qualifications/{volunteerQualificationId}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateVolunteerQualification(@PathVariable Integer volunteerId,
-            @PathVariable Integer volunteerQualificationId,
-            @Valid VolunteerQualificationForm form)
+            @PathVariable Integer volunteerQualificationId, @Valid VolunteerQualificationForm form)
             throws NoSuchRequestHandlingMethodException {
 
         VolunteerQualification volunteerQualification = volunteerDao.findQualification(volunteerQualificationId);
@@ -1486,18 +1481,18 @@ public class VolunteersController {
      */
     @RequestMapping(value = "{volunteerId}/qualifications/{volunteerQualificationId}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteVolunteerQualification(@PathVariable Integer volunteerId, @PathVariable Integer volunteerQualificationId)
-            throws NoSuchRequestHandlingMethodException {
+    public void deleteVolunteerQualification(@PathVariable Integer volunteerId,
+            @PathVariable Integer volunteerQualificationId) throws NoSuchRequestHandlingMethodException {
 
         VolunteerQualification volunteerQualification = volunteerDao.findQualification(volunteerQualificationId);
         if (volunteerQualification == null) {
-            throw new NoSuchRequestHandlingMethodException("Volunteer qualification #" + volunteerQualificationId + " is not found",
-                    this.getClass());
+            throw new NoSuchRequestHandlingMethodException("Volunteer qualification #" + volunteerQualificationId
+                    + " is not found", this.getClass());
         }
 
         if (!volunteerQualification.getPersonId().equals(volunteerId)) {
-            throw new NoSuchRequestHandlingMethodException("Volunteer #" + volunteerId + " is not linked to qualification #"
-                    + volunteerQualificationId, this.getClass());
+            throw new NoSuchRequestHandlingMethodException("Volunteer #" + volunteerId
+                    + " is not linked to qualification #" + volunteerQualificationId, this.getClass());
         }
 
         volunteerDao.deleteVolunteerQualification(volunteerQualification);
@@ -1515,8 +1510,9 @@ public class VolunteersController {
      */
     @RequestMapping(value = "{volunteerId}/qualifications", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<Void> createVolunteerQualification(@PathVariable Integer volunteerId, @Valid VolunteerQualificationForm form,
-            UriComponentsBuilder builder) throws NoSuchRequestHandlingMethodException {
+    public ResponseEntity<Void> createVolunteerQualification(@PathVariable Integer volunteerId,
+            @Valid VolunteerQualificationForm form, UriComponentsBuilder builder)
+            throws NoSuchRequestHandlingMethodException {
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, null);
         if (volunteer == null) {

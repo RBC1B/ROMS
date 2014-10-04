@@ -23,7 +23,7 @@
  */
 package uk.org.rbc1b.roms.controller.common;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 

@@ -25,7 +25,7 @@ package uk.org.rbc1b.roms.db;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Shared component that defines the postal address of a person, hall or
