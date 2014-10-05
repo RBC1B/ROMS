@@ -99,7 +99,7 @@ create table ProjectDepartmentRequired (
     foreign key(ProjectId) references Project(ProjectId) on delete set null,
     foreign key(DepartmentId) references Department(DepartmentId) on delete set null,
     foreign key (UpdatedBy) references Person(PersonId),
-    unique (ProjectId, DepartmentId)
+    unique (ProjectId, DepartmentId, WorkDate)
 )engine=InnoDB;
 
 create table ProjectDepartmentRequired_AUD (
@@ -124,6 +124,10 @@ create table ProjectAvailability(
     PersonResponded             boolean default false,
     OverseerConfirmed           boolean default false,
     ConfirmationEmail           boolean default false,
+    AvailabilityStatusCode      char(2),
+    TransportRequired           boolean default false,
+    OfferTransport              boolean default false,
+    AccomodationRequired        boolean default false,
     UpdateTime      timestamp   not null,
     UpdatedBy       bigint(20)  not null,
     primary key(ProjectAvailabilityId),
@@ -144,6 +148,9 @@ create table ProjectAvailability_AUD(
     OverseerConfirmed           boolean,
     ConfirmationEmail           boolean,
     AvailabilityStatusCode      char(2),
+    TransportRequired           boolean,
+    OfferTransport              boolean,
+    AccomodationRequired        boolean,
     UpdateTime      timestamp   not null,
     UpdatedBy       bigint(20)  not null,        
     primary key(ProjectAvailabilityId, REV)
