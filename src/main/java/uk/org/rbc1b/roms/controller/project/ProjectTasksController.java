@@ -26,6 +26,7 @@ package uk.org.rbc1b.roms.controller.project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,6 +53,7 @@ public class ProjectTasksController {
      * @throws NoSuchRequestHandlingMethodException on failure to find the task
      */
     @RequestMapping(value = "{projectTaskId}/name", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PreAuthorize("hasPermission('PROJECT','EDIT')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateTaskName(@PathVariable Integer projectTaskId, @RequestParam String value)
             throws NoSuchRequestHandlingMethodException {

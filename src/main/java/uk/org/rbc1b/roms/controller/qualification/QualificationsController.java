@@ -27,18 +27,15 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
-import uk.org.rbc1b.roms.controller.ForbiddenRequestException;
 import uk.org.rbc1b.roms.db.volunteer.qualification.Qualification;
 import uk.org.rbc1b.roms.db.volunteer.qualification.QualificationDao;
-import uk.org.rbc1b.roms.security.AccessLevel;
-import uk.org.rbc1b.roms.security.Application;
-import uk.org.rbc1b.roms.security.RomsPermissionEvaluator;
 
 /**
  * Qualification types which may be applied to a volunteer.
@@ -61,6 +58,7 @@ public class QualificationsController {
      * @return model containing the list of qualifications
      */
     @RequestMapping(method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('SKILL', 'READ')")
     public String showQualificationList(ModelMap model) {
 
         List<Qualification> qualifications = qualificationDao.findQualifications();
@@ -83,6 +81,7 @@ public class QualificationsController {
      * @throws NoSuchRequestHandlingMethodException on failure to look up the qualification
      */
     @RequestMapping(value = "{qualificationId}", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('SKILL', 'READ')")
     public String showQualification(@PathVariable Integer qualificationId, ModelMap model)
             throws NoSuchRequestHandlingMethodException {
         Qualification qualification = qualificationDao.findQualification(qualificationId);
@@ -102,16 +101,12 @@ public class QualificationsController {
      * @throws NoSuchRequestHandlingMethodException on failure to find the qualification
      */
     @RequestMapping(value = "{qualificationId}/edit", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('SKILL', 'EDIT')")
     public String showEditQualificationForm(@PathVariable Integer qualificationId, ModelMap model)
             throws NoSuchRequestHandlingMethodException {
         Qualification qualification = this.qualificationDao.findQualification(qualificationId);
         if (qualification == null) {
             throw new NoSuchRequestHandlingMethodException("No qualification #" + qualificationId, this.getClass());
-        }
-
-        if (!RomsPermissionEvaluator.hasPermission(Application.SKILL, AccessLevel.EDIT)) {
-            throw new ForbiddenRequestException(
-                    "Skill application edit permission is required to show the qualification form");
         }
 
         QualificationForm form = new QualificationForm();
@@ -132,13 +127,8 @@ public class QualificationsController {
      * @return view name
      */
     @RequestMapping(value = "new", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('SKILL', 'ADD')")
     public String showCreateQualificationForm(ModelMap model) {
-
-        if (!RomsPermissionEvaluator.hasPermission(Application.SKILL, AccessLevel.ADD)) {
-            throw new ForbiddenRequestException(
-                    "Skill application add permission is required to show the qualification form");
-        }
-
         model.addAttribute("qualificationForm", new QualificationForm());
         model.addAttribute("submitUri", QualificationModelFactory.generateUri(null));
         model.addAttribute("submitMethod", "POST");
@@ -153,6 +143,7 @@ public class QualificationsController {
      * @throws NoSuchRequestHandlingMethodException on failure to find the qualification
      */
     @RequestMapping(value = "{qualificationId}", method = RequestMethod.PUT)
+    @PreAuthorize("hasPermission('SKILL', 'EDIT')")
     public String updateQualification(@PathVariable Integer qualificationId, @Valid QualificationForm qualificationForm)
             throws NoSuchRequestHandlingMethodException {
 
@@ -175,6 +166,7 @@ public class QualificationsController {
      * @return mvc redirect
      */
     @RequestMapping(method = RequestMethod.POST)
+    @PreAuthorize("hasPermission('SKILL', 'ADD')")
     public String createQualification(@Valid QualificationForm qualificationForm) {
 
         Qualification qualification = new Qualification();

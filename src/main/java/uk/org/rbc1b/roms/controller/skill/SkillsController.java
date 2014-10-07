@@ -30,6 +30,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -65,6 +66,7 @@ public class SkillsController {
      * @return view
      */
     @RequestMapping(method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('SKILL', 'READ')")
     public String showSkillList(ModelMap model) {
 
         SkillSearchCriteria searchCriteria = new SkillSearchCriteria();
@@ -87,6 +89,7 @@ public class SkillsController {
      * @return model containing the list of skills
      */
     @RequestMapping(value = "search", method = RequestMethod.GET, produces = "application/json")
+    @PreAuthorize("hasPermission('SKILL', 'READ')")
     @ResponseBody
     public List<SkillModel> findSkills(@RequestParam(value = "name", required = true) String name) {
         List<Skill> skills = skillDao.findSkills(name);
@@ -105,6 +108,7 @@ public class SkillsController {
      * @throws NoSuchRequestHandlingMethodException on failure to look up the skill
      */
     @RequestMapping(value = "{skillId}", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('SKILL', 'READ')")
     public String showSkill(@PathVariable Integer skillId, ModelMap model) throws NoSuchRequestHandlingMethodException {
 
         Skill skill = skillDao.findSkill(skillId);
@@ -126,6 +130,7 @@ public class SkillsController {
      * @throws NoSuchRequestHandlingMethodException on failure to find the skill
      */
     @RequestMapping(value = "{skillId}/edit", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('SKILL', 'EDIT')")
     public String showEditSkillForm(@PathVariable Integer skillId, ModelMap model)
             throws NoSuchRequestHandlingMethodException {
         Skill skill = this.skillDao.findSkill(skillId);
@@ -154,6 +159,7 @@ public class SkillsController {
      * @return view name
      */
     @RequestMapping(value = "new", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('SKILL', 'ADD')")
     public String showCreateSkillForm(ModelMap model) {
 
         // initialise the form bean
@@ -171,6 +177,7 @@ public class SkillsController {
      * @return view name
      */
     @RequestMapping(method = RequestMethod.POST)
+    @PreAuthorize("hasPermission('SKILL', 'ADD')")
     public String createSkill(@Valid SkillForm skillForm) {
 
         Skill skill = new Skill();
@@ -195,6 +202,7 @@ public class SkillsController {
      * @throws NoSuchRequestHandlingMethodException on failure to find the skill
      */
     @RequestMapping(value = "{skillId}", method = RequestMethod.PUT)
+    @PreAuthorize("hasPermission('SKILL', 'EDIT')")
     public String updateSkill(@PathVariable Integer skillId, @Valid SkillForm skillForm)
             throws NoSuchRequestHandlingMethodException {
 
@@ -221,18 +229,18 @@ public class SkillsController {
      * @throws NoSuchRequestHandlingMethodException on failure to find the skill
      */
     @RequestMapping(method = RequestMethod.DELETE)
+    @PreAuthorize("hasPermission('SKILL', 'DELETE')")
     public String deleteSkill(HttpServletRequest request, ModelMap model) throws NoSuchRequestHandlingMethodException {
         Integer skillId;
         skillId = Integer.parseInt(request.getParameter("skillId"));
         Skill skill = this.skillDao.findSkill(skillId);
         if (skill == null) {
             throw new NoSuchRequestHandlingMethodException("No Skill #" + skillId, this.getClass());
-        } else {
-            this.skillDao.deleteSkill(skill);
-
-            LOGGER.error("Deleted Skill:" + skillId);
-            return "redirect:/skills";
         }
+        this.skillDao.deleteSkill(skill);
+
+        LOGGER.error("Deleted Skill:" + skillId);
+        return "redirect:/skills";
     }
 
 }

@@ -24,7 +24,6 @@
 package uk.org.rbc1b.roms.db;
 
 import java.util.List;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -40,7 +39,6 @@ public interface PersonChangeDao {
      * @param personChangeId the person change id
      * @return PersonChange, or null
      */
-    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional
     PersonChange findPersonChange(Integer personChangeId);
 
@@ -50,7 +48,6 @@ public interface PersonChangeDao {
      * @param personId the person id
      * @return list of person changes
      */
-    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional
     List<PersonChange> findPersonChanges(Integer personId);
 
@@ -59,7 +56,6 @@ public interface PersonChangeDao {
      *
      * @return list of personchange
      */
-    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional
     List<PersonChange> findPersonChangeNotUpdated();
 
@@ -68,7 +64,6 @@ public interface PersonChangeDao {
      *
      * @return list of person changes
      */
-    @PreAuthorize("hasPermission('VOLUNTEER','READ')")
     @Transactional
     List<PersonChange> findPersonChange();
 
@@ -77,7 +72,6 @@ public interface PersonChangeDao {
      *
      * @param personChange to update
      */
-    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     @Transactional
     void updatePersonChange(PersonChange personChange);
 
@@ -86,7 +80,6 @@ public interface PersonChangeDao {
      *
      * @param personChange to save
      */
-    @PreAuthorize("hasPermission('VOLUNTEER','EDIT')")
     @Transactional
     void savePersonChange(PersonChange personChange);
 
@@ -97,7 +90,6 @@ public interface PersonChangeDao {
      * @param oldPerson to clear from cache
      * @return Person old person
      */
-    @PreAuthorize("hasPermission('VOLUNTEER','READ')")
     @Transactional
     Person getOldPerson(Integer personId, Person oldPerson);
 }

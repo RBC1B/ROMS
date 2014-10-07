@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -61,6 +62,7 @@ public class CircuitsController {
      * @return view
      */
     @RequestMapping(method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('CIRCUIT', 'READ')")
     public String showCircuitList(ModelMap model) {
 
         List<Circuit> circuits = circuitDao.findCircuits();
@@ -83,6 +85,7 @@ public class CircuitsController {
      * @throws NoSuchRequestHandlingMethodException on failure to look up the circuit
      */
     @RequestMapping(value = "{circuitId}", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('CIRCUIT', 'READ')")
     public String showCircuit(@PathVariable Integer circuitId, ModelMap model)
             throws NoSuchRequestHandlingMethodException {
 
@@ -105,6 +108,7 @@ public class CircuitsController {
      * @throws NoSuchRequestHandlingMethodException on failure to look up the circuit
      */
     @RequestMapping(value = "{circuitId}/edit", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('CIRCUIT', 'EDIT')")
     public String showEditCircuitForm(@PathVariable Integer circuitId, ModelMap model)
             throws NoSuchRequestHandlingMethodException {
         Circuit circuit = circuitDao.findCircuit(circuitId);
@@ -145,6 +149,7 @@ public class CircuitsController {
      * @return view name
      */
     @RequestMapping(value = "new", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('CIRCUIT', 'ADD')")
     public String showCreateCircuitForm(ModelMap model) {
 
         // initialise the form bean
@@ -161,6 +166,7 @@ public class CircuitsController {
      * @return view name
      */
     @RequestMapping(method = RequestMethod.POST)
+    @PreAuthorize("hasPermission('CIRCUIT', 'ADD')")
     public String createCircuit(@Valid CircuitForm circuitForm) {
 
         Circuit circuit = new Circuit();
@@ -181,6 +187,7 @@ public class CircuitsController {
      * @return view name
      */
     @RequestMapping(value = "{circuitId}", method = RequestMethod.PUT)
+    @PreAuthorize("hasPermission('CIRCUIT', 'EDIT')")
     public String updateCircuit(@PathVariable Integer circuitId, @Valid CircuitForm circuitForm) {
 
         Circuit circuit = new Circuit();

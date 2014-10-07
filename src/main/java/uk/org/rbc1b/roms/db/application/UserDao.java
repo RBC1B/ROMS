@@ -24,7 +24,6 @@
 package uk.org.rbc1b.roms.db.application;
 
 import java.util.List;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -68,7 +67,6 @@ public interface UserDao {
      * @param username the username to lookup
      * @return boolean true if it exists
      */
-    @PreAuthorize("hasPermission('DATABASE','READ')")
     @Transactional(readOnly = true)
     boolean checkUserExist(String username);
 
@@ -77,7 +75,6 @@ public interface UserDao {
      *
      * @return users
      */
-    @PreAuthorize("hasPermission('DATABASE','READ')")
     @Transactional(readOnly = true)
     List<User> findAllUsers();
 
@@ -86,7 +83,6 @@ public interface UserDao {
      *
      * @param user the user to update
      */
-    @PreAuthorize("hasPermission('DATABASE','EDIT')")
     @Transactional
     void updateUser(User user);
 
@@ -95,7 +91,6 @@ public interface UserDao {
      *
      * @param user the user to create
      */
-    @PreAuthorize("hasPermission('DATABASE','ADD')")
     @Transactional
     void createUser(User user);
 }

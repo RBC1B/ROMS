@@ -24,7 +24,6 @@
 package uk.org.rbc1b.roms.db.volunteer.skill;
 
 import java.util.List;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -37,7 +36,6 @@ public interface SkillDao {
      * @param skillId id
      * @return skill
      */
-    @PreAuthorize("hasPermission('SKILL', 'READ')")
     @Transactional(readOnly = true)
     Skill findSkill(Integer skillId);
 
@@ -46,7 +44,6 @@ public interface SkillDao {
      * @param name skill name
      * @return skills
      */
-    @PreAuthorize("hasPermission('SKILL', 'READ')")
     @Transactional(readOnly = true)
     List<Skill> findSkills(String name);
 
@@ -55,7 +52,6 @@ public interface SkillDao {
      * @param searchCriteria search criteria
      * @return list of matching skills
      */
-    @PreAuthorize("hasPermission('SKILL', 'READ')")
     @Transactional(readOnly = true)
     List<Skill> findSkills(SkillSearchCriteria searchCriteria);
 
@@ -63,7 +59,6 @@ public interface SkillDao {
      * Save a skill.
      * @param skill a skill to save
      */
-    @PreAuthorize("hasPermission('SKILL','EDIT')")
     @Transactional
     void updateSkill(Skill skill);
 
@@ -71,7 +66,6 @@ public interface SkillDao {
      * Create a new skill.
      * @param skill new skill to create
      */
-    @PreAuthorize("hasPermission('SKILL', 'ADD')")
     @Transactional
     void createSkill(Skill skill);
 
@@ -79,7 +73,6 @@ public interface SkillDao {
      * Deletes a skill.
      * @param skill to delete
      */
-    @PreAuthorize("hasPermission('SKILL','DELETE')")
     @Transactional
     void deleteSkill(Skill skill);
 
@@ -88,7 +81,6 @@ public interface SkillDao {
      * @param skillCategoryId id
      * @return Category, or null if not found
      */
-    @PreAuthorize("hasPermission('SKILL', 'READ')")
     @Transactional(readOnly = true)
     SkillCategory findSkillCategory(Integer skillCategoryId);
 
@@ -96,7 +88,6 @@ public interface SkillDao {
      * Get all Category.
      * @return List Category
      */
-    @PreAuthorize("hasPermission('SKILL', 'READ')")
     @Transactional(readOnly = true)
     List<SkillCategory> findSkillCategories();
 

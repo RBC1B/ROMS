@@ -24,7 +24,6 @@
 package uk.org.rbc1b.roms.db.volunteer.qualification;
 
 import java.util.List;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -41,7 +40,6 @@ public interface QualificationDao {
      * @return qualification
      *
      */
-    @PreAuthorize("hasPermission('SKILL', 'READ')")
     @Transactional(readOnly = true)
     Qualification findQualification(Integer qualificationId);
 
@@ -50,7 +48,6 @@ public interface QualificationDao {
      *
      * @return list of matching qualifications
      */
-    @PreAuthorize("hasPermission('SKILL', 'READ')")
     @Transactional(readOnly = true)
     List<Qualification> findQualifications();
 
@@ -59,7 +56,6 @@ public interface QualificationDao {
      *
      * @param qualification a qualification to save
      */
-    @PreAuthorize("hasPermission('SKILL','EDIT')")
     @Transactional
     void updateQualification(Qualification qualification);
 
@@ -68,7 +64,6 @@ public interface QualificationDao {
      *
      * @param qualification a qualification to save
      */
-    @PreAuthorize("hasPermission('SKILL','ADD')")
     @Transactional
     void createQualification(Qualification qualification);
 

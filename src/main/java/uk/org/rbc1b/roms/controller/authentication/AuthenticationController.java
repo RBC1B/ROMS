@@ -30,8 +30,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- *
- * @author oliver.elder.esq
+ * Login/logout controller.
  */
 @Controller
 public class AuthenticationController {

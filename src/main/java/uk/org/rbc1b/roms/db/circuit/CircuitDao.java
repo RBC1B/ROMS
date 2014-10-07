@@ -24,7 +24,6 @@
 package uk.org.rbc1b.roms.db.circuit;
 
 import java.util.List;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -40,7 +39,6 @@ public interface CircuitDao {
      * @param circuitId id
      * @return circuit
      */
-    @PreAuthorize("hasPermission('CIRCUIT', 'READ')")
     @Transactional(readOnly = true)
     Circuit findCircuit(Integer circuitId);
 
@@ -49,7 +47,6 @@ public interface CircuitDao {
      *
      * @return list of matching circuits
      */
-    @PreAuthorize("hasPermission('CIRCUIT', 'READ')")
     @Transactional(readOnly = true)
     List<Circuit> findCircuits();
 
@@ -58,7 +55,6 @@ public interface CircuitDao {
      *
      * @param circuit object to create
      */
-    @PreAuthorize("hasPermission('CIRCUIT', 'ADD')")
     @Transactional
     void createCircuit(Circuit circuit);
 
@@ -67,7 +63,6 @@ public interface CircuitDao {
      *
      * @param circuit object to update
      */
-    @PreAuthorize("hasPermission('CIRCUIT', 'EDIT')")
     @Transactional
     void updateCircuit(Circuit circuit);
 }

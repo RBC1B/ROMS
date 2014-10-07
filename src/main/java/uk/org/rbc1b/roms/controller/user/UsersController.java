@@ -32,6 +32,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -94,6 +95,7 @@ public class UsersController {
      * @return view
      */
     @RequestMapping(method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('DATABASE','READ')")
     public String showUserList(ModelMap model) {
         List<User> users = userDao.findAllUsers();
         List<UserModel> modelList = new ArrayList<UserModel>();
@@ -112,6 +114,7 @@ public class UsersController {
      * @return model containing the list of users
      */
     @RequestMapping(value = "search", method = RequestMethod.GET, produces = "application/json")
+    @PreAuthorize("hasPermission('DATABASE','READ')")
     @ResponseBody
     public List<UserSearchResult> findUsers(@RequestParam(value = "name", required = true) String name) {
         List<User> users = userDao.findUsers(name);
@@ -136,6 +139,7 @@ public class UsersController {
      * @throws NoSuchRequestHandlingMethodException on failure to look up user
      */
     @RequestMapping(value = "{personId}", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('DATABASE','READ')")
     public String showUser(@PathVariable Integer personId, ModelMap model) throws NoSuchRequestHandlingMethodException {
         User user = userDao.findUser(personId);
         if (user == null) {
@@ -154,6 +158,7 @@ public class UsersController {
      * @return view
      */
     @RequestMapping(value = "/new", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('DATABASE','ADD')")
     public String showCreateUserForm(ModelMap model) {
         if (!RomsPermissionEvaluator.hasPermission(uk.org.rbc1b.roms.security.Application.DATABASE, AccessLevel.ADD)) {
             throw new ForbiddenRequestException(
@@ -161,7 +166,8 @@ public class UsersController {
         }
         List<Application> applications = applicationDao.getApplications();
 
-        model.addAttribute("applications", ApplicationAccessFormFactory.generateApplicationAccessForm(applications, null));
+        model.addAttribute("applications",
+                ApplicationAccessFormFactory.generateApplicationAccessForm(applications, null));
         model.addAttribute("userForm", new UserForm());
         model.addAttribute("submitUri", UserModelFactory.generateUri(null));
         model.addAttribute("submitMethod", "POST");
@@ -179,6 +185,7 @@ public class UsersController {
      * @return model containing list of volunteers
      */
     @RequestMapping(value = "search-volunteer", method = RequestMethod.GET, produces = "application/json")
+    @PreAuthorize("hasPermission('DATABASE','READ')")
     @ResponseBody
     public List<UserSearchResult> findUsers(@RequestParam(value = "forename", required = true) String forename,
             @RequestParam(value = "surname", required = true) String surname,
@@ -200,6 +207,7 @@ public class UsersController {
      * @return isUsed true or false
      */
     @RequestMapping(value = "check-user", method = RequestMethod.GET, produces = "application/json")
+    @PreAuthorize("hasPermission('DATABASE','READ')")
     @ResponseBody
     public boolean checkUsername(@RequestParam(value = "username", required = true) String username) {
         return userDao.checkUserExist(username);
@@ -247,6 +255,7 @@ public class UsersController {
      * @return redirect to view
      */
     @RequestMapping(method = RequestMethod.POST)
+    @PreAuthorize("hasPermission('DATABASE','ADD')")
     public String createUser(@Valid UserForm userForm, HttpServletRequest request) {
         User user = new User();
         Person theUser = new Person();
@@ -278,24 +287,21 @@ public class UsersController {
      * @param model the MVC model
      * @return the jsp page to display
      * @throws NoSuchRequestHandlingMethodException if the user does not exist
-     * @throws ForbiddenRequestException if access is not granted to the user
      */
     @RequestMapping(value = "{personId}/edit", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('DATABASE','EDIT')")
     public String showUserForm(@PathVariable Integer personId, ModelMap model)
-            throws NoSuchRequestHandlingMethodException, ForbiddenRequestException {
+            throws NoSuchRequestHandlingMethodException {
         User user = userDao.findUser(personId);
         if (user == null) {
             throw new NoSuchRequestHandlingMethodException("No User with ID:" + personId, this.getClass());
-        }
-        if (!RomsPermissionEvaluator.hasPermission(uk.org.rbc1b.roms.security.Application.DATABASE, AccessLevel.EDIT)) {
-            throw new ForbiddenRequestException(
-                    "Database application edit permission is required to show the edit user form");
         }
         List<Application> applications = applicationDao.getApplications();
         UserForm userForm = createUserFormForCurrentUser(user);
 
         model.addAttribute("userForm", userForm);
-        model.addAttribute("applications", ApplicationAccessFormFactory.generateApplicationAccessForm(applications, user.getApplicationAccess()));
+        model.addAttribute("applications",
+                ApplicationAccessFormFactory.generateApplicationAccessForm(applications, user.getApplicationAccess()));
         model.addAttribute("submitUri", UserModelFactory.generateUri(personId));
         model.addAttribute("submitMethod", "PUT");
         model.addAttribute("user", userModelFactory.generateUserModel(user));
@@ -312,6 +318,7 @@ public class UsersController {
      * @return redirect
      */
     @RequestMapping(value = "{personId}", method = RequestMethod.PUT)
+    @PreAuthorize("hasPermission('DATABASE','EDIT')")
     public String saveUserUpdate(@PathVariable Integer personId, @Valid UserForm userForm, HttpServletRequest request) {
         User me = getMyUser();
         // Three things we could do: 1. disable user, 2. change password, 3. update acl
@@ -360,13 +367,7 @@ public class UsersController {
      */
     private String getPasswordHash(String salt, String password) {
         ShaPasswordEncoder encoder = new ShaPasswordEncoder();
-        String hash;
-        if (salt.isEmpty()) {
-            hash = encoder.encodePassword(password, null);
-        } else {
-            hash = encoder.encodePassword(password, salt);
-        }
-        return hash;
+        return encoder.encodePassword(password, salt.isEmpty() ? null : salt);
     }
 
     /**

@@ -26,6 +26,7 @@ package uk.org.rbc1b.roms.controller.personchange;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -55,6 +56,7 @@ public class PersonChangesController {
      * @return view
      */
     @RequestMapping(method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     public String showPersonChangeList(ModelMap model) {
         List<PersonChange> personChanges = personChangeDao.findPersonChangeNotUpdated();
 
@@ -75,6 +77,7 @@ public class PersonChangesController {
      * @throws NoSuchRequestHandlingMethodException on failure to find the row
      */
     @RequestMapping(value = "{personChangeId}", method = RequestMethod.PUT)
+    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     public void updatePersonChange(@PathVariable Integer personChangeId) throws NoSuchRequestHandlingMethodException {
         PersonChange personChange = personChangeDao.findPersonChange(personChangeId);
         if (personChange == null) {

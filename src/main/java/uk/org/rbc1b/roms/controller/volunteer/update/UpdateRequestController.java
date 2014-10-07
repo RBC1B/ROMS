@@ -23,8 +23,6 @@
  */
 package uk.org.rbc1b.roms.controller.volunteer.update;
 
-import freemarker.template.Configuration;
-import freemarker.template.TemplateException;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.HashMap;
@@ -60,6 +58,8 @@ import uk.org.rbc1b.roms.db.email.Email;
 import uk.org.rbc1b.roms.db.email.EmailDao;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
+import freemarker.template.Configuration;
+import freemarker.template.TemplateException;
 
 /**
  * Controller for checking and accepting requests to update contact details.
@@ -76,8 +76,7 @@ public class UpdateRequestController {
     private static final String SUBJECT = "RBC (London & Home Counties) Volunteer Information Update";
     private static final String SECURITY_SALT = "security.salt";
     private static final String SERVER_URL = "edifice.url";
-    private static final String EMAIL_PATTERN =
-            "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+    private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     private static final String DATETIMEFORMAT = "yyyyMMddHHmm";
     private static final long MAXTIME = 86400000;
@@ -96,14 +95,14 @@ public class UpdateRequestController {
 
     /**
      * Accepts and checks requests for updating contact.
-     *
+     * There is no security checks around this because it is done be the unauthenticated user. Security
+     * is added by hashed urls.
      * @param requestForm the user form
      * @param response the http response to set
      * @param request the http request
      */
     @RequestMapping(method = RequestMethod.POST)
-    public void acceptRequest(@Valid RequestForm requestForm,
-            HttpServletResponse response, HttpServletRequest request) {
+    public void acceptRequest(@Valid RequestForm requestForm, HttpServletResponse response, HttpServletRequest request) {
         Volunteer volunteer = volunteerDao.findVolunteerById(requestForm.getPersonId());
         Date birthDate = DataConverterUtil.toSqlDate(requestForm.getBirthDate());
         if (volunteer == null) {
@@ -127,7 +126,8 @@ public class UpdateRequestController {
 
     /**
      * Handles the request to update contact.
-     *
+     * There is no security checks around this because it is done be the unauthenticated user. Security
+     * is added by hashed urls.
      * @param personId the person id
      * @param datetime the datetime of the email
      * @param hash the hash
@@ -135,15 +135,16 @@ public class UpdateRequestController {
      * @return contact update form
      */
     @RequestMapping(value = "/{personId}/{datetime}/{hash}/update", method = RequestMethod.GET)
-    public String showVolunteerContact(@PathVariable Integer personId,
-            @PathVariable String datetime, @PathVariable String hash, ModelMap model) {
+    public String showVolunteerContact(@PathVariable Integer personId, @PathVariable String datetime,
+            @PathVariable String hash, ModelMap model) {
         String uri = BASE_URI + "/" + personId + "/" + datetime + "/" + hash;
         Volunteer volunteer = volunteerDao.findVolunteerById(personId);
         if (volunteer == null) {
             return "update/contact-update-incorrect";
         }
         if (checkWithinTime(datetime) && checkHash(volunteer, datetime, hash)) {
-            ContactUpdateForm contactUpdateModel = contactUpdateModelFactory.generateContactUpdateModel(volunteer, datetime, hash);
+            ContactUpdateForm contactUpdateModel = contactUpdateModelFactory.generateContactUpdateModel(volunteer,
+                    datetime, hash);
             model.addAttribute("contactUpdateModel", contactUpdateModel);
             model.addAttribute("submitUrl", uri);
             model.addAttribute("submitMethod", "POST");
@@ -155,7 +156,8 @@ public class UpdateRequestController {
 
     /**
      * Handles update requests.
-     *
+     * There is no security checks around this because it is done be the unauthenticated user. Security
+     * is added by hashed urls.
      * @param personId the person Id
      * @param datetime the date and time of the original request
      * @param hash the hash
@@ -163,8 +165,8 @@ public class UpdateRequestController {
      * @param form the updated contact form
      */
     @RequestMapping(value = "/{personId}/{datetime}/{hash}", method = RequestMethod.POST)
-    public void acceptUpdate(@PathVariable Integer personId,
-            @PathVariable String datetime, @PathVariable String hash, HttpServletResponse response, @Valid ContactUpdateForm form) {
+    public void acceptUpdate(@PathVariable Integer personId, @PathVariable String datetime, @PathVariable String hash,
+            HttpServletResponse response, @Valid ContactUpdateForm form) {
         LOGGER.error("UpdateRequestController: Contact Update Form for " + personId);
         Volunteer volunteer = volunteerDao.findVolunteerById(personId);
         if (volunteer == null) {
@@ -181,8 +183,8 @@ public class UpdateRequestController {
                 volunteer.getPerson().getAddress().setPostcode(form.getPostcode());
                 try {
                     UserDetails system = userDetailsService.loadUserByUsername("System");
-                    Authentication authentication = new UsernamePasswordAuthenticationToken(system, system.getUsername(),
-                            system.getAuthorities());
+                    Authentication authentication = new UsernamePasswordAuthenticationToken(system,
+                            system.getUsername(), system.getAuthorities());
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                     volunteerDao.updateVolunteerByVolunteer(volunteer);
                     preparePostUpdateEmail(volunteer);
@@ -252,7 +254,8 @@ public class UpdateRequestController {
         Map<String, String> model = new HashMap<String, String>();
         model.put("forename", volunteer.getPerson().getForename());
         model.put("httpsurl", uri);
-        String text = FreeMarkerTemplateUtils.processTemplateIntoString(conf.getTemplate(UPDATE_REQUEST_TEMPLATE), model);
+        String text = FreeMarkerTemplateUtils.processTemplateIntoString(conf.getTemplate(UPDATE_REQUEST_TEMPLATE),
+                model);
         Email email = new Email();
         email.setRecipient(volunteer.getPerson().getEmail());
         email.setSubject(SUBJECT);
@@ -318,8 +321,7 @@ public class UpdateRequestController {
             salt = "er9bhmbsaa5ppdnoQP";
             LOGGER.error("UpdateRequestController: JNDI property for security salt is not set - will use default.");
         }
-        String text = datetime + ":" + volunteer.getPersonId()
-                + volunteer.getPerson().getBirthDate().toString();
+        String text = datetime + ":" + volunteer.getPersonId() + volunteer.getPerson().getBirthDate().toString();
         ShaPasswordEncoder encoder = new ShaPasswordEncoder(256);
         return encoder.encodePassword(salt, text);
     }

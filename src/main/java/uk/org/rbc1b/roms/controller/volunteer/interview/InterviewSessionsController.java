@@ -36,6 +36,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
@@ -53,6 +56,8 @@ import uk.org.rbc1b.roms.db.CongregationContact;
 import uk.org.rbc1b.roms.db.CongregationDao;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.PersonDao;
+import uk.org.rbc1b.roms.db.application.User;
+import uk.org.rbc1b.roms.db.application.UserDao;
 import uk.org.rbc1b.roms.db.email.Email;
 import uk.org.rbc1b.roms.db.email.EmailDao;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
@@ -66,10 +71,6 @@ import uk.org.rbc1b.roms.db.volunteer.interview.InterviewSessionDao;
 import uk.org.rbc1b.roms.db.volunteer.interview.VolunteerInterviewSession;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import uk.org.rbc1b.roms.db.application.User;
-import uk.org.rbc1b.roms.db.application.UserDao;
 
 /**
  * Handler the volunteer interview session and invitations.
@@ -113,6 +114,7 @@ public class InterviewSessionsController {
      * @return view
      */
     @RequestMapping(method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     public String showInterviewSessionList(ModelMap model) {
 
         List<InterviewSession> sessions = interviewSessionDao.findInterviewSessions();
@@ -140,6 +142,7 @@ public class InterviewSessionsController {
      * interview session
      */
     @RequestMapping(value = "{interviewSessionId}", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     public String showInterviewSession(@PathVariable Integer interviewSessionId, ModelMap model)
             throws NoSuchRequestHandlingMethodException {
         InterviewSession session = interviewSessionDao.findInterviewSession(interviewSessionId);
@@ -206,6 +209,7 @@ public class InterviewSessionsController {
      * session
      */
     @RequestMapping(value = "{interviewSessionId}/invitations", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     public String showInvitationList(@PathVariable Integer interviewSessionId, ModelMap model)
             throws NoSuchRequestHandlingMethodException {
 
@@ -253,6 +257,7 @@ public class InterviewSessionsController {
      * session
      */
     @RequestMapping(value = "{interviewSessionId}/invitations", method = RequestMethod.POST)
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     public String submitInvitationList(@PathVariable Integer interviewSessionId,
             @RequestParam(value = "volunteerIds") String volunteerIdsParam) throws NoSuchRequestHandlingMethodException {
 
@@ -370,6 +375,7 @@ public class InterviewSessionsController {
      * session or invitation
      */
     @RequestMapping(value = "{interviewSessionId}/invitations/{volunteerInterviewSessionId}", method = RequestMethod.PUT)
+    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void updateVolunteerInvitation(@PathVariable Integer interviewSessionId,
             @PathVariable Integer volunteerInterviewSessionId, @RequestParam String interviewStatusCode,
@@ -407,6 +413,7 @@ public class InterviewSessionsController {
      * @return view
      */
     @RequestMapping(value = "new", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     public String showEditInterviewSessionForm(ModelMap model) {
 
         InterviewSessionForm form = new InterviewSessionForm();
@@ -426,6 +433,7 @@ public class InterviewSessionsController {
      * @return redirect
      */
     @RequestMapping(method = RequestMethod.POST)
+    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     public String createInterviewSession(@Valid InterviewSessionForm interviewSessionForm) {
         InterviewSession session = new InterviewSession();
 
@@ -448,6 +456,7 @@ public class InterviewSessionsController {
      * session
      */
     @RequestMapping(value = "{interviewSessionId}/edit", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     public String showEditInterviewSessionForm(@PathVariable Integer interviewSessionId, ModelMap model)
             throws NoSuchRequestHandlingMethodException {
         InterviewSession session = interviewSessionDao.findInterviewSession(interviewSessionId);
@@ -485,6 +494,7 @@ public class InterviewSessionsController {
      * session
      */
     @RequestMapping(value = "{interviewSessionId}", method = RequestMethod.PUT)
+    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     public String updateInterviewSession(@PathVariable Integer interviewSessionId,
             @Valid InterviewSessionForm interviewSessionForm) throws NoSuchRequestHandlingMethodException {
         InterviewSession session = interviewSessionDao.findInterviewSession(interviewSessionId);

@@ -24,7 +24,6 @@
 package uk.org.rbc1b.roms.db.kingdomhall;
 
 import java.util.List;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -40,7 +39,6 @@ public interface KingdomHallDao {
      * @param kingdomHallId kingdom hall id
      * @return kingdom hall
      */
-    @PreAuthorize("hasPermission('KINGDOMHALL', 'READ')")
     @Transactional(readOnly = true)
     KingdomHall findKingdomHall(Integer kingdomHallId);
 
@@ -49,7 +47,6 @@ public interface KingdomHallDao {
      *
      * @return list of matching kingdom halls
      */
-    @PreAuthorize("hasPermission('KINGDOMHALL', 'READ')")
     @Transactional(readOnly = true)
     List<KingdomHall> findKingdomHalls();
 
@@ -59,7 +56,6 @@ public interface KingdomHallDao {
      * @param name name
      * @return kingdom halls
      */
-    @PreAuthorize("hasPermission('KINGDOMHALL','READ')")
     @Transactional(readOnly = true)
     List<KingdomHall> findKingdomHalls(String name);
 
@@ -68,7 +64,6 @@ public interface KingdomHallDao {
      *
      * @param kingdomHall new kingdom hall to create
      */
-    @PreAuthorize("hasPermission('KINGDOMHALL', 'ADD')")
     @Transactional
     void createKingdomHall(KingdomHall kingdomHall);
 
@@ -77,7 +72,6 @@ public interface KingdomHallDao {
      *
      * @param kingdomHall new kingdom hall to create
      */
-    @PreAuthorize("hasPermission('KINGDOMHALL', 'EDIT')")
     @Transactional
     void updateKingdomHall(KingdomHall kingdomHall);
 
@@ -86,7 +80,6 @@ public interface KingdomHallDao {
      *
      * @param kingdomHall to delete
      */
-    @PreAuthorize("hasPermission('KINGDOMHALL','DELETE')")
     @Transactional
     void deleteKingdomHall(KingdomHall kingdomHall);
 }

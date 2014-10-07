@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -76,6 +77,7 @@ public class DepartmentsController {
      * @return view
      */
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=text/html")
+    @PreAuthorize("hasPermission('VOLUNTEER','READ')")
     public String showDepartmentList(ModelMap model) {
 
         List<Department> departments = departmentDao.findDepartments();
@@ -99,7 +101,7 @@ public class DepartmentsController {
      */
     @RequestMapping(value = "search", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public List<DepartmentSearchResult> findCongregations(@RequestParam(value = "name", required = true) String name) {
+    public List<DepartmentSearchResult> findDepartments(@RequestParam(value = "name", required = true) String name) {
         List<Department> departments = departmentDao.findDepartments(name);
         List<DepartmentSearchResult> results = new ArrayList<DepartmentSearchResult>();
         if (!departments.isEmpty()) {
@@ -120,6 +122,7 @@ public class DepartmentsController {
      * @throws NoSuchRequestHandlingMethodException when no department matching the id is found
      */
     @RequestMapping(value = "{departmentId}", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('VOLUNTEER','READ')")
     public String showDepartment(@PathVariable Integer departmentId, ModelMap model)
             throws NoSuchRequestHandlingMethodException {
         Department department = departmentDao.findDepartment(departmentId);
@@ -188,6 +191,7 @@ public class DepartmentsController {
      * @return view
      */
     @RequestMapping(value = "{departmentId}/assignments", method = RequestMethod.GET, headers = "Accept=application/json")
+    @PreAuthorize("hasPermission('VOLUNTEER','READ')")
     @ResponseBody
     public AjaxDataTableResult<AssignmentModel> showDatatableAjaxAssignmentList(@PathVariable Integer departmentId,
             AjaxDataTableRequestData requestData) {

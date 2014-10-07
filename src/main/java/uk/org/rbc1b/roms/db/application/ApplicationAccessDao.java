@@ -25,13 +25,10 @@ package uk.org.rbc1b.roms.db.application;
 
 import java.util.List;
 import java.util.Set;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Look up application access information for user.
- *
- * @author ramindursingh
  */
 public interface ApplicationAccessDao {
 
@@ -49,7 +46,6 @@ public interface ApplicationAccessDao {
      *
      * @param applicationAccess set
      */
-    @PreAuthorize("hasPermission('DATABASE', 'ADD')")
     @Transactional
     void saveApplicationAccess(Set<ApplicationAccess> applicationAccess);
 
@@ -58,7 +54,6 @@ public interface ApplicationAccessDao {
      *
      * @param personId the person id to delete
      */
-    @PreAuthorize("hasPermission('DATABASE','DELETE')")
     @Transactional
     void deleteAclForPerson(Integer personId);
 }

@@ -50,12 +50,11 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.FileCopyUtils;
@@ -112,7 +111,6 @@ import com.google.common.collect.Ordering;
 @RequestMapping("/volunteers")
 public class VolunteersController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(VolunteersController.class);
     private static final String MARRIED_MARITAL_STATUS = "MR";
     private static final String RBC_STATUS_PENDING = "PD";
     private static final String FULLTIME_REGULAR_PIONEER = "RP";
@@ -156,6 +154,7 @@ public class VolunteersController {
      * @return view
      */
     @RequestMapping(method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     public String showVolunteerList(ModelMap model, VolunteerSearchCriteria searchCriteria) {
 
         model.addAttribute("volunteers", volunteerDao.findVolunteers(searchCriteria));
@@ -171,6 +170,7 @@ public class VolunteersController {
      * @return view
      */
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json")
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @ResponseBody
     public AjaxDataTableResult<VolunteerListModel> showDatatableAjaxVolunteerList(
             VolunteerAjaxDataTableRequestData requestData) {
@@ -216,6 +216,7 @@ public class VolunteersController {
      * id is found
      */
     @RequestMapping(value = "{volunteerId}", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     public String showVolunteer(@PathVariable Integer volunteerId, ModelMap model)
             throws NoSuchRequestHandlingMethodException {
 
@@ -305,6 +306,7 @@ public class VolunteersController {
      * @throws NoSuchRequestHandlingMethodException on failure to find the skill
      */
     @RequestMapping(value = "{volunteerId}/qualifications/{volunteerQualificationId}/edit", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     public String showEditVolunteerQualificationForm(@PathVariable Integer volunteerQualificationId, ModelMap model)
             throws NoSuchRequestHandlingMethodException {
 
@@ -403,6 +405,7 @@ public class VolunteersController {
      * @return view name
      */
     @RequestMapping(value = "new", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('VOLUNTEER', 'ADD')")
     public String showCreateVolunteerForm(ModelMap model) {
 
         // initialise the form bean
@@ -420,6 +423,7 @@ public class VolunteersController {
      * @return redirect url
      */
     @RequestMapping(method = RequestMethod.POST)
+    @PreAuthorize("hasPermission('VOLUNTEER', 'ADD')")
     public String createVolunteer(@Valid VolunteerForm form) {
 
         Volunteer volunteer;
@@ -519,6 +523,7 @@ public class VolunteersController {
      * @throws NoSuchRequestHandlingMethodException if volunteer is not found
      */
     @RequestMapping(value = "{volunteerId}/spiritual/edit", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     public String showEditVolunteerSpiritualForm(@PathVariable Integer volunteerId, ModelMap model)
             throws NoSuchRequestHandlingMethodException {
 
@@ -559,6 +564,7 @@ public class VolunteersController {
      * @throws NoSuchRequestHandlingMethodException if volunteer is not found
      */
     @RequestMapping(value = "{volunteerId}/rbc-status/edit", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     public String showEditVolunteerRbcStatusForm(@PathVariable Integer volunteerId, ModelMap model)
             throws NoSuchRequestHandlingMethodException {
 
@@ -621,6 +627,7 @@ public class VolunteersController {
      * @throws NoSuchRequestHandlingMethodException if volunteer is not found
      */
     @RequestMapping(value = "{volunteerId}/personal/edit", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     public String showEditVolunteerPersonalForm(@PathVariable Integer volunteerId, ModelMap model)
             throws NoSuchRequestHandlingMethodException {
 
@@ -676,6 +683,7 @@ public class VolunteersController {
      * @throws NoSuchRequestHandlingMethodException if volunteer is not found
      */
     @RequestMapping(value = "{volunteerId}/name", method = RequestMethod.PUT)
+    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateVolunteerName(@PathVariable Integer volunteerId, @Valid VolunteerNameForm form)
             throws NoSuchRequestHandlingMethodException {
@@ -705,6 +713,7 @@ public class VolunteersController {
      * @throws NoSuchRequestHandlingMethodException if volunteer is not found
      */
     @RequestMapping(value = "{volunteerId}/comments", method = RequestMethod.PUT)
+    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateVolunteerComments(@PathVariable Integer volunteerId, @RequestParam("comments") String comments)
             throws NoSuchRequestHandlingMethodException {
@@ -728,6 +737,7 @@ public class VolunteersController {
      * @throws NoSuchRequestHandlingMethodException if volunteer is not found
      */
     @RequestMapping(value = "{volunteerId}/spiritual", method = RequestMethod.PUT)
+    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     public String updateVolunteerSpiritual(@PathVariable Integer volunteerId, @Valid VolunteerSpiritualForm form)
             throws NoSuchRequestHandlingMethodException {
 
@@ -761,6 +771,7 @@ public class VolunteersController {
      * @throws NoSuchRequestHandlingMethodException if volunteer is not found
      */
     @RequestMapping(value = "{volunteerId}/rbc-status", method = RequestMethod.PUT)
+    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     public String updateVolunteerRbcStatus(@PathVariable Integer volunteerId, @Valid VolunteerRbcStatusForm form)
             throws NoSuchRequestHandlingMethodException {
 
@@ -816,6 +827,7 @@ public class VolunteersController {
      *
      */
     @RequestMapping(value = "{volunteerId}/rbc-status-code", method = RequestMethod.PUT)
+    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateVolunteerRbcStatusCode(@PathVariable Integer volunteerId,
             @RequestParam("rbcStatusCode") String rbcStatusCode) throws NoSuchRequestHandlingMethodException {
@@ -839,6 +851,7 @@ public class VolunteersController {
      * @throws NoSuchRequestHandlingMethodException if volunteer is not found
      */
     @RequestMapping(value = "{volunteerId}/personal", method = RequestMethod.PUT)
+    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     public String updateVolunteerPersonal(@PathVariable Integer volunteerId, @Valid VolunteerPersonalForm form)
             throws NoSuchRequestHandlingMethodException {
 
@@ -894,6 +907,7 @@ public class VolunteersController {
      * @return modelAndView of the VolunteerBadgePdfView
      */
     @RequestMapping(value = "{volunteerId}/rbc-{volunteerBadgeId}-badge.pdf", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     public ModelAndView produceVolunteerBadgePdf(@PathVariable Integer volunteerId,
             @PathVariable Integer volunteerBadgeId) throws IOException {
 
@@ -949,6 +963,7 @@ public class VolunteersController {
      * found
      */
     @RequestMapping(value = "{volunteerId}/image", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     public void showImage(@PathVariable Integer volunteerId, HttpServletResponse response) throws IOException,
             NoSuchRequestHandlingMethodException {
         String imageName = volunteerId + ".jpg";
@@ -978,6 +993,7 @@ public class VolunteersController {
      * volunteer
      */
     @RequestMapping(value = "{volunteerId}/image", method = RequestMethod.POST)
+    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     public String handleImageUpload(@PathVariable Integer volunteerId,
             @RequestParam(value = "image", required = true) MultipartFile imageFile) throws IOException,
             NoSuchRequestHandlingMethodException {

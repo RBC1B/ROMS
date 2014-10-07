@@ -38,6 +38,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -68,6 +69,7 @@ public class ReportsController {
      * id is found
      */
     @RequestMapping(value = "fixed", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('REPORT', 'READ')")
     public String showFixedReports(ModelMap model) {
         List<FixedReport> reports = reportDao.findFixedReports();
 
@@ -88,6 +90,7 @@ public class ReportsController {
      * @throws NoSuchRequestHandlingMethodException on failure to find the report
      */
     @RequestMapping(value = "fixed/{reportId}/html", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('REPORT', 'READ')")
     public String runHtmlReport(@PathVariable Integer reportId, ModelMap model)
             throws NoSuchRequestHandlingMethodException {
 
@@ -115,6 +118,7 @@ public class ReportsController {
      * @throws IOException on failure to write to output stream
      */
     @RequestMapping(value = "fixed/{reportId}/csv", method = RequestMethod.GET, consumes = "text/csv", produces = "text/csv")
+    @PreAuthorize("hasPermission('REPORT', 'READ')")
     public void downloadCsvReport(@PathVariable Integer reportId, HttpServletResponse response)
             throws NoSuchRequestHandlingMethodException, IOException {
 

@@ -24,7 +24,6 @@
 package uk.org.rbc1b.roms.db;
 
 import java.util.List;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -38,7 +37,6 @@ public interface PersonDao {
      * @param personId person id
      * @return Person, or null if no matching instance
      */
-    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional(readOnly = true)
     Person findPerson(Integer personId);
 
@@ -50,7 +48,6 @@ public interface PersonDao {
      * @param surname person's last name
      * @return list of people
      */
-    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional(readOnly = true)
     List<Person> findPersons(String forename, String surname);
 
@@ -59,7 +56,6 @@ public interface PersonDao {
      * @param searchCriteria search criteria
      * @return list of people
      */
-    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional(readOnly = true)
     List<Person> findPersons(PersonSearchCriteria searchCriteria);
 
@@ -68,7 +64,6 @@ public interface PersonDao {
      * @param searchCriteria search criteria
      * @return list of people
      */
-    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional(readOnly = true)
     int findPersonsCount(PersonSearchCriteria searchCriteria);
 
@@ -76,7 +71,6 @@ public interface PersonDao {
      * Save the new person.
      * @param person person to persist
      */
-    @PreAuthorize("hasPermission('VOLUNTEER', 'ADD')")
     @Transactional
     void createPerson(Person person);
 
@@ -84,7 +78,6 @@ public interface PersonDao {
      * Update the person.
      * @param person person to persist
      */
-    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     @Transactional
     void updatePerson(Person person);
 }

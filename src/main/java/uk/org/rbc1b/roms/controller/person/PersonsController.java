@@ -29,6 +29,7 @@ import java.util.List;
 import javax.validation.Valid;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -76,6 +77,7 @@ public class PersonsController {
      * @return view
      */
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=text/html")
+    @PreAuthorize("hasPermission('PERSON','READ')")
     public String showPersonList(ModelMap model, PersonSearchCriteria searchCriteria) {
 
         List<Person> persons = personDao.findPersons(searchCriteria);
@@ -95,6 +97,7 @@ public class PersonsController {
      * @return view
      */
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json")
+    @PreAuthorize("hasPermission('PERSON','READ')")
     @ResponseBody
     public AjaxDataTableResult<PersonModel> showDatatableAjaxPersonList(AjaxDataTableRequestData requestData) {
 
@@ -135,6 +138,7 @@ public class PersonsController {
      * @throws NoSuchRequestHandlingMethodException when no person matching the id is found
      */
     @RequestMapping(value = "{personId}", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('PERSON','READ')")
     public String showPerson(@PathVariable Integer personId, ModelMap model)
             throws NoSuchRequestHandlingMethodException {
         Person person = fetchPerson(personId);
@@ -155,6 +159,7 @@ public class PersonsController {
      * @throws NoSuchRequestHandlingMethodException when no person matching the id is found
      */
     @RequestMapping(value = "{personId}/edit", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('PERSON','EDIT') or hasPermission('VOLUNTEER','EDIT')")
     public String showEditPersonForm(@PathVariable Integer personId, ModelMap model)
             throws NoSuchRequestHandlingMethodException {
 
@@ -210,6 +215,7 @@ public class PersonsController {
      * @throws NoSuchRequestHandlingMethodException when no person matching the id is found
      */
     @RequestMapping(value = "{personId}", method = RequestMethod.PUT)
+    @PreAuthorize("hasPermission('PERSON','EDIT') or hasPermission('VOLUNTEER','EDIT')")
     public String updatePerson(@PathVariable Integer personId, @Valid PersonForm form)
             throws NoSuchRequestHandlingMethodException {
         Person person = fetchPerson(personId);
@@ -254,6 +260,7 @@ public class PersonsController {
      * @throws NoSuchRequestHandlingMethodException 404 response
      */
     @RequestMapping(value = "{personId}/reference", method = RequestMethod.GET, produces = "application/json")
+    @PreAuthorize("hasPermission('PERSON','READ') or hasPermission('VOLUNTEER','READ')")
     @ResponseBody
     public PersonModel showAjaxPerson(@PathVariable Integer personId) throws NoSuchRequestHandlingMethodException {
         Person person = fetchPerson(personId);
@@ -270,6 +277,7 @@ public class PersonsController {
      * @return model containing the list of people
      */
     @RequestMapping(value = "search", method = RequestMethod.GET, produces = "application/json")
+    @PreAuthorize("hasPermission('PERSON','READ') or hasPermission('VOLUNTEER','READ')")
     @ResponseBody
     public List<PersonSearchResult> findPersons(@RequestParam(value = "forename", required = true) String forename,
             @RequestParam(value = "surname", required = true) String surname,

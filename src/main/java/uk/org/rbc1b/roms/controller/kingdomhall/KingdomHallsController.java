@@ -24,14 +24,13 @@
 package uk.org.rbc1b.roms.controller.kingdomhall;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,7 +40,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.controller.LoggingHandlerExceptionResolver;
-import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableResult;
 import uk.org.rbc1b.roms.controller.congregation.CongregationModelFactory;
 import uk.org.rbc1b.roms.db.Address;
 import uk.org.rbc1b.roms.db.Congregation;
@@ -79,6 +77,7 @@ public class KingdomHallsController {
      * @return view
      */
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=text/html")
+    @PreAuthorize("hasPermission('KINGDOMHALL','READ')")
     public String showKingdomHallList(ModelMap model) {
         model.addAttribute("kingdomHalls",
                 kingdomHallModelFactory.generateKingdomHallListModels(kingdomHallDao.findKingdomHalls()));
@@ -97,6 +96,7 @@ public class KingdomHallsController {
      * kingdom hall
      */
     @RequestMapping(value = "{kingdomHallId}", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('KINGDOMHALL','READ')")
     public String showKingdomHall(@PathVariable Integer kingdomHallId, ModelMap model)
             throws NoSuchRequestHandlingMethodException {
 
@@ -125,6 +125,7 @@ public class KingdomHallsController {
      * @throws NoSuchRequestHandlingMethodException if kingdom hall is not found
      */
     @RequestMapping(value = "{kingdomHallId}/edit", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('KINGDOMHALL','EDIT')")
     public String showEditKingdomHallForm(@PathVariable Integer kingdomHallId, ModelMap model)
             throws NoSuchRequestHandlingMethodException {
         KingdomHall kingdomHall = kingdomHallDao.findKingdomHall(kingdomHallId);
@@ -173,6 +174,7 @@ public class KingdomHallsController {
      * @return String view
      */
     @RequestMapping(value = "{kingdomHallId}", method = RequestMethod.PUT)
+    @PreAuthorize("hasPermission('KINGDOMHALL','EDIT')")
     public String updateKingdomHall(@PathVariable Integer kingdomHallId, @Valid KingdomHallForm kingdomHallForm)
             throws NoSuchRequestHandlingMethodException {
         KingdomHall kingdomHall = kingdomHallDao.findKingdomHall(kingdomHallId);
@@ -195,6 +197,7 @@ public class KingdomHallsController {
      * @return view name
      */
     @RequestMapping(value = "new", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('KINGDOMHALL','ADD')")
     public String showCreateKingdomHallForm(ModelMap model) {
         // initialise the form bean
         model.addAttribute("kingdomHallForm", new KingdomHallForm());
@@ -212,6 +215,7 @@ public class KingdomHallsController {
      * @return view name
      */
     @RequestMapping(method = RequestMethod.POST)
+    @PreAuthorize("hasPermission('KINGDOMHALL','ADD')")
     public String createKingdomHall(@Valid KingdomHallForm kingdomHallForm) {
         KingdomHall kingdomHall = new KingdomHall();
 
@@ -251,7 +255,7 @@ public class KingdomHallsController {
 
     /**
      * Search for a kingdom hall by name.
-     *
+     * Do not restruct to roles since this is used in circuit, cong, volunteer editing
      * @param name partial name match
      * @return list of matching kingdom halls
      */
@@ -274,43 +278,6 @@ public class KingdomHallsController {
     }
 
     /**
-     * Display the page list of kingdom halls, returning JSON.
-     *
-     * @param echoId request identifier returned back to the caller
-     * @return view
-     */
-    @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json")
-    @ResponseBody
-    public AjaxDataTableResult<KingdomHallListModel> showDatatableAjaxKingdomHallList(
-            @RequestParam(value = "sEcho") Integer echoId) {
-        AjaxDataTableResult<KingdomHallListModel> result = new AjaxDataTableResult<KingdomHallListModel>();
-        result.setRecords(createKingdomHallListModels(kingdomHallDao.findKingdomHalls()));
-        result.setTotalDisplayRecords(result.getAaData().size());
-        result.setTotalRecords(result.getAaData().size());
-        result.setEcho(echoId);
-        return result;
-    }
-
-    private List<KingdomHallListModel> createKingdomHallListModels(List<KingdomHall> halls) {
-        if (CollectionUtils.isEmpty(halls)) {
-            return Collections.emptyList();
-        }
-        List<KingdomHallListModel> modelList = new ArrayList<KingdomHallListModel>(halls.size());
-        for (KingdomHall hall : halls) {
-            KingdomHallListModel model = new KingdomHallListModel();
-            model.setKingdomHallId(hall.getKingdomHallId());
-            model.setName(hall.getName());
-            model.setPostcode(hall.getAddress().getPostcode());
-            model.setTown(hall.getAddress().getTown());
-            model.setUri(KingdomHallModelFactory.generateUri(hall.getKingdomHallId()));
-            model.setEditUri(KingdomHallModelFactory.generateUri(hall.getKingdomHallId()) + "/edit");
-
-            modelList.add(model);
-        }
-        return modelList;
-    }
-
-    /**
      * Deletes a Kingdom Hall.
      *
      * @param request http servlet request
@@ -320,6 +287,7 @@ public class KingdomHallsController {
      * Kingdom Hall
      */
     @RequestMapping(method = RequestMethod.DELETE)
+    @PreAuthorize("hasPermission('KINGDOMHALL','DELETE')")
     public String deleteKingdomHall(HttpServletRequest request, ModelMap model)
             throws NoSuchRequestHandlingMethodException {
         Integer kingdomHallId;

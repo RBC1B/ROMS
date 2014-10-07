@@ -28,6 +28,7 @@ import java.util.HashSet;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -76,6 +77,7 @@ public class CongregationsController {
      * @return view
      */
     @RequestMapping(method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('CONG','READ')")
     public String showCongregationList(ModelMap model) {
 
         List<CongregationListModel> modelList = congregationModelFactory.generateCongregationListModels(congregationDao
@@ -88,7 +90,7 @@ public class CongregationsController {
 
     /**
      * Search for a congregation by name.
-     *
+     * No pre-auth checks are applied for the name lookup.
      * @param name partial name match
      * @return list of matching congregations
      */
@@ -118,6 +120,7 @@ public class CongregationsController {
      * congregation
      */
     @RequestMapping(value = "{congregationId}", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('CONG','READ')")
     public String showCongregation(@PathVariable Integer congregationId, ModelMap model)
             throws NoSuchRequestHandlingMethodException {
         Congregation congregation = congregationDao.findCongregation(congregationId);
@@ -138,6 +141,7 @@ public class CongregationsController {
      * congregation
      */
     @RequestMapping(value = "{congregationId}/edit", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('CONG','EDIT')")
     public String showEditCongregationForm(@PathVariable Integer congregationId, ModelMap model)
             throws NoSuchRequestHandlingMethodException {
         Congregation congregation = congregationDao.findCongregation(congregationId);
@@ -204,6 +208,7 @@ public class CongregationsController {
      * @return view name
      */
     @RequestMapping(value = "new", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('CONG','ADD')")
     public String showCreateCongregationForm(ModelMap model) {
         model.addAttribute("congregationForm", new CongregationForm());
         model.addAttribute("circuits", circuitDao.findCircuits());
@@ -225,6 +230,7 @@ public class CongregationsController {
      * congregation
      */
     @RequestMapping(value = "{congregationId}", method = RequestMethod.PUT)
+    @PreAuthorize("hasPermission('CONG','EDIT')")
     public String updateCongregation(@PathVariable Integer congregationId, @Valid CongregationForm congregationForm)
             throws NoSuchRequestHandlingMethodException {
         Congregation congregation = congregationDao.findCongregation(congregationId);
@@ -246,6 +252,7 @@ public class CongregationsController {
      * @return view name
      */
     @RequestMapping(method = RequestMethod.POST)
+    @PreAuthorize("hasPermission('CONG','ADD')")
     public String createCongregation(@Valid CongregationForm congregationForm) {
         Congregation congregation = new Congregation();
         congregation.setContacts(new HashSet<CongregationContact>());

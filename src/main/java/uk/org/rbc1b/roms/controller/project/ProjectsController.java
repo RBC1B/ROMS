@@ -35,6 +35,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -94,6 +95,7 @@ public class ProjectsController {
      * @return view
      */
     @RequestMapping(method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('PROJECT','READ')")
     public String showProjectList(ModelMap model) {
 
         List<Project> projects = projectDao.findProjects();
@@ -132,6 +134,7 @@ public class ProjectsController {
      * id is found
      */
     @RequestMapping(value = "{projectId}", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('PROJECT','READ')")
     public String showProject(@PathVariable Integer projectId, ModelMap model)
             throws NoSuchRequestHandlingMethodException {
 
@@ -164,6 +167,7 @@ public class ProjectsController {
      */
     @RequestMapping(value = "{projectId}/stage-activity-order", method = RequestMethod.PUT, consumes = "application/x-www-form-urlencoded")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasPermission('PROJECT','EDIT')")
     public void reorderStageActivities(@PathVariable Integer projectId, @RequestParam("idValues") String stageIdValues) {
 
         reorderStages(projectId, stageIdValues, "stage\\-\\d\\-activity\\-", PROJECT_STAGE_ACTIVITY);
@@ -178,6 +182,7 @@ public class ProjectsController {
      */
     @RequestMapping(value = "{projectId}/stage-activity-task-order", method = RequestMethod.PUT, consumes = "application/x-www-form-urlencoded")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasPermission('PROJECT','EDIT')")
     public void reorderStageActivityTasks(@PathVariable Integer projectId,
             @RequestParam("idValues") String stageIdValues) {
 
@@ -204,6 +209,7 @@ public class ProjectsController {
      * @return view name
      */
     @RequestMapping(value = "new", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('PROJECT','ADD')")
     public String showCreateProjectForm(ModelMap model) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -230,6 +236,7 @@ public class ProjectsController {
      * @throws NoSuchRequestHandlingMethodException on failure ot find the project
      */
     @RequestMapping(value = "{projectId}/edit", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('PROJECT','EDIT')")
     public String showEditProjectForm(@PathVariable Integer projectId, ModelMap model)
             throws NoSuchRequestHandlingMethodException {
 
@@ -281,6 +288,7 @@ public class ProjectsController {
      * @return view name
      */
     @RequestMapping(method = RequestMethod.POST)
+    @PreAuthorize("hasPermission('PROJECT','ADD')")
     public String createProject(@Valid ProjectForm projectForm) {
 
         Project project = new Project();
@@ -324,6 +332,7 @@ public class ProjectsController {
      * @throws NoSuchRequestHandlingMethodException on failure to find the project
      */
     @RequestMapping(value = "{projectId}", method = RequestMethod.PUT)
+    @PreAuthorize("hasPermission('PROJECT','EDIT')")
     public String updateProject(@PathVariable Integer projectId, @Valid ProjectForm projectForm)
             throws NoSuchRequestHandlingMethodException {
 

@@ -24,7 +24,6 @@
 package uk.org.rbc1b.roms.db;
 
 import java.util.List;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -36,7 +35,6 @@ public interface CongregationDao {
      * Get a list of congregations.
      * @return congregations
      */
-    @PreAuthorize("hasPermission('CONG','READ')")
     @Transactional(readOnly = true)
     List<Congregation> findAllCongregations();
 
@@ -45,7 +43,6 @@ public interface CongregationDao {
      * @param congregationId congregation id
      * @return Congregation, or null if no matching instance
      */
-    @PreAuthorize("hasPermission('CONG','READ') or hasPermission('VOLUNTEER', 'READ')")
     @Transactional(readOnly = true)
     Congregation findCongregation(Integer congregationId);
 
@@ -54,7 +51,6 @@ public interface CongregationDao {
      * @param name name
      * @return congregations
      */
-    @PreAuthorize("hasPermission('CONG','READ')")
     @Transactional(readOnly = true)
     List<Congregation> findCongregations(String name);
 
@@ -63,7 +59,6 @@ public interface CongregationDao {
      * @param searchCriteria search criteria
      * @return congregations
      */
-    @PreAuthorize("hasPermission('CONG','READ')")
     @Transactional(readOnly = true)
     List<Congregation> findCongregations(CongregationSearchCriteria searchCriteria);
 
@@ -71,7 +66,6 @@ public interface CongregationDao {
      * Saves a congregation.
      * @param congregation to save
      */
-    @PreAuthorize("hasPermission('CONG','EDIT')")
     @Transactional
     void updateCongregation(Congregation congregation);
 
@@ -79,7 +73,6 @@ public interface CongregationDao {
      * Creates a new congregation.
      * @param congregation to create
      */
-    @PreAuthorize("hasPermission('CONG','ADD')")
     @Transactional
     void createCongregation(Congregation congregation);
 

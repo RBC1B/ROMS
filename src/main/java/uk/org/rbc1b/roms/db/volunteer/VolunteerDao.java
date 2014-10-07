@@ -25,7 +25,6 @@ package uk.org.rbc1b.roms.db.volunteer;
 
 import java.util.List;
 import java.util.Set;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import uk.org.rbc1b.roms.db.volunteer.department.Assignment;
 import uk.org.rbc1b.roms.db.volunteer.qualification.VolunteerQualification;
@@ -64,7 +63,6 @@ public interface VolunteerDao {
      * @param data additional data to populate
      * @return volunteer
      */
-    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional(readOnly = true)
     Volunteer findVolunteer(Integer volunteerId, Set<VolunteerData> data);
 
@@ -74,7 +72,6 @@ public interface VolunteerDao {
      * @param searchCriteria search criteria
      * @return list of matching volunteers
      */
-    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional(readOnly = true)
     List<Volunteer> findVolunteers(VolunteerSearchCriteria searchCriteria);
 
@@ -84,7 +81,6 @@ public interface VolunteerDao {
      * @param searchCriteria search criteria
      * @return list of people
      */
-    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional(readOnly = true)
     int findVolunteersCount(VolunteerSearchCriteria searchCriteria);
 
@@ -93,7 +89,6 @@ public interface VolunteerDao {
      *
      * @param volunteer volunteer to
      */
-    @PreAuthorize("hasPermission('VOLUNTEER', 'ADD')")
     @Transactional
     void createVolunteer(Volunteer volunteer);
 
@@ -102,7 +97,6 @@ public interface VolunteerDao {
      *
      * @param volunteer volunteer to
      */
-    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     @Transactional
     void updateVolunteer(Volunteer volunteer);
 
@@ -112,7 +106,6 @@ public interface VolunteerDao {
      * @param volunteerId id
      * @return list of assignments
      */
-    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional(readOnly = true)
     List<Assignment> findAssignments(Integer volunteerId);
 
@@ -122,7 +115,6 @@ public interface VolunteerDao {
      * @param volunteerId id
      * @return assignment
      */
-    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional(readOnly = true)
     Assignment findPrimaryAssignment(Integer volunteerId);
 
@@ -132,7 +124,6 @@ public interface VolunteerDao {
      * @param volunteerId id
      * @return list of skills
      */
-    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional(readOnly = true)
     List<VolunteerSkill> findSkills(Integer volunteerId);
 
@@ -142,7 +133,6 @@ public interface VolunteerDao {
      * @param volunteerSkillId primary key
      * @return volunteer skill, or null if no match
      */
-    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional(readOnly = true)
     VolunteerSkill findSkill(Integer volunteerSkillId);
 
@@ -152,7 +142,6 @@ public interface VolunteerDao {
      * @param volunteerSkill linked skill
      */
     @Transactional
-    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     void deleteSkill(VolunteerSkill volunteerSkill);
 
     /**
@@ -161,7 +150,6 @@ public interface VolunteerDao {
      * @param volunteerSkill linked skill
      */
     @Transactional
-    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     void updateSkill(VolunteerSkill volunteerSkill);
 
     /**
@@ -170,7 +158,6 @@ public interface VolunteerDao {
      * @param volunteerSkill linked skill
      */
     @Transactional
-    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     void createSkill(VolunteerSkill volunteerSkill);
 
     /**
@@ -179,7 +166,6 @@ public interface VolunteerDao {
      * @param volunteerId id
      * @return list of qualifications
      */
-    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional(readOnly = true)
     List<VolunteerQualification> findQualifications(Integer volunteerId);
 
@@ -189,7 +175,6 @@ public interface VolunteerDao {
      * @param volunteerQualificationId id
      * @return single qualification
      */
-    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional(readOnly = true)
     VolunteerQualification findQualification(Integer volunteerQualificationId);
 
@@ -200,7 +185,6 @@ public interface VolunteerDao {
      * @param searchCriteria search criteria
      * @return list of people
      */
-    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional(readOnly = true)
     List<VolunteerTrade> findVolunteerTrades(VolunteerTradeSearchCriteria searchCriteria);
 
@@ -210,7 +194,6 @@ public interface VolunteerDao {
      * @param searchCriteria search criteria
      * @return list of people
      */
-    @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     @Transactional(readOnly = true)
     int findVolunteerTradesCount(VolunteerTradeSearchCriteria searchCriteria);
 
@@ -219,7 +202,6 @@ public interface VolunteerDao {
      *
      * @param volunteerTrade volunteer trade
      */
-    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     @Transactional
     void deleteVolunteerTrade(VolunteerTrade volunteerTrade);
 
@@ -228,7 +210,6 @@ public interface VolunteerDao {
      *
      * @param volunteerTrade a trade to save
      */
-    @PreAuthorize("hasPermission('VOLUNTEER','EDIT')")
     @Transactional
     void createTrade(VolunteerTrade volunteerTrade);
 
@@ -237,7 +218,6 @@ public interface VolunteerDao {
      *
      * @param volunteerTrade the trade experience to save
      */
-    @PreAuthorize("hasPermission('VOLUNTEER','EDIT')")
     @Transactional
     void updateTrade(VolunteerTrade volunteerTrade);
 
@@ -247,7 +227,6 @@ public interface VolunteerDao {
      * @param volunteerTradeId the volunteer trade id
      * @return volunteerTrade the trade
      */
-    @PreAuthorize("hasPermission('VOLUNTEER','EDIT')")
     @Transactional
     VolunteerTrade findTrade(Integer volunteerTradeId);
 
@@ -256,7 +235,6 @@ public interface VolunteerDao {
      *
      * @param volunteerQualification a volunteer qualification to save
      */
-    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     @Transactional
     void updateVolunteerQualification(VolunteerQualification volunteerQualification);
 
@@ -265,7 +243,6 @@ public interface VolunteerDao {
      *
      * @param volunteerQualification a volunteer qualification to save
      */
-    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     @Transactional
     void deleteVolunteerQualification(VolunteerQualification volunteerQualification);
 
@@ -275,7 +252,6 @@ public interface VolunteerDao {
      * @param volunteerQualification qualification
      */
     @Transactional
-    @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     void createQualification(VolunteerQualification volunteerQualification);
 
     /**

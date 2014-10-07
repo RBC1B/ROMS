@@ -24,7 +24,6 @@
 package uk.org.rbc1b.roms.db.report;
 
 import java.util.List;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -35,7 +34,6 @@ public interface ReportDao {
     /**
      * @return all active fixed reports
      */
-    @PreAuthorize("hasPermission('REPORT', 'READ')")
     @Transactional(readOnly = true)
     List<FixedReport> findFixedReports();
 
@@ -45,7 +43,6 @@ public interface ReportDao {
      * @param reportId report id
      * @return report, or null if not found
      */
-    @PreAuthorize("hasPermission('REPORT', 'READ')")
     @Transactional(readOnly = true)
     FixedReport findFixedReport(Integer reportId);
 }

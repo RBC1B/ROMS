@@ -25,7 +25,6 @@ package uk.org.rbc1b.roms.db.project;
 
 import java.util.List;
 import java.util.Map;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -40,7 +39,6 @@ public interface ProjectDao {
      *
      * @return list of projects
      */
-    @PreAuthorize("hasPermission('PROJECT', 'READ')")
     @Transactional(readOnly = true)
     List<Project> findProjects();
 
@@ -50,7 +48,6 @@ public interface ProjectDao {
      * @param projectId project id
      * @return project, or null if not found
      */
-    @PreAuthorize("hasPermission('PROJECT', 'READ')")
     @Transactional(readOnly = true)
     Project findProject(Integer projectId);
 
@@ -60,7 +57,6 @@ public interface ProjectDao {
      * @param name project name
      * @return project
      */
-    @PreAuthorize("hasPermission('PROJECT', 'READ')")
     @Transactional(readOnly = true)
     Project findProject(String name);
 
@@ -69,7 +65,6 @@ public interface ProjectDao {
      *
      * @param project to create
      */
-    @PreAuthorize("hasPermission('PROJECT','ADD')")
     @Transactional
     void createProject(Project project);
 
@@ -78,7 +73,6 @@ public interface ProjectDao {
      *
      * @param project to create
      */
-    @PreAuthorize("hasPermission('PROJECT','EDIT')")
     @Transactional
     void updateProject(Project project);
 
@@ -88,7 +82,6 @@ public interface ProjectDao {
      * @param projectTypeId project type
      * @return list of stage types
      */
-    @PreAuthorize("hasPermission('PROJECT', 'READ')")
     @Transactional(readOnly = true)
     List<ProjectTypeStageType> findProjectTypeStageTypes(Integer projectTypeId);
 
@@ -98,7 +91,6 @@ public interface ProjectDao {
      * @param stageTypeId stage type
      * @return list of activity types
      */
-    @PreAuthorize("hasPermission('PROJECT', 'READ')")
     @Transactional(readOnly = true)
     List<ProjectStageTypeActivityType> findProjectStageTypeActivityType(Integer stageTypeId);
 
@@ -109,7 +101,6 @@ public interface ProjectDao {
      * @param projectId project id
      * @return stages
      */
-    @PreAuthorize("hasPermission('PROJECT', 'READ')")
     @Transactional(readOnly = true)
     List<ProjectStage> findProjectStages(Integer projectId);
 
@@ -119,7 +110,6 @@ public interface ProjectDao {
      * @param projectStageId project stage id
      * @return stages
      */
-    @PreAuthorize("hasPermission('PROJECT', 'READ')")
     @Transactional(readOnly = true)
     List<ProjectStageActivity> findProjectStageActivities(Integer projectStageId);
 
@@ -130,7 +120,6 @@ public interface ProjectDao {
      * @param projectStageActivityId project stage activity id
      * @return stages
      */
-    @PreAuthorize("hasPermission('PROJECT', 'READ')")
     @Transactional(readOnly = true)
     List<ProjectStageActivityTask> findProjectStageActivityTasks(Integer projectStageActivityId);
 
@@ -141,7 +130,6 @@ public interface ProjectDao {
      * @param projectStageId project stage id
      * @return stages
      */
-    @PreAuthorize("hasPermission('PROJECT', 'READ')")
     @Transactional(readOnly = true)
     ProjectStage findProjectStage(Integer projectStageId);
 
@@ -152,7 +140,6 @@ public interface ProjectDao {
      * @param projectStageActivityId project stage activity id
      * @return stages
      */
-    @PreAuthorize("hasPermission('PROJECT', 'READ')")
     @Transactional(readOnly = true)
     ProjectStageActivity findProjectStageActivity(Integer projectStageActivityId);
 
@@ -188,7 +175,6 @@ public interface ProjectDao {
      * @param taskId project stage activity task id
      * @return task
      */
-    @PreAuthorize("hasPermission('PROJECT', 'READ')")
     @Transactional(readOnly = true)
     ProjectStageActivityTask findTask(Integer taskId);
 
@@ -197,7 +183,6 @@ public interface ProjectDao {
      *
      * @param task to create
      */
-    @PreAuthorize("hasPermission('PROJECT','EDIT')")
     @Transactional
     void createTask(ProjectStageActivityTask task);
 
@@ -206,7 +191,6 @@ public interface ProjectDao {
      *
      * @param task to update
      */
-    @PreAuthorize("hasPermission('PROJECT','EDIT')")
     @Transactional
     void updateTask(ProjectStageActivityTask task);
 }
