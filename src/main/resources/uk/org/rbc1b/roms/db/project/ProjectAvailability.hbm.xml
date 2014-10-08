@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="uk.org.rbc1b.roms.db.project.ProjectAvailability" >
+        <id name="projectAvailabilityId">
+            <generator class="identity" />
+        </id>
+        <many-to-one name="projectDepartmentRequired" column="ProjectDepartmentRequiredId" />
+        <many-to-one name="person" column="PersonId" />
+        <property name="emailSent" />
+        <property name="overseerConfirmed" />
+        <property name="confirmationEmail" />
+        <many-to-one name="availabilityStatus" column="AvailabilityStatusCode" />
+        <property name="transportRequired" />
+        <property name="offerTransport" />
+        <property name="accomodationRequired" />
+        <property name="updateTime" not-null="true" />
+        <property name="updatedBy" not-null="true" />
+    </class>
+</hibernate-mapping>

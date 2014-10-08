@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2013 RBC1B.
+ * Copyright 2014 RBC1B.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,38 +21,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.controller.project;
+package uk.org.rbc1b.roms.db.project;
 
 /**
- * Form used to create a project activity task.
+ *
+ * @author ramindursingh
  */
-public class ProjectTaskForm {
-    private String comments;
-    private Integer assignedUserId;
+public class AvailabilityStatus {
+
+    private String availabilityStatusCode;
     private String name;
 
-    public Integer getAssignedUserId() {
-        return assignedUserId;
+    /**
+     * @return the availabilityStatusCode
+     */
+    public String getAvailabilityStatusCode() {
+        return availabilityStatusCode;
     }
 
-    public void setAssignedUserId(Integer assignedUserId) {
-        this.assignedUserId = assignedUserId;
+    /**
+     * @param availabilityStatusCode the availabilityStatusCode to set
+     */
+    public void setAvailabilityStatusCode(String availabilityStatusCode) {
+        this.availabilityStatusCode = availabilityStatusCode;
     }
 
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
-
+    /**
+     * @return the name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @param name the name to set
+     */
     public void setName(String name) {
         this.name = name;
     }
-
 }

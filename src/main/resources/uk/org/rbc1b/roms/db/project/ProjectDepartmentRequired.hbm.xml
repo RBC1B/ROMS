@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="uk.org.rbc1b.roms.db.project.ProjectDepartmentRequired">
+        <id name="projectDepartmentRequiredId" >
+            <generator class="identity" />
+        </id>
+        <many-to-one name="project" column="ProjectId" />
+        <many-to-one name="Deparment" column="DepartmentId" />
+        <property name="name" length="250" />
+        <property name="workDate" />
+        <property name="workPeriod" />
+        <property name="updateTime" not-null="true" />
+        <property name="updatedBy" not-null="true" />
+    </class>
+</hibernate-mapping>

@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2013 RBC1B.
+ * Copyright 2014 RBC1B.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,176 +23,147 @@
  */
 package uk.org.rbc1b.roms.controller.project;
 
-import java.util.Date;
-import java.util.List;
 import uk.org.rbc1b.roms.controller.common.model.EntityModel;
-import uk.org.rbc1b.roms.controller.common.model.PersonModel;
-import uk.org.rbc1b.roms.db.Address;
 
 /**
- * Model representing the project.
+ *
+ * @author ramindursingh
  */
 public class ProjectModel {
-    private String editUri;
-    private Address address;
-    private String constraints;
-    private Date completedDate;
-    private PersonModel contactPerson;
-    private PersonModel coordinator;
-    private String estimateCost;
-    private EntityModel kingdomHall;
-    private String name;
+
     private Integer projectId;
-    private String type;
-    private String priority;
-    private Date requestDate;
-    private List<ProjectStageModel> stages;
-    private String status;
-    private String supportingCongregation;
-    private String telephone;
-    private Date visitDate;
+    private String name;
+    private EntityModel kingdomHall;
+    private EntityModel coordinator;
+    private boolean minorWork;
+    private java.sql.Date requestDate;
+    private java.sql.Date completedDate;
+    private String uri;
+    private String editUri;
 
-    public String getEditUri() {
-        return editUri;
-    }
-
-    public void setEditUri(String editUri) {
-        this.editUri = editUri;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public String getConstraints() {
-        return constraints;
-    }
-
-    public void setConstraints(String constraints) {
-        this.constraints = constraints;
-    }
-
-    public Date getCompletedDate() {
-        return completedDate;
-    }
-
-    public void setCompletedDate(Date completedDate) {
-        this.completedDate = completedDate;
-    }
-
-    public PersonModel getContactPerson() {
-        return contactPerson;
-    }
-
-    public void setContactPerson(PersonModel contactPerson) {
-        this.contactPerson = contactPerson;
-    }
-
-    public PersonModel getCoordinator() {
-        return coordinator;
-    }
-
-    public void setCoordinator(PersonModel coordinator) {
-        this.coordinator = coordinator;
-    }
-
-    public String getEstimateCost() {
-        return estimateCost;
-    }
-
-    public void setEstimateCost(String estimateCost) {
-        this.estimateCost = estimateCost;
-    }
-
-    public EntityModel getKingdomHall() {
-        return kingdomHall;
-    }
-
-    public void setKingdomHall(EntityModel kingdomHall) {
-        this.kingdomHall = kingdomHall;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
+    /**
+     * @return the projectId
+     */
     public Integer getProjectId() {
         return projectId;
     }
 
+    /**
+     * @param projectId the projectId to set
+     */
     public void setProjectId(Integer projectId) {
         this.projectId = projectId;
     }
 
-    public String getType() {
-        return type;
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getPriority() {
-        return priority;
+    /**
+     * @return the kingdomHall
+     */
+    public EntityModel getKingdomHall() {
+        return kingdomHall;
     }
 
-    public void setPriority(String priority) {
-        this.priority = priority;
+    /**
+     * @param kingdomHall the kingdomHall to set
+     */
+    public void setKingdomHall(EntityModel kingdomHall) {
+        this.kingdomHall = kingdomHall;
     }
 
-    public Date getRequestDate() {
+    /**
+     * @return the coordinator
+     */
+    public EntityModel getCoordinator() {
+        return coordinator;
+    }
+
+    /**
+     * @param coordinator the coordinator to set
+     */
+    public void setCoordinator(EntityModel coordinator) {
+        this.coordinator = coordinator;
+    }
+
+    /**
+     * @return the minorWork
+     */
+    public boolean isMinorWork() {
+        return minorWork;
+    }
+
+    /**
+     * @param minorWork the minorWork to set
+     */
+    public void setMinorWork(boolean minorWork) {
+        this.minorWork = minorWork;
+    }
+
+    /**
+     * @return the requestDate
+     */
+    public java.sql.Date getRequestDate() {
         return requestDate;
     }
 
-    public void setRequestDate(Date requestDate) {
+    /**
+     * @param requestDate the requestDate to set
+     */
+    public void setRequestDate(java.sql.Date requestDate) {
         this.requestDate = requestDate;
     }
 
-    public List<ProjectStageModel> getStages() {
-        return stages;
+    /**
+     * @return the completedDate
+     */
+    public java.sql.Date getCompletedDate() {
+        return completedDate;
     }
 
-    public void setStages(List<ProjectStageModel> stages) {
-        this.stages = stages;
+    /**
+     * @param completedDate the completedDate to set
+     */
+    public void setCompletedDate(java.sql.Date completedDate) {
+        this.completedDate = completedDate;
     }
 
-    public String getStatus() {
-        return status;
+    /**
+     * @return the uri
+     */
+    public String getUri() {
+        return uri;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    /**
+     * @param uri the uri to set
+     */
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 
-    public String getSupportingCongregation() {
-        return supportingCongregation;
+    /**
+     * @return the editUri
+     */
+    public String getEditUri() {
+        return editUri;
     }
 
-    public void setSupportingCongregation(String supportingCongregation) {
-        this.supportingCongregation = supportingCongregation;
-    }
-
-    public String getTelephone() {
-        return telephone;
-    }
-
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
-
-    public Date getVisitDate() {
-        return visitDate;
-    }
-
-    public void setVisitDate(Date visitDate) {
-        this.visitDate = visitDate;
+    /**
+     * @param editUri the editUri to set
+     */
+    public void setEditUri(String editUri) {
+        this.editUri = editUri;
     }
 }

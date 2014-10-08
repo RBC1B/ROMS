@@ -25,202 +25,126 @@ package uk.org.rbc1b.roms.db.project;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 import org.hibernate.envers.Audited;
-import uk.org.rbc1b.roms.db.Address;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.UpdateAuditable;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 
 /**
  * A unit of work to be performed at a given site (kingdom hall or address).
+ *
  * @author oliver.elder.esq
  */
 @Audited
 public class Project implements UpdateAuditable, Serializable {
+
     private static final long serialVersionUID = 9175072301683424474L;
-    private Address address;
-    private String constraints;
-    private java.sql.Date completedDate;
-    private Person contactPerson;
-    private Person coordinator;
-    private String estimateCost;
-    private KingdomHall kingdomHall;
-    private String name;
     private Integer projectId;
-    private Integer projectTypeId;
-    private String priority;
+    private String name;
+    private KingdomHall kingdomHall;
+    private Person coordinator;
+    private boolean minorWork;
     private java.sql.Date requestDate;
-    private String statusCode;
-    private Set<ProjectStage> stages;
-    private String supportingCongregation;
-    private String telephone;
-    private java.sql.Date visitDate;
-    private Set<ProjectWorkBrief> workBriefs;
+    private java.sql.Date completedDate;
     private Date updateTime;
     private Integer updatedBy;
 
     /**
-     * Find the stage identified by the stage type.
-     * @param projectStageTypeId type id
-     * @return stage, or null if not found
+     * @return the projectId
      */
-    public ProjectStage findStage(Integer projectStageTypeId) {
-        if (stages == null) {
-            return null;
-        }
-
-        for (ProjectStage stage : stages) {
-            if (stage.getProjectStageType().getProjectStageTypeId().equals(projectStageTypeId)) {
-                return stage;
-            }
-        }
-
-        return null;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public java.sql.Date getCompletedDate() {
-        return completedDate;
-    }
-
-    public void setCompletedDate(java.sql.Date completedDate) {
-        this.completedDate = completedDate;
-    }
-
-    public String getConstraints() {
-        return constraints;
-    }
-
-    public void setConstraints(String constraints) {
-        this.constraints = constraints;
-    }
-
-    public Person getContactPerson() {
-        return contactPerson;
-    }
-
-    public void setContactPerson(Person contactPerson) {
-        this.contactPerson = contactPerson;
-    }
-
-    public Person getCoordinator() {
-        return coordinator;
-    }
-
-    public void setCoordinator(Person coordinator) {
-        this.coordinator = coordinator;
-    }
-
-    public String getEstimateCost() {
-        return estimateCost;
-    }
-
-    public void setEstimateCost(String estimateCost) {
-        this.estimateCost = estimateCost;
-    }
-
-    public KingdomHall getKingdomHall() {
-        return kingdomHall;
-    }
-
-    public void setKingdomHall(KingdomHall kingdomHall) {
-        this.kingdomHall = kingdomHall;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPriority() {
-        return priority;
-    }
-
-    public void setPriority(String priority) {
-        this.priority = priority;
-    }
-
     public Integer getProjectId() {
         return projectId;
     }
 
+    /**
+     * @param projectId the projectId to set
+     */
     public void setProjectId(Integer projectId) {
         this.projectId = projectId;
     }
 
-    public Integer getProjectTypeId() {
-        return projectTypeId;
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
     }
 
-    public void setProjectTypeId(Integer projectTypeId) {
-        this.projectTypeId = projectTypeId;
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 
+    /**
+     * @return the kingdomHall
+     */
+    public KingdomHall getKingdomHall() {
+        return kingdomHall;
+    }
+
+    /**
+     * @param kingdomHall the kingdomHall to set
+     */
+    public void setKingdomHall(KingdomHall kingdomHall) {
+        this.kingdomHall = kingdomHall;
+    }
+
+    /**
+     * @return the coordinator
+     */
+    public Person getCoordinator() {
+        return coordinator;
+    }
+
+    /**
+     * @param coordinator the coordinator to set
+     */
+    public void setCoordinator(Person coordinator) {
+        this.coordinator = coordinator;
+    }
+
+    /**
+     * @return the minorWork
+     */
+    public boolean isMinorWork() {
+        return minorWork;
+    }
+
+    /**
+     * @param minorWork the minorWork to set
+     */
+    public void setMinorWork(boolean minorWork) {
+        this.minorWork = minorWork;
+    }
+
+    /**
+     * @return the requestDate
+     */
     public java.sql.Date getRequestDate() {
         return requestDate;
     }
 
+    /**
+     * @param requestDate the requestDate to set
+     */
     public void setRequestDate(java.sql.Date requestDate) {
         this.requestDate = requestDate;
     }
 
-    public Set<ProjectStage> getStages() {
-        return stages;
+    /**
+     * @return the completedDate
+     */
+    public java.sql.Date getCompletedDate() {
+        return completedDate;
     }
 
-    public void setStages(Set<ProjectStage> stages) {
-        this.stages = stages;
-    }
-
-    public String getStatusCode() {
-        return statusCode;
-    }
-
-    public void setStatusCode(String statusCode) {
-        this.statusCode = statusCode;
-    }
-
-    public String getSupportingCongregation() {
-        return supportingCongregation;
-    }
-
-    public void setSupportingCongregation(String supportingCongregation) {
-        this.supportingCongregation = supportingCongregation;
-    }
-
-    public String getTelephone() {
-        return telephone;
-    }
-
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
-
-    public java.sql.Date getVisitDate() {
-        return visitDate;
-    }
-
-    public void setVisitDate(java.sql.Date visitDate) {
-        this.visitDate = visitDate;
-    }
-
-    public Set<ProjectWorkBrief> getWorkBriefs() {
-        return workBriefs;
-    }
-
-    public void setWorkBriefs(Set<ProjectWorkBrief> workBriefs) {
-        this.workBriefs = workBriefs;
+    /**
+     * @param completedDate the completedDate to set
+     */
+    public void setCompletedDate(java.sql.Date completedDate) {
+        this.completedDate = completedDate;
     }
 
     @Override
@@ -243,6 +167,6 @@ public class Project implements UpdateAuditable, Serializable {
 
     @Override
     public String toString() {
-        return "Project{" + "projectId=" + projectId + '}';
+        return "Project{" + "projectId=" + getProjectId() + '}';
     }
 }

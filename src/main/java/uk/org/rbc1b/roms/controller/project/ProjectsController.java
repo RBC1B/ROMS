@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2013 RBC1B.
+ * Copyright 2014 RBC1B.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,348 +23,49 @@
  */
 package uk.org.rbc1b.roms.controller.project;
 
-import static uk.org.rbc1b.roms.db.project.ProjectStageSortable.ProjectStageOrderType.PROJECT_STAGE_ACTIVITY;
-import static uk.org.rbc1b.roms.db.project.ProjectStageSortable.ProjectStageOrderType.PROJECT_STAGE_ACTIVITY_TASK;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import javax.validation.Valid;
-import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
-import uk.org.rbc1b.roms.controller.common.DataConverterUtil;
-import uk.org.rbc1b.roms.db.PersonDao;
-import uk.org.rbc1b.roms.db.application.User;
-import uk.org.rbc1b.roms.db.application.UserDao;
-import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
-import uk.org.rbc1b.roms.db.kingdomhall.KingdomHallDao;
 import uk.org.rbc1b.roms.db.project.Project;
 import uk.org.rbc1b.roms.db.project.ProjectDao;
-import uk.org.rbc1b.roms.db.project.ProjectStage;
-import uk.org.rbc1b.roms.db.project.ProjectStageActivity;
-import uk.org.rbc1b.roms.db.project.ProjectStageActivityType;
-import uk.org.rbc1b.roms.db.project.ProjectStageSortable.ProjectStageOrderType;
-import uk.org.rbc1b.roms.db.project.ProjectStageType;
-import uk.org.rbc1b.roms.db.project.ProjectStageTypeActivityType;
-import uk.org.rbc1b.roms.db.project.ProjectTypeStageType;
-import uk.org.rbc1b.roms.db.reference.ReferenceDao;
-import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
-import uk.org.rbc1b.roms.security.ROMSUserDetails;
 
 /**
- * Control access to the underlying project data.
+ *
+ * @author ramindursingh
  */
 @Controller
 @RequestMapping("/projects")
 public class ProjectsController {
 
-    @Autowired
-    private KingdomHallDao kingdomHallDao;
-    @Autowired
-    private PersonDao personDao;
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProjectsController.class);
     @Autowired
     private ProjectDao projectDao;
     @Autowired
-    private ReferenceDao referenceDao;
-    @Autowired
     private ProjectModelFactory projectModelFactory;
-    @Autowired
-    private VolunteerDao volunteerDao;
-    @Autowired
-    private UserDao userDao;
 
     /**
-     * Display the list of projects.
+     * Handles the project list.
      *
-     * @param model mvc model
-     * @return view
+     * @param model the mvc model
+     * @return list jsp page
      */
     @RequestMapping(method = RequestMethod.GET)
-    @PreAuthorize("hasPermission('PROJECT','READ')")
-    public String showProjectList(ModelMap model) {
-
+    public String showProjects(ModelMap model) {
         List<Project> projects = projectDao.findProjects();
-        Map<Integer, String> types = referenceDao.findProjectTypeValues();
-        Map<String, String> statuses = referenceDao.findProjectStatusValues();
-        List<ProjectListModel> modelList = new ArrayList<ProjectListModel>(projects.size());
+
+        List<ProjectModel> modelList = new ArrayList<ProjectModel>();
         for (Project project : projects) {
-            modelList.add(projectModelFactory.generateProjectListModel(project, types, statuses));
+            modelList.add(projectModelFactory.generateProjectModel(project));
         }
 
         model.addAttribute("projects", modelList);
         model.addAttribute("newUri", ProjectModelFactory.generateUri(null) + "/new");
-
         return "projects/list";
-    }
-
-    /**
-     * Look up a project id by name.
-     *
-     * @param name project name
-     * @return matched project id
-     */
-    @RequestMapping(value = "search", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public Integer findProjectIdByName(@RequestParam("name") String name) {
-        Project project = projectDao.findProject(name);
-
-        return project != null ? project.getProjectId() : null;
-    }
-
-    /**
-     * @param projectId project primary key
-     * @param model model
-     * @return view name
-     * @throws NoSuchRequestHandlingMethodException when no project matching the
-     * id is found
-     */
-    @RequestMapping(value = "{projectId}", method = RequestMethod.GET)
-    @PreAuthorize("hasPermission('PROJECT','READ')")
-    public String showProject(@PathVariable Integer projectId, ModelMap model)
-            throws NoSuchRequestHandlingMethodException {
-
-        Project project = projectDao.findProject(projectId);
-        if (project == null) {
-            throw new NoSuchRequestHandlingMethodException("No project with id [" + projectId + "]", this.getClass());
-        }
-
-        ProjectModel projectModel = projectModelFactory.generateProjectModel(project);
-        projectModel.setStages(projectModelFactory.generateProjectStages(projectDao.findProjectStages(projectId)));
-
-        model.addAttribute("project", projectModel);
-
-        // include the user details, picked up when adding tasks
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        ROMSUserDetails user = (ROMSUserDetails) authentication.getPrincipal();
-
-        model.addAttribute("userId", user.getUserId());
-        model.addAttribute("userName", user.getUsername());
-
-        return "projects/show";
-    }
-
-    /**
-     * Reorder the project stages by passing in the new stage id order.
-     *
-     * @param projectId project to reorder
-     * @param stageIdValues comma separated list of the stage ids, in the format
-     * stage-1, stage-3, stage-17
-     */
-    @RequestMapping(value = "{projectId}/stage-activity-order", method = RequestMethod.PUT, consumes = "application/x-www-form-urlencoded")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("hasPermission('PROJECT','EDIT')")
-    public void reorderStageActivities(@PathVariable Integer projectId, @RequestParam("idValues") String stageIdValues) {
-
-        reorderStages(projectId, stageIdValues, "stage\\-\\d\\-activity\\-", PROJECT_STAGE_ACTIVITY);
-    }
-
-    /**
-     * Reorder the project stages by passing in the new stage id order.
-     *
-     * @param projectId project to reorder
-     * @param stageIdValues comma separated list of the stage ids, in the format
-     * stage-1, stage-3, stage-17
-     */
-    @RequestMapping(value = "{projectId}/stage-activity-task-order", method = RequestMethod.PUT, consumes = "application/x-www-form-urlencoded")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("hasPermission('PROJECT','EDIT')")
-    public void reorderStageActivityTasks(@PathVariable Integer projectId,
-            @RequestParam("idValues") String stageIdValues) {
-
-        reorderStages(projectId, stageIdValues, "stage\\-\\d\\-activity\\-\\d\\-task\\-", PROJECT_STAGE_ACTIVITY_TASK);
-    }
-
-    private void reorderStages(Integer projectId, String stageIdValues, String regex,
-            ProjectStageOrderType projectStageOrderType) {
-
-        String[] stageIdValueArray = StringUtils.split(stageIdValues, ',');
-        List<Integer> stageIds = new ArrayList<Integer>();
-        for (String stageIdValue : stageIdValueArray) {
-            Integer stageId = DataConverterUtil.toInteger(stageIdValue.replaceAll(regex, ""));
-            stageIds.add(stageId);
-        }
-
-        projectDao.updateProjectStageOrder(projectId, projectStageOrderType.getValue(), stageIds);
-    }
-
-    /**
-     * Display the form to create a new project.
-     *
-     * @param model mvc model
-     * @return view name
-     */
-    @RequestMapping(value = "new", method = RequestMethod.GET)
-    @PreAuthorize("hasPermission('PROJECT','ADD')")
-    public String showCreateProjectForm(ModelMap model) {
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        ROMSUserDetails user = (ROMSUserDetails) authentication.getPrincipal();
-
-        // initialise the form bean
-        ProjectForm form = new ProjectForm();
-        form.setCoordinatorUserId(user.getUserId());
-        form.setCoordinatorUserName(user.getUsername());
-
-        model.addAttribute("projectForm", form);
-        model.addAttribute("projectTypeValues", referenceDao.findProjectTypeValues());
-        model.addAttribute("submitUri", ProjectModelFactory.generateUri(null));
-        model.addAttribute("submitMethod", "POST");
-
-        return "projects/create";
-    }
-
-    /**
-     * Display the form to edit an existing project.
-     * @param projectId project identifier
-     * @param model mvc model
-     * @return view name
-     * @throws NoSuchRequestHandlingMethodException on failure ot find the project
-     */
-    @RequestMapping(value = "{projectId}/edit", method = RequestMethod.GET)
-    @PreAuthorize("hasPermission('PROJECT','EDIT')")
-    public String showEditProjectForm(@PathVariable Integer projectId, ModelMap model)
-            throws NoSuchRequestHandlingMethodException {
-
-        Project project = projectDao.findProject(projectId);
-        if (project == null) {
-            throw new NoSuchRequestHandlingMethodException("No project with id [" + projectId + "]", this.getClass());
-        }
-
-        // initialise the form bean
-        ProjectForm form = new ProjectForm();
-        form.setConstraints(project.getConstraints());
-
-        if (project.getCoordinator() != null) {
-            User user = userDao.findUser(project.getCoordinator().getPersonId());
-            form.setCoordinatorUserId(user.getPersonId());
-            form.setCoordinatorUserName(user.getUserName());
-        }
-
-        form.setEstimateCost(project.getEstimateCost());
-
-        if (project.getKingdomHall() != null) {
-            KingdomHall kingdomHall = kingdomHallDao.findKingdomHall(project.getKingdomHall().getKingdomHallId());
-            form.setKingdomHallId(project.getKingdomHall().getKingdomHallId());
-            form.setKingdomHallName(kingdomHall.getName());
-        }
-
-        form.setName(project.getName());
-        form.setPriority(project.getPriority());
-        form.setProjectTypeId(project.getProjectTypeId());
-
-        form.setRequestDate(DataConverterUtil.toDateTime(project.getRequestDate()));
-        form.setSupportingCongregation(project.getSupportingCongregation());
-        form.setVisitDate(DataConverterUtil.toDateTime(project.getVisitDate()));
-
-        model.addAttribute("projectForm", form);
-        model.addAttribute("projectId", projectId);
-        model.addAttribute("submitUri", ProjectModelFactory.generateUri(projectId));
-        model.addAttribute("projectTypeName", referenceDao.findProjectTypeValues().get(project.getProjectTypeId()));
-        model.addAttribute("submitMethod", "PUT");
-
-        return "projects/edit";
-    }
-
-    /**
-     * Creates a project, creating the default stages and activities for the
-     * type.
-     *
-     * @param projectForm projectForm bean
-     * @return view name
-     */
-    @RequestMapping(method = RequestMethod.POST)
-    @PreAuthorize("hasPermission('PROJECT','ADD')")
-    public String createProject(@Valid ProjectForm projectForm) {
-
-        Project project = new Project();
-        populateProjectFromFormData(project, projectForm);
-
-        Map<Integer, ProjectStageType> stageTypes = projectDao.findProjectStageTypes();
-        Map<Integer, ProjectStageActivityType> activityTypes = projectDao.findProjectStageActivityTypes();
-        List<ProjectTypeStageType> projectTypeStageTypes = projectDao.findProjectTypeStageTypes(projectForm
-                .getProjectTypeId());
-
-        Set<ProjectStage> stages = new HashSet<ProjectStage>();
-        for (ProjectTypeStageType projectTypeStageType : projectTypeStageTypes) {
-            ProjectStage stage = new ProjectStage();
-            stage.setProjectStageType(stageTypes.get(projectTypeStageType.getProjectStageTypeId()));
-
-            List<ProjectStageTypeActivityType> stageTypeActivityTypes = projectDao
-                    .findProjectStageTypeActivityType(projectTypeStageType.getProjectStageTypeId());
-            Set<ProjectStageActivity> activities = new HashSet<ProjectStageActivity>();
-            for (ProjectStageTypeActivityType stageTypeActivityType : stageTypeActivityTypes) {
-                ProjectStageActivity activity = new ProjectStageActivity();
-                activity.setProjectStageActivityType(activityTypes.get(stageTypeActivityType
-                        .getProjectStageActivityTypeId()));
-            }
-            stage.setActivities(activities);
-
-            stages.add(stage);
-        }
-        project.setStages(stages);
-
-        projectDao.createProject(project);
-
-        return "redirect:" + ProjectModelFactory.generateUri(project.getProjectId());
-
-    }
-
-    /**
-     * Update the core details of an existing project.
-     * @param projectId project id
-     * @param projectForm projectForm bean
-     * @return view name
-     * @throws NoSuchRequestHandlingMethodException on failure to find the project
-     */
-    @RequestMapping(value = "{projectId}", method = RequestMethod.PUT)
-    @PreAuthorize("hasPermission('PROJECT','EDIT')")
-    public String updateProject(@PathVariable Integer projectId, @Valid ProjectForm projectForm)
-            throws NoSuchRequestHandlingMethodException {
-
-        Project project = projectDao.findProject(projectId);
-        if (project == null) {
-            throw new NoSuchRequestHandlingMethodException("No project with id [" + projectId + "]", this.getClass());
-        }
-
-        populateProjectFromFormData(project, projectForm);
-
-        projectDao.updateProject(project);
-
-        return "redirect:" + ProjectModelFactory.generateUri(project.getProjectId());
-    }
-
-    private void populateProjectFromFormData(Project project, ProjectForm projectForm) {
-        project.setConstraints(projectForm.getConstraints());
-
-        if (projectForm.getCoordinatorUserId() != null) {
-            project.setCoordinator(personDao.findPerson(projectForm.getCoordinatorUserId()));
-        }
-
-        project.setEstimateCost(projectForm.getEstimateCost());
-
-        if (projectForm.getKingdomHallId() != null) {
-            project.setKingdomHall(kingdomHallDao.findKingdomHall(projectForm.getKingdomHallId()));
-        }
-        project.setName(projectForm.getName());
-        project.setPriority(projectForm.getPriority());
-        project.setProjectTypeId(projectForm.getProjectTypeId());
-        project.setRequestDate(DataConverterUtil.toSqlDate(projectForm.getRequestDate()));
-        project.setSupportingCongregation(projectForm.getSupportingCongregation());
-        project.setVisitDate(DataConverterUtil.toSqlDate(projectForm.getVisitDate()));
     }
 }

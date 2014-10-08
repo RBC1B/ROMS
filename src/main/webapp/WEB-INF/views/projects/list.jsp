@@ -12,16 +12,16 @@
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <h1>Projects</h1>
         <hr />
-        <table class="table table-bordered table-condensed table-striped table-hover" id="project-list">
+                <table class="table table-bordered table-condensed table-striped table-hover" id="project-list">
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Kingdom Hall</th>
                     <th>Name</th>
-                    <th>Type</th>
-                    <th>Status</th>
+                    <th>Minor Work</th>
                     <th>Requested</th>
                     <th>Completed</th>
-                    <th>Contact</th>
+                    <th>Coordinator</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -29,12 +29,25 @@
                 <c:forEach items="${projects}" var="project">
                     <tr>
                         <td>${project.projectId}</td>
+                        <td>
+                            <c:if test="${not empty project.kingdomHall}">
+                                <a href="<c:url value='${project.kingdomHall.uri}'/>">
+                                    <c:out value="${project.kingdomHall.name}" />
+                                </a>
+                            </c:if>
+                        </td>
                         <td><c:out value="${project.name}" /></td>
-                        <td>${project.type}</td>
-                        <td>${project.status}</td>
+                        <td>${project.minorWork}</td>
+
                         <td><fmt:formatDate value="${project.requestDate}" pattern="yyyy-MM-dd" /></td>
                         <td><fmt:formatDate value="${project.completedDate}" pattern="yyyy-MM-dd" /></td>
-                        <td><c:if test="${not empty project.contactPerson}"><a href="<c:url value='${project.contactPerson.uri}'/>"><c:out value="${project.contactPerson.name}" /></a></c:if></td>
+                        <td>
+                            <c:if test="${not empty project.coordinator}">
+                                <a href="<c:url value='${project.coordinator.uri}'/>">
+                                    <c:out value="${project.coordinator.name}" />
+                                </a>
+                            </c:if>
+                        </td>
                         <td>
                             <ul class="list-inline">
                                 <li><a class="btn btn-success" href="<c:url value="${project.uri}" />">View</a></li>
