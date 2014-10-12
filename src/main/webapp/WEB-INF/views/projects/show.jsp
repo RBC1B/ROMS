@@ -13,42 +13,22 @@
         <h1>Project #${project.projectId}: <c:out value="${project.name}" /></h1>
         <hr />
         <dl class="dl-horizontal">
-            <dt>Type:</dt><dd>${project.type}</dd>
-            <dt>Status:</dt><dd>${project.status}</dd>
+            <dt>Kingdom Hall</dt>
+            <dd>
+                <a href="<c:url value="${project.kingdomHall.uri}" />">
+                    <c:out value="${project.kingdomHall.name}" />
+                </a>
+            </dd>
+            <dt>Request Date</dt><dd>${project.requestDate}</dd>
+            <dt>Completed Date:</dt><dd>${project.completedDate}</dd>
+            <dt>Minor Work</dt><dd>${project.minorWork}</dd>
+            <dt>Coordinator</dt>
+            <dd>
+                <a href="<c:url value="${project.coordinator.uri}" />">
+                    <c:out value="${project.coordinator.name}" />
+                </a>
+            </dd>
         </dl>
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="#stages" data-toggle="tab">Stages</a></li>
-            <li><a href="#details" data-toggle="tab">Details</a></li>
-            <li><a href="#contacts" data-toggle="tab">Contacts</a></li>
-        </ul>
-        <br />
-        <div class="tab-content">
-            <div class="tab-pane active" id="stages">
-                <!--div class="row"-->
-                    <c:choose>
-                        <c:when test="${!empty project.stages}">
-                            <div id="project-stages" data-project-id="${project.projectId}">
-                                <c:forEach var="stage" items="${project.stages}">
-                                    <%@ include file="fragments/show-stage.jsp" %>
-                                </c:forEach>
-                            </div>
-                        </c:when>
-                        <c:otherwise><p>No stages defined</p></c:otherwise>
-                    </c:choose>
-                <!--/div-->
-                <%@ include file="fragments/add-task-popup.jsp" %>
-            </div>
-            <div class="tab-pane" id="details">
-                <div class="row">
-                    <%@ include file="fragments/show-details.jsp" %>
-                </div>
-            </div>
-            <div class="tab-pane" id="contacts">
-                <div class="row">
-                    <%@ include file="fragments/show-contacts.jsp" %>
-                </div>
-            </div>
-        </div>
         <sec:authorize access="hasPermission('PROJECT', 'EDIT')">
             <hr />
             <a href="<c:url value='${project.editUri}' />" class="btn btn-edifice">Edit Project</a>

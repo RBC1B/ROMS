@@ -28,10 +28,13 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.db.project.Project;
 import uk.org.rbc1b.roms.db.project.ProjectDao;
 
@@ -56,6 +59,7 @@ public class ProjectsController {
      * @return list jsp page
      */
     @RequestMapping(method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('PROJECT', 'READ')")
     public String showProjects(ModelMap model) {
         List<Project> projects = projectDao.findProjects();
 
@@ -67,5 +71,27 @@ public class ProjectsController {
         model.addAttribute("projects", modelList);
         model.addAttribute("newUri", ProjectModelFactory.generateUri(null) + "/new");
         return "projects/list";
+    }
+
+    /**
+     * Displays the specified project.
+     *
+     * @param projectId the project id
+     * @param model the mvc model
+     * @return view name
+     * @throws NoSuchRequestHandlingMethodException if project does not exist
+     */
+    @RequestMapping(value = "{projectId}", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('PROJECT', 'READ')")
+    public String showProject(@PathVariable Integer projectId, ModelMap model)
+            throws NoSuchRequestHandlingMethodException {
+        Project project = projectDao.findProject(projectId);
+        if (project == null) {
+            throw new NoSuchRequestHandlingMethodException("No project #" + projectId, this.getClass());
+        }
+
+        model.addAttribute("project", projectModelFactory.generateProjectModel(project));
+
+        return "projects/show";
     }
 }
