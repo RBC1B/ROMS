@@ -25,8 +25,11 @@ package uk.org.rbc1b.roms.db.project;
 
 import java.util.List;
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -43,9 +46,7 @@ public class HibernateProjectDao implements ProjectDao {
     @Override
     public List<Project> findProjects() {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Project.class);
-        @SuppressWarnings("unchecked")
-        List<Project> projects = criteria.list();
-        return projects;
+        return criteria.list();
     }
 
     @Override
@@ -54,17 +55,21 @@ public class HibernateProjectDao implements ProjectDao {
     }
 
     @Override
-    public Project findProject(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Project> findProject(String name) {
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Project.class);
+        criteria.add(Restrictions.eq("name", name));
+        return criteria.list();
     }
 
     @Override
     public void createProject(Project project) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Session session = this.sessionFactory.getCurrentSession();
+        session.save(project);
     }
 
     @Override
+    @CacheEvict(value = "project.project", key = "#project.projectId")
     public void updateProject(Project project) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.sessionFactory.getCurrentSession().merge(project);
     }
 }

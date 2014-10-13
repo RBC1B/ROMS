@@ -54,10 +54,10 @@ public interface ProjectDao {
      * Look up the project details by exact match name.
      *
      * @param name project name
-     * @return project
+     * @return project list matching name
      */
     @Transactional(readOnly = true)
-    Project findProject(String name);
+    List<Project> findProject(String name);
 
     /**
      * Creates a new project, with the underlying default stages and activities.
@@ -68,7 +68,8 @@ public interface ProjectDao {
     void createProject(Project project);
 
     /**
-     * Update an existing project, with the underlying default stages and activities.
+     * Update an existing project, with the underlying default stages and
+     * activities.
      *
      * @param project to create
      */

@@ -24,112 +24,117 @@
 $(document).ready(function() {
     // list view
     roms.common.datatables(
-        $('#project-list'),
-        {
-            "iDisplayLength": 10,
-            "aoColumnDefs": [
+            $('#project-list'),
             {
-                'bSortable': false,
-                'aTargets': [ 7 ]
+                "iDisplayLength": 10,
+                "aoColumnDefs": [
+                    {
+                        'bSortable': false,
+                        'aTargets': [7]
+                    }
+                ]
             }
-            ]
-        }
     );
 
-    $(".a-project-status, .a-project-count, .a-project-assignment, .a-event-created-by").tooltip();
+    // Gets the person after the names have been entered
+    $("#surname").blur(function() {
+        findCoordinatorByName(
+                $("#forename").val(),
+                $("#surname").val(),
+                $("#coordinatorId")
+                );
+    });
 
-    // details view
-    $("#project-stages").sortable({
-        items: ".panel-activity",
-        update: function( event, ui ) {
-            var stageIds = $(this).sortable('toArray').toString();
-            $.ajax({
-                url: roms.common.relativePath + '/projects/' + $(this).data("project-id") + "/stage-activity-order",
-                type: 'PUT',
-                data:  {
-                    idValues: stageIds
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    alert(xhr.status + ": " + thrownError);
-                }
-            });
+    function findCoordinatorByName(forename, surname, $coordinatorId) {
+        // The names are still blank
+        if (!forename || !surname) {
+            return;
         }
-    });
-    
-    $(".panel-activity").sortable({
-       items: ".panel-task",
-       update: function( event, ui ) {
-            var stageIds = $(this).sortable('toArray').toString();
-            $.ajax({
-                url: roms.common.relativePath + '/projects/' + $("#project-stages").data("project-id") + "/stage-activity-task-order",
-                type: 'PUT',
-                data:  {
-                    idValues: stageIds
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    alert(xhr.status + ": " + thrownError);
+        // find the volunteer
+        findCoordinator(forename, surname, $coordinatorId);
+    }
+
+    function findCoordinator(forename, surname, $coordinatorId) {
+        var existingCoordinatorId = $coordinatorId.val();
+
+        $.ajax({
+            url: roms.common.relativePath + '/persons/search',
+            contentType: "application/json",
+            dataType: "json",
+            data: {
+                forename: forename,
+                surname: surname,
+                checkVolunteer: true
+            },
+            success: function(data) {
+                // no match, and no person linked
+                if ((!data || data.length === 0) && !existingCoordinatorId) {
+                    return;
                 }
-            });
+
+                var matchedPersons = new Array();
+                if (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        var result = data[i];
+                        if (result.personId !== existingCoordinatorId) {
+                            matchedPersons.push(result);
+                        } else {
+                            data.existingCoordinatorName = result.forename + " " + result.surname;
+                        }
+                    }
+                }
+
+
+                data.existingCoordinatorId = existingCoordinatorId;
+
+                if (matchedPersons.length > 0) {
+                    data.matchedPersons = true;
+                    data.results = matchedPersons;
+                }
+                var template = $("#coordinator-link-search-form").html();
+                var html = Mustache.to_html(template, data);
+
+                $("#person-link-modal .modal-body").html(html);
+                var modalElement = $("#person-link-modal");
+
+                modalElement.modal('show');
+
+                $("a.matched-coordinator").on("click", function(event) {
+                    populateCoordinatorFromPerson($(this).data("coordinator-id"), $coordinatorId);
+                    modalElement.modal('hide');
+                });
+            }
+        });
+    }
+
+    function populateCoordinatorFromPerson(selectedCoordinatorId, $coordinatorId) {
+        if (selectedCoordinatorId) {
+            $("#coordinator-linked").show("fast");
+        } else {
+            alert("hiding modal");
+            $("#coordinator-linked").hide("fast");
         }
-    });
-    
-    // toggle the accordion and the accordion image
-    $('.a-accordian-control').click(function() {
-       var target = $(this).data("target");
-       var $accordion = $(target);
-       if ($accordion.hasClass("in")) {
-           $accordion.collapse('hide');
-           $("span", $(this)).removeClass("glyphicon-chevron-down");
-           $("span", $(this)).addClass("glyphicon-chevron-right");
-       } else {
-           $accordion.collapse('show');
-           $("span", $(this)).removeClass("glyphicon-chevron-right");
-           $("span", $(this)).addClass("glyphicon-chevron-down");
-       }
-    });
-    
-    $(".a-add-task-button").click(function() {
-        var $modal = $('#project-task-modal');
-        $("#project-task-modal-form", $modal).attr("action", $(this).data("uri"));
-        
-        $("input[name='assignedUserId']", $modal).val($(this).data("userId"));
-        $("input[name='assignedUserName']", $modal).val($(this).data("userName"));
-        
-        $modal.modal('show');
-    });
-    
-    $.fn.editable.defaults.ajaxOptions = {type: "PUT"};
-    $(".project-task-name").editable();
-    
+        $coordinatorId.val(selectedCoordinatorId);
+    }
+
     // project create/edit
     $("#kingdomHallName").typeahead({
         remote: roms.common.relativePath + '/kingdom-halls/search?name=%QUERY',
         valueKey: 'name'
     });
-    
+
     // we always clear the kingdom hall id on change.
     // it will be re-calculated in validation
     $("#kingdomHallName").change(function() {
         $("#kingdomHallId").val(null);
     });
-    
+
     $(".datepicker").datepicker({
         dateFormat: "dd/mm/yy",
         minDate: "-1y",
         maxDate: "+0d"
     });
-    
-    $("#coordinatorUserName").typeahead({
-        remote: roms.common.relativePath + '/users/search?name=%QUERY',
-        valueKey: 'userName'
-    });
-    
-    // we always clear the coordinator user id on change.
-    // it will be re-calculated in validation
-    $("#coordinatorUserName").change(function() {
-        $("#coordinatorUserId").val(null);
-    });
-    
+
     $("#projectForm").validate({
         rules: {
             name: {
@@ -137,33 +142,36 @@ $(document).ready(function() {
                 remote: {
                     // make sure this is not a duplicate name
                     url: roms.common.relativePath + "/projects/search",
-                    contentType: "text/plain",
-                    dataType: "text",
+                    contentType: "application/json",
+                    dataType: "json",
+                    cache: false,
                     data: {
                         name: function() {
                             return $("#name").val();
                         }
                     },
                     dataFilter: function(rawData) {
-                        // if we return an empty string, we didn't match an existing project name
-                        if (rawData == "") {
+                        //We only check if creating a new project..... 
+                        var action = $("#create-project").attr("val");
+                        if (action == 1) {
+                            var data = JSON.parse(rawData)
+                            if (data && data.length > 0) {
+                                return false;
+                            } else {
+                                return true;
+                            }
+                        } else {
                             return true;
                         }
-                        // otherwise, compare it to the existing project value if set
-                        var currentProjectId = $("#projectForm").data("project-id");
-                        return rawData == currentProjectId;
                     }
                 }
-            },
-            projectTypeId: {
-                required: true
             },
             kingdomHallName: {
                 remote: roms.common.validation.kingdomHall($("#kingdomHallName"), $("#kingdomHallId"))
             },
-            coordinatorUserName: {
-                remote: roms.common.validation.user($("#coordinatorUserName"), $("#coordinatorUserId"))
-            }
+            requestDate: {
+                required: true
+            },
         },
         messages: {
             name: {
@@ -172,42 +180,10 @@ $(document).ready(function() {
             kingdomHallName: {
                 remote: "Please provide the name of an existing kingdom hall"
             },
-            coordinatorUserName: {
-                remote: "Please provide the name of an existing user"
-            }
         },
-        submitHandler :function(form) {
+        submitHandler: function(form) {
             form.submit();
         },
         errorPlacement: roms.common.validatorErrorPlacement
     });
-    
-    
-    $("input[name='assignedUserName']").typeahead({
-        remote: roms.common.relativePath + '/users/search?name=%QUERY',
-        valueKey: 'userName'
-    });
-    
-    $("#project-task-modal-form").validate({
-        rules: {
-            name: {
-                required: true
-            },
-            assignedUserName: {
-                required: true,
-                remote: roms.common.validation.user($("input[name='assignedUserName']"), $("input[name='assignedUserId']"))
-            }
-        },
-        submitHandler :function(form) {
-            $(form).ajaxSubmit({
-                success: function(data) { 
-                    // we could add the newly created task inline, but for now just reload the page
-                    window.location.reload();
-                }
-            });
-        },
-        errorPlacement: roms.common.validatorErrorPlacement
-    });
-    
-    
 });

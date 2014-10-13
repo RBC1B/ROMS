@@ -6,77 +6,83 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <c:set var="pageTitle">Edit project</c:set>
+    <c:choose>
+        <c:when test="${empty projectForm.name}">
+            <c:set var="pageTitle">Create new project</c:set>
+        </c:when>
+        <c:otherwise>
+            <c:set var="pageTitle">Edit project</c:set>
+        </c:otherwise>
+    </c:choose>
+
+
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <h1>Edit project</h1>
+        <c:choose>
+            <c:when test="${empty projectForm.name}">
+                <div id="create-project" val="1"/>
+                <h1>Create new project</h1>
+            </c:when>
+            <c:otherwise>
+                <div id="create-project" val="0"/>
+                <h1>Edit project (${projectForm.projectId})</h1>
+            </c:otherwise>
+        </c:choose>
         <hr />
         <c:url var="formAction" value="${submitUri}" />
         <form:form class="form-horizontal" commandName="projectForm" method="${submitMethod}" action="${formAction}"
-            data-project-id="${projectId}">
+                   data-project-id="${projectId}">
             <div class="form-group">
-                <label for="name" class="control-label col-sm-2">Name</label>
+                <form:hidden class="form-control" path="projectId" />
+                <label for="name" class="control-label col-sm-2">Project Name</label>
                 <div class="col-sm-4">
-                    <form:input path="name" class="form-control" maxlength="50" />
+                    <form:input path="name" class="form-control" maxlength="250" />
                 </div>
             </div>
             <div class="form-group">
-                <label for="projectTypeId" class="control-label col-sm-2">Type</label>
-                <div class="col-sm-3">
-                    <!-- the type cannot be changed -->
-                    <form:hidden path="projectTypeId" />
-                    <p>${projectTypeName}</p>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="coordinatorUserName" class="control-label col-sm-2">Coordinator</label>
-                <div class="col-sm-3">
-                    <form:hidden path="coordinatorUserId" />
-                    <form:input path="coordinatorUserName" class="form-control" maxlength="50" autocomplete="off" />
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="kingdomHallName" class="control-label col-sm-2">Kingdom Hall</label>
-                <div class="col-sm-3">
-                    <form:hidden path="kingdomHallId" />
-                    <form:input path="kingdomHallName" class="form-control" maxlength="50" autocomplete="off" />
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="supportingCongregation" class="control-label col-sm-2">Supporting congregation</label>
-                <div class="col-sm-3">
-                    <form:input path="supportingCongregation" class="form-control" maxlength="250" />
+                <form:hidden path="kingdomHallId" />
+                <label class="control-label col-sm-3 col-md-2" for="kingdomHallName">Kingdom Hall</label>
+                <div class="col-sm-9 col-md-3">
+                    <form:input path="kingdomHallName" class="typeahead form-control" type="text" name="kingdomHallName" placeholder="Name of the kingdom hall" maxlength="50" />
                 </div>
             </div>
             <div class="form-group">
                 <label for="requestDate" class="control-label col-sm-2">Request date</label>
                 <div class="col-sm-2">
-                    <form:input path="requestDate" placeholder="dd/mm/yyyy" class="datepicker form-control" data-date-format="dd/mm/yy" type="text" value=""/>
+                    <form:input path="requestDate" placeholder="dd/mm/yyyy" class="datepicker form-control" data-date-format="dd/mm/yy" type="text" />
                 </div>
             </div>
             <div class="form-group">
-                <label for="visitDate" class="control-label col-sm-2">Visit Date</label>
+                <label for="completedDate" class="control-label col-sm-2">Completion date</label>
                 <div class="col-sm-2">
-                    <form:input path="visitDate" placeholder="dd/mm/yyyy" class="datepicker form-control" data-date-format="dd/mm/yy" type="text" value=""/>
+                    <form:input path="completedDate" placeholder="dd/mm/yyyy" class="datepicker form-control" data-date-format="dd/mm/yy" type="text" />
                 </div>
             </div>
             <div class="form-group">
-                <label for="priority" class="control-label col-sm-2">Priority</label>
-                <div class="col-sm-3">
-                    <form:input path="priority" class="form-control" maxlength="50" />
+                <div class="control-label col-sm-3 col-md-2">
+                    <b>Coordinator</b>
+                </div>
+                <div class="col-sm-2">
+                    <form:hidden class="form-control" path="coordinatorId" />
+                    <div class="form-group">
+                        <form:input class="form-control" path="forename" maxlength="50" placeholder="First Name"/>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <form:input class="form-control" path="surname" maxlength="50" placeholder="Surname"/>
+                    </div>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="estimateCost" class="control-label col-sm-2">Estimated cost</label>
-                <div class="col-sm-3">
-                    <form:input path="estimateCost" class="form-control" maxlength="50" />
-                </div>
+            <div id="coordinator-linked" class="alert alert-warning alert-dismissable" style="display:none;">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">Unlink</button>
+                Linked to an existing person in the database
             </div>
             <div class="form-group">
-                <label for="estimateCost" class="control-label col-sm-2">Constraints</label>
-                <div class="col-sm-3">
-                    <form:textarea path="constraints" class="form-control" rows="4" cols="50" />
+                <label for="minorWork" class="control-label col-sm-2">Minor Work</label>
+                <div class="col-sm-2">
+                    <form:checkbox path="minorWork"/>
                 </div>
             </div>
             <div class="form-group">
@@ -90,6 +96,8 @@
             <li role="menuitem"><a href="<c:url value="/projects" />">Projects</a></li>
             <li class="active">Edit</li>
         </ol>
+        <%@include file="/WEB-INF/views/common/person-link-modal.jsp" %>
+        <%@include file="/WEB-INF/views/projects/mustache-coordinator-link-search-form.jsp" %>
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         <script type="text/javascript" src="<c:url value='/javascript/projects.js' />" ></script>
     </body>
