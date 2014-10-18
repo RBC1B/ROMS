@@ -92,20 +92,17 @@ public class HibernateUserDao implements UserDao {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void updateUser(User user) {
         this.sessionFactory.getCurrentSession().merge(user);
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     @CacheEvict(value = "user.userId", allEntries = true)
     public void createUser(User user) {
         this.sessionFactory.getCurrentSession().save(user);
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public boolean checkUserExist(String username) {
         this.sessionFactory.getCurrentSession().clear();
         List<User> users = findUsers(username);

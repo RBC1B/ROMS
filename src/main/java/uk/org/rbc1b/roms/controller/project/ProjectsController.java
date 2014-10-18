@@ -26,8 +26,6 @@ package uk.org.rbc1b.roms.controller.project;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -56,8 +54,6 @@ import uk.org.rbc1b.roms.security.RomsPermissionEvaluator;
 @Controller
 @RequestMapping("/projects")
 public class ProjectsController {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ProjectsController.class);
     @Autowired
     private ProjectDao projectDao;
     @Autowired
@@ -120,8 +116,7 @@ public class ProjectsController {
     @PreAuthorize("hasPermission('PROJECT', 'ADD')")
     public String showCreateProjectForm(ModelMap model) {
         if (!RomsPermissionEvaluator.hasPermission(uk.org.rbc1b.roms.security.Application.PROJECT, AccessLevel.ADD)) {
-            throw new ForbiddenRequestException(
-                    "Access to add new project is required to show the new project form");
+            throw new ForbiddenRequestException("Access to add new project is required to show the new project form");
         }
 
         model.addAttribute("projectForm", new ProjectForm());

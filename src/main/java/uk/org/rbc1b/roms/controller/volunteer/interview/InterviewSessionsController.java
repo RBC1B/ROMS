@@ -82,7 +82,6 @@ public class InterviewSessionsController {
     private static final Logger LOGGER = LoggerFactory.getLogger(InterviewSessionsController.class);
     private static final String INVITATION_EMAIL_TEMPLATE = "volunteer-interview-session-invitation.ftl";
     private static final String INVITATION_EMAIL_SUBJECT = "RBC induction interview";
-    private static final String INVITATION_EMAIL_ADDRESS = "rbc.lhr.interviews@gmail.com";
     private static final Logger LOG = LoggerFactory.getLogger(InterviewSessionsController.class);
     @Autowired
     private InterviewSessionDao interviewSessionDao;

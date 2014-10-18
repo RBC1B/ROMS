@@ -51,7 +51,6 @@ public class HibernateApplicationAccessDao implements ApplicationAccessDao {
         return criteria.list();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void saveApplicationAccess(Set<ApplicationAccess> applicationAccess) {
         Session session = sessionFactory.getCurrentSession();

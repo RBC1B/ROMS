@@ -144,11 +144,11 @@ The contents of the skills tab.
                             <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
                                 <li><a class="a-edit-experience"
                                        href="<c:url value="${trade.uri}" />">Edit</a></li>
-                                <li><a class="a-delete-experience" 
+                                <li><a class="a-delete-experience"
                                        data-ajax-url="<c:url value="${trade.uri}" />" href="<c:url value="#" />">Delete</a></li>
                             </sec:authorize>
                         </ul>
-                    </td>                    
+                    </td>
                 </tr>
             </c:forEach>
         </tbody>

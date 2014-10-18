@@ -1,7 +1,5 @@
-<%-- 
-    Document   : contact-update-incorrect
-    Created on : Jun 25, 2014, 10:57:32 AM
-    Author     : ramindursingh
+<%--
+    Show an error page when the volunteer update link is expired or invalid.
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -24,7 +22,7 @@
              <h1>RBC London and Home Counties</h1>
         </div>
         <div class="container">
-            You have tried to update your details but the link is incorrect or expired.<br/> 
+            You have tried to update your details but the link is incorrect or expired.<br/>
             <a href="/">Please re-submit your update request.</a>
         </div>
     </body>

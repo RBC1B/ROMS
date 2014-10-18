@@ -1,7 +1,5 @@
-<%-- 
-    Document   : contact-update
-    Created on : Jun 25, 2014, 10:57:58 AM
-    Author     : ramindursingh
+<%--
+    Form to allow volunteer to update their personal details.
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -120,7 +118,7 @@
             <p>Please note that from this page, only your contact details can be updated.</p>
             <p>To update any other other information, please contact Volunteer Service Desk. Your
                 department overseer should be able to provide you with the necessary information.</p>
-            <br/> 
+            <br/>
             <a href="/">Edifice Login Page</a>
         </div>
         <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>

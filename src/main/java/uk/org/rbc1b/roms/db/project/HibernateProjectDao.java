@@ -43,6 +43,7 @@ public class HibernateProjectDao implements ProjectDao {
     @Autowired
     private SessionFactory sessionFactory;
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Project> findProjects() {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Project.class);
@@ -54,6 +55,7 @@ public class HibernateProjectDao implements ProjectDao {
         return (Project) this.sessionFactory.getCurrentSession().get(Project.class, projectId);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Project> findProject(String name) {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Project.class);

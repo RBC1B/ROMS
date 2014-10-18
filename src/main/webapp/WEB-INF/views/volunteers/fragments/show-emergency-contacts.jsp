@@ -1,7 +1,5 @@
-<%-- 
-    Document   : show-emergency-contacts
-    Created on : 14-Jun-2014, 17:13:19
-    Author     : Graham Pointer
+<%--
+    Display the list of volunteer emergency contacts, part of the volunteer page.
 --%>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>

@@ -43,6 +43,7 @@ public class HibernateApplicationDao implements ApplicationDao {
      *
      * @return list of applications
      */
+    @SuppressWarnings("unchecked")
     @Override
     public List<Application> getApplications() {
         return sessionFactory.getCurrentSession().createCriteria(Application.class).list();

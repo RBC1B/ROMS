@@ -72,7 +72,7 @@
                         <div id="username-already-exists" class="alert alert-danger alert-dismissable" style="display:none;">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                             This username already exists in the system. Please use another username.
-                        </div>          
+                        </div>
                         <div id="username-too-small" class="alert alert-danger alert-dismissable" style="display:none;">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                             The username is too small, must be at least seven characters long.
