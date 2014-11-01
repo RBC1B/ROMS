@@ -86,13 +86,12 @@ create table Project_AUD (
     primary key (ProjectId, REV)
 )engine=InnoDB;
 
-create table ProjectDepartmentRequired (
-    ProjectDepartmentRequiredId bigint(20) auto_increment,
+create table ProjectDepartmentSession (
+    ProjectDepartmentSessionId bigint(20) auto_increment,
     ProjectId       bigint(20),
     DepartmentId    bigint(20),
-    Name            varchar(250) not null unique,
-    WorkDate        date,
-    WorkPeriod      int default 1,
+    FromDate        date,
+    ToDate        date,
     UpdateTime      timestamp not null,
     UpdatedBy       bigint(20) not null,
     primary key(ProjectDepartmentRequiredId),
@@ -102,15 +101,15 @@ create table ProjectDepartmentRequired (
     unique (ProjectId, DepartmentId, WorkDate)
 )engine=InnoDB;
 
-create table ProjectDepartmentRequired_AUD (
-    ProjectDepartmentRequiredId bigint(20),
+create table ProjectDepartmentSession_AUD (
+    ProjectDepartmentSessionId bigint(20),
     REV             int         not null,
     REVTYPE         tinyint,
     ProjectId       bigint(20),
     DepartmentId    bigint(20),
     Name            varchar(250),
-    WorkDate        date,
-    WorkPeriod      int default 1,
+    FromDate        date,
+    ToDate          date,
     UpdateTime      timestamp not null,
     UpdatedBy       bigint(20) not null,
     primary key(ProjectDepartmentRequiredId, REV)
@@ -118,7 +117,7 @@ create table ProjectDepartmentRequired_AUD (
 
 create table ProjectAvailability(
     ProjectAvailabilityId       bigint(20) auto_increment,
-    ProjectDepartmentRequiredId bigint(20),
+    ProjectDepartmentSessionId bigint(20),
     PersonId                    bigint(20),
     EmailSent                   boolean default false,
     PersonResponded             boolean default false,
@@ -131,8 +130,8 @@ create table ProjectAvailability(
     UpdateTime      timestamp   not null,
     UpdatedBy       bigint(20)  not null,
     primary key(ProjectAvailabilityId),
-    unique (ProjectDepartmentRequiredId, PersonId),
-    foreign key(ProjectDepartmentRequiredId) references ProjectDepartmentRequired(ProjectDepartmentRequiredId) on delete cascade,
+    unique (ProjectDepartmentSessionId, PersonId),
+    foreign key(ProjectDepartmentSessionId) references ProjectDepartmentSession(ProjectDepartmentSessionId) on delete cascade,
     foreign key(PersonId) references Person(PersonId),
     foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
@@ -141,7 +140,7 @@ create table ProjectAvailability_AUD(
     ProjectAvailabilityId       bigint(20),
     REV                         int         not null,
     REVTYPE                     tinyint,
-    ProjectDepartmentRequiredId bigint(20),
+    ProjectDepartmentSessionId bigint(20),
     PersonId                    bigint(20),
     EmailSent                   boolean,
     PersonResponded             boolean,

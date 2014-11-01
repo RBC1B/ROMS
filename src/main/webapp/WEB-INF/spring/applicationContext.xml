@@ -82,7 +82,7 @@ THE SOFTWARE.
                 <value>uk/org/rbc1b/roms/db/kingdomhall/KingdomHallFeature.hbm.xml</value>
 
                 <value>uk/org/rbc1b/roms/db/project/Project.hbm.xml</value>
-                <value>uk/org/rbc1b/roms/db/project/ProjectDepartmentRequired.hbm.xml</value>
+                <value>uk/org/rbc1b/roms/db/project/ProjectDepartmentSession.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/project/ProjectAvailability.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/project/ProjectAttendance.hbm.xml</value>
                 <value>uk/org/rbc1b/roms/db/project/AvailabilityStatus.hbm.xml</value>

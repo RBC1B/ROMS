@@ -5,7 +5,7 @@
         <id name="projectAvailabilityId">
             <generator class="identity" />
         </id>
-        <many-to-one name="projectDepartmentRequired" column="ProjectDepartmentRequiredId" />
+        <many-to-one name="projectDepartmentSession" column="ProjectDepartmentSessionId" />
         <many-to-one name="person" column="PersonId" />
         <property name="emailSent" />
         <property name="overseerConfirmed" />

@@ -32,7 +32,7 @@ import uk.org.rbc1b.roms.db.Person;
 public class ProjectAvailability {
 
     private Integer projectAvailabilityId;
-    private ProjectDepartmentRequired projectDepartmentRequired;
+    private ProjectDepartmentSession projectDepartmentSession;
     private Person person;
     private boolean emailSent;
     private boolean personResponded;
@@ -60,17 +60,17 @@ public class ProjectAvailability {
     }
 
     /**
-     * @return the projectDepartmentRequired
+     * @return the projectDepartmentSession
      */
-    public ProjectDepartmentRequired getProjectDepartmentRequired() {
-        return projectDepartmentRequired;
+    public ProjectDepartmentSession getProjectDepartmentSession() {
+        return projectDepartmentSession;
     }
 
     /**
-     * @param projectDepartmentRequired the projectDepartmentRequired to set
+     * @param projectDepartmentSession the projectDepartmentSession to set
      */
-    public void setProjectDepartmentRequired(ProjectDepartmentRequired projectDepartmentRequired) {
-        this.projectDepartmentRequired = projectDepartmentRequired;
+    public void setProjectDepartmentSession(ProjectDepartmentSession projectDepartmentSession) {
+        this.projectDepartmentSession = projectDepartmentSession;
     }
 
     /**

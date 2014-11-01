@@ -29,29 +29,28 @@ import uk.org.rbc1b.roms.db.volunteer.department.Department;
  *
  * @author ramindursingh
  */
-public class ProjectDepartmentRequired {
+public class ProjectDepartmentSession {
 
-    private Integer projectDepartmentRequiredId;
+    private Integer projectDepartmentSessionId;
     private Project project;
     private Department deparment;
-    private String name;
-    private java.sql.Date workDate;
-    private int workPeriod;
+    private java.sql.Date fromDate;
+    private java.sql.Date toDate;
     private java.sql.Date updateTime;
     private Integer updatedBy;
 
     /**
-     * @return the projectDepartmentRequiredId
+     * @return the projectDepartmentSessionId
      */
-    public Integer getProjectDepartmentRequiredId() {
-        return projectDepartmentRequiredId;
+    public Integer getProjectDepartmentSessionId() {
+        return projectDepartmentSessionId;
     }
 
     /**
-     * @param projectDepartmentRequiredId the projectDepartmentRequiredId to set
+     * @param projectDepartmentSessionId the projectDepartmentSessionId to set
      */
-    public void setProjectDepartmentRequiredId(Integer projectDepartmentRequiredId) {
-        this.projectDepartmentRequiredId = projectDepartmentRequiredId;
+    public void setProjectDepartmentSessionId(Integer projectDepartmentSessionId) {
+        this.projectDepartmentSessionId = projectDepartmentSessionId;
     }
 
     /**
@@ -83,45 +82,31 @@ public class ProjectDepartmentRequired {
     }
 
     /**
-     * @return the name
+     * @return the fromDate
      */
-    public String getName() {
-        return name;
+    public java.sql.Date getFromDate() {
+        return fromDate;
     }
 
     /**
-     * @param name the name to set
+     * @param fromDate the fromDate to set
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setFromDate(java.sql.Date fromDate) {
+        this.fromDate = fromDate;
     }
 
     /**
-     * @return the workDate
+     * @return the toDate
      */
-    public java.sql.Date getWorkDate() {
-        return workDate;
+    public java.sql.Date getToDate() {
+        return toDate;
     }
 
     /**
-     * @param workDate the workDate to set
+     * @param toDate the toDate to set
      */
-    public void setWorkDate(java.sql.Date workDate) {
-        this.workDate = workDate;
-    }
-
-    /**
-     * @return the workPeriod
-     */
-    public int getWorkPeriod() {
-        return workPeriod;
-    }
-
-    /**
-     * @param workPeriod the workPeriod to set
-     */
-    public void setWorkPeriod(int workPeriod) {
-        this.workPeriod = workPeriod;
+    public void setToDate(java.sql.Date toDate) {
+        this.toDate = toDate;
     }
 
     /**
@@ -151,4 +136,5 @@ public class ProjectDepartmentRequired {
     public void setUpdatedBy(Integer updatedBy) {
         this.updatedBy = updatedBy;
     }
+
 }
