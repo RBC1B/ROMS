@@ -206,6 +206,9 @@ THE SOFTWARE.
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
                     <property name="name" value="user.userId" />
                 </bean>
+                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
+                    <property name="name" value="projectDepartmentSession.projectDepartmentSession" />
+                </bean>
             </set>
         </property>
     </bean>
