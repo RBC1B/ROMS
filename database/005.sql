@@ -94,11 +94,11 @@ create table ProjectDepartmentSession (
     ToDate        date,
     UpdateTime      timestamp not null,
     UpdatedBy       bigint(20) not null,
-    primary key(ProjectDepartmentRequiredId),
+    primary key(ProjectDepartmentSessionId),
     foreign key(ProjectId) references Project(ProjectId) on delete set null,
     foreign key(DepartmentId) references Department(DepartmentId) on delete set null,
     foreign key (UpdatedBy) references Person(PersonId),
-    unique (ProjectId, DepartmentId, WorkDate)
+    unique (ProjectId, DepartmentId, FromDate)
 )engine=InnoDB;
 
 create table ProjectDepartmentSession_AUD (
@@ -112,7 +112,7 @@ create table ProjectDepartmentSession_AUD (
     ToDate          date,
     UpdateTime      timestamp not null,
     UpdatedBy       bigint(20) not null,
-    primary key(ProjectDepartmentRequiredId, REV)
+    primary key(ProjectDepartmentSessionId, REV)
 )engine=InnoDB;
 
 create table ProjectAvailability(
