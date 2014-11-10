@@ -29,6 +29,7 @@ import org.joda.time.DateTime;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,6 +54,8 @@ import uk.org.rbc1b.roms.db.email.Email;
 import uk.org.rbc1b.roms.db.email.EmailDao;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHallDao;
 import uk.org.rbc1b.roms.db.project.Project;
+import uk.org.rbc1b.roms.db.project.ProjectAttendance;
+import uk.org.rbc1b.roms.db.project.ProjectAttendanceDao;
 import uk.org.rbc1b.roms.db.project.ProjectAvailability;
 import uk.org.rbc1b.roms.db.project.ProjectAvailabilityDao;
 import uk.org.rbc1b.roms.db.project.ProjectDao;
@@ -70,11 +73,13 @@ public class ProjectAvailabilityEmailScheduledService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProjectAvailabilityEmailScheduledService.class);
     private static final String BASE_URI = "/project-availability";
-    private static final String SUBJECT = "Project Availability Request";
+    private static final String AVAILABILITY_SUBJECT = "Project Availability Request";
+    private static final String CONFIRMATION_SUBJECT = "Project Confirmation Dates";
     private static final String SECURITY_SALT = "security.salt";
     private static final String SERVER_URL = "edifice.url";
     private static final String DATETIMEFORMAT = "yyyyMMddHHmm";
     private static final String AVAILABILITY_TEMPLATE = "project-availability.ftl";
+    private static final String CONFIRMATION_TEMPLATE = "project-attendance-confirmation.ftl";
     @Autowired
     private PersonDao personDao;
     @Autowired
@@ -89,6 +94,8 @@ public class ProjectAvailabilityEmailScheduledService {
     private ProjectDepartmentSessionDao projectDepartmentSessionDao;
     @Autowired
     private ProjectAvailabilityDao projectAvailabilityDao;
+    @Autowired
+    private ProjectAttendanceDao projectAttendanceDao;
     @Autowired
     private FreeMarkerConfigurer emailFreemarkerConfigurer;
     @Autowired
@@ -125,15 +132,81 @@ public class ProjectAvailabilityEmailScheduledService {
         }
     }
 
+    /**
+     * Checks volunteers who have been need to sent the confirmed dates.
+     */
+    @Scheduled(cron = "0 10,40 * * * ?")
+    public void checkConfirmationDates() {
+        UserDetails system = userDetailsService.loadUserByUsername("System");
+        Authentication authentication = new UsernamePasswordAuthenticationToken(system, system.getUsername(),
+                system.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        List<ProjectAvailability> projectAvailabilityList = projectAvailabilityDao.findUnconfirmedVolunteers();
+        if (projectAvailabilityList.isEmpty()) {
+            return;
+        }
+        for (ProjectAvailability projectAvailability : projectAvailabilityList) {
+            try {
+                createConfirmationEmailForVolunteer(projectAvailability);
+                projectAvailability.setConfirmationEmail(true);
+                projectAvailabilityDao.updateNotifiedVolunteers(projectAvailability);
+            } catch (IOException e) {
+                LOGGER.error("Failed to send Confirmation email:", e);
+            } catch (TemplateException e) {
+                LOGGER.error("Failed to generate Confirmation email", e);
+            }
+        }
+    }
+
+    private void createConfirmationEmailForVolunteer(ProjectAvailability projectAvailability)
+            throws IOException, TemplateException {
+        Configuration conf = emailFreemarkerConfigurer.getConfiguration();
+        Map model = new HashMap();
+
+        List<ProjectAttendance> projectAttendances = projectAttendanceDao.getConfirmedDates(projectAvailability);
+        if (projectAttendances.isEmpty()) {
+            return;
+        }
+
+        List<String> dates = new ArrayList<String>();
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+        String date;
+        for (ProjectAttendance projectAttendance : projectAttendances) {
+            date = dateFormat.format(projectAttendance.getAvailableDate());
+            dates.add(date);
+        }
+        model.put("dates", dates);
+
+        Person person = personDao.findPerson(projectAvailability.getPerson().getPersonId());
+        populatePersonToModel(model, person);
+        model.put("httpsurl", getSecureConfirmedDatesUrl(person, projectAvailability));
+
+        ProjectDepartmentSession projectSession = projectDepartmentSessionDao.
+                findByProjectDepartmentSessionId(projectAvailability.
+                getProjectDepartmentSession().getProjectDepartmentSessionId());
+        Department department = departmentDao.findDepartment(projectSession.getDeparment().getDepartmentId());
+        model.put("department", department.getName());
+        model.put("projectsession", projectSession.getProjectDepartmentSessionId());
+
+        Project project = projectDao.findProject(projectSession.getProject().getProjectId());
+        populateProjectToModel(model, project);
+
+        String text = FreeMarkerTemplateUtils.processTemplateIntoString(conf.getTemplate(CONFIRMATION_TEMPLATE), model);
+        Email email = new Email();
+        email.setRecipient(person.getEmail());
+        email.setSubject(CONFIRMATION_SUBJECT);
+        email.setText(text);
+        emailDao.save(email);
+    }
+
     private void createEmailForVolunteers(ProjectAvailability projectAvailability)
             throws IOException, TemplateException {
         Configuration conf = emailFreemarkerConfigurer.getConfiguration();
         Map<String, String> model = new HashMap<String, String>();
 
         Person person = personDao.findPerson(projectAvailability.getPerson().getPersonId());
-        model.put("forename", person.getForename());
-        model.put("email", person.getEmail());
-        model.put("httpsurl", getSecureUrl(person, projectAvailability));
+        populatePersonToModel(model, person);
+        model.put("httpsurl", getSecureAvailabilityUrl(person, projectAvailability));
 
         ProjectDepartmentSession projectSession = projectDepartmentSessionDao.
                 findByProjectDepartmentSessionId(projectAvailability.
@@ -146,6 +219,22 @@ public class ProjectAvailabilityEmailScheduledService {
         model.put("department", department.getName());
 
         Project project = projectDao.findProject(projectSession.getProject().getProjectId());
+        populateProjectToModel(model, project);
+
+        String text = FreeMarkerTemplateUtils.processTemplateIntoString(conf.getTemplate(AVAILABILITY_TEMPLATE), model);
+        Email email = new Email();
+        email.setRecipient(person.getEmail());
+        email.setSubject(AVAILABILITY_SUBJECT);
+        email.setText(text);
+        emailDao.save(email);
+    }
+
+    private void populatePersonToModel(Map<String, String> model, Person person) {
+        model.put("forename", person.getForename());
+        model.put("email", person.getEmail());
+    }
+
+    private void populateProjectToModel(Map<String, String> model, Project project) {
         project.setKingdomHall(kingdomHallDao.findKingdomHall(project.getKingdomHall().getKingdomHallId()));
         model.put("project", project.getName());
         model.put("kingdomhall", project.getKingdomHall().getName());
@@ -153,13 +242,6 @@ public class ProjectAvailabilityEmailScheduledService {
         model.put("town", project.getKingdomHall().getAddress().getTown());
         model.put("county", project.getKingdomHall().getAddress().getCounty());
         model.put("postcode", project.getKingdomHall().getAddress().getPostcode());
-
-        String text = FreeMarkerTemplateUtils.processTemplateIntoString(conf.getTemplate(AVAILABILITY_TEMPLATE), model);
-        Email email = new Email();
-        email.setRecipient(person.getEmail());
-        email.setSubject(SUBJECT);
-        email.setText(text);
-        emailDao.save(email);
     }
 
     /**
@@ -167,10 +249,10 @@ public class ProjectAvailabilityEmailScheduledService {
      * https://edifice/project-availability/{personId}/{projectAvailabilityId}/{datetime}/{token}/update
      *
      * @param person
-     * @param projectDepartmentSession
+     * @param projectAvailability
      * @return url
      */
-    private String getSecureUrl(Person person, ProjectAvailability projectAvailability) {
+    private String getSecureAvailabilityUrl(Person person, ProjectAvailability projectAvailability) {
         String url = edificeProperty.getProperty(SERVER_URL);
 
         url = url + BASE_URI + "/" + person.getPersonId() + "/" + projectAvailability.getProjectAvailabilityId() + "/";
@@ -178,6 +260,15 @@ public class ProjectAvailabilityEmailScheduledService {
         url = url + datetime + "/";
         url = url + getSecureToken(person, projectAvailability, datetime) + "/update";
 
+        return url;
+    }
+
+    private String getSecureConfirmedDatesUrl(Person person, ProjectAvailability projectAvailability) {
+        String url = edificeProperty.getProperty(SERVER_URL);
+        url = url + BASE_URI + "/" + person.getPersonId() + "/" + projectAvailability.getProjectAvailabilityId() + "/";
+        String datetime = getCurrentDateTime();
+        url = url + datetime + "/";
+        url = url + getSecureToken(person, projectAvailability, datetime) + "/confirmed";
         return url;
     }
 

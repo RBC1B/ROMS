@@ -27,34 +27,26 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Dao for project availability.
+ * DAO for ProjectAttendance.
  *
  * @author ramindursingh
  */
-public interface ProjectAvailabilityDao {
+public interface ProjectAttendanceDao {
 
     /**
-     * Get list of ones who have not been sent email.
+     * Update volunteers attendance.
      *
-     * @return list
-     */
-    @Transactional(readOnly = true)
-    List<ProjectAvailability> findUnnotifiedVolunteers();
-
-    /**
-     * Update volunteers who have been sent an email.
-     *
-     * @param projectAvailability the row
+     * @param projectAttendance the row
      */
     @Transactional(readOnly = false)
-    void updateNotifiedVolunteers(ProjectAvailability projectAvailability);
+    void updateProjectAttendance(ProjectAttendance projectAttendance);
 
     /**
-     * Gets the list of volunteers who have been selected for dates to attend
-     * who have not been notified.
+     * Gets a list of confirmed dates for a volunteer to attend.
      *
-     * @return list
+     * @param projectAvailability the availability
+     * @return list of dates
      */
     @Transactional(readOnly = true)
-    List<ProjectAvailability> findUnconfirmedVolunteers();
+    List<ProjectAttendance> getConfirmedDates(ProjectAvailability projectAvailability);
 }

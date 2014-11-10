@@ -31,34 +31,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 /**
+ * DAO for project attendance.
  *
  * @author ramindursingh
  */
 @Repository
-public class HibernateProjectAvailabilityDao implements ProjectAvailabilityDao {
+public class HibernateProjectAttendanceDao implements ProjectAttendanceDao {
 
     @Autowired
     private SessionFactory sessionFactory;
 
     @Override
-    public List<ProjectAvailability> findUnnotifiedVolunteers() {
-        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(ProjectAvailability.class);
-        criteria.add(Restrictions.eq("emailSent", Boolean.FALSE));
-        return criteria.list();
+    public void updateProjectAttendance(ProjectAttendance projectAttendance) {
+        this.sessionFactory.getCurrentSession().merge(projectAttendance);
     }
 
     @Override
-    public void updateNotifiedVolunteers(ProjectAvailability projectAvailability) {
-        this.sessionFactory.getCurrentSession().merge(projectAvailability);
-    }
-
-    @Override
-    public List<ProjectAvailability> findUnconfirmedVolunteers() {
-        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(ProjectAvailability.class);
-        criteria.add(Restrictions.eq("personResponded", Boolean.TRUE));
-        criteria.add(Restrictions.eq("overseerConfirmed", Boolean.TRUE));
-        criteria.add(Restrictions.eq("confirmationEmail", Boolean.FALSE));
-
+    public List<ProjectAttendance> getConfirmedDates(ProjectAvailability projectAvailability) {
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(ProjectAttendance.class);
+        criteria.add(Restrictions.eq("projectAvailability.projectAvailabilityId", projectAvailability.getProjectAvailabilityId()));
+        criteria.add(Restrictions.eq("required", Boolean.TRUE));
         return criteria.list();
     }
 }

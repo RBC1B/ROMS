@@ -13,3 +13,10 @@ values
 (1,6),
 (2,5),
 (2,6);
+
+insert into ProjectAttendance(ProjectAvailabilityId, AvailableDate, Required)
+values
+(1, '2014/12/18', false),
+(1, '2014/12/19', true),
+(1, '2014/12/20', false),
+(1, '2014/12/21', true);
