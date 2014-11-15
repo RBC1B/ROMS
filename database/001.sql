@@ -1315,7 +1315,7 @@ insert into Department (Name, SuperDepartmentId, Description, UpdateTime, Update
     ('Training','5','', NOW(), 0),
     ('Volunteer Service','5','', NOW(), 0),
     ('Design','6','', NOW(), 0),
-    ('Legel','6','', NOW(), 0),
+    ('Legal','6','', NOW(), 0),
     ('Real Estate','6','', NOW(), 0),
     ('Materials Take Off','4','', NOW(), 0),
     ('Construction Oversight', '3','',NOW(),0);
