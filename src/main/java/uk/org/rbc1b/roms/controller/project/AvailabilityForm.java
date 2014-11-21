@@ -21,29 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.db.project;
-
-import uk.org.rbc1b.roms.db.Person;
+package uk.org.rbc1b.roms.controller.project;
 
 /**
  *
  * @author ramindursingh
  */
-public class ProjectAvailability {
+public class AvailabilityForm {
 
     private Integer projectAvailabilityId;
-    private ProjectDepartmentSession projectDepartmentSession;
-    private Person person;
-    private boolean emailSent;
-    private boolean personResponded;
-    private boolean overseerConfirmed;
-    private boolean confirmationEmail;
-    private AvailabilityStatus availabilityStatus;
+    private Integer projectDepartmentSessionId;
+    private String projectName;
+    private String address;
+    private String departmentName;
+    private String volunteer;
+    private String fromDate;
+    private String toDate;
+    private String endDate;
     private boolean transportRequired;
     private boolean offerTransport;
     private boolean accommodationRequired;
-    private java.sql.Date updateTime;
-    private Integer updatedBy;
+    private String hash;
+    private String datetime;
+
+    /**
+     * Default constructor with certain values set.
+     *
+     */
+    public AvailabilityForm() {
+        transportRequired = false;
+        offerTransport = false;
+        accommodationRequired = false;
+    }
 
     /**
      * @return the projectAvailabilityId
@@ -60,107 +69,121 @@ public class ProjectAvailability {
     }
 
     /**
-     * @return the projectDepartmentSession
+     * @return the projectDepartmentSessionId
      */
-    public ProjectDepartmentSession getProjectDepartmentSession() {
-        return projectDepartmentSession;
+    public Integer getProjectDepartmentSessionId() {
+        return projectDepartmentSessionId;
     }
 
     /**
-     * @param projectDepartmentSession the projectDepartmentSession to set
+     * @param projectDepartmentSessionId the projectDepartmentSessionId to set
      */
-    public void setProjectDepartmentSession(ProjectDepartmentSession projectDepartmentSession) {
-        this.projectDepartmentSession = projectDepartmentSession;
+    public void setProjectDepartmentSessionId(Integer projectDepartmentSessionId) {
+        this.projectDepartmentSessionId = projectDepartmentSessionId;
     }
 
     /**
-     * @return the person
+     * @return the projectName
      */
-    public Person getPerson() {
-        return person;
+    public String getProjectName() {
+        return projectName;
     }
 
     /**
-     * @param person the person to set
+     * @param projectName the projectName to set
      */
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 
     /**
-     * @return the emailSent
+     * @return the address
      */
-    public boolean isEmailSent() {
-        return emailSent;
+    public String getAddress() {
+        return address;
     }
 
     /**
-     * @param emailSent the emailSent to set
+     * @param address the address to set
      */
-    public void setEmailSent(boolean emailSent) {
-        this.emailSent = emailSent;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     /**
-     * @return the personResponded
+     * @return the departmentName
      */
-    public boolean isPersonResponded() {
-        return personResponded;
+    public String getDepartmentName() {
+        return departmentName;
     }
 
     /**
-     * @param personResponded the personResponded to set
+     * @param departmentName the departmentName to set
      */
-    public void setPersonResponded(boolean personResponded) {
-        this.personResponded = personResponded;
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
     }
 
     /**
-     * @return the overseerConfirmed
+     * @return the volunteer
      */
-    public boolean isOverseerConfirmed() {
-        return overseerConfirmed;
+    public String getVolunteer() {
+        return volunteer;
     }
 
     /**
-     * @param overseerConfirmed the overseerConfirmed to set
+     * @param volunteer the volunteer to set
      */
-    public void setOverseerConfirmed(boolean overseerConfirmed) {
-        this.overseerConfirmed = overseerConfirmed;
+    public void setVolunteer(String volunteer) {
+        this.volunteer = volunteer;
     }
 
     /**
-     * @return the confirmationEmail
+     * @return the fromDate
      */
-    public boolean isConfirmationEmail() {
-        return confirmationEmail;
+    public String getFromDate() {
+        return fromDate;
     }
 
     /**
-     * @param confirmationEmail the confirmationEmail to set
+     * @param fromDate the fromDate to set
      */
-    public void setConfirmationEmail(boolean confirmationEmail) {
-        this.confirmationEmail = confirmationEmail;
+    public void setFromDate(String fromDate) {
+        this.fromDate = fromDate;
     }
 
     /**
-     * @return the availabilityStatus
+     * @return the toDate
      */
-    public AvailabilityStatus getAvailabilityStatus() {
-        return availabilityStatus;
+    public String getToDate() {
+        return toDate;
     }
 
     /**
-     * @param availabilityStatus the availabilityStatus to set
+     * @param toDate the toDate to set
      */
-    public void setAvailabilityStatus(AvailabilityStatus availabilityStatus) {
-        this.availabilityStatus = availabilityStatus;
+    public void setToDate(String toDate) {
+        this.toDate = toDate;
+    }
+
+    /**
+     * @return the endDate
+     */
+    public String getEndDate() {
+        return endDate;
+    }
+
+    /**
+     * @param endDate the endDate to set
+     */
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 
     /**
      * @return the transportRequired
      */
-    public boolean isTransportRequired() {
+    public boolean isTransportREquired() {
         return transportRequired;
     }
 
@@ -188,7 +211,7 @@ public class ProjectAvailability {
     /**
      * @return the accommodationRequired
      */
-    public boolean isAccommodationRequired() {
+    public boolean isAccomodationRequired() {
         return accommodationRequired;
     }
 
@@ -200,30 +223,30 @@ public class ProjectAvailability {
     }
 
     /**
-     * @return the updateTime
+     * @return the hash
      */
-    public java.sql.Date getUpdateTime() {
-        return updateTime;
+    public String getHash() {
+        return hash;
     }
 
     /**
-     * @param updateTime the updateTime to set
+     * @param hash the hash to set
      */
-    public void setUpdateTime(java.sql.Date updateTime) {
-        this.updateTime = updateTime;
+    public void setHash(String hash) {
+        this.hash = hash;
     }
 
     /**
-     * @return the updatedBy
+     * @return the datetime
      */
-    public Integer getUpdatedBy() {
-        return updatedBy;
+    public String getDatetime() {
+        return datetime;
     }
 
     /**
-     * @param updatedBy the updatedBy to set
+     * @param datetime the datetime to set
      */
-    public void setUpdatedBy(Integer updatedBy) {
-        this.updatedBy = updatedBy;
+    public void setDatetime(String datetime) {
+        this.datetime = datetime;
     }
 }

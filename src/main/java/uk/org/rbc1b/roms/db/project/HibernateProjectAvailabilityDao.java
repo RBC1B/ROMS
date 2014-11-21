@@ -48,7 +48,7 @@ public class HibernateProjectAvailabilityDao implements ProjectAvailabilityDao {
     }
 
     @Override
-    public void updateNotifiedVolunteers(ProjectAvailability projectAvailability) {
+    public void update(ProjectAvailability projectAvailability) {
         this.sessionFactory.getCurrentSession().merge(projectAvailability);
     }
 
@@ -60,5 +60,10 @@ public class HibernateProjectAvailabilityDao implements ProjectAvailabilityDao {
         criteria.add(Restrictions.eq("confirmationEmail", Boolean.FALSE));
 
         return criteria.list();
+    }
+
+    @Override
+    public ProjectAvailability findById(Integer id) {
+        return (ProjectAvailability) this.sessionFactory.getCurrentSession().get(ProjectAvailability.class, id);
     }
 }

@@ -126,7 +126,7 @@ create table ProjectAvailability(
     AvailabilityStatusCode      char(2),
     TransportRequired           boolean default false,
     OfferTransport              boolean default false,
-    AccomodationRequired        boolean default false,
+    AccommodationRequired        boolean default false,
     UpdateTime      timestamp   not null,
     UpdatedBy       bigint(20)  not null,
     primary key(ProjectAvailabilityId),

@@ -23,6 +23,7 @@
  */
 package uk.org.rbc1b.roms.db.project;
 
+import java.sql.Date;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
@@ -52,5 +53,23 @@ public class HibernateProjectAttendanceDao implements ProjectAttendanceDao {
         criteria.add(Restrictions.eq("projectAvailability.projectAvailabilityId", projectAvailability.getProjectAvailabilityId()));
         criteria.add(Restrictions.eq("required", Boolean.TRUE));
         return criteria.list();
+    }
+
+    @Override
+    public ProjectAttendance getAvailableDate(ProjectAvailability projectAvailability, Date date) {
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(ProjectAttendance.class);
+        criteria.add(Restrictions.eq("projectAvailability.projectAvailabilityId", projectAvailability.getProjectAvailabilityId()));
+        criteria.add(Restrictions.eq("availableDate", date));
+        return (ProjectAttendance) criteria.uniqueResult();
+    }
+
+    @Override
+    public void save(ProjectAttendance projectAttendance) {
+        this.sessionFactory.getCurrentSession().save(projectAttendance);
+    }
+
+    @Override
+    public void delete(ProjectAttendance projectAttendance) {
+        this.sessionFactory.getCurrentSession().delete(projectAttendance);
     }
 }

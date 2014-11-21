@@ -107,8 +107,8 @@ public class ProjectAvailabilityEmailScheduledService {
      * Checks volunteers who have not been sent an email.
      */
     // For testing
-    //@Scheduled(cron = "0 0/5 * * * ?")
-    @Scheduled(cron = "0 15,45 * * * ?")
+    @Scheduled(cron = "0 0/5 * * * ?")
+    //@Scheduled(cron = "0 15,45 * * * ?")
     public void checkAvailability() {
         UserDetails system = userDetailsService.loadUserByUsername("System");
         Authentication authentication = new UsernamePasswordAuthenticationToken(system, system.getUsername(),
@@ -123,7 +123,7 @@ public class ProjectAvailabilityEmailScheduledService {
             try {
                 createEmailForVolunteers(projectAvailability);
                 projectAvailability.setEmailSent(true);
-                projectAvailabilityDao.updateNotifiedVolunteers(projectAvailability);
+                projectAvailabilityDao.update(projectAvailability);
             } catch (IOException e) {
                 LOGGER.error("Failed to send Availability email:", e);
             } catch (TemplateException e) {
@@ -135,7 +135,8 @@ public class ProjectAvailabilityEmailScheduledService {
     /**
      * Checks volunteers who have been need to sent the confirmed dates.
      */
-    @Scheduled(cron = "0 10,40 * * * ?")
+    @Scheduled(cron = "0 0/5 * * * ?")
+    //@Scheduled(cron = "0 10,40 * * * ?")
     public void checkConfirmationDates() {
         UserDetails system = userDetailsService.loadUserByUsername("System");
         Authentication authentication = new UsernamePasswordAuthenticationToken(system, system.getUsername(),
@@ -149,7 +150,7 @@ public class ProjectAvailabilityEmailScheduledService {
             try {
                 createConfirmationEmailForVolunteer(projectAvailability);
                 projectAvailability.setConfirmationEmail(true);
-                projectAvailabilityDao.updateNotifiedVolunteers(projectAvailability);
+                projectAvailabilityDao.update(projectAvailability);
             } catch (IOException e) {
                 LOGGER.error("Failed to send Confirmation email:", e);
             } catch (TemplateException e) {

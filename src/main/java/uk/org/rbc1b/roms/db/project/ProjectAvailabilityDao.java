@@ -47,7 +47,7 @@ public interface ProjectAvailabilityDao {
      * @param projectAvailability the row
      */
     @Transactional(readOnly = false)
-    void updateNotifiedVolunteers(ProjectAvailability projectAvailability);
+    void update(ProjectAvailability projectAvailability);
 
     /**
      * Gets the list of volunteers who have been selected for dates to attend
@@ -57,4 +57,13 @@ public interface ProjectAvailabilityDao {
      */
     @Transactional(readOnly = true)
     List<ProjectAvailability> findUnconfirmedVolunteers();
+
+    /**
+     * Finds the availability by id.
+     *
+     * @param id the id to find
+     * @return project availability
+     */
+    @Transactional(readOnly = true)
+    ProjectAvailability findById(Integer id);
 }

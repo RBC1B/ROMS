@@ -25,6 +25,7 @@ package uk.org.rbc1b.roms.db.project;
 
 import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
+import java.sql.Date;
 
 /**
  * DAO for ProjectAttendance.
@@ -49,4 +50,30 @@ public interface ProjectAttendanceDao {
      */
     @Transactional(readOnly = true)
     List<ProjectAttendance> getConfirmedDates(ProjectAvailability projectAvailability);
+
+    /**
+     * Gets an attendance date by availability id and date.
+     *
+     * @param projectAvailability the availability
+     * @param date the date
+     * @return ProjectAttendance matching attendance
+     */
+    @Transactional(readOnly = true)
+    ProjectAttendance getAvailableDate(ProjectAvailability projectAvailability, Date date);
+
+    /**
+     * Inserts a new attendance record into the database.
+     *
+     * @param projectAttendance the attendance object
+     */
+    @Transactional(readOnly = false)
+    void save(ProjectAttendance projectAttendance);
+
+    /**
+     * Deletes the attendance record from the database.
+     *
+     * @param projectAttendance the attendance to delete
+     */
+    @Transactional(readOnly = false)
+    void delete(ProjectAttendance projectAttendance);
 }
