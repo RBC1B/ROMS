@@ -21,23 +21,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.db.project;
-
-import uk.org.rbc1b.roms.db.volunteer.department.Department;
+package uk.org.rbc1b.roms.controller.project;
 
 /**
  *
  * @author ramindursingh
  */
-public class ProjectDepartmentSession {
+public class ProjectWorkSessionModel {
 
+    private String projectDepartmentSession;
     private Integer projectDepartmentSessionId;
-    private Project project;
-    private Department department;
-    private java.sql.Date fromDate;
-    private java.sql.Date toDate;
-    private java.sql.Date updateTime;
-    private Integer updatedBy;
+    private Integer departmentId;
+    private Integer projectId;
+    private String fromDate;
+    private String toDate;
+
+    /**
+     * @return the projectDepartmentSession
+     */
+    public String getProjectDepartmentSession() {
+        return projectDepartmentSession;
+    }
+
+    /**
+     * @param projectDepartmentSession the projectDepartmentSession to set
+     */
+    public void setProjectDepartmentSession(String projectDepartmentSession) {
+        this.projectDepartmentSession = projectDepartmentSession;
+    }
 
     /**
      * @return the projectDepartmentSessionId
@@ -54,87 +65,58 @@ public class ProjectDepartmentSession {
     }
 
     /**
-     * @return the project
+     * @return the departmentId
      */
-    public Project getProject() {
-        return project;
+    public Integer getDepartmentId() {
+        return departmentId;
     }
 
     /**
-     * @param project the project to set
+     * @param departmentId the departmentId to set
      */
-    public void setProject(Project project) {
-        this.project = project;
+    public void setDepartmentId(Integer departmentId) {
+        this.departmentId = departmentId;
     }
 
     /**
-     * @return the department
+     * @return the projectId
      */
-    public Department getDepartment() {
-        return department;
+    public Integer getProjectId() {
+        return projectId;
     }
 
     /**
-     * @param department the department to set
+     * @param projectId the projectId to set
      */
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void setProjectId(Integer projectId) {
+        this.projectId = projectId;
     }
 
     /**
      * @return the fromDate
      */
-    public java.sql.Date getFromDate() {
+    public String getFromDate() {
         return fromDate;
     }
 
     /**
      * @param fromDate the fromDate to set
      */
-    public void setFromDate(java.sql.Date fromDate) {
+    public void setFromDate(String fromDate) {
         this.fromDate = fromDate;
     }
 
     /**
      * @return the toDate
      */
-    public java.sql.Date getToDate() {
+    public String getToDate() {
         return toDate;
     }
 
     /**
      * @param toDate the toDate to set
      */
-    public void setToDate(java.sql.Date toDate) {
+    public void setToDate(String toDate) {
         this.toDate = toDate;
     }
-
-    /**
-     * @return the updateTime
-     */
-    public java.sql.Date getUpdateTime() {
-        return updateTime;
-    }
-
-    /**
-     * @param updateTime the updateTime to set
-     */
-    public void setUpdateTime(java.sql.Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    /**
-     * @return the updatedBy
-     */
-    public Integer getUpdatedBy() {
-        return updatedBy;
-    }
-
-    /**
-     * @param updatedBy the updatedBy to set
-     */
-    public void setUpdatedBy(Integer updatedBy) {
-        this.updatedBy = updatedBy;
-    }
-
 }

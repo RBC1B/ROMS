@@ -276,7 +276,7 @@ public class VolunteerAvailabilityController {
                 + kingdomhall.getAddress().getPostcode() + ".";
         model.setAddress(address);
 
-        Department dept = departmentDao.findDepartment(session.getDeparment().getDepartmentId());
+        Department dept = departmentDao.findDepartment(session.getDepartment().getDepartmentId());
         model.setDepartmentName(dept.getName());
 
         DateFormat dateFormat = new SimpleDateFormat(DATEFORMAT, Locale.UK);

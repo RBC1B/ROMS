@@ -23,6 +23,7 @@
  */
 package uk.org.rbc1b.roms.db.project;
 
+import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -39,4 +40,14 @@ public interface ProjectDepartmentSessionDao {
      */
     @Transactional(readOnly = true)
     ProjectDepartmentSession findByProjectDepartmentSessionId(Integer id);
+
+    /**
+     * Gets the list of project department sessions for a department.
+     *
+     * @param projectId the project Id
+     * @param departmentId the department Id
+     * @return list of sessions
+     */
+    @Transactional(readOnly = true)
+    List<ProjectDepartmentSession> findProjectSessionsForDepartment(Integer projectId, Integer departmentId);
 }

@@ -25,9 +25,13 @@ package uk.org.rbc1b.roms.controller.project;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,11 +44,22 @@ import uk.org.rbc1b.roms.controller.ForbiddenRequestException;
 import uk.org.rbc1b.roms.controller.common.DataConverterUtil;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.PersonDao;
+import uk.org.rbc1b.roms.db.application.User;
+import uk.org.rbc1b.roms.db.application.UserDao;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHallDao;
 import uk.org.rbc1b.roms.db.project.Project;
+import uk.org.rbc1b.roms.db.project.ProjectAvailability;
+import uk.org.rbc1b.roms.db.project.ProjectAvailabilityDao;
 import uk.org.rbc1b.roms.db.project.ProjectDao;
+import uk.org.rbc1b.roms.db.project.ProjectDepartmentSession;
+import uk.org.rbc1b.roms.db.project.ProjectDepartmentSessionDao;
+import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
+import uk.org.rbc1b.roms.db.volunteer.department.Assignment;
+import uk.org.rbc1b.roms.db.volunteer.department.AssignmentSearchCriteria;
+import uk.org.rbc1b.roms.db.volunteer.department.DepartmentDao;
 import uk.org.rbc1b.roms.security.AccessLevel;
+import uk.org.rbc1b.roms.security.ROMSUserDetails;
 import uk.org.rbc1b.roms.security.RomsPermissionEvaluator;
 
 /**
@@ -62,6 +77,20 @@ public class ProjectsController {
     private PersonDao personDao;
     @Autowired
     private ProjectModelFactory projectModelFactory;
+    @Autowired
+    private ProjectWorkSessionModelFactory workSessionModelFactory;
+    @Autowired
+    private VolunteerForProjectModelFactory volunteerForProjectModelFactory;
+    @Autowired
+    private VolunteerDao volunteerDao;
+    @Autowired
+    private UserDao userDao;
+    @Autowired
+    private ProjectDepartmentSessionDao projectDepartmentSessionDao;
+    @Autowired
+    private DepartmentDao departmentDao;
+    @Autowired
+    private ProjectAvailabilityDao projectAvailabilityDao;
 
     /**
      * Handles the project list.
@@ -101,9 +130,105 @@ public class ProjectsController {
             throw new NoSuchRequestHandlingMethodException("No project #" + projectId, this.getClass());
         }
 
+        // Project tab
         model.addAttribute("project", projectModelFactory.generateProjectModel(project));
 
+        // Invitation tab
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User me = userDao.findUserAndPermissions(userDetails.getUsername());
+        List<Assignment> assignments = volunteerDao.findAssignments(me.getPersonId());
+        if (assignments == null) {
+            // There is nothing to show as I do not have any assignments.
+            model.addAttribute("assignment", false);
+        } else {
+            List<ProjectDepartmentSession> workSessions = new ArrayList<ProjectDepartmentSession>();
+            List<Assignment> allDepartmentVolunteers = new ArrayList<Assignment>();
+            AssignmentSearchCriteria assignmentSearchCriteria = new AssignmentSearchCriteria();
+            for (Assignment assignment : assignments) {
+                List<ProjectDepartmentSession> sessionsForDept =
+                        projectDepartmentSessionDao
+                        .findProjectSessionsForDepartment(projectId, assignment.getDepartmentId());
+                if (sessionsForDept != null) {
+                    workSessions.addAll(sessionsForDept);
+                }
+            }
+            List<ProjectWorkSessionModel> workSessionModels = workSessionModelFactory.generate(workSessions);
+
+            model.addAttribute("assignment", true);
+            model.addAttribute("workSessions", workSessionModels);
+        }
+
         return "projects/show";
+    }
+
+    /**
+     * Returns a list of volunteers for matching project department session.
+     *
+     * @param projectDepartmentSessionId the work session
+     * @return list of volunteers in the department
+     */
+    @RequestMapping(value = "{projectDepartmentSessionId}/department-session", method = RequestMethod.GET, produces = "application/json")
+    @PreAuthorize("hasPermission('PROJECT', 'READ')")
+    @ResponseBody
+    public List<ProjectAvailabilityModel> findVolunteersForWorkSession(@RequestParam(value = "projectDepartmentSessionId",
+            required = true) Integer projectDepartmentSessionId) {
+        ProjectDepartmentSession workSession = projectDepartmentSessionDao.findByProjectDepartmentSessionId(projectDepartmentSessionId);
+        if (workSession != null) {
+            AssignmentSearchCriteria assignmentSearchCriteria = new AssignmentSearchCriteria();
+            assignmentSearchCriteria.setDepartmentId(workSession.getDepartment().getDepartmentId());
+            List<Assignment> departmentVolunteers = departmentDao.findAssignments(assignmentSearchCriteria);
+            return volunteerForProjectModelFactory.generate(departmentVolunteers, workSession);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Handles requests for deleting a projectAvailability.
+     *
+     * @param response the http response
+     * @param projectDepartmentSessionId the work session id
+     * @param personId the person id
+     */
+    @RequestMapping(value = "{projectDepartmentSessionId}/{personId}/availability-delete", method = RequestMethod.DELETE)
+    @PreAuthorize("hasPermission('PROJECT', 'EDIT')")
+    public void deleteAvailabilityForVolunteer(HttpServletResponse response, @PathVariable Integer projectDepartmentSessionId,
+            @PathVariable Integer personId) {
+        ProjectAvailability availability = projectAvailabilityDao.find(personId, projectDepartmentSessionId);
+        if (availability != null) {
+            projectAvailabilityDao.delete(availability);
+            response.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        }
+    }
+
+    /**
+     * Handles requests for adding project availability.
+     *
+     * @param response the http response
+     * @param projectDepartmentSessionId the work session
+     * @param personId the person invited
+     */
+    @RequestMapping(value = "{projectDepartmentSessionId}/{personId}/availability-add", method = RequestMethod.POST)
+    @PreAuthorize("hasPermission('PROJECT', 'EDIT')")
+    public void insertAvailabilityForVolunteer(HttpServletResponse response, @PathVariable Integer projectDepartmentSessionId,
+            @PathVariable Integer personId) {
+        ProjectAvailability availability = new ProjectAvailability();
+        Person person = personDao.findPerson(personId);
+        ProjectDepartmentSession workSession = projectDepartmentSessionDao.findByProjectDepartmentSessionId(projectDepartmentSessionId);
+        if (person != null && workSession != null) {
+            availability.setPerson(person);
+            availability.setProjectDepartmentSession(workSession);
+
+            availability.setUpdatedBy(findUserId());
+            availability.setUpdateTime(new java.sql.Date(new java.util.Date().getTime()));
+
+            projectAvailabilityDao.save(availability);
+            response.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        }
     }
 
     /**
@@ -250,5 +375,11 @@ public class ProjectsController {
         projectDao.updateProject(project);
 
         return "redirect:" + ProjectModelFactory.generateUri(projectId);
+    }
+
+    private Integer findUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        ROMSUserDetails user = (ROMSUserDetails) authentication.getPrincipal();
+        return user.getUserId();
     }
 }

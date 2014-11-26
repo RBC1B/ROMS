@@ -66,4 +66,40 @@ public interface ProjectAvailabilityDao {
      */
     @Transactional(readOnly = true)
     ProjectAvailability findById(Integer id);
+
+    /**
+     * Finds the availability for a given volunteer and work session.
+     *
+     * @param personId the person
+     * @param workSession the work session
+     * @return the availability
+     */
+    @Transactional(readOnly = true)
+    ProjectAvailability findVolunteerAvailabilityByWorkSession(Integer personId, ProjectDepartmentSession workSession);
+
+    /**
+     * Finds the availability by person and work session id.
+     *
+     * @param personId the person id
+     * @param projectDepartmentSessionId the work session id
+     * @return the availability
+     */
+    @Transactional(readOnly = true)
+    ProjectAvailability find(Integer personId, Integer projectDepartmentSessionId);
+
+    /**
+     * Deletes the availability from the db.
+     *
+     * @param projectAvailability the availability to delete
+     */
+    @Transactional(readOnly = false)
+    void delete(ProjectAvailability projectAvailability);
+
+    /**
+     * Saves/inserts into the database.
+     *
+     * @param projectAvailability the availability to save
+     */
+    @Transactional(readOnly = false)
+    void save(ProjectAvailability projectAvailability);
 }

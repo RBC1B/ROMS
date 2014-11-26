@@ -185,7 +185,7 @@ public class ProjectAvailabilityEmailScheduledService {
         ProjectDepartmentSession projectSession = projectDepartmentSessionDao.
                 findByProjectDepartmentSessionId(projectAvailability.
                 getProjectDepartmentSession().getProjectDepartmentSessionId());
-        Department department = departmentDao.findDepartment(projectSession.getDeparment().getDepartmentId());
+        Department department = departmentDao.findDepartment(projectSession.getDepartment().getDepartmentId());
         model.put("department", department.getName());
         model.put("projectsession", projectSession.getProjectDepartmentSessionId());
 
@@ -216,7 +216,7 @@ public class ProjectAvailabilityEmailScheduledService {
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
         model.put("fromDate", dateFormat.format(projectSession.getFromDate()));
         model.put("toDate", dateFormat.format(projectSession.getToDate()));
-        Department department = departmentDao.findDepartment(projectSession.getDeparment().getDepartmentId());
+        Department department = departmentDao.findDepartment(projectSession.getDepartment().getDepartmentId());
         model.put("department", department.getName());
 
         Project project = projectDao.findProject(projectSession.getProject().getProjectId());

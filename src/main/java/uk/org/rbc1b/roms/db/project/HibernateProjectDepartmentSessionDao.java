@@ -23,7 +23,10 @@
  */
 package uk.org.rbc1b.roms.db.project;
 
+import java.util.List;
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
@@ -42,5 +45,13 @@ public class HibernateProjectDepartmentSessionDao implements ProjectDepartmentSe
     @Cacheable("projectDepartmentSession.projectDepartmentSession")
     public ProjectDepartmentSession findByProjectDepartmentSessionId(Integer projectDepartmentSessionId) {
         return (ProjectDepartmentSession) this.sessionFactory.getCurrentSession().get(ProjectDepartmentSession.class, projectDepartmentSessionId);
+    }
+
+    @Override
+    public List<ProjectDepartmentSession> findProjectSessionsForDepartment(Integer projectId, Integer departmentId) {
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(ProjectDepartmentSession.class);
+        criteria.add(Restrictions.eq("project.projectId", projectId));
+        criteria.add(Restrictions.eq("department.departmentId", departmentId));
+        return criteria.list();
     }
 }

@@ -66,4 +66,30 @@ public class HibernateProjectAvailabilityDao implements ProjectAvailabilityDao {
     public ProjectAvailability findById(Integer id) {
         return (ProjectAvailability) this.sessionFactory.getCurrentSession().get(ProjectAvailability.class, id);
     }
+
+    @Override
+    public ProjectAvailability findVolunteerAvailabilityByWorkSession(Integer personId, ProjectDepartmentSession workSession) {
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(ProjectAvailability.class);
+        criteria.add(Restrictions.eq("projectDepartmentSession.projectDepartmentSessionId", workSession.getProjectDepartmentSessionId()));
+        criteria.add(Restrictions.eq("person.personId", personId));
+        return (ProjectAvailability) criteria.uniqueResult();
+    }
+
+    @Override
+    public ProjectAvailability find(Integer personId, Integer projectDepartmentSessionId) {
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(ProjectAvailability.class);
+        criteria.add(Restrictions.eq("projectDepartmentSession.projectDepartmentSessionId", projectDepartmentSessionId));
+        criteria.add(Restrictions.eq("person.personId", personId));
+        return (ProjectAvailability) criteria.uniqueResult();
+    }
+
+    @Override
+    public void delete(ProjectAvailability projectAvailability) {
+        this.sessionFactory.getCurrentSession().delete(projectAvailability);
+    }
+
+    @Override
+    public void save(ProjectAvailability projectAvailability) {
+        this.sessionFactory.getCurrentSession().save(projectAvailability);
+    }
 }
