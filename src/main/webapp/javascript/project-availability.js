@@ -26,14 +26,17 @@
 var selectedDate = {};
 
 function updateDateMap(dateClicked, thisObject) {
-    if (selectedDate[dateClicked.format()] == 1) {
-        selectedDate[dateClicked.format()] = 0;
-        sendAvailabilityDate(dateClicked, "DELETE");
-        $(thisObject).css('background-color', '#fff');
-    } else {
-        selectedDate[dateClicked.format()] = 1;
-        var result = sendAvailabilityDate(dateClicked, "POST");
-        $(thisObject).css('background-color', '#3a3');
+    var date = new Date(dateClicked.format());
+    if (workingSunday === "true" || date.getDay() !== 0) {
+        if (selectedDate[dateClicked.format()] == 1) {
+            selectedDate[dateClicked.format()] = 0;
+            sendAvailabilityDate(dateClicked, "DELETE");
+            $(thisObject).css('background-color', '#fff');
+        } else {
+            selectedDate[dateClicked.format()] = 1;
+            var result = sendAvailabilityDate(dateClicked, "POST");
+            $(thisObject).css('background-color', '#3a3');
+        }
     }
 }
 

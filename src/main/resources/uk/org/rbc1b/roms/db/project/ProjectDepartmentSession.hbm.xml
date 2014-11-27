@@ -15,6 +15,7 @@
                      column="DepartmentId" />
         <property name="fromDate" />
         <property name="toDate" />
+        <property name="sunday" />
         <property name="updateTime" not-null="true" />
         <property name="updatedBy" not-null="true" />
     </class>

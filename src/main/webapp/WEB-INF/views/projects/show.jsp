@@ -36,7 +36,7 @@
                 </div>
             </div>
         </div>
-
+        <div id="project-permissions" attendance="${application.nonDepartmentLevelAccess}"/>
         <div class="clearfix"></div>
         <br />
         <ol class="breadcrumb">

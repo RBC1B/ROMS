@@ -92,6 +92,7 @@ public class ProjectModelFactory {
         }
 
         model.setEditUri(generateUri(project.getProjectId()) + "/edit");
+        model.setModifyDepartmentSessionUri(generateUri(project.getProjectId()) + "/project-work-session");
         model.setUri(generateUri(project.getProjectId()));
 
         return model;

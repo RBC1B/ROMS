@@ -50,4 +50,12 @@ public interface ProjectDepartmentSessionDao {
      */
     @Transactional(readOnly = true)
     List<ProjectDepartmentSession> findProjectSessionsForDepartment(Integer projectId, Integer departmentId);
+
+    /**
+     * Saves a new project department work session.
+     *
+     * @param workSession the session to save
+     */
+    @Transactional(readOnly = false)
+    void save(ProjectDepartmentSession workSession);
 }

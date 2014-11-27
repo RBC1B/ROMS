@@ -42,6 +42,7 @@ public class ProjectWorkSessionModelFactory {
 
     /**
      * Generates the model for displaying in JSP.
+     *
      * @param sessions the projectDepartmentSession list
      * @return the model
      */
@@ -61,6 +62,8 @@ public class ProjectWorkSessionModelFactory {
 
             model.setDepartmentId(session.getDepartment().getDepartmentId());
             model.setProjectId(session.getProject().getProjectId());
+
+            model.setSunday(session.isSunday());
 
             workSessions.add(model);
         }

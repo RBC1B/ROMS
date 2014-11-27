@@ -41,6 +41,7 @@ public class AvailabilityForm {
     private boolean transportRequired;
     private boolean offerTransport;
     private boolean accommodationRequired;
+    private boolean workingSunday;
     private String hash;
     private String datetime;
 
@@ -220,6 +221,20 @@ public class AvailabilityForm {
      */
     public void setAccommodationRequired(boolean accommodationRequired) {
         this.accommodationRequired = accommodationRequired;
+    }
+
+    /**
+     * @return the workingSunday
+     */
+    public boolean isWorkingSunday() {
+        return workingSunday;
+    }
+
+    /**
+     * @param workingSunday the workingSunday to set
+     */
+    public void setWorkingSunday(boolean workingSunday) {
+        this.workingSunday = workingSunday;
     }
 
     /**

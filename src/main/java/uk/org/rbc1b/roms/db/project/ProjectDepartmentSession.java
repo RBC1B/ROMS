@@ -36,6 +36,7 @@ public class ProjectDepartmentSession {
     private Department department;
     private java.sql.Date fromDate;
     private java.sql.Date toDate;
+    private boolean sunday;
     private java.sql.Date updateTime;
     private Integer updatedBy;
 
@@ -107,6 +108,20 @@ public class ProjectDepartmentSession {
      */
     public void setToDate(java.sql.Date toDate) {
         this.toDate = toDate;
+    }
+
+    /**
+     * @return the sunday
+     */
+    public boolean isSunday() {
+        return sunday;
+    }
+
+    /**
+     * @param sunday the sunday to set
+     */
+    public void setSunday(boolean sunday) {
+        this.sunday = sunday;
     }
 
     /**

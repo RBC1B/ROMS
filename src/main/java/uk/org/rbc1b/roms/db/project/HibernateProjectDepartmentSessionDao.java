@@ -54,4 +54,9 @@ public class HibernateProjectDepartmentSessionDao implements ProjectDepartmentSe
         criteria.add(Restrictions.eq("department.departmentId", departmentId));
         return criteria.list();
     }
+
+    @Override
+    public void save(ProjectDepartmentSession workSession) {
+        this.sessionFactory.getCurrentSession().save(workSession);
+    }
 }

@@ -37,6 +37,7 @@
                 <br/><b>To: </b><c:out value="${availabilityModel.toDate}" />
             </p>
         </div>
+            <div id="working-sunday" value="${availabilityModel.workingSunday}" />
         <form id="availability-update-form" class="form-horizontal"  action="${submitUrl}" method="${submitMethod}">
             <div id='calendar'>
             </div>
@@ -73,6 +74,7 @@
         <script>
             var updateUrl = $('#availability-update-form').attr('action');
             var updateMethod = $('#availability-update-form').attr('method');
+            var workingSunday = $("#working-sunday").attr("value");
             $(document).ready(function() {
 
                 $('#calendar').fullCalendar({
@@ -88,7 +90,7 @@
                     ],
                     dayClick: function(date, jsEvent, view) {
                         if (date >= Date.parse('<c:out value="${availabilityModel.fromDate}" />') && date <= Date.parse('<c:out value="${availabilityModel.toDate}" />')) {
-                            updateDateMap(date, this);
+                                updateDateMap(date, this);
                         }
                     }
                 });

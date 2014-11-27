@@ -265,6 +265,7 @@ public class VolunteerAvailabilityController {
                 .getProjectDepartmentSessionId());
         model.setProjectAvailabilityId(availability.getProjectAvailabilityId());
         model.setProjectDepartmentSessionId(session.getProjectDepartmentSessionId());
+        model.setWorkingSunday(session.isSunday());
 
         Project project = projectDao.findProject(session.getProject().getProjectId());
         model.setProjectName(project.getName());

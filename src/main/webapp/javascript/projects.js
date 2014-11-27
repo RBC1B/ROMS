@@ -188,6 +188,8 @@ $(document).ready(function() {
     });
 
     // Project Work session/availabiliity request page
+    var attendance = $("#project-permissions").attr("attendance");
+
     function addColumnHeaders(volunteerdata) {
         var columnHeaders = {
             "projectDepartmentSessionId": "Work Session Id",
@@ -255,10 +257,10 @@ $(document).ready(function() {
                             cell = row.getElementsByTagName("td")[4];
                             var invited = cell.innerHTML;
                             updateVolunteerAvailability(personId, projectworksessionId, invited);
-                            if(invited === "true"){
-                                cell.innerHTML=false;
-                            }else{
-                                cell.innerHTML=true;
+                            if (invited === "true") {
+                                cell.innerHTML = false;
+                            } else {
+                                cell.innerHTML = true;
                             }
                         };
                     };
@@ -267,22 +269,24 @@ $(document).ready(function() {
     }
 
     function updateVolunteerAvailability(personId, departmentSessionId, invited) {
-        if (invited === "true") {
-            $.ajax({
-                url: roms.common.relativePath + '/projects/' + departmentSessionId + "/" + personId + "/availability-delete",
-                type: "DELETE",
-                cache: false,
-                success: function() {
-                }
-            });
-        } else {
-            $.ajax({
-                url: roms.common.relativePath + '/projects/' + departmentSessionId + "/" + personId + "/availability-add",
-                type: "POST",
-                cache: false,
-                success: function() {
-                }
-            });
+        if (attendance !== null && attendance !== "READ") {
+            if (invited === "true") {
+                $.ajax({
+                    url: roms.common.relativePath + '/projects/' + departmentSessionId + "/" + personId + "/availability-delete",
+                    type: "DELETE",
+                    cache: false,
+                    success: function() {
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: roms.common.relativePath + '/projects/' + departmentSessionId + "/" + personId + "/availability-add",
+                    type: "POST",
+                    cache: false,
+                    success: function() {
+                    }
+                });
+            }
         }
     }
 
@@ -327,6 +331,56 @@ $(document).ready(function() {
             }
         } else {
             removeTable();
+        }
+    });
+
+    // Handle requests to add new project department work sessions
+    var updateUrl = $("#project-department-session-form").attr("action");
+    var updateMethod = $("#project-department-session-form").attr("method");
+
+    $("input[name=fromDate]").datetimepicker({
+        pickTime: false,
+        minDate: '1/1/2000',
+        format: "DD/MM/YYYY"
+    });
+    $("input[name=toDate]").datetimepicker({
+        pickTime: false,
+        minDate: '1/1/2000',
+        format: "DD/MM/YYYY"
+    });
+
+    $("#add-new-project-session").on("click", function(event) {
+        event.preventDefault();
+        $("#project-department-session").modal("show");
+    });
+
+    $("#cancel-update").on("click", function(event) {
+        $("#project-department-session").modal("hide")
+    });
+
+    $("#project-department-session-form").validate({
+        debug: true,
+        rules: {
+            fromDate: {
+                required: true
+            }
+        },
+        messages: {
+            fromDate: "You must enter the start date"
+        },
+        submitHandler: function(form) {
+            $("#alert-update").hide();
+            $.ajax({
+                url: updateUrl,
+                data: $(form).serialize(),
+                type: updateMethod,
+                cache: false,
+                success: function(data, status, xhr) {
+                    $("#alert-update").hide();
+                    $("#project-department-session").modal("hide");
+                    window.location.reload();
+                }
+            });
         }
     });
 });

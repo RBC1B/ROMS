@@ -23,46 +23,39 @@
  */
 package uk.org.rbc1b.roms.controller.project;
 
+import javax.validation.constraints.NotNull;
+import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+
 /**
  *
  * @author ramindursingh
  */
-public class ProjectWorkSessionModel {
+public class ProjectDepartmentSessionForm {
 
-    private String projectDepartmentSession;
-    private Integer projectDepartmentSessionId;
-    private Integer departmentId;
+    @NotNull
     private Integer projectId;
-    private String fromDate;
-    private String toDate;
+    @NotNull
+    private Integer departmentId;
+    @NotNull
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private DateTime fromDate;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private DateTime toDate;
     private boolean sunday;
 
     /**
-     * @return the projectDepartmentSession
+     * @return the projectId
      */
-    public String getProjectDepartmentSession() {
-        return projectDepartmentSession;
+    public Integer getProjectId() {
+        return projectId;
     }
 
     /**
-     * @param projectDepartmentSession the projectDepartmentSession to set
+     * @param projectId the projectId to set
      */
-    public void setProjectDepartmentSession(String projectDepartmentSession) {
-        this.projectDepartmentSession = projectDepartmentSession;
-    }
-
-    /**
-     * @return the projectDepartmentSessionId
-     */
-    public Integer getProjectDepartmentSessionId() {
-        return projectDepartmentSessionId;
-    }
-
-    /**
-     * @param projectDepartmentSessionId the projectDepartmentSessionId to set
-     */
-    public void setProjectDepartmentSessionId(Integer projectDepartmentSessionId) {
-        this.projectDepartmentSessionId = projectDepartmentSessionId;
+    public void setProjectId(Integer projectId) {
+        this.projectId = projectId;
     }
 
     /**
@@ -80,44 +73,30 @@ public class ProjectWorkSessionModel {
     }
 
     /**
-     * @return the projectId
-     */
-    public Integer getProjectId() {
-        return projectId;
-    }
-
-    /**
-     * @param projectId the projectId to set
-     */
-    public void setProjectId(Integer projectId) {
-        this.projectId = projectId;
-    }
-
-    /**
      * @return the fromDate
      */
-    public String getFromDate() {
+    public DateTime getFromDate() {
         return fromDate;
     }
 
     /**
      * @param fromDate the fromDate to set
      */
-    public void setFromDate(String fromDate) {
+    public void setFromDate(DateTime fromDate) {
         this.fromDate = fromDate;
     }
 
     /**
      * @return the toDate
      */
-    public String getToDate() {
+    public DateTime getToDate() {
         return toDate;
     }
 
     /**
      * @param toDate the toDate to set
      */
-    public void setToDate(String toDate) {
+    public void setToDate(DateTime toDate) {
         this.toDate = toDate;
     }
 

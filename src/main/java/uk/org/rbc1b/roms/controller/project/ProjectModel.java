@@ -40,6 +40,7 @@ public class ProjectModel {
     private java.sql.Date completedDate;
     private String uri;
     private String editUri;
+    private String modifyDepartmentSessionUri;
 
     /**
      * @return the projectId
@@ -165,5 +166,19 @@ public class ProjectModel {
      */
     public void setEditUri(String editUri) {
         this.editUri = editUri;
+    }
+
+    /**
+     * @return the modifyDepartmentSessionUri
+     */
+    public String getModifyDepartmentSessionUri() {
+        return modifyDepartmentSessionUri;
+    }
+
+    /**
+     * @param modifyDepartmentSessionUri the modifyDepartmentSessionUri to set
+     */
+    public void setModifyDepartmentSessionUri(String modifyDepartmentSessionUri) {
+        this.modifyDepartmentSessionUri = modifyDepartmentSessionUri;
     }
 }
