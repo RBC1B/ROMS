@@ -60,19 +60,13 @@
                 </div>
             </div>
             <div class="form-group">
-                <div class="control-label col-sm-3 col-md-2">
-                    <b>Coordinator</b>
-                </div>
+                    <label for="Coordinator" class="control-label col-sm-2">Coordinator</label>
                 <div class="col-sm-2">
                     <form:hidden class="form-control" path="coordinatorId" />
-                    <div class="form-group">
                         <form:input class="form-control" path="forename" maxlength="50" placeholder="First Name"/>
-                    </div>
                 </div>
                 <div class="col-sm-2">
-                    <div class="form-group">
                         <form:input class="form-control" path="surname" maxlength="50" placeholder="Surname"/>
-                    </div>
                 </div>
             </div>
             <div id="coordinator-linked" class="alert alert-warning alert-dismissable" style="display:none;">

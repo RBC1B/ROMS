@@ -107,8 +107,10 @@ form input, form label, form select {
     display: block;
 }
 form label {
-    margin-top:10px;
+    margin-top: 18px;
 }
+
+label.control-label.col-sm-2 {}
 
 /* Fix for Bootstrap3 Typeahead                                              */
 .twitter-typeahead .tt-query,
@@ -712,3 +714,4 @@ div.project-count {
 #alert-update {
     display:none;
 }
+
