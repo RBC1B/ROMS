@@ -86,7 +86,6 @@
             </sec:authorize>
         </ul>
         <form class="navbar-form navbar-right">
-            <a class="btn btn-edifice" href="#" ><span class="glyphicon glyphicon-question-sign"></span>&nbsp;Help</a>&nbsp;
             <a class="btn btn-danger" href="<c:url value="/j_spring_security_logout" />" ><span class="glyphicon glyphicon-off"></span>&nbsp;Logout</a>&nbsp;
         </form>
         <!-- Everything between parenthesis will be minimised at 940px or less -->
