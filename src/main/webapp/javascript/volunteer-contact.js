@@ -87,9 +87,7 @@ $(document).ready(function() {
                 success: function(data, status, xhr) {
                     $("#alert-update").hide();
                     $("#volunteer-contact-update-success").modal("show");
-                    window.setTimeout(function() {
-                        window.location.assign("/login");
-                    }, 5000);
+                    window.location.assign("/login");
                 }
             });
         }

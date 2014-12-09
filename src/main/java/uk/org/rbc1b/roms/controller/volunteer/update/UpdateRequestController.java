@@ -32,7 +32,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -60,17 +59,24 @@ import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
+import java.util.ArrayList;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import uk.org.rbc1b.roms.controller.ForbiddenRequestException;
+import uk.org.rbc1b.roms.controller.UnprocessableRequestException;
 
 /**
  * Controller for checking and accepting requests to update contact details.
  *
  */
 @Controller
-@RequestMapping("/update-contact")
+@RequestMapping("/volunteer-contact")
 public class UpdateRequestController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UpdateRequestController.class);
-    private static final String BASE_URI = "/update-contact";
+    private static final String BASE_URI = "/volunteer-contact";
     private static final String UPDATE_REQUEST_TEMPLATE = "volunteer-contact-update-request.ftl";
     private static final String POST_UPDATE_TEMPLATE = "volunteer-contact-update-confirmation.ftl";
     private static final String SUBJECT = "RBC (London & Home Counties) Volunteer Information Update";
@@ -94,53 +100,56 @@ public class UpdateRequestController {
     private Properties edificeProperty;
 
     /**
-     * Accepts and checks requests for updating contact.
-     * There is no security checks around this because it is done be the unauthenticated user. Security
-     * is added by hashed urls.
-     * @param requestForm the user form
-     * @param response the http response to set
+     * Accepts and checks requests for updating contact when the volunteer puts
+     * in his RVC ID and date of birth to trigger an email. There is no security
+     * checks around this as this is initial request by the volunteer.
+     *
+     * @param form the user form
      * @param request the http request
+     * @throws UnprocessableRequestException when it is unprocessible
+     * @throws ForbiddenRequestException when data does not match
      */
     @RequestMapping(method = RequestMethod.POST)
-    public void acceptRequest(@Valid RequestForm requestForm, HttpServletResponse response, HttpServletRequest request) {
-        Volunteer volunteer = volunteerDao.findVolunteerById(requestForm.getPersonId());
-        Date birthDate = DataConverterUtil.toSqlDate(requestForm.getBirthDate());
-        if (volunteer == null) {
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-        } else if (volunteer.getPerson().getBirthDate().compareTo(birthDate) != 0) {
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void acceptRequest(@Valid RequestForm form, HttpServletRequest request)
+            throws UnprocessableRequestException, ForbiddenRequestException {
+        Volunteer volunteer = volunteerDao.findVolunteerById(form.getPersonId());
+        Date birthDate = DataConverterUtil.toSqlDate(form.getBirthDate());
+        if (volunteer == null || volunteer.getPerson().getBirthDate() == null
+                || volunteer.getPerson().getBirthDate().compareTo(birthDate) != 0) {
+            throw new ForbiddenRequestException("Non-existent/insufficient information for:" + form.getPersonId());
         } else if (!checkEmail(volunteer)) {
-            response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
+            throw new UnprocessableRequestException("No valid email address on system for:" + form.getPersonId());
         } else {
-            String uri = getSecureUri(request, volunteer);
+            String uri = generateSecureUri(request, volunteer);
             try {
                 prepareEmail(volunteer, uri);
-                response.setStatus(HttpServletResponse.SC_OK);
             } catch (IOException e) {
-                response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
+                throw new UnprocessableRequestException("Problem reading email template");
             } catch (TemplateException e) {
-                response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
+                throw new UnprocessableRequestException("Problem sending email");
             }
         }
     }
 
     /**
-     * Handles the request to update contact.
-     * There is no security checks around this because it is done be the unauthenticated user. Security
-     * is added by hashed urls.
+     * Handles the request to update contact. There is no security checks around
+     * this because it is done be the unauthenticated user. Security is added by
+     * hashed urls.
+     *
      * @param personId the person id
      * @param datetime the datetime of the email
      * @param hash the hash
      * @param model the mvc model
      * @return contact update form
      */
-    @RequestMapping(value = "/{personId}/{datetime}/{hash}/update", method = RequestMethod.GET)
+    @RequestMapping(value = "/{personId}/{datetime}/{hash}", method = RequestMethod.GET)
     public String showVolunteerContact(@PathVariable Integer personId, @PathVariable String datetime,
             @PathVariable String hash, ModelMap model) {
         String uri = BASE_URI + "/" + personId + "/" + datetime + "/" + hash;
         Volunteer volunteer = volunteerDao.findVolunteerById(personId);
         if (volunteer == null) {
-            return "update/contact-update-incorrect";
+            return "volunteer-contact/volunteer-incorrect-form";
         }
         if (checkWithinTime(datetime) && checkHash(volunteer, datetime, hash)) {
             ContactUpdateForm contactUpdateModel = contactUpdateModelFactory.generateContactUpdateModel(volunteer,
@@ -148,29 +157,32 @@ public class UpdateRequestController {
             model.addAttribute("contactUpdateModel", contactUpdateModel);
             model.addAttribute("submitUrl", uri);
             model.addAttribute("submitMethod", "POST");
-            return "update/contact-update";
+            return "volunteer-contact/volunteer-contact-form";
         } else {
-            return "update/contact-update-incorrect";
+            return "volunteer-contact/volunteer-incorrect-form";
         }
     }
 
     /**
-     * Handles update requests.
-     * There is no security checks around this because it is done be the unauthenticated user. Security
-     * is added by hashed urls.
+     * Handles update requests. There is no security checks around this because
+     * it is done be the unauthenticated user. Security is added by hashed urls.
+     *
      * @param personId the person Id
      * @param datetime the date and time of the original request
      * @param hash the hash
-     * @param response the HTTP response
      * @param form the updated contact form
+     * @throws UnprocessableRequestException when it is unprocessible
+     * @throws ForbiddenRequestException when data does not match
      */
     @RequestMapping(value = "/{personId}/{datetime}/{hash}", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void acceptUpdate(@PathVariable Integer personId, @PathVariable String datetime, @PathVariable String hash,
-            HttpServletResponse response, @Valid ContactUpdateForm form) {
-        LOGGER.error("UpdateRequestController: Contact Update Form for " + personId);
+            @Valid ContactUpdateForm form)
+            throws UnprocessableRequestException, ForbiddenRequestException {
+        LOGGER.error("Volunteer Contact Update Form for " + personId);
         Volunteer volunteer = volunteerDao.findVolunteerById(personId);
         if (volunteer == null) {
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            throw new ForbiddenRequestException("Volunteer not found.");
         } else {
             if (checkWithinTime(datetime) && checkHash(volunteer, datetime, hash)) {
                 volunteer.getPerson().setEmail(form.getEmail());
@@ -188,14 +200,13 @@ public class UpdateRequestController {
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                     volunteerDao.updateVolunteerByVolunteer(volunteer);
                     preparePostUpdateEmail(volunteer);
-                    response.setStatus(HttpServletResponse.SC_OK);
                 } catch (IOException e) {
-                    response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
+                    throw new UnprocessableRequestException("Problem reading email template.");
                 } catch (TemplateException e) {
-                    response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
+                    throw new UnprocessableRequestException("Problem with email template.");
                 }
             } else {
-                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                throw new ForbiddenRequestException("Security token expired or not valid.");
             }
         }
     }
@@ -282,20 +293,22 @@ public class UpdateRequestController {
      * @param volunteer the volunteer
      * @return url string
      */
-    private String getSecureUri(HttpServletRequest request, Volunteer volunteer) {
+    private String generateSecureUri(HttpServletRequest request, Volunteer volunteer) {
         String url = edificeProperty.getProperty(SERVER_URL);
         if (url == null || url.isEmpty()) {
-            LOGGER.error("UpdateRequestController: JNDI property for this server's URL is not set.");
+            LOGGER.error("JNDI property for this server's URL is not set.");
             url = request.getRequestURL().toString();
         } else {
             url = url + request.getRequestURI();
         }
-        url = url + "/" + volunteer.getPersonId() + "/";
-        String datetime = getCurrentDateTime();
-        url = url + datetime + "/";
-        String token = getSecureToken(volunteer, datetime);
-        url = url + token + "/update";
-        return url;
+        List<String> path = new ArrayList<String>();
+        path.add(url);
+        path.add(Integer.toString(volunteer.getPersonId()));
+        String dateTime = getCurrentDateTime();
+        path.add(dateTime);
+        path.add(getSecureToken(volunteer, dateTime));
+
+        return StringUtils.join(path, "/");
     }
 
     /**
@@ -319,7 +332,7 @@ public class UpdateRequestController {
         String salt = edificeProperty.getProperty(SECURITY_SALT);
         if (salt == null || salt.isEmpty()) {
             salt = "er9bhmbsaa5ppdnoQP";
-            LOGGER.error("UpdateRequestController: JNDI property for security salt is not set - will use default.");
+            LOGGER.error("JNDI property for security salt is not set - will use default.");
         }
         String text = datetime + ":" + volunteer.getPersonId() + volunteer.getPerson().getBirthDate().toString();
         ShaPasswordEncoder encoder = new ShaPasswordEncoder(256);

@@ -56,21 +56,21 @@ $(document).ready(function() {
         submitHandler: function(form) {
             $("#alert-update").hide();
             $.ajax({
-                url: roms.common.relativePath + '/update-contact',
+                url: roms.common.relativePath + '/volunteer-contact',
                 data: $(form).serialize(),
                 type: "post",
                 cache: false,
                 statusCode: {
-                    302: function(){
+                    302: function() {
                         $("#alert-update").html("<p><b>Error: </b>Could not connect to the server.</p>");
                         $("#alert-update").show();
                     },
-                    403: function() {
-                        $("#alert-update").html("<p><b>Error: </b>Your records do not match.</p>");
+                    422: function() {
+                        $("#alert-update").html("<p><b>Error: </b>Unable to send out an email - please contact Volunteer Department.</p>");
                         $("#alert-update").show();
                     },
-                    503: function() {
-                        $("#alert-update").html("<p><b>Error: </b>Unable to send out an email - please contact Volunteer Department.</p>");
+                    500: function() {
+                        $("#alert-update").html("<p><b>System Error: </b>Unable to send out an email - please contact Volunteer Department.</p>");
                         $("#alert-update").show();
                     }
                 },

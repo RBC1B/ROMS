@@ -51,8 +51,8 @@ public class EmailScheduledService {
      * Send emails that have been queued up, stored in the database.
      * Scheduled to send once every 30 minutes.
      */
-    // @Scheduled(cron = "0 0/2 * * * ?") Test - every 2 minutes
-    @Scheduled(cron = "0 0/30 * * * ?")
+    @Scheduled(cron = "0 0/2 * * * ?")
+    //@Scheduled(cron = "0 0/30 * * * ?")
     public void sendEmails() {
         List<Email> emails = this.emailDao.findAll();
         for (Email email : emails) {
