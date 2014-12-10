@@ -16,7 +16,7 @@
                     </div>
                     <div class="form-group">
                         <label for="birthDate" class="control-label">Date of Birth</label>
-                        <input id="birthDate" name="birthDate" type="text" class="form-control" placeholder="Your date of birth" />
+                        <input id="birthDate" name="birthDate" type="text" class="datepicker form-control" placeholder="dd/mm/yyyy" data-date-format="dd/mm/yyyy"/>
                     </div>
                 </div>
                 <div class="modal-footer">

@@ -22,11 +22,14 @@
  * THE SOFTWARE.
  */
 $(document).ready(function() {
-
-    $("input[name=birthDate]").datetimepicker({
-        pickTime: false,
-        minDate: '1/1/1900',
-        format: "DD/MM/YYYY"
+    
+        $(".datepicker").datepicker({
+        dateFormat: "dd/mm/yy",
+        changeYear: true,
+        changeMonth: true,
+        minDate: "-80y",
+        maxDate: "0d",
+        yearRange: "-80:+0"
     });
 
     $("#update-contact").on("click", function(event) {
@@ -63,6 +66,10 @@ $(document).ready(function() {
                 statusCode: {
                     302: function() {
                         $("#alert-update").html("<p><b>Error: </b>Could not connect to the server.</p>");
+                        $("#alert-update").show();
+                    },
+                    404: function(){
+                        $("#alert-update").html("<p><b>Error: </b>Your RBC ID number is incorrect.</p>");
                         $("#alert-update").show();
                     },
                     422: function() {

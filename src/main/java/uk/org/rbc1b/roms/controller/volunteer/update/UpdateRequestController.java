@@ -65,6 +65,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import uk.org.rbc1b.roms.controller.ForbiddenRequestException;
+import uk.org.rbc1b.roms.controller.NotFoundException;
 import uk.org.rbc1b.roms.controller.UnprocessableRequestException;
 
 /**
@@ -108,16 +109,18 @@ public class UpdateRequestController {
      * @param request the http request
      * @throws UnprocessableRequestException when it is unprocessible
      * @throws ForbiddenRequestException when data does not match
+     * @throws NotFoundException when user is not on system
      */
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void acceptRequest(@Valid RequestForm form, HttpServletRequest request)
-            throws UnprocessableRequestException, ForbiddenRequestException {
+            throws UnprocessableRequestException, ForbiddenRequestException, NotFoundException {
         Volunteer volunteer = volunteerDao.findVolunteerById(form.getPersonId());
         Date birthDate = DataConverterUtil.toSqlDate(form.getBirthDate());
-        if (volunteer == null || volunteer.getPerson().getBirthDate() == null
-                || volunteer.getPerson().getBirthDate().compareTo(birthDate) != 0) {
-            throw new ForbiddenRequestException("Non-existent/insufficient information for:" + form.getPersonId());
+        if (volunteer == null) {
+            throw new NotFoundException("RBC ID " + form.getPersonId() + " does not exist");
+        } else if (volunteer.getPerson().getBirthDate() == null || volunteer.getPerson().getBirthDate().compareTo(birthDate) != 0) {
+            throw new ForbiddenRequestException("Insufficient information for:" + form.getPersonId());
         } else if (!checkEmail(volunteer)) {
             throw new UnprocessableRequestException("No valid email address on system for:" + form.getPersonId());
         } else {
@@ -173,6 +176,7 @@ public class UpdateRequestController {
      * @param form the updated contact form
      * @throws UnprocessableRequestException when it is unprocessible
      * @throws ForbiddenRequestException when data does not match
+     * @throws NotFoundException when volunteer ID does not exist
      */
     @RequestMapping(value = "/{personId}/{datetime}/{hash}", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -182,7 +186,7 @@ public class UpdateRequestController {
         LOGGER.error("Volunteer Contact Update Form for " + personId);
         Volunteer volunteer = volunteerDao.findVolunteerById(personId);
         if (volunteer == null) {
-            throw new ForbiddenRequestException("Volunteer not found.");
+            throw new NotFoundException("Volunteer not found.");
         } else {
             if (checkWithinTime(datetime) && checkHash(volunteer, datetime, hash)) {
                 volunteer.getPerson().setEmail(form.getEmail());

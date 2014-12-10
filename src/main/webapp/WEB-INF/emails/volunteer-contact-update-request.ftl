@@ -1,22 +1,21 @@
-PLEASE DO NOT REPLY TO THIS EMAIL.
-* This is an automated email from RBC (London & the Home Counties) Management System *
-
 Dear ${forename},
 
-You submitted a request to update your contact details on Edifice.
+You submitted a request to update your contact details that we hold on Edifice.
 
 If you wish to update your details, please click on the secure link below:
 
 ${httpsurl}
 
-You have upto twenty-fours hours to update your information using this link. After this time period, you will need to re-submit your request.
+You can use this link at any time within 24 hours to update your contact details. After this time period, you will need to re-submit your request.
 
 Only contact details can be updated by this link. All other information must be updated by contacting the Volunteers Service Department(VSD).
 
 If you wish to contact VSD, please speak to your overseer.
 
 IMPORTANT NOTICE
-If you did not make this request, please speak to your overseer immediately. He will help you to contact IT Support Department.
+1. If you did not make this request, please forward this email to edifice.help@gmail.com immediately.
+2. If this is your first time, you may get a "Security Exception" warning by your web browser. You can safely ignore this warning and permanently store the certificate. For more information, please see: http://www.inmotionhosting.com/support/website/ssl/self-signed-ssl-certificate-warning
 
 Regards,
 RBC IT Support
+London & Home Counties
