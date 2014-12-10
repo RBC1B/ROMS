@@ -6,12 +6,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-    <head>
-        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" />
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Edifice Volunteer Contact Update Request</title>
-    </head>
+    <%@ include file="/WEB-INF/views/volunteer-contact/fragments/header.jsp" %>
     <body>
         <div class="container">
             <nav class="navbar navbar-inverse navbar-static-top" role="navbar">

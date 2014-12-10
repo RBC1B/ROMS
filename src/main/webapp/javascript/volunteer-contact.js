@@ -33,14 +33,24 @@ $(document).ready(function() {
         window.location.assign("/login");
     });
 
+    $.validator.addMethod("phoneNumber", roms.common.validatorPhoneNumber, "Please enter a valid phone number");
+    $.validator.addMethod("mobilePhoneNumber", roms.common.validatorMobilePhoneNumber, "Please enter a valid mobile phone number");
+    
     $("#contact-update-form").validate({
         debug: true,
         rules: {
             email: {
-                required: true
+                email: true
             },
             telephone: {
-                required: true
+                phoneNumber: true
+            },
+            mobile: {
+                phoneNumber: true,
+                mobilePhoneNumber: true
+            },
+            workPhone: {
+                phoneNumber: true
             },
             street: {
                 required: true
@@ -58,6 +68,8 @@ $(document).ready(function() {
         messages: {
             email: "Please enter a valid email address",
             telephone: "Please enter a valid phone number",
+            mobile: "Please enter a valid mobile number",
+            workPhone: "Please enter a valid phone number",
             street: "Please enter your street",
             town: "Please enter your town",
             county: "Please enter your county",
@@ -76,10 +88,14 @@ $(document).ready(function() {
                         $("#alert-update").show();
                     },
                     403: function() {
-                        $("#alert-update").html("<p><b>Error: </b>Your records do not match.</p>");
+                        $("#alert-update").html("<p><b>Error: </b>Expired or incorrect link - please go back to the login page and start all over again.</p>");
                         $("#alert-update").show();
                     },
-                    503: function() {
+                    404: function() {
+                        $("#alert-update").html("<p><b>Error: </b>The RBC ID does not exist - please go back to the login page and start all over again.</p>");
+                        $("#alert-update").show();
+                    },
+                    500: function() {
                         $("#alert-update").html("<p><b>Error: </b>Unable to send out an email - please contact Volunteer Department.</p>");
                         $("#alert-update").show();
                     }
@@ -87,7 +103,7 @@ $(document).ready(function() {
                 success: function(data, status, xhr) {
                     $("#alert-update").hide();
                     $("#volunteer-contact-update-success").modal("show");
-                    window.location.assign("/login");
+                    window.setTimeout(function(){window.location.assign("/login")}, 2500);
                 }
             });
         }

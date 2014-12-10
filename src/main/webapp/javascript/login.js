@@ -59,7 +59,7 @@ $(document).ready(function() {
         submitHandler: function(form) {
             $("#alert-update").hide();
             $.ajax({
-                url: roms.common.relativePath + '/volunteer-contact',
+                url: roms.common.relativePath + '/volunteer-contact/',
                 data: $(form).serialize(),
                 type: "post",
                 cache: false,
@@ -73,11 +73,11 @@ $(document).ready(function() {
                         $("#alert-update").show();
                     },
                     422: function() {
-                        $("#alert-update").html("<p><b>Error: </b>Unable to send out an email - please contact Volunteer Department.</p>");
+                        $("#alert-update").html("<p><b>Error: </b>Your information is insufficient to send out an email - please contact Volunteer Department.</p>");
                         $("#alert-update").show();
                     },
                     500: function() {
-                        $("#alert-update").html("<p><b>System Error: </b>Unable to send out an email - please contact Volunteer Department.</p>");
+                        $("#alert-update").html("<p><b>System Error: </b>Please contact Edifice.Help@gmail.com</p>");
                         $("#alert-update").show();
                     }
                 },

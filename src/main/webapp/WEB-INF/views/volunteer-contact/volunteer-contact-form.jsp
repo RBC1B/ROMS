@@ -7,13 +7,9 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
-    <head>
-        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" />
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Edifice Volunteer Contact Update Request</title>
-    </head>
+    <%@ include file="/WEB-INF/views/volunteer-contact/fragments/header.jsp" %>
     <body>
+        <div id="relative-path" data-relative-path="<c:url value="/" />"></div>
         <div class="container">
             <nav class="navbar navbar-inverse navbar-static-top" role="navbar">
                 <a class="navbar-brand" href="<c:url value="/" />"><img src="<c:url value='/images/logo-brand.png' />" alt="edifice" /></a>
@@ -114,12 +110,8 @@
             <br/>
             <a href="/">Edifice Login Page</a>
         </div>
-        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-        <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
-        <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/additional-methods.min.js"></script>
-        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
-        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.0.0/js/bootstrap-datetimepicker.min.js"></script>
+        <%@ include file="/WEB-INF/views/common/footer-min.jsp" %>
+        <script type="text/javascript" src="<c:url value='/javascript/common.js' />"></script>
         <script type="text/javascript" src="<c:url value='/javascript/thirdparty/phoneformat-574.js' />" ></script>
         <script type="text/javascript" src="<c:url value='/javascript/volunteer-contact.js' />" ></script>
     </body>

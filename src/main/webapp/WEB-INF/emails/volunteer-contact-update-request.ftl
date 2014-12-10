@@ -14,7 +14,7 @@ If you wish to contact VSD, please speak to your overseer.
 
 IMPORTANT NOTICE
 1. If you did not make this request, please forward this email to edifice.help@gmail.com immediately.
-2. If this is your first time, you may get a "Security Exception" warning by your web browser. You can safely ignore this warning and permanently store the certificate. For more information, please see: http://www.inmotionhosting.com/support/website/ssl/self-signed-ssl-certificate-warning
+2. If this is your first time using this web-site, you may get a "Security Exception" warning by your web browser. You can safely ignore this warning and permanently store the certificate. For more information, please see: http://www.inmotionhosting.com/support/website/ssl/self-signed-ssl-certificate-warning
 
 Regards,
 RBC IT Support

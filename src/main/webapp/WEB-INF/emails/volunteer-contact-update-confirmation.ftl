@@ -1,6 +1,6 @@
 Dear ${forename},
 
-Your request to update your contact details were successful.
+Your request to update your contact details was successful.
 
 Please note that only contact details can be updated by this method. Any other information must be updated by contacting the Volunteers Service Department(VSD).
 

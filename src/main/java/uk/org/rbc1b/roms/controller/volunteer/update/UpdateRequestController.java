@@ -63,10 +63,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import uk.org.rbc1b.roms.controller.ForbiddenRequestException;
-import uk.org.rbc1b.roms.controller.NotFoundException;
-import uk.org.rbc1b.roms.controller.UnprocessableRequestException;
+import org.springframework.http.ResponseEntity;
 
 /**
  * Controller for checking and accepting requests to update contact details.
@@ -107,30 +104,25 @@ public class UpdateRequestController {
      *
      * @param form the user form
      * @param request the http request
-     * @throws UnprocessableRequestException when it is unprocessible
-     * @throws ForbiddenRequestException when data does not match
-     * @throws NotFoundException when user is not on system
+     * @return ResponseEntity the status
      */
-    @RequestMapping(method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void acceptRequest(@Valid RequestForm form, HttpServletRequest request)
-            throws UnprocessableRequestException, ForbiddenRequestException, NotFoundException {
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+    public ResponseEntity<Void> acceptRequest(@Valid RequestForm form, HttpServletRequest request) {
         Volunteer volunteer = volunteerDao.findVolunteerById(form.getPersonId());
         Date birthDate = DataConverterUtil.toSqlDate(form.getBirthDate());
         if (volunteer == null) {
-            throw new NotFoundException("RBC ID " + form.getPersonId() + " does not exist");
-        } else if (volunteer.getPerson().getBirthDate() == null || volunteer.getPerson().getBirthDate().compareTo(birthDate) != 0) {
-            throw new ForbiddenRequestException("Insufficient information for:" + form.getPersonId());
-        } else if (!checkEmail(volunteer)) {
-            throw new UnprocessableRequestException("No valid email address on system for:" + form.getPersonId());
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+        } else if (volunteer.getPerson().getBirthDate() == null || !checkEmail(volunteer)) {
+            return new ResponseEntity<Void>(HttpStatus.UNPROCESSABLE_ENTITY);
+        } else if (volunteer.getPerson().getBirthDate().compareTo(birthDate) != 0) {
+            return new ResponseEntity<Void>(HttpStatus.FORBIDDEN);
         } else {
             String uri = generateSecureUri(request, volunteer);
             try {
                 prepareEmail(volunteer, uri);
-            } catch (IOException e) {
-                throw new UnprocessableRequestException("Problem reading email template");
-            } catch (TemplateException e) {
-                throw new UnprocessableRequestException("Problem sending email");
+                return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+            } catch (IOException | TemplateException e) {
+                return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
     }
@@ -174,19 +166,14 @@ public class UpdateRequestController {
      * @param datetime the date and time of the original request
      * @param hash the hash
      * @param form the updated contact form
-     * @throws UnprocessableRequestException when it is unprocessible
-     * @throws ForbiddenRequestException when data does not match
-     * @throws NotFoundException when volunteer ID does not exist
+     * @return ResponseEntity the status exist
      */
     @RequestMapping(value = "/{personId}/{datetime}/{hash}", method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void acceptUpdate(@PathVariable Integer personId, @PathVariable String datetime, @PathVariable String hash,
-            @Valid ContactUpdateForm form)
-            throws UnprocessableRequestException, ForbiddenRequestException {
-        LOGGER.error("Volunteer Contact Update Form for " + personId);
+    public ResponseEntity<Void> acceptUpdate(@PathVariable Integer personId, @PathVariable String datetime,
+            @PathVariable String hash, @Valid ContactUpdateForm form) {
         Volunteer volunteer = volunteerDao.findVolunteerById(personId);
         if (volunteer == null) {
-            throw new NotFoundException("Volunteer not found.");
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         } else {
             if (checkWithinTime(datetime) && checkHash(volunteer, datetime, hash)) {
                 volunteer.getPerson().setEmail(form.getEmail());
@@ -204,13 +191,14 @@ public class UpdateRequestController {
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                     volunteerDao.updateVolunteerByVolunteer(volunteer);
                     preparePostUpdateEmail(volunteer);
+                    return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
                 } catch (IOException e) {
-                    throw new UnprocessableRequestException("Problem reading email template.");
+                    return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
                 } catch (TemplateException e) {
-                    throw new UnprocessableRequestException("Problem with email template.");
+                    return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
                 }
             } else {
-                throw new ForbiddenRequestException("Security token expired or not valid.");
+                return new ResponseEntity<Void>(HttpStatus.FORBIDDEN);
             }
         }
     }

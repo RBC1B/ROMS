@@ -21,35 +21,29 @@
                 <br />
             </div>
             <div class="col-md-6">
-            <div class="form-signin">
-                <form action="<c:url value='j_spring_security_check' />" method="POST">
-                    <img src="<c:url value='/images/logo-login.png' />" alt="Edifice" />
-                    <p class="title-quote">Edifice :- Origin from Latin <b>aedificum</b> from <b><i>aedis 'dwelling' + facere 'make' </i></b></p>
-                    <c:if test="${not empty status}"><p class="error">Invalid login details supplied. Please try again</p></c:if>
-                        <fieldset>
-                            <input type='text' class="input-block-level" name='j_username' value=''>
-                        </fieldset>
-                        <fieldset>
-                            <input type='password' class="input-block-level" name='j_password'/>
-                        </fieldset>
-                        <input name="submit" class="btn btn-large btn-edifice" type="submit" value="Login"/>
-                    </form>
-                </div>
                 <div class="form-signin">
-                    <h3>Update your Contact Details</h3>
-                    <p>If you wish to update your contact details, please click on the link below.</p>
-                    <a id="update-contact" class="btn btn-lg btn-edifice" href="#">Update contact details</a>
+                    <form action="<c:url value='j_spring_security_check' />" method="POST">
+                        <img src="<c:url value='/images/logo-login.png' />" alt="Edifice" />
+                        <p class="title-quote">Edifice :- Origin from Latin <b>aedificum</b> from <b><i>aedis 'dwelling' + facere 'make' </i></b></p>
+                        <c:if test="${not empty status}"><p class="error">Invalid login details supplied. Please try again</p></c:if>
+                            <fieldset>
+                                <input type='text' class="input-block-level" name='j_username' value=''>
+                            </fieldset>
+                            <fieldset>
+                                <input type='password' class="input-block-level" name='j_password'/>
+                            </fieldset>
+                            <input name="submit" class="btn btn-large btn-edifice" type="submit" value="Login"/>
+                        </form>
+                    </div>
+                    <div class="form-signin">
+                        <h3>Update your Contact Details</h3>
+                        <p>If you wish to update your contact details, please click on the link below.</p>
+                        <a id="update-contact" class="btn btn-lg btn-edifice" href="#">Update contact details</a>
+                    </div>
                 </div>
             </div>
-        </div>
         <%@ include file="show-contact-validation-modal.jsp" %>
-        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-        <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
-        <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/additional-methods.min.js"></script>
-        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
-        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
-        <!-- script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.0.0/js/bootstrap-datetimepicker.min.js"></script -->
+        <%@ include file="/WEB-INF/views/common/footer-min.jsp" %>
         <script type="text/javascript" src="<c:url value='/javascript/common.js' />"></script>
         <script type="text/javascript" src="<c:url value='/javascript/login.js' />" ></script>
     </body>
