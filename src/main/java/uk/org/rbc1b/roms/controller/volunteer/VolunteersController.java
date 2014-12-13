@@ -73,12 +73,14 @@ import uk.org.rbc1b.roms.controller.common.PhoneNumberFormatter;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableResult;
 import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
 import uk.org.rbc1b.roms.controller.qualification.QualificationModel;
+import uk.org.rbc1b.roms.controller.user.UserModelFactory;
 import uk.org.rbc1b.roms.db.Address;
 import uk.org.rbc1b.roms.db.Congregation;
 import uk.org.rbc1b.roms.db.CongregationDao;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.PersonDao;
 import uk.org.rbc1b.roms.db.application.User;
+import uk.org.rbc1b.roms.db.application.UserDao;
 import uk.org.rbc1b.roms.db.reference.ReferenceDao;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
@@ -143,6 +145,8 @@ public class VolunteersController {
     private SkillDao skillDao;
     @Autowired
     private QualificationDao qualificationDao;
+    @Autowired
+    private UserDao userDao;
     @Resource(name = "imageDirectories")
     private Properties imageDirectories;
 
@@ -253,6 +257,13 @@ public class VolunteersController {
         model.addAttribute("assignmentRoles", referenceDao.findAssignmentRoleValues());
         model.addAttribute("skills", findSkills());
         model.addAttribute("qualifications", findQualifications());
+
+        User user = userDao.findUser(volunteerId);
+        if (user != null) {
+            model.addAttribute("userUri", UserModelFactory.generateUri(volunteerId));
+        } else {
+            model.addAttribute("createUserUri", UserModelFactory.generateUri(null) + "/new?userId=" + volunteerId);
+        }
 
         return "volunteers/show";
     }

@@ -1078,14 +1078,14 @@ $(document).ready(function() {
 
     $(".a-edit-hover").hover(
             function over() {
-                $(this).find("a").removeClass("hide");
+                $(this).find("a.a-edit-hover-action").removeClass("hide");
             },
             function out() {
-                $(this).find("a").addClass("hide");
+                $(this).find("a.a-edit-hover-action").addClass("hide");
             }
     );
 
-    $("#volunteer-name a").on("click", function(e) {
+    $("#volunteer-name a.a-edit-hover-action").on("click", function(e) {
         e.preventDefault();
 
         // make sure the values are set to the current name

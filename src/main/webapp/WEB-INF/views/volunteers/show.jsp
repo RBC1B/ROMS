@@ -34,8 +34,13 @@
                      data-surname="${volunteer.surname}">
                     <h1 class="media-heading">
                         #${volunteer.id}: <span id="volunteer-full-name"><c:out value="${volunteer.forename} ${volunteer.middleName} ${volunteer.surname}" /></span>
+                        <sec:authorize access="hasPermission('DATABASE', 'READ')">
+                            <c:if test="${!empty userUri}">
+                                <a href="<c:url value='${userUri}' />" class="btn btn-edifice btn-xs">View User</a>
+                            </c:if>
+                        </sec:authorize>
                         <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
-                            <a class="hide btn btn-edifice btn-xs" href="#">Edit</a>
+                            <a class="hide btn btn-edifice btn-xs a-edit-hover-action" href="#">Edit</a>
                         </sec:authorize>
                     </h1>
 
@@ -46,7 +51,7 @@
                         <dd>
                             <span id="volunteer-rbc-status-code-content"><c:out value="${volunteer.status}" /></span>
                             <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
-                                <a class="hide btn btn-edifice btn-xs" href="#">Edit</a>
+                                <a class="hide btn btn-edifice btn-xs a-edit-hover-action" href="#">Edit</a>
                             </sec:authorize>
                         </dd>
                     </div>
@@ -58,7 +63,7 @@
                         <dd>
                             <span id="volunteer-comments-content"><c:out value="${volunteer.comments}" /></span>
                             <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
-                                <a class="hide btn btn-edifice btn-xs" href="#">Edit</a>
+                                <a class="hide btn btn-edifice btn-xs a-edit-hover-action" href="#">Edit</a>
                             </sec:authorize>
                         </dd>
                     </div>
@@ -74,9 +79,14 @@
                 <button class="btn" type="button" data-title="Pdf Badge Generation Not Possible"
                         data-content="A badge for <c:out value='${volunteer.displayName}' /> cannot be created before setting their:
                         <ul><li>birth date</li><li>photo</li><li>department assignments</li></ul>"
-                        id="disabled-badge-button">Generate badge</button><br />
+                        id="disabled-badge-button">Generate badge</button>
             </c:otherwise>
         </c:choose>
+        <sec:authorize access="hasPermission('DATABASE', 'ADD')">
+            <c:if test="${!empty createUserUri}">
+                &nbsp;<a href="<c:url value='${createUserUri}' />" class="btn btn-edifice">Create User</a>
+            </c:if>
+        </sec:authorize>
         <hr />
         <%@ include file="fragments/show-assignments.jsp" %>
         <div class="clearfix"></div>
