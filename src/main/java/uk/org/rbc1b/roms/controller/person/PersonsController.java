@@ -44,6 +44,7 @@ import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableRequestData;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableResult;
 import uk.org.rbc1b.roms.controller.common.model.PersonModel;
 import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
+import uk.org.rbc1b.roms.controller.user.UserModelFactory;
 import uk.org.rbc1b.roms.controller.volunteer.VolunteerModelFactory;
 import uk.org.rbc1b.roms.db.Address;
 import uk.org.rbc1b.roms.db.Congregation;
@@ -51,6 +52,8 @@ import uk.org.rbc1b.roms.db.CongregationDao;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.PersonDao;
 import uk.org.rbc1b.roms.db.PersonSearchCriteria;
+import uk.org.rbc1b.roms.db.application.User;
+import uk.org.rbc1b.roms.db.application.UserDao;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
 
 /**
@@ -69,6 +72,8 @@ public class PersonsController {
     private CongregationDao congregationDao;
     @Autowired
     private PersonModelFactory personModelFactory;
+    @Autowired
+    private UserDao userDao;
 
     /**
      * Display the list of persons.
@@ -147,6 +152,13 @@ public class PersonsController {
             return "redirect:" + VolunteerModelFactory.generateUri(personId);
         }
         model.addAttribute("person", personModelFactory.generatePersonModel(person));
+
+        User user = userDao.findUser(personId);
+        if (user != null) {
+            model.addAttribute("userUri", UserModelFactory.generateUri(personId));
+        } else {
+            model.addAttribute("createUserUri", UserModelFactory.generateUri(null) + "/new?userId=" + personId);
+        }
 
         return "persons/show";
     }

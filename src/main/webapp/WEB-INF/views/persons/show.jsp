@@ -10,7 +10,13 @@
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <h1><c:out value="${person.forename} ${person.middleName} ${person.surname}"/></h1>
+        <h1><c:out value="${person.forename} ${person.middleName} ${person.surname}"/>
+            <sec:authorize access="hasPermission('DATABASE', 'READ')">
+                <c:if test="${!empty userUri}">
+                    <a href="<c:url value='${userUri}' />" class="btn btn-edifice btn-xs">View User</a>
+                </c:if>
+            </sec:authorize>
+        </h1>
         <hr />
         <dl class="dl-horizontal">
             <dt>Congregation:</dt>
@@ -89,6 +95,11 @@
         <sec:authorize access="hasPermission('PERSON', 'EDIT')">
             <hr />
             <a href="<c:url value='${person.editUri}' />" class="btn btn-edifice">Edit Person</a>
+        </sec:authorize>
+        <sec:authorize access="hasPermission('DATABASE', 'ADD')">
+            <c:if test="${!empty createUserUri}">
+                <a href="<c:url value='${createUserUri}' />" class="btn btn-edifice">Create User</a>
+            </c:if>
         </sec:authorize>
 
         <br />
