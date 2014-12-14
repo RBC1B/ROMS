@@ -26,7 +26,6 @@ package uk.org.rbc1b.roms.db.application;
 import java.io.Serializable;
 import java.util.Date;
 import org.hibernate.envers.Audited;
-import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.UpdateAuditable;
 
 /**
@@ -34,9 +33,12 @@ import uk.org.rbc1b.roms.db.UpdateAuditable;
  */
 @Audited
 public class ApplicationAccess implements UpdateAuditable, Serializable {
+    /**
+     * Value set when the user has no access.
+     */
     private static final long serialVersionUID = -6714506443989985762L;
     private Integer applicationAccessId;
-    private Person person;
+    private Integer personId;
     private Application application;
     private char departmentAccess;
     private char nonDepartmentAccess;
@@ -75,12 +77,12 @@ public class ApplicationAccess implements UpdateAuditable, Serializable {
         this.nonDepartmentAccess = nonDepartmentAccess;
     }
 
-    public Person getPerson() {
-        return person;
+    public Integer getPersonId() {
+        return personId;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setPersonId(Integer personId) {
+        this.personId = personId;
     }
 
     @Override

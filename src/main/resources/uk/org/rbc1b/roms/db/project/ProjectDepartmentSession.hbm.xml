@@ -5,11 +5,11 @@
         <id name="projectDepartmentSessionId" >
             <generator class="identity" />
         </id>
-        <many-to-one name="project" 
+        <many-to-one name="project"
                      class="uk.org.rbc1b.roms.db.project.Project"
                      lazy="false"
                      column="ProjectId" />
-        <many-to-one name="department" 
+        <many-to-one name="department"
                      class="uk.org.rbc1b.roms.db.volunteer.department.Department"
                      lazy="false"
                      column="DepartmentId" />

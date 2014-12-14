@@ -36,13 +36,9 @@ public class UserForm {
     @Size(min = 7, max = 50)
     private String userName;
     @Size(min = 7, max = 50)
-    private String password1;
-    @Size(min = 7, max = 50)
-    private String password2;
+    private String password;
     @NotNull
-    private Integer personId;
-    private String forename;
-    private String surname;
+    private Integer userId;
     private boolean active;
 
     /**
@@ -60,73 +56,25 @@ public class UserForm {
     }
 
     /**
-     * @return the password1
+     * @return the password
      */
-    public String getPassword1() {
-        return password1;
+    public String getPassword() {
+        return password;
     }
 
     /**
-     * @param password1 the password1 to set
+     * @param password the password to set
      */
-    public void setPassword1(String password1) {
-        this.password1 = password1;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    /**
-     * @return the password2
-     */
-    public String getPassword2() {
-        return password2;
+    public Integer getUserId() {
+        return userId;
     }
 
-    /**
-     * @param password2 the password2 to set
-     */
-    public void setPassword2(String password2) {
-        this.password2 = password2;
-    }
-
-    /**
-     * @return the personId
-     */
-    public Integer getPersonId() {
-        return personId;
-    }
-
-    /**
-     * @param personId the personId to set
-     */
-    public void setPersonId(Integer personId) {
-        this.personId = personId;
-    }
-
-    /**
-     * @return the forename
-     */
-    public String getForename() {
-        return forename;
-    }
-
-    /**
-     * @param forename the forename to set
-     */
-    public void setForename(String forename) {
-        this.forename = forename;
-    }
-
-    /**
-     * @return the surname
-     */
-    public String getSurname() {
-        return surname;
-    }
-
-    /**
-     * @param surname the surname to set
-     */
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     /**

@@ -139,7 +139,7 @@ public class ProjectsController {
 
         // Invitation tab
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User me = userDao.findUserAndPermissions(userDetails.getUsername());
+        User me = userDao.findUser(userDetails.getUsername());
         List<Assignment> assignments = volunteerDao.findAssignments(me.getPersonId());
         if (assignments == null || assignments.isEmpty()) {
             // There is nothing to show as I do not have any assignments.
@@ -150,8 +150,7 @@ public class ProjectsController {
             List<Department> departments = new ArrayList<Department>();
             AssignmentSearchCriteria assignmentSearchCriteria = new AssignmentSearchCriteria();
             for (Assignment assignment : assignments) {
-                List<ProjectDepartmentSession> sessionsForDept =
-                        projectDepartmentSessionDao
+                List<ProjectDepartmentSession> sessionsForDept = projectDepartmentSessionDao
                         .findProjectSessionsForDepartment(projectId, assignment.getDepartmentId());
                 if (sessionsForDept != null) {
                     workSessions.addAll(sessionsForDept);
@@ -180,9 +179,10 @@ public class ProjectsController {
     @RequestMapping(value = "{projectDepartmentSessionId}/department-session", method = RequestMethod.GET, produces = "application/json")
     @PreAuthorize("hasPermission('PROJECT', 'READ')")
     @ResponseBody
-    public List<ProjectAvailabilityModel> findVolunteersForWorkSession(@RequestParam(value = "projectDepartmentSessionId",
-            required = true) Integer projectDepartmentSessionId) {
-        ProjectDepartmentSession workSession = projectDepartmentSessionDao.findByProjectDepartmentSessionId(projectDepartmentSessionId);
+    public List<ProjectAvailabilityModel> findVolunteersForWorkSession(
+            @RequestParam(value = "projectDepartmentSessionId", required = true) Integer projectDepartmentSessionId) {
+        ProjectDepartmentSession workSession = projectDepartmentSessionDao
+                .findByProjectDepartmentSessionId(projectDepartmentSessionId);
         if (workSession != null) {
             AssignmentSearchCriteria assignmentSearchCriteria = new AssignmentSearchCriteria();
             assignmentSearchCriteria.setDepartmentId(workSession.getDepartment().getDepartmentId());
@@ -202,8 +202,8 @@ public class ProjectsController {
      */
     @RequestMapping(value = "{projectDepartmentSessionId}/{personId}/availability-delete", method = RequestMethod.DELETE)
     @PreAuthorize("hasPermission('ATTENDANCE', 'EDIT')")
-    public void deleteAvailabilityForVolunteer(HttpServletResponse response, @PathVariable Integer projectDepartmentSessionId,
-            @PathVariable Integer personId) {
+    public void deleteAvailabilityForVolunteer(HttpServletResponse response,
+            @PathVariable Integer projectDepartmentSessionId, @PathVariable Integer personId) {
         ProjectAvailability availability = projectAvailabilityDao.find(personId, projectDepartmentSessionId);
         if (availability != null) {
             projectAvailabilityDao.delete(availability);
@@ -222,11 +222,12 @@ public class ProjectsController {
      */
     @RequestMapping(value = "{projectDepartmentSessionId}/{personId}/availability-add", method = RequestMethod.POST)
     @PreAuthorize("hasPermission('ATTENDANCE', 'EDIT')")
-    public void insertAvailabilityForVolunteer(HttpServletResponse response, @PathVariable Integer projectDepartmentSessionId,
-            @PathVariable Integer personId) {
+    public void insertAvailabilityForVolunteer(HttpServletResponse response,
+            @PathVariable Integer projectDepartmentSessionId, @PathVariable Integer personId) {
         ProjectAvailability availability = new ProjectAvailability();
         Person person = personDao.findPerson(personId);
-        ProjectDepartmentSession workSession = projectDepartmentSessionDao.findByProjectDepartmentSessionId(projectDepartmentSessionId);
+        ProjectDepartmentSession workSession = projectDepartmentSessionDao
+                .findByProjectDepartmentSessionId(projectDepartmentSessionId);
         if (person != null && workSession != null) {
             availability.setPerson(person);
             availability.setProjectDepartmentSession(workSession);

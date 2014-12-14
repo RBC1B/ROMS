@@ -5,11 +5,7 @@
         <id name="applicationAccessId" >
             <generator class="identity"/>
         </id>
-        <many-to-one class="uk.org.rbc1b.roms.db.Person"
-                        column="PersonId"
-                        name="person"
-                        lazy="false">
-        </many-to-one>
+        <property name="personId" not-null="true" />
         <many-to-one class="uk.org.rbc1b.roms.db.application.Application"
                         column="ApplicationId"
                         name="application"

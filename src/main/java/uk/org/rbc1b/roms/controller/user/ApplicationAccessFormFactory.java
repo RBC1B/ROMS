@@ -25,17 +25,21 @@ package uk.org.rbc1b.roms.controller.user;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.collections.CollectionUtils;
 import uk.org.rbc1b.roms.db.application.Application;
 import uk.org.rbc1b.roms.db.application.ApplicationAccess;
-
-import java.util.Set;
+import uk.org.rbc1b.roms.security.AccessLevel;
 
 /**
  * Generates the list of application access to use in form.
  */
 public final class ApplicationAccessFormFactory {
 
-    private static final char NO_PERMISSION = 'N';
+    private static final ApplicationAccess NO_ACCESS = new ApplicationAccess();
+    static {
+        NO_ACCESS.setDepartmentAccess(AccessLevel.NOACCESS.getCode());
+        NO_ACCESS.setNonDepartmentAccess(AccessLevel.NOACCESS.getCode());
+    }
 
     /**
      * This stops anyone creating this object.
@@ -51,26 +55,39 @@ public final class ApplicationAccessFormFactory {
      * @return application access form list with values set
      */
     public static List<ApplicationAccessForm> generateApplicationAccessForm(List<Application> applications,
-            Set<ApplicationAccess> applicationAccesses) {
+            List<ApplicationAccess> applicationAccesses) {
         List<ApplicationAccessForm> applicationAccessForms;
         applicationAccessForms = new ArrayList<ApplicationAccessForm>();
         for (Application application : applications) {
             ApplicationAccessForm applicationAccessForm = new ApplicationAccessForm();
             applicationAccessForm.setCode(application.getCode());
             applicationAccessForm.setName(application.getName());
-            applicationAccessForm.setDeptPermission(NO_PERMISSION);
-            applicationAccessForm.setNonDeptPermission(NO_PERMISSION);
-            if (applicationAccesses != null) {
-                for (ApplicationAccess applicationAccess : applicationAccesses) {
-                    if (applicationAccess.getApplication().getCode().equalsIgnoreCase(application.getCode())) {
-                        applicationAccessForm.setApplicationAccessId(applicationAccess.getApplicationAccessId());
-                        applicationAccessForm.setDeptPermission(applicationAccess.getDepartmentAccess());
-                        applicationAccessForm.setNonDeptPermission(applicationAccess.getNonDepartmentAccess());
-                    }
-                }
+
+            ApplicationAccess access = findApplicationAccess(application, applicationAccesses);
+            if (access == null) {
+                access = NO_ACCESS;
             }
+
+            applicationAccessForm.setApplicationAccessId(access.getApplicationAccessId());
+            applicationAccessForm.setDeptPermission(access.getDepartmentAccess());
+            applicationAccessForm.setNonDeptPermission(access.getNonDepartmentAccess());
+
             applicationAccessForms.add(applicationAccessForm);
         }
         return applicationAccessForms;
     }
+
+    private static ApplicationAccess findApplicationAccess(Application application,
+            List<ApplicationAccess> applicationAccesses) {
+        if (CollectionUtils.isEmpty(applicationAccesses)) {
+            return null;
+        }
+        for (ApplicationAccess access : applicationAccesses) {
+            if (access.getApplication().getCode().equalsIgnoreCase(application.getCode())) {
+                return access;
+            }
+        }
+        return null;
+    }
+
 }

@@ -4,7 +4,8 @@
         <div class="navbar-inner">
             <div class="row">
                 <div class="col-xs-4">
-                    <sec:authorize access="hasPermission('CIRCUIT', 'READ') or hasPermission('KINGDOMHALL', 'READ') or hasPermission('CONG', 'READ')">
+                    <sec:authorize
+                        access="hasPermission('CIRCUIT', 'READ') or hasPermission('KINGDOMHALL', 'READ') or hasPermission('CONG', 'READ')">
                         <ul class="footer-nav">
                             <li class="first">Organisation</li>
                             <sec:authorize access="hasPermission('CIRCUIT', 'READ')">
@@ -27,13 +28,14 @@
                                 <li role="menuitem"><a href="<c:url value="/volunteers" />">Volunteers</a></li>
                             </sec:authorize>
                             <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
-                              <li role="menuitem"><a href="<c:url value="/persons" />">Persons</a></li>
+                                <li role="menuitem"><a href="<c:url value="/persons" />">Persons</a></li>
                             </sec:authorize>
                             <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
                                 <li role="menuitem"><a href="<c:url value="/person-changes" />">Form updates</a></li>
                             </sec:authorize>
                             <sec:authorize access="hasPermission('VOLUNTEER', 'READ')">
-                                <li role="menuitem"><a href="<c:url value="/interview-sessions" />">Interview sessions</a></li>
+                                <li role="menuitem"><a href="<c:url value="/interview-sessions" />">Interview
+                                        sessions</a></li>
                             </sec:authorize>
                             <sec:authorize access="hasPermission('SKILL', 'READ')">
                                 <li role="menuitem"><a href="<c:url value="/qualifications" />">Qualifications</a></li>
@@ -57,6 +59,9 @@
                             <sec:authorize access="hasPermission('PROJECT', 'READ')">
                                 <li><a href="<c:url value="/projects" />">Projects</a></li>
                             </sec:authorize>
+                            <sec:authorize access="hasPermission('REPORT', 'READ')">
+                                <li><a href="<c:url value="/reports/fixed" />">Reports</a></li>
+                            </sec:authorize>
                             <sec:authorize access="hasPermission('DATABASE', 'READ')">
                                 <li><a href="<c:url value="/admin" />">Admin</a></li>
                             </sec:authorize>
@@ -64,12 +69,13 @@
                     </sec:authorize>
                 </div>
             </div>
-                <div class="col-xs-12" id="footer-nav">
-                    <!-- So users on smaller screens don't have to scroll all the way back to the top -->
-                    <a href="#" class="btn btn-edifice pull-right" id="back-to-top"><span class="glyphicon glyphicon-circle-arrow-up"></span>&nbsp;Back to Top</a>
-                </div>
+            <div class="col-xs-12" id="footer-nav">
+                <!-- So users on smaller screens don't have to scroll all the way back to the top -->
+                <a href="#" class="btn btn-edifice pull-right" id="back-to-top"><span
+                    class="glyphicon glyphicon-circle-arrow-up"></span>&nbsp;Back to Top</a>
             </div>
         </div>
+    </div>
     </div>
 </footer>
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -77,10 +83,11 @@
 <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+<script type="text/javascript"
+    src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 <script type="text/javascript" src="<c:url value='/javascript/thirdparty/mustache-0.7.2.js' />"></script>
-<script type="text/javascript" src="<c:url value='/javascript/thirdparty/typeahead-0.9.3.min.js' />" ></script>
-<script type="text/javascript" src="<c:url value='/javascript/thirdparty/jquery.form.v20131121.min.js' />" ></script>
+<script type="text/javascript" src="<c:url value='/javascript/thirdparty/typeahead-0.9.3.min.js' />"></script>
+<script type="text/javascript" src="<c:url value='/javascript/thirdparty/jquery.form.v20131121.min.js' />"></script>
 <script type="text/javascript" src="<c:url value='/javascript/thirdparty/moment-2.5.1.min.js' />"></script>
 <script type="text/javascript" src="<c:url value='/javascript/thirdparty/bootstrap-datetimepicker-2.1.30.min.js' />"></script>
 <script type="text/javascript" src="<c:url value='/javascript/thirdparty/bootstrap-confirmation-1.0.0.js' />"></script>

@@ -37,8 +37,8 @@ import javax.servlet.jsp.tagext.TagSupport;
 public class Permissions extends TagSupport {
 
     private static final long serialVersionUID = 1L;
-    private Map<String, String> acl = new PermissionMap().getAcl();
-    private String forValue;
+    private final Map<Character, String> acl = new PermissionMap().getAcl();
+    private Character forValue;
 
     /**
      * Converts acl permissions to specified type.
@@ -61,13 +61,13 @@ public class Permissions extends TagSupport {
      * @return the forValue
      */
     public String getForValue() {
-        return forValue;
+        return forValue.toString();
     }
 
     /**
      * @param forValue the forValue to set
      */
     public void setForValue(String forValue) {
-        this.forValue = forValue;
+        this.forValue = forValue.charAt(0);
     }
 }

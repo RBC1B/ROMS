@@ -14,204 +14,87 @@
     <c:choose>
         <c:when test="${!empty userForm.userName}">
             <c:set var="pageTitle">Edit user</c:set>
+            <c:set var="newUser" value="false" />
         </c:when>
         <c:otherwise>
             <c:set var="pageTitle">Create new user</c:set>
+            <c:set var="newUser" value="true" />
         </c:otherwise>
     </c:choose>
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
     <body>
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
-        <c:choose>
-            <c:when test="${!empty userForm.userName}">
-                <h1>Edit user</h1>
-            </c:when>
-            <c:otherwise>
-                <h1>Create new user</h1>
-            </c:otherwise>
-        </c:choose>
+        <h1><c:out value='${pageTitle}' /></h1>
         <hr />
+        <h2><c:out value="${person.forename} ${person.middleName} ${person.surname}"/></h2>
         <c:url var="formAction" value="${submitUri}" />
         <form:form class="form-horizontal" commandName="userForm" method="${submitMethod}" action="${formAction}">
-            <c:choose>
-                <c:when test="${empty userForm.userName}">
-                    <fieldset>
-                        <div class="form-group">
-                            <form:hidden class="form-control" path="personId" maxlength="10" placeholder="Person ID"/>
-                        </div>
-                        <div class="row">
-                            <h3 class="text-left">Volunteer</h3>
-                            <div class="col-md-4">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <form:input class="form-control" path="forename" maxlength="50" placeholder="First Name"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <form:input class="form-control" path="surname" maxlength="50" placeholder="Surname"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="volunteer-linked" class="alert alert-warning alert-dismissable" style="display:none;">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">Unlink</button>
-                            Linked to an existing person in the database
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <form:input class="form-control" path="userName" maxlength="50" placeholder="Login Username"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="username-already-exists" class="alert alert-danger alert-dismissable" style="display:none;">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            This username already exists in the system. Please use another username.
-                        </div>
-                        <div id="username-too-small" class="alert alert-danger alert-dismissable" style="display:none;">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            The username is too small, must be at least seven characters long.
-                        </div>
-                        <div class="row" id="pwd-container">
-                            <div class="col-md-4">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <form:password class="form-control" path="password1" maxlength="50" placeholder="Password"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <form:password class="form-control" path="password2" maxlength="50" placeholder="Confirm Password"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="password-not-matched" class="alert alert-danger alert-dismissable" style="display:none;">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            The passwords do not match.
-                        </div>
-                        <div id="password-too-small" class="alert alert-danger alert-dismissable" style="display:none;">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            The password is too small, must be at least seven characters long.
-                        </div>
-                    </fieldset>
-                </c:when>
-                <c:otherwise>
-                    <fieldset>
-                        <div class="form-group">
-                            <form:hidden class="form-control" path="personId" maxlength="10" placeholder="Person ID"/>
-                        </div>
-                        <div class="row">
-                            <h3 class="text-left">Volunteer</h3>
-                            <div class="col-md-4">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <form:input class="form-control" path="forename" maxlength="50" placeholder="First Name" readonly="true" />
-                                        <form:hidden class="form-control" path="forename" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <form:input class="form-control" path="surname" maxlength="50" placeholder="Surname" readonly="true" />
-                                        <form:hidden class="form-control" path="surname" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <form:input class="form-control" path="userName" maxlength="50" placeholder="Login Username" readonly="true" />
-                                        <form:hidden class="form-control" path="userName" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" id="pwd-container">
-                            <div class="col-md-4">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <form:password class="form-control" path="password1" maxlength="50" placeholder="Password - only click if changing password" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <form:password class="form-control" path="password2" maxlength="50" placeholder="Confirm password" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="password-not-matched" class="alert alert-danger alert-dismissable" style="display:none;">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            The passwords do not match.
-                        </div>
-                        <div id="password-too-small" class="alert alert-danger alert-dismissable" style="display:none;">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            The password is too small, must be at least seven characters long.
-                        </div>
-                    </fieldset>
-                    <div class="row" id="user-active">
-                        <div class="col-md-4">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <form:checkbox path="active"/>User Status Enabled
-                                </div>
-                            </div>
+            <fieldset>
+                <form:hidden path="userId" />
+                <div class="form-group">
+                    <label for="name" class="control-label col-sm-3 col-md-2">User name</label>
+                    <div class="col-sm-9 col-md-3">
+                        <form:input class="form-control" path="userName" maxlength="50" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="active" class="control-label col-sm-2">Active</label>
+                    <div class="col-sm-2">
+                        <form:checkbox path="active"/>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <c:if test="${!newUser}"><p>Leave password blank unless changing it</p></c:if>
+                <c:if test="${newUser}"><c:set var="passwordRequired">required="true"</c:set></c:if>
+                <div class="form-group">
+                    <label for="name" class="control-label col-sm-3 col-md-2">Password</label>
+                    <div class="col-sm-9 col-md-3">
+                        <input type="password" class="form-control" name="password" id="password" maxlength="50" ${passwordRequired} />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="name" class="control-label col-sm-3 col-md-2">Password Confirm</label>
+                    <div class="col-sm-9 col-md-3">
+                        <input type="password" class="form-control" name="passwordConfirm" id="passwordConfirm" maxlength="50" ${passwordRequired} />
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Department Access Permissions</legend>
+                <c:forEach items="${applications}" var="application">
+                    <div class="form-group">
+                        <label for="name" class="control-label col-sm-3 col-md-2">${application.name}</label>
+                        <div class="col-sm-9 col-md-3">
+                            <roms:select className="form-control" selected="${application.deptPermission}" itemValue="${fn:toLowerCase(application.code)}Dept" />
                         </div>
                     </div>
-                </c:otherwise>
-            </c:choose>
-
-            <div class="row-fluid">
-                <div id="user-volunteer-user" data-user-id="${user.personId}"></div>
-                <table class="table table-bordered table-condensed table-striped table-hover" id="user-acl-list">
-                    <thead>
-                        <tr>
-                            <th>Application</th>
-                            <th>Department Access</th>
-                            <th>Non-Department Access</th>
-                        </tr>
-                    <thead />
-                    <tbody>
-                        <c:forEach items="${applications}" var="application">
-                            <tr>
-                                <td><c:out value="${application.name}" /></td>
-                                <td>
-                                    <roms:select className="form-control" selected="${application.deptPermission}" itemValue="${fn:toLowerCase(application.code)}Dept" />
-                                </td>
-                                <td>
-                                    <roms:select className="form-control" selected="${application.nonDeptPermission}" itemValue="${fn:toLowerCase(application.code)}All" />
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                    <tfoot>
-                    </tfoot>
-                </table>
-            </div>
+                </c:forEach>
+            </fieldset>
             <fieldset>
-                <div id="submit-button" class="col-sm-1 col-md-1">
-                    <button type="submit" class="btn btn-default btn-success">Submit</button>
+                <legend>Non-department Access Permissions</legend>
+                <c:forEach items="${applications}" var="application">
+                    <div class="form-group">
+                        <label for="name" class="control-label col-sm-3 col-md-2">${application.name}</label>
+                        <div class="col-sm-9 col-md-3">
+                            <roms:select className="form-control" selected="${application.nonDeptPermission}" itemValue="${fn:toLowerCase(application.code)}All" />
+                        </div>
+                    </div>
+                </c:forEach>
+            </fieldset>
+            <fieldset>
+                <div class="form-group">
+                    <label class="control-label col-sm-3 col-md-2"></label>
+                    <div class="col-sm-9 col-md-3">
+                        <button type="submit" class="btn btn-default btn-success">Submit</button>
+                    </div>
                 </div>
-            </div>
-        </fieldset>
-    </form:form>
+            </fieldset>
+        </form:form>
 
-    <ol class="breadcrumb">
-        <li><a href="<c:url value="/" />">Edifice</a></li>
-        <li role="menuitem"><a href="<c:url value="/users" />">Users</a></li>
+        <ol class="breadcrumb">
+            <li><a href="<c:url value="/" />">Edifice</a></li>
+            <li role="menuitem"><a href="<c:url value="/users" />">Users</a></li>
             <c:choose>
                 <c:when test="${!empty userForm.userName}">
                 <li class="active">Edit</li>
@@ -220,10 +103,8 @@
                 <li class="active">New User</li>
                 </c:otherwise>
             </c:choose>
-    </ol>
-    <%@include file="/WEB-INF/views/common/person-link-modal.jsp" %>
-    <%@include file="/WEB-INF/views/common/mustache-user-link-search-form.jsp" %>
-    <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-    <script type="text/javascript" src="<c:url value='/javascript/users.js' />" ></script>
-</body>
+        </ol>
+        <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+        <script type="text/javascript" src="<c:url value='/javascript/users.js' />" ></script>
+    </body>
 </html>

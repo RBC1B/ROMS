@@ -24,6 +24,7 @@
 package uk.org.rbc1b.roms.tags;
 
 import java.util.Map;
+import uk.org.rbc1b.roms.security.AccessLevel;
 import com.google.common.collect.ImmutableMap;
 
 /**
@@ -33,15 +34,16 @@ import com.google.common.collect.ImmutableMap;
  */
 public class PermissionMap {
 
-    private static final Map<String, String> ACL = ImmutableMap.of("N", "None", "R", "Read Only", "E", "Edit Records",
-            "A", "Add New Records", "D", "Delete Records");
+    private static final Map<Character, String> ACL = ImmutableMap.of(AccessLevel.NOACCESS.getCode(), "None",
+            AccessLevel.READ.getCode(), "Read Only", AccessLevel.EDIT.getCode(), "Edit Records",
+            AccessLevel.ADD.getCode(), "Add New Records", AccessLevel.DELETE.getCode(), "Delete Records");
 
     /**
      * Returns the acl.
      *
      * @return the acl
      */
-    public Map<String, String> getAcl() {
+    public Map<Character, String> getAcl() {
         return ACL;
     }
 }

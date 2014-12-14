@@ -24,7 +24,6 @@
 package uk.org.rbc1b.roms.db.application;
 
 import java.util.List;
-import java.util.Set;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -47,13 +46,6 @@ public interface ApplicationAccessDao {
      * @param applicationAccess set
      */
     @Transactional
-    void saveApplicationAccess(Set<ApplicationAccess> applicationAccess);
+    void saveApplicationAccess(ApplicationAccess applicationAccess);
 
-    /**
-     * Deletes all ACLs for a person.
-     *
-     * @param personId the person id to delete
-     */
-    @Transactional
-    void deleteAclForPerson(Integer personId);
 }

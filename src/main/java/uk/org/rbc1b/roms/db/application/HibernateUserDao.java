@@ -23,10 +23,8 @@
  */
 package uk.org.rbc1b.roms.db.application;
 
-import java.util.HashSet;
 import java.util.List;
 import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -44,7 +42,7 @@ public class HibernateUserDao implements UserDao {
     private SessionFactory sessionFactory;
 
     @Override
-    public User findUserAndPermissions(String userName) {
+    public User findUser(String userName) {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(User.class);
         criteria.add(Restrictions.eq("userName", userName));
 
@@ -54,22 +52,12 @@ public class HibernateUserDao implements UserDao {
             return null;
         }
 
-        User user = users.get(0);
-
-        criteria = this.sessionFactory.getCurrentSession().createCriteria(ApplicationAccess.class);
-        criteria.setFetchMode("application", FetchMode.JOIN);
-        criteria.add(Restrictions.eq("person.personId", user.getPersonId()));
-        @SuppressWarnings("unchecked")
-        List<ApplicationAccess> access = criteria.list();
-
-        user.setApplicationAccess(new HashSet<ApplicationAccess>(access));
-
-        return user;
+        return users.get(0);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<User> findUsers(String userName) {
+    public List<User> findUsersByUserNamePrefix(String userName) {
         this.sessionFactory.getCurrentSession().clear();
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(User.class);
         criteria.add(Restrictions.like("userName", userName + "%"));
@@ -100,12 +88,5 @@ public class HibernateUserDao implements UserDao {
     @CacheEvict(value = "user.userId", allEntries = true)
     public void createUser(User user) {
         this.sessionFactory.getCurrentSession().save(user);
-    }
-
-    @Override
-    public boolean checkUserExist(String username) {
-        this.sessionFactory.getCurrentSession().clear();
-        List<User> users = findUsers(username);
-        return !(users.isEmpty());
     }
 }

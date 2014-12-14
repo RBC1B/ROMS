@@ -24,10 +24,7 @@
 package uk.org.rbc1b.roms.db.application;
 
 import java.util.List;
-import java.util.Set;
 import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,23 +44,13 @@ public class HibernateApplicationAccessDao implements ApplicationAccessDao {
     @Override
     public List<ApplicationAccess> findUserPermissions(Integer personId) {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(ApplicationAccess.class);
-        criteria.add(Restrictions.eq("person.personId", personId));
+        criteria.add(Restrictions.eq("personId", personId));
         return criteria.list();
     }
 
     @Override
-    public void saveApplicationAccess(Set<ApplicationAccess> applicationAccess) {
-        Session session = sessionFactory.getCurrentSession();
-        for (ApplicationAccess appAccess : applicationAccess) {
-            session.save(appAccess);
-        }
+    public void saveApplicationAccess(ApplicationAccess applicationAccess) {
+        sessionFactory.getCurrentSession().merge(applicationAccess);
     }
 
-    @Override
-    public void deleteAclForPerson(Integer personId) {
-        Session session = sessionFactory.getCurrentSession();
-        Query query = session.createQuery("delete from ApplicationAccess where PersonId = :UserId");
-        query.setParameter("UserId", personId);
-        query.executeUpdate();
-    }
 }

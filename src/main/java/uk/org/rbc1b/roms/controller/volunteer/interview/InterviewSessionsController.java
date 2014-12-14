@@ -521,7 +521,7 @@ public class InterviewSessionsController {
     private Person getMyDetails() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String myUserName = userDetails.getUsername();
-        User me = userDao.findUserAndPermissions(myUserName);
+        User me = userDao.findUser(myUserName);
         Person myDetails = personDao.findPerson(me.getPersonId());
         return myDetails;
     }

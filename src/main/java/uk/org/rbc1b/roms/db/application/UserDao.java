@@ -34,13 +34,13 @@ import org.springframework.transaction.annotation.Transactional;
 public interface UserDao {
 
     /**
-     * Look up the user by name. Include the user permissions.
+     * Look up the user by name.
      *
      * @param userName user name
      * @return user
      */
     @Transactional(readOnly = true)
-    User findUserAndPermissions(String userName);
+    User findUser(String userName);
 
     /**
      * Look up the user by name. We do a prefix match on the name.
@@ -49,7 +49,7 @@ public interface UserDao {
      * @return users
      */
     @Transactional(readOnly = true)
-    List<User> findUsers(String userName);
+    List<User> findUsersByUserNamePrefix(String userName);
 
     /**
      * Look up the user by id.
@@ -59,16 +59,6 @@ public interface UserDao {
      */
     @Transactional(readOnly = true)
     User findUser(Integer userId);
-
-    /**
-     * Look up the user by username. This needs to be protected to handle AJAX
-     * requests so that it does not leak information.
-     *
-     * @param username the username to lookup
-     * @return boolean true if it exists
-     */
-    @Transactional(readOnly = true)
-    boolean checkUserExist(String username);
 
     /**
      * Find all users on the system.

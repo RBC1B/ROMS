@@ -10,11 +10,5 @@
         <property name="active" />
         <property name="updatedBy" />
         <property name="updateTime" not-null="true" />
-        <set name="applicationAccess" table="ApplicationAccess" inverse="true" lazy="false" >
-            <key>
-                <column name="personId" not-null="true" />
-            </key>
-            <one-to-many class="uk.org.rbc1b.roms.db.application.ApplicationAccess" />
-        </set>
     </class>
 </hibernate-mapping>

@@ -25,6 +25,7 @@ package uk.org.rbc1b.roms.security;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -32,7 +33,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import uk.org.rbc1b.roms.controller.ForbiddenRequestException;
 import uk.org.rbc1b.roms.db.application.ApplicationAccess;
+import uk.org.rbc1b.roms.db.application.ApplicationAccessDao;
 import uk.org.rbc1b.roms.db.application.User;
 import uk.org.rbc1b.roms.db.application.UserDao;
 
@@ -44,17 +47,25 @@ import uk.org.rbc1b.roms.db.application.UserDao;
 public class ROMSUserDetailsService implements UserDetailsService {
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private ApplicationAccessDao applicationAccessDao;
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 
-        final User user = userDao.findUserAndPermissions(userName);
+        final User user = userDao.findUser(userName);
         if (user == null) {
             throw new UsernameNotFoundException("Failed to find user [" + userName + "]");
         }
 
+        if (!user.isActive()) {
+            throw new ForbiddenRequestException("User #" + user.getPersonId() + " is not active");
+        }
+
+        List<ApplicationAccess> userAccessList = applicationAccessDao.findUserPermissions(user.getPersonId());
+
         final Map<Application, ROMSGrantedAuthority> authorityMap = new HashMap<Application, ROMSGrantedAuthority>();
-        for (ApplicationAccess access : user.getApplicationAccess()) {
+        for (ApplicationAccess access : userAccessList) {
             ROMSGrantedAuthority authority = new ROMSGrantedAuthority();
             authority.setApplication(Application.valueOf(access.getApplication().getCode()));
             authority.setDepartmentLevelAccess(AccessLevel.findAccessLevel(access.getDepartmentAccess()));
