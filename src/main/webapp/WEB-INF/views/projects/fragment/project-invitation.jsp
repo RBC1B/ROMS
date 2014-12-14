@@ -10,19 +10,21 @@
     </c:when>
     <c:otherwise>
         <dl class="dl-horizontal">
-            <dt>Project Work Session</dt>
-            <dd>
-                <select id="work-sessions" class="form-control" name="work-sessions">
-                    <option value="None" selected>
-                        No Session Selected
-                    </option>
-                    <c:forEach var="workSession" items="${workSessions}">
-                        <option value="${workSession.projectDepartmentSession}">
-                            <c:out value="${workSession.projectDepartmentSession}" />
+            <div id="availability">
+                <dt>Project Work Session</dt>
+                <dd>
+                    <select id="available-work-sessions" class="form-control" name="available-work-sessions">
+                        <option value="None" selected>
+                            No Session Selected
                         </option>
-                    </c:forEach> 
-                </select>
-            </dd>
+                        <c:forEach var="workSession" items="${workSessions}">
+                            <option value="${workSession.projectDepartmentSession}">
+                                <c:out value="${workSession.projectDepartmentSession}" />
+                            </option>
+                        </c:forEach> 
+                    </select>
+                </dd>
+            </div>
             <sec:authorize access="hasPermission('ATTENDANCE', 'EDIT')">
                 <a id="add-new-project-session" href='#' class="btn btn-edifice">Add Project Work Session</a>
             </sec:authorize>

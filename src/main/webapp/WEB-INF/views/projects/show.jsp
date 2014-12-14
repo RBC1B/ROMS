@@ -21,7 +21,11 @@
                 </li>
                 <li role="presentation">
                     <a href="#invitation" aria-controls="invitation" role="tab"
-                       data-toggle="tab">Project Invitations</a>
+                       data-toggle="tab">Volunteer Invitations</a>
+                </li>
+                <li role="presentation">
+                    <a href="#attendance" aria-controls="attendance" role="tab"
+                       data-toggle="tab">Volunteer Invitation Confirmation</a>
                 </li>
             </ul>
 
@@ -33,6 +37,9 @@
 
                 <div role="tabpanel" class="tab-pane" id="invitation">
                     <%@ include file="fragment/project-invitation.jsp" %>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="attendance">
+                    <%@ include file="fragment/project-attendance.jsp" %>
                 </div>
             </div>
         </div>

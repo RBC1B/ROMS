@@ -125,7 +125,7 @@ public class ProjectsController {
      * @return view name
      * @throws NoSuchRequestHandlingMethodException if project does not exist
      */
-    @RequestMapping(value = "{projectId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{projectId}", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('PROJECT', 'READ')")
     public String showProject(@PathVariable Integer projectId, ModelMap model)
             throws NoSuchRequestHandlingMethodException {

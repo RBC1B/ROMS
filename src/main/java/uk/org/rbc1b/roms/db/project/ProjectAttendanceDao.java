@@ -35,6 +35,15 @@ import java.sql.Date;
 public interface ProjectAttendanceDao {
 
     /**
+     * Finds the project attendance by id.
+     *
+     * @param projectAttendanceId the id to find
+     * @return projectAttendance row data
+     */
+    @Transactional(readOnly = true)
+    ProjectAttendance find(Integer projectAttendanceId);
+
+    /**
      * Update volunteers attendance.
      *
      * @param projectAttendance the row
@@ -76,4 +85,12 @@ public interface ProjectAttendanceDao {
      */
     @Transactional(readOnly = false)
     void delete(ProjectAttendance projectAttendance);
+
+    /**
+     * Updates an existing attendance record.
+     *
+     * @param projectAttendance the row to update
+     */
+    @Transactional(readOnly = false)
+    void update(ProjectAttendance projectAttendance);
 }

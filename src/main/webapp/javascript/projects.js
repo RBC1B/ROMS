@@ -321,19 +321,6 @@ $(document).ready(function() {
         $('#table-location').html('<table class="table table-bordered table-condensed table-striped table-hover" cellspacing="0" id="volunteer-availability" width="90%"></table>');
     }
 
-    $("#work-sessions").change(function() {
-        var workSession = $("#work-sessions option:selected");
-        if (workSession.val() !== "None") {
-            var sessionTokens = workSession.val().split(" - ");
-            var sessionId = sessionTokens[1];
-            if (sessionId !== null) {
-                getJsonData(sessionId);
-            }
-        } else {
-            removeTable();
-        }
-    });
-
     // Handle requests to add new project department work sessions
     var updateUrl = $("#project-department-session-form").attr("action");
     var updateMethod = $("#project-department-session-form").attr("method");
@@ -383,4 +370,231 @@ $(document).ready(function() {
             });
         }
     });
+
+    $("#available-work-sessions").change(function() {
+        var workSession = $("#available-work-sessions option:selected");
+        if (workSession.val() !== "None") {
+            var sessionTokens = workSession.val().split(" - ");
+            var sessionId = sessionTokens[1];
+            if (sessionId !== null) {
+                getJsonData(sessionId);
+            }
+        } else {
+            removeTable();
+        }
+    });
+
+// Overseer inviting/confirming dates when volunteers should come
+    $("#confirmation-work-sessions").change(function() {
+        var workSession = $("#confirmation-work-sessions option:selected");
+        if (workSession.val() !== "None") {
+            var sessionTokens = workSession.val().split(" - ");
+            var sessionId = sessionTokens[1];
+            if (sessionId !== null) {
+                removeConfirmationTable();
+                addConfirmationTable();
+                getAvailableVolunteers(sessionId);
+            }
+        } else {
+            removeConfirmationTable();
+        }
+    });
+
+    // Gets a list of dates used to build table headers for confirmation
+    var sessionWorkDates;
+    function getSessionWorkDates(sessionId) {
+        $.ajax({
+            url: roms.common.relativePath + "/service/projects/session/" + sessionId + '/dates',
+            contenType: "application/json",
+            dataType: "json",
+            data: {
+                sessionId: sessionId
+            },
+            success: function(data) {
+                if (!data || data.length === 0) {
+                    sessionWorkDates = "";
+                } else {
+                    sessionWorkDates = data;
+                }
+            }
+        });
+    }
+
+    // Gets list of volunteers and dates that they are available as JSON data
+    function getAvailableVolunteers(sessionId)
+    {
+        getSessionWorkDates(sessionId);
+        $.ajax({
+            url: roms.common.relativePath + '/service/projects/session/' + sessionId + '/volunteers',
+            contentType: "application/json",
+            dataType: "json",
+            data: {
+                projectDepartmentSessionId: sessionId
+            },
+            success: function(data) {
+                if (!data || data.length === 0) {
+                    return;
+                } else {
+                    buildConfirmationTable(data);
+                }
+            }
+        });
+    }
+
+    function buildConfirmationTable(volunteers)
+    {
+        if (volunteers.length > 0)
+        {
+            generateConfirmationTableHeaders();
+            var tbody$ = $('<tbody>');
+            for (var volunteer = 0; volunteer < volunteers.length; volunteer++)
+            {
+                var row$ = $('<tr/>');
+                var rbcid = volunteers[volunteer]["personId"];
+                if (rbcid === null)
+                    rbcid = "";
+                row$.append($('<td/>').html(rbcid));
+                var name = volunteers[volunteer]["name"];
+                if (name === null)
+                    name = "";
+                row$.append($('<td/>').html(name));
+                var workDates = volunteers[volunteer]["projectAttendanceDates"];
+                for (var availableDate = 0; availableDate < workDates.length; availableDate++)
+                {
+                    var projectAttendanceId = workDates[availableDate]["projectAttendanceId"];
+                    var required = workDates[availableDate]["required"];
+                    var status = "";
+                    if (projectAttendanceId === null)
+                    {
+                        status = "";
+                    } else if (required === false) {
+                        status = "Available";
+                    } else {
+                        status = "Invited";
+                    }
+                    var htmldata = "<div id='" + projectAttendanceId + "'projectAttendanceId='" + projectAttendanceId + "' />" + status;
+                    row$.append($('<td/>').html(htmldata));
+                }
+                $("#volunteer-confirmation").append(row$);
+            }
+            var tableData = document.getElementById("volunteer-confirmation");
+            var wrapper = document.createElement("div");
+            wrapper.appendChild(tableData.cloneNode(true));
+            roms.common.datatables($("#volunteer-confirmation"), {"iDisplayLength": 10});
+            addConfirmationTableCellEventHandler();
+        }
+    }
+
+    // Sets up on click event handler for each cell
+    function addConfirmationTableCellEventHandler()
+    {
+        var table = document.getElementById("volunteer-confirmation");
+        var rows = table.getElementsByTagName("tr");
+        for (var rowIndex = 0; rowIndex < rows.length; rowIndex++)
+        {
+            var row = table.rows[rowIndex];
+            var cells = row.getElementsByTagName("td");
+            for (var cellIndex = 2; cellIndex < cells.length; cellIndex++)
+            {
+                var cell = table.rows[rowIndex].cells[cellIndex];
+                cell.onclick = function()
+                {
+                    processConfirmationRequest(this);
+                }
+            }
+        }
+    }
+
+    // handles AJAX requests to update attendance
+    function processConfirmationRequest(html)
+    {
+        if (attendance !== null && attendance !== "READ")
+        {
+            var clickedCell = html.getElementsByTagName("div")[0];
+            if (clickedCell !== null) {
+                var attendanceId = clickedCell.getAttribute("projectAttendanceId");
+                if (attendanceId !== null && attendanceId > 0)
+                {
+                    sendConfirmationRequest(attendanceId, html)
+                            .done(function(r) {
+                        updateCell(html);
+                    })
+                            .fail(function(x) {
+                        alert("Failed to send update");
+                    });
+                }
+            }
+        }
+    }
+    function updateCell(html) {
+        var attendanceId = html.getElementsByTagName("div")[0].getAttribute("projectAttendanceId");
+        var newHtml = "<div id='" + attendanceId + "'projectAttendanceId='" + attendanceId + "' />";
+        var cell = document.getElementById(attendanceId).parentNode;
+        if (html.innerHTML.indexOf("Available") > -1)
+        {
+            cell.innerHTML = newHtml + "Invited";
+        }
+        else if (html.innerHTML.indexOf("Invited") > -1)
+        {
+            cell.innerHTML = newHtml + "Available";
+        } else {
+            alert("Could not understand...");
+        }
+    }
+
+    function sendConfirmationRequest(attendanceId, html) {
+        var aStatus = html.innerHTML.indexOf("Available");
+        var cStatus = html.innerHTML.indexOf("Invited");
+        var required;
+        if (aStatus > -1)
+        {
+            required = true;
+        } else if (cStatus > -1)
+        {
+            required = false;
+        } else {
+            //Assume that the volunteer is available...
+            required = true;
+        }
+        var jsonData = {projectAttendanceId: attendanceId, "required": required, attended: false};
+        return $.ajax({
+            url: roms.common.relativePath + "/service/projects/attendance/" + attendanceId,
+            contentType: "application/json",
+            type: "PUT",
+            datatype: "json",
+            data: JSON.stringify(jsonData),
+        });
+    }
+
+    // Create the confirmation table header
+    function generateConfirmationTableHeaders()
+    {
+        var thead$ = $('<thead/>');
+        var headerTr$ = $('<tr/>');
+        headerTr$.append($('<th/>').html("RBC ID"));
+        headerTr$.append($('<th/>').html("Name"));
+        for (var dateIndex = 0; dateIndex < sessionWorkDates.length; dateIndex++)
+        {
+            headerTr$.append($('<th/>').html(sessionWorkDates[dateIndex]));
+        }
+        thead$.append(headerTr$);
+        $('#volunteer-confirmation').append(thead$);
+    }
+
+    // Removes the volunteer invitation confirmation table
+    function removeConfirmationTable()
+    {
+        var table = document.getElementById("volunteer-confirmation");
+        if (table !== null)
+        {
+            var parent = document.getElementById("volunteer-confirmation").parentNode;
+            parent.removeChild(table);
+        }
+    }
+
+    // Adds the volunteer invitation confirmation table
+    function addConfirmationTable()
+    {
+        $('#confirmation-table-location').html('<table class="table table-bordered table-condensed table-striped table-hover" cellspacing="0" id="volunteer-confirmation" width="90%"></table>');
+    }
 });

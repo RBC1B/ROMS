@@ -72,4 +72,15 @@ public class HibernateProjectAttendanceDao implements ProjectAttendanceDao {
     public void delete(ProjectAttendance projectAttendance) {
         this.sessionFactory.getCurrentSession().delete(projectAttendance);
     }
+
+    @Override
+    public ProjectAttendance find(Integer projectAttendanceId) {
+        return (ProjectAttendance) this.sessionFactory.getCurrentSession()
+                .get(ProjectAttendance.class, projectAttendanceId);
+    }
+
+    @Override
+    public void update(ProjectAttendance projectAttendance) {
+        this.sessionFactory.getCurrentSession().merge(projectAttendance);
+    }
 }

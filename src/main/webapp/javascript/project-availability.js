@@ -42,7 +42,7 @@ function updateDateMap(dateClicked, thisObject) {
 
 function sendAvailabilityDate(date, updateMethod) {
     $.ajax({
-        url: updateUrl + "/" + date.format() + "/" + updateMethod,
+        url: updateUrl + "/" + date.format(),
         type: updateMethod,
         cache: false,
         statusCode: {
@@ -67,7 +67,7 @@ function sendAvailabilityDate(date, updateMethod) {
 
 function updateRequirements(requirement) {
     $.ajax({
-        url: updateUrl + "/" + requirement + "/" + "PUT",
+        url: updateUrl + "/" + requirement,
         type: "PUT",
         cache: false,
         statusCode: {

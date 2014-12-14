@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import javax.annotation.Resource;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,8 +74,8 @@ public class ProjectAvailabilityEmailScheduledService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProjectAvailabilityEmailScheduledService.class);
     private static final String BASE_URI = "/project-availability";
-    private static final String AVAILABILITY_SUBJECT = "Project Availability Request";
-    private static final String CONFIRMATION_SUBJECT = "Project Confirmation Dates";
+    private static final String AVAILABILITY_SUBJECT = "Availability for Project Request";
+    private static final String CONFIRMATION_SUBJECT = "Project Attendance Confirmation Dates";
     private static final String SECURITY_SALT = "security.salt";
     private static final String SERVER_URL = "edifice.url";
     private static final String DATETIMEFORMAT = "yyyyMMddHHmm";
@@ -207,7 +208,7 @@ public class ProjectAvailabilityEmailScheduledService {
 
         Person person = personDao.findPerson(projectAvailability.getPerson().getPersonId());
         populatePersonToModel(model, person);
-        model.put("httpsurl", getSecureAvailabilityUrl(person, projectAvailability));
+        model.put("httpsurl", generateSecureAvailabilityUrl(person, projectAvailability));
 
         ProjectDepartmentSession projectSession = projectDepartmentSessionDao.
                 findByProjectDepartmentSessionId(projectAvailability.
@@ -253,15 +254,17 @@ public class ProjectAvailabilityEmailScheduledService {
      * @param projectAvailability
      * @return url
      */
-    private String getSecureAvailabilityUrl(Person person, ProjectAvailability projectAvailability) {
-        String url = edificeProperty.getProperty(SERVER_URL);
-
-        url = url + BASE_URI + "/" + person.getPersonId() + "/" + projectAvailability.getProjectAvailabilityId() + "/";
+    private String generateSecureAvailabilityUrl(Person person, ProjectAvailability projectAvailability) {
+        List<String> url = new ArrayList<String>();
+        url.add(edificeProperty.getProperty(SERVER_URL));
+        url.add(BASE_URI);
+        url.add(Integer.toString(person.getPersonId()));
+        url.add(Integer.toString(projectAvailability.getProjectAvailabilityId()));
         String datetime = getCurrentDateTime();
-        url = url + datetime + "/";
-        url = url + getSecureToken(person, projectAvailability, datetime) + "/update";
+        url.add(datetime);
+        url.add(generateSecureToken(person, projectAvailability, datetime));
 
-        return url;
+        return StringUtils.join(url, "/");
     }
 
     private String getSecureConfirmedDatesUrl(Person person, ProjectAvailability projectAvailability) {
@@ -269,7 +272,7 @@ public class ProjectAvailabilityEmailScheduledService {
         url = url + BASE_URI + "/" + person.getPersonId() + "/" + projectAvailability.getProjectAvailabilityId() + "/";
         String datetime = getCurrentDateTime();
         url = url + datetime + "/";
-        url = url + getSecureToken(person, projectAvailability, datetime) + "/confirmed";
+        url = url + generateSecureToken(person, projectAvailability, datetime) + "/confirmed";
         return url;
     }
 
@@ -278,7 +281,7 @@ public class ProjectAvailabilityEmailScheduledService {
         return datetime.toString(DATETIMEFORMAT);
     }
 
-    private String getSecureToken(Person person, ProjectAvailability projectAvailability, String datetime) {
+    private String generateSecureToken(Person person, ProjectAvailability projectAvailability, String datetime) {
         String salt = edificeProperty.getProperty(SECURITY_SALT);
         if (salt == null || salt.isEmpty()) {
             salt = "er9bhmbsaa5ppdnoQP";

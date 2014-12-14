@@ -74,7 +74,7 @@ public class VolunteerAvailabilityController {
     private static final long DAY = 24 * 60 * 60 * 1000;
     private static final String ACCOMMODATION = "accommodationRequired";
     private static final String TRANSPORTRQD = "transportRequired";
-    private static final String TRANSPORTOFF = "offerTransport";
+    private static final String TRANSPORTOFR = "offerTransport";
     @Autowired
     private ProjectAvailabilityDao projectAvailabilityDao;
     @Autowired
@@ -102,7 +102,7 @@ public class VolunteerAvailabilityController {
      * @param model the mvc model
      * @return the jsp page to show
      */
-    @RequestMapping(value = "/{personId}/{projectAvailabilityId}/{datetime}/{hash}/update", method = RequestMethod.GET)
+    @RequestMapping(value = "/{personId}/{projectAvailabilityId}/{datetime}/{hash}", method = RequestMethod.GET)
     public String showVolunteerAvailabilityPage(@PathVariable Integer personId, @PathVariable Integer projectAvailabilityId,
             @PathVariable String datetime, @PathVariable String hash, ModelMap model) {
         String uri = BASE_URL + "/" + personId + "/" + projectAvailabilityId + "/" + datetime + "/" + hash;
@@ -140,7 +140,7 @@ public class VolunteerAvailabilityController {
      * @param hash security token
      * @param date the date to add to the database
      */
-    @RequestMapping(value = "/{personId}/{projectAvailabilityId}/{datetime}/{hash}/{date}/POST", method = RequestMethod.POST)
+    @RequestMapping(value = "/{personId}/{projectAvailabilityId}/{datetime}/{hash}/{date}", method = RequestMethod.POST)
     public void availableDatesPosted(HttpServletResponse response, @PathVariable Integer personId, @PathVariable Integer projectAvailabilityId,
             @PathVariable String datetime, @PathVariable String hash, @PathVariable String date) {
         ProjectAvailability projectAvailability = projectAvailabilityDao.findById(projectAvailabilityId);
@@ -178,7 +178,7 @@ public class VolunteerAvailabilityController {
      * @param hash security token
      * @param date the date to delete to the database
      */
-    @RequestMapping(value = "/{personId}/{projectAvailabilityId}/{datetime}/{hash}/{date}/DELETE", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{personId}/{projectAvailabilityId}/{datetime}/{hash}/{date}", method = RequestMethod.DELETE)
     public void availableDatesDeleted(HttpServletResponse response, @PathVariable Integer personId, @PathVariable Integer projectAvailabilityId,
             @PathVariable String datetime, @PathVariable String hash, @PathVariable String date) {
         ProjectAvailability projectAvailability = projectAvailabilityDao.findById(projectAvailabilityId);
@@ -210,7 +210,7 @@ public class VolunteerAvailabilityController {
      * @param hash security token
      * @param requirement the requirement to update
      */
-    @RequestMapping(value = "/{personId}/{projectAvailabilityId}/{datetime}/{hash}/{requirement}/PUT", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{personId}/{projectAvailabilityId}/{datetime}/{hash}/{requirement}", method = RequestMethod.PUT)
     public void updateRequirements(HttpServletResponse response, @PathVariable Integer personId, @PathVariable Integer projectAvailabilityId,
             @PathVariable String datetime, @PathVariable String hash, @PathVariable String requirement) {
         ProjectAvailability projectAvailability = projectAvailabilityDao.findById(projectAvailabilityId);
@@ -234,7 +234,7 @@ public class VolunteerAvailabilityController {
                 } else {
                     projectAvailability.setTransportRequired(true);
                 }
-            } else if (requirement.equalsIgnoreCase(TRANSPORTOFF)) {
+            } else if (requirement.equalsIgnoreCase(TRANSPORTOFR)) {
                 validRequest = true;
                 if (projectAvailability.isOfferTransport()) {
                     projectAvailability.setOfferTransport(false);
