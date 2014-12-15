@@ -220,28 +220,54 @@ $(document).ready(function() {
 
     function buildTable(volunteerdata) {
         if (volunteerdata.length > 0) {
-            removeTable();
-            addNewTable();
+            addAvailabilityTable();
             var columns = addColumnHeaders(volunteerdata);
             var tbody$ = $('<tbody>');
             $('#volunteer-availability').append(tbody$);
             for (var i = 0; i < volunteerdata.length; i++) {
+                var rbcid = volunteerdata[i]["personId"];
+                if (rbcid === null)
+                    rbcid = "";
+                var sessionId = volunteerdata[i]["projectDepartmentSessionId"];
+                if (sessionId === null)
+                    sessionId = "";
                 var row$ = $('<tr/>');
                 for (var c = 0; c < columns.length; c++) {
                     var cellvalue = volunteerdata[i][columns[c]];
                     if (cellvalue === null) {
                         cellvalue = "";
+                    } else {
+                        if (columns[c] === "invited") {
+                            var celldata = "<div id='" + sessionId + "-" + rbcid + "'></div>";
+                            if (cellvalue) {
+                                cellvalue = celldata + "Invited";
+                            } else {
+                                cellvalue = celldata;
+                            }
+                        } else if (columns[c] === "emailSent") {
+                            if (cellvalue) {
+                                cellvalue = "Email sent";
+                            }
+                        } else if (columns[c] === "personResponded") {
+                            if (cellvalue) {
+                                cellvalue = "Volunteer acknowledged";
+                            }
+                        } else if (columns[c] === "overseerConfirmed") {
+                            if (cellvalue) {
+                                cellvalue = "Dates confirmed";
+                            }
+                        }
                     }
                     row$.append($('<td/>').html(cellvalue));
                 }
                 $('#volunteer-availability').append(row$);
             }
             roms.common.datatables($('#volunteer-availability'), {"iDisplayLength": 10});
-            addRowEventHandler();
+            addAvailabilityTableRowEventHandler();
         }
     }
 
-    function addRowEventHandler() {
+    function addAvailabilityTableRowEventHandler() {
         var table = document.getElementById("volunteer-availability");
         var rows = table.getElementsByTagName("tr");
         for (i = 0; i < rows.length; i++) {
@@ -255,45 +281,58 @@ $(document).ready(function() {
                             cell = row.getElementsByTagName("td")[1];
                             var personId = cell.innerHTML;
                             cell = row.getElementsByTagName("td")[4];
-                            var invited = cell.innerHTML;
-                            updateVolunteerAvailability(personId, projectworksessionId, invited);
-                            if (invited === "true") {
-                                cell.innerHTML = false;
-                            } else {
-                                cell.innerHTML = true;
-                            }
+                            processAvailabilityRequest(personId, projectworksessionId, cell.innerHTML);
                         };
                     };
             thisRow.onclick = createOnClickHandler(thisRow);
         }
     }
 
-    function updateVolunteerAvailability(personId, departmentSessionId, invited) {
+    function processAvailabilityRequest(personId, projectWorkSessionId, cell) {
         if (attendance !== null && attendance !== "READ") {
-            if (invited === "true") {
-                $.ajax({
-                    url: roms.common.relativePath + '/projects/' + departmentSessionId + "/" + personId + "/availability-delete",
-                    type: "DELETE",
-                    cache: false,
-                    success: function() {
-                    }
-                });
-            } else {
-                $.ajax({
-                    url: roms.common.relativePath + '/projects/' + departmentSessionId + "/" + personId + "/availability-add",
-                    type: "POST",
-                    cache: false,
-                    success: function() {
-                    }
-                });
-            }
+            var newInvitedValue;
+            if (cell.indexOf("Invited") > -1)
+                newInvitedValue = false;
+            else
+                newInvitedValue = true;
+            sendAvailabilityRequest(personId, projectWorkSessionId, newInvitedValue)
+                    .done(function() {
+                updateAvailabilityCell(personId, projectWorkSessionId, newInvitedValue);
+            })
+                    .fail(function() {
+                alert("Failed to send update");
+            });
         }
     }
 
+    function updateAvailabilityCell(personId, sessionId, invited) {
+        var cell = document.getElementById(sessionId + "-" + personId).parentNode;
+        var celldata = "<div id='" + sessionId + "-" + personId + "'></div>";
+        if (invited) {
+            cell.innerHTML = celldata + "Invited";
+        } else {
+            cell.innerHTML = celldata;
+        }
+    }
 
-    function getJsonData(sessionId) {
+    function sendAvailabilityRequest(personId, departmentSessionId, invited) {
+        var methodType = "";
+        if (invited)
+            methodType = "POST";
+        else
+            methodType = "DELETE";
+        return $.ajax({
+            url: roms.common.relativePath + "/service/projects/sessions/" + departmentSessionId
+                    + "/person/" + personId + "/availability/",
+            type: methodType,
+            cache: false
+        });
+    }
+
+
+    function getDepartmentVolunteersAndBuildTable(sessionId) {
         $.ajax({
-            url: roms.common.relativePath + '/projects/' + sessionId + '/department-session',
+            url: roms.common.relativePath + '/service/projects/department/volunteers/session/' + sessionId,
             contentType: "application/json",
             dataType: "json",
             data: {
@@ -309,7 +348,7 @@ $(document).ready(function() {
         });
     }
 
-    function removeTable() {
+    function removeAvailabilityTable() {
         var table = document.getElementById("volunteer-availability");
         if (table !== null) {
             var parent = document.getElementById("volunteer-availability").parentNode;
@@ -317,7 +356,7 @@ $(document).ready(function() {
         }
     }
 
-    function addNewTable() {
+    function addAvailabilityTable() {
         $('#table-location').html('<table class="table table-bordered table-condensed table-striped table-hover" cellspacing="0" id="volunteer-availability" width="90%"></table>');
     }
 
@@ -377,10 +416,11 @@ $(document).ready(function() {
             var sessionTokens = workSession.val().split(" - ");
             var sessionId = sessionTokens[1];
             if (sessionId !== null) {
-                getJsonData(sessionId);
+                removeAvailabilityTable();
+                getDepartmentVolunteersAndBuildTable(sessionId);
             }
         } else {
-            removeTable();
+            removeAvailabilityTable();
         }
     });
 
@@ -517,7 +557,7 @@ $(document).ready(function() {
                 {
                     sendConfirmationRequest(attendanceId, html)
                             .done(function(r) {
-                        updateCell(html);
+                        updateConfirmationCell(html);
                     })
                             .fail(function(x) {
                         alert("Failed to send update");
@@ -526,7 +566,7 @@ $(document).ready(function() {
             }
         }
     }
-    function updateCell(html) {
+    function updateConfirmationCell(html) {
         var attendanceId = html.getElementsByTagName("div")[0].getAttribute("projectAttendanceId");
         var newHtml = "<div id='" + attendanceId + "'projectAttendanceId='" + attendanceId + "' />";
         var cell = document.getElementById(attendanceId).parentNode;

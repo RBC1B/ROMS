@@ -25,8 +25,5 @@ If you have any questions, please contact your department overseer.
 Regards,
 RBC-LHC IT Support
 
-Regards,
-RBC-LHC IT Support
-
 To contact support, please email Edifice.Help@gmail.com
 To update your contact details, please go to https://edifice.rbc-lhc.org.uk
