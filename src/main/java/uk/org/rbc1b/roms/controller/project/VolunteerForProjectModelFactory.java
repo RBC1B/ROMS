@@ -48,7 +48,8 @@ public class VolunteerForProjectModelFactory {
 
     /**
      * Generates the model to display for requests to volunteers to make their
-     * availability known.
+     * availability known. This is a list of all department volunteers used to
+     * invite.
      *
      * @param assignments the departmental assignments
      * @param workSession the project worksessions
@@ -58,30 +59,86 @@ public class VolunteerForProjectModelFactory {
         List<ProjectAvailabilityModel> volunteersForProject = new ArrayList<ProjectAvailabilityModel>();
 
         for (Assignment assignment : assignments) {
-            ProjectAvailabilityModel availableModel = new ProjectAvailabilityModel();
+            ProjectAvailabilityModel model;
 
-            availableModel.setProjectDepartmentSessionId(workSession.getProjectDepartmentSessionId());
-
-            Person person = personDao.findPerson(assignment.getPerson().getPersonId());
-            String address = person.getAddress().getTown() + ", "
-                    + person.getAddress().getCounty() + ", "
-                    + person.getAddress().getPostcode();
-            availableModel.setAddress(address);
-
-            availableModel.setPersonId(person.getPersonId());
-            availableModel.setPersonName(person.getSurname() + ", " + person.getForename());
-
-            if (workSession != null) {
-                ProjectAvailability availability = projectAvailabilityDao.findVolunteerAvailabilityByWorkSession(person.getPersonId(), workSession);
+            if (workSession == null) {
+                model = generate(assignment, workSession);
+            } else {
+                ProjectAvailability availability = projectAvailabilityDao
+                        .findVolunteerAvailabilityByWorkSession(assignment.getPerson().getPersonId(), workSession);
                 if (availability != null) {
-                    availableModel.setInvited(true);
-                    availableModel.setEmailSent(availability.isEmailSent());
-                    availableModel.setPersonResponded(availability.isPersonResponded());
-                    availableModel.setOverseerConfirmed(availability.isOverseerConfirmed());
+                    model = generate(availability);
+                } else {
+                    model = generate(assignment, workSession);
                 }
             }
-            volunteersForProject.add(availableModel);
+            volunteersForProject.add(model);
         }
         return volunteersForProject;
+    }
+
+    /**
+     * Used to generate a model based on assignment and work session. Used to
+     * generate a model for a person who has not been invited - no records in
+     * available table.
+     *
+     * @param assignment the departmental assignment of the volunteer
+     * @param session the work session
+     * @return model
+     */
+    public ProjectAvailabilityModel generate(Assignment assignment, ProjectDepartmentSession session) {
+        ProjectAvailabilityModel model = new ProjectAvailabilityModel();
+        model.setProjectDepartmentSessionId(session.getProjectDepartmentSessionId());
+        Person person = personDao.findPerson(assignment.getPerson().getPersonId());
+
+        model.setPersonId(person.getPersonId());
+        model.setPersonName(person.getSurname() + ", " + person.getForename());
+
+        String address = person.getAddress().getTown() + ", "
+                + person.getAddress().getCounty() + ", "
+                + person.getAddress().getPostcode();
+        model.setAddress(address);
+        model.setInvited(false);
+        model.setEmailSent(false);
+        model.setPersonResponded(false);
+        model.setOverseerConfirmed(false);
+        model.setTransportRequired(false);
+        model.setOfferTransport(false);
+        model.setAccommodationRequired(false);
+
+        return model;
+    }
+
+    /**
+     * Generates a model for a volunteer who has already been invited, i.e.
+     * there is a record in the availability table.
+     *
+     * @param availability the available record
+     * @return model
+     */
+    public ProjectAvailabilityModel generate(ProjectAvailability availability) {
+        ProjectAvailabilityModel model = new ProjectAvailabilityModel();
+
+        model.setProjectDepartmentSessionId(availability.getProjectDepartmentSession().getProjectDepartmentSessionId());
+
+        Person person = personDao.findPerson(availability.getPerson().getPersonId());
+
+        model.setPersonId(person.getPersonId());
+        model.setPersonName(person.getSurname() + ", " + person.getForename());
+
+        String address = person.getAddress().getTown() + ", "
+                + person.getAddress().getCounty() + ", "
+                + person.getAddress().getPostcode();
+        model.setAddress(address);
+
+        model.setInvited(true);
+        model.setEmailSent(availability.isEmailSent());
+        model.setPersonResponded(availability.isPersonResponded());
+        model.setOverseerConfirmed(availability.isOverseerConfirmed());
+        model.setTransportRequired(availability.isTransportRequired());
+        model.setOfferTransport(availability.isOfferTransport());
+        model.setAccommodationRequired(availability.isAccommodationRequired());
+
+        return model;
     }
 }

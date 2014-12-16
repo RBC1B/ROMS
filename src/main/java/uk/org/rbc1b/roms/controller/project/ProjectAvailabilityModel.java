@@ -37,6 +37,9 @@ public class ProjectAvailabilityModel {
     private boolean emailSent;
     private boolean personResponded;
     private boolean overseerConfirmed;
+    private boolean transportRequired;
+    private boolean offerTransport;
+    private boolean accommodationRequired;
 
     /**
      * @return the projectDepartmentSessionId
@@ -148,5 +151,47 @@ public class ProjectAvailabilityModel {
      */
     public void setOverseerConfirmed(boolean overseerConfirmed) {
         this.overseerConfirmed = overseerConfirmed;
+    }
+
+    /**
+     * @return the transportRequired
+     */
+    public boolean isTransportRequired() {
+        return transportRequired;
+    }
+
+    /**
+     * @param transportRequired the transportRequired to set
+     */
+    public void setTransportRequired(boolean transportRequired) {
+        this.transportRequired = transportRequired;
+    }
+
+    /**
+     * @return the offerTransport
+     */
+    public boolean isOfferTransport() {
+        return offerTransport;
+    }
+
+    /**
+     * @param offerTransport the offerTransport to set
+     */
+    public void setOfferTransport(boolean offerTransport) {
+        this.offerTransport = offerTransport;
+    }
+
+    /**
+     * @return the accommodationRequired
+     */
+    public boolean isAccommodationRequired() {
+        return accommodationRequired;
+    }
+
+    /**
+     * @param accommodationRequired the accommodationRequired to set
+     */
+    public void setAccommodationRequired(boolean accommodationRequired) {
+        this.accommodationRequired = accommodationRequired;
     }
 }

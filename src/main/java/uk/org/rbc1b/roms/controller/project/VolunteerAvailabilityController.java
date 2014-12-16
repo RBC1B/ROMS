@@ -26,7 +26,10 @@ package uk.org.rbc1b.roms.controller.project;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Properties;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -36,12 +39,15 @@ import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.PersonDao;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
@@ -89,6 +95,8 @@ public class VolunteerAvailabilityController {
     private DepartmentDao departmentDao;
     @Autowired
     private PersonDao personDao;
+    @Autowired
+    private VolunteerForProjectModelFactory volunteerForProjectModelFactory;
     @Resource(name = "edificeProperty")
     private Properties edificeProperty;
 
@@ -257,6 +265,66 @@ public class VolunteerAvailabilityController {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         }
 
+    }
+
+    /**
+     * Returns the Availability record for a volunteer. Extra parameters are
+     * required for extra security.
+     *
+     * @param personId the volunteer id
+     * @param projectAvailabilityId the availability id
+     * @param datetime the datetime
+     * @param hash the security token
+     * @return responseEntity set with appropriate JSON data
+     */
+    @RequestMapping(value = "/{personId}/{projectAvailabilityId}/{datetime}/{hash}/availability", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Object> getVolunteerAvailability(@PathVariable Integer personId, @PathVariable Integer projectAvailabilityId,
+            @PathVariable String datetime, @PathVariable String hash) {
+        ProjectAvailability availability = projectAvailabilityDao.findById(projectAvailabilityId);
+        if (availability == null
+                && checkIfValidProjectAvailability(personId, availability)
+                && checkHash(availability, datetime, hash)
+                && checkIfWithinTime(datetime)) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<Object>(volunteerForProjectModelFactory.generate(availability), HttpStatus.OK);
+        }
+    }
+
+    /**
+     * Returns the dates that the volunteer may have already entered
+     *
+     * @param personId the person id
+     * @param projectAvailabilityId the availability id
+     * @param datetime the date time
+     * @param hash the security token
+     * @return responseEntity with status
+     */
+    @RequestMapping(value = "/{personId}/{projectAvailabilityId}/{datetime}/{hash}/attendance", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Object> getVolunteerDates(@PathVariable Integer personId, @PathVariable Integer projectAvailabilityId,
+            @PathVariable String datetime, @PathVariable String hash) {
+        ProjectAvailability availability = projectAvailabilityDao.findById(projectAvailabilityId);
+        if (availability == null
+                && checkIfValidProjectAvailability(personId, availability)
+                && checkHash(availability, datetime, hash)
+                && checkIfWithinTime(datetime)) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        } else {
+            List<ProjectAttendance> availableDates = projectAttendanceDao.getDatesForVolunteer(availability);
+            if (availableDates == null) {
+                return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+            } else {
+                Map<String, Boolean> dates = new HashMap<String, Boolean>();
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                for (ProjectAttendance availableDate : availableDates) {
+                    dates.put(formatter.format(availableDate.getAvailableDate()), availableDate.isRequired());
+                    LOGGER.error("Date: " + formatter.format(availableDate.getAvailableDate()) + ", required=" + availableDate.isRequired() );
+                }
+                return new ResponseEntity<Object>(dates, HttpStatus.OK);
+            }
+        }
     }
 
     private void populateModel(AvailabilityForm model, ProjectAvailability availability) {

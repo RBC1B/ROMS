@@ -61,6 +61,15 @@ public interface ProjectAttendanceDao {
     List<ProjectAttendance> getConfirmedDates(ProjectAvailability projectAvailability);
 
     /**
+     * Gets a list of dates for which the volunteer is available.
+     *
+     * @param projectAvailability the availability
+     * @return list of dates from attendance
+     */
+    @Transactional(readOnly = false)
+    List<ProjectAttendance> getDatesForVolunteer(ProjectAvailability projectAvailability);
+
+    /**
      * Gets an attendance date by availability id and date.
      *
      * @param projectAvailability the availability

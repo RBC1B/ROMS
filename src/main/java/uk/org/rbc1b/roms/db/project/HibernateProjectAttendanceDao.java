@@ -56,6 +56,12 @@ public class HibernateProjectAttendanceDao implements ProjectAttendanceDao {
     }
 
     @Override
+    public List<ProjectAttendance> getDatesForVolunteer(ProjectAvailability projectAvailability) {
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(ProjectAttendance.class);
+        criteria.add(Restrictions.eq("projectAvailability.projectAvailabilityId", projectAvailability.getProjectAvailabilityId()));
+        return criteria.list();
+    }
+    @Override
     public ProjectAttendance getAvailableDate(ProjectAvailability projectAvailability, Date date) {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(ProjectAttendance.class);
         criteria.add(Restrictions.eq("projectAvailability.projectAvailabilityId", projectAvailability.getProjectAvailabilityId()));

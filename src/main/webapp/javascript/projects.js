@@ -199,7 +199,10 @@ $(document).ready(function() {
             "invited": "Invited",
             "emailSent": "Notified",
             "personResponded": "Acknowledged",
-            "overseerConfirmed": "Dates Confirmed"
+            "overseerConfirmed": "Dates Confirmed",
+            "transportRequired": "Need Transport",
+            "offerTransport": "Offer Transport",
+            "accommodationRequired": "Need Accommodation"
         };
         var columns = [];
         var thead$ = $('<thead/>');
@@ -255,6 +258,18 @@ $(document).ready(function() {
                         } else if (columns[c] === "overseerConfirmed") {
                             if (cellvalue) {
                                 cellvalue = "Dates confirmed";
+                            }
+                        } else if (columns[c] === "transportRequired") {
+                            if (cellvalue) {
+                                cellvalue = "Yes";
+                            }
+                        } else if (columns[c] === "offerTransport") {
+                            if (cellvalue) {
+                                cellvalue = "Yes";
+                            }
+                        } else if (columns[c] === "accommodationRequired") {
+                            if (cellvalue) {
+                                cellvalue = "Yes";
                             }
                         }
                     }

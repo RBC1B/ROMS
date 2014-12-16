@@ -96,6 +96,9 @@
                 });
 
                 $('#calendar').fullCalendar('gotoDate', '<c:out value="${availabilityModel.fromDate}" />');
+                
+                getExistingAvailableRecord();
+                getExistingAttendanceRecords();
 
                 $('#accommodationRequired').on("click", function(event) {
                     updateRequirements("accommodationRequired");

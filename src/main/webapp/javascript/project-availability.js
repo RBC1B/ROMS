@@ -22,45 +22,41 @@
  * THE SOFTWARE.
  */
 
-
-var selectedDate = {};
-
 function updateDateMap(dateClicked, thisObject) {
-    var date = new Date(dateClicked.format());
-    if (workingSunday === "true" || date.getDay() !== 0) {
-        if (selectedDate[dateClicked.format()] == 1) {
-            selectedDate[dateClicked.format()] = 0;
-            sendAvailabilityDate(dateClicked, "DELETE");
-            $(thisObject).css('background-color', '#fff');
-        } else {
-            selectedDate[dateClicked.format()] = 1;
-            var result = sendAvailabilityDate(dateClicked, "POST");
-            $(thisObject).css('background-color', '#3a3');
-        }
-    }
+    var dateKey= "[data-date='" + dateClicked.format() + "']";
+	var colour = $(dateKey).css('background-color');
+	if(colour == "rgba(0, 0, 0, 0)" || colour == "rgb(255, 255, 255)" ){
+                sendAvailabilityDate(dateClicked, "POST")
+                .done(function(){
+                    $(thisObject).css('background-color', '#3a3');
+                });
+	}else if (colour == "rgb(51, 170, 51)"){
+                sendAvailabilityDate(dateClicked, "DELETE")
+                .done(function(){
+                    $(thisObject).css('background-color', '#fff');
+                });
+	}else if(colour == "rgb(255, 0, 0)"){
+		alert("Your overseer has confirmed this date - please contact your overseer.");
+	}else{
+		alert("Unknown status - please contact Edifice.Help@gmail.com");
+	}
 }
 
 function sendAvailabilityDate(date, updateMethod) {
-    $.ajax({
+    return $.ajax({
         url: updateUrl + "/" + date.format(),
         type: updateMethod,
         cache: false,
         statusCode: {
             302: function() {
                 alert("302 error - could not connect to server.");
-                return false;
             },
             403: function() {
                 alert("403 error - problem with security token/dates");
-                return false;
             },
             503: function() {
                 alert("503 error - problem with server handling your request");
-                return false;
             }
-        },
-        success: function(data, status, xhr) {
-            return true;
         }
     });
 }
@@ -82,7 +78,51 @@ function updateRequirements(requirement) {
             }
         },
         success: function(data, status, xhr) {
-            alert("Your requirement has been updated.");
+        }
+    });
+}
+
+function getExistingAvailableRecord(){
+    return $.ajax({
+        url: updateUrl + "/availability",
+        type: "GET",
+        cache: false,
+        success: function(data){
+            if(!data || data.length === 0){
+                return;
+            }
+            if(data["transportRequired"] === true){
+                document.getElementById("transportRequired").checked = true;
+            }
+            if(data["offerTransport"] === true){
+                document.getElementById("offerTransport").checked = true;
+            }
+            if(data["accommodationRequired"] === true){
+                document.getElementById("accommodationRequired").checked = true;
+            }
+        }
+    });
+}
+
+function getExistingAttendanceRecords(){
+    $.ajax({
+        url: updateUrl + "/attendance",
+        type: "GET",
+        cache: false,
+        success: function(data){
+            if(!data || data.length === 0){
+                return;
+            }
+                for(var key in data){
+                    var attendanceDate = key;
+                    var required = data[attendanceDate];
+                    var dateKey= "[data-date='" + attendanceDate + "']";
+                    if(required){
+                        $(dateKey).css("background-color", "red");
+                    }else{
+                        $(dateKey).css("background-color", "#3a3");
+                    }
+                }
         }
     });
 }
