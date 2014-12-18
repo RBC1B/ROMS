@@ -293,7 +293,7 @@ public class VolunteerAvailabilityController {
     }
 
     /**
-     * Returns the dates that the volunteer may have already entered
+     * Returns the dates that the volunteer may have already entered.
      *
      * @param personId the person id
      * @param projectAvailabilityId the availability id
@@ -320,7 +320,7 @@ public class VolunteerAvailabilityController {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                 for (ProjectAttendance availableDate : availableDates) {
                     dates.put(formatter.format(availableDate.getAvailableDate()), availableDate.isRequired());
-                    LOGGER.error("Date: " + formatter.format(availableDate.getAvailableDate()) + ", required=" + availableDate.isRequired() );
+                    LOGGER.error("Date: " + formatter.format(availableDate.getAvailableDate()) + ", required=" + availableDate.isRequired());
                 }
                 return new ResponseEntity<Object>(dates, HttpStatus.OK);
             }
