@@ -69,14 +69,14 @@ import uk.org.rbc1b.roms.db.volunteer.department.DepartmentDao;
  */
 @Controller
 @RequestMapping("/project-availability")
-public class VolunteerAvailabilityController {
+public class ProjectAvailabilityController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(VolunteerAvailabilityController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProjectAvailabilityController.class);
     private static final String BASE_URL = "/project-availability";
     private static final String SECURITY_SALT = "security.salt";
     private static final String DATETIMEFORMAT = "yyyyMMddHHmm";
     private static final String DATEFORMAT = "yyyy-MM-dd";
-    private static final long MAXTIME = 1209600000; //Two weeks
+    private static final long MAXTIME = 1209600000; // Two weeks
     private static final long DAY = 24 * 60 * 60 * 1000;
     private static final String ACCOMMODATION = "accommodationRequired";
     private static final String TRANSPORTRQD = "transportRequired";
@@ -111,16 +111,16 @@ public class VolunteerAvailabilityController {
      * @return the jsp page to show
      */
     @RequestMapping(value = "/{personId}/{projectAvailabilityId}/{datetime}/{hash}", method = RequestMethod.GET)
-    public String showVolunteerAvailabilityPage(@PathVariable Integer personId, @PathVariable Integer projectAvailabilityId,
-            @PathVariable String datetime, @PathVariable String hash, ModelMap model) {
+    public String showVolunteerAvailabilityPage(@PathVariable Integer personId,
+            @PathVariable Integer projectAvailabilityId, @PathVariable String datetime, @PathVariable String hash,
+            ModelMap model) {
         String uri = BASE_URL + "/" + personId + "/" + projectAvailabilityId + "/" + datetime + "/" + hash;
         ProjectAvailability projectAvailability = projectAvailabilityDao.findById(projectAvailabilityId);
         if (projectAvailability == null) {
             return "project-availability/availability-did-not-match";
         }
         if (checkIfValidProjectAvailability(personId, projectAvailability)
-                && checkHash(projectAvailability, datetime, hash)
-                && checkIfWithinTime(datetime)) {
+                && checkHash(projectAvailability, datetime, hash) && checkIfWithinTime(datetime)) {
             projectAvailability.setPersonResponded(true);
             projectAvailabilityDao.update(projectAvailability);
 
@@ -149,13 +149,12 @@ public class VolunteerAvailabilityController {
      * @param date the date to add to the database
      */
     @RequestMapping(value = "/{personId}/{projectAvailabilityId}/{datetime}/{hash}/{date}", method = RequestMethod.POST)
-    public void availableDatesPosted(HttpServletResponse response, @PathVariable Integer personId, @PathVariable Integer projectAvailabilityId,
-            @PathVariable String datetime, @PathVariable String hash, @PathVariable String date) {
+    public void availableDatesPosted(HttpServletResponse response, @PathVariable Integer personId,
+            @PathVariable Integer projectAvailabilityId, @PathVariable String datetime, @PathVariable String hash,
+            @PathVariable String date) {
         ProjectAvailability projectAvailability = projectAvailabilityDao.findById(projectAvailabilityId);
-        if (projectAvailability != null
-                && checkIfValidProjectAvailability(personId, projectAvailability)
-                && checkHash(projectAvailability, datetime, hash)
-                && checkIfWithinTime(datetime)) {
+        if (projectAvailability != null && checkIfValidProjectAvailability(personId, projectAvailability)
+                && checkHash(projectAvailability, datetime, hash) && checkIfWithinTime(datetime)) {
             java.sql.Date sqlDate = java.sql.Date.valueOf(date);
             java.sql.Date now = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
 
@@ -187,13 +186,12 @@ public class VolunteerAvailabilityController {
      * @param date the date to delete to the database
      */
     @RequestMapping(value = "/{personId}/{projectAvailabilityId}/{datetime}/{hash}/{date}", method = RequestMethod.DELETE)
-    public void availableDatesDeleted(HttpServletResponse response, @PathVariable Integer personId, @PathVariable Integer projectAvailabilityId,
-            @PathVariable String datetime, @PathVariable String hash, @PathVariable String date) {
+    public void availableDatesDeleted(HttpServletResponse response, @PathVariable Integer personId,
+            @PathVariable Integer projectAvailabilityId, @PathVariable String datetime, @PathVariable String hash,
+            @PathVariable String date) {
         ProjectAvailability projectAvailability = projectAvailabilityDao.findById(projectAvailabilityId);
-        if (projectAvailability != null
-                && checkIfValidProjectAvailability(personId, projectAvailability)
-                && checkHash(projectAvailability, datetime, hash)
-                && checkIfWithinTime(datetime)) {
+        if (projectAvailability != null && checkIfValidProjectAvailability(personId, projectAvailability)
+                && checkHash(projectAvailability, datetime, hash) && checkIfWithinTime(datetime)) {
             java.sql.Date sqlDate = java.sql.Date.valueOf(date);
 
             ProjectAttendance attendance = projectAttendanceDao.getAvailableDate(projectAvailability, sqlDate);
@@ -219,13 +217,12 @@ public class VolunteerAvailabilityController {
      * @param requirement the requirement to update
      */
     @RequestMapping(value = "/{personId}/{projectAvailabilityId}/{datetime}/{hash}/{requirement}", method = RequestMethod.PUT)
-    public void updateRequirements(HttpServletResponse response, @PathVariable Integer personId, @PathVariable Integer projectAvailabilityId,
-            @PathVariable String datetime, @PathVariable String hash, @PathVariable String requirement) {
+    public void updateRequirements(HttpServletResponse response, @PathVariable Integer personId,
+            @PathVariable Integer projectAvailabilityId, @PathVariable String datetime, @PathVariable String hash,
+            @PathVariable String requirement) {
         ProjectAvailability projectAvailability = projectAvailabilityDao.findById(projectAvailabilityId);
-        if (projectAvailability != null
-                && checkIfValidProjectAvailability(personId, projectAvailability)
-                && checkHash(projectAvailability, datetime, hash)
-                && checkIfWithinTime(datetime)) {
+        if (projectAvailability != null && checkIfValidProjectAvailability(personId, projectAvailability)
+                && checkHash(projectAvailability, datetime, hash) && checkIfWithinTime(datetime)) {
 
             boolean validRequest = false;
             if (requirement.equalsIgnoreCase(ACCOMMODATION)) {
@@ -279,13 +276,11 @@ public class VolunteerAvailabilityController {
      */
     @RequestMapping(value = "/{personId}/{projectAvailabilityId}/{datetime}/{hash}/availability", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<Object> getVolunteerAvailability(@PathVariable Integer personId, @PathVariable Integer projectAvailabilityId,
-            @PathVariable String datetime, @PathVariable String hash) {
+    public ResponseEntity<Object> getVolunteerAvailability(@PathVariable Integer personId,
+            @PathVariable Integer projectAvailabilityId, @PathVariable String datetime, @PathVariable String hash) {
         ProjectAvailability availability = projectAvailabilityDao.findById(projectAvailabilityId);
-        if (availability == null
-                && checkIfValidProjectAvailability(personId, availability)
-                && checkHash(availability, datetime, hash)
-                && checkIfWithinTime(datetime)) {
+        if (availability == null && checkIfValidProjectAvailability(personId, availability)
+                && checkHash(availability, datetime, hash) && checkIfWithinTime(datetime)) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         } else {
             return new ResponseEntity<Object>(volunteerForProjectModelFactory.generate(availability), HttpStatus.OK);
@@ -303,13 +298,11 @@ public class VolunteerAvailabilityController {
      */
     @RequestMapping(value = "/{personId}/{projectAvailabilityId}/{datetime}/{hash}/attendance", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<Object> getVolunteerDates(@PathVariable Integer personId, @PathVariable Integer projectAvailabilityId,
-            @PathVariable String datetime, @PathVariable String hash) {
+    public ResponseEntity<Object> getVolunteerDates(@PathVariable Integer personId,
+            @PathVariable Integer projectAvailabilityId, @PathVariable String datetime, @PathVariable String hash) {
         ProjectAvailability availability = projectAvailabilityDao.findById(projectAvailabilityId);
-        if (availability == null
-                && checkIfValidProjectAvailability(personId, availability)
-                && checkHash(availability, datetime, hash)
-                && checkIfWithinTime(datetime)) {
+        if (availability == null && checkIfValidProjectAvailability(personId, availability)
+                && checkHash(availability, datetime, hash) && checkIfWithinTime(datetime)) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         } else {
             List<ProjectAttendance> availableDates = projectAttendanceDao.getDatesForVolunteer(availability);
@@ -320,7 +313,8 @@ public class VolunteerAvailabilityController {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                 for (ProjectAttendance availableDate : availableDates) {
                     dates.put(formatter.format(availableDate.getAvailableDate()), availableDate.isRequired());
-                    LOGGER.error("Date: " + formatter.format(availableDate.getAvailableDate()) + ", required=" + availableDate.isRequired());
+                    LOGGER.error("Date: " + formatter.format(availableDate.getAvailableDate()) + ", required="
+                            + availableDate.isRequired());
                 }
                 return new ResponseEntity<Object>(dates, HttpStatus.OK);
             }
@@ -328,9 +322,8 @@ public class VolunteerAvailabilityController {
     }
 
     private void populateModel(AvailabilityForm model, ProjectAvailability availability) {
-        ProjectDepartmentSession session = projectDepartmentSessionDao
-                .findByProjectDepartmentSessionId(availability.getProjectDepartmentSession()
-                .getProjectDepartmentSessionId());
+        ProjectDepartmentSession session = projectDepartmentSessionDao.findByProjectDepartmentSessionId(availability
+                .getProjectDepartmentSession().getProjectDepartmentSessionId());
         model.setProjectAvailabilityId(availability.getProjectAvailabilityId());
         model.setProjectDepartmentSessionId(session.getProjectDepartmentSessionId());
         model.setWorkingSunday(session.isSunday());
@@ -339,10 +332,8 @@ public class VolunteerAvailabilityController {
         model.setProjectName(project.getName());
 
         KingdomHall kingdomhall = kingdomHallDao.findKingdomHall(project.getKingdomHall().getKingdomHallId());
-        String address = kingdomhall.getAddress().getStreet() + ", "
-                + kingdomhall.getAddress().getTown() + ", "
-                + kingdomhall.getAddress().getCounty() + ", "
-                + kingdomhall.getAddress().getPostcode() + ".";
+        String address = kingdomhall.getAddress().getStreet() + ", " + kingdomhall.getAddress().getTown() + ", "
+                + kingdomhall.getAddress().getCounty() + ", " + kingdomhall.getAddress().getPostcode() + ".";
         model.setAddress(address);
 
         Department dept = departmentDao.findDepartment(session.getDepartment().getDepartmentId());
@@ -352,11 +343,10 @@ public class VolunteerAvailabilityController {
         model.setToDate(dateFormat.format(session.getToDate()));
         model.setFromDate(dateFormat.format(session.getFromDate()));
 
-        //We add extra date to include end date for FullCalendar as the end date
+        // We add extra date to include end date for FullCalendar as the end date
         // is exclusive.
         java.sql.Date endDate = new java.sql.Date(session.getToDate().getTime() + DAY);
         model.setEndDate(dateFormat.format(endDate));
-
 
         Person person = personDao.findPerson(availability.getPerson().getPersonId());
         model.setVolunteer(person.getSurname() + ", " + person.getForename());
@@ -383,7 +373,8 @@ public class VolunteerAvailabilityController {
             salt = "er9bhmbsaa5ppdnoQP";
             LOGGER.error("JNDI property for security salt is not set - will use default.");
         }
-        String text = datetime + ":" + projectAvailability.getPerson().getPersonId() + ":" + projectAvailability.getProjectAvailabilityId();
+        String text = datetime + ":" + projectAvailability.getPerson().getPersonId() + ":"
+                + projectAvailability.getProjectAvailabilityId();
         ShaPasswordEncoder encoder = new ShaPasswordEncoder(256);
         String workedHash = encoder.encodePassword(salt, text);
         return workedHash.equalsIgnoreCase(hash);
