@@ -190,7 +190,7 @@ public class ProjectAvailabilityEmailGenerator {
 
     /**
      * Generates the url with the following format:
-     * https://edifice/project-availability/{personId}/{projectAvailabilityId}/{datetime}/{token}/update
+     * https://edifice/project-availability/{projectAvailabilityId}/{datetime}/{token}/update
      *
      * @param person
      * @param projectAvailability
@@ -200,7 +200,6 @@ public class ProjectAvailabilityEmailGenerator {
         List<String> url = new ArrayList<String>();
         url.add(edificeProperty.getProperty(SERVER_URL));
         url.add(BASE_URI);
-        url.add(Integer.toString(person.getPersonId()));
         url.add(Integer.toString(projectAvailability.getProjectAvailabilityId()));
         String datetime = getCurrentDateTime();
         url.add(datetime);
@@ -212,8 +211,7 @@ public class ProjectAvailabilityEmailGenerator {
     private String getSecureConfirmedDatesUrl(Person person, ProjectAvailability projectAvailability) {
         StringBuilder builder = new StringBuilder();
         builder.append(edificeProperty.getProperty(SERVER_URL));
-        builder.append(BASE_URI).append("/").append(person.getPersonId()).append("/")
-                .append(projectAvailability.getProjectAvailabilityId()).append("/");
+        builder.append(BASE_URI).append("/").append(projectAvailability.getProjectAvailabilityId()).append("/");
         String datetime = getCurrentDateTime();
         builder.append(datetime).append("/");
         builder.append(generateSecureToken(person, projectAvailability, datetime)).append("/confirmed");
