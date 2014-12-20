@@ -72,7 +72,6 @@ import uk.org.rbc1b.roms.db.volunteer.department.DepartmentDao;
 public class ProjectAvailabilityController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProjectAvailabilityController.class);
-    private static final String BASE_URL = "/project-availability";
     private static final String SECURITY_SALT = "security.salt";
     private static final String DATETIMEFORMAT = "yyyyMMddHHmm";
     private static final String DATEFORMAT = "yyyy-MM-dd";
@@ -114,7 +113,6 @@ public class ProjectAvailabilityController {
     public String showVolunteerAvailabilityPage(@PathVariable Integer personId,
             @PathVariable Integer projectAvailabilityId, @PathVariable String datetime, @PathVariable String hash,
             ModelMap model) {
-        String uri = BASE_URL + "/" + personId + "/" + projectAvailabilityId + "/" + datetime + "/" + hash;
         ProjectAvailability projectAvailability = projectAvailabilityDao.findById(projectAvailabilityId);
         if (projectAvailability == null) {
             return "project-availability/availability-did-not-match";
@@ -130,8 +128,6 @@ public class ProjectAvailabilityController {
             modelForm.setHash(hash);
 
             model.addAttribute("availabilityModel", modelForm);
-            model.addAttribute("submitUrl", uri);
-            model.addAttribute("submitMethod", "PUT");
             return "project-availability/availability-update";
         } else {
             return "project-availability/availability-did-not-match";

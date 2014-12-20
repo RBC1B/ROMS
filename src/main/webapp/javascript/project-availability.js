@@ -26,12 +26,12 @@ function updateDateMap(dateClicked, thisObject) {
     var dateKey= "[data-date='" + dateClicked.format() + "']";
 	var colour = $(dateKey).css('background-color');
 	if(colour == "rgba(0, 0, 0, 0)" || colour == "rgb(255, 255, 255)" ){
-                sendAvailabilityDate(dateClicked, "POST")
+	            setAvailabilityDate(dateClicked)
                 .done(function(){
                     $(thisObject).css('background-color', '#3a3');
                 });
 	}else if (colour == "rgb(51, 170, 51)"){
-                sendAvailabilityDate(dateClicked, "DELETE")
+	            deleteAvailabilityDate(dateClicked)
                 .done(function(){
                     $(thisObject).css('background-color', '#fff');
                 });
@@ -42,49 +42,42 @@ function updateDateMap(dateClicked, thisObject) {
 	}
 }
 
-function sendAvailabilityDate(date, updateMethod) {
+function setAvailabilityDate(date) {
     return $.ajax({
-        url: updateUrl + "/" + date.format(),
-        type: updateMethod,
+        url: window.location.href + "/" + date.format(),
+        type: 'POST',
         cache: false,
-        statusCode: {
-            302: function() {
-                alert("302 error - could not connect to server.");
-            },
-            403: function() {
-                alert("403 error - problem with security token/dates");
-            },
-            503: function() {
-                alert("503 error - problem with server handling your request");
-            }
+        error: function (jqXHR, textStatus) {
+            alert("Failed to set the date. Status: " + textStatus);
+        }
+    });
+}
+
+function deleteAvailabilityDate(date) {
+    return $.ajax({
+        url: window.location.href + "/" + date.format(),
+        type: 'DELETE',
+        cache: false,
+        error: function (jqXHR, textStatus) {
+            alert("Failed to clear the date. Status: " + textStatus);
         }
     });
 }
 
 function updateRequirements(requirement) {
     $.ajax({
-        url: updateUrl + "/" + requirement,
+        url: window.location.href + "/" + requirement,
         type: "PUT",
         cache: false,
-        statusCode: {
-            302: function() {
-                alert("302 error - could not connect to server.");
-            },
-            403: function() {
-                alert("403 error - problem with security token/dates");
-            },
-            503: function() {
-                alert("503 error - problem with server handling your request");
-            }
-        },
-        success: function(data, status, xhr) {
+        error: function (jqXHR, textStatus) {
+            alert("Failed to set the value. Status: " + textStatus);
         }
     });
 }
 
 function getExistingAvailableRecord(){
     return $.ajax({
-        url: updateUrl + "/availability",
+        url: window.location.href + "/availability",
         type: "GET",
         cache: false,
         success: function(data){
@@ -106,23 +99,23 @@ function getExistingAvailableRecord(){
 
 function getExistingAttendanceRecords(){
     $.ajax({
-        url: updateUrl + "/attendance",
+        url: window.location.href + "/attendance",
         type: "GET",
         cache: false,
         success: function(data){
             if(!data || data.length === 0){
                 return;
             }
-                for(var key in data){
-                    var attendanceDate = key;
-                    var required = data[attendanceDate];
-                    var dateKey= "[data-date='" + attendanceDate + "']";
-                    if(required){
-                        $(dateKey).css("background-color", "red");
-                    }else{
-                        $(dateKey).css("background-color", "#3a3");
-                    }
+            for(var key in data){
+                var attendanceDate = key;
+                var required = data[attendanceDate];
+                var dateKey= "[data-date='" + attendanceDate + "']";
+                if(required){
+                    $(dateKey).css("background-color", "red");
+                }else{
+                    $(dateKey).css("background-color", "#3a3");
                 }
+            }
         }
     });
 }
