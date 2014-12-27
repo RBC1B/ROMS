@@ -21,7 +21,7 @@
                             <option value="${workSession.projectDepartmentSession}">
                                 <c:out value="${workSession.projectDepartmentSession}" />
                             </option>
-                        </c:forEach> 
+                        </c:forEach>
                     </select>
                 </dd>
             </div>

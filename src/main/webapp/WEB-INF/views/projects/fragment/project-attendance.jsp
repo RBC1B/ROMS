@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : project-attendance - displays the list of volunteers and dates
                     that they are available
     Created on : Dec 11, 2014, 2:41:23 PM
@@ -22,7 +22,7 @@
                             <option value="${workSession.projectDepartmentSession}">
                                 <c:out value="${workSession.projectDepartmentSession}" />
                             </option>
-                        </c:forEach> 
+                        </c:forEach>
                     </select>
                 </dd>
             </div>

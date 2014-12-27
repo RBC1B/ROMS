@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : project-show - shows project information
     Created on : Nov 24, 2014, 9:02:58 AM
     Author     : ramindursingh
@@ -22,6 +22,6 @@
         </a>
     </dd>
 </dl>
-        <sec:authorize access="hasPermission('PROJECT', 'EDIT')">
-            <a href='<c:url value="${project.editUri}" />' class="btn btn-edifice">Edit Project</a>
-        </sec:authorize>
+<sec:authorize access="hasPermission('PROJECT', 'EDIT')">
+    <a href='<c:url value="${project.editUri}" />' class="btn btn-edifice">Edit Project</a>
+</sec:authorize>

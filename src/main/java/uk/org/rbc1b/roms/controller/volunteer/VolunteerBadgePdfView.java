@@ -27,9 +27,9 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Map;
-import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.web.servlet.view.document.AbstractPdfStamperView;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Image;
@@ -37,7 +37,6 @@ import com.lowagie.text.pdf.Barcode39;
 import com.lowagie.text.pdf.BaseFont;
 import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfStamper;
-import org.springframework.web.servlet.view.document.AbstractPdfStamperView;
 
 /**
  * View that builds the Volunteer Badge as a PDF.
@@ -59,12 +58,10 @@ public class VolunteerBadgePdfView extends AbstractPdfStamperView {
      * @throws IOException if unable to read and render data
      */
     @Override
-    protected void mergePdfDocument(Map<String, Object> model, PdfStamper stamper,
-            HttpServletRequest request, HttpServletResponse response) throws DocumentException, IOException {
+    protected void mergePdfDocument(Map<String, Object> model, PdfStamper stamper, HttpServletRequest request,
+            HttpServletResponse response) throws DocumentException, IOException {
 
         Volunteer volunteer = (Volunteer) model.get("volunteer");
-        @SuppressWarnings("unchecked")
-        Set<String> skillsSet = (Set<String>) model.get("skillsSet");
         PdfContentByte cb = stamper.getOverContent(1);
         String assignment = (String) model.get("assignment");
 
@@ -87,56 +84,6 @@ public class VolunteerBadgePdfView extends AbstractPdfStamperView {
      */
     private static void addImage(PdfContentByte content, Image img) throws DocumentException {
         content.addImage(img, 75, 0, 0, 88, 338, 383);
-    }
-
-    /**
-     * Creates a geometric table for a skills matrix.
-     *
-     * @param content to be added
-     */
-    private static void addSkillsTable(PdfContentByte content) {
-        // Horizontal lines of table
-        int y = 0;
-        for (int i = 0; i <= 8; i++) {
-            content.moveTo(90, 635 - y);
-            content.lineTo(205, 635 - y);
-            content.closePathStroke();
-
-            y += 12;
-        }
-        content.setColorStroke(Color.BLACK);
-        // left side
-        content.moveTo(90, 635);
-        content.lineTo(90, 539);
-        content.closePathStroke();
-
-        // right side
-        content.moveTo(205, 635);
-        content.lineTo(205, 539);
-        content.setColorStroke(Color.BLACK);
-        content.closePathStroke();
-    }
-
-    /**
-     * Adds the volunteer's skills to the Badge. Uses the y-axis to position
-     * each individual skill.
-     *
-     * @param content to be added
-     * @param skills set of volunteer skills
-     */
-    private static void addSkills(PdfContentByte content, Set<String> skills) throws DocumentException, IOException {
-        int y = 0;
-        for (String skill : skills) {
-            content.beginText();
-            content.moveText(91, 625 - y);
-
-            BaseFont bf = BaseFont.createFont();
-            content.setFontAndSize(bf, 8);
-            content.setColorFill(Color.BLACK);
-            content.showText(skill);
-            content.endText();
-            y += 12;
-        }
     }
 
     /**
@@ -163,8 +110,7 @@ public class VolunteerBadgePdfView extends AbstractPdfStamperView {
      * @param content to be added
      * @param rbcRegion RBC region
      */
-    private static void addRBCRegionFooter(PdfContentByte content) throws DocumentException,
-            IOException {
+    private static void addRBCRegionFooter(PdfContentByte content) throws DocumentException, IOException {
         content.beginText();
         content.moveText(183, 345);
 

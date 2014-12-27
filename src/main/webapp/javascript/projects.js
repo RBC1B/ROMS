@@ -285,7 +285,7 @@ $(document).ready(function() {
     function addAvailabilityTableRowEventHandler() {
         var table = document.getElementById("volunteer-availability");
         var rows = table.getElementsByTagName("tr");
-        for (i = 0; i < rows.length; i++) {
+        for (var i = 0; i < rows.length; i++) {
             var thisRow = table.rows[i];
             var createOnClickHandler =
                     function(row)

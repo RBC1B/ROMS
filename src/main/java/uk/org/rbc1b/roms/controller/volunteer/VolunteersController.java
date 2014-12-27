@@ -920,10 +920,8 @@ public class VolunteersController {
             }
 
             String assignment = volunteerBadgePdfModelFactory.generatePrimaryAssignment(volunteer);
-            Set<String> skillsSet = volunteerBadgePdfModelFactory.generateSkillsSet(volunteer);
 
             modelAndView.getModelMap().addAttribute("volunteer", volunteer);
-            modelAndView.getModelMap().addAttribute("skillsSet", skillsSet);
             modelAndView.getModelMap().addAttribute("assignment", assignment);
 
             String imageName = volunteerId + ".jpg";

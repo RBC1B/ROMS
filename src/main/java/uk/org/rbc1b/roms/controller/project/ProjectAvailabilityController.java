@@ -32,8 +32,6 @@ import org.apache.commons.lang3.time.FastDateFormat;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -68,8 +66,6 @@ import uk.org.rbc1b.roms.db.volunteer.department.DepartmentDao;
 @Controller
 @RequestMapping("/project-availability")
 public class ProjectAvailabilityController {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ProjectAvailabilityController.class);
     private static final String SECURITY_SALT = "security.salt";
     private static final String DATETIMEFORMAT = "yyyyMMddHHmm";
     private static final FastDateFormat DATE_FORMATTER = FastDateFormat.getInstance("yyyy-MM-dd");

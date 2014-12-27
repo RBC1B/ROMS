@@ -345,8 +345,7 @@ public class VolunteerModelFactory {
      * @param volunteerTrades a set of volunteer experience
      * @return modelList the model list
      */
-    public List<VolunteerTradeModel> generateVolunteerTradesModel(
-            Set<VolunteerTrade> volunteerTrades) {
+    public List<VolunteerTradeModel> generateVolunteerTradesModel(Set<VolunteerTrade> volunteerTrades) {
         if (CollectionUtils.isEmpty(volunteerTrades)) {
             return null;
         }
@@ -357,8 +356,8 @@ public class VolunteerModelFactory {
             model.setName(volunteerTrade.getName());
             model.setExperienceDescription(volunteerTrade.getExperienceDescription());
             model.setExperienceYears(volunteerTrade.getExperienceYears());
-            Integer volid = volunteerTrade.getVolunteer().getPersonId();
-            model.setUri(generateUri(volunteerTrade.getVolunteer().getPersonId()) + "/experience/" + volunteerTrade.getVolunteerTradeId());
+            model.setUri(generateUri(volunteerTrade.getVolunteer().getPersonId()) + "/experience/"
+                    + volunteerTrade.getVolunteerTradeId());
             modelList.add(model);
         }
         return modelList;

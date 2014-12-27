@@ -34,8 +34,6 @@ import java.util.Properties;
 import javax.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
@@ -62,7 +60,6 @@ import freemarker.template.TemplateException;
  */
 @Component
 public class ProjectAvailabilityEmailGenerator {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ProjectAvailabilityEmailGenerator.class);
     private static final String BASE_URI = "/project-availability";
     private static final String DATETIME_FORMAT = "yyyyMMddHHmm";
     private static final String SECURITY_SALT = "security.salt";

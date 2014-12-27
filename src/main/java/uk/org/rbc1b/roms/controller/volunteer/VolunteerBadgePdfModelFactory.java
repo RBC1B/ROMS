@@ -23,10 +23,7 @@
  */
 package uk.org.rbc1b.roms.controller.volunteer;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import org.joda.time.LocalDate;
 import org.joda.time.Years;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +33,6 @@ import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
 import uk.org.rbc1b.roms.db.volunteer.department.Assignment;
 import uk.org.rbc1b.roms.db.volunteer.department.Department;
 import uk.org.rbc1b.roms.db.volunteer.department.DepartmentDao;
-import uk.org.rbc1b.roms.db.volunteer.skill.Skill;
-import uk.org.rbc1b.roms.db.volunteer.skill.SkillDao;
-import uk.org.rbc1b.roms.db.volunteer.skill.VolunteerSkill;
 
 /**
  * Generate the Volunteer Badge PDF model.
@@ -55,8 +49,6 @@ public class VolunteerBadgePdfModelFactory {
     private VolunteerDao volunteerDao;
     @Autowired
     private DepartmentDao departmentDao;
-    @Autowired
-    private SkillDao skillDao;
 
     /**
      * Generate the badge uri for a volunteer.
@@ -67,28 +59,6 @@ public class VolunteerBadgePdfModelFactory {
     public static String generateUri(Integer volunteerId) {
         return volunteerId != null ? BASE_URI + volunteerId + MIDDLE_URI + volunteerId + END_URI : BASE_URI
                 + volunteerId;
-    }
-
-    /**
-     * Generate a Set of skills that should appear on a volunteer badge. These
-     * skills are Strings of each skill's name. No more than 8 skills can be
-     * displayed on a badge.
-     *
-     * @param volunteer the volunteer
-     * @return Set of skill names
-     */
-    public Set<String> generateSkillsSet(Volunteer volunteer) {
-        List<Skill> skills = findVolunteerSkills(volunteer.getPersonId());
-        Set<String> badgeSkills = new HashSet<String>();
-        for (Skill skill : skills) {
-            if (skillDao.findSkillCategory(skill.getCategory().getSkillCategoryId()).isAppearOnBadge()) {
-                badgeSkills.add(skill.getName());
-                if (badgeSkills.size() >= 8) {
-                    break;
-                }
-            }
-        }
-        return badgeSkills;
     }
 
     /**
@@ -129,22 +99,6 @@ public class VolunteerBadgePdfModelFactory {
         Assignment primaryAssignment = assignments.get(0);
         Department department = departmentDao.findDepartment(primaryAssignment.getDepartmentId());
         return department.getName();
-    }
-
-    /**
-     * Helper method to return a list of skills for a volunteer.
-     *
-     * @param personId volunteer id
-     * @return list of skills
-     */
-    private List<Skill> findVolunteerSkills(Integer personId) {
-        List<VolunteerSkill> volunteerSkills = volunteerDao.findSkills(personId);
-        List<Skill> skills = new ArrayList<Skill>();
-        for (VolunteerSkill volunteerSkill : volunteerSkills) {
-            Skill skill = skillDao.findSkill(volunteerSkill.getSkillId());
-            skills.add(skill);
-        }
-        return skills;
     }
 
     /**
