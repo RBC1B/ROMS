@@ -170,6 +170,7 @@ public class InterviewSessionsController {
 
         VolunteerSearchCriteria volunteerSearchCriteria = new VolunteerSearchCriteria();
         volunteerSearchCriteria.setInterviewSessionId(interviewSessionId);
+        volunteerSearchCriteria.setMaxResults(null);
         List<Volunteer> volunteers = volunteerDao.findVolunteers(volunteerSearchCriteria);
 
         Map<Integer, Volunteer> volunteerMap = new HashMap<Integer, Volunteer>();

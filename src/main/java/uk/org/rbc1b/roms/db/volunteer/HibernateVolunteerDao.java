@@ -88,8 +88,12 @@ public class HibernateVolunteerDao implements VolunteerDao {
         Session session = this.sessionFactory.getCurrentSession();
         Criteria criteria = createVolunteerSearchCriteria(searchCriteria, session);
 
-        criteria.setFirstResult(searchCriteria.getStartIndex());
-        criteria.setMaxResults(searchCriteria.getMaxResults());
+        if (searchCriteria.getStartIndex() != null) {
+            criteria.setFirstResult(searchCriteria.getStartIndex());
+        }
+        if (searchCriteria.getMaxResults() != null) {
+            criteria.setMaxResults(searchCriteria.getMaxResults());
+        }
 
         if (searchCriteria.getSortValue() != null) {
             criteria.addOrder(searchCriteria.getSortDirection() == SortDirection.ASCENDING ? Order.asc(searchCriteria
