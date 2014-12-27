@@ -7,7 +7,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
-    <%@ include file="/WEB-INF/views/volunteer-contact/fragments/header.jsp" %>
+    <%@ include file="/WEB-INF/views/volunteers/update/header.jsp" %>
     <body>
         <div id="relative-path" data-relative-path="<c:url value="/" />"></div>
         <div class="container">
@@ -103,6 +103,6 @@
         <%@ include file="/WEB-INF/views/common/footer-min.jsp" %>
         <script type="text/javascript" src="<c:url value='/javascript/common.js' />"></script>
         <script type="text/javascript" src="<c:url value='/javascript/thirdparty/phoneformat-574.js' />" ></script>
-        <script type="text/javascript" src="<c:url value='/javascript/volunteer-contact.js' />" ></script>
+        <script type="text/javascript" src="<c:url value='/javascript/volunteer-update.js' />" ></script>
     </body>
 </html>

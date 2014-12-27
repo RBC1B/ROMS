@@ -6,7 +6,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-    <%@ include file="/WEB-INF/views/volunteer-contact/fragments/header.jsp" %>
+    <%@ include file="/WEB-INF/views/volunteers/update/header.jsp" %>
     <body>
         <div class="container">
             <nav class="navbar navbar-inverse navbar-static-top" role="navbar">

@@ -59,7 +59,7 @@ $(document).ready(function() {
         submitHandler: function(form) {
             $("#alert-update").hide();
             $.ajax({
-                url: roms.common.relativePath + '/volunteer-contact/',
+                url: roms.common.relativePath + '/volunteer-update/',
                 data: $(form).serialize(),
                 type: "post",
                 cache: false,
@@ -77,7 +77,7 @@ $(document).ready(function() {
                         $("#alert-update").show();
                     },
                     500: function() {
-                        $("#alert-update").html("<p><b>System Error: </b>Please contact Edifice.Help@gmail.com</p>");
+                        $("#alert-update").html("<p><b>System Error: </b>Please contact edifice.help@gmail.com</p>");
                         $("#alert-update").show();
                     }
                 },

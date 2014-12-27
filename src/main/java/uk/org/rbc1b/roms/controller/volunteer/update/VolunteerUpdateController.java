@@ -62,7 +62,7 @@ import freemarker.template.TemplateException;
  *
  */
 @Controller
-@RequestMapping("/volunteer-contact")
+@RequestMapping("/volunteer-update")
 public class VolunteerUpdateController {
     private static final String SECURITY_SALT = "security.salt";
     private static final String DATETIMEFORMAT = "yyyyMMddHHmm";
@@ -139,7 +139,7 @@ public class VolunteerUpdateController {
             @PathVariable String hash, ModelMap model) {
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, null);
         if (volunteer == null) {
-            return "volunteer-contact/volunteer-incorrect-form";
+            return "volunteers/update/error";
         }
         if (checkWithinTime(datetime) && checkHash(volunteer, datetime, hash)) {
             VolunteerUpdateForm form = new VolunteerUpdateForm();
@@ -155,9 +155,9 @@ public class VolunteerUpdateController {
             model.addAttribute("forename", volunteer.getPerson().getForename());
             model.addAttribute("surname", volunteer.getPerson().getSurname());
             model.addAttribute("volunteer", form);
-            return "volunteer-contact/volunteer-contact-form";
+            return "volunteers/update/edit";
         } else {
-            return "volunteer-contact/volunteer-incorrect-form";
+            return "volunteers/update/error";
         }
     }
 

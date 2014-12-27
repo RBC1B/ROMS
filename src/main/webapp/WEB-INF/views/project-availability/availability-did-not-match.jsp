@@ -26,7 +26,7 @@
             The maximum time to make your availability known is 2 weeks.<br/>
             Please check the email you were sent and contact your department overseer.<br/>
             <p> You can email support for assistance using
-                <a href="mailto:edifice.help@gmail.com">Edifice.Help@Gmail.Com</a>
+                <a href="mailto:edifice.help@gmail.com">edifice.help@Gmail.Com</a>
             </p>
         </div>
     </body>

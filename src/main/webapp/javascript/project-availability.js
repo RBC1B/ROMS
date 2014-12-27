@@ -38,7 +38,7 @@ function updateDateMap(dateClicked, thisObject) {
 	}else if(colour == "rgb(255, 0, 0)"){
 		alert("Your overseer has confirmed this date - please contact your overseer.");
 	}else{
-		alert("Unknown status - please contact Edifice.Help@gmail.com");
+		alert("Unknown status - please contact edifice.help@gmail.com");
 	}
 }
 
