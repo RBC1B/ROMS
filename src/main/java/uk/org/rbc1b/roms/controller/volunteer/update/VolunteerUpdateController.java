@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.Properties;
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.joda.time.DateTime;
@@ -84,14 +83,12 @@ public class VolunteerUpdateController {
      * checks around this as this is initial request by the volunteer.
      *
      * @param form the user form
-     * @param request the http request
      * @throws TemplateException on failure to render the email
      * @throws IOException  on failure to render the email
      */
     @RequestMapping(value = "/", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void acceptRequest(@Valid VolunteerUpdateRequestForm form, HttpServletRequest request) throws IOException,
-            TemplateException {
+    public void acceptRequest(@Valid VolunteerUpdateRequestForm form) throws IOException, TemplateException {
         Volunteer volunteer = volunteerDao.findVolunteer(form.getPersonId(), null);
         if (volunteer == null) {
             throw new ResourceNotFoundException("No volunteer #" + form.getPersonId());
