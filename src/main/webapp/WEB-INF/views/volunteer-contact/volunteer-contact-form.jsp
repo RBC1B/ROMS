@@ -15,8 +15,16 @@
                 <a class="navbar-brand" href="<c:url value="/" />"><img src="<c:url value='/images/logo-brand.png' />" alt="edifice" /></a>
             </nav>
         </div>
-        <div class="container"
+        <div class="container">
              <h1>RBC London and Home Counties</h1>
+        </div>
+        <div id="a-submit-alerts" style="display:none">
+            <div class="alert alert-success">
+                <p><strong>Success: </strong>Your request has been submitted. You will receive a confirmation email shortly.</p>
+            </div>
+            <div class="alert alert-error">
+                <p><b>Error: </b>Failed to update your details. Please contact the Volunteer Department.</p>
+            </div>
         </div>
         <div class="container">
             <p>Contact Information for <c:out value="${surname}"/>, <c:out value="${forename}"/></p>
@@ -85,28 +93,12 @@
                 </fieldset>
             </form:form>
         </div>
-        <div class="modal fade" id="volunteer-contact-update-success" tabindex="-1" role="dialog" aria-labelledby="volunteer-comments-modal-success-label" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">x</button>
-                        <h4 class="modal-title" id="volunteer-contact-modal-form-label">Update Request</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="alert alert-success"><p><strong>Success: </strong>Your request has been submitted. You will receive a confirmation email shortly.</p></div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-edifice" aria-hidden="true" data-dismiss="modal">OK</button>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="container">
             <p>Please note that from this page, only your contact details can be updated.</p>
             <p>To update any other other information, please contact Volunteer Service Desk. Your
                 department overseer should be able to provide you with the necessary information.</p>
             <br/>
-            <a href="/">Edifice Login Page</a>
+            <a href="<c:url value='/' />">Edifice Login Page</a>
         </div>
         <%@ include file="/WEB-INF/views/common/footer-min.jsp" %>
         <script type="text/javascript" src="<c:url value='/javascript/common.js' />"></script>

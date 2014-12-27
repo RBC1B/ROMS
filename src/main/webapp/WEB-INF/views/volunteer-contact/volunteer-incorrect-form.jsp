@@ -13,12 +13,12 @@
                 <a class="navbar-brand" href="<c:url value="/" />"><img src="<c:url value='/images/logo-brand.png' />" alt="edifice" /></a>
             </nav>
         </div>
-        <div class="container"
+        <div class="container">
              <h1>RBC London and Home Counties</h1>
         </div>
         <div class="container">
             <p>You have tried to update your details but the link is incorrect or expired.</p>
-            <p><a href="/">Please re-submit your update request.</a></p>
+            <a href="<c:url value='/' />">Please re-submit your update request.</a>
         </div>
     </body>
 </html>

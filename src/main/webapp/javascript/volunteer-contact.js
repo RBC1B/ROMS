@@ -26,9 +26,6 @@ $(document).ready(function() {
 
     $("#alert-update").hide();
 
-    var updateUrl = $("#contact-update-form").attr("action");
-    var updateMethod = $("#contact-update-form").attr("method");
-
     $("#cancel").on("click", function(event) {
         window.location.assign("/login");
     });
@@ -69,34 +66,22 @@ $(document).ready(function() {
             }
         },
         submitHandler: function(form) {
-            $("#alert-update").hide();
+            $("#a-submit-alerts").hide();
+            $("#a-submit-alerts .alert").hide();
             $.ajax({
-                url: updateUrl,
+                url: window.location.href,
                 data: $(form).serialize(),
-                type: updateMethod,
+                type: 'POST',
                 cache: false,
-                statusCode: {
-                    302: function() {
-                        $("#alert-update").html("<p><b>Error: </b>Could not connect to the server.</p>");
-                        $("#alert-update").show();
-                    },
-                    403: function() {
-                        $("#alert-update").html("<p><b>Error: </b>Expired or incorrect link - please go back to the login page and start all over again.</p>");
-                        $("#alert-update").show();
-                    },
-                    404: function() {
-                        $("#alert-update").html("<p><b>Error: </b>The RBC ID does not exist - please go back to the login page and start all over again.</p>");
-                        $("#alert-update").show();
-                    },
-                    500: function() {
-                        $("#alert-update").html("<p><b>Error: </b>Unable to send out an email - please contact Volunteer Department.</p>");
-                        $("#alert-update").show();
-                    }
-                },
                 success: function(data, status, xhr) {
-                    $("#alert-update").hide();
-                    $("#volunteer-contact-update-success").modal("show");
-                    window.setTimeout(function(){window.location.assign("/login")}, 2500);
+                    $("#a-submit-alerts .alert-success").show();
+                    $("#a-submit-alerts").show();
+                    $('html, body').animate({scrollTop:$('#a-submit-alerts').position().top});
+                },
+                error: function (jqXHR, textStatus) {
+                    $("#a-submit-alerts .alert-error").show();
+                    $("#a-submit-alerts").show();
+                    $('html, body').animate({scrollTop:$('#a-submit-alerts').position().top});
                 }
             });
         },
