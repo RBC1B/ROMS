@@ -10,7 +10,7 @@
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <div class="container">
             <h1>Something has gone badly, badly wrong.</h1>
-            <p>Please go to <a href="mailto:edificesupport@rbc-lhc.org.uk?Subject=Edifice%20Error">report a problem, including the details below</a></p>
+            <p>Please go to <a href="mailto:edificesupport@rbc-lhc.org.uk?Subject=Edifice%20Error">report a problem</a>, including the details below</p>
             <hr/>
             <h2>Details</h2>
             <pre>${stackTrace}</pre>
