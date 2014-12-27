@@ -94,7 +94,6 @@ public class UsersController {
             modelList.add(userModelFactory.generateUserModel(user));
         }
         model.addAttribute("users", modelList);
-        model.addAttribute("newUri", UserModelFactory.generateUri(null) + "/new");
         return "users/list";
     }
 

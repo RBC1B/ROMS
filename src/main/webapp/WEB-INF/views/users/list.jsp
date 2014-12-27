@@ -47,12 +47,6 @@
                 </tbody>
             </table>
         </div>
-        <sec:authorize access="hasPermission('DATABASE', 'ADD')">
-            <hr />
-            <div class="entity-list-add-new">
-                <a class="btn btn-edifice" href="<c:url value="${newUri}" />">Add New User</a>
-            </div>
-        </sec:authorize>
 
         <br />
         <ol class="breadcrumb">
