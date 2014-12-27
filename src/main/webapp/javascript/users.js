@@ -42,6 +42,7 @@ $(document).ready(function() {
         rules:{
             userName: {
                 required: true,
+                validUserName: true,
                 minlength: 7,
                 remote: uniqueUserNameValidation($("#userName"), $("#userId"))
             },
@@ -62,6 +63,11 @@ $(document).ready(function() {
         },
         errorPlacement: roms.common.validatorErrorPlacement
     });
+    
+    jQuery.validator.addMethod("validUserName", function(value, element) { 
+        var re=/^[0-9A-Za-z]+$/;
+        return value.search(re) != -1; 
+      }, "User name can only contain letters and numbers");
     
     function uniqueUserNameValidation($nameInput, $idInput) {
         return {
