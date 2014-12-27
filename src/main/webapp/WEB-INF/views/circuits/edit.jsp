@@ -73,6 +73,9 @@
                     <div class="col-sm-9 col-md-3">
                         <form:input path="street" class="form-control" maxlength="70" placeholder="Street"/>
                     </div>
+                    <div class="col-sm-3 col-md-3">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Include house number or house name"></span>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-sm-3 col-md-2" for="town">Town</label>
