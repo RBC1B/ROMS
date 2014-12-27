@@ -38,8 +38,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.controller.LoggingHandlerExceptionResolver;
+import uk.org.rbc1b.roms.controller.ResourceNotFoundException;
 import uk.org.rbc1b.roms.controller.congregation.CongregationModelFactory;
 import uk.org.rbc1b.roms.db.Address;
 import uk.org.rbc1b.roms.db.Congregation;
@@ -92,20 +92,17 @@ public class KingdomHallsController {
      * @param kingdomHallId kingdom hall id (primary key)
      * @param model mvc model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException on failure to look up the
-     * kingdom hall
      */
     @RequestMapping(value = "{kingdomHallId}", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('KINGDOMHALL','READ')")
-    public String showKingdomHall(@PathVariable Integer kingdomHallId, ModelMap model)
-            throws NoSuchRequestHandlingMethodException {
+    public String showKingdomHall(@PathVariable Integer kingdomHallId, ModelMap model) {
 
         KingdomHall kingdomHall = kingdomHallDao.findKingdomHall(kingdomHallId);
         CongregationSearchCriteria congregationSearchCriteria = new CongregationSearchCriteria();
         congregationSearchCriteria.setKingdomHallId(kingdomHallId);
         List<Congregation> congregations = congregationDao.findCongregations(congregationSearchCriteria);
         if (kingdomHall == null) {
-            throw new NoSuchRequestHandlingMethodException("No kingdom hall #" + kingdomHallId, this.getClass());
+            throw new ResourceNotFoundException("No kingdom hall #" + kingdomHallId);
         }
         kingdomHall.setOwnershipTypeCode(kingdomHall.getOwnershipTypeCode());
         model.addAttribute("kingdomHall", kingdomHallModelFactory.generateKingdomHallModel(kingdomHall));
@@ -122,16 +119,14 @@ public class KingdomHallsController {
      * @param kingdomHallId kingdomHallId
      * @param model mvc model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException if kingdom hall is not found
      */
     @RequestMapping(value = "{kingdomHallId}/edit", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('KINGDOMHALL','EDIT')")
-    public String showEditKingdomHallForm(@PathVariable Integer kingdomHallId, ModelMap model)
-            throws NoSuchRequestHandlingMethodException {
+    public String showEditKingdomHallForm(@PathVariable Integer kingdomHallId, ModelMap model) {
         KingdomHall kingdomHall = kingdomHallDao.findKingdomHall(kingdomHallId);
 
         if (kingdomHall == null) {
-            throw new NoSuchRequestHandlingMethodException("No kingdom hall #" + kingdomHallId, this.getClass());
+            throw new ResourceNotFoundException("No kingdom hall #" + kingdomHallId);
         }
 
         // initialise the Kingdom Hall Form
@@ -169,18 +164,15 @@ public class KingdomHallsController {
      *
      * @param kingdomHallId id
      * @param kingdomHallForm form
-     * @throws NoSuchRequestHandlingMethodException if kingdom hall does not
-     * exist
      * @return String view
      */
     @RequestMapping(value = "{kingdomHallId}", method = RequestMethod.PUT)
     @PreAuthorize("hasPermission('KINGDOMHALL','EDIT')")
-    public String updateKingdomHall(@PathVariable Integer kingdomHallId, @Valid KingdomHallForm kingdomHallForm)
-            throws NoSuchRequestHandlingMethodException {
+    public String updateKingdomHall(@PathVariable Integer kingdomHallId, @Valid KingdomHallForm kingdomHallForm) {
         KingdomHall kingdomHall = kingdomHallDao.findKingdomHall(kingdomHallId);
 
         if (kingdomHall == null) {
-            throw new NoSuchRequestHandlingMethodException("No kingdom hall #" + kingdomHallId, this.getClass());
+            throw new ResourceNotFoundException("No kingdom hall #" + kingdomHallId);
         }
 
         populateKingdomHall(kingdomHallForm, kingdomHall);
@@ -283,23 +275,20 @@ public class KingdomHallsController {
      * @param request http servlet request
      * @param model spring mvc model
      * @return mvc redirect
-     * @throws NoSuchRequestHandlingMethodException on failure to find the
-     * Kingdom Hall
      */
     @RequestMapping(method = RequestMethod.DELETE)
     @PreAuthorize("hasPermission('KINGDOMHALL','DELETE')")
-    public String deleteKingdomHall(HttpServletRequest request, ModelMap model)
-            throws NoSuchRequestHandlingMethodException {
+    public String deleteKingdomHall(HttpServletRequest request, ModelMap model) {
         Integer kingdomHallId;
         kingdomHallId = Integer.parseInt(request.getParameter("kingdomHallId"));
         KingdomHall kingdomHall = this.kingdomHallDao.findKingdomHall(kingdomHallId);
         if (kingdomHall == null) {
-            throw new NoSuchRequestHandlingMethodException("No Kingdom Hall #" + kingdomHallId, this.getClass());
-        } else {
-            this.kingdomHallDao.deleteKingdomHall(kingdomHall);
-
-            LOGGER.error("Deleted Kingdom Hall:" + kingdomHallId);
-            return "redirect:/kingdom-halls";
+            throw new ResourceNotFoundException("No Kingdom Hall #" + kingdomHallId);
         }
+        this.kingdomHallDao.deleteKingdomHall(kingdomHall);
+
+        LOGGER.error("Deleted Kingdom Hall:" + kingdomHallId);
+        return "redirect:/kingdom-halls";
+
     }
 }

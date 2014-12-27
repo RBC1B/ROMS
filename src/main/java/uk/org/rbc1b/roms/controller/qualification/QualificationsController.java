@@ -33,7 +33,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
+import uk.org.rbc1b.roms.controller.ResourceNotFoundException;
 import uk.org.rbc1b.roms.db.volunteer.qualification.Qualification;
 import uk.org.rbc1b.roms.db.volunteer.qualification.QualificationDao;
 
@@ -78,15 +78,13 @@ public class QualificationsController {
      * @param qualificationId qualification Id (primary key)
      * @param model mvc
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException on failure to look up the qualification
      */
     @RequestMapping(value = "{qualificationId}", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('SKILL', 'READ')")
-    public String showQualification(@PathVariable Integer qualificationId, ModelMap model)
-            throws NoSuchRequestHandlingMethodException {
+    public String showQualification(@PathVariable Integer qualificationId, ModelMap model) {
         Qualification qualification = qualificationDao.findQualification(qualificationId);
         if (qualification == null) {
-            throw new NoSuchRequestHandlingMethodException("No qualification #" + qualificationId, this.getClass());
+            throw new ResourceNotFoundException("No qualification #" + qualificationId);
         }
         model.addAttribute("qualification", qualificationModelFactory.generateQualificationModel(qualification));
         return "qualifications/show";
@@ -98,15 +96,13 @@ public class QualificationsController {
      * @param qualificationId qualification ID
      * @param model mvc model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException on failure to find the qualification
      */
     @RequestMapping(value = "{qualificationId}/edit", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('SKILL', 'EDIT')")
-    public String showEditQualificationForm(@PathVariable Integer qualificationId, ModelMap model)
-            throws NoSuchRequestHandlingMethodException {
+    public String showEditQualificationForm(@PathVariable Integer qualificationId, ModelMap model) {
         Qualification qualification = this.qualificationDao.findQualification(qualificationId);
         if (qualification == null) {
-            throw new NoSuchRequestHandlingMethodException("No qualification #" + qualificationId, this.getClass());
+            throw new ResourceNotFoundException("No qualification #" + qualificationId);
         }
 
         QualificationForm form = new QualificationForm();
@@ -140,16 +136,14 @@ public class QualificationsController {
      * @param qualificationId qualification to update
      * @param qualificationForm form bean
      * @return mvc redirect to qualification page
-     * @throws NoSuchRequestHandlingMethodException on failure to find the qualification
      */
     @RequestMapping(value = "{qualificationId}", method = RequestMethod.PUT)
     @PreAuthorize("hasPermission('SKILL', 'EDIT')")
-    public String updateQualification(@PathVariable Integer qualificationId, @Valid QualificationForm qualificationForm)
-            throws NoSuchRequestHandlingMethodException {
+    public String updateQualification(@PathVariable Integer qualificationId, @Valid QualificationForm qualificationForm) {
 
         Qualification qualification = this.qualificationDao.findQualification(qualificationId);
         if (qualification == null) {
-            throw new NoSuchRequestHandlingMethodException("No qualification #" + qualificationId, this.getClass());
+            throw new ResourceNotFoundException("No qualification #" + qualificationId);
         }
 
         qualification.setName(qualificationForm.getName());

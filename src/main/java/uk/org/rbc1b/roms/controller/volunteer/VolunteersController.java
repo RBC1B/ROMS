@@ -66,8 +66,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import org.springframework.web.util.UriComponentsBuilder;
+import uk.org.rbc1b.roms.controller.ResourceNotFoundException;
 import uk.org.rbc1b.roms.controller.common.DataConverterUtil;
 import uk.org.rbc1b.roms.controller.common.PhoneNumberFormatter;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableResult;
@@ -216,21 +216,18 @@ public class VolunteersController {
      * @param volunteerId volunteer primary key
      * @param model model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException when no person matching the
      * id is found
      */
     @RequestMapping(value = "{volunteerId}", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
-    public String showVolunteer(@PathVariable Integer volunteerId, ModelMap model)
-            throws NoSuchRequestHandlingMethodException {
+    public String showVolunteer(@PathVariable Integer volunteerId, ModelMap model) {
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
         if (volunteer == null) {
             if (personDao.findPerson(volunteerId) != null) {
                 return "redirect:" + PersonModelFactory.generateUri(volunteerId);
             }
-            throw new NoSuchRequestHandlingMethodException("No volunteer or person with id [" + volunteerId + "]",
-                    this.getClass());
+            throw new ResourceNotFoundException("No volunteer or person with id [" + volunteerId + "]");
         }
 
         List<Assignment> assignments = volunteerDao.findAssignments(volunteerId);
@@ -314,17 +311,14 @@ public class VolunteersController {
      * @param volunteerQualificationId skill ID to edit
      * @param model mvc model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException on failure to find the skill
      */
     @RequestMapping(value = "{volunteerId}/qualifications/{volunteerQualificationId}/edit", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
-    public String showEditVolunteerQualificationForm(@PathVariable Integer volunteerQualificationId, ModelMap model)
-            throws NoSuchRequestHandlingMethodException {
+    public String showEditVolunteerQualificationForm(@PathVariable Integer volunteerQualificationId, ModelMap model) {
 
         VolunteerQualification volunteerQualification = volunteerDao.findQualification(volunteerQualificationId);
         if (volunteerQualification == null) {
-            throw new NoSuchRequestHandlingMethodException("No volunteer qualification #" + volunteerQualificationId
-                    + " found", this.getClass());
+            throw new ResourceNotFoundException("No volunteer qualification #" + volunteerQualificationId + " found");
         }
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerQualification.getPersonId(),
@@ -531,16 +525,14 @@ public class VolunteersController {
      * @param volunteerId volunteer id to edit
      * @param model mvc model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException if volunteer is not found
      */
     @RequestMapping(value = "{volunteerId}/spiritual/edit", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
-    public String showEditVolunteerSpiritualForm(@PathVariable Integer volunteerId, ModelMap model)
-            throws NoSuchRequestHandlingMethodException {
+    public String showEditVolunteerSpiritualForm(@PathVariable Integer volunteerId, ModelMap model) {
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, EnumSet.noneOf(VolunteerData.class));
         if (volunteer == null) {
-            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+            throw new ResourceNotFoundException("No volunteer #" + volunteerId + " found");
         }
 
         VolunteerSpiritualForm form = new VolunteerSpiritualForm();
@@ -572,16 +564,14 @@ public class VolunteersController {
      * @param volunteerId volunteer id to edit
      * @param model mvc model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException if volunteer is not found
      */
     @RequestMapping(value = "{volunteerId}/rbc-status/edit", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
-    public String showEditVolunteerRbcStatusForm(@PathVariable Integer volunteerId, ModelMap model)
-            throws NoSuchRequestHandlingMethodException {
+    public String showEditVolunteerRbcStatusForm(@PathVariable Integer volunteerId, ModelMap model) {
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, EnumSet.of(VolunteerData.INTERVIEWER));
         if (volunteer == null) {
-            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+            throw new ResourceNotFoundException("No volunteer #" + volunteerId + " found");
         }
 
         VolunteerRbcStatusForm form = new VolunteerRbcStatusForm();
@@ -635,16 +625,14 @@ public class VolunteersController {
      * @param volunteerId volunteer id to edit
      * @param model mvc model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException if volunteer is not found
      */
     @RequestMapping(value = "{volunteerId}/personal/edit", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
-    public String showEditVolunteerPersonalForm(@PathVariable Integer volunteerId, ModelMap model)
-            throws NoSuchRequestHandlingMethodException {
+    public String showEditVolunteerPersonalForm(@PathVariable Integer volunteerId, ModelMap model) {
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, EnumSet.of(VolunteerData.SPOUSE));
         if (volunteer == null) {
-            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+            throw new ResourceNotFoundException("No volunteer #" + volunteerId + " found");
         }
 
         VolunteerPersonalForm form = new VolunteerPersonalForm();
@@ -691,17 +679,15 @@ public class VolunteersController {
      *
      * @param volunteerId volunteer id to edit
      * @param form form data
-     * @throws NoSuchRequestHandlingMethodException if volunteer is not found
      */
     @RequestMapping(value = "{volunteerId}/name", method = RequestMethod.PUT)
     @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateVolunteerName(@PathVariable Integer volunteerId, @Valid VolunteerNameForm form)
-            throws NoSuchRequestHandlingMethodException {
+    public void updateVolunteerName(@PathVariable Integer volunteerId, @Valid VolunteerNameForm form) {
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
         if (volunteer == null) {
-            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+            throw new ResourceNotFoundException("No volunteer #" + volunteerId + " found");
         }
 
         Person person = volunteer.getPerson();
@@ -721,17 +707,15 @@ public class VolunteersController {
      *
      * @param volunteerId volunteer id to edit
      * @param comments comments to set
-     * @throws NoSuchRequestHandlingMethodException if volunteer is not found
      */
     @RequestMapping(value = "{volunteerId}/comments", method = RequestMethod.PUT)
     @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateVolunteerComments(@PathVariable Integer volunteerId, @RequestParam("comments") String comments)
-            throws NoSuchRequestHandlingMethodException {
+    public void updateVolunteerComments(@PathVariable Integer volunteerId, @RequestParam("comments") String comments) {
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
         if (volunteer == null) {
-            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+            throw new ResourceNotFoundException("No volunteer #" + volunteerId + " found");
         }
 
         volunteer.getPerson().setComments(comments);
@@ -745,16 +729,14 @@ public class VolunteersController {
      * @param volunteerId volunteer id to edit
      * @param form form data
      * @return view name (redirect)
-     * @throws NoSuchRequestHandlingMethodException if volunteer is not found
      */
     @RequestMapping(value = "{volunteerId}/spiritual", method = RequestMethod.PUT)
     @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
-    public String updateVolunteerSpiritual(@PathVariable Integer volunteerId, @Valid VolunteerSpiritualForm form)
-            throws NoSuchRequestHandlingMethodException {
+    public String updateVolunteerSpiritual(@PathVariable Integer volunteerId, @Valid VolunteerSpiritualForm form) {
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
         if (volunteer == null) {
-            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+            throw new ResourceNotFoundException("No volunteer #" + volunteerId + " found");
         }
 
         volunteer.setBaptismDate(DataConverterUtil.toSqlDate(form.getBaptismDate()));
@@ -779,16 +761,14 @@ public class VolunteersController {
      * @param volunteerId volunteer id to edit
      * @param form form data
      * @return view name (redirect)
-     * @throws NoSuchRequestHandlingMethodException if volunteer is not found
      */
     @RequestMapping(value = "{volunteerId}/rbc-status", method = RequestMethod.PUT)
     @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
-    public String updateVolunteerRbcStatus(@PathVariable Integer volunteerId, @Valid VolunteerRbcStatusForm form)
-            throws NoSuchRequestHandlingMethodException {
+    public String updateVolunteerRbcStatus(@PathVariable Integer volunteerId, @Valid VolunteerRbcStatusForm form) {
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
         if (volunteer == null) {
-            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+            throw new ResourceNotFoundException("No volunteer #" + volunteerId + " found");
         }
 
         volunteer.setFormDate(DataConverterUtil.toSqlDate(form.getFormDate()));
@@ -834,19 +814,18 @@ public class VolunteersController {
      *
      * @param volunteerId volunteer id
      * @param rbcStatusCode RBC status code to be passed in the request
-     * @throws NoSuchRequestHandlingMethodException if volunteer not found
      *
      */
     @RequestMapping(value = "{volunteerId}/rbc-status-code", method = RequestMethod.PUT)
     @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateVolunteerRbcStatusCode(@PathVariable Integer volunteerId,
-            @RequestParam("rbcStatusCode") String rbcStatusCode) throws NoSuchRequestHandlingMethodException {
+            @RequestParam("rbcStatusCode") String rbcStatusCode) {
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
 
         if (volunteer == null) {
-            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+            throw new ResourceNotFoundException("No volunteer #" + volunteerId + " found");
         }
 
         volunteer.setRbcStatusCode(rbcStatusCode);
@@ -859,16 +838,14 @@ public class VolunteersController {
      * @param volunteerId volunteer id to edit
      * @param form form data
      * @return view name (redirect)
-     * @throws NoSuchRequestHandlingMethodException if volunteer is not found
      */
     @RequestMapping(value = "{volunteerId}/personal", method = RequestMethod.PUT)
     @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
-    public String updateVolunteerPersonal(@PathVariable Integer volunteerId, @Valid VolunteerPersonalForm form)
-            throws NoSuchRequestHandlingMethodException {
+    public String updateVolunteerPersonal(@PathVariable Integer volunteerId, @Valid VolunteerPersonalForm form) {
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
         if (volunteer == null) {
-            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+            throw new ResourceNotFoundException("No volunteer #" + volunteerId + " found");
         }
 
         Person person = volunteer.getPerson();
@@ -970,19 +947,16 @@ public class VolunteersController {
      * @param volunteerId id
      * @param response HttpServletResponse
      * @throws IOException if the file cannot be read
-     * @throws NoSuchRequestHandlingMethodException when the image file is not
      * found
      */
     @RequestMapping(value = "{volunteerId}/image", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
-    public void showImage(@PathVariable Integer volunteerId, HttpServletResponse response) throws IOException,
-            NoSuchRequestHandlingMethodException {
+    public void showImage(@PathVariable Integer volunteerId, HttpServletResponse response) throws IOException {
         String imageName = volunteerId + ".jpg";
         File file = new File(imageDirectories.getProperty(VOLUNTEER_IMAGE_DIRECTORY_KEY) + imageName);
 
         if (!file.exists()) {
-            throw new NoSuchRequestHandlingMethodException("Volunteer #" + volunteerId
-                    + " does not have an image defined", this.getClass());
+            throw new ResourceNotFoundException("Volunteer #" + volunteerId + " does not have an image defined");
         }
 
         OutputStream out = response.getOutputStream();
@@ -1000,18 +974,16 @@ public class VolunteersController {
      * @param imageFile file to be uploaded
      * @throws IOException if file cannot be written
      * @return view
-     * @throws NoSuchRequestHandlingMethodException on failure to find the
      * volunteer
      */
     @RequestMapping(value = "{volunteerId}/image", method = RequestMethod.POST)
     @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     public String handleImageUpload(@PathVariable Integer volunteerId,
-            @RequestParam(value = "image", required = true) MultipartFile imageFile) throws IOException,
-            NoSuchRequestHandlingMethodException {
+            @RequestParam(value = "image", required = true) MultipartFile imageFile) throws IOException {
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, EnumSet.of(VolunteerData.INTERVIEWER));
         if (volunteer == null) {
-            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+            throw new ResourceNotFoundException("No volunteer #" + volunteerId + " found");
         }
 
         String filename = volunteerId + ".jpg";
@@ -1093,18 +1065,16 @@ public class VolunteersController {
      * @param form assignment information
      * @param builder uri builder, for building the response header
      * @return created status, with the assignment url
-     * @throws NoSuchRequestHandlingMethodException if either the volunteer
      * assignment is not found
      */
     @RequestMapping(value = "{volunteerId}/assignments", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> createVolunteerAssignment(@PathVariable Integer volunteerId,
-            @Valid VolunteerAssignmentForm form, UriComponentsBuilder builder)
-            throws NoSuchRequestHandlingMethodException {
+            @Valid VolunteerAssignmentForm form, UriComponentsBuilder builder) {
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, null);
         if (volunteer == null) {
-            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+            throw new ResourceNotFoundException("No volunteer #" + volunteerId + " found");
         }
 
         Assignment volunteerAssignment = new Assignment();
@@ -1138,13 +1108,11 @@ public class VolunteersController {
      *
      * @param volunteerId volunteer id
      * @param assignmentId linked volunteer department assignment id
-     * @throws NoSuchRequestHandlingMethodException if either the volunteer
      * assignment is not found
      */
     @RequestMapping(value = "{volunteerId}/assignments/{assignmentId}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteVolunteerAssignment(@PathVariable Integer volunteerId, @PathVariable Integer assignmentId)
-            throws NoSuchRequestHandlingMethodException {
+    public void deleteVolunteerAssignment(@PathVariable Integer volunteerId, @PathVariable Integer assignmentId) {
 
         Assignment volunteerAssignment = findAssignment(volunteerId, assignmentId);
 
@@ -1157,13 +1125,12 @@ public class VolunteersController {
      * @param volunteerId volunteer id
      * @param assignmentId linked volunteer department assignment id
      * @param form updated data
-     * @throws NoSuchRequestHandlingMethodException if either the volunteer
      * assignment is not found
      */
     @RequestMapping(value = "{volunteerId}/assignments/{assignmentId}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateVolunteerAssignment(@PathVariable Integer volunteerId, @PathVariable Integer assignmentId,
-            @Valid VolunteerAssignmentForm form) throws NoSuchRequestHandlingMethodException {
+            @Valid VolunteerAssignmentForm form) {
 
         Assignment volunteerAssignment = findAssignment(volunteerId, assignmentId);
         // we don't change the person or the department
@@ -1183,8 +1150,7 @@ public class VolunteersController {
         departmentDao.updateAssignment(volunteerAssignment);
     }
 
-    private Assignment findAssignment(Integer volunteerId, Integer assignmentId)
-            throws NoSuchRequestHandlingMethodException {
+    private Assignment findAssignment(Integer volunteerId, Integer assignmentId) {
         List<Assignment> assignments = volunteerDao.findAssignments(volunteerId);
 
         Assignment volunteerAssignment = null;
@@ -1197,8 +1163,8 @@ public class VolunteersController {
         }
 
         if (volunteerAssignment == null) {
-            throw new NoSuchRequestHandlingMethodException("Volunteer #" + volunteerId
-                    + " is not linked to assignment #" + assignmentId, this.getClass());
+            throw new ResourceNotFoundException("Volunteer #" + volunteerId + " is not linked to assignment #"
+                    + assignmentId);
         }
         return volunteerAssignment;
     }
@@ -1210,18 +1176,15 @@ public class VolunteersController {
      * @param form emergency contact information
      * @param builder uri builder, for building the response header
      * @return created status, with the emergency contact url
-     * @throws NoSuchRequestHandlingMethodException if the volunteer is not
-     * found
      */
     @RequestMapping(value = "{volunteerId}/emergencycontacts", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> createVolunteerEmergencyContact(@PathVariable Integer volunteerId,
-            @Valid VolunteerEmergencyContactForm form, UriComponentsBuilder builder)
-            throws NoSuchRequestHandlingMethodException {
+            @Valid VolunteerEmergencyContactForm form, UriComponentsBuilder builder) {
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, null);
         if (volunteer == null) {
-            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+            throw new ResourceNotFoundException("No volunteer #" + volunteerId + " found");
         }
 
         volunteer.setEmergencyContactRelationshipCode(form.getRelationshipCode());
@@ -1255,17 +1218,16 @@ public class VolunteersController {
      *
      * @param volunteerId volunteer id
      * @param emergencyContactId linked volunteer emergency contact id
-     * @throws NoSuchRequestHandlingMethodException if the volunteer is not
      * found
      */
     @RequestMapping(value = "{volunteerId}/emergencycontacts/{emergencyContactId}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteVolunteerEmergencyContact(@PathVariable Integer volunteerId,
-            @PathVariable Integer emergencyContactId) throws NoSuchRequestHandlingMethodException {
+            @PathVariable Integer emergencyContactId) {
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, null);
         if (volunteer == null) {
-            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+            throw new ResourceNotFoundException("No volunteer #" + volunteerId + " found");
         }
         volunteer.setEmergencyContact(null);
         volunteer.setEmergencyContactRelationshipCode(null);
@@ -1279,18 +1241,16 @@ public class VolunteersController {
      * @param volunteerId volunteer id
      * @param emergencyContactId linked volunteer emergency contact id
      * @param form updated data
-     * @throws NoSuchRequestHandlingMethodException if the volunteer is not
      * found
      */
     @RequestMapping(value = "{volunteerId}/emergencycontacts/{emergencyContactId}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateVolunteerEmergencyContact(@PathVariable Integer volunteerId,
-            @PathVariable Integer emergencyContactId, @Valid VolunteerEmergencyContactForm form)
-            throws NoSuchRequestHandlingMethodException {
+            @PathVariable Integer emergencyContactId, @Valid VolunteerEmergencyContactForm form) {
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, null);
         if (volunteer == null) {
-            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+            throw new ResourceNotFoundException("No volunteer #" + volunteerId + " found");
         }
 
         volunteer.setEmergencyContactRelationshipCode(form.getRelationshipCode());
@@ -1305,17 +1265,16 @@ public class VolunteersController {
      * @param form skill information
      * @param builder uri builder, for building the response header
      * @return created status, with the skill url
-     * @throws NoSuchRequestHandlingMethodException if either the volunteer
      * assignment is not found
      */
     @RequestMapping(value = "{volunteerId}/skills", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> createVolunteerSkill(@PathVariable Integer volunteerId, @Valid VolunteerSkillForm form,
-            UriComponentsBuilder builder) throws NoSuchRequestHandlingMethodException {
+            UriComponentsBuilder builder) {
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, null);
         if (volunteer == null) {
-            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+            throw new ResourceNotFoundException("No volunteer #" + volunteerId + " found");
         }
 
         VolunteerSkill volunteerSkill = new VolunteerSkill();
@@ -1340,23 +1299,20 @@ public class VolunteersController {
      *
      * @param volunteerId volunteer id
      * @param volunteerSkillId linked volunteer skill id
-     * @throws NoSuchRequestHandlingMethodException if either the volunteer
      * skill is not found
      */
     @RequestMapping(value = "{volunteerId}/skills/{volunteerSkillId}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteVolunteerSkill(@PathVariable Integer volunteerId, @PathVariable Integer volunteerSkillId)
-            throws NoSuchRequestHandlingMethodException {
+    public void deleteVolunteerSkill(@PathVariable Integer volunteerId, @PathVariable Integer volunteerSkillId) {
 
         VolunteerSkill volunteerSkill = volunteerDao.findSkill(volunteerSkillId);
         if (volunteerSkill == null) {
-            throw new NoSuchRequestHandlingMethodException("Volunteer skill #" + volunteerSkillId + " is not found",
-                    this.getClass());
+            throw new ResourceNotFoundException("Volunteer skill #" + volunteerSkillId + " is not found");
         }
 
         if (!volunteerSkill.getPersonId().equals(volunteerId)) {
-            throw new NoSuchRequestHandlingMethodException("Volunteer #" + volunteerId + " is not linked to skill #"
-                    + volunteerSkillId, this.getClass());
+            throw new ResourceNotFoundException("Volunteer #" + volunteerId + " is not linked to skill #"
+                    + volunteerSkillId);
         }
 
         volunteerDao.deleteSkill(volunteerSkill);
@@ -1368,18 +1324,16 @@ public class VolunteersController {
      * @param volunteerId volunteer id
      * @param skillId linked volunteer department skill id
      * @param form updated data
-     * @throws NoSuchRequestHandlingMethodException if either the volunteer
      * skill is not found
      */
     @RequestMapping(value = "{volunteerId}/skills/{skillId}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateVolunteerSkill(@PathVariable Integer volunteerId, @PathVariable Integer skillId,
-            @Valid VolunteerSkillForm form) throws NoSuchRequestHandlingMethodException {
+            @Valid VolunteerSkillForm form) {
 
         VolunteerSkill volunteerSkill = volunteerDao.findSkill(skillId);
         if (volunteerSkill == null || !volunteerSkill.getPersonId().equals(volunteerId)) {
-            throw new NoSuchRequestHandlingMethodException("Volunteer #" + volunteerId + " is not linked to skill #"
-                    + skillId, this.getClass());
+            throw new ResourceNotFoundException("Volunteer #" + volunteerId + " is not linked to skill #" + skillId);
         }
 
         // we don't change the skill or department
@@ -1396,12 +1350,10 @@ public class VolunteersController {
      *
      * @param volunteerId the volunteer id
      * @param volunteerTradeId the volunteer trade id
-     * @throws NoSuchRequestHandlingMethodException the exception
      */
     @RequestMapping(value = "{volunteerId}/experience/{volunteerTradeId}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteVolunteerExperience(@PathVariable Integer volunteerId, @PathVariable Integer volunteerTradeId)
-            throws NoSuchRequestHandlingMethodException {
+    public void deleteVolunteerExperience(@PathVariable Integer volunteerId, @PathVariable Integer volunteerTradeId) {
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, null);
         for (VolunteerTrade trade : volunteer.getTrades()) {
             if (trade.getVolunteerTradeId() == volunteerTradeId) {
@@ -1417,17 +1369,15 @@ public class VolunteersController {
      * @param form the form data
      * @param builder the builder
      * @return response status
-     * @throws NoSuchRequestHandlingMethodException the exception
      */
     @RequestMapping(value = "{volunteerId}/experience", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> createVolunteerExperience(@PathVariable Integer volunteerId,
-            @Valid VolunteerExperienceForm form, UriComponentsBuilder builder)
-            throws NoSuchRequestHandlingMethodException {
+            @Valid VolunteerExperienceForm form, UriComponentsBuilder builder) {
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, null);
         if (volunteer == null) {
-            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+            throw new ResourceNotFoundException("No volunteer #" + volunteerId + " found");
         }
 
         VolunteerTrade trade = new VolunteerTrade();
@@ -1451,18 +1401,16 @@ public class VolunteersController {
      * @param volunteerTradeId the volunteer trade id
      * @param form the valid form data
      * @param builder the builder
-     * @throws NoSuchRequestHandlingMethodException the exception
      */
     @RequestMapping(value = "{volunteerId}/experience/{volunteerTradeId}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateVolunteerExperience(@PathVariable Integer volunteerId, @PathVariable Integer volunteerTradeId,
-            @Valid VolunteerExperienceForm form, UriComponentsBuilder builder)
-            throws NoSuchRequestHandlingMethodException {
+            @Valid VolunteerExperienceForm form, UriComponentsBuilder builder) {
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, null);
         VolunteerTrade volunteerTrade = volunteerDao.findTrade(volunteerTradeId);
         if (volunteer == null || volunteerTrade == null
                 || volunteer.getPersonId() != volunteerTrade.getVolunteer().getPersonId()) {
-            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+            throw new ResourceNotFoundException("No volunteer #" + volunteerId + " found");
         }
 
         volunteerTrade.setName(form.getName());
@@ -1478,18 +1426,15 @@ public class VolunteersController {
      * @param volunteerId the volunteer id
      * @param volunteerQualificationId volunteer qualification Id to edit
      * @param form form data
-     * @throws NoSuchRequestHandlingMethodException if volunteer is not found
      */
     @RequestMapping(value = "{volunteerId}/qualifications/{volunteerQualificationId}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateVolunteerQualification(@PathVariable Integer volunteerId,
-            @PathVariable Integer volunteerQualificationId, @Valid VolunteerQualificationForm form)
-            throws NoSuchRequestHandlingMethodException {
+            @PathVariable Integer volunteerQualificationId, @Valid VolunteerQualificationForm form) {
 
         VolunteerQualification volunteerQualification = volunteerDao.findQualification(volunteerQualificationId);
         if (volunteerQualification == null || volunteerQualification.getPersonId() != volunteerId) {
-            throw new NoSuchRequestHandlingMethodException("No volunteer qualification #" + volunteerQualificationId
-                    + " found", this.getClass());
+            throw new ResourceNotFoundException("No volunteer qualification #" + volunteerQualificationId + " found");
         }
 
         volunteerQualification.setComments(form.getComments());
@@ -1503,23 +1448,22 @@ public class VolunteersController {
      *
      * @param volunteerId volunteer id
      * @param volunteerQualificationId linked volunteer qualification id
-     * @throws NoSuchRequestHandlingMethodException if either the volunteer
      * qualification is not found
      */
     @RequestMapping(value = "{volunteerId}/qualifications/{volunteerQualificationId}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteVolunteerQualification(@PathVariable Integer volunteerId,
-            @PathVariable Integer volunteerQualificationId) throws NoSuchRequestHandlingMethodException {
+            @PathVariable Integer volunteerQualificationId) {
 
         VolunteerQualification volunteerQualification = volunteerDao.findQualification(volunteerQualificationId);
         if (volunteerQualification == null) {
-            throw new NoSuchRequestHandlingMethodException("Volunteer qualification #" + volunteerQualificationId
-                    + " is not found", this.getClass());
+            throw new ResourceNotFoundException("Volunteer qualification #" + volunteerQualificationId
+                    + " is not found");
         }
 
         if (!volunteerQualification.getPersonId().equals(volunteerId)) {
-            throw new NoSuchRequestHandlingMethodException("Volunteer #" + volunteerId
-                    + " is not linked to qualification #" + volunteerQualificationId, this.getClass());
+            throw new ResourceNotFoundException("Volunteer #" + volunteerId + " is not linked to qualification #"
+                    + volunteerQualificationId);
         }
 
         volunteerDao.deleteVolunteerQualification(volunteerQualification);
@@ -1532,18 +1476,16 @@ public class VolunteersController {
      * @param form qualification information
      * @param builder uri builder, for building the response header
      * @return created status, with the qualification url
-     * @throws NoSuchRequestHandlingMethodException if either the qualification
      * is not found
      */
     @RequestMapping(value = "{volunteerId}/qualifications", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> createVolunteerQualification(@PathVariable Integer volunteerId,
-            @Valid VolunteerQualificationForm form, UriComponentsBuilder builder)
-            throws NoSuchRequestHandlingMethodException {
+            @Valid VolunteerQualificationForm form, UriComponentsBuilder builder) {
 
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, null);
         if (volunteer == null) {
-            throw new NoSuchRequestHandlingMethodException("No volunteer #" + volunteerId + " found", this.getClass());
+            throw new ResourceNotFoundException("No volunteer #" + volunteerId + " found");
         }
 
         VolunteerQualification volunteerQualification = new VolunteerQualification();

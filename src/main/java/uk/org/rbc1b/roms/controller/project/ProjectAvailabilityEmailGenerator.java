@@ -37,10 +37,10 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
+import uk.org.rbc1b.roms.controller.common.HashGenerator;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.PersonDao;
 import uk.org.rbc1b.roms.db.email.Email;
@@ -224,13 +224,8 @@ public class ProjectAvailabilityEmailGenerator {
     }
 
     private String generateSecureToken(Person person, ProjectAvailability projectAvailability, String datetime) {
-        String salt = edificeProperty.getProperty(SECURITY_SALT);
-        if (salt == null || salt.isEmpty()) {
-            salt = "er9bhmbsaa5ppdnoQP";
-            LOGGER.error("JNDI property for security salt is not set - will use default.");
-        }
-        String text = datetime + ":" + person.getPersonId() + ":" + projectAvailability.getProjectAvailabilityId();
-        ShaPasswordEncoder encoder = new ShaPasswordEncoder(256);
-        return encoder.encodePassword(salt, text);
+        String value = datetime + ":" + projectAvailability.getPerson().getPersonId() + ":"
+                + projectAvailability.getProjectAvailabilityId();
+        return HashGenerator.generateHash(value, edificeProperty.getProperty(SECURITY_SALT));
     }
 }

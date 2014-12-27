@@ -47,8 +47,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
+import uk.org.rbc1b.roms.controller.ResourceNotFoundException;
 import uk.org.rbc1b.roms.controller.common.DataConverterUtil;
 import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
 import uk.org.rbc1b.roms.db.Congregation;
@@ -137,17 +137,14 @@ public class InterviewSessionsController {
      * @param interviewSessionId id
      * @param model model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException on failure to find the
      * interview session
      */
     @RequestMapping(value = "{interviewSessionId}", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
-    public String showInterviewSession(@PathVariable Integer interviewSessionId, ModelMap model)
-            throws NoSuchRequestHandlingMethodException {
+    public String showInterviewSession(@PathVariable Integer interviewSessionId, ModelMap model) {
         InterviewSession session = interviewSessionDao.findInterviewSession(interviewSessionId);
         if (session == null) {
-            throw new NoSuchRequestHandlingMethodException("No session with id [" + interviewSessionId + "]",
-                    this.getClass());
+            throw new ResourceNotFoundException("No session with id [" + interviewSessionId + "]");
         }
 
         Map<String, Integer> sessionVolunteerCounts = interviewSessionDao
@@ -204,18 +201,14 @@ public class InterviewSessionsController {
      * @param interviewSessionId session id
      * @param model model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException on failure to find the
-     * session
      */
     @RequestMapping(value = "{interviewSessionId}/invitations", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
-    public String showInvitationList(@PathVariable Integer interviewSessionId, ModelMap model)
-            throws NoSuchRequestHandlingMethodException {
+    public String showInvitationList(@PathVariable Integer interviewSessionId, ModelMap model) {
 
         InterviewSession session = interviewSessionDao.findInterviewSession(interviewSessionId);
         if (session == null) {
-            throw new NoSuchRequestHandlingMethodException("No session with id [" + interviewSessionId + "]",
-                    this.getClass());
+            throw new ResourceNotFoundException("No session with id [" + interviewSessionId + "]");
         }
 
         // we can't invite more people if the session has already happened
@@ -252,13 +245,12 @@ public class InterviewSessionsController {
      * @param interviewSessionId session id
      * @param volunteerIdsParam volunteer ids to be invited
      * @return redirect
-     * @throws NoSuchRequestHandlingMethodException on failure to find the
      * session
      */
     @RequestMapping(value = "{interviewSessionId}/invitations", method = RequestMethod.POST)
     @PreAuthorize("hasPermission('VOLUNTEER', 'READ')")
     public String submitInvitationList(@PathVariable Integer interviewSessionId,
-            @RequestParam(value = "volunteerIds") String volunteerIdsParam) throws NoSuchRequestHandlingMethodException {
+            @RequestParam(value = "volunteerIds") String volunteerIdsParam) {
 
         Set<Integer> volunteerIds = new HashSet<Integer>();
         for (String volunteerId : volunteerIdsParam.split(",")) {
@@ -267,8 +259,7 @@ public class InterviewSessionsController {
 
         InterviewSession session = interviewSessionDao.findInterviewSession(interviewSessionId);
         if (session == null) {
-            throw new NoSuchRequestHandlingMethodException("No session with id [" + interviewSessionId + "]",
-                    this.getClass());
+            throw new ResourceNotFoundException("No session with id [" + interviewSessionId + "]");
         }
 
         // we can't invite more people if the session has already happened
@@ -370,7 +361,6 @@ public class InterviewSessionsController {
      * @param volunteerInterviewSessionId volunteer invitation id
      * @param interviewStatusCode updated status code
      * @param comments comments
-     * @throws NoSuchRequestHandlingMethodException on failure to look up the
      * session or invitation
      */
     @RequestMapping(value = "{interviewSessionId}/invitations/{volunteerInterviewSessionId}", method = RequestMethod.PUT)
@@ -378,25 +368,23 @@ public class InterviewSessionsController {
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void updateVolunteerInvitation(@PathVariable Integer interviewSessionId,
             @PathVariable Integer volunteerInterviewSessionId, @RequestParam String interviewStatusCode,
-            @RequestParam String comments) throws NoSuchRequestHandlingMethodException {
+            @RequestParam String comments) {
 
         InterviewSession session = interviewSessionDao.findInterviewSession(interviewSessionId);
         if (session == null) {
-            throw new NoSuchRequestHandlingMethodException("No session with id [" + interviewSessionId + "]",
-                    this.getClass());
+            throw new ResourceNotFoundException("No session with id [" + interviewSessionId + "]");
         }
 
         VolunteerInterviewSession volunteerInterviewSession = interviewSessionDao
                 .findVolunteerInterviewSession(volunteerInterviewSessionId);
         if (volunteerInterviewSession == null) {
-            throw new NoSuchRequestHandlingMethodException("No volunteer interview session with id ["
-                    + volunteerInterviewSessionId + "]", this.getClass());
+            throw new ResourceNotFoundException("No volunteer interview session with id ["
+                    + volunteerInterviewSessionId + "]");
         }
 
         if (!volunteerInterviewSession.getInterviewSession().getInterviewSessionId().equals(interviewSessionId)) {
-            throw new NoSuchRequestHandlingMethodException("Volunteer interview session #"
-                    + volunteerInterviewSessionId + " is not linked ot interview session #" + interviewSessionId,
-                    this.getClass());
+            throw new ResourceNotFoundException("Volunteer interview session #" + volunteerInterviewSessionId
+                    + " is not linked ot interview session #" + interviewSessionId);
         }
 
         volunteerInterviewSession.setComments(comments);
@@ -451,17 +439,14 @@ public class InterviewSessionsController {
      * @param interviewSessionId primary key
      * @param model model
      * @return view
-     * @throws NoSuchRequestHandlingMethodException on failure to find the
      * session
      */
     @RequestMapping(value = "{interviewSessionId}/edit", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
-    public String showEditInterviewSessionForm(@PathVariable Integer interviewSessionId, ModelMap model)
-            throws NoSuchRequestHandlingMethodException {
+    public String showEditInterviewSessionForm(@PathVariable Integer interviewSessionId, ModelMap model) {
         InterviewSession session = interviewSessionDao.findInterviewSession(interviewSessionId);
         if (session == null) {
-            throw new NoSuchRequestHandlingMethodException("No session with id [" + interviewSessionId + "]",
-                    this.getClass());
+            throw new ResourceNotFoundException("No session with id [" + interviewSessionId + "]");
         }
 
         InterviewSessionForm form = new InterviewSessionForm();
@@ -489,17 +474,15 @@ public class InterviewSessionsController {
      * @param interviewSessionId session id
      * @param interviewSessionForm updated session data
      * @return redirect
-     * @throws NoSuchRequestHandlingMethodException on failure to find the
      * session
      */
     @RequestMapping(value = "{interviewSessionId}", method = RequestMethod.PUT)
     @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
     public String updateInterviewSession(@PathVariable Integer interviewSessionId,
-            @Valid InterviewSessionForm interviewSessionForm) throws NoSuchRequestHandlingMethodException {
+            @Valid InterviewSessionForm interviewSessionForm) {
         InterviewSession session = interviewSessionDao.findInterviewSession(interviewSessionId);
         if (session == null) {
-            throw new NoSuchRequestHandlingMethodException("No session with id [" + interviewSessionId + "]",
-                    this.getClass());
+            throw new ResourceNotFoundException("No session with id [" + interviewSessionId + "]");
         }
 
         session.setComments(interviewSessionForm.getComments());

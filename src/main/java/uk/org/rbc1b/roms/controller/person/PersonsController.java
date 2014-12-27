@@ -37,7 +37,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
+import uk.org.rbc1b.roms.controller.ResourceNotFoundException;
 import uk.org.rbc1b.roms.controller.common.DataConverterUtil;
 import uk.org.rbc1b.roms.controller.common.PhoneNumberFormatter;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableRequestData;
@@ -140,12 +140,10 @@ public class PersonsController {
      * @param personId person primary key
      * @param model model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException when no person matching the id is found
      */
     @RequestMapping(value = "{personId}", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('PERSON','READ')")
-    public String showPerson(@PathVariable Integer personId, ModelMap model)
-            throws NoSuchRequestHandlingMethodException {
+    public String showPerson(@PathVariable Integer personId, ModelMap model) {
         Person person = fetchPerson(personId);
 
         if (volunteerDao.findVolunteer(person.getPersonId(), null) != null) {
@@ -168,12 +166,10 @@ public class PersonsController {
      * @param personId person primary key
      * @param model mvc model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException when no person matching the id is found
      */
     @RequestMapping(value = "{personId}/edit", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('PERSON','EDIT') or hasPermission('VOLUNTEER','EDIT')")
-    public String showEditPersonForm(@PathVariable Integer personId, ModelMap model)
-            throws NoSuchRequestHandlingMethodException {
+    public String showEditPersonForm(@PathVariable Integer personId, ModelMap model) {
 
         Person person = fetchPerson(personId);
 
@@ -224,12 +220,10 @@ public class PersonsController {
      * @param personId person primary key
      * @param form populate person form
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException when no person matching the id is found
      */
     @RequestMapping(value = "{personId}", method = RequestMethod.PUT)
     @PreAuthorize("hasPermission('PERSON','EDIT') or hasPermission('VOLUNTEER','EDIT')")
-    public String updatePerson(@PathVariable Integer personId, @Valid PersonForm form)
-            throws NoSuchRequestHandlingMethodException {
+    public String updatePerson(@PathVariable Integer personId, @Valid PersonForm form) {
         Person person = fetchPerson(personId);
 
         if (form.getStreet() != null || form.getTown() != null || form.getCounty() != null
@@ -269,12 +263,11 @@ public class PersonsController {
      * "Ambiguous handler methods mapped" exception.
      * @param personId person primary key
      * @return person object
-     * @throws NoSuchRequestHandlingMethodException 404 response
      */
     @RequestMapping(value = "{personId}/reference", method = RequestMethod.GET, produces = "application/json")
     @PreAuthorize("hasPermission('PERSON','READ') or hasPermission('VOLUNTEER','READ')")
     @ResponseBody
-    public PersonModel showAjaxPerson(@PathVariable Integer personId) throws NoSuchRequestHandlingMethodException {
+    public PersonModel showAjaxPerson(@PathVariable Integer personId) {
         Person person = fetchPerson(personId);
 
         return personModelFactory.generatePersonModel(person);
@@ -324,10 +317,10 @@ public class PersonsController {
         return result;
     }
 
-    private Person fetchPerson(Integer personId) throws NoSuchRequestHandlingMethodException {
+    private Person fetchPerson(Integer personId) {
         Person person = personDao.findPerson(personId);
         if (person == null) {
-            throw new NoSuchRequestHandlingMethodException("No person with id [" + personId + "]", this.getClass());
+            throw new ResourceNotFoundException("No person with id [" + personId + "]");
         }
         return person;
     }

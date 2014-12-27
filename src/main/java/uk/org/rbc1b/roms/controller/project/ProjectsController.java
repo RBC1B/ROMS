@@ -39,8 +39,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.controller.ForbiddenRequestException;
+import uk.org.rbc1b.roms.controller.ResourceNotFoundException;
 import uk.org.rbc1b.roms.controller.common.DataConverterUtil;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.PersonDao;
@@ -117,15 +117,13 @@ public class ProjectsController {
      * @param projectId the project id
      * @param model the mvc model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException if project does not exist
      */
     @RequestMapping(value = "/{projectId}", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('PROJECT', 'READ')")
-    public String showProject(@PathVariable Integer projectId, ModelMap model)
-            throws NoSuchRequestHandlingMethodException {
+    public String showProject(@PathVariable Integer projectId, ModelMap model) {
         Project project = projectDao.findProject(projectId);
         if (project == null) {
-            throw new NoSuchRequestHandlingMethodException("No project #" + projectId, this.getClass());
+            throw new ResourceNotFoundException("No project #" + projectId);
         }
 
         // Project tab
@@ -276,16 +274,14 @@ public class ProjectsController {
      * @param projectId project id
      * @param model mvc model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException if project not found
      */
     @RequestMapping(value = "{projectId}/edit", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('PROJECT','EDIT')")
-    public String showProjectForm(@PathVariable Integer projectId, ModelMap model)
-            throws NoSuchRequestHandlingMethodException {
+    public String showProjectForm(@PathVariable Integer projectId, ModelMap model) {
 
         Project project = projectDao.findProject(projectId);
         if (project == null) {
-            throw new NoSuchRequestHandlingMethodException("No project #" + projectId, this.getClass());
+            throw new ResourceNotFoundException("No project #" + projectId);
         }
         project.setKingdomHall(kingdomHallDao.findKingdomHall(project.getKingdomHall().getKingdomHallId()));
         if (project.getCoordinator() != null) {
@@ -306,17 +302,15 @@ public class ProjectsController {
      * @param projectId the project id
      * @param form the form bean
      * @return view
-     * @throws NoSuchRequestHandlingMethodException if the project does not
      * exist
      */
     @RequestMapping(value = "{projectId}", method = RequestMethod.PUT)
     @PreAuthorize("hasPermission('PROJECT','EDIT')")
-    public String updateProject(@PathVariable Integer projectId, @Valid ProjectForm form)
-            throws NoSuchRequestHandlingMethodException {
+    public String updateProject(@PathVariable Integer projectId, @Valid ProjectForm form) {
         Project project = projectDao.findProject(projectId);
 
         if (project == null) {
-            throw new NoSuchRequestHandlingMethodException("No project #" + projectId, this.getClass());
+            throw new ResourceNotFoundException("No project #" + projectId);
         }
 
         KingdomHall kingdomHall = kingdomHallDao.findKingdomHall(form.getKingdomHallId());

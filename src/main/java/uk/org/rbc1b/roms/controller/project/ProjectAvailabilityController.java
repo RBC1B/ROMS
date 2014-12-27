@@ -36,7 +36,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,8 +43,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.controller.ForbiddenRequestException;
+import uk.org.rbc1b.roms.controller.ResourceNotFoundException;
+import uk.org.rbc1b.roms.controller.common.HashGenerator;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.PersonDao;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
@@ -133,16 +133,14 @@ public class ProjectAvailabilityController {
      * @param datetime when email sent out
      * @param hash security token
      * @param date the date to add to the database
-     * @throws NoSuchRequestHandlingMethodException if we cant find the project availability
      */
     @RequestMapping(value = "/{projectAvailabilityId}/{datetime}/{hash}/{date}", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void availableDatesPosted(@PathVariable Integer projectAvailabilityId, @PathVariable String datetime,
-            @PathVariable String hash, @PathVariable String date) throws NoSuchRequestHandlingMethodException {
+            @PathVariable String hash, @PathVariable String date) {
         ProjectAvailability projectAvailability = projectAvailabilityDao.findById(projectAvailabilityId);
         if (projectAvailability == null) {
-            throw new NoSuchRequestHandlingMethodException("No ProjectAvailability#" + projectAvailabilityId,
-                    this.getClass());
+            throw new ResourceNotFoundException("No ProjectAvailability#" + projectAvailabilityId);
         }
 
         verifyHashAndStartTime(projectAvailability, datetime, hash);
@@ -166,16 +164,14 @@ public class ProjectAvailabilityController {
      * @param datetime when email sent out
      * @param hash security token
      * @param date the date to delete to the database
-     * @throws NoSuchRequestHandlingMethodException on failure to find the project availability
      */
     @RequestMapping(value = "/{projectAvailabilityId}/{datetime}/{hash}/{date}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void availableDatesDeleted(@PathVariable Integer projectAvailabilityId, @PathVariable String datetime,
-            @PathVariable String hash, @PathVariable String date) throws NoSuchRequestHandlingMethodException {
+            @PathVariable String hash, @PathVariable String date) {
         ProjectAvailability projectAvailability = projectAvailabilityDao.findById(projectAvailabilityId);
         if (projectAvailability == null) {
-            throw new NoSuchRequestHandlingMethodException("No ProjectAvailability#" + projectAvailabilityId,
-                    this.getClass());
+            throw new ResourceNotFoundException("No ProjectAvailability#" + projectAvailabilityId);
         }
 
         verifyHashAndStartTime(projectAvailability, datetime, hash);
@@ -195,16 +191,14 @@ public class ProjectAvailabilityController {
      * @param datetime when email sent out
      * @param hash security token
      * @param requirement the requirement to update
-     * @throws NoSuchRequestHandlingMethodException on failure to find the project availability
      */
     @RequestMapping(value = "/{projectAvailabilityId}/{datetime}/{hash}/{requirement}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateRequirements(@PathVariable Integer projectAvailabilityId, @PathVariable String datetime,
-            @PathVariable String hash, @PathVariable String requirement) throws NoSuchRequestHandlingMethodException {
+            @PathVariable String hash, @PathVariable String requirement) {
         ProjectAvailability projectAvailability = projectAvailabilityDao.findById(projectAvailabilityId);
         if (projectAvailability == null) {
-            throw new NoSuchRequestHandlingMethodException("No ProjectAvailability#" + projectAvailabilityId,
-                    this.getClass());
+            throw new ResourceNotFoundException("No ProjectAvailability#" + projectAvailabilityId);
         }
 
         verifyHashAndStartTime(projectAvailability, datetime, hash);
@@ -221,8 +215,7 @@ public class ProjectAvailabilityController {
             projectAvailability.setOfferTransport(!projectAvailability.isOfferTransport());
             break;
         default:
-            throw new NoSuchRequestHandlingMethodException("No ProjectAvailability requirement [" + requirement
-                    + "] exists", this.getClass());
+            throw new ResourceNotFoundException("No ProjectAvailability requirement [" + requirement + "] exists");
         }
 
         projectAvailability.setUpdatedBy(projectAvailability.getPerson().getPersonId());
@@ -237,15 +230,13 @@ public class ProjectAvailabilityController {
      * @param datetime the datetime
      * @param hash the security token
      * @return responseEntity set with appropriate JSON data
-     * @throws NoSuchRequestHandlingMethodException on failure to find the project availability
      */
     @RequestMapping(value = "/{projectAvailabilityId}/{datetime}/{hash}/availability", method = RequestMethod.GET)
     public ProjectAvailabilityModel getVolunteerAvailability(@PathVariable Integer projectAvailabilityId,
-            @PathVariable String datetime, @PathVariable String hash) throws NoSuchRequestHandlingMethodException {
+            @PathVariable String datetime, @PathVariable String hash) {
         ProjectAvailability projectAvailability = projectAvailabilityDao.findById(projectAvailabilityId);
         if (projectAvailability == null) {
-            throw new NoSuchRequestHandlingMethodException("No ProjectAvailability#" + projectAvailabilityId,
-                    this.getClass());
+            throw new ResourceNotFoundException("No ProjectAvailability#" + projectAvailabilityId);
         }
 
         verifyHashAndStartTime(projectAvailability, datetime, hash);
@@ -260,16 +251,14 @@ public class ProjectAvailabilityController {
      * @param datetime the date time
      * @param hash the security token
      * @return responseEntity with status
-     * @throws NoSuchRequestHandlingMethodException on failure to find the project availability
      */
     @RequestMapping(value = "/{projectAvailabilityId}/{datetime}/{hash}/attendance", method = RequestMethod.GET)
     @ResponseBody
     public Map<String, Boolean> getVolunteerDates(@PathVariable Integer projectAvailabilityId,
-            @PathVariable String datetime, @PathVariable String hash) throws NoSuchRequestHandlingMethodException {
+            @PathVariable String datetime, @PathVariable String hash) {
         ProjectAvailability projectAvailability = projectAvailabilityDao.findById(projectAvailabilityId);
         if (projectAvailability == null) {
-            throw new NoSuchRequestHandlingMethodException("No ProjectAvailability#" + projectAvailabilityId,
-                    this.getClass());
+            throw new ResourceNotFoundException("No ProjectAvailability#" + projectAvailabilityId);
         }
 
         verifyHashAndStartTime(projectAvailability, datetime, hash);
@@ -331,15 +320,10 @@ public class ProjectAvailabilityController {
     }
 
     private boolean isValidHash(ProjectAvailability projectAvailability, String datetime, String hash) {
-        String salt = edificeProperty.getProperty(SECURITY_SALT);
-        if (salt == null || salt.isEmpty()) {
-            salt = "er9bhmbsaa5ppdnoQP";
-            LOGGER.error("JNDI property for security salt is not set - will use default.");
-        }
-        String text = datetime + ":" + projectAvailability.getPerson().getPersonId() + ":"
+        String value = datetime + ":" + projectAvailability.getPerson().getPersonId() + ":"
                 + projectAvailability.getProjectAvailabilityId();
-        ShaPasswordEncoder encoder = new ShaPasswordEncoder(256);
-        String workedHash = encoder.encodePassword(salt, text);
-        return workedHash.equalsIgnoreCase(hash);
+        String generatedHash = HashGenerator.generateHash(value, edificeProperty.getProperty(SECURITY_SALT));
+
+        return generatedHash.equalsIgnoreCase(hash);
     }
 }

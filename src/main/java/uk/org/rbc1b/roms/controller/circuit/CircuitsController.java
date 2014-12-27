@@ -33,7 +33,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
+import uk.org.rbc1b.roms.controller.ResourceNotFoundException;
 import uk.org.rbc1b.roms.controller.common.PhoneNumberFormatter;
 import uk.org.rbc1b.roms.db.Address;
 import uk.org.rbc1b.roms.db.Person;
@@ -82,17 +82,15 @@ public class CircuitsController {
      * @param circuitId circuit id (primary key)
      * @param model mvc model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException on failure to look up the circuit
      */
     @RequestMapping(value = "{circuitId}", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('CIRCUIT', 'READ')")
-    public String showCircuit(@PathVariable Integer circuitId, ModelMap model)
-            throws NoSuchRequestHandlingMethodException {
+    public String showCircuit(@PathVariable Integer circuitId, ModelMap model) {
 
         Circuit circuit = circuitDao.findCircuit(circuitId);
 
         if (circuit == null) {
-            throw new NoSuchRequestHandlingMethodException("No circuit #" + circuitId, this.getClass());
+            throw new ResourceNotFoundException("No circuit #" + circuitId);
         }
 
         model.addAttribute("circuit", circuitModelFactory.generateCircuitModel(circuit));
@@ -105,16 +103,14 @@ public class CircuitsController {
      * @param circuitId circuit id (primary key)
      * @param model mvc model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException on failure to look up the circuit
      */
     @RequestMapping(value = "{circuitId}/edit", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('CIRCUIT', 'EDIT')")
-    public String showEditCircuitForm(@PathVariable Integer circuitId, ModelMap model)
-            throws NoSuchRequestHandlingMethodException {
+    public String showEditCircuitForm(@PathVariable Integer circuitId, ModelMap model) {
         Circuit circuit = circuitDao.findCircuit(circuitId);
 
         if (circuit == null) {
-            throw new NoSuchRequestHandlingMethodException("No circuit #" + circuitId, this.getClass());
+            throw new ResourceNotFoundException("No circuit #" + circuitId);
         }
         CircuitForm form = new CircuitForm();
         form.setName(circuit.getName());

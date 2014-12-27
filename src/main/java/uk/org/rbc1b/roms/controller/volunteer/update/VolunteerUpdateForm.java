@@ -23,18 +23,25 @@
  */
 package uk.org.rbc1b.roms.controller.volunteer.update;
 
-import org.springframework.format.annotation.DateTimeFormat;
-import org.joda.time.DateTime;
-
 /**
- * Update Contact Request form.
  *
+ * @author ramindursingh
  */
 public class VolunteerUpdateForm {
 
     private Integer personId;
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    private DateTime birthDate;
+    private String datetime;
+    private String hash;
+    private String forename;
+    private String surname;
+    private String street;
+    private String town;
+    private String county;
+    private String postcode;
+    private String email;
+    private String mobile;
+    private String telephone;
+    private String workPhone;
 
     /**
      * @return the personId
@@ -51,16 +58,170 @@ public class VolunteerUpdateForm {
     }
 
     /**
-     * @return the birthDate
+     * @return the forename
      */
-    public DateTime getBirthDate() {
-        return birthDate;
+    public String getForename() {
+        return forename;
     }
 
     /**
-     * @param birthDate the birthDate to set
+     * @param forename the forename to set
      */
-    public void setBirthDate(DateTime birthDate) {
-        this.birthDate = birthDate;
+    public void setForename(String forename) {
+        this.forename = forename;
+    }
+
+    /**
+     * @return the surname
+     */
+    public String getSurname() {
+        return surname;
+    }
+
+    /**
+     * @param surname the surname to set
+     */
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    /**
+     * @return the street
+     */
+    public String getStreet() {
+        return street;
+    }
+
+    /**
+     * @param street the street to set
+     */
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    /**
+     * @return the town
+     */
+    public String getTown() {
+        return town;
+    }
+
+    /**
+     * @param town the town to set
+     */
+    public void setTown(String town) {
+        this.town = town;
+    }
+
+    /**
+     * @return the county
+     */
+    public String getCounty() {
+        return county;
+    }
+
+    /**
+     * @param county the county to set
+     */
+    public void setCounty(String county) {
+        this.county = county;
+    }
+
+    /**
+     * @return the postcode
+     */
+    public String getPostcode() {
+        return postcode;
+    }
+
+    /**
+     * @param postcode the postcode to set
+     */
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
+    }
+
+    /**
+     * @return the email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * @param email the email to set
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /**
+     * @return the mobile
+     */
+    public String getMobile() {
+        return mobile;
+    }
+
+    /**
+     * @param mobile the mobile to set
+     */
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    /**
+     * @return the telephone
+     */
+    public String getTelephone() {
+        return telephone;
+    }
+
+    /**
+     * @param telephone the telephone to set
+     */
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    /**
+     * @return the workPhone
+     */
+    public String getWorkPhone() {
+        return workPhone;
+    }
+
+    /**
+     * @param workPhone the workPhone to set
+     */
+    public void setWorkPhone(String workPhone) {
+        this.workPhone = workPhone;
+    }
+
+    /**
+     * @return the datetime
+     */
+    public String getDatetime() {
+        return datetime;
+    }
+
+    /**
+     * @param datetime the datetime to set
+     */
+    public void setDatetime(String datetime) {
+        this.datetime = datetime;
+    }
+
+    /**
+     * @return the hash
+     */
+    public String getHash() {
+        return hash;
+    }
+
+    /**
+     * @param hash the hash to set
+     */
+    public void setHash(String hash) {
+        this.hash = hash;
     }
 }

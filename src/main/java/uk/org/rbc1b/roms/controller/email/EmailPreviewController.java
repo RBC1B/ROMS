@@ -31,12 +31,15 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.controller.BadRequestException;
+import uk.org.rbc1b.roms.controller.ResourceNotFoundException;
 import uk.org.rbc1b.roms.controller.project.ProjectAvailabilityEmailGenerator;
+import uk.org.rbc1b.roms.controller.volunteer.update.VolunteerUpdateEmailGenerator;
 import uk.org.rbc1b.roms.db.email.Email;
 import uk.org.rbc1b.roms.db.project.ProjectAvailability;
 import uk.org.rbc1b.roms.db.project.ProjectAvailabilityDao;
+import uk.org.rbc1b.roms.db.volunteer.Volunteer;
+import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
 import freemarker.template.TemplateException;
 
 /**
@@ -49,29 +52,28 @@ public class EmailPreviewController {
     private ProjectAvailabilityDao projectAvailabilityDao;
     @Autowired
     private ProjectAvailabilityEmailGenerator projectAvailabilityEmailGenerator;
+    @Autowired
+    private VolunteerDao volunteerDao;
+    @Autowired
+    private VolunteerUpdateEmailGenerator volunteerUpdateEmailGenerator;
 
     /**
      * Preview the project availability request email we send to the volunteer.
      * @param projectAvailabilityId id
      * @param model model
      * @return jsp path
-     * @throws NoSuchRequestHandlingMethodException on failure to find the project availability id
+     * @throws TemplateException on failure process the template
+     * @throws IOException on failure to look up the template
      */
     @RequestMapping(value = "project-availability/{projectAvailabilityId}/request", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('DATABASE','READ')")
     public String previewVolunteerRequestEmail(@PathVariable Integer projectAvailabilityId, ModelMap model)
-            throws NoSuchRequestHandlingMethodException {
+            throws IOException, TemplateException {
         ProjectAvailability projectAvailability = projectAvailabilityDao.findById(projectAvailabilityId);
         if (projectAvailability == null) {
-            throw new NoSuchRequestHandlingMethodException("No ProjectAvailability#" + projectAvailabilityId,
-                    this.getClass());
+            throw new ResourceNotFoundException("No ProjectAvailability#" + projectAvailabilityId);
         }
-        Email email;
-        try {
-            email = projectAvailabilityEmailGenerator.generateVolunteerAvailabilityRequestEmail(projectAvailability);
-        } catch (IOException | TemplateException e) {
-            throw new IllegalStateException("Failed to generate the email", e);
-        }
+        Email email = projectAvailabilityEmailGenerator.generateVolunteerAvailabilityRequestEmail(projectAvailability);
 
         if (email == null) {
             throw new BadRequestException("No email available");
@@ -87,28 +89,69 @@ public class EmailPreviewController {
      * @param projectAvailabilityId id
      * @param model model
      * @return jsp path
-     * @throws NoSuchRequestHandlingMethodException on failure to find the project availability id
+     * @throws TemplateException on failure process the template
+     * @throws IOException on failure to look up the template
      */
     @RequestMapping(value = "project-availability/{projectAvailabilityId}/confirmation", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('DATABASE','READ')")
     public String previewVolunteerConfirmationEmail(@PathVariable Integer projectAvailabilityId, ModelMap model)
-            throws NoSuchRequestHandlingMethodException {
+            throws IOException, TemplateException {
         ProjectAvailability projectAvailability = projectAvailabilityDao.findById(projectAvailabilityId);
         if (projectAvailability == null) {
-            throw new NoSuchRequestHandlingMethodException("No ProjectAvailability#" + projectAvailabilityId,
-                    this.getClass());
+            throw new ResourceNotFoundException("No ProjectAvailability#" + projectAvailabilityId);
         }
-        Email email;
-        try {
-            email = projectAvailabilityEmailGenerator
-                    .generateVolunteerAvailabilityConfirmationEmail(projectAvailability);
-        } catch (IOException | TemplateException e) {
-            throw new IllegalStateException("Failed to generate the email", e);
-        }
+        Email email = projectAvailabilityEmailGenerator
+                .generateVolunteerAvailabilityConfirmationEmail(projectAvailability);
 
         if (email == null) {
             throw new BadRequestException("No email available");
         }
+
+        model.addAttribute("email", email);
+
+        return "emails/preview";
+    }
+
+    /**
+     * Preview the volunteer update request email we send to the volunteer.
+     * @param volunteerId id
+     * @param model model
+     * @return jsp path
+     * @throws TemplateException on failure process the template
+     * @throws IOException on failure to look up the template
+     */
+    @RequestMapping(value = "volunteer/{volunteerId}/update-request", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('DATABASE','READ')")
+    public String previewVolunteerUpdateRequestEmail(@PathVariable Integer volunteerId, ModelMap model)
+            throws IOException, TemplateException {
+        Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, null);
+        if (volunteer == null) {
+            throw new ResourceNotFoundException("No Volunteer#" + volunteerId);
+        }
+        Email email = volunteerUpdateEmailGenerator.generateVolunteerUpdateRequestEmail(volunteer);
+
+        model.addAttribute("email", email);
+
+        return "emails/preview";
+    }
+
+    /**
+     * Preview the volunteer update comfirmation email we send to the volunteer after they update their details.
+     * @param volunteerId id
+     * @param model model
+     * @return jsp path
+     * @throws TemplateException on failure process the template
+     * @throws IOException on failure to look up the template
+     */
+    @RequestMapping(value = "volunteer/{volunteerId}/update-confirmation", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('DATABASE','READ')")
+    public String previewVolunteerUpdateConfirmationEmail(@PathVariable Integer volunteerId, ModelMap model)
+            throws IOException, TemplateException {
+        Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, null);
+        if (volunteer == null) {
+            throw new ResourceNotFoundException("No Volunteer#" + volunteerId);
+        }
+        Email email = volunteerUpdateEmailGenerator.generateVolunteerUpdateConfirmationEmail(volunteer);
 
         model.addAttribute("email", email);
 

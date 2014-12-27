@@ -37,7 +37,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
+import uk.org.rbc1b.roms.controller.ResourceNotFoundException;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableRequestData;
 import uk.org.rbc1b.roms.controller.common.datatable.AjaxDataTableResult;
 import uk.org.rbc1b.roms.controller.skill.SkillModel;
@@ -119,15 +119,13 @@ public class DepartmentsController {
      * @param departmentId person primary key
      * @param model model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException when no department matching the id is found
      */
     @RequestMapping(value = "{departmentId}", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('VOLUNTEER','READ')")
-    public String showDepartment(@PathVariable Integer departmentId, ModelMap model)
-            throws NoSuchRequestHandlingMethodException {
+    public String showDepartment(@PathVariable Integer departmentId, ModelMap model) {
         Department department = departmentDao.findDepartment(departmentId);
         if (department == null) {
-            throw new NoSuchRequestHandlingMethodException("No department#" + departmentId, this.getClass());
+            throw new ResourceNotFoundException("No department#" + departmentId);
         }
 
         Assignment overseerAssignment = findDepartmentAssignment(departmentId, OVERSEER_ROLE_CODE);

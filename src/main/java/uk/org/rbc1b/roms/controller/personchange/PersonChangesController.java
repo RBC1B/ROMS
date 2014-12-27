@@ -32,7 +32,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
+import uk.org.rbc1b.roms.controller.ResourceNotFoundException;
 import uk.org.rbc1b.roms.db.PersonChange;
 import uk.org.rbc1b.roms.db.PersonChangeDao;
 
@@ -74,14 +74,13 @@ public class PersonChangesController {
      * Updates a personChange by setting the updated form to true.
      *
      * @param personChangeId the row to update
-     * @throws NoSuchRequestHandlingMethodException on failure to find the row
      */
     @RequestMapping(value = "{personChangeId}", method = RequestMethod.PUT)
     @PreAuthorize("hasPermission('VOLUNTEER', 'EDIT')")
-    public void updatePersonChange(@PathVariable Integer personChangeId) throws NoSuchRequestHandlingMethodException {
+    public void updatePersonChange(@PathVariable Integer personChangeId) {
         PersonChange personChange = personChangeDao.findPersonChange(personChangeId);
         if (personChange == null) {
-            throw new NoSuchRequestHandlingMethodException("No personChange #" + personChangeId, this.getClass());
+            throw new ResourceNotFoundException("No personChange #" + personChangeId);
         }
         personChange.setFormUpdated(true);
         personChangeDao.updatePersonChange(personChange);

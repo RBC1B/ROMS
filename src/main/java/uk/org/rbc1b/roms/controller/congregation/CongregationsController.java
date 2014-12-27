@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
+import uk.org.rbc1b.roms.controller.ResourceNotFoundException;
 import uk.org.rbc1b.roms.db.Congregation;
 import uk.org.rbc1b.roms.db.CongregationContact;
 import uk.org.rbc1b.roms.db.CongregationDao;
@@ -116,16 +116,13 @@ public class CongregationsController {
      * @param congregationId congregation Id (primary key)
      * @param model mvc
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException on failure to look up the
-     * congregation
      */
     @RequestMapping(value = "{congregationId}", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('CONG','READ')")
-    public String showCongregation(@PathVariable Integer congregationId, ModelMap model)
-            throws NoSuchRequestHandlingMethodException {
+    public String showCongregation(@PathVariable Integer congregationId, ModelMap model) {
         Congregation congregation = congregationDao.findCongregation(congregationId);
         if (congregation == null) {
-            throw new NoSuchRequestHandlingMethodException("No Congregation #" + congregationId, this.getClass());
+            throw new ResourceNotFoundException("No Congregation #" + congregationId);
         }
         model.addAttribute("congregation", congregationModelFactory.generateCongregationModel(congregation));
         return "congregations/show";
@@ -137,16 +134,13 @@ public class CongregationsController {
      * @param congregationId congregation ID to edit
      * @param model mvc model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException on failure to find
-     * congregation
      */
     @RequestMapping(value = "{congregationId}/edit", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('CONG','EDIT')")
-    public String showEditCongregationForm(@PathVariable Integer congregationId, ModelMap model)
-            throws NoSuchRequestHandlingMethodException {
+    public String showEditCongregationForm(@PathVariable Integer congregationId, ModelMap model) {
         Congregation congregation = congregationDao.findCongregation(congregationId);
         if (congregation == null) {
-            throw new NoSuchRequestHandlingMethodException("No congregation #" + congregationId, this.getClass());
+            throw new ResourceNotFoundException("No congregation #" + congregationId);
         }
 
         CongregationForm form = new CongregationForm();
@@ -226,16 +220,13 @@ public class CongregationsController {
      * @param congregationId existing congregation id
      * @param congregationForm congregationForm bean
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException on failure to find
-     * congregation
      */
     @RequestMapping(value = "{congregationId}", method = RequestMethod.PUT)
     @PreAuthorize("hasPermission('CONG','EDIT')")
-    public String updateCongregation(@PathVariable Integer congregationId, @Valid CongregationForm congregationForm)
-            throws NoSuchRequestHandlingMethodException {
+    public String updateCongregation(@PathVariable Integer congregationId, @Valid CongregationForm congregationForm) {
         Congregation congregation = congregationDao.findCongregation(congregationId);
         if (congregation == null) {
-            throw new NoSuchRequestHandlingMethodException("No congregation #" + congregationId, this.getClass());
+            throw new ResourceNotFoundException("No congregation #" + congregationId);
         }
 
         populateCongregation(congregationForm, congregation);

@@ -44,7 +44,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
+import uk.org.rbc1b.roms.controller.ResourceNotFoundException;
 import uk.org.rbc1b.roms.db.report.FixedReport;
 import uk.org.rbc1b.roms.db.report.ReportDao;
 import au.com.bytecode.opencsv.CSVWriter;
@@ -87,16 +87,14 @@ public class ReportsController {
      * @param reportId report id
      * @param model model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException on failure to find the report
      */
     @RequestMapping(value = "fixed/{reportId}/html", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('REPORT', 'READ')")
-    public String runHtmlReport(@PathVariable Integer reportId, ModelMap model)
-            throws NoSuchRequestHandlingMethodException {
+    public String runHtmlReport(@PathVariable Integer reportId, ModelMap model) {
 
         FixedReport fixedReport = reportDao.findFixedReport(reportId);
         if (fixedReport == null) {
-            throw new NoSuchRequestHandlingMethodException("No fixed report #" + reportId, this.getClass());
+            throw new ResourceNotFoundException("No fixed report #" + reportId);
         }
         model.addAttribute("report", createFixedReportModel(fixedReport));
         try {
@@ -114,17 +112,15 @@ public class ReportsController {
      * Run a fixed report, returning the data in a downloadable csv format.
      * @param reportId report id
      * @param response servlet response to output the csv data to directly
-     * @throws NoSuchRequestHandlingMethodException on failure to find the report
      * @throws IOException on failure to write to output stream
      */
     @RequestMapping(value = "fixed/{reportId}/csv", method = RequestMethod.GET, consumes = "text/csv", produces = "text/csv")
     @PreAuthorize("hasPermission('REPORT', 'READ')")
-    public void downloadCsvReport(@PathVariable Integer reportId, HttpServletResponse response)
-            throws NoSuchRequestHandlingMethodException, IOException {
+    public void downloadCsvReport(@PathVariable Integer reportId, HttpServletResponse response) throws IOException {
 
         FixedReport fixedReport = reportDao.findFixedReport(reportId);
         if (fixedReport == null) {
-            throw new NoSuchRequestHandlingMethodException("No fixed report #" + reportId, this.getClass());
+            throw new ResourceNotFoundException("No fixed report #" + reportId);
         }
 
         ReportResults reportResults;

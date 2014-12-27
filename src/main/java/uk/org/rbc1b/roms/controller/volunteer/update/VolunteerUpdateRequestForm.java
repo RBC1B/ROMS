@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2013 RBC1B.
+ * Copyright 2014 RBC1B.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,37 +21,48 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.controller;
+package uk.org.rbc1b.roms.controller.volunteer.update;
 
-import org.springframework.beans.propertyeditors.StringTrimmerEditor;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.context.request.WebRequest;
+import javax.validation.constraints.NotNull;
+import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
- * Implement the spring request parameter binder to convert empty strings to
- * null by default.
+ * Update Contact Request form.
+ *
  */
-@ControllerAdvice
-public class GlobalBindingInitializer {
-
-    // @Autowired
-    // private Validator validator;
-    // @Autowired
-    // private ConversionService conversionService;
+public class VolunteerUpdateRequestForm {
+    @NotNull
+    private Integer personId;
+    @NotNull
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private DateTime birthDate;
 
     /**
-     * Custom web binder values.
-     * @param binder binder
-     * @param request request
+     * @return the personId
      */
-    @InitBinder
-    public void initBinder(WebDataBinder binder, WebRequest request) {
-        binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
-
-        // binder.setValidator(new org.springframework.validation.beanvalidation.LocalValidatorFactoryBean());
-        // binder.setConversionService(new org.springframework.format.support.FormattingConversionServiceFactoryBean());
+    public Integer getPersonId() {
+        return personId;
     }
 
+    /**
+     * @param personId the personId to set
+     */
+    public void setPersonId(Integer personId) {
+        this.personId = personId;
+    }
+
+    /**
+     * @return the birthDate
+     */
+    public DateTime getBirthDate() {
+        return birthDate;
+    }
+
+    /**
+     * @param birthDate the birthDate to set
+     */
+    public void setBirthDate(DateTime birthDate) {
+        this.birthDate = birthDate;
+    }
 }
