@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2014 RBC1B.
+ * Copyright 2013 RBC1B.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,46 +21,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.controller.volunteer.update;
+package uk.org.rbc1b.roms.controller;
 
-import org.springframework.format.annotation.DateTimeFormat;
-import org.joda.time.DateTime;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * Update Contact Request form.
- *
+ * Exception representing a 422 forbidden exception.
  */
-public class RequestForm {
-
-    private Integer personId;
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    private DateTime birthDate;
+@ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
+public class UnprocessableEntityRequestException extends RuntimeException {
+    private static final long serialVersionUID = -609859282956616717L;
 
     /**
-     * @return the personId
+     * @param message error message
      */
-    public Integer getPersonId() {
-        return personId;
-    }
-
-    /**
-     * @param personId the personId to set
-     */
-    public void setPersonId(Integer personId) {
-        this.personId = personId;
-    }
-
-    /**
-     * @return the birthDate
-     */
-    public DateTime getBirthDate() {
-        return birthDate;
-    }
-
-    /**
-     * @param birthDate the birthDate to set
-     */
-    public void setBirthDate(DateTime birthDate) {
-        this.birthDate = birthDate;
+    public UnprocessableEntityRequestException(String message) {
+        super(message);
     }
 }

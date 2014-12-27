@@ -25,20 +25,23 @@ package uk.org.rbc1b.roms.controller.volunteer.update;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.core.Authentication;
@@ -51,7 +54,11 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
+import uk.org.rbc1b.roms.controller.ForbiddenRequestException;
+import uk.org.rbc1b.roms.controller.UnprocessableEntityRequestException;
 import uk.org.rbc1b.roms.controller.common.DataConverterUtil;
 import uk.org.rbc1b.roms.db.email.Email;
 import uk.org.rbc1b.roms.db.email.EmailDao;
@@ -59,11 +66,6 @@ import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
-import java.util.ArrayList;
-import java.util.List;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 /**
  * Controller for checking and accepting requests to update contact details.
@@ -71,17 +73,15 @@ import org.springframework.http.ResponseEntity;
  */
 @Controller
 @RequestMapping("/volunteer-contact")
-public class UpdateRequestController {
+public class VolunteerUpdateController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UpdateRequestController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(VolunteerUpdateController.class);
     private static final String BASE_URI = "/volunteer-contact";
     private static final String UPDATE_REQUEST_TEMPLATE = "volunteer-contact-update-request.ftl";
     private static final String POST_UPDATE_TEMPLATE = "volunteer-contact-update-confirmation.ftl";
     private static final String SUBJECT = "RBC (London & Home Counties) Volunteer Information Update";
     private static final String SECURITY_SALT = "security.salt";
     private static final String SERVER_URL = "edifice.url";
-    private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-            + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     private static final String DATETIMEFORMAT = "yyyyMMddHHmm";
     private static final long MAXTIME = 86400000;
     @Autowired
@@ -104,26 +104,42 @@ public class UpdateRequestController {
      *
      * @param form the user form
      * @param request the http request
-     * @return ResponseEntity the status
+     * @throws NoSuchRequestHandlingMethodException on failure to find the volunteer
+     * @throws TemplateException on failure to render the email
+     * @throws IOException  on failure to render the email
      */
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public ResponseEntity<Void> acceptRequest(@Valid RequestForm form, HttpServletRequest request) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void acceptRequest(@Valid VolunteerUpdateForm form, HttpServletRequest request)
+            throws NoSuchRequestHandlingMethodException, IOException, TemplateException {
         Volunteer volunteer = volunteerDao.findVolunteerById(form.getPersonId());
-        Date birthDate = DataConverterUtil.toSqlDate(form.getBirthDate());
         if (volunteer == null) {
-            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
-        } else if (volunteer.getPerson().getBirthDate() == null || !checkEmail(volunteer)) {
-            return new ResponseEntity<Void>(HttpStatus.UNPROCESSABLE_ENTITY);
-        } else if (volunteer.getPerson().getBirthDate().compareTo(birthDate) != 0) {
-            return new ResponseEntity<Void>(HttpStatus.FORBIDDEN);
-        } else {
-            String uri = generateSecureUri(request, volunteer);
-            try {
-                prepareEmail(volunteer, uri);
-                return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-            } catch (IOException | TemplateException e) {
-                return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
+            throw new NoSuchRequestHandlingMethodException("No volunteer #" + form.getPersonId(), this.getClass());
+        }
+
+        assertVolunteerInformationIsValid(volunteer);
+
+        Date birthDate = DataConverterUtil.toSqlDate(form.getBirthDate());
+
+        if (volunteer.getPerson().getBirthDate().compareTo(birthDate) != 0) {
+            throw new ForbiddenRequestException("Birth date does not match");
+        }
+
+        String uri = generateSecureUri(request, volunteer);
+        prepareEmail(volunteer, uri);
+    }
+
+    private void assertVolunteerInformationIsValid(Volunteer volunteer) {
+        if (volunteer.getPerson().getBirthDate() == null) {
+            throw new UnprocessableEntityRequestException("Volunteer #" + volunteer.getPersonId()
+                    + " birth date is not set");
+        }
+        if (volunteer.getPerson().getEmail() == null) {
+            throw new UnprocessableEntityRequestException("Volunteer #" + volunteer.getPersonId() + " email is not set");
+        }
+        if (!EmailValidator.getInstance().isValid(volunteer.getPerson().getEmail())) {
+            throw new UnprocessableEntityRequestException("Volunteer #" + volunteer.getPersonId()
+                    + " email is not valid");
         }
     }
 
@@ -132,17 +148,17 @@ public class UpdateRequestController {
      * this because it is done be the unauthenticated user. Security is added by
      * hashed urls.
      *
-     * @param personId the person id
+     * @param volunteerId the volunteer id
      * @param datetime the datetime of the email
      * @param hash the hash
      * @param model the mvc model
      * @return contact update form
      */
-    @RequestMapping(value = "/{personId}/{datetime}/{hash}", method = RequestMethod.GET)
-    public String showVolunteerContact(@PathVariable Integer personId, @PathVariable String datetime,
+    @RequestMapping(value = "/{volunteerId}/{datetime}/{hash}", method = RequestMethod.GET)
+    public String showVolunteerContact(@PathVariable Integer volunteerId, @PathVariable String datetime,
             @PathVariable String hash, ModelMap model) {
-        String uri = BASE_URI + "/" + personId + "/" + datetime + "/" + hash;
-        Volunteer volunteer = volunteerDao.findVolunteerById(personId);
+        String uri = BASE_URI + "/" + volunteerId + "/" + datetime + "/" + hash;
+        Volunteer volunteer = volunteerDao.findVolunteerById(volunteerId);
         if (volunteer == null) {
             return "volunteer-contact/volunteer-incorrect-form";
         }
@@ -162,45 +178,46 @@ public class UpdateRequestController {
      * Handles update requests. There is no security checks around this because
      * it is done be the unauthenticated user. Security is added by hashed urls.
      *
-     * @param personId the person Id
+     * @param volunteerId the person Id
      * @param datetime the date and time of the original request
      * @param hash the hash
      * @param form the updated contact form
-     * @return ResponseEntity the status exist
+     * @throws NoSuchRequestHandlingMethodException on failure to look up the volunteer
+     * @throws TemplateException on failure to render the confirmation email
+     * @throws IOException  on failure to render the confirmation email
      */
-    @RequestMapping(value = "/{personId}/{datetime}/{hash}", method = RequestMethod.POST)
-    public ResponseEntity<Void> acceptUpdate(@PathVariable Integer personId, @PathVariable String datetime,
-            @PathVariable String hash, @Valid ContactUpdateForm form) {
-        Volunteer volunteer = volunteerDao.findVolunteerById(personId);
+    @RequestMapping(value = "/{volunteerId}/{datetime}/{hash}", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void acceptUpdate(@PathVariable Integer volunteerId, @PathVariable String datetime,
+            @PathVariable String hash, @Valid ContactUpdateForm form) throws NoSuchRequestHandlingMethodException,
+            IOException, TemplateException {
+        Volunteer volunteer = volunteerDao.findVolunteerById(volunteerId);
         if (volunteer == null) {
-            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
-        } else {
-            if (checkWithinTime(datetime) && checkHash(volunteer, datetime, hash)) {
-                volunteer.getPerson().setEmail(form.getEmail());
-                volunteer.getPerson().setTelephone(form.getTelephone());
-                volunteer.getPerson().setMobile(form.getMobile());
-                volunteer.getPerson().setWorkPhone(form.getWorkPhone());
-                volunteer.getPerson().getAddress().setStreet(form.getStreet());
-                volunteer.getPerson().getAddress().setTown(form.getTown());
-                volunteer.getPerson().getAddress().setCounty(form.getCounty());
-                volunteer.getPerson().getAddress().setPostcode(form.getPostcode());
-                try {
-                    UserDetails system = userDetailsService.loadUserByUsername("System");
-                    Authentication authentication = new UsernamePasswordAuthenticationToken(system,
-                            system.getUsername(), system.getAuthorities());
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
-                    volunteerDao.updateVolunteerByVolunteer(volunteer);
-                    preparePostUpdateEmail(volunteer);
-                    return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-                } catch (IOException e) {
-                    return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
-                } catch (TemplateException e) {
-                    return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
-                }
-            } else {
-                return new ResponseEntity<Void>(HttpStatus.FORBIDDEN);
-            }
+            throw new NoSuchRequestHandlingMethodException("No volunteer #" + form.getPersonId(), this.getClass());
         }
+
+        if (!checkHash(volunteer, datetime, hash)) {
+            throw new ForbiddenRequestException("Mismatched request hash");
+        }
+        if (!checkWithinTime(datetime)) {
+            throw new ForbiddenRequestException("Expired request hash");
+        }
+
+        volunteer.getPerson().setEmail(form.getEmail());
+        volunteer.getPerson().setTelephone(form.getTelephone());
+        volunteer.getPerson().setMobile(form.getMobile());
+        volunteer.getPerson().setWorkPhone(form.getWorkPhone());
+        volunteer.getPerson().getAddress().setStreet(form.getStreet());
+        volunteer.getPerson().getAddress().setTown(form.getTown());
+        volunteer.getPerson().getAddress().setCounty(form.getCounty());
+        volunteer.getPerson().getAddress().setPostcode(form.getPostcode());
+
+        UserDetails system = userDetailsService.loadUserByUsername("System");
+        Authentication authentication = new UsernamePasswordAuthenticationToken(system, system.getUsername(),
+                system.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        volunteerDao.updateVolunteerByVolunteer(volunteer);
+        preparePostUpdateEmail(volunteer);
     }
 
     /**
@@ -228,21 +245,6 @@ public class UpdateRequestController {
     private boolean checkHash(Volunteer volunteer, String datetime, String hash) {
         String token = getSecureToken(volunteer, datetime);
         return token.compareTo(hash) == 0;
-    }
-
-    /**
-     * Checks for valid email. Later, we can add further email validation, etc.
-     *
-     * @param volunteer the volunteer to check
-     * @return boolean if valid email or not
-     */
-    private boolean checkEmail(Volunteer volunteer) {
-        if (volunteer.getPerson().getEmail() == null) {
-            return false;
-        }
-        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
-        Matcher matcher = pattern.matcher(volunteer.getPerson().getEmail());
-        return matcher.matches();
     }
 
     /**
