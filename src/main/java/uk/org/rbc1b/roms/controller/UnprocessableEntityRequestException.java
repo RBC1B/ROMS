@@ -23,35 +23,20 @@
  */
 package uk.org.rbc1b.roms.controller;
 
-import org.springframework.beans.propertyeditors.StringTrimmerEditor;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.context.request.WebRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * Implement the spring request parameter binder to convert empty strings to
- * null by default.
+ * Exception representing a 422 forbidden exception.
  */
-@ControllerAdvice
-public class GlobalBindingInitializer {
-
-    // @Autowired
-    // private Validator validator;
-    // @Autowired
-    // private ConversionService conversionService;
+@ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
+public class UnprocessableEntityRequestException extends RuntimeException {
+    private static final long serialVersionUID = -609859282956616717L;
 
     /**
-     * Custom web binder values.
-     * @param binder binder
-     * @param request request
+     * @param message error message
      */
-    @InitBinder
-    public void initBinder(WebDataBinder binder, WebRequest request) {
-        binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
-
-        // binder.setValidator(new org.springframework.validation.beanvalidation.LocalValidatorFactoryBean());
-        // binder.setConversionService(new org.springframework.format.support.FormattingConversionServiceFactoryBean());
+    public UnprocessableEntityRequestException(String message) {
+        super(message);
     }
-
 }

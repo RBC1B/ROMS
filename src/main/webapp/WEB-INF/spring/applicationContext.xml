@@ -37,7 +37,7 @@ THE SOFTWARE.
 
     <context:component-scan base-package="uk.org.rbc1b.roms.db" />
     <context:component-scan base-package="uk.org.rbc1b.roms.security" />
-    <context:component-scan base-package="uk.org.rbc1b.roms.service" />
+    <context:component-scan base-package="uk.org.rbc1b.roms.controller" />
 
     <jee:jndi-lookup id="dataSource" jndi-name="jdbc/_roms" />
 

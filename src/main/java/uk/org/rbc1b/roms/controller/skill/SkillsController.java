@@ -38,8 +38,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.controller.LoggingHandlerExceptionResolver;
+import uk.org.rbc1b.roms.controller.ResourceNotFoundException;
 import uk.org.rbc1b.roms.db.volunteer.department.DepartmentDao;
 import uk.org.rbc1b.roms.db.volunteer.skill.Skill;
 import uk.org.rbc1b.roms.db.volunteer.skill.SkillDao;
@@ -105,16 +105,15 @@ public class SkillsController {
      * @param skillId skill id (primary key)
      * @param model mvc model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException on failure to look up the skill
      */
     @RequestMapping(value = "{skillId}", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('SKILL', 'READ')")
-    public String showSkill(@PathVariable Integer skillId, ModelMap model) throws NoSuchRequestHandlingMethodException {
+    public String showSkill(@PathVariable Integer skillId, ModelMap model) {
 
         Skill skill = skillDao.findSkill(skillId);
 
         if (skill == null) {
-            throw new NoSuchRequestHandlingMethodException("No skill #" + skillId, this.getClass());
+            throw new ResourceNotFoundException("No skill #" + skillId);
         }
 
         model.addAttribute("skill", skillModelFactory.generateSkillModel(skill));
@@ -127,15 +126,13 @@ public class SkillsController {
      * @param skillId skill ID to edit
      * @param model mvc model
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException on failure to find the skill
      */
     @RequestMapping(value = "{skillId}/edit", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('SKILL', 'EDIT')")
-    public String showEditSkillForm(@PathVariable Integer skillId, ModelMap model)
-            throws NoSuchRequestHandlingMethodException {
+    public String showEditSkillForm(@PathVariable Integer skillId, ModelMap model) {
         Skill skill = this.skillDao.findSkill(skillId);
         if (skill == null) {
-            throw new NoSuchRequestHandlingMethodException("No Skill #" + skillId, this.getClass());
+            throw new ResourceNotFoundException("No Skill #" + skillId);
         }
         SkillForm form = new SkillForm();
         form.setSkillId(skill.getSkillId());
@@ -199,16 +196,14 @@ public class SkillsController {
      * @param skillId existing skill id
      * @param skillForm form bean
      * @return view name
-     * @throws NoSuchRequestHandlingMethodException on failure to find the skill
      */
     @RequestMapping(value = "{skillId}", method = RequestMethod.PUT)
     @PreAuthorize("hasPermission('SKILL', 'EDIT')")
-    public String updateSkill(@PathVariable Integer skillId, @Valid SkillForm skillForm)
-            throws NoSuchRequestHandlingMethodException {
+    public String updateSkill(@PathVariable Integer skillId, @Valid SkillForm skillForm) {
 
         Skill skill = this.skillDao.findSkill(skillId);
         if (skill == null) {
-            throw new NoSuchRequestHandlingMethodException("No Skill #" + skillId, this.getClass());
+            throw new ResourceNotFoundException("No Skill #" + skillId);
         }
 
         skill.setName(skillForm.getName());
@@ -226,16 +221,15 @@ public class SkillsController {
      * @param request http servlet request
      * @param model spring mvc model
      * @return mvc redirect
-     * @throws NoSuchRequestHandlingMethodException on failure to find the skill
      */
     @RequestMapping(method = RequestMethod.DELETE)
     @PreAuthorize("hasPermission('SKILL', 'DELETE')")
-    public String deleteSkill(HttpServletRequest request, ModelMap model) throws NoSuchRequestHandlingMethodException {
+    public String deleteSkill(HttpServletRequest request, ModelMap model) {
         Integer skillId;
         skillId = Integer.parseInt(request.getParameter("skillId"));
         Skill skill = this.skillDao.findSkill(skillId);
         if (skill == null) {
-            throw new NoSuchRequestHandlingMethodException("No Skill #" + skillId, this.getClass());
+            throw new ResourceNotFoundException("No Skill #" + skillId);
         }
         this.skillDao.deleteSkill(skill);
 

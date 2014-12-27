@@ -23,16 +23,18 @@
  */
 package uk.org.rbc1b.roms.controller.volunteer.update;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import javax.validation.constraints.NotNull;
 import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * Update Contact Request form.
  *
  */
-public class RequestForm {
-
+public class VolunteerUpdateRequestForm {
+    @NotNull
     private Integer personId;
+    @NotNull
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private DateTime birthDate;
 

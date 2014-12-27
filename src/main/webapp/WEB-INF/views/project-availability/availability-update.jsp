@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : availability-update
     Created on : Nov 18, 2014, 3:33:06 PM
     Author     : ramindursingh
@@ -37,8 +37,8 @@
                 <br/><b>To: </b><c:out value="${availabilityModel.toDate}" />
             </p>
         </div>
-            <div id="working-sunday" value="${availabilityModel.workingSunday}" />
-        <form id="availability-update-form" class="form-horizontal"  action="${submitUrl}" method="${submitMethod}">
+        <div id="working-sunday" value="${availabilityModel.workingSunday}" />
+        <form id="availability-update-form" class="form-horizontal">
             <div id='calendar'>
             </div>
             <div class="container">
@@ -70,10 +70,8 @@
         <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.0/fullcalendar.min.js"></script>
-        <script type="text/javascript" src="/javascript/project-availability.js"></script>
+        <script type="text/javascript" src="<c:url value='/javascript/project-availability.js' />"></script>
         <script>
-            var updateUrl = $('#availability-update-form').attr('action');
-            var updateMethod = $('#availability-update-form').attr('method');
             var workingSunday = $("#working-sunday").attr("value");
             $(document).ready(function() {
 
@@ -96,7 +94,7 @@
                 });
 
                 $('#calendar').fullCalendar('gotoDate', '<c:out value="${availabilityModel.fromDate}" />');
-                
+
                 getExistingAvailableRecord();
                 getExistingAttendanceRecords();
 
@@ -106,7 +104,7 @@
                 $('#transportRequired').on("click", function(event) {
                     updateRequirements("transportRequired");
                 });
-                
+
                 $('#offerTransport').on("click", function(event) {
                     updateRequirements("offerTransport");
                 });

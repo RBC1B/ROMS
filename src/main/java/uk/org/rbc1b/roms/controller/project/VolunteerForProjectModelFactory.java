@@ -64,8 +64,8 @@ public class VolunteerForProjectModelFactory {
             if (workSession == null) {
                 model = generate(assignment, workSession);
             } else {
-                ProjectAvailability availability = projectAvailabilityDao
-                        .findVolunteerAvailabilityByWorkSession(assignment.getPerson().getPersonId(), workSession);
+                ProjectAvailability availability = projectAvailabilityDao.findVolunteerAvailabilityByWorkSession(
+                        assignment.getPerson().getPersonId(), workSession);
                 if (availability != null) {
                     model = generate(availability);
                 } else {
@@ -94,8 +94,7 @@ public class VolunteerForProjectModelFactory {
         model.setPersonId(person.getPersonId());
         model.setPersonName(person.getSurname() + ", " + person.getForename());
 
-        String address = person.getAddress().getTown() + ", "
-                + person.getAddress().getCounty() + ", "
+        String address = person.getAddress().getTown() + ", " + person.getAddress().getCounty() + ", "
                 + person.getAddress().getPostcode();
         model.setAddress(address);
         model.setInvited(false);
@@ -126,10 +125,11 @@ public class VolunteerForProjectModelFactory {
         model.setPersonId(person.getPersonId());
         model.setPersonName(person.getSurname() + ", " + person.getForename());
 
-        String address = person.getAddress().getTown() + ", "
-                + person.getAddress().getCounty() + ", "
-                + person.getAddress().getPostcode();
-        model.setAddress(address);
+        if (person.getAddress() != null) {
+            String address = person.getAddress().getTown() + ", " + person.getAddress().getCounty() + ", "
+                    + person.getAddress().getPostcode();
+            model.setAddress(address);
+        }
 
         model.setInvited(true);
         model.setEmailSent(availability.isEmailSent());

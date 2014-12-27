@@ -41,8 +41,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 import uk.org.rbc1b.roms.controller.BadRequestException;
+import uk.org.rbc1b.roms.controller.ResourceNotFoundException;
 import uk.org.rbc1b.roms.controller.common.model.PersonModelFactory;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.PersonDao;
@@ -127,14 +127,13 @@ public class UsersController {
      * @param personId the person id
      * @param model mvc model
      * @return view
-     * @throws NoSuchRequestHandlingMethodException on failure to look up user
      */
     @RequestMapping(value = "{personId}", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('DATABASE','READ')")
-    public String showUser(@PathVariable Integer personId, ModelMap model) throws NoSuchRequestHandlingMethodException {
+    public String showUser(@PathVariable Integer personId, ModelMap model) {
         User user = userDao.findUser(personId);
         if (user == null) {
-            throw new NoSuchRequestHandlingMethodException("No User with ID:" + personId, this.getClass());
+            throw new ResourceNotFoundException("No User with ID:" + personId);
         }
         model.addAttribute("user", userModelFactory.generateUserModel(user));
         List<ApplicationAccess> permissions = applicationAccessDao.findUserPermissions(personId);
@@ -148,12 +147,10 @@ public class UsersController {
      * @param model mvc model
      * @param userId user id (person id) to create
      * @return view
-     * @throws NoSuchRequestHandlingMethodException if requesting a user id with no defined person
      */
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('DATABASE','ADD')")
-    public String showCreateUserForm(ModelMap model, @RequestParam Integer userId)
-            throws NoSuchRequestHandlingMethodException {
+    public String showCreateUserForm(ModelMap model, @RequestParam Integer userId) {
 
         // if the user already exists, redirect to their view page
         User user = userDao.findUser(userId);
@@ -163,7 +160,7 @@ public class UsersController {
 
         Person person = personDao.findPerson(userId);
         if (person == null) {
-            throw new NoSuchRequestHandlingMethodException("No Person with ID:" + userId, this.getClass());
+            throw new ResourceNotFoundException("No Person with ID:" + userId);
         }
 
         List<Application> applications = applicationDao.getApplications();
@@ -221,15 +218,13 @@ public class UsersController {
      * @param userId the user to update
      * @param model the MVC model
      * @return the jsp page to display
-     * @throws NoSuchRequestHandlingMethodException if the user does not exist
      */
     @RequestMapping(value = "{userId}/edit", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('DATABASE','EDIT')")
-    public String showUserForm(@PathVariable Integer userId, ModelMap model)
-            throws NoSuchRequestHandlingMethodException {
+    public String showUserForm(@PathVariable Integer userId, ModelMap model) {
         User user = userDao.findUser(userId);
         if (user == null) {
-            throw new NoSuchRequestHandlingMethodException("No User with ID:" + userId, this.getClass());
+            throw new ResourceNotFoundException("No User with ID:" + userId);
         }
         List<Application> applications = applicationDao.getApplications();
         Person person = personDao.findPerson(userId);
@@ -260,15 +255,13 @@ public class UsersController {
      * @param userForm a valid user form
      * @param request the http request
      * @return redirect
-     * @throws NoSuchRequestHandlingMethodException id the user does not exist
      */
     @RequestMapping(value = "{userId}", method = RequestMethod.PUT)
     @PreAuthorize("hasPermission('DATABASE','EDIT')")
-    public String saveUserUpdate(@PathVariable Integer userId, @Valid UserForm userForm, HttpServletRequest request)
-            throws NoSuchRequestHandlingMethodException {
+    public String saveUserUpdate(@PathVariable Integer userId, @Valid UserForm userForm, HttpServletRequest request) {
         User user = userDao.findUser(userId);
         if (user == null) {
-            throw new NoSuchRequestHandlingMethodException("No User with ID:" + userId, this.getClass());
+            throw new ResourceNotFoundException("No User with ID:" + userId);
         }
 
         // Three things we could do: 1. disable user, 2. change password, 3. update acl

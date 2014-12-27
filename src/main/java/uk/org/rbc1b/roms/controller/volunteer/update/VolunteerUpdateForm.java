@@ -27,7 +27,7 @@ package uk.org.rbc1b.roms.controller.volunteer.update;
  *
  * @author ramindursingh
  */
-public class ContactUpdateForm {
+public class VolunteerUpdateForm {
 
     private Integer personId;
     private String datetime;

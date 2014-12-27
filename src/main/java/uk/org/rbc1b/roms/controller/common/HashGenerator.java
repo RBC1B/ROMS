@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2013 RBC1B.
+ * Copyright 2014 RBC1B.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,37 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.controller;
+package uk.org.rbc1b.roms.controller.common;
 
-import org.springframework.beans.propertyeditors.StringTrimmerEditor;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.context.request.WebRequest;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 
 /**
- * Implement the spring request parameter binder to convert empty strings to
- * null by default.
+ * Helper class to generate a security hash.
  */
-@ControllerAdvice
-public class GlobalBindingInitializer {
+public final class HashGenerator {
+    private static final Logger LOGGER = LoggerFactory.getLogger(HashGenerator.class);
 
-    // @Autowired
-    // private Validator validator;
-    // @Autowired
-    // private ConversionService conversionService;
+    private HashGenerator() {
+    }
 
     /**
-     * Custom web binder values.
-     * @param binder binder
-     * @param request request
+     * Generate the hash from the incoming value.
+     * @param value value
+     * @param salt hash salt. Default to a fixed vaue if not defined
+     * @return hash
      */
-    @InitBinder
-    public void initBinder(WebDataBinder binder, WebRequest request) {
-        binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
-
-        // binder.setValidator(new org.springframework.validation.beanvalidation.LocalValidatorFactoryBean());
-        // binder.setConversionService(new org.springframework.format.support.FormattingConversionServiceFactoryBean());
+    public static String generateHash(String value, String salt) {
+        String hashSalt = salt;
+        if (StringUtils.isEmpty(hashSalt)) {
+            hashSalt = "er9bhmbsaa5ppdnoQP";
+            LOGGER.error("JNDI property for security salt is not set - will use default.");
+        }
+        ShaPasswordEncoder encoder = new ShaPasswordEncoder(256);
+        return encoder.encodePassword(value, hashSalt);
     }
 
 }

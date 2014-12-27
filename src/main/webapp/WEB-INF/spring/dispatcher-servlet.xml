@@ -61,24 +61,7 @@ THE SOFTWARE.
         </property>
     </bean>
 
-    <!-- replace the mvc:annotation-driven element with the beans below to allow us to
-    override the binding initialiser -->
-    <bean id="handlerMapping" class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
-
-    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
-        <property name="webBindingInitializer">
-            <bean class="uk.org.rbc1b.roms.controller.GlobalBindingInitializer"/>
-        </property>
-        <property name="messageConverters">
-            <list>
-                <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />
-                <bean class="org.springframework.http.converter.StringHttpMessageConverter" />
-                <bean class="org.springframework.http.converter.FormHttpMessageConverter" />
-                <bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter" />
-                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
-            </list>
-        </property>
-    </bean>
+    <mvc:annotation-driven conversion-service="conversionService" />
 
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
     <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean" />
