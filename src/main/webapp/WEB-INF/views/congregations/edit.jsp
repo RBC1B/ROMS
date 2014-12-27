@@ -182,6 +182,9 @@
                 <div class="col-sm-9 col-md-3">
                     <form:textarea path="strategy" class="form-control" rows="4" />
                 </div>
+                <div class=”col-sm-3 col-md-3”>
+                    <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title=""></span>
+                </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-3 col-md-2"></label>
