@@ -64,7 +64,6 @@ import freemarker.template.TemplateException;
 @Controller
 @RequestMapping("/volunteer-contact")
 public class VolunteerUpdateController {
-    private static final String BASE_URI = "/volunteer-contact";
     private static final String SECURITY_SALT = "security.salt";
     private static final String DATETIMEFORMAT = "yyyyMMddHHmm";
     private static final long MAXTIME = 86400000;
@@ -138,18 +137,12 @@ public class VolunteerUpdateController {
     @RequestMapping(value = "/{volunteerId}/{datetime}/{hash}", method = RequestMethod.GET)
     public String showVolunteerContact(@PathVariable Integer volunteerId, @PathVariable String datetime,
             @PathVariable String hash, ModelMap model) {
-        String uri = BASE_URI + "/" + volunteerId + "/" + datetime + "/" + hash;
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, null);
         if (volunteer == null) {
             return "volunteer-contact/volunteer-incorrect-form";
         }
         if (checkWithinTime(datetime) && checkHash(volunteer, datetime, hash)) {
             VolunteerUpdateForm form = new VolunteerUpdateForm();
-            form.setPersonId(volunteer.getPersonId());
-            form.setDatetime(datetime);
-            form.setHash(hash);
-            form.setForename(volunteer.getPerson().getForename());
-            form.setSurname(volunteer.getPerson().getSurname());
             form.setStreet(volunteer.getPerson().getAddress().getStreet());
             form.setTown(volunteer.getPerson().getAddress().getTown());
             form.setCounty(volunteer.getPerson().getAddress().getCounty());
@@ -159,9 +152,9 @@ public class VolunteerUpdateController {
             form.setWorkPhone(volunteer.getPerson().getWorkPhone());
             form.setMobile(volunteer.getPerson().getMobile());
 
-            model.addAttribute("contactUpdateModel", form);
-            model.addAttribute("submitUrl", uri);
-            model.addAttribute("submitMethod", "POST");
+            model.addAttribute("forename", volunteer.getPerson().getForename());
+            model.addAttribute("surname", volunteer.getPerson().getSurname());
+            model.addAttribute("volunteer", form);
             return "volunteer-contact/volunteer-contact-form";
         } else {
             return "volunteer-contact/volunteer-incorrect-form";
@@ -185,7 +178,7 @@ public class VolunteerUpdateController {
             @PathVariable String hash, @Valid VolunteerUpdateForm form) throws IOException, TemplateException {
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, null);
         if (volunteer == null) {
-            throw new ResourceNotFoundException("No volunteer #" + form.getPersonId());
+            throw new ResourceNotFoundException("No volunteer #" + volunteerId);
         }
 
         if (!checkHash(volunteer, datetime, hash)) {

@@ -182,9 +182,11 @@ $(document).ready(function() {
                 email: true
             },
             telephone: {
+                required: true,
                 phoneNumber: true
             },
             mobile: {
+                required: true,
                 phoneNumber: true,
                 mobilePhoneNumber: true
             },

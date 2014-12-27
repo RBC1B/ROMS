@@ -19,34 +19,32 @@
              <h1>RBC London and Home Counties</h1>
         </div>
         <div class="container">
-            <div class="container">
-                Contact Information for <c:out value="${contactUpdateModel.surname}"/>, <c:out value="${contactUpdateModel.forename}"/>
-            </div>
-            <form id="contact-update-form" class="form-horizontal" commandName="contactUpdateModel" action="${submitUrl}" method="${submitMethod}">
+            <p>Contact Information for <c:out value="${surname}"/>, <c:out value="${forename}"/></p>
+            <form:form id="contact-update-form" class="form-horizontal" commandName="volunteer" action="" method="POST">
                 <fieldset>
                     <legend>Contacts</legend>
                     <div class="form-group">
                         <label for="email" class="control-label col-sm-3 col-md-2">Email</label>
                         <div class="col-sm-9 col-md-3">
-                            <form:input path="contactUpdateModel.email" class="form-control" maxlength="50" placeholder="Email Address" />
+                            <form:input path="email" class="form-control" maxlength="50" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="telephone" class="control-label col-sm-3 col-md-2">Home phone</label>
                         <div class="col-sm-9 col-md-2">
-                            <form:input path="contactUpdateModel.telephone" class="form-control" maxlength="15" placeholder="Home Phone" />
+                            <form:input path="telephone" class="form-control" maxlength="15" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="mobile" class="control-label col-sm-3 col-md-2">Mobile phone</label>
                         <div class="col-sm-9 col-md-2">
-                            <form:input path="contactUpdateModel.mobile" class="form-control" maxlength="15" placeholder="Mobile" />
+                            <form:input path="mobile" class="form-control" maxlength="15" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="workPhone" class="control-label col-sm-3 col-md-2">Work phone</label>
                         <div class="col-sm-9 col-md-2">
-                            <form:input path="contactUpdateModel.workPhone" class="form-control" maxlength="15" placeholder="Work Phone" />
+                            <form:input path="workPhone" class="form-control" maxlength="15" />
                         </div>
                     </div>
                 </fieldset>
@@ -55,25 +53,25 @@
                     <div class="form-group">
                         <label for="street" class="control-label col-sm-3 col-md-2">Street</label>
                         <div class="col-sm-9 col-md-3">
-                            <form:input path="contactUpdateModel.street" class="form-control" maxlength="50" placeholder="Street" />
+                            <form:input path="street" class="form-control" maxlength="50" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="town" class="control-label col-sm-3 col-md-2">Town</label>
                         <div class="col-sm-9 col-md-3">
-                            <form:input path="contactUpdateModel.town" class="form-control" maxlength="50" placeholder="Town" />
+                            <form:input path="town" class="form-control" maxlength="50" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="county" class="control-label col-sm-3 col-md-2">County</label>
                         <div class="col-sm-9 col-md-3">
-                            <form:input path="contactUpdateModel.county" class="form-control" maxlength="50" placeholder="County" />
+                            <form:input path="county" class="form-control" maxlength="50" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="postcode" class="control-label col-sm-3 col-md-2">Postcode</label>
                         <div class="col-sm-9 col-md-2">
-                            <form:input path="contactUpdateModel.postcode" class="form-control" maxlength="10" placeholder="Postcode" />
+                            <form:input path="postcode" class="form-control" maxlength="10" />
                         </div>
                     </div>
                 </fieldset>
@@ -85,7 +83,7 @@
                         </div>
                     </div>
                 </fieldset>
-            </form>
+            </form:form>
         </div>
         <div class="modal fade" id="volunteer-contact-update-success" tabindex="-1" role="dialog" aria-labelledby="volunteer-comments-modal-success-label" aria-hidden="true">
             <div class="modal-dialog">

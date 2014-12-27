@@ -28,12 +28,6 @@ package uk.org.rbc1b.roms.controller.volunteer.update;
  * @author ramindursingh
  */
 public class VolunteerUpdateForm {
-
-    private Integer personId;
-    private String datetime;
-    private String hash;
-    private String forename;
-    private String surname;
     private String street;
     private String town;
     private String county;
@@ -42,48 +36,6 @@ public class VolunteerUpdateForm {
     private String mobile;
     private String telephone;
     private String workPhone;
-
-    /**
-     * @return the personId
-     */
-    public Integer getPersonId() {
-        return personId;
-    }
-
-    /**
-     * @param personId the personId to set
-     */
-    public void setPersonId(Integer personId) {
-        this.personId = personId;
-    }
-
-    /**
-     * @return the forename
-     */
-    public String getForename() {
-        return forename;
-    }
-
-    /**
-     * @param forename the forename to set
-     */
-    public void setForename(String forename) {
-        this.forename = forename;
-    }
-
-    /**
-     * @return the surname
-     */
-    public String getSurname() {
-        return surname;
-    }
-
-    /**
-     * @param surname the surname to set
-     */
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
 
     /**
      * @return the street
@@ -197,31 +149,4 @@ public class VolunteerUpdateForm {
         this.workPhone = workPhone;
     }
 
-    /**
-     * @return the datetime
-     */
-    public String getDatetime() {
-        return datetime;
-    }
-
-    /**
-     * @param datetime the datetime to set
-     */
-    public void setDatetime(String datetime) {
-        this.datetime = datetime;
-    }
-
-    /**
-     * @return the hash
-     */
-    public String getHash() {
-        return hash;
-    }
-
-    /**
-     * @param hash the hash to set
-     */
-    public void setHash(String hash) {
-        this.hash = hash;
-    }
 }

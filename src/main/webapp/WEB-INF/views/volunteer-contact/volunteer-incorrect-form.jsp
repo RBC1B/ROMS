@@ -17,8 +17,8 @@
              <h1>RBC London and Home Counties</h1>
         </div>
         <div class="container">
-            You have tried to update your details but the link is incorrect or expired.<br/>
-            <a href="/">Please re-submit your update request.</a>
+            <p>You have tried to update your details but the link is incorrect or expired.</p>
+            <p><a href="/">Please re-submit your update request.</a></p>
         </div>
     </body>
 </html>

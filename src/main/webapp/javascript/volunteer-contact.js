@@ -40,12 +40,15 @@ $(document).ready(function() {
         debug: true,
         rules: {
             email: {
+                required: true,
                 email: true
             },
             telephone: {
+                required: true,
                 phoneNumber: true
             },
             mobile: {
+                required: true,
                 phoneNumber: true,
                 mobilePhoneNumber: true
             },
@@ -53,27 +56,17 @@ $(document).ready(function() {
                 phoneNumber: true
             },
             street: {
+                minlength: 2,
                 required: true
             },
             town: {
-                required: true
-            },
-            county: {
+                minlength: 2,
                 required: true
             },
             postcode: {
+                minlength: 2,
                 required: true
             }
-        },
-        messages: {
-            email: "Please enter a valid email address",
-            telephone: "Please enter a valid phone number",
-            mobile: "Please enter a valid mobile number",
-            workPhone: "Please enter a valid phone number",
-            street: "Please enter your street",
-            town: "Please enter your town",
-            county: "Please enter your county",
-            postcode: "Please enter your postcode"
         },
         submitHandler: function(form) {
             $("#alert-update").hide();
@@ -106,6 +99,7 @@ $(document).ready(function() {
                     window.setTimeout(function(){window.location.assign("/login")}, 2500);
                 }
             });
-        }
+        },
+        errorPlacement: roms.common.validatorErrorPlacement
     });
 });
