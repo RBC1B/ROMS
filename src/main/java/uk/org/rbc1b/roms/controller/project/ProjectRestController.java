@@ -23,6 +23,7 @@
  */
 package uk.org.rbc1b.roms.controller.project;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +73,8 @@ public class ProjectRestController {
     private ProjectAttendanceDao projectAttendanceDao;
     @Autowired
     private VolunteerForProjectModelFactory volunteerForProjectModelFactory;
+    @Autowired
+    private ProjectGateListModelFactory projectGateListModelFactory;
 
     /**
      * Handles requests to insert into availability, when a volunteer is
@@ -208,6 +211,27 @@ public class ProjectRestController {
             }
             return new ResponseEntity<>(HttpStatus.OK);
         }
+    }
+
+    /**
+     * Gets a list of volunteers attending a project on a given date for gate list.
+     *
+     * @param projectId the project Id
+     * @param projectDate the date - a string
+     * @return response entity JSON
+     * @throws ParseException if cannot convert to a valid date
+     */
+    @RequestMapping(value = "/project-gatelist/{projectId}/date/{projectDate}", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('PROJECT', 'READ')")
+    public ResponseEntity<Object> getGateListByDate(@PathVariable Integer projectId, @PathVariable String projectDate)
+            throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        java.util.Date dateParser = format.parse(projectDate);
+        java.sql.Date sqlDate = new java.sql.Date(dateParser.getTime());
+
+        List<ProjectAttendance> attendances = projectAttendanceDao.findConfirmedVolunteersForProjectByDate(projectId, sqlDate);
+        List<ProjectGateListModel> models = projectGateListModelFactory.generateModels(attendances);
+        return new ResponseEntity<Object>(models, HttpStatus.OK);
     }
 
     private List<String> generateDateRange(DateTime startDate, DateTime endDate) {

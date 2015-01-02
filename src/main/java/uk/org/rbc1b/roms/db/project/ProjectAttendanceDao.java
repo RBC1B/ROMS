@@ -44,6 +44,16 @@ public interface ProjectAttendanceDao {
     ProjectAttendance find(Integer projectAttendanceId);
 
     /**
+     * Finds all volunteers for a project and specific date, confirmed as invited.
+     *
+     * @param projectId the project Id
+     * @param date the date
+     * @return list of projectAttendance
+     */
+    @Transactional(readOnly = true)
+    List<ProjectAttendance> findConfirmedVolunteersForProjectByDate(Integer projectId, Date date);
+
+    /**
      * Update volunteers attendance.
      *
      * @param projectAttendance the row

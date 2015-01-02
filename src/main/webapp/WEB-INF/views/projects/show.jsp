@@ -21,11 +21,15 @@
                 </li>
                 <li role="presentation">
                     <a href="#invitation" aria-controls="invitation" role="tab"
-                       data-toggle="tab">Volunteer Invitations</a>
+                       data-toggle="tab">Invitation & Summary</a>
                 </li>
                 <li role="presentation">
                     <a href="#attendance" aria-controls="attendance" role="tab"
-                       data-toggle="tab">Volunteer Invitation Confirmation</a>
+                       data-toggle="tab">Attendance</a>
+                </li>
+                <li role="presentation">
+                    <a href="#gatelist" aria-controls="gatelist" role="tab"
+                       data-toggle="tab">Gate List</a>
                 </li>
             </ul>
 
@@ -41,6 +45,9 @@
                 <div role="tabpanel" class="tab-pane" id="attendance">
                     <%@ include file="fragment/project-attendance.jsp" %>
                 </div>
+                <div role="tabpanel" class="tab-pane" id="gatelist">
+                    <%@ include file="fragment/project-gatelist.jsp" %>
+                </div>
             </div>
         </div>
         <div id="project-permissions" attendance="${application.nonDepartmentLevelAccess}"/>
@@ -51,6 +58,7 @@
             <li><a href="<c:url value="/projects" />">Projects</a></li>
             <li>#${project.projectId}: <c:out value="${project.name}" /></li>
         </ol>
+        <div id="project-id" project-id="${project.projectId}" />
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         <script type="text/javascript" src="<c:url value='/javascript/projects.js' />" ></script>
     </body>

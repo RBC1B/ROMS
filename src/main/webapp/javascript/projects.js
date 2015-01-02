@@ -501,7 +501,8 @@ $(document).ready(function() {
         if (volunteers.length > 0)
         {
             generateConfirmationTableHeaders();
-            var tbody$ = $('<tbody>');
+            var tbody$ = $('<tbody/>');
+            $("#volunteer-confirmation").append(tbody$);
             for (var volunteer = 0; volunteer < volunteers.length; volunteer++)
             {
                 var row$ = $('<tr/>');
@@ -616,7 +617,7 @@ $(document).ready(function() {
             url: roms.common.relativePath + "/service/projects/attendance/" + attendanceId,
             contentType: "application/json",
             type: "PUT",
-            datatype: "json",
+            dataType: "json",
             data: JSON.stringify(jsonData),
         });
     }
@@ -651,5 +652,95 @@ $(document).ready(function() {
     function addConfirmationTable()
     {
         $('#confirmation-table-location').html('<table class="table table-bordered table-condensed table-striped table-hover" cellspacing="0" id="volunteer-confirmation" width="90%"></table>');
+    }
+
+    // Gate list
+    $("input[name=projectDate]").datetimepicker({
+        pickTime: false,
+        minDate: '1/1/2000',
+        format: "DD-MM-YYYY"
+    });
+    // No easy way to do this within datetimepicker...
+    document.getElementById("projectDate").value = getTodaysDate();
+
+    $("#generate-gate-list").on("click", function(event) {
+        event.preventDefault();
+        removeGateListTable();
+        addGateListTable();
+        var projectId = document.getElementById("project-id").getAttribute("project-id");
+        var selectedDate = document.getElementById("projectDate").value;
+        getGateListData(projectId, selectedDate);
+    });
+
+    $("#download-gate-list").on("click", function(event) {
+    });
+
+    function getGateListData(projectId, selectedDate) {
+        return $.ajax({
+            url: roms.common.relativePath + "/service/projects/project-gatelist/" + projectId + "/date/" + selectedDate,
+            contentType: "application/json",
+            type: "GET",
+            dataType: "json",
+            success: function(data) {
+                buildGateListTable(data);
+            }
+        });
+    }
+
+    function buildGateListTable(data) {
+        if (data.length > 0) {
+            generateGateListHeaders();
+            var tbody$ = $('<tbody/>');
+            $('#gate-list-table').append(tbody$);
+            for (var rowId = 0; rowId < data.length; rowId++) {
+                var row$ = $('<tr/>');
+                var rbcid = data[rowId]["personId"];
+                row$.append($('<td/>').html(rbcid));
+                var surname = data[rowId]["surname"];
+                row$.append($('<td/>').html(surname));
+                var forename = data[rowId]["forename"];
+                row$.append($('<td/>').html(forename));
+                var dept = data[rowId]["department"];
+                row$.append($('<td/>').html(dept));
+                $('#gate-list-table').append(row$);
+            }
+            var tableData = document.getElementById("gate-list-table");
+            var wrapper = document.createElement("div");
+            wrapper.appendChild(tableData.cloneNode(true));
+            roms.common.datatables($("#gate-list-table"), {"iDisplayLength": 10});
+        }
+    }
+
+    function generateGateListHeaders() {
+        var thead$ = $('<thead/>');
+        var headerRow$ = $('<tr/>');
+        headerRow$.append($('<th/>').html("RBC ID"));
+        headerRow$.append($('<th/>').html('Surname'));
+        headerRow$.append($('<th/>').html('Forename'));
+        headerRow$.append($('<th/>').html('Department'));
+        thead$.append(headerRow$);
+        $('#gate-list-table').append(thead$);
+    }
+
+    function addGateListTable() {
+        $('#gate-list-location').html('<table class="table table-bordered table-condensed table-striped table-hover" cellspacing="0" id="gate-list-table" width="90%"></table>');
+    }
+    function removeGateListTable() {
+        var table = document.getElementById("gate-list-table");
+        if (table !== null) {
+            var parent = document.getElementById("gate-list-table").parentNode;
+            parent.removeChild(table);
+        }
+    }
+
+    function getTodaysDate() {
+        var today = new Date();
+        var dd = today.getDate();
+        if (dd < 10)
+            dd = "0" + dd;
+        var mnth = today.getMonth() + 1;
+        if (mnth < 10)
+            mnth = "0" + mnth;
+        return dd + "-" + mnth + "-" + today.getFullYear();
     }
 });

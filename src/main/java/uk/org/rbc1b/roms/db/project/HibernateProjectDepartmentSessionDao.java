@@ -59,4 +59,11 @@ public class HibernateProjectDepartmentSessionDao implements ProjectDepartmentSe
     public void save(ProjectDepartmentSession workSession) {
         this.sessionFactory.getCurrentSession().save(workSession);
     }
+
+    @Override
+    public List<ProjectDepartmentSession> findAllProjectSessions(Integer projectId) {
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(ProjectDepartmentSession.class);
+        criteria.add(Restrictions.eq("project.projectId", projectId));
+        return criteria.list();
+    }
 }

@@ -24,6 +24,7 @@
 package uk.org.rbc1b.roms.db.project;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
@@ -41,6 +42,10 @@ public class HibernateProjectAttendanceDao implements ProjectAttendanceDao {
 
     @Autowired
     private SessionFactory sessionFactory;
+    @Autowired
+    private ProjectDepartmentSessionDao projectDepartmentSessionDao;
+    @Autowired
+    private ProjectAvailabilityDao projectAvailabilityDao;
 
     @Override
     public void updateProjectAttendance(ProjectAttendance projectAttendance) {
@@ -61,12 +66,37 @@ public class HibernateProjectAttendanceDao implements ProjectAttendanceDao {
         criteria.add(Restrictions.eq("projectAvailability.projectAvailabilityId", projectAvailability.getProjectAvailabilityId()));
         return criteria.list();
     }
+
     @Override
     public ProjectAttendance getAvailableDate(ProjectAvailability projectAvailability, Date date) {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(ProjectAttendance.class);
         criteria.add(Restrictions.eq("projectAvailability.projectAvailabilityId", projectAvailability.getProjectAvailabilityId()));
         criteria.add(Restrictions.eq("availableDate", date));
         return (ProjectAttendance) criteria.uniqueResult();
+    }
+
+    @Override
+    public List<ProjectAttendance> findConfirmedVolunteersForProjectByDate(Integer projectId, Date date) {
+        List<ProjectAttendance> attendanceList = new ArrayList<>();
+        List<ProjectAvailability> projectAvailabilities = new ArrayList<>();
+
+        List<ProjectDepartmentSession> workSessions = projectDepartmentSessionDao.findAllProjectSessions(projectId);
+        for (ProjectDepartmentSession workSession : workSessions) {
+            List<ProjectAvailability> sessionAvailabilities = projectAvailabilityDao.findForDepartmentSession(workSession.getProjectDepartmentSessionId());
+            if (!sessionAvailabilities.isEmpty()) {
+                projectAvailabilities.addAll(sessionAvailabilities);
+            }
+        }
+
+        for (ProjectAvailability availability : projectAvailabilities) {
+            ProjectAttendance attendance = getAvailableDate(availability, date);
+            if (attendance != null && attendance.isRequired()) {
+                attendance.setProjectAvailability(availability);
+                attendanceList.add(attendance);
+            }
+        }
+
+        return attendanceList;
     }
 
     @Override

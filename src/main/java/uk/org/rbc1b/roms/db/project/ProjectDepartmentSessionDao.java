@@ -35,11 +35,11 @@ public interface ProjectDepartmentSessionDao {
     /**
      * Gets the projectDepartmentSession.
      *
-     * @param id the projectDepartmentSessionId
+     * @param projectDepartmentSessionId the projectDepartmentSessionId
      * @return projectDepartmentSession
      */
     @Transactional(readOnly = true)
-    ProjectDepartmentSession findByProjectDepartmentSessionId(Integer id);
+    ProjectDepartmentSession findByProjectDepartmentSessionId(Integer projectDepartmentSessionId);
 
     /**
      * Gets the list of project department sessions for a department.
@@ -50,6 +50,15 @@ public interface ProjectDepartmentSessionDao {
      */
     @Transactional(readOnly = true)
     List<ProjectDepartmentSession> findProjectSessionsForDepartment(Integer projectId, Integer departmentId);
+
+    /**
+     * Finds all sessions for a project.
+     *
+     * @param projectId the project Id
+     * @return list of sessions
+     */
+    @Transactional(readOnly = true)
+    List<ProjectDepartmentSession> findAllProjectSessions(Integer projectId);
 
     /**
      * Saves a new project department work session.

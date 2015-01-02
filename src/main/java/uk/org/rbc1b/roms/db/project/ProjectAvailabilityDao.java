@@ -78,6 +78,15 @@ public interface ProjectAvailabilityDao {
     ProjectAvailability findVolunteerAvailabilityByWorkSession(Integer personId, ProjectDepartmentSession workSession);
 
     /**
+     * Finds all availabilities for a work session.
+     *
+     * @param projectDepartmentSessionId the session id
+     * @return list of availabilities
+     */
+    @Transactional(readOnly = true)
+    List<ProjectAvailability> findForDepartmentSession(Integer projectDepartmentSessionId);
+
+    /**
      * Finds the availability by person and work session id.
      *
      * @param personId the person id

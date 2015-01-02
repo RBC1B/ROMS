@@ -92,4 +92,11 @@ public class HibernateProjectAvailabilityDao implements ProjectAvailabilityDao {
     public void save(ProjectAvailability projectAvailability) {
         this.sessionFactory.getCurrentSession().save(projectAvailability);
     }
+
+    @Override
+    public List<ProjectAvailability> findForDepartmentSession(Integer projectDepartmentSessionId) {
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(ProjectAvailability.class);
+        criteria.add(Restrictions.eq("projectDepartmentSession.projectDepartmentSessionId", projectDepartmentSessionId));
+        return criteria.list();
+    }
 }
