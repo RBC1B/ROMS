@@ -100,6 +100,30 @@ public class HibernateProjectAttendanceDao implements ProjectAttendanceDao {
     }
 
     @Override
+    public List<ProjectAttendance> findAllAvailableVolunteersForProjectByDate(Integer projectId, Date date) {
+        List<ProjectAttendance> attendanceList = new ArrayList<>();
+        List<ProjectAvailability> projectAvailabilities = new ArrayList<>();
+
+        List<ProjectDepartmentSession> workSessions = projectDepartmentSessionDao.findAllProjectSessions(projectId);
+        for (ProjectDepartmentSession workSession : workSessions) {
+            List<ProjectAvailability> sessionAvailabilities = projectAvailabilityDao.findForDepartmentSession(workSession.getProjectDepartmentSessionId());
+            if (!sessionAvailabilities.isEmpty()) {
+                projectAvailabilities.addAll(sessionAvailabilities);
+            }
+        }
+
+        for (ProjectAvailability availability : projectAvailabilities) {
+            ProjectAttendance attendance = getAvailableDate(availability, date);
+            if (attendance != null) {
+                attendance.setProjectAvailability(availability);
+                attendanceList.add(attendance);
+            }
+        }
+
+        return attendanceList;
+    }
+
+    @Override
     public void save(ProjectAttendance projectAttendance) {
         this.sessionFactory.getCurrentSession().save(projectAttendance);
     }

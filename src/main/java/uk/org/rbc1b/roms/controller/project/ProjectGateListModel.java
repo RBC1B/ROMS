@@ -32,8 +32,7 @@ public class ProjectGateListModel {
     private String forename;
     private String surname;
     private String department;
-    private String timeIn;
-    private String timeOut;
+
 
     /**
      * @return the personId
@@ -89,33 +88,5 @@ public class ProjectGateListModel {
      */
     public void setDepartment(String department) {
         this.department = department;
-    }
-
-    /**
-     * @return the timeIn
-     */
-    public String getTimeIn() {
-        return timeIn;
-    }
-
-    /**
-     * @param timeIn the timeIn to set
-     */
-    public void setTimeIn(String timeIn) {
-        this.timeIn = timeIn;
-    }
-
-    /**
-     * @return the timeOut
-     */
-    public String getTimeOut() {
-        return timeOut;
-    }
-
-    /**
-     * @param timeOut the timeOut to set
-     */
-    public void setTimeOut(String timeOut) {
-        this.timeOut = timeOut;
     }
 }

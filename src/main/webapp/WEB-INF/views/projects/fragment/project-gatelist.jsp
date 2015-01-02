@@ -9,10 +9,10 @@
     <input id="projectDate" name="projectDate" type="text" class="form-control" placeholder="Date (dd-mm-yyyy)" />
 </div>
 
-<a id="generate-gate-list" class="btn btn-success" href="#">Generate</a>
+<a id="generate-gate-list" class="btn btn-success" href="#">Display List</a>
 
-<dt>Gate List</dt>
+<div id="gate-list-summary"></div>
 <div id="gate-list-location">
 </div>
 
-<a id="download-gate-list" class="btn btn-success" href="#">Download</a>
+<a id="download-gate-list" class="btn btn-success" href="#">Download List</a>

@@ -23,6 +23,13 @@
  */
 package uk.org.rbc1b.roms.controller.project;
 
+import au.com.bytecode.opencsv.CSVWriter;
+import com.google.common.net.MediaType;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
@@ -49,6 +56,8 @@ import uk.org.rbc1b.roms.db.application.UserDao;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHallDao;
 import uk.org.rbc1b.roms.db.project.Project;
+import uk.org.rbc1b.roms.db.project.ProjectAttendance;
+import uk.org.rbc1b.roms.db.project.ProjectAttendanceDao;
 import uk.org.rbc1b.roms.db.project.ProjectDao;
 import uk.org.rbc1b.roms.db.project.ProjectDepartmentSession;
 import uk.org.rbc1b.roms.db.project.ProjectDepartmentSessionDao;
@@ -89,6 +98,10 @@ public class ProjectsController {
     private ProjectDepartmentSessionDao projectDepartmentSessionDao;
     @Autowired
     private DepartmentDao departmentDao;
+    @Autowired
+    private ProjectAttendanceDao projectAttendanceDao;
+    @Autowired
+    private ProjectGateListModelFactory projectGateListModelFactory;
 
     /**
      * Handles the project list.
@@ -301,8 +314,7 @@ public class ProjectsController {
      *
      * @param projectId the project id
      * @param form the form bean
-     * @return view
-     * exist
+     * @return view exist
      */
     @RequestMapping(value = "{projectId}", method = RequestMethod.PUT)
     @PreAuthorize("hasPermission('PROJECT','EDIT')")
@@ -334,6 +346,54 @@ public class ProjectsController {
         projectDao.updateProject(project);
 
         return "redirect:" + ProjectModelFactory.generateUri(projectId);
+    }
+
+    /**
+     * Returns the gate list in downloadable CSV format.
+     *
+     * @param projectId the project id
+     * @param projectDate the date
+     * @param response the servlet response
+     * @throws IOException failure to write to output stream
+     * @throws ParseException failure to parse date
+     */
+    @RequestMapping(value = "gate-list/{projectId}/{projectDate}")
+    @PreAuthorize("hasPermission('PROJECT','READ')")
+    public void downloadGateList(@PathVariable Integer projectId, @PathVariable String projectDate, HttpServletResponse response)
+            throws IOException, ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        java.util.Date dateParser = format.parse(projectDate);
+        java.sql.Date sqlDate = new java.sql.Date(dateParser.getTime());
+
+        List<ProjectAttendance> attendances = projectAttendanceDao.findConfirmedVolunteersForProjectByDate(projectId, sqlDate);
+        List<ProjectGateListModel> models = projectGateListModelFactory.generateModels(attendances);
+
+        String[] headers = new String[]{"RBC ID", "Surname", "Forename", "Department"};
+
+        String fileName = "gatelist-" + projectId + "-" + projectDate + ".csv";
+
+        response.setContentType(MediaType.CSV_UTF_8.toString());
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+
+        OutputStream output = response.getOutputStream();
+        CSVWriter writer = new CSVWriter(new OutputStreamWriter(output), '\u0009');
+
+        writer.writeNext(headers);
+        writer.writeAll(convertModelArray(models));
+        writer.close();
+    }
+
+    private List<String[]> convertModelArray(List<ProjectGateListModel> models) {
+        List<String[]> gateList = new ArrayList<String[]>();
+        for (ProjectGateListModel model : models) {
+            String[] rowData = new String[4];
+            rowData[0] = Integer.toString(model.getPersonId().intValue());
+            rowData[1] = model.getSurname();
+            rowData[2] = model.getForename();
+            rowData[3] = model.getDepartment();
+            gateList.add(rowData);
+        }
+        return gateList;
     }
 
     private Integer findUserId() {

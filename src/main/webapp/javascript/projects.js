@@ -669,11 +669,38 @@ $(document).ready(function() {
         addGateListTable();
         var projectId = document.getElementById("project-id").getAttribute("project-id");
         var selectedDate = document.getElementById("projectDate").value;
+        getGateListSummary(projectId, selectedDate);
         getGateListData(projectId, selectedDate);
     });
 
     $("#download-gate-list").on("click", function(event) {
+        var projectId = document.getElementById("project-id").getAttribute("project-id");
+        var selectedDate = document.getElementById("projectDate").value;
+        var url = roms.common.relativePath + "/projects/gate-list/" + projectId + "/" + selectedDate;
+        var link = document.getElementById("download-gate-list");
+        link.href = url;
+        link.click();
     });
+
+    function getGateListSummary(projectId, selectedDate) {
+        $.ajax({
+            url: roms.common.relativePath + "/service/projects/project-gatelist/" + projectId + "/date/" + selectedDate + "/summary",
+            contentType: "application/json",
+            type: "GET",
+            dataType: "json",
+            success: function(data) {
+                printGateListSummary(data);
+            }
+        });
+    }
+
+    function printGateListSummary(summary) {
+        $("#gate-list-summary").html("");
+        var forDate = summary["date"];
+        var invited = summary["invited"];
+        var available = summary["available"];
+        $("#gate-list-summary").html("<b>Date:</b> " + forDate + "<p/><b>Invited:</b> " + invited + "<p/><b>Available:</b> " + available + "<p/>");
+    }
 
     function getGateListData(projectId, selectedDate) {
         return $.ajax({
@@ -723,7 +750,7 @@ $(document).ready(function() {
     }
 
     function addGateListTable() {
-        $('#gate-list-location').html('<table class="table table-bordered table-condensed table-striped table-hover" cellspacing="0" id="gate-list-table" width="90%"></table>');
+        $('#gate-list-location').html('<table class="table table-bordered table-condensed table-striped table-hover" cellspacing="0" id="gate-list-table"></table>');
     }
     function removeGateListTable() {
         var table = document.getElementById("gate-list-table");

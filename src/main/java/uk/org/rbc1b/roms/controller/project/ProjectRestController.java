@@ -26,7 +26,9 @@ package uk.org.rbc1b.roms.controller.project;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -214,7 +216,8 @@ public class ProjectRestController {
     }
 
     /**
-     * Gets a list of volunteers attending a project on a given date for gate list.
+     * Gets a list of volunteers attending a project on a given date for gate
+     * list.
      *
      * @param projectId the project Id
      * @param projectDate the date - a string
@@ -232,6 +235,31 @@ public class ProjectRestController {
         List<ProjectAttendance> attendances = projectAttendanceDao.findConfirmedVolunteersForProjectByDate(projectId, sqlDate);
         List<ProjectGateListModel> models = projectGateListModelFactory.generateModels(attendances);
         return new ResponseEntity<Object>(models, HttpStatus.OK);
+    }
+
+    /**
+     * Gets a summary for gate list for a project for a particular day.
+     *
+     * @param projectId the project id
+     * @param projectDate the date
+     * @return response entity with data
+     * @throws ParseException if cannot convert to a valid date
+     */
+    @RequestMapping(value = "/project-gatelist/{projectId}/date/{projectDate}/summary", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('PROJECT', 'READ')")
+    public ResponseEntity<Object> getGateListSummaryByDate(@PathVariable Integer projectId, @PathVariable String projectDate)
+            throws ParseException {
+        Map<String, String> summary = new HashMap<>();
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        java.util.Date dateParser = format.parse(projectDate);
+        java.sql.Date sqlDate = new java.sql.Date(dateParser.getTime());
+
+        List<ProjectAttendance> attendances = projectAttendanceDao.findConfirmedVolunteersForProjectByDate(projectId, sqlDate);
+        List<ProjectAttendance> availables = projectAttendanceDao.findAllAvailableVolunteersForProjectByDate(projectId, sqlDate);
+        summary.put("date", projectDate);
+        summary.put("invited", Integer.toString(attendances.size()));
+        summary.put("available", Integer.toString(availables.size()));
+        return new ResponseEntity<Object>(summary, HttpStatus.OK);
     }
 
     private List<String> generateDateRange(DateTime startDate, DateTime endDate) {
