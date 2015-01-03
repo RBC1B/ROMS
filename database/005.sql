@@ -191,3 +191,18 @@ insert into AvailabilityStatus(AvailabilityStatusCode, Name) values
 ('HD', 'Not available - Holiday'),
 ('WK', 'Not available - Work'),
 ('NA', 'Not available - Other');
+
+-- Volunteer schema change for updating their details via email every six
+-- months.
+
+alter table Volunteer add column ContactDetailsLastConfirmed date default null
+after PhotoProvided;
+
+alter table Volunteer_AUD add column ContactDetailsLastConfirmed date default null
+after PhotoProvided;
+
+alter table Volunteer add column UpdateContactDetailsEmailLastSent date default null
+after ContactDetailsLastConfirmed;
+
+alter table Volunteer_AUD add column UpdateContactDetailsEmailLastSent date default null
+after ContactDetailsLastConfirmed;

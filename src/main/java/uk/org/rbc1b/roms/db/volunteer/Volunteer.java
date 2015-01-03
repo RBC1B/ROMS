@@ -64,6 +64,8 @@ public class Volunteer implements Serializable {
     private String hhcFormCode;
     private java.sql.Date badgeIssueDate;
     private Set<VolunteerTrade> trades;
+    private java.sql.Date contactDetailsLastConfirmed;
+    private java.sql.Date updateContactDetailsEmailLastSent;
 
     /**
      * Constructor. Instantiate the linked person.
@@ -296,6 +298,21 @@ public class Volunteer implements Serializable {
         this.trades = trades;
     }
 
+    public java.sql.Date getContactDetailsLastConfirmed() {
+        return contactDetailsLastConfirmed;
+    }
+
+    public void setContactDetailsLastConfirmed(java.sql.Date contactDetailsLastConfirmed) {
+        this.contactDetailsLastConfirmed = contactDetailsLastConfirmed;
+    }
+
+    public java.sql.Date getUpdateContactDetailsEmailLastSent() {
+        return updateContactDetailsEmailLastSent;
+    }
+
+    public void setUpdateContactDetailsEmailLastSent(java.sql.Date updateContactDetailsEmailLastSent) {
+        this.updateContactDetailsEmailLastSent = updateContactDetailsEmailLastSent;
+    }
     @Override
     public String toString() {
         return "Volunteer #" + personId;
