@@ -315,7 +315,7 @@ $(document).ready(function() {
                 updateAvailabilityCell(personId, projectWorkSessionId, newInvitedValue);
             })
                     .fail(function() {
-                alert("Failed to send update");
+                alert("Could not update availability request for volunteer");
             });
         }
     }
@@ -331,11 +331,9 @@ $(document).ready(function() {
     }
 
     function sendAvailabilityRequest(personId, departmentSessionId, invited) {
-        var methodType = "";
+        var methodType = "DELETE";
         if (invited)
             methodType = "POST";
-        else
-            methodType = "DELETE";
         return $.ajax({
             url: roms.common.relativePath + "/service/projects/sessions/" + departmentSessionId
                     + "/person/" + personId + "/availability/",
@@ -572,11 +570,11 @@ $(document).ready(function() {
                 if (attendanceId !== null && attendanceId > 0)
                 {
                     sendConfirmationRequest(attendanceId, html)
-                            .done(function(r) {
+                            .done(function() {
                         updateConfirmationCell(html);
                     })
-                            .fail(function(x) {
-                        alert("Failed to send update");
+                            .fail(function() {
+                        alert("Could not update date for volunteer");
                     });
                 }
             }
@@ -617,7 +615,6 @@ $(document).ready(function() {
             url: roms.common.relativePath + "/service/projects/attendance/" + attendanceId,
             contentType: "application/json",
             type: "PUT",
-            dataType: "json",
             data: JSON.stringify(jsonData),
         });
     }
