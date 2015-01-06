@@ -216,7 +216,10 @@ public class ProjectRestController {
         ProjectAvailability projectAvailability = projectAvailabilityDao.findById(projectAttendance.getProjectAvailability().getProjectAvailabilityId());
         if (projectAvailability != null) {
             projectAvailability.setOverseerConfirmed(true);
-            projectAvailability.setConfirmationEmail(false);
+            if (projectAvailability.isConfirmationEmail()) {
+                projectAvailability.setConfirmationEmail(false);
+                projectAvailability.setDatesChanged(true);
+            }
             projectAvailabilityDao.update(projectAvailability);
         }
     }
@@ -291,7 +294,7 @@ public class ProjectRestController {
      *
      * @param e the exception to handle
      */
-    @ExceptionHandler({ BadRequestException.class, ParseException.class })
+    @ExceptionHandler({BadRequestException.class, ParseException.class })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public void handleExceptions(Exception e) {
     }

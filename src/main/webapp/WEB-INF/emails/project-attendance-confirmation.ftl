@@ -1,3 +1,4 @@
+<head>
 <style>
 /**********************************************
 * Ink v1.0.5 - Copyright 2013 ZURB Inc        *
@@ -690,34 +691,6 @@ body.outlook p {
 
   </style>
   <style>
-
-    table.facebook td {
-      background: #3b5998;
-      border-color: #2d4473;
-    }
-
-    table.facebook:hover td {
-      background: #2d4473 !important;
-    }
-
-    table.twitter td {
-      background: #00acee;
-      border-color: #0087bb;
-    }
-
-    table.twitter:hover td {
-      background: #0087bb !important;
-    }
-
-    table.google-plus td {
-      background-color: #DB4A39;
-      border-color: #CC0000;
-    }
-
-    table.google-plus:hover td {
-      background: #CC0000 !important;
-    }
-
     .template-label {
       color: #ffffff;
       font-weight: bold;
@@ -769,119 +742,102 @@ body.outlook p {
       }
     }
 
-	</style>
+</style>
 </head>
 <body>
-	<table class="body">
-		<tr>
-			<td class="center" align="center" valign="top">
-        <center>
+<table class="body">
+    <tr>
+        <td class="center" align="center" valign="top">
+            <center>
+            <table class="row header">
+                <tr>
+                    <td class="center" align="center">
+                        <center>
+                        <table class="container">
+                            <tr>
+                                <td class="wrapper last">
+                                <table class="twelve columns">
+                                    <tr>
+                                        <td class="six sub-columns last" style="text-align:left; vertical-align:middle;">
+                                            <span class="template-label">Regional Building Committee - London & Home Counties</span>
+                                        </td>
 
-          <table class="row header">
-            <tr>
-              <td class="center" align="center">
-                <center>
-
-                  <table class="container">
-                    <tr>
-                      <td class="wrapper last">
-
-                        <table class="twelve columns">
-                          <tr>
-                            
-                            <td class="six sub-columns last" style="text-align:left; vertical-align:middle;">
-                              <span class="template-label">Regional Building Committee - London & Home Counties</span>
-                            </td>
-                            
-                          </tr>
+                                    </tr>
+                                </table>
+                                </td>
+                            </tr>
                         </table>
-
-                      </td>
-                    </tr>
-                  </table>
-
-                </center>
-              </td>
-            </tr>
-          </table>
-
-          <table class="container">
-            <tr>
-              <td>
-
-                <table class="row">
-                  <tr>
-                    <td class="wrapper last">
-
-                      <table class="twelve columns">
-                        <tr>
-                          <td>
-                            <h1>Dear ${forename}</h1>
-                						<p class="lead">The following dates have now been <u>confirmed</u> by your RBC department, <b><i>${department}</i></b>:</p>
-                						<p>
-                							<#list dates as date>
-        										<b><i>${date}</i></b><br/>
-											</#list>
-                						</p>
-                						<p>for you to attend at the following project/address:</p>
-                						<p>
-                							<b>Project Name:</b>          ${project}<br/>
-											<b>Project Session ID:</b>    ${projectsession}<br/>
-											<b>Kingdom Hall/Location:</b> ${kingdomhall}<br/>
-											<b>Street:</b>                ${street}<br/>
-											<b>Town:</b>                  ${town}<br/>
-											<b>County:</b>                ${county}<br/>
-											<b>Post Code:</b>             ${postcode}<br/>
-                						</p>
-                						<p>Please make a note of the above address and dates. If you are not able to attend for any reasons on the above dates, please contact ${department} department as soon as possible.</p>
-                						<p>You will need to bring your RBC ID badge, the Safety booklet, and appropriate clothing for admission to site.</p>
-                						<p>If you have any questions, please contact your department overseer.</p>
-                          </td>
-                          <td class="expander"></td>
-                        </tr>
-                      </table>
-
+                        </center>
                     </td>
-                  </tr>
-                </table>
-                <table class="row footer">
-                  <tr>
-                    <td class="wrapper">
-
-                      
-
+                </tr>
+            </table>
+            <table class="container">
+                <tr>
+                    <td>
+                        <table class="row">
+                            <tr>
+                                <td class="wrapper last">
+                                <table class="twelve columns">
+                                    <tr>
+                                        <td>
+                                            <h1>Dear ${forename}</h1>
+                                            <p class="lead">The following dates have now been <u>confirmed</u> by your RBC department, <b><i>${department}</i></b>:</p>
+                                            <p>
+                                                    <#list dates as date>
+                                                                    <b><i>${date}</i></b><br/>
+                                                                    </#list>
+                                            </p>
+                                            <p>for you to attend at the following project/address:</p>
+                                            <p>
+                                                    <b>Project Name:</b>          ${project}<br/>
+                                                    <b>Project Work Session ID:</b>    ${projectsession}<br/>
+                                                    <b>Kingdom Hall/Location:</b> ${kingdomhall}<br/>
+                                                    <b>Street:</b>                ${street}<br/>
+                                                    <b>Town:</b>                  ${town}<br/>
+                                                    <b>County:</b>                ${county}<br/>
+                                                    <b>Post Code:</b>             ${postcode}<br/>
+                                            </p>
+                                            <#if datesChanged>
+                                                <p>This is a change in dates for ${department} and project work session ID ${projectsession}.</p>
+                                            </#if>
+                                            <p>Please make a note of the above address and dates. If you are not able to attend for any reasons on the above dates, please contact ${department} department as soon as possible.</p>
+                                            <p>You will need to bring your RBC ID badge, the Safety booklet, and appropriate clothing for admission to site.</p>
+                                            <p>If you have any questions, please contact your department overseer.</p>
+                                        </td>
+                                        <td class="expander"></td>
+                                    </tr>
+                                </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="row footer">
+                            <tr>
+                                <td class="wrapper">
+                                </td>
+                                <td class="wrapper last">
+                                    <table class="six columns">
+                                        <tr>
+                                            <td class="last right-text-pad">
+                                                <h5>Edifice:</h5>
+                                                <p>Email: <a href="mailto:Edifice.Help@gmail.com">Edifice HelpDesk</a></p>
+                                                <p>Web: <a href="https://edifice.rbc-lhc.org.uk">Update your contact details</a></p>
+                                            </td>
+                                            <td class="expander"></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="row">
+                            <tr>
+                                <td class="wrapper last">
+                                </td>
+                            </tr>
+                        </table>
                     </td>
-                    <td class="wrapper last">
-
-                      <table class="six columns">
-                        <tr>
-                          <td class="last right-text-pad">
-                            <h5>Edifice:</h5>
-                            <p>Email: <a href="mailto:Edifice.Help@gmail.com">Edifice HelpDesk</a></p>
-                            <p>Web: <a href="https://edifice.rbc-lhc.org.uk">Update your contact details</a></p>
-                          </td>
-                          <td class="expander"></td>
-                        </tr>
-                      </table>
-
-                    </td>
-                  </tr>
-                </table>
-
-
-                <table class="row">
-                  <tr>
-                    <td class="wrapper last">
-                    </td>
-                  </tr>
-                </table>
-
-              <!-- container end below -->
-              </td>
-            </tr>
-          </table>
-
-        </center>
-			</td>
-		</tr>
-	</table>
+                </tr>
+            </table>
+            </center>
+        </td>
+    </tr>
+</table>

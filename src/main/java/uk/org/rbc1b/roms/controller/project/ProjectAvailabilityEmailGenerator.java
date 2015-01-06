@@ -148,6 +148,7 @@ public class ProjectAvailabilityEmailGenerator {
             dates.add(dateFormat.format(projectAttendance.getAvailableDate()));
         }
         model.put("dates", dates);
+        model.put("datesChanged", projectAvailability.isDatesChanged());
 
         Person person = personDao.findPerson(projectAvailability.getPerson().getPersonId());
         populatePersonToModel(model, person);

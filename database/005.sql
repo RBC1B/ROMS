@@ -128,6 +128,7 @@ create table ProjectAvailability(
     TransportRequired           boolean default false,
     OfferTransport              boolean default false,
     AccommodationRequired        boolean default false,
+    DatesChanged                boolean default false,
     UpdateTime      timestamp   not null,
     UpdatedBy       bigint(20)  not null,
     primary key(ProjectAvailabilityId),
@@ -151,6 +152,7 @@ create table ProjectAvailability_AUD(
     TransportRequired           boolean,
     OfferTransport              boolean,
     AccomodationRequired        boolean,
+    DatesChanged                boolean,
     UpdateTime      timestamp   not null,
     UpdatedBy       bigint(20)  not null,        
     primary key(ProjectAvailabilityId, REV)
