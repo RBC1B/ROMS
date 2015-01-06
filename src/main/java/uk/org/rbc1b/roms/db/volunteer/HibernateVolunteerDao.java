@@ -23,6 +23,7 @@
  */
 package uk.org.rbc1b.roms.db.volunteer;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Set;
 import org.apache.commons.collections.CollectionUtils;
@@ -36,6 +37,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Repository;
@@ -369,5 +371,38 @@ public class HibernateVolunteerDao implements VolunteerDao {
     @Override
     public void createQualification(VolunteerQualification volunteerQualification) {
         this.sessionFactory.getCurrentSession().save(volunteerQualification);
+    }
+
+    @Override
+    public List<Volunteer> findVolunteersWhoNeedBiannualEmail(VolunteerSearchCriteria searchCriteria) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Criteria criteria = createVolunteerSearchCriteria(searchCriteria, session);
+
+        SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-dd");
+        LocalDate todayDate = new LocalDate();
+        LocalDate sixMonthsBehind = todayDate.minusMonths(6);
+
+        criteria.add(Restrictions.disjunction()
+                .add(
+                        Restrictions.or(
+                                Restrictions.isNull("updateContactDetailsEmailLastSent"),
+                                Restrictions.not(Restrictions.between("updateContactDetailsEmailLastSent", todayDate, sixMonthsBehind))
+                        )
+                )
+                .add(
+                        Restrictions.or(
+                                Restrictions.isNull("contactDetailsLastConfirmed"),
+                                Restrictions.not(Restrictions.between("contactDetailsLastConfirmed", todayDate, sixMonthsBehind))
+                        )
+                )
+        );
+
+        if (searchCriteria.getMaxResults() != null) {
+            criteria.setMaxResults(searchCriteria.getMaxResults());
+        }
+
+        criteria.addOrder(Order.asc("person.personId"));
+
+        return criteria.list();
     }
 }

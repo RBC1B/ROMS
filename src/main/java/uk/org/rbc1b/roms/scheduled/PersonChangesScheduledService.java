@@ -91,9 +91,7 @@ public class PersonChangesScheduledService {
         for (EmailRecipient mailRecipient : mailRecipients) {
             try {
                 createEmailForRecipient(mailRecipient);
-            } catch (IOException e) {
-                LOGGER.error("Failed to send person change notification email", e);
-            } catch (TemplateException e) {
+            } catch (IOException | TemplateException e) {
                 LOGGER.error("Failed to send person change notification email", e);
             }
         }
@@ -102,7 +100,7 @@ public class PersonChangesScheduledService {
     private void createEmailForRecipient(EmailRecipient mailRecipient) throws IOException, TemplateException {
         Configuration conf = emailFreemarkerConfigurer.getConfiguration();
 
-        Map<String, Person> model = new HashMap<String, Person>();
+        Map<String, Person> model = new HashMap<>();
         Person person = personDao.findPerson(mailRecipient.getPerson().getPersonId());
         model.put("person", person);
 

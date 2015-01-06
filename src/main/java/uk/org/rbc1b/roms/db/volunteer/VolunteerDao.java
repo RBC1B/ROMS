@@ -235,6 +235,17 @@ public interface VolunteerDao {
     void createQualification(VolunteerQualification volunteerQualification);
 
     /**
+     * Find a list of volunteers who need to be sent an email regarding
+     * their contact details based on the last confirmation of their details
+     * and the last time an email was sent to them.
+     *
+     * @param searchCriteria the search criteria
+     * @return list of volunteers matching criteria
+     */
+    @Transactional(readOnly = true)
+    List<Volunteer> findVolunteersWhoNeedBiannualEmail(VolunteerSearchCriteria searchCriteria);
+
+    /**
      * Additional data to pull in when generating the volunteer details.
      */
     public static enum VolunteerData {

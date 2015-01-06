@@ -37,7 +37,8 @@ import uk.org.rbc1b.roms.db.email.Email;
 import uk.org.rbc1b.roms.db.email.EmailDao;
 
 /**
- * Send pending emails.
+ * Send pending emails. This is the main service class that sends queued emails
+ * in the database.
  */
 @Component
 public class EmailScheduledService {
