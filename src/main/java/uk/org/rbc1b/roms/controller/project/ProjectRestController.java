@@ -216,6 +216,7 @@ public class ProjectRestController {
         ProjectAvailability projectAvailability = projectAvailabilityDao.findById(projectAttendance.getProjectAvailability().getProjectAvailabilityId());
         if (projectAvailability != null) {
             projectAvailability.setOverseerConfirmed(true);
+            projectAvailability.setConfirmationEmail(false);
             projectAvailabilityDao.update(projectAvailability);
         }
     }

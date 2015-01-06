@@ -191,3 +191,7 @@ insert into AvailabilityStatus(AvailabilityStatusCode, Name) values
 ('HD', 'Not available - Holiday'),
 ('WK', 'Not available - Work'),
 ('NA', 'Not available - Other');
+
+-- Increase email test size
+alter table Email modify Text varchar(65000);
+alter table Email add Html boolean default false;

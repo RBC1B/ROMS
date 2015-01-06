@@ -68,6 +68,7 @@ public class ProjectAvailabilityEmailGenerator {
     private static final String AVAILABILITY_TEMPLATE = "project-availability.ftl";
     private static final String CONFIRMATION_SUBJECT = "Project Attendance Confirmation Dates";
     private static final String CONFIRMATION_TEMPLATE = "project-attendance-confirmation.ftl";
+    private static final boolean HTML = true;
 
     @Autowired
     private KingdomHallDao kingdomHallDao;
@@ -166,7 +167,7 @@ public class ProjectAvailabilityEmailGenerator {
         email.setRecipient(person.getEmail());
         email.setSubject(CONFIRMATION_SUBJECT);
         email.setText(FreeMarkerTemplateUtils.processTemplateIntoString(conf.getTemplate(CONFIRMATION_TEMPLATE), model));
-
+        email.setHtml(HTML);
         return email;
     }
 
