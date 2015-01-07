@@ -107,7 +107,7 @@ public class ProjectAvailabilityEmailGenerator {
                 .findByProjectDepartmentSessionId(projectAvailability.getProjectDepartmentSession()
                         .getProjectDepartmentSessionId());
 
-        FastDateFormat dateFormat = FastDateFormat.getInstance("dd-MM-YYYY");
+        FastDateFormat dateFormat = FastDateFormat.getInstance("dd-MM-yyyy");
         model.put("fromDate", dateFormat.format(projectSession.getFromDate()));
         model.put("toDate", dateFormat.format(projectSession.getToDate()));
         Department department = departmentDao.findDepartment(projectSession.getDepartment().getDepartmentId());
@@ -142,7 +142,7 @@ public class ProjectAvailabilityEmailGenerator {
         }
 
         List<String> dates = new ArrayList<String>();
-        FastDateFormat dateFormat = FastDateFormat.getInstance("dd-MM-YYYY");
+        FastDateFormat dateFormat = FastDateFormat.getInstance("dd-MM-yyyy");
         for (ProjectAttendance projectAttendance : projectAttendances) {
             dates.add(dateFormat.format(projectAttendance.getAvailableDate()));
         }

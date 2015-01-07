@@ -228,6 +228,7 @@ public class ProjectAvailabilityController {
      * @return responseEntity set with appropriate JSON data
      */
     @RequestMapping(value = "/{projectAvailabilityId}/{datetime}/{hash}/availability", method = RequestMethod.GET)
+    @ResponseBody
     public ProjectAvailabilityModel getVolunteerAvailability(@PathVariable Integer projectAvailabilityId,
             @PathVariable String datetime, @PathVariable String hash) {
         ProjectAvailability projectAvailability = projectAvailabilityDao.findById(projectAvailabilityId);

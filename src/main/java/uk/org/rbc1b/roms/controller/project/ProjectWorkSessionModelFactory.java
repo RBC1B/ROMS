@@ -36,7 +36,7 @@ import uk.org.rbc1b.roms.db.project.ProjectDepartmentSession;
 @Component
 public class ProjectWorkSessionModelFactory {
 
-    private static final String DATEFORMAT = "dd-MM-YYYY";
+    private static final String DATEFORMAT = "dd-MM-yyyy";
 
     /**
      * Generates the model for displaying in JSP.
