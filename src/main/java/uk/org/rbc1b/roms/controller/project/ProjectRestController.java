@@ -24,11 +24,11 @@
 package uk.org.rbc1b.roms.controller.project;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.lang3.time.FastDateFormat;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -237,7 +237,7 @@ public class ProjectRestController {
     @PreAuthorize("hasPermission('PROJECT', 'READ')")
     public ResponseEntity<Object> getGateListByDate(@PathVariable Integer projectId, @PathVariable String projectDate)
             throws ParseException {
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        FastDateFormat format = FastDateFormat.getInstance("dd-MM-yyyy");
         java.util.Date dateParser = format.parse(projectDate);
         java.sql.Date sqlDate = new java.sql.Date(dateParser.getTime());
 
@@ -259,7 +259,7 @@ public class ProjectRestController {
     public ResponseEntity<Object> getGateListSummaryByDate(@PathVariable Integer projectId, @PathVariable String projectDate)
             throws ParseException {
         Map<String, String> summary = new HashMap<>();
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        FastDateFormat format = FastDateFormat.getInstance("dd-MM-yyyy");
         java.util.Date dateParser = format.parse(projectDate);
         java.sql.Date sqlDate = new java.sql.Date(dateParser.getTime());
 
@@ -275,7 +275,7 @@ public class ProjectRestController {
         List<String> range = new ArrayList<>();
         DateTime tmpdate;
         tmpdate = startDate;
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        FastDateFormat formatter = FastDateFormat.getInstance("dd-MM-yyyy");
         while (tmpdate.isBefore(endDate) || tmpdate.equals(endDate)) {
             range.add(formatter.format(tmpdate.toDate()));
             tmpdate = tmpdate.plusDays(1);

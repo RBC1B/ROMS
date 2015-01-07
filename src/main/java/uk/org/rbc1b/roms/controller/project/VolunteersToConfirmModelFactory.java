@@ -24,9 +24,9 @@
 package uk.org.rbc1b.roms.controller.project;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.lang3.time.FastDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.org.rbc1b.roms.db.Person;
@@ -64,7 +64,7 @@ public class VolunteersToConfirmModelFactory {
     public List<VolunteerToConfirmModel> generate(List<Assignment> assignments,
             ProjectDepartmentSession workSession, List<String> dates) {
         List<VolunteerToConfirmModel> modelList = new ArrayList<>();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        FastDateFormat formatter = FastDateFormat.getInstance("dd-MM-yyyy");
         for (Assignment assignment : assignments) {
             ProjectAvailability projectAvailability = projectAvailabilityDao
                     .find(assignment.getPerson().getPersonId(), workSession.getProjectDepartmentSessionId());

@@ -24,8 +24,6 @@
 package uk.org.rbc1b.roms.controller.project;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,6 +52,7 @@ import uk.org.rbc1b.roms.db.volunteer.department.Department;
 import uk.org.rbc1b.roms.db.volunteer.department.DepartmentDao;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
+import org.apache.commons.lang3.time.FastDateFormat;
 
 /**
  * Generate the email to be send to the volunteer requesting they confirm when they are available.
@@ -108,7 +107,7 @@ public class ProjectAvailabilityEmailGenerator {
                 .findByProjectDepartmentSessionId(projectAvailability.getProjectDepartmentSession()
                         .getProjectDepartmentSessionId());
 
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+        FastDateFormat dateFormat = FastDateFormat.getInstance("dd-MM-YYYY");
         model.put("fromDate", dateFormat.format(projectSession.getFromDate()));
         model.put("toDate", dateFormat.format(projectSession.getToDate()));
         Department department = departmentDao.findDepartment(projectSession.getDepartment().getDepartmentId());
@@ -143,7 +142,7 @@ public class ProjectAvailabilityEmailGenerator {
         }
 
         List<String> dates = new ArrayList<String>();
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+        FastDateFormat dateFormat = FastDateFormat.getInstance("dd-MM-YYYY");
         for (ProjectAttendance projectAttendance : projectAttendances) {
             dates.add(dateFormat.format(projectAttendance.getAvailableDate()));
         }

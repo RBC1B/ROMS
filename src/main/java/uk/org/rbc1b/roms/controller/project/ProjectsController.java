@@ -29,11 +29,11 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import org.apache.commons.lang3.time.FastDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -361,7 +361,7 @@ public class ProjectsController {
     @PreAuthorize("hasPermission('PROJECT','READ')")
     public void downloadGateList(@PathVariable Integer projectId, @PathVariable String projectDate, HttpServletResponse response)
             throws IOException, ParseException {
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        FastDateFormat format = FastDateFormat.getInstance("dd-MM-yyyy");
         java.util.Date dateParser = format.parse(projectDate);
         java.sql.Date sqlDate = new java.sql.Date(dateParser.getTime());
 
