@@ -54,7 +54,7 @@ public class DailyVolunteerEmailScheduledService {
      */
     public void queueVolunteerInformationEmails() {
         VolunteerSearchCriteria searchCriteria = new VolunteerSearchCriteria();
-        searchCriteria.setMaxResults(findMaxVolunteersForEmailReceipt());
+        searchCriteria.setMaxResults(findMaxVolunteersForEmail());
 
         List<Volunteer> volunteersForEmail = volunteerDao.findVolunteersWhoNeedBiannualEmail(searchCriteria);
         for (Volunteer volunteer : volunteersForEmail) {
@@ -71,7 +71,7 @@ public class DailyVolunteerEmailScheduledService {
      *
      * @return integer of max number of volunteers
      */
-    private int findMaxVolunteersForEmailReceipt() {
+    private int findMaxVolunteersForEmail() {
         VolunteerSearchCriteria searchCriteria = new VolunteerSearchCriteria();
         int totalVolunteerCount = volunteerDao.findVolunteersCount(searchCriteria);
         final DateTime dateTime = new DateTime();
