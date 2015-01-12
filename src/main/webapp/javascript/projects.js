@@ -658,7 +658,9 @@ $(document).ready(function() {
         format: "DD-MM-YYYY"
     });
     // No easy way to do this within datetimepicker...
-    document.getElementById("projectDate").value = getTodaysDate();
+    $("#project-tabs").on("click", function(event){
+        document.getElementById("projectDate").value = getTodaysDate();
+    });
 
     $("#generate-gate-list").on("click", function(event) {
         event.preventDefault();
@@ -726,6 +728,14 @@ $(document).ready(function() {
                 row$.append($('<td/>').html(forename));
                 var dept = data[rowId]["department"];
                 row$.append($('<td/>').html(dept));
+                var cong = data[rowId]["congregation"];
+                row$.append($('<td/>').html(cong));
+                var email = data[rowId]["email"];
+                row$.append($('<td/>').html(email));
+                var tel = data[rowId]["telephone"];
+                row$.append($('<td/>').html(tel));
+                var mobile = data[rowId]["mobile"];
+                row$.append($('<td/>').html(mobile));
                 $('#gate-list-table').append(row$);
             }
             var tableData = document.getElementById("gate-list-table");
@@ -742,6 +752,10 @@ $(document).ready(function() {
         headerRow$.append($('<th/>').html('Surname'));
         headerRow$.append($('<th/>').html('Forename'));
         headerRow$.append($('<th/>').html('Department'));
+        headerRow$.append($('<th/>').html('Congregation'));
+        headerRow$.append($('<th/>').html('Email'));
+        headerRow$.append($('<th/>').html('Telephone'));
+        headerRow$.append($('<th/>').html('Mobile'));
         thead$.append(headerRow$);
         $('#gate-list-table').append(thead$);
     }

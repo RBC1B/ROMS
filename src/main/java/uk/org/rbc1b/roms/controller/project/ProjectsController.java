@@ -80,6 +80,7 @@ import uk.org.rbc1b.roms.security.RomsPermissionEvaluator;
 @RequestMapping("/projects")
 public class ProjectsController {
 
+    private static final int GATELISTCOLUMNSIZE = 8;
     @Autowired
     private ProjectDao projectDao;
     @Autowired
@@ -367,8 +368,9 @@ public class ProjectsController {
 
         List<ProjectAttendance> attendances = projectAttendanceDao.findConfirmedVolunteersForProjectByDate(projectId, sqlDate);
         List<ProjectGateListModel> models = projectGateListModelFactory.generateModels(attendances);
+        List<String[]> gateList = convertModelArray(models);
 
-        String[] headers = new String[]{"RBC ID", "Surname", "Forename", "Department"};
+        String[] headers = new String[]{"RBC ID", "Surname", "Forename", "Department", "Congregation", "Email", "Telephone", "Mobile"};
 
         String fileName = "gatelist-" + projectId + "-" + projectDate + ".csv";
 
@@ -379,18 +381,22 @@ public class ProjectsController {
         CSVWriter writer = new CSVWriter(new OutputStreamWriter(output), '\u0009');
 
         writer.writeNext(headers);
-        writer.writeAll(convertModelArray(models));
+        writer.writeAll(gateList);
         writer.close();
     }
 
     private List<String[]> convertModelArray(List<ProjectGateListModel> models) {
         List<String[]> gateList = new ArrayList<String[]>();
         for (ProjectGateListModel model : models) {
-            String[] rowData = new String[4];
+            String[] rowData = new String[GATELISTCOLUMNSIZE];
             rowData[0] = Integer.toString(model.getPersonId().intValue());
             rowData[1] = model.getSurname();
             rowData[2] = model.getForename();
             rowData[3] = model.getDepartment();
+            rowData[4] = model.getCongregation();
+            rowData[5] = model.getEmail();
+            rowData[6] = model.getTelephone();
+            rowData[7] = model.getMobile();
             gateList.add(rowData);
         }
         return gateList;

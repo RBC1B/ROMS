@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import uk.org.rbc1b.roms.db.Congregation;
+import uk.org.rbc1b.roms.db.CongregationDao;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.PersonDao;
 import uk.org.rbc1b.roms.db.project.ProjectAttendance;
@@ -48,6 +50,8 @@ public class ProjectGateListModelFactory {
     private ProjectDepartmentSessionDao projectDepartmentSessionDao;
     @Autowired
     private DepartmentDao departmentDao;
+    @Autowired
+    private CongregationDao congregationDao;
 
     /**
      * Generates a list of gate list row for a list of attendances.
@@ -61,6 +65,7 @@ public class ProjectGateListModelFactory {
         for (ProjectAttendance attendance : attendances) {
             ProjectAvailability availability = attendance.getProjectAvailability();
             Person person = personDao.findPerson(availability.getPerson().getPersonId());
+            Congregation congregation = congregationDao.findCongregation(person.getCongregation().getCongregationId());
             ProjectDepartmentSession session = projectDepartmentSessionDao
                     .findByProjectDepartmentSessionId(availability.getProjectDepartmentSession().getProjectDepartmentSessionId());
             Department department = departmentDao.findDepartment(session.getDepartment().getDepartmentId());
@@ -68,6 +73,10 @@ public class ProjectGateListModelFactory {
             model.setPersonId(person.getPersonId());
             model.setForename(person.getForename());
             model.setSurname(person.getSurname());
+            model.setEmail(person.getEmail());
+            model.setCongregation(congregation.getName());
+            model.setTelephone(person.getTelephone());
+            model.setMobile(person.getMobile());
             model.setDepartment(department.getName());
             models.add(model);
         }
