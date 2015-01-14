@@ -5,22 +5,22 @@ This email is to inform you of the information that the RBC keeps of you.
 On our system, your contact details are as follows:
 
 Address:
-<#-- ${address.street},
-${volunteer.person.address.town},
-${volunteer.person.address.county},
-${volunteer.person.address.postcode} -->
+${street},
+${town},
+${county},
+${postcode}
 
 Email:
-${volunteer.person.email}
+${person.email}
 
 Home Telephone:
-${volunteer.person.telephone}
+${person.telephone}
 
 Mobile phone:
-${volunteer.person.mobile}
+${person.mobile}
 
-<#if volunteer.person.workPhone??>Work phone:
-${volunteer.person.workPhone}
+<#if person.workPhone??>Work phone:
+${person.workPhone}
 <#else>
 A work phone has not been provided.
 </#if>
@@ -33,30 +33,47 @@ However, if the above details are correct, then please confirm this by using the
 <#-- confirm link -->
 
 We also have the following information about you on our records. If there are any changes in the
-information below, then please email the Volunteer Services Department: 
+information below, then please contact the Volunteer Services Department via your Department Overseer: 
 
 Congregation:
-<#-- ${volunteer.person.congregation.name} -->
+${person.congregation.name}
 
 Your Emergency Contact:
-<#-- ${volunteer.emergencyContact.forename} ${volunteer.emergencyContact.surname} -->
-Address: 
-<#-- ${volunteer.emergencyContact.address.street} 
-${volunteer.emergencyContact.address.town}
-${volunteer.emergencyContact.address.county}
-${volunteer.emergencyContact.address.postcode} -->
-Phone numbers:
-<#-- ${volunteer.emergencyContact.telephone}
-${volunteer.emergencyContact.mobile} -->
+${emergencyContact.forename} ${emergencyContact.surname}
+Address:
+${emergencyContact.address.street},
+${emergencyContact.address.town},
+${emergencyContact.address.county},
+${emergencyContact.address.postcode}
+Emergency Contact Phone numbers:
+${emergencyContact.telephone}
+${emergencyContact.mobile}
 
-<#-- trades -->
+<#-- assignments -->
+Your Departmental Assignments:
+<#list assignments as assignment>
+ - Department: ${assignment.department.name}, Role: ${assignment.role}, Trade Number: ${assignment.tradeNumber}
+</#list>
 
 <#-- qualifications -->
+Your Qualifications:
+<#if qualifications?has_content>
+<#list qualifications as qualification>
+ - ${qualification.qualification.name}
+</#list>
+<#else>
+We currently do not have any information about your qualifications.
+</#if>
 
 <#-- skills -->
-
-If any of the details above, such as your emergency contact details, your skills
-
+Your Skills:
+<#if skills?has_content>
+<#list skills as skill>
+ - ${skill.skill.name} (Dept: ${skill.department.name})
+</#list>
+<#else>
+We currently do not have any information about your skills.
+</#if>
 
 Kind Regards
 Volunteer Service Department

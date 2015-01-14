@@ -26,17 +26,26 @@ package uk.org.rbc1b.roms.controller.volunteer;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
+import uk.org.rbc1b.roms.db.Address;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.email.Email;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
+import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
+import uk.org.rbc1b.roms.db.volunteer.department.Assignment;
+import uk.org.rbc1b.roms.db.volunteer.qualification.VolunteerQualification;
+import uk.org.rbc1b.roms.db.volunteer.skill.VolunteerSkill;
 
 /**
+ * Generates the email that should be sent to each volunteer over a period of six months.
+ * Generates the volunteer information required in the email.
  *
  * @author rahulsingh
  */
@@ -45,6 +54,15 @@ public class VolunteerContactDetailsEmailGenerator {
 
     private static final String BIANNUAL_CONTACT_DETAILS_TEMPLATE = "volunteer-biannual-contact-details.ftl";
     private static final String SUBJECT = "RBC (London & Home Counties) Volunteer Information Held on Edifice";
+
+    @Autowired
+    private VolunteerDao volunteerDao;
+
+    @Autowired
+    private AssignmentModelFactory assignmentModelFactory;
+
+    @Autowired
+    private VolunteerModelFactory volunteerModelFactory;
 
     @Autowired
     private FreeMarkerConfigurer emailFreemarkerConfigurer;
@@ -62,10 +80,18 @@ public class VolunteerContactDetailsEmailGenerator {
 
         Configuration conf = emailFreemarkerConfigurer.getConfiguration();
         Map<String, Object> model = new HashMap<>();
-
         model.put("volunteer", volunteer);
-
         populatePersonModel(model, volunteer.getPerson());
+        model.put("emergencyContact", volunteer.getEmergencyContact());
+
+        List<Assignment> assignments = volunteerDao.findAssignments(volunteer.getPersonId());
+        populateAssignments(model, assignments);
+
+        List<VolunteerQualification> qualifications = volunteerDao.findQualifications(volunteer.getPersonId());
+        model.put("qualifications", volunteerModelFactory.generateVolunteerQualificationsModel(qualifications));
+
+        List<VolunteerSkill> skills = volunteerDao.findSkills(volunteer.getPersonId());
+        model.put("skills", volunteerModelFactory.generateVolunteerSkillsModel(skills));
 
         Email email = new Email();
         email.setRecipient(volunteer.getPerson().getEmail());
@@ -75,8 +101,28 @@ public class VolunteerContactDetailsEmailGenerator {
         return email;
     }
 
+    /**
+     * Populate the person data into the model which will be injected into the template
+     * using the model map.
+     *
+     * @param model model map
+     * @param person person data
+     */
     private void populatePersonModel(Map<String, Object> model, Person person) {
         model.put("person", person);
+
+        Address address = person.getAddress();
+        model.put("street", address.getStreet());
+        model.put("town", address.getTown());
+        model.put("county", address.getCounty());
+        model.put("postcode", address.getPostcode());
     }
 
+    private void populateAssignments(Map<String, Object> model, List<Assignment> assignments) {
+        List<AssignmentModel> assignmentModelList = new ArrayList<>();
+        for (Assignment assignment : assignments) {
+            assignmentModelList.add(assignmentModelFactory.generateAssignmentModel(assignment));
+        }
+        model.put("assignments", assignmentModelList);
+    }
 }
