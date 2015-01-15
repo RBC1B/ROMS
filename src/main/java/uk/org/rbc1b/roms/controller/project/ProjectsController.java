@@ -29,11 +29,11 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import org.apache.commons.lang3.time.FastDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -80,6 +80,7 @@ import uk.org.rbc1b.roms.security.RomsPermissionEvaluator;
 @RequestMapping("/projects")
 public class ProjectsController {
 
+    private static final int GATELISTCOLUMNSIZE = 8;
     @Autowired
     private ProjectDao projectDao;
     @Autowired
@@ -361,14 +362,15 @@ public class ProjectsController {
     @PreAuthorize("hasPermission('PROJECT','READ')")
     public void downloadGateList(@PathVariable Integer projectId, @PathVariable String projectDate, HttpServletResponse response)
             throws IOException, ParseException {
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        FastDateFormat format = FastDateFormat.getInstance("dd-MM-yyyy");
         java.util.Date dateParser = format.parse(projectDate);
         java.sql.Date sqlDate = new java.sql.Date(dateParser.getTime());
 
         List<ProjectAttendance> attendances = projectAttendanceDao.findConfirmedVolunteersForProjectByDate(projectId, sqlDate);
         List<ProjectGateListModel> models = projectGateListModelFactory.generateModels(attendances);
+        List<String[]> gateList = convertModelArray(models);
 
-        String[] headers = new String[]{"RBC ID", "Surname", "Forename", "Department"};
+        String[] headers = new String[]{"RBC ID", "Surname", "Forename", "Department", "Congregation", "Email", "Telephone", "Mobile"};
 
         String fileName = "gatelist-" + projectId + "-" + projectDate + ".csv";
 
@@ -379,18 +381,22 @@ public class ProjectsController {
         CSVWriter writer = new CSVWriter(new OutputStreamWriter(output), '\u0009');
 
         writer.writeNext(headers);
-        writer.writeAll(convertModelArray(models));
+        writer.writeAll(gateList);
         writer.close();
     }
 
     private List<String[]> convertModelArray(List<ProjectGateListModel> models) {
         List<String[]> gateList = new ArrayList<String[]>();
         for (ProjectGateListModel model : models) {
-            String[] rowData = new String[4];
+            String[] rowData = new String[GATELISTCOLUMNSIZE];
             rowData[0] = Integer.toString(model.getPersonId().intValue());
             rowData[1] = model.getSurname();
             rowData[2] = model.getForename();
             rowData[3] = model.getDepartment();
+            rowData[4] = model.getCongregation();
+            rowData[5] = model.getEmail();
+            rowData[6] = model.getTelephone();
+            rowData[7] = model.getMobile();
             gateList.add(rowData);
         }
         return gateList;

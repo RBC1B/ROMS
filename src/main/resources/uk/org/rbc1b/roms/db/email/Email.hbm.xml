@@ -9,6 +9,7 @@
     <property length="250" name="cc"/>
     <property length="250" name="replyTo"/>
     <property length="250" name="subject"/>
-    <property length="1000" name="text"/>
+    <property length="65000" name="text"/>
+    <property name="html" />
   </class>
 </hibernate-mapping>

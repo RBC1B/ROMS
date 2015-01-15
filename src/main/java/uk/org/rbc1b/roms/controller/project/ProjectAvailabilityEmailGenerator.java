@@ -24,8 +24,6 @@
 package uk.org.rbc1b.roms.controller.project;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,6 +52,7 @@ import uk.org.rbc1b.roms.db.volunteer.department.Department;
 import uk.org.rbc1b.roms.db.volunteer.department.DepartmentDao;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
+import org.apache.commons.lang3.time.FastDateFormat;
 
 /**
  * Generate the email to be send to the volunteer requesting they confirm when they are available.
@@ -68,6 +67,7 @@ public class ProjectAvailabilityEmailGenerator {
     private static final String AVAILABILITY_TEMPLATE = "project-availability.ftl";
     private static final String CONFIRMATION_SUBJECT = "Project Attendance Confirmation Dates";
     private static final String CONFIRMATION_TEMPLATE = "project-attendance-confirmation.ftl";
+    private static final boolean HTML = true;
 
     @Autowired
     private KingdomHallDao kingdomHallDao;
@@ -107,7 +107,7 @@ public class ProjectAvailabilityEmailGenerator {
                 .findByProjectDepartmentSessionId(projectAvailability.getProjectDepartmentSession()
                         .getProjectDepartmentSessionId());
 
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+        FastDateFormat dateFormat = FastDateFormat.getInstance("dd-MM-yyyy");
         model.put("fromDate", dateFormat.format(projectSession.getFromDate()));
         model.put("toDate", dateFormat.format(projectSession.getToDate()));
         Department department = departmentDao.findDepartment(projectSession.getDepartment().getDepartmentId());
@@ -142,11 +142,12 @@ public class ProjectAvailabilityEmailGenerator {
         }
 
         List<String> dates = new ArrayList<String>();
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+        FastDateFormat dateFormat = FastDateFormat.getInstance("dd-MM-yyyy");
         for (ProjectAttendance projectAttendance : projectAttendances) {
             dates.add(dateFormat.format(projectAttendance.getAvailableDate()));
         }
         model.put("dates", dates);
+        model.put("datesChanged", projectAvailability.isDatesChanged());
 
         Person person = personDao.findPerson(projectAvailability.getPerson().getPersonId());
         populatePersonToModel(model, person);
@@ -166,7 +167,7 @@ public class ProjectAvailabilityEmailGenerator {
         email.setRecipient(person.getEmail());
         email.setSubject(CONFIRMATION_SUBJECT);
         email.setText(FreeMarkerTemplateUtils.processTemplateIntoString(conf.getTemplate(CONFIRMATION_TEMPLATE), model));
-
+        email.setHtml(HTML);
         return email;
     }
 

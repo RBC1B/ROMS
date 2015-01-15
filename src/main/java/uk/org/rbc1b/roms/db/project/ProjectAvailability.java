@@ -42,6 +42,7 @@ public class ProjectAvailability {
     private boolean transportRequired;
     private boolean offerTransport;
     private boolean accommodationRequired;
+    private boolean datesChanged;
     private java.sql.Date updateTime;
     private Integer updatedBy;
 
@@ -197,6 +198,20 @@ public class ProjectAvailability {
      */
     public void setAccommodationRequired(boolean accommodationRequired) {
         this.accommodationRequired = accommodationRequired;
+    }
+
+    /**
+     * @return the datesChanged
+     */
+    public boolean isDatesChanged() {
+        return datesChanged;
+    }
+
+    /**
+     * @param datesChanged the datesChanged to set
+     */
+    public void setDatesChanged(boolean datesChanged) {
+        this.datesChanged = datesChanged;
     }
 
     /**

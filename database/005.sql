@@ -128,6 +128,7 @@ create table ProjectAvailability(
     TransportRequired           boolean default false,
     OfferTransport              boolean default false,
     AccommodationRequired        boolean default false,
+    DatesChanged                boolean default false,
     UpdateTime      timestamp   not null,
     UpdatedBy       bigint(20)  not null,
     primary key(ProjectAvailabilityId),
@@ -151,6 +152,7 @@ create table ProjectAvailability_AUD(
     TransportRequired           boolean,
     OfferTransport              boolean,
     AccomodationRequired        boolean,
+    DatesChanged                boolean,
     UpdateTime      timestamp   not null,
     UpdatedBy       bigint(20)  not null,        
     primary key(ProjectAvailabilityId, REV)
@@ -206,3 +208,7 @@ after ContactDetailsLastConfirmed;
 
 alter table Volunteer_AUD add column UpdateContactDetailsEmailLastSent date default null
 after ContactDetailsLastConfirmed;
+
+-- Increase email test size
+alter table Email modify Text varchar(65000);
+alter table Email add Html boolean default false;

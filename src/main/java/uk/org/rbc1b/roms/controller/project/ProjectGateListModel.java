@@ -31,8 +31,11 @@ public class ProjectGateListModel {
     private Integer personId;
     private String forename;
     private String surname;
+    private String email;
+    private String congregation;
+    private String telephone;
+    private String mobile;
     private String department;
-
 
     /**
      * @return the personId
@@ -74,6 +77,62 @@ public class ProjectGateListModel {
      */
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    /**
+     * @return the email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * @param email the email to set
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /**
+     * @return the congregation
+     */
+    public String getCongregation() {
+        return congregation;
+    }
+
+    /**
+     * @param congregation the congregation to set
+     */
+    public void setCongregation(String congregation) {
+        this.congregation = congregation;
+    }
+
+    /**
+     * @return the telephone
+     */
+    public String getTelephone() {
+        return telephone;
+    }
+
+    /**
+     * @param telephone the telephone to set
+     */
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    /**
+     * @return the mobile
+     */
+    public String getMobile() {
+        return mobile;
+    }
+
+    /**
+     * @param mobile the mobile to set
+     */
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     /**

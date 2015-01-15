@@ -14,7 +14,7 @@
         <hr />
         <div role="tabpanel">
             <!-- Tabs -->
-            <ul class="nav nav-tabs" role="tablist">
+            <ul class="nav nav-tabs" role="tablist" id="project-tabs">
                 <li role="presentation" class="active">
                     <a href="#project" aria-controls="project" role="tab"
                        data-toggle="tab">Project Information</a>

@@ -66,6 +66,11 @@ public class EmailScheduledService {
         }
     }
 
+    /**
+     * Generates and sends out emails.
+     * @param email the email to send out
+     * @throws MessagingException if problem with creating an email sender
+     */
     private void sendEmail(Email email) throws MessagingException {
         MimeMessage mimeMessage = this.mailGateway.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
@@ -77,7 +82,7 @@ public class EmailScheduledService {
             helper.setCc(email.getCc());
         }
         helper.setSubject(email.getSubject());
-        helper.setText(email.getText());
+        helper.setText(email.getText(), email.isHtml());
         this.mailGateway.send(mimeMessage);
     }
 
