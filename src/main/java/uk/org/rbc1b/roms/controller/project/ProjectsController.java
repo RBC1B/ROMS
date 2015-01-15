@@ -30,10 +30,22 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.apache.commons.lang3.time.FastDateFormat;
+import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -80,7 +92,7 @@ import uk.org.rbc1b.roms.security.RomsPermissionEvaluator;
 @RequestMapping("/projects")
 public class ProjectsController {
 
-    private static final int GATELISTCOLUMNSIZE = 8;
+    private static final int GATELISTCOLUMNSIZE = 9;
     @Autowired
     private ProjectDao projectDao;
     @Autowired
@@ -362,15 +374,19 @@ public class ProjectsController {
     @PreAuthorize("hasPermission('PROJECT','READ')")
     public void downloadGateList(@PathVariable Integer projectId, @PathVariable String projectDate, HttpServletResponse response)
             throws IOException, ParseException {
-        FastDateFormat format = FastDateFormat.getInstance("dd-MM-yyyy");
-        java.util.Date dateParser = format.parse(projectDate);
-        java.sql.Date sqlDate = new java.sql.Date(dateParser.getTime());
+        List<String[]> gateList;
 
-        List<ProjectAttendance> attendances = projectAttendanceDao.findConfirmedVolunteersForProjectByDate(projectId, sqlDate);
-        List<ProjectGateListModel> models = projectGateListModelFactory.generateModels(attendances);
-        List<String[]> gateList = convertModelArray(models);
+        if (projectDate.equalsIgnoreCase("ALL")) {
+            gateList = getAttendanceList(null, projectId);
+        } else {
+            FastDateFormat format = FastDateFormat.getInstance("dd-MM-yyyy");
+            java.util.Date dateParser = format.parse(projectDate);
+            java.sql.Date sqlDate = new java.sql.Date(dateParser.getTime());
 
-        String[] headers = new String[]{"RBC ID", "Surname", "Forename", "Department", "Congregation", "Email", "Telephone", "Mobile"};
+            gateList = getAttendanceList(sqlDate, projectId);
+        }
+
+        String[] headers = new String[]{"Date", "RBC ID", "Surname", "Forename", "Department", "Congregation", "Email", "Telephone", "Mobile"};
 
         String fileName = "gatelist-" + projectId + "-" + projectDate + ".csv";
 
@@ -385,18 +401,138 @@ public class ProjectsController {
         writer.close();
     }
 
+    /**
+     * Creates the file for the project coordinator.
+     *
+     * @param projectId the project id
+     * @param response the http servlet response
+     * @throws IOException when creating file
+     */
+    @RequestMapping(value = "coordinator-list/{projectId}")
+    @PreAuthorize("hasPermission('PROJECT','READ')")
+    public void downloadCoordList(@PathVariable Integer projectId, HttpServletResponse response)
+            throws IOException {
+        String fileName = "coordinator-list-" + projectId + ".xlsx";
+        XSSFWorkbook workbook = createWorkbook(projectId);
+
+        response.setContentType(MediaType.OOXML_SHEET.toString());
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+        OutputStream output = response.getOutputStream();
+        
+        output.flush();
+        workbook.write(output);
+        workbook.close();
+        output.flush();
+    }
+
+    private XSSFWorkbook createWorkbook(Integer projectId) {
+        List<ProjectAttendance> attendances = projectAttendanceDao.findConfirmedVolunteersForProject(projectId);
+        List<ProjectAttendance> availabilities = projectAttendanceDao.findAllAvailableVolunteersForProject(projectId);
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        Sheet attendance = workbook.createSheet("Attendace");
+        Sheet available = workbook.createSheet("Available");
+        Row row;
+
+        List<String[]> attendanceList = convertAttendanceToArray(attendances);
+
+        int rowId = 0;
+
+        for (String[] rowData : attendanceList) {
+            row = attendance.createRow(rowId++);
+            int cellId = 0;
+            for (String cellValue : rowData) {
+                Cell cell = row.createCell(cellId++);
+                cell.setCellValue(cellValue);
+            }
+        }
+
+        List<String[]> availableList = convertAttendanceToArray(availabilities);
+
+        rowId = 0;
+
+        for (String[] rowData : availableList) {
+            row = available.createRow(rowId++);
+            int cellId = 0;
+            for (String cellValue : rowData) {
+                Cell cell = row.createCell(cellId++);
+                cell.setCellValue(cellValue);
+            }
+        }
+        return workbook;
+    }
+
+    private List<String[]> convertAttendanceToArray(List<ProjectAttendance> attendances) {
+        List<String[]> list = new ArrayList<>();
+        String[] headers = new String[]{"RBC ID", "Surname", "Forename", "Congregation", "Email", "Mobile", "Telephone", "Department", "Accommodation", "Transport", "Dates"};
+        list.add(headers);
+
+        List<ProjectGateListModel> gatelist = projectGateListModelFactory.generateModels(attendances);
+        Map<Integer, List<String>> map = new HashMap<>();
+
+        for (ProjectGateListModel entry : gatelist) {
+            if (map.containsKey(entry.getPersonId())) {
+                map.get(entry.getPersonId()).add(entry.getDate());
+            } else {
+                List<String> rowdata = convertGateListModelToArray(entry);
+                map.put(entry.getPersonId(), rowdata);
+            }
+        }
+        Set<Integer> keys = map.keySet();
+        for (Integer personId : keys) {
+            List<String> rowdata = map.get(personId);
+            String[] cells = new String[rowdata.size()];
+            int cellIndex = 0;
+            for (String cellValue : rowdata) {
+                cells[cellIndex++] = cellValue;
+            }
+            list.add(cells);
+        }
+
+        return list;
+    }
+
+    private List<String> convertGateListModelToArray(ProjectGateListModel model) {
+        List<String> rowdata = new ArrayList<>();
+        rowdata.add(model.getPersonId().toString());
+        rowdata.add(model.getSurname());
+        rowdata.add(model.getForename());
+        rowdata.add(model.getCongregation());
+        rowdata.add(model.getEmail());
+        rowdata.add(model.getMobile());
+        rowdata.add(model.getTelephone());
+        rowdata.add(model.getDepartment());
+        rowdata.add(model.getAccommodation());
+        rowdata.add(model.getTransport());
+        rowdata.add(model.getDate());
+
+        return rowdata;
+    }
+
+    private List<String[]> getAttendanceList(java.sql.Date date, Integer projectId) {
+        List<ProjectAttendance> attendances;
+        if (date == null) {
+            attendances = projectAttendanceDao.findConfirmedVolunteersForProject(projectId);
+        } else {
+            attendances = projectAttendanceDao.findAllAvailableVolunteersForProjectByDate(projectId, date);
+        }
+        List<ProjectGateListModel> models = projectGateListModelFactory.generateModels(attendances);
+        List<String[]> gateList = convertModelArray(models);
+        return gateList;
+    }
+
     private List<String[]> convertModelArray(List<ProjectGateListModel> models) {
         List<String[]> gateList = new ArrayList<String[]>();
         for (ProjectGateListModel model : models) {
             String[] rowData = new String[GATELISTCOLUMNSIZE];
-            rowData[0] = Integer.toString(model.getPersonId().intValue());
-            rowData[1] = model.getSurname();
-            rowData[2] = model.getForename();
-            rowData[3] = model.getDepartment();
-            rowData[4] = model.getCongregation();
-            rowData[5] = model.getEmail();
-            rowData[6] = model.getTelephone();
-            rowData[7] = model.getMobile();
+            rowData[0] = model.getDate();
+            rowData[1] = Integer.toString(model.getPersonId().intValue());
+            rowData[2] = model.getSurname();
+            rowData[3] = model.getForename();
+            rowData[4] = model.getDepartment();
+            rowData[5] = model.getCongregation();
+            rowData[6] = model.getEmail();
+            rowData[7] = model.getTelephone();
+            rowData[8] = model.getMobile();
             gateList.add(rowData);
         }
         return gateList;

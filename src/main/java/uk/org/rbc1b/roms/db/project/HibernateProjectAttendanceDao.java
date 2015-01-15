@@ -76,6 +76,11 @@ public class HibernateProjectAttendanceDao implements ProjectAttendanceDao {
     }
 
     @Override
+    public List<ProjectAttendance> findConfirmedVolunteersForProject(Integer projectId) {
+        return findAllVolunteersForProject(projectId, Boolean.TRUE);
+    }
+
+    @Override
     public List<ProjectAttendance> findConfirmedVolunteersForProjectByDate(Integer projectId, Date date) {
         List<ProjectAttendance> attendanceList = new ArrayList<>();
         List<ProjectAvailability> projectAvailabilities = new ArrayList<>();
@@ -97,6 +102,11 @@ public class HibernateProjectAttendanceDao implements ProjectAttendanceDao {
         }
 
         return attendanceList;
+    }
+
+    @Override
+    public List<ProjectAttendance> findAllAvailableVolunteersForProject(Integer projectId) {
+        return findAllVolunteersForProject(projectId, Boolean.FALSE);
     }
 
     @Override
@@ -142,5 +152,30 @@ public class HibernateProjectAttendanceDao implements ProjectAttendanceDao {
     @Override
     public void update(ProjectAttendance projectAttendance) {
         this.sessionFactory.getCurrentSession().merge(projectAttendance);
+    }
+
+    private List<ProjectAttendance> findAllVolunteersForProject(Integer projectId, Boolean confirmed) {
+        List<ProjectAttendance> attendanceList = new ArrayList<>();
+
+        List<ProjectAvailability> projectAvailabilities = new ArrayList<>();
+        List<ProjectDepartmentSession> workSessions = projectDepartmentSessionDao.findAllProjectSessions(projectId);
+        for (ProjectDepartmentSession workSession : workSessions) {
+            List<ProjectAvailability> sessionAvailabilities = projectAvailabilityDao.findForDepartmentSession(workSession.getProjectDepartmentSessionId());
+            if (!sessionAvailabilities.isEmpty()) {
+                projectAvailabilities.addAll(sessionAvailabilities);
+            }
+        }
+
+        for (ProjectAvailability availability : projectAvailabilities) {
+            Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(ProjectAttendance.class);
+            criteria.add(Restrictions.eq("projectAvailability.projectAvailabilityId", availability.getProjectAvailabilityId()));
+            criteria.add(Restrictions.eq("required", confirmed));
+            List<ProjectAttendance> attendances = criteria.list();
+            if (attendances != null && !attendances.isEmpty()) {
+                attendanceList.addAll(attendances);
+            }
+        }
+
+        return attendanceList;
     }
 }

@@ -25,6 +25,7 @@ package uk.org.rbc1b.roms.controller.project;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.lang3.time.FastDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.org.rbc1b.roms.db.Congregation;
@@ -61,8 +62,10 @@ public class ProjectGateListModelFactory {
      */
     public List<ProjectGateListModel> generateModels(List<ProjectAttendance> attendances) {
         List<ProjectGateListModel> models = new ArrayList<>();
+        FastDateFormat format = FastDateFormat.getInstance("dd-MM-yyyy");
 
         for (ProjectAttendance attendance : attendances) {
+            String date = format.format(attendance.getAvailableDate());
             ProjectAvailability availability = attendance.getProjectAvailability();
             Person person = personDao.findPerson(availability.getPerson().getPersonId());
             Congregation congregation = congregationDao.findCongregation(person.getCongregation().getCongregationId());
@@ -70,6 +73,7 @@ public class ProjectGateListModelFactory {
                     .findByProjectDepartmentSessionId(availability.getProjectDepartmentSession().getProjectDepartmentSessionId());
             Department department = departmentDao.findDepartment(session.getDepartment().getDepartmentId());
             ProjectGateListModel model = new ProjectGateListModel();
+            model.setDate(date);
             model.setPersonId(person.getPersonId());
             model.setForename(person.getForename());
             model.setSurname(person.getSurname());
@@ -78,6 +82,16 @@ public class ProjectGateListModelFactory {
             model.setTelephone(person.getTelephone());
             model.setMobile(person.getMobile());
             model.setDepartment(department.getName());
+            if (availability.isAccommodationRequired()) {
+                model.setAccommodation("Require Accommodation");
+            }
+
+            if (availability.isOfferTransport()) {
+                model.setTransport("Offer Transport");
+            } else if (availability.isTransportRequired()) {
+                model.setTransport("Require Transport");
+            }
+
             models.add(model);
         }
         return models;
