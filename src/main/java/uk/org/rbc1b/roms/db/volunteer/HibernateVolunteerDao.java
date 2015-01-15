@@ -23,7 +23,6 @@
  */
 package uk.org.rbc1b.roms.db.volunteer;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Set;
 import org.apache.commons.collections.CollectionUtils;
@@ -378,7 +377,6 @@ public class HibernateVolunteerDao implements VolunteerDao {
         Session session = this.sessionFactory.getCurrentSession();
         Criteria criteria = createVolunteerSearchCriteria(searchCriteria, session);
 
-        SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-dd");
         LocalDate todayDate = new LocalDate();
         LocalDate sixMonthsBehind = todayDate.minusMonths(6);
 

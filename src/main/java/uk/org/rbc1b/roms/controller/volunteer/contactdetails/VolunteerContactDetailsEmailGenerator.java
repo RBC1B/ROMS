@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.controller.volunteer;
+package uk.org.rbc1b.roms.controller.volunteer.contactdetails;
 
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
@@ -34,6 +34,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
+import uk.org.rbc1b.roms.controller.volunteer.AssignmentModel;
+import uk.org.rbc1b.roms.controller.volunteer.AssignmentModelFactory;
+import uk.org.rbc1b.roms.controller.volunteer.VolunteerModelFactory;
 import uk.org.rbc1b.roms.db.Address;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.email.Email;

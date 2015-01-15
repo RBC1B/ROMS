@@ -21,12 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.controller.volunteer;
+package uk.org.rbc1b.roms.controller.volunteer.contactdetails;
 
+import uk.org.rbc1b.roms.controller.volunteer.contactdetails.VolunteerContactDetailsEmailGenerator;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.when;
 
 import freemarker.template.Configuration;
@@ -40,12 +42,16 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import static org.mockito.Matchers.anyObject;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import uk.org.rbc1b.roms.controller.common.model.EntityModel;
+import uk.org.rbc1b.roms.controller.volunteer.AssignmentModel;
+import uk.org.rbc1b.roms.controller.volunteer.AssignmentModelFactory;
+import uk.org.rbc1b.roms.controller.volunteer.VolunteerModelFactory;
+import uk.org.rbc1b.roms.controller.volunteer.VolunteerQualificationModel;
+import uk.org.rbc1b.roms.controller.volunteer.VolunteerSkillModel;
 import uk.org.rbc1b.roms.db.Address;
 import uk.org.rbc1b.roms.db.Congregation;
 import uk.org.rbc1b.roms.db.Person;

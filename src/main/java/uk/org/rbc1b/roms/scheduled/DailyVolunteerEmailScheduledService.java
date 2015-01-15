@@ -23,6 +23,8 @@
  */
 package uk.org.rbc1b.roms.scheduled;
 
+import freemarker.template.TemplateException;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
@@ -30,7 +32,12 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import uk.org.rbc1b.roms.controller.common.DataConverterUtil;
+import uk.org.rbc1b.roms.controller.volunteer.contactdetails.VolunteerContactDetailsEmailGenerator;
+import uk.org.rbc1b.roms.db.email.Email;
+import uk.org.rbc1b.roms.db.email.EmailDao;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerSearchCriteria;
@@ -47,20 +54,37 @@ public class DailyVolunteerEmailScheduledService {
 
     @Autowired
     private VolunteerDao volunteerDao;
+    @Autowired
+    private VolunteerContactDetailsEmailGenerator volunteerContactDetailsEmailGenerator;
+    @Autowired
+    private EmailDao emailDao;
 
     /**
      * Scheduled execution method for formatting the email and saving
      * into the database which will then be sent using {@code EmailScheduledService}.
+     * This will be executed every day at noon.
      */
+    @Scheduled(cron = "0 0 12 * * ?")
     public void queueVolunteerInformationEmails() {
         VolunteerSearchCriteria searchCriteria = new VolunteerSearchCriteria();
         searchCriteria.setMaxResults(findMaxVolunteersForEmail());
 
         List<Volunteer> volunteersForEmail = volunteerDao.findVolunteersWhoNeedBiannualEmail(searchCriteria);
         for (Volunteer volunteer : volunteersForEmail) {
-            volunteer.getUpdateContactDetailsEmailLastSent();
-            // TODO - use a VolunteerEmailGenerator/Helper class to do the formatting.
-            // generate the email and save it into the db
+            try {
+                Email email = volunteerContactDetailsEmailGenerator.generateEmailForVolunteers(volunteer);
+
+                if (email != null) {
+                    emailDao.save(email);
+                }
+                // update the update contact details email last sent date to today for volunteer
+                final DateTime dt = new DateTime();
+                volunteer.setUpdateContactDetailsEmailLastSent(DataConverterUtil.toSqlDate(dt));
+
+                volunteerDao.updateVolunteer(volunteer);
+            } catch (IOException | TemplateException ex) {
+                LOGGER.error("Failed to send the volunteer contact details email: ", ex);
+            }
         }
     }
 
