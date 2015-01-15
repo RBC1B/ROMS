@@ -23,7 +23,6 @@
  */
 package uk.org.rbc1b.roms.controller.volunteer.contactdetails;
 
-import uk.org.rbc1b.roms.controller.volunteer.contactdetails.VolunteerContactDetailsEmailGenerator;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertNotNull;
@@ -38,6 +37,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,6 +47,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
+import uk.org.rbc1b.roms.controller.common.HashGenerator;
 import uk.org.rbc1b.roms.controller.common.model.EntityModel;
 import uk.org.rbc1b.roms.controller.volunteer.AssignmentModel;
 import uk.org.rbc1b.roms.controller.volunteer.AssignmentModelFactory;
@@ -96,6 +98,12 @@ public class VolunteerContactDetailsEmailGeneratorTest {
 
     private static final String MOCK_CONGREGATION_NAME = "London, Hounslow";
 
+    private static final String SERVER_URL = "edifice.url";
+    private static final String MOCK_SERVER_URL = "https://edifice.org.uk";
+    private static final String SECURITY_SALT = "security.salt";
+    private static final String MOCK_SECURITY_SALT = "0Abser23";
+    private static final String MOCK_CONFIRMATION_URI_PARTIAL = "/volunteer-contact-details-confirmation/" + MOCK_PERSON_ID + "/";
+
     @InjectMocks
     private VolunteerContactDetailsEmailGenerator volunteerContactDetailsEmailGenerator;
     @Mock
@@ -114,6 +122,8 @@ public class VolunteerContactDetailsEmailGeneratorTest {
     private Congregation mockCongregation;
     @Mock
     private Assignment mockAssignment;
+    @Mock
+    private Properties mockProperties;
     @Mock
     private FreeMarkerConfigurer mockFreeMarkerConfigurer;
     @Mock
@@ -186,6 +196,9 @@ public class VolunteerContactDetailsEmailGeneratorTest {
         volunteerSkillModelList = new ArrayList<>();
         initialiseSkillModelList();
         when(mockVolunteerModelFactory.generateVolunteerSkillsModel(volunteerSkills)).thenReturn(volunteerSkillModelList);
+
+        when(mockProperties.getProperty(SERVER_URL)).thenReturn(MOCK_SERVER_URL);
+        when(mockProperties.getProperty(SECURITY_SALT)).thenReturn(MOCK_SECURITY_SALT);
 
         when(mockFreeMarkerConfigurer.getConfiguration()).thenReturn(mockConfiguration);
         when(mockConfiguration.getTemplate(BIANNUAL_CONTACT_DETAILS_TEMPLATE)).thenReturn(template);
@@ -315,6 +328,24 @@ public class VolunteerContactDetailsEmailGeneratorTest {
         Email email = volunteerContactDetailsEmailGenerator.generateEmailForVolunteers(mockVolunteerOne);
 
         assertThat(email.getText(), containsString("We currently do not have any information about your skills"));
+    }
+
+    /**
+     * Should show the confirmation link.
+     *
+     * @throws IOException if can't find template
+     * @throws TemplateException if Freemarker's given up
+     */
+    @Test
+    public void shouldShowTheConfirmationLink() throws IOException, TemplateException {
+        Email email = volunteerContactDetailsEmailGenerator.generateEmailForVolunteers(mockVolunteerOne);
+
+        final DateTime dateTime = new DateTime();
+        String dateTimeString = dateTime.toString("yyyyMMddHHmm");
+        String hash = HashGenerator.generateHash(dateTimeString + ":" + MOCK_PERSON_ID, MOCK_SECURITY_SALT);
+
+        String completeUri = MOCK_SERVER_URL + MOCK_CONFIRMATION_URI_PARTIAL + dateTimeString + "/" + hash;
+        assertThat(email.getText(), containsString(completeUri));
     }
 
     private void initialiseAssignmentModel() {

@@ -30,7 +30,7 @@ If any of the details above are incorrect, then please use this link to make any
 
 However, if the above details are correct, then please confirm this by using the link below:
 
-<#-- confirm link -->
+${confirmationUrl}
 
 We also have the following information about you on our records. If there are any changes in the
 information below, then please contact the Volunteer Services Department via your Department Overseer: 

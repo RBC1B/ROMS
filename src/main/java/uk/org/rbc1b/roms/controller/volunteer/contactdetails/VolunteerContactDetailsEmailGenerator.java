@@ -30,10 +30,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+import javax.annotation.Resource;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
+import uk.org.rbc1b.roms.controller.common.HashGenerator;
 import uk.org.rbc1b.roms.controller.volunteer.AssignmentModel;
 import uk.org.rbc1b.roms.controller.volunteer.AssignmentModelFactory;
 import uk.org.rbc1b.roms.controller.volunteer.VolunteerModelFactory;
@@ -57,6 +61,10 @@ public class VolunteerContactDetailsEmailGenerator {
 
     private static final String BIANNUAL_CONTACT_DETAILS_TEMPLATE = "volunteer-biannual-contact-details.ftl";
     private static final String SUBJECT = "RBC (London & Home Counties) Volunteer Information Held on Edifice";
+    private static final String BASE_URI = "/volunteer-contact-details-confirmation";
+    private static final String DATETIME_FORMAT = "yyyyMMddHHmm";
+    private static final String SECURITY_SALT = "security.salt";
+    private static final String SERVER_URL = "edifice.url";
 
     @Autowired
     private VolunteerDao volunteerDao;
@@ -69,6 +77,9 @@ public class VolunteerContactDetailsEmailGenerator {
 
     @Autowired
     private FreeMarkerConfigurer emailFreemarkerConfigurer;
+
+    @Resource(name = "edificeProperty")
+    private Properties edificeProperty;
 
     /**
      * Generate the email template for the volunteer passed into this
@@ -95,6 +106,8 @@ public class VolunteerContactDetailsEmailGenerator {
 
         List<VolunteerSkill> skills = volunteerDao.findSkills(volunteer.getPersonId());
         model.put("skills", volunteerModelFactory.generateVolunteerSkillsModel(skills));
+
+        model.put("confirmationUrl", generateConfirmationUrl(volunteer.getPersonId()));
 
         Email email = new Email();
         email.setRecipient(volunteer.getPerson().getEmail());
@@ -127,5 +140,28 @@ public class VolunteerContactDetailsEmailGenerator {
             assignmentModelList.add(assignmentModelFactory.generateAssignmentModel(assignment));
         }
         model.put("assignments", assignmentModelList);
+    }
+
+    private String generateConfirmationUrl(Integer volunteerId) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(edificeProperty.getProperty(SERVER_URL));
+        sb.append(BASE_URI).append("/").append(volunteerId).append("/");
+
+        // get the current date time in the correct format as String
+        String dateTime = getCurrentDateTime();
+        sb.append(dateTime).append("/");
+        sb.append(generateSecureHash(volunteerId, dateTime));
+
+        return sb.toString();
+    }
+
+    private String getCurrentDateTime() {
+        DateTime dt = new DateTime();
+        return dt.toString(DATETIME_FORMAT);
+    }
+
+    private String generateSecureHash(Integer volunteerId, String dateTime) {
+        String value = dateTime + ":" + volunteerId;
+        return HashGenerator.generateHash(value, edificeProperty.getProperty(SECURITY_SALT));
     }
 }
