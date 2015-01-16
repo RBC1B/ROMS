@@ -370,7 +370,7 @@ $(document).ready(function() {
     }
 
     function addAvailabilityTable() {
-        $('#table-location').html('<table class="table table-bordered table-condensed table-striped table-hover" cellspacing="0" id="volunteer-availability" width="90%"></table>');
+        $('#table-location').html('<table class="table table-bordered table-condensed table-striped table-hover" cellspacing="0" id="volunteer-availability" width="100%"></table>');
     }
 
     // Handle requests to add new project department work sessions
@@ -648,7 +648,7 @@ $(document).ready(function() {
     // Adds the volunteer invitation confirmation table
     function addConfirmationTable()
     {
-        $('#confirmation-table-location').html('<table class="table table-bordered table-condensed table-striped table-hover" cellspacing="0" id="volunteer-confirmation" width="90%"></table>');
+        $('#confirmation-table-location').html('<table class="table table-bordered table-condensed table-striped table-hover" cellspacing="0" id="volunteer-confirmation" width="100%"></table>');
     }
 
     // Gate list

@@ -37,14 +37,9 @@ import java.util.Set;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.apache.commons.lang3.time.FastDateFormat;
-import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -418,7 +413,7 @@ public class ProjectsController {
         response.setContentType(MediaType.OOXML_SHEET.toString());
         response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
         OutputStream output = response.getOutputStream();
-        
+
         output.flush();
         workbook.write(output);
         workbook.close();
@@ -463,7 +458,10 @@ public class ProjectsController {
 
     private List<String[]> convertAttendanceToArray(List<ProjectAttendance> attendances) {
         List<String[]> list = new ArrayList<>();
-        String[] headers = new String[]{"RBC ID", "Surname", "Forename", "Congregation", "Email", "Mobile", "Telephone", "Department", "Accommodation", "Transport", "Dates"};
+        String[] headers = new String[]{
+            "RBC ID", "Surname", "Forename", "Congregation", "Email",
+            "Mobile", "Telephone", "Department", "Accommodation", "Transport", "Dates",
+        };
         list.add(headers);
 
         List<ProjectGateListModel> gatelist = projectGateListModelFactory.generateModels(attendances);
