@@ -483,7 +483,7 @@ public class ProjectsController {
         List<String[]> list = new ArrayList<>();
         String[] headers = new String[]{
             "RBC ID", "Surname", "Forename", "Congregation", "Email",
-            "Mobile", "Telephone", "Department", "Accommodation", "Transport", "Dates",};
+            "Mobile", "Telephone", "Department", "Accommodation", "Transport", "Dates", };
         list.add(headers);
 
         List<ProjectGateListModel> gatelist = projectGateListModelFactory.generateModels(attendances);
