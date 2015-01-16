@@ -88,6 +88,7 @@ import uk.org.rbc1b.roms.security.RomsPermissionEvaluator;
 public class ProjectsController {
 
     private static final int GATELISTCOLUMNSIZE = 9;
+    private static final String ALLPROJECTS = "/all-projects";
     @Autowired
     private ProjectDao projectDao;
     @Autowired
@@ -112,7 +113,7 @@ public class ProjectsController {
     private ProjectGateListModelFactory projectGateListModelFactory;
 
     /**
-     * Handles the project list.
+     * Handles the project list that are current and non-complete.
      *
      * @param model the mvc model
      * @return list jsp page
@@ -120,7 +121,7 @@ public class ProjectsController {
     @RequestMapping(method = RequestMethod.GET)
     @PreAuthorize("hasPermission('PROJECT', 'READ')")
     public String showProjects(ModelMap model) {
-        List<Project> projects = projectDao.findProjects();
+        List<Project> projects = projectDao.findAllCurrentProjects();
 
         List<ProjectModel> modelList = new ArrayList<>();
         for (Project project : projects) {
@@ -129,6 +130,28 @@ public class ProjectsController {
 
         model.addAttribute("projects", modelList);
         model.addAttribute("newUri", ProjectModelFactory.generateUri(null) + "/new");
+        model.addAttribute("allProjectUri", ProjectModelFactory.generateUri(null) + ALLPROJECTS);
+        return "projects/list";
+    }
+
+    /**
+     * Handles the project list for all projects.
+     *
+     * @param model the mvc model
+     * @return list jsp page
+     */
+    @RequestMapping(value = "all-projects", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('PROJECT', 'READ')")
+    public String showAllProjects(ModelMap model) {
+        List<Project> projects = projectDao.findProjects();
+
+        List<ProjectModel> modelList = new ArrayList<>();
+        for (Project project : projects) {
+            modelList.add(projectModelFactory.generateProjectModel(project));
+        }
+        model.addAttribute("projects", modelList);
+        model.addAttribute("newUri", ProjectModelFactory.generateUri(null) + "/new");
+        model.addAttribute("allProjectUri", ProjectModelFactory.generateUri(null) + ALLPROJECTS);
         return "projects/list";
     }
 
@@ -460,8 +483,7 @@ public class ProjectsController {
         List<String[]> list = new ArrayList<>();
         String[] headers = new String[]{
             "RBC ID", "Surname", "Forename", "Congregation", "Email",
-            "Mobile", "Telephone", "Department", "Accommodation", "Transport", "Dates",
-        };
+            "Mobile", "Telephone", "Department", "Accommodation", "Transport", "Dates",};
         list.add(headers);
 
         List<ProjectGateListModel> gatelist = projectGateListModelFactory.generateModels(attendances);
