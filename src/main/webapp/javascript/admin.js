@@ -97,6 +97,7 @@ $(document).ready(function() {
 
     $("#user-password-change").on("click", function(e) {
         e.preventDefault();
+        $("#update-alerts").hide();
         // clear the values
         $("#user-password-change-modal-form input[name='password']").val("");
         $("#user-password-change-modal-form input[name='passwordConfirm']").val("");
@@ -125,6 +126,11 @@ $(document).ready(function() {
                 },
                 success: function() {
                     $('#user-password-change-modal').modal('hide');
+                    
+                    // make sure we hide all existing alerts before showing the password update notification
+                    $("#update-alerts .alert").hide();
+                    $("#password-update-alert").show();
+                    $("#update-alerts").show();
                 }
             });
         },
