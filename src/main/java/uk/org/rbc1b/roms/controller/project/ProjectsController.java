@@ -23,10 +23,24 @@
  */
 package uk.org.rbc1b.roms.controller.project;
 
+import au.com.bytecode.opencsv.CSVWriter;
+import com.google.common.net.MediaType;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import org.apache.commons.lang3.time.FastDateFormat;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -49,6 +63,8 @@ import uk.org.rbc1b.roms.db.application.UserDao;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHall;
 import uk.org.rbc1b.roms.db.kingdomhall.KingdomHallDao;
 import uk.org.rbc1b.roms.db.project.Project;
+import uk.org.rbc1b.roms.db.project.ProjectAttendance;
+import uk.org.rbc1b.roms.db.project.ProjectAttendanceDao;
 import uk.org.rbc1b.roms.db.project.ProjectDao;
 import uk.org.rbc1b.roms.db.project.ProjectDepartmentSession;
 import uk.org.rbc1b.roms.db.project.ProjectDepartmentSessionDao;
@@ -71,6 +87,8 @@ import uk.org.rbc1b.roms.security.RomsPermissionEvaluator;
 @RequestMapping("/projects")
 public class ProjectsController {
 
+    private static final int GATELISTCOLUMNSIZE = 9;
+    private static final String ALLPROJECTS = "/all-projects";
     @Autowired
     private ProjectDao projectDao;
     @Autowired
@@ -89,9 +107,13 @@ public class ProjectsController {
     private ProjectDepartmentSessionDao projectDepartmentSessionDao;
     @Autowired
     private DepartmentDao departmentDao;
+    @Autowired
+    private ProjectAttendanceDao projectAttendanceDao;
+    @Autowired
+    private ProjectGateListModelFactory projectGateListModelFactory;
 
     /**
-     * Handles the project list.
+     * Handles the project list that are current and non-complete.
      *
      * @param model the mvc model
      * @return list jsp page
@@ -99,7 +121,7 @@ public class ProjectsController {
     @RequestMapping(method = RequestMethod.GET)
     @PreAuthorize("hasPermission('PROJECT', 'READ')")
     public String showProjects(ModelMap model) {
-        List<Project> projects = projectDao.findProjects();
+        List<Project> projects = projectDao.findAllCurrentProjects();
 
         List<ProjectModel> modelList = new ArrayList<>();
         for (Project project : projects) {
@@ -108,6 +130,28 @@ public class ProjectsController {
 
         model.addAttribute("projects", modelList);
         model.addAttribute("newUri", ProjectModelFactory.generateUri(null) + "/new");
+        model.addAttribute("allProjectUri", ProjectModelFactory.generateUri(null) + ALLPROJECTS);
+        return "projects/list";
+    }
+
+    /**
+     * Handles the project list for all projects.
+     *
+     * @param model the mvc model
+     * @return list jsp page
+     */
+    @RequestMapping(value = "all-projects", method = RequestMethod.GET)
+    @PreAuthorize("hasPermission('PROJECT', 'READ')")
+    public String showAllProjects(ModelMap model) {
+        List<Project> projects = projectDao.findProjects();
+
+        List<ProjectModel> modelList = new ArrayList<>();
+        for (Project project : projects) {
+            modelList.add(projectModelFactory.generateProjectModel(project));
+        }
+        model.addAttribute("projects", modelList);
+        model.addAttribute("newUri", ProjectModelFactory.generateUri(null) + "/new");
+        model.addAttribute("allProjectUri", ProjectModelFactory.generateUri(null) + ALLPROJECTS);
         return "projects/list";
     }
 
@@ -301,8 +345,7 @@ public class ProjectsController {
      *
      * @param projectId the project id
      * @param form the form bean
-     * @return view
-     * exist
+     * @return view exist
      */
     @RequestMapping(value = "{projectId}", method = RequestMethod.PUT)
     @PreAuthorize("hasPermission('PROJECT','EDIT')")
@@ -334,6 +377,185 @@ public class ProjectsController {
         projectDao.updateProject(project);
 
         return "redirect:" + ProjectModelFactory.generateUri(projectId);
+    }
+
+    /**
+     * Returns the gate list in downloadable CSV format.
+     *
+     * @param projectId the project id
+     * @param projectDate the date
+     * @param response the servlet response
+     * @throws IOException failure to write to output stream
+     * @throws ParseException failure to parse date
+     */
+    @RequestMapping(value = "gate-list/{projectId}/{projectDate}")
+    @PreAuthorize("hasPermission('PROJECT','READ')")
+    public void downloadGateList(@PathVariable Integer projectId, @PathVariable String projectDate, HttpServletResponse response)
+            throws IOException, ParseException {
+        List<String[]> gateList;
+
+        if (projectDate.equalsIgnoreCase("ALL")) {
+            gateList = getAttendanceList(null, projectId);
+        } else {
+            FastDateFormat format = FastDateFormat.getInstance("dd-MM-yyyy");
+            java.util.Date dateParser = format.parse(projectDate);
+            java.sql.Date sqlDate = new java.sql.Date(dateParser.getTime());
+
+            gateList = getAttendanceList(sqlDate, projectId);
+        }
+
+        String[] headers = new String[]{"Date", "RBC ID", "Surname", "Forename", "Department", "Congregation", "Email", "Telephone", "Mobile"};
+
+        String fileName = "gatelist-" + projectId + "-" + projectDate + ".csv";
+
+        response.setContentType(MediaType.CSV_UTF_8.toString());
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+
+        OutputStream output = response.getOutputStream();
+        CSVWriter writer = new CSVWriter(new OutputStreamWriter(output), '\u0009');
+
+        writer.writeNext(headers);
+        writer.writeAll(gateList);
+        writer.close();
+    }
+
+    /**
+     * Creates the file for the project coordinator.
+     *
+     * @param projectId the project id
+     * @param response the http servlet response
+     * @throws IOException when creating file
+     */
+    @RequestMapping(value = "coordinator-list/{projectId}")
+    @PreAuthorize("hasPermission('PROJECT','READ')")
+    public void downloadCoordList(@PathVariable Integer projectId, HttpServletResponse response)
+            throws IOException {
+        String fileName = "coordinator-list-" + projectId + ".xlsx";
+        XSSFWorkbook workbook = createWorkbook(projectId);
+
+        response.setContentType(MediaType.OOXML_SHEET.toString());
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+        OutputStream output = response.getOutputStream();
+
+        output.flush();
+        workbook.write(output);
+        workbook.close();
+        output.flush();
+    }
+
+    private XSSFWorkbook createWorkbook(Integer projectId) {
+        List<ProjectAttendance> attendances = projectAttendanceDao.findConfirmedVolunteersForProject(projectId);
+        List<ProjectAttendance> availabilities = projectAttendanceDao.findAllAvailableVolunteersForProject(projectId);
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        Sheet attendance = workbook.createSheet("Attendace");
+        Sheet available = workbook.createSheet("Available");
+        Row row;
+
+        List<String[]> attendanceList = convertAttendanceToArray(attendances);
+
+        int rowId = 0;
+
+        for (String[] rowData : attendanceList) {
+            row = attendance.createRow(rowId++);
+            int cellId = 0;
+            for (String cellValue : rowData) {
+                Cell cell = row.createCell(cellId++);
+                cell.setCellValue(cellValue);
+            }
+        }
+
+        List<String[]> availableList = convertAttendanceToArray(availabilities);
+
+        rowId = 0;
+
+        for (String[] rowData : availableList) {
+            row = available.createRow(rowId++);
+            int cellId = 0;
+            for (String cellValue : rowData) {
+                Cell cell = row.createCell(cellId++);
+                cell.setCellValue(cellValue);
+            }
+        }
+        return workbook;
+    }
+
+    private List<String[]> convertAttendanceToArray(List<ProjectAttendance> attendances) {
+        List<String[]> list = new ArrayList<>();
+        String[] headers = new String[]{
+            "RBC ID", "Surname", "Forename", "Congregation", "Email",
+            "Mobile", "Telephone", "Department", "Accommodation", "Transport", "Dates", };
+        list.add(headers);
+
+        List<ProjectGateListModel> gatelist = projectGateListModelFactory.generateModels(attendances);
+        Map<Integer, List<String>> map = new HashMap<>();
+
+        for (ProjectGateListModel entry : gatelist) {
+            if (map.containsKey(entry.getPersonId())) {
+                map.get(entry.getPersonId()).add(entry.getDate());
+            } else {
+                List<String> rowdata = convertGateListModelToArray(entry);
+                map.put(entry.getPersonId(), rowdata);
+            }
+        }
+        Set<Integer> keys = map.keySet();
+        for (Integer personId : keys) {
+            List<String> rowdata = map.get(personId);
+            String[] cells = new String[rowdata.size()];
+            int cellIndex = 0;
+            for (String cellValue : rowdata) {
+                cells[cellIndex++] = cellValue;
+            }
+            list.add(cells);
+        }
+
+        return list;
+    }
+
+    private List<String> convertGateListModelToArray(ProjectGateListModel model) {
+        List<String> rowdata = new ArrayList<>();
+        rowdata.add(model.getPersonId().toString());
+        rowdata.add(model.getSurname());
+        rowdata.add(model.getForename());
+        rowdata.add(model.getCongregation());
+        rowdata.add(model.getEmail());
+        rowdata.add(model.getMobile());
+        rowdata.add(model.getTelephone());
+        rowdata.add(model.getDepartment());
+        rowdata.add(model.getAccommodation());
+        rowdata.add(model.getTransport());
+        rowdata.add(model.getDate());
+
+        return rowdata;
+    }
+
+    private List<String[]> getAttendanceList(java.sql.Date date, Integer projectId) {
+        List<ProjectAttendance> attendances;
+        if (date == null) {
+            attendances = projectAttendanceDao.findConfirmedVolunteersForProject(projectId);
+        } else {
+            attendances = projectAttendanceDao.findAllAvailableVolunteersForProjectByDate(projectId, date);
+        }
+        List<ProjectGateListModel> models = projectGateListModelFactory.generateModels(attendances);
+        List<String[]> gateList = convertModelArray(models);
+        return gateList;
+    }
+
+    private List<String[]> convertModelArray(List<ProjectGateListModel> models) {
+        List<String[]> gateList = new ArrayList<String[]>();
+        for (ProjectGateListModel model : models) {
+            String[] rowData = new String[GATELISTCOLUMNSIZE];
+            rowData[0] = model.getDate();
+            rowData[1] = Integer.toString(model.getPersonId().intValue());
+            rowData[2] = model.getSurname();
+            rowData[3] = model.getForename();
+            rowData[4] = model.getDepartment();
+            rowData[5] = model.getCongregation();
+            rowData[6] = model.getEmail();
+            rowData[7] = model.getTelephone();
+            rowData[8] = model.getMobile();
+            gateList.add(rowData);
+        }
+        return gateList;
     }
 
     private Integer findUserId() {

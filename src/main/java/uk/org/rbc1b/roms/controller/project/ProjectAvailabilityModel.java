@@ -33,6 +33,7 @@ public class ProjectAvailabilityModel {
     private Integer personId;
     private String personName;
     private String address;
+    private String tradeNumber;
     private boolean invited;
     private boolean emailSent;
     private boolean personResponded;
@@ -95,6 +96,20 @@ public class ProjectAvailabilityModel {
      */
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    /**
+     * @return the tradeNumber
+     */
+    public String getTradeNumber() {
+        return tradeNumber;
+    }
+
+    /**
+     * @param tradeNumber the tradeNumber to set
+     */
+    public void setTradeNumber(String tradeNumber) {
+        this.tradeNumber = tradeNumber;
     }
 
     /**

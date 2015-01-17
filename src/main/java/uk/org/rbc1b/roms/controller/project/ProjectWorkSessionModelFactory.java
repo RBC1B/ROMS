@@ -23,11 +23,9 @@
  */
 package uk.org.rbc1b.roms.controller.project;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+import org.apache.commons.lang3.time.FastDateFormat;
 import org.springframework.stereotype.Component;
 import uk.org.rbc1b.roms.db.project.ProjectDepartmentSession;
 
@@ -38,7 +36,7 @@ import uk.org.rbc1b.roms.db.project.ProjectDepartmentSession;
 @Component
 public class ProjectWorkSessionModelFactory {
 
-    private static final String DATEFORMAT = "dd-MM-YYYY";
+    private static final String DATEFORMAT = "dd-MM-yyyy";
 
     /**
      * Generates the model for displaying in JSP.
@@ -52,7 +50,7 @@ public class ProjectWorkSessionModelFactory {
         for (ProjectDepartmentSession session : sessions) {
             ProjectWorkSessionModel model = new ProjectWorkSessionModel();
 
-            DateFormat dateFormat = new SimpleDateFormat(DATEFORMAT, Locale.UK);
+            FastDateFormat dateFormat = FastDateFormat.getInstance(DATEFORMAT);
             model.setToDate(dateFormat.format(session.getToDate()));
             model.setFromDate(dateFormat.format(session.getFromDate()));
 

@@ -28,12 +28,31 @@ package uk.org.rbc1b.roms.controller.project;
  */
 public class ProjectGateListModel {
 
+    private String date;
     private Integer personId;
     private String forename;
     private String surname;
+    private String email;
+    private String congregation;
+    private String telephone;
+    private String mobile;
     private String department;
-    private String timeIn;
-    private String timeOut;
+    private String accommodation;
+    private String transport;
+
+    /**
+     * @return the date
+     */
+    public String getDate() {
+        return date;
+    }
+
+    /**
+     * @param date the date to set
+     */
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     /**
      * @return the personId
@@ -78,6 +97,62 @@ public class ProjectGateListModel {
     }
 
     /**
+     * @return the email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * @param email the email to set
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /**
+     * @return the congregation
+     */
+    public String getCongregation() {
+        return congregation;
+    }
+
+    /**
+     * @param congregation the congregation to set
+     */
+    public void setCongregation(String congregation) {
+        this.congregation = congregation;
+    }
+
+    /**
+     * @return the telephone
+     */
+    public String getTelephone() {
+        return telephone;
+    }
+
+    /**
+     * @param telephone the telephone to set
+     */
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    /**
+     * @return the mobile
+     */
+    public String getMobile() {
+        return mobile;
+    }
+
+    /**
+     * @param mobile the mobile to set
+     */
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    /**
      * @return the department
      */
     public String getDepartment() {
@@ -92,30 +167,30 @@ public class ProjectGateListModel {
     }
 
     /**
-     * @return the timeIn
+     * @return the accommodation
      */
-    public String getTimeIn() {
-        return timeIn;
+    public String getAccommodation() {
+        return accommodation;
     }
 
     /**
-     * @param timeIn the timeIn to set
+     * @param accommodation the accommodation to set
      */
-    public void setTimeIn(String timeIn) {
-        this.timeIn = timeIn;
+    public void setAccommodation(String accommodation) {
+        this.accommodation = accommodation;
     }
 
     /**
-     * @return the timeOut
+     * @return the transport
      */
-    public String getTimeOut() {
-        return timeOut;
+    public String getTransport() {
+        return transport;
     }
 
     /**
-     * @param timeOut the timeOut to set
+     * @param transport the transport to set
      */
-    public void setTimeOut(String timeOut) {
-        this.timeOut = timeOut;
+    public void setTransport(String transport) {
+        this.transport = transport;
     }
 }

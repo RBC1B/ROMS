@@ -68,6 +68,7 @@ public class VolunteerForProjectModelFactory {
                         assignment.getPerson().getPersonId(), workSession);
                 if (availability != null) {
                     model = generate(availability);
+                    model.setTradeNumber(assignment.getTradeNumberId().toString());
                 } else {
                     model = generate(assignment, workSession);
                 }
@@ -96,6 +97,7 @@ public class VolunteerForProjectModelFactory {
 
         String address = person.getAddress().getTown() + ", " + person.getAddress().getCounty() + ", "
                 + person.getAddress().getPostcode();
+        model.setTradeNumber(assignment.getTradeNumberId().toString());
         model.setAddress(address);
         model.setInvited(false);
         model.setEmailSent(false);

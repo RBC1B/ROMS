@@ -29,7 +29,6 @@ import java.io.Serializable;
  * An object that defines an email. There is no sender address as this is set by
  * the JavaMail JNDI session.
  */
-
 public class Email implements Serializable {
 
     private static final long serialVersionUID = -1589295278670347715L;
@@ -39,6 +38,7 @@ public class Email implements Serializable {
     private String replyTo;
     private String subject;
     private String text;
+    private boolean html;
 
     public String getCc() {
         return cc;
@@ -93,4 +93,17 @@ public class Email implements Serializable {
         return "Email [emailId=" + emailId + ", recipient=" + recipient + ", subject=" + subject + "]";
     }
 
+    /**
+     * @return the html
+     */
+    public boolean isHtml() {
+        return html;
+    }
+
+    /**
+     * @param html the html to set
+     */
+    public void setHtml(boolean html) {
+        this.html = html;
+    }
 }

@@ -15,6 +15,7 @@
     <property name="transportRequired"/>
     <property name="offerTransport"/>
     <property name="accommodationRequired"/>
+    <property name="datesChanged"/>
     <property name="updateTime" not-null="true"/>
     <property name="updatedBy" not-null="true"/>
   </class>

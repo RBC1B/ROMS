@@ -25,8 +25,11 @@ package uk.org.rbc1b.roms.controller.project;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.lang3.time.FastDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import uk.org.rbc1b.roms.db.Congregation;
+import uk.org.rbc1b.roms.db.CongregationDao;
 import uk.org.rbc1b.roms.db.Person;
 import uk.org.rbc1b.roms.db.PersonDao;
 import uk.org.rbc1b.roms.db.project.ProjectAttendance;
@@ -48,6 +51,8 @@ public class ProjectGateListModelFactory {
     private ProjectDepartmentSessionDao projectDepartmentSessionDao;
     @Autowired
     private DepartmentDao departmentDao;
+    @Autowired
+    private CongregationDao congregationDao;
 
     /**
      * Generates a list of gate list row for a list of attendances.
@@ -57,18 +62,36 @@ public class ProjectGateListModelFactory {
      */
     public List<ProjectGateListModel> generateModels(List<ProjectAttendance> attendances) {
         List<ProjectGateListModel> models = new ArrayList<>();
+        FastDateFormat format = FastDateFormat.getInstance("dd-MM-yyyy");
 
         for (ProjectAttendance attendance : attendances) {
+            String date = format.format(attendance.getAvailableDate());
             ProjectAvailability availability = attendance.getProjectAvailability();
             Person person = personDao.findPerson(availability.getPerson().getPersonId());
+            Congregation congregation = congregationDao.findCongregation(person.getCongregation().getCongregationId());
             ProjectDepartmentSession session = projectDepartmentSessionDao
                     .findByProjectDepartmentSessionId(availability.getProjectDepartmentSession().getProjectDepartmentSessionId());
             Department department = departmentDao.findDepartment(session.getDepartment().getDepartmentId());
             ProjectGateListModel model = new ProjectGateListModel();
+            model.setDate(date);
             model.setPersonId(person.getPersonId());
             model.setForename(person.getForename());
             model.setSurname(person.getSurname());
+            model.setEmail(person.getEmail());
+            model.setCongregation(congregation.getName());
+            model.setTelephone(person.getTelephone());
+            model.setMobile(person.getMobile());
             model.setDepartment(department.getName());
+            if (availability.isAccommodationRequired()) {
+                model.setAccommodation("Require Accommodation");
+            }
+
+            if (availability.isOfferTransport()) {
+                model.setTransport("Offer Transport");
+            } else if (availability.isTransportRequired()) {
+                model.setTransport("Require Transport");
+            }
+
             models.add(model);
         }
         return models;
