@@ -31,12 +31,9 @@ import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 
 /**
  * Factory class to create the volunteerEmergencyContact model.
- *
- * @author Graham Pointer
  */
 @Component
 public class VolunteerEmergencyContactModelFactory {
-
     @Autowired
     private ReferenceDao referenceDao;
     @Autowired

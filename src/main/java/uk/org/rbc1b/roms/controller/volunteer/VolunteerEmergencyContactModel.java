@@ -27,10 +27,8 @@ import uk.org.rbc1b.roms.controller.common.model.PersonModel;
 
 /**
  * Model of a volunteer emergency contact.
- * @author Graham Pointer
  */
 public class VolunteerEmergencyContactModel {
-
     private Integer id;
     private PersonModel person;
     private String relationship;

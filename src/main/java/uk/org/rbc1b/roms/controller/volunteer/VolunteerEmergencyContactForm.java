@@ -27,8 +27,6 @@ import javax.validation.constraints.NotNull;
 
 /**
  * Data associated with updating a volunteer emergency contact.
- *
- * @author Graham Pointer
  */
 public class VolunteerEmergencyContactForm {
 
