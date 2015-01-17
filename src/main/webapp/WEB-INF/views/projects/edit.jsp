@@ -21,11 +21,11 @@
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <c:choose>
             <c:when test="${empty projectForm.name}">
-                <div id="create-project" val="1"/>
+                <div id="create-project" val="1" ></div>
                 <h1>Create new project</h1>
             </c:when>
             <c:otherwise>
-                <div id="create-project" val="0"/>
+                <div id="create-project" val="0" ></div>
                 <h1>Edit project (${projectForm.projectId})</h1>
             </c:otherwise>
         </c:choose>
