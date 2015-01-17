@@ -36,7 +36,7 @@ import uk.org.rbc1b.roms.db.application.User;
 @Component
 public class UserModelFactory {
 
-    private static final String BASE_URI = "/users";
+    private static final String BASE_URI = "/admin/users";
     private static final String VOLUNTEER_BASE_URI = "/volunteers";
     @Autowired
     private PersonDao personDao;

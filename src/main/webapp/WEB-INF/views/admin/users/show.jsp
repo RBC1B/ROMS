@@ -72,12 +72,13 @@
         <br />
         <ol class="breadcrumb">
             <li><a href="<c:url value="/" />">Edifice</a></li>
-            <li role="menuitem"><a href="<c:url value="/users" />">User</a></li>
+            <li role="menuitem"><a href="<c:url value="/admin" />">Admin</a></li>
+            <li role="menuitem"><a href="<c:url value="/admin#!users" />">Users</a></li>
             <li class="active"><c:out value="${user.userName}" /></li>
         </ol>
 
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         <%@ include file="/WEB-INF/views/common/mustache-list-actions.jsp" %>
-        <script type="text/javascript" src="<c:url value='/javascript/users.js' />" ></script>
+        <script type="text/javascript" src="<c:url value='/javascript/admin.js' />" ></script>
     </body>
 </html>

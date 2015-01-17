@@ -21,7 +21,7 @@
                 </li>
                 <sec:authorize access="hasPermission('DATABASE', 'READ')">
                     <li role="presentation">
-                        <a href="#invitation" aria-controls="users" role="tab"
+                        <a href="#users" aria-controls="users" role="tab"
                            data-toggle="tab">Users</a>
                     </li>
                 </sec:authorize>
@@ -34,7 +34,7 @@
                 </div>
                 <sec:authorize access="hasPermission('DATABASE', 'READ')">
                     <div role="tabpanel" class="tab-pane" id="users">
-
+                        <%@ include file="fragments/users-list.jsp" %>
                     </div>
                 </sec:authorize>
             </div>
@@ -46,5 +46,6 @@
             <li>Admin</li>
         </ol>
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+        <script type="text/javascript" src="<c:url value='/javascript/admin.js' />" ></script>
     </body>
 </html>

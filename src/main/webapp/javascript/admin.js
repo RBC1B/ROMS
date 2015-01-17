@@ -23,6 +23,8 @@
  */
 
 $(document).ready(function() {
+	roms.common.persistentTabs();
+	
     // list
     roms.common.datatables(
             $('#user-list'),
@@ -31,7 +33,7 @@ $(document).ready(function() {
                 "aoColumnDefs": [
                     {
                         'bSortable': false,
-                        'aTargets': [2]
+                        'aTargets': [3]
                     }
                 ]
             }

@@ -1,6 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="roms" uri="/WEB-INF/tld/roms.tld"%>
+<h3>Departmental users</h3>
 <div class="entity-list-results">
     <table class="table table-bordered table-condensed table-striped table-hover" id="user-list">
         <thead>

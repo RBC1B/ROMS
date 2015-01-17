@@ -59,7 +59,7 @@ import uk.org.rbc1b.roms.security.AccessLevel;
  * Read/write ROMS users.
  */
 @Controller
-@RequestMapping("/users")
+@RequestMapping("/admin/users")
 public class UsersController {
     private static final ApplicationAccessComparator APPLICATION_ACCESS_COMPARATOR = new ApplicationAccessComparator();
     private static final String NONDEPARTMENT = "All";
