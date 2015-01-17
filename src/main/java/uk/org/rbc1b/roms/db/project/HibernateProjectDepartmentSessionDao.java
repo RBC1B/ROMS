@@ -44,9 +44,11 @@ public class HibernateProjectDepartmentSessionDao implements ProjectDepartmentSe
     @Override
     @Cacheable("projectDepartmentSession.projectDepartmentSession")
     public ProjectDepartmentSession findByProjectDepartmentSessionId(Integer projectDepartmentSessionId) {
-        return (ProjectDepartmentSession) this.sessionFactory.getCurrentSession().get(ProjectDepartmentSession.class, projectDepartmentSessionId);
+        return (ProjectDepartmentSession) this.sessionFactory.getCurrentSession().get(ProjectDepartmentSession.class,
+                projectDepartmentSessionId);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<ProjectDepartmentSession> findProjectSessionsForDepartment(Integer projectId, Integer departmentId) {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(ProjectDepartmentSession.class);
@@ -60,6 +62,7 @@ public class HibernateProjectDepartmentSessionDao implements ProjectDepartmentSe
         this.sessionFactory.getCurrentSession().save(workSession);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<ProjectDepartmentSession> findAllProjectSessions(Integer projectId) {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(ProjectDepartmentSession.class);

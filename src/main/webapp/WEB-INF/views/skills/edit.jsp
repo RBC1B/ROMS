@@ -60,7 +60,7 @@
                     <div class="col-sm-9 col-md-3">
                          <form:textarea path="description" class="form-control" rows="4" cols="50" />
                     </div>
-                    <div class=”col-sm-3 col-md-3”>
+                    <div class="col-sm-3 col-md-3">
                          <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title=""></span>
                     </div>
                 </div>

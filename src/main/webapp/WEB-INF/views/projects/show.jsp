@@ -21,7 +21,7 @@
                 </li>
                 <li role="presentation">
                     <a href="#invitation" aria-controls="invitation" role="tab"
-                       data-toggle="tab">Invitation & Summary</a>
+                       data-toggle="tab">Invitation &amp; Summary</a>
                 </li>
                 <li role="presentation">
                     <a href="#attendance" aria-controls="attendance" role="tab"

@@ -3,7 +3,7 @@
                     who can be invited to a project
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <c:choose>
     <c:when test="${not assignment}">
         You have no departmental assignment to show invitations for.

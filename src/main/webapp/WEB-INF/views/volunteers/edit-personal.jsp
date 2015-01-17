@@ -132,19 +132,18 @@ Edit form for the volunteer data under the personal tab.
                     </div>
                 </div>
             </fieldset>
-        </div>
-    </form:form>
+    	</form:form>
 
-    <ol class="breadcrumb">
-        <li><a href="<c:url value="/" />">Edifice</a></li>
-        <li><a href="<c:url value="/volunteers" />">Volunteers</a></li>
-        <li class="active">Edit ${forename} ${surname} personal information</li>
-    </ol>
-
-    <%@ include file="/WEB-INF/views/common/footer.jsp"%>
-    <%@ include file="/WEB-INF/views/common/mustache-person-link-search-form.jsp"%>
-    <%@ include file="/WEB-INF/views/common/person-link-modal.jsp"%>
-    <script type="text/javascript" src="<c:url value='/javascript/thirdparty/phoneformat-574.js' />" ></script>
-    <script type="text/javascript" src="<c:url value='/javascript/volunteers.js' />"></script>
-</body>
+	    <ol class="breadcrumb">
+	        <li><a href="<c:url value="/" />">Edifice</a></li>
+	        <li><a href="<c:url value="/volunteers" />">Volunteers</a></li>
+	        <li class="active">Edit ${forename} ${surname} personal information</li>
+	    </ol>
+	
+	    <%@ include file="/WEB-INF/views/common/footer.jsp"%>
+	    <%@ include file="/WEB-INF/views/common/mustache-person-link-search-form.jsp"%>
+	    <%@ include file="/WEB-INF/views/common/person-link-modal.jsp"%>
+	    <script type="text/javascript" src="<c:url value='/javascript/thirdparty/phoneformat-574.js' />" ></script>
+	    <script type="text/javascript" src="<c:url value='/javascript/volunteers.js' />"></script>
+	</body>
 </html>

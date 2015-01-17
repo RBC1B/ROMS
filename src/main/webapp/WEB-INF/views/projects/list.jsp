@@ -58,11 +58,11 @@
             </tbody>
         </table>
         <div class="row-fluid">
-            <sec:authorize access="hasPermission('PROJECT', 'ADD')">
-                <hr />
-                <a class="btn btn-edifice" href="<c:url value="${newUri}" />" />Create new project</a>
-            </sec:authorize>
-        <a class="btn btn-edifice" href="<c:url value="${allProjectUri}" />" />See all projects</a>
+		<sec:authorize access="hasPermission('PROJECT', 'ADD')">
+			<hr />
+			<a class="btn btn-edifice" href="<c:url value="${newUri}" />">Create new project</a>
+		</sec:authorize>
+        <a class="btn btn-edifice" href="<c:url value="${allProjectUri}" />">See all projects</a>
 </div>
 <br />
 <ol class="breadcrumb">

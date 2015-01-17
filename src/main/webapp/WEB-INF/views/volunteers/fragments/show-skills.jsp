@@ -2,6 +2,8 @@
 The contents of the skills tab.
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <div id="volunteer-with-skills" <c:if test="${empty volunteerSkills}">style="display: none"</c:if>>
         <h3>Skills</h3>
         <table id="volunteer-skills-skills" class="table table-bordered table-condensed table-striped table-hover">

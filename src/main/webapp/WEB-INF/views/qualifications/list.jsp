@@ -41,7 +41,7 @@
         </table>
         <sec:authorize access="hasPermission('SKILL', 'ADD')">
             <hr />
-            <a class="btn btn-edifice" href="<c:url value="${newUri}" />" />Create new qualification</a>
+            <a class="btn btn-edifice" href="<c:url value="${newUri}" />" >Create new qualification</a>
         </sec:authorize>
 
     <br />

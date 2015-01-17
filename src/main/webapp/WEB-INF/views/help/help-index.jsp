@@ -26,8 +26,7 @@
                 <div class="well">
                   <h3>Kingdom Hall</h3>
                   <ul class="nav nav-tabs nav-stacked">
-                    <li>List Of Kingdom Halls</li>
-                        <a href="">Details of Kingdom Halls ></a></p>
+                    <li>List Of Kingdom Halls - <a href="">Details of Kingdom Halls ></a></li>
                   </ul>
                 </div>
               </div>
@@ -49,7 +48,7 @@
                   <h3>Volunteers</h3>
                     <ul class="nav nav-tabs nav-stacked">
                       <li>Contact Details</li>
-                      <li>Skills & Training</li>
+                      <li>Skills &amp; Training</li>
                       <li>Gate List</li>
                     </ul>
                 </div>

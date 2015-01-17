@@ -3,6 +3,7 @@
 --%>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <div id="volunteer-with-emergency-contacts" <c:if test="${empty emergencyContacts}">style="display: none"</c:if>>
     <h3>Emergency contact</h3>
     <table class="table table-bordered table-condensed table-striped table-hover" id="volunteer-emergency-contacts">
