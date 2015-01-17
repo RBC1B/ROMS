@@ -21,36 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.controller.user;
+package uk.org.rbc1b.roms.controller.admin.users;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
- * Model of User details.
+ * Request form bean when creating or editing user.
  *
  */
-public class UserModel {
+public class UserForm {
 
-    private Integer personId;
+    @NotNull
+    @Size(min = 7, max = 50)
     private String userName;
+    @Size(min = 7, max = 50)
     private String password;
-    private String name;
-    private String uri;
+    @NotNull
+    private Integer userId;
     private boolean active;
-    private String editUri;
-    private String volunteerUri;
-
-    /**
-     * @return the personId
-     */
-    public Integer getPersonId() {
-        return personId;
-    }
-
-    /**
-     * @param personId the personId to set
-     */
-    public void setPersonId(Integer personId) {
-        this.personId = personId;
-    }
 
     /**
      * @return the userName
@@ -80,32 +69,12 @@ public class UserModel {
         this.password = password;
     }
 
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return name;
+    public Integer getUserId() {
+        return userId;
     }
 
-    /**
-     * @param name the name to set
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * @return the uri
-     */
-    public String getUri() {
-        return uri;
-    }
-
-    /**
-     * @param uri the uri to set
-     */
-    public void setUri(String uri) {
-        this.uri = uri;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     /**
@@ -120,33 +89,5 @@ public class UserModel {
      */
     public void setActive(boolean active) {
         this.active = active;
-    }
-
-    /**
-     * @return the editUri
-     */
-    public String getEditUri() {
-        return editUri;
-    }
-
-    /**
-     * @param editUri the editUri to set
-     */
-    public void setEditUri(String editUri) {
-        this.editUri = editUri;
-    }
-
-    /**
-     * @return the volunteerUri
-     */
-    public String getVolunteerUri() {
-        return volunteerUri;
-    }
-
-    /**
-     * @param volunteerUri the volunteerUri to set
-     */
-    public void setVolunteerUri(String volunteerUri) {
-        this.volunteerUri = volunteerUri;
     }
 }
