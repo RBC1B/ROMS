@@ -196,6 +196,7 @@ $(document).ready(function() {
             "personId": "RBC ID",
             "personName": "Name",
             "address": "Address",
+            "tradeNumber": "Trade Number",
             "invited": "Invited",
             "emailSent": "Notified",
             "personResponded": "Acknowledged",
@@ -524,7 +525,7 @@ $(document).ready(function() {
                     } else if (required === false) {
                         status = "Available";
                     } else {
-                        status = "Invited";
+                        status = "Confirmed";
                     }
                     var htmldata = "<div id='" + projectAttendanceId + "'projectAttendanceId='" + projectAttendanceId + "' />" + status;
                     row$.append($('<td/>').html(htmldata));
@@ -586,9 +587,9 @@ $(document).ready(function() {
         var cell = document.getElementById(attendanceId).parentNode;
         if (html.innerHTML.indexOf("Available") > -1)
         {
-            cell.innerHTML = newHtml + "Invited";
+            cell.innerHTML = newHtml + "Confirmed";
         }
-        else if (html.innerHTML.indexOf("Invited") > -1)
+        else if (html.innerHTML.indexOf("Confirmed") > -1)
         {
             cell.innerHTML = newHtml + "Available";
         } else {
@@ -598,7 +599,7 @@ $(document).ready(function() {
 
     function sendConfirmationRequest(attendanceId, html) {
         var aStatus = html.innerHTML.indexOf("Available");
-        var cStatus = html.innerHTML.indexOf("Invited");
+        var cStatus = html.innerHTML.indexOf("Confirmed");
         var required;
         if (aStatus > -1)
         {
