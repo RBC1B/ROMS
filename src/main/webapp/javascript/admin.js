@@ -95,4 +95,40 @@ $(document).ready(function() {
         };
     }
 
+    $("#user-password-change").on("click", function(e) {
+        e.preventDefault();
+        // clear the values
+        $("#user-password-change-modal-form input[name='password']").val("");
+        $("#user-password-change-modal-form input[name='passwordConfirm']").val("");
+
+        $('#user-password-change-modal').modal('show');
+    });
+    
+    $("#user-password-change-modal-form").validate({
+        rules: {
+        	password: {
+        		required: true,
+                minlength: 7
+            },
+            passwordConfirm: {
+            	required: true,
+                equalTo: "#password"
+            }
+        },
+        submitHandler: function(form) {
+            $.ajax({
+                url: $(form).attr("action"),
+                data: $(form).serialize(),
+                type: "POST",
+                error: function(jqXHR, textStatus) {
+                    alert("Failed to update your password. Status: " + textStatus);
+                },
+                success: function() {
+                    $('#user-password-change-modal').modal('hide');
+                }
+            });
+        },
+        errorPlacement: roms.common.validatorErrorPlacement
+    });
+    
 });

@@ -25,6 +25,7 @@ package uk.org.rbc1b.roms.controller.admin.users;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import uk.org.rbc1b.roms.db.application.User;
 
 /**
  * Request form bean when creating or editing user.
@@ -33,9 +34,9 @@ import javax.validation.constraints.Size;
 public class UserForm {
 
     @NotNull
-    @Size(min = 7, max = 50)
+    @Size(min = User.MIN_USERNAME_LENGTH, max = User.MAX_USERNAME_LENGTH)
     private String userName;
-    @Size(min = 7, max = 50)
+    @Size(min = User.MIN_PASSWORD_LENGTH, max = User.MAX_PASSWORD_LENGTH)
     private String password;
     @NotNull
     private Integer userId;

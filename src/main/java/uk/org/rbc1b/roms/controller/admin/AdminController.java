@@ -26,15 +26,22 @@ package uk.org.rbc1b.roms.controller.admin;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import uk.org.rbc1b.roms.controller.BadRequestException;
 import uk.org.rbc1b.roms.controller.admin.users.UserModel;
 import uk.org.rbc1b.roms.controller.admin.users.UserModelFactory;
 import uk.org.rbc1b.roms.db.application.User;
 import uk.org.rbc1b.roms.db.application.UserDao;
 import uk.org.rbc1b.roms.security.AccessLevel;
+import uk.org.rbc1b.roms.security.ROMSUserDetails;
 import uk.org.rbc1b.roms.security.RomsPermissionEvaluator;
 
 /**
@@ -54,7 +61,14 @@ public class AdminController {
      */
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String showAdminDashboard(ModelMap model) {
+        // look up their own user info
+        ROMSUserDetails principle = (ROMSUserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        User authenticatedUser = userDao.findUser(principle.getUserId());
+        model.addAttribute("user", userModelFactory.generateUserModel(authenticatedUser));
+        model.addAttribute("changePasswordUri", "/admin/password");
 
+        // look up the list of users if they have permission
         if (RomsPermissionEvaluator.hasPermission(uk.org.rbc1b.roms.security.Application.DATABASE, AccessLevel.READ)) {
             List<User> users = userDao.findAllUsers();
             List<UserModel> modelList = new ArrayList<UserModel>();
@@ -65,5 +79,29 @@ public class AdminController {
         }
 
         return "admin/dashboard";
+    }
+
+    /**
+     * Update the currently authenticated user's password.
+     * @param password password
+     */
+    @RequestMapping(value = "/admin/password", method = RequestMethod.PUT)
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void updatePassword(@RequestParam String password) {
+        ROMSUserDetails principle = (ROMSUserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+
+        if (password.length() < User.MIN_PASSWORD_LENGTH || password.length() > User.MAX_PASSWORD_LENGTH) {
+            throw new BadRequestException("Password must be between " + User.MIN_PASSWORD_LENGTH + " and "
+                    + User.MAX_USERNAME_LENGTH + " chars");
+        }
+
+        User user = userDao.findUser(principle.getUserId());
+
+        ShaPasswordEncoder encoder = new ShaPasswordEncoder();
+        user.setPassword(encoder.encodePassword(password, null));
+
+        userDao.updateUser(user);
+
     }
 }

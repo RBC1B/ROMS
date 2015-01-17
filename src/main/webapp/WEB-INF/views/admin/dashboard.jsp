@@ -16,7 +16,7 @@
             <!-- Tabs -->
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active">
-                    <a href="#acount" aria-controls="account" role="tab"
+                    <a href="#account" aria-controls="account" role="tab"
                        data-toggle="tab">My Account</a>
                 </li>
                 <sec:authorize access="hasPermission('DATABASE', 'READ')">
@@ -30,7 +30,7 @@
             <!-- Tab contents -->
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="account">
-
+                    <%@ include file="fragments/authenticated-user.jsp" %>
                 </div>
                 <sec:authorize access="hasPermission('DATABASE', 'READ')">
                     <div role="tabpanel" class="tab-pane" id="users">
