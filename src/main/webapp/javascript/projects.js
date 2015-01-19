@@ -685,10 +685,10 @@ $(document).ready(function() {
         link.click();
     });
     
-    $("#download-co-list").on("click", function(event){
+    $("#download-summary-list").on("click", function(event){
         var projectId = document.getElementById("project-id").getAttribute("project-id");
-        var url = roms.common.relativePath + "/projects/coordinator-list/" + projectId;
-        var link = document.getElementById("download-co-list");
+        var url = roms.common.relativePath + "/projects/summary-list/" + projectId;
+        var link = document.getElementById("download-summary-list");
         link.href = url;
         link.click();
     });

@@ -328,11 +328,6 @@
             <artifactId>freemarker</artifactId>
             <version>2.3.20</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi-ooxml</artifactId>
-            <version>3.11</version>
-        </dependency>
     </dependencies>
     <build>
         <testResources>

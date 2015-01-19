@@ -23,7 +23,7 @@
             <a id="download-gate-list" class="btn btn-success" href="#">Download gate list</a>
         </div>
         <div class="col-md-3">
-            <a id="download-co-list" class="btn btn-success" href="#">Project Coordinator list</a>
+            <a id="download-summary-list" class="btn btn-success" href="#">Download requirements</a>
         </div>
     </div>
 </div>
