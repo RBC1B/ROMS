@@ -196,6 +196,7 @@ $(document).ready(function() {
             "personId": "RBC ID",
             "personName": "Name",
             "address": "Address",
+            "tradeNumber": "Trade Number",
             "invited": "Invited",
             "emailSent": "Notified",
             "personResponded": "Acknowledged",
@@ -370,7 +371,7 @@ $(document).ready(function() {
     }
 
     function addAvailabilityTable() {
-        $('#table-location').html('<table class="table table-bordered table-condensed table-striped table-hover" cellspacing="0" id="volunteer-availability" width="90%"></table>');
+        $('#table-location').html('<table class="table table-bordered table-condensed table-striped table-hover" cellspacing="0" id="volunteer-availability" width="100%"></table>');
     }
 
     // Handle requests to add new project department work sessions
@@ -524,7 +525,7 @@ $(document).ready(function() {
                     } else if (required === false) {
                         status = "Available";
                     } else {
-                        status = "Invited";
+                        status = "Confirmed";
                     }
                     var htmldata = "<div id='" + projectAttendanceId + "'projectAttendanceId='" + projectAttendanceId + "' />" + status;
                     row$.append($('<td/>').html(htmldata));
@@ -586,9 +587,9 @@ $(document).ready(function() {
         var cell = document.getElementById(attendanceId).parentNode;
         if (html.innerHTML.indexOf("Available") > -1)
         {
-            cell.innerHTML = newHtml + "Invited";
+            cell.innerHTML = newHtml + "Confirmed";
         }
-        else if (html.innerHTML.indexOf("Invited") > -1)
+        else if (html.innerHTML.indexOf("Confirmed") > -1)
         {
             cell.innerHTML = newHtml + "Available";
         } else {
@@ -598,7 +599,7 @@ $(document).ready(function() {
 
     function sendConfirmationRequest(attendanceId, html) {
         var aStatus = html.innerHTML.indexOf("Available");
-        var cStatus = html.innerHTML.indexOf("Invited");
+        var cStatus = html.innerHTML.indexOf("Confirmed");
         var required;
         if (aStatus > -1)
         {
@@ -648,7 +649,7 @@ $(document).ready(function() {
     // Adds the volunteer invitation confirmation table
     function addConfirmationTable()
     {
-        $('#confirmation-table-location').html('<table class="table table-bordered table-condensed table-striped table-hover" cellspacing="0" id="volunteer-confirmation" width="90%"></table>');
+        $('#confirmation-table-location').html('<table class="table table-bordered table-condensed table-striped table-hover" cellspacing="0" id="volunteer-confirmation" width="100%"></table>');
     }
 
     // Gate list
@@ -657,10 +658,7 @@ $(document).ready(function() {
         minDate: '1/1/2000',
         format: "DD-MM-YYYY"
     });
-    // No easy way to do this within datetimepicker...
-    $("#project-tabs").on("click", function(event){
-        document.getElementById("projectDate").value = getTodaysDate();
-    });
+
 
     $("#generate-gate-list").on("click", function(event) {
         event.preventDefault();
@@ -668,15 +666,29 @@ $(document).ready(function() {
         addGateListTable();
         var projectId = document.getElementById("project-id").getAttribute("project-id");
         var selectedDate = document.getElementById("projectDate").value;
-        getGateListSummary(projectId, selectedDate);
-        getGateListData(projectId, selectedDate);
+        if (selectedDate === "") {
+            getGateListData(projectId, "ALL");
+        } else {
+            getGateListSummary(projectId, selectedDate);
+            getGateListData(projectId, selectedDate);
+        }
     });
 
     $("#download-gate-list").on("click", function(event) {
         var projectId = document.getElementById("project-id").getAttribute("project-id");
         var selectedDate = document.getElementById("projectDate").value;
+        if (selectedDate === "")
+            selectedDate = "ALL";
         var url = roms.common.relativePath + "/projects/gate-list/" + projectId + "/" + selectedDate;
         var link = document.getElementById("download-gate-list");
+        link.href = url;
+        link.click();
+    });
+    
+    $("#download-co-list").on("click", function(event){
+        var projectId = document.getElementById("project-id").getAttribute("project-id");
+        var url = roms.common.relativePath + "/projects/coordinator-list/" + projectId;
+        var link = document.getElementById("download-co-list");
         link.href = url;
         link.click();
     });
@@ -694,11 +706,12 @@ $(document).ready(function() {
     }
 
     function printGateListSummary(summary) {
-        $("#gate-list-summary").html("");
         var forDate = summary["date"];
         var invited = summary["invited"];
         var available = summary["available"];
-        $("#gate-list-summary").html("<b>Date:</b> " + forDate + "<p/><b>Invited:</b> " + invited + "<p/><b>Available:</b> " + available + "<p/>");
+        $("#project-summary-date").html(forDate);
+        $("#project-summary-invited").html(invited);
+        $("#project-summary-available").html(available);
     }
 
     function getGateListData(projectId, selectedDate) {
@@ -720,6 +733,8 @@ $(document).ready(function() {
             $('#gate-list-table').append(tbody$);
             for (var rowId = 0; rowId < data.length; rowId++) {
                 var row$ = $('<tr/>');
+                var date = data[rowId]["date"];
+                row$.append($('<td/>').html(date));
                 var rbcid = data[rowId]["personId"];
                 row$.append($('<td/>').html(rbcid));
                 var surname = data[rowId]["surname"];
@@ -748,6 +763,7 @@ $(document).ready(function() {
     function generateGateListHeaders() {
         var thead$ = $('<thead/>');
         var headerRow$ = $('<tr/>');
+        headerRow$.append($('<th/>').html("Date"));
         headerRow$.append($('<th/>').html("RBC ID"));
         headerRow$.append($('<th/>').html('Surname'));
         headerRow$.append($('<th/>').html('Forename'));

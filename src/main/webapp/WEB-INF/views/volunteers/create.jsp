@@ -340,15 +340,16 @@
                         <input type="submit" class="btn btn-lg btn-success"/>
                     </div>
                 </fieldset>
-            </div> <!--container div-->
+            </form:form>
+		</div> <!--container div-->
 
-            <br />
-            <ol class="breadcrumb">
-                <li><a href="<c:url value="/" />">Edifice</a></li>
-                <li role="menuitem"><a href="<c:url value="/volunteers" />">Volunteers</a></li>
-                <li class="active">Edit</li>
-            </ol>
-        </form:form>
+		<br />
+		<ol class="breadcrumb">
+			<li><a href="<c:url value="/" />">Edifice</a></li>
+			<li role="menuitem"><a href="<c:url value="/volunteers" />">Volunteers</a></li>
+			<li class="active">Edit</li>
+		</ol>
+        
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         <%@ include file="/WEB-INF/views/common/person-link-modal.jsp"%>
         <%@ include file="/WEB-INF/views/common/mustache-person-link-search-form.jsp"%>

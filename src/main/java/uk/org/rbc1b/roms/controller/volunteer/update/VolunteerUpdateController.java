@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.Properties;
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.joda.time.DateTime;
@@ -62,7 +61,7 @@ import freemarker.template.TemplateException;
  *
  */
 @Controller
-@RequestMapping("/volunteer-contact")
+@RequestMapping("/volunteer-update")
 public class VolunteerUpdateController {
     private static final String SECURITY_SALT = "security.salt";
     private static final String DATETIMEFORMAT = "yyyyMMddHHmm";
@@ -84,14 +83,12 @@ public class VolunteerUpdateController {
      * checks around this as this is initial request by the volunteer.
      *
      * @param form the user form
-     * @param request the http request
      * @throws TemplateException on failure to render the email
      * @throws IOException  on failure to render the email
      */
     @RequestMapping(value = "/", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void acceptRequest(@Valid VolunteerUpdateRequestForm form, HttpServletRequest request) throws IOException,
-            TemplateException {
+    public void acceptRequest(@Valid VolunteerUpdateRequestForm form) throws IOException, TemplateException {
         Volunteer volunteer = volunteerDao.findVolunteer(form.getPersonId(), null);
         if (volunteer == null) {
             throw new ResourceNotFoundException("No volunteer #" + form.getPersonId());
@@ -139,7 +136,7 @@ public class VolunteerUpdateController {
             @PathVariable String hash, ModelMap model) {
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, null);
         if (volunteer == null) {
-            return "volunteer-contact/volunteer-incorrect-form";
+            return "volunteers/update/error";
         }
         if (checkWithinTime(datetime) && checkHash(volunteer, datetime, hash)) {
             VolunteerUpdateForm form = new VolunteerUpdateForm();
@@ -155,9 +152,9 @@ public class VolunteerUpdateController {
             model.addAttribute("forename", volunteer.getPerson().getForename());
             model.addAttribute("surname", volunteer.getPerson().getSurname());
             model.addAttribute("volunteer", form);
-            return "volunteer-contact/volunteer-contact-form";
+            return "volunteers/update/edit";
         } else {
-            return "volunteer-contact/volunteer-incorrect-form";
+            return "volunteers/update/error";
         }
     }
 

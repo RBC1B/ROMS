@@ -34,6 +34,11 @@ import uk.org.rbc1b.roms.db.UpdateAuditable;
  */
 @Audited
 public class User implements UpdateAuditable, Serializable {
+    public static final int MIN_PASSWORD_LENGTH = 7;
+    public static final int MAX_PASSWORD_LENGTH = 50;
+    public static final int MIN_USERNAME_LENGTH = 7;
+    public static final int MAX_USERNAME_LENGTH = 50;
+
     private static final long serialVersionUID = 1679723249032731035L;
     private Integer personId;
     private String userName;

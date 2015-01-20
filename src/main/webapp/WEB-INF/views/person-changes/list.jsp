@@ -57,7 +57,7 @@
                                         <c:out value="${personchange.oldMiddleName}" />
                                     </c:when>
                                     <c:otherwise>
-                                        <font class="details-changed"><c:out value="${personchange.newMiddleName}" />
+                                        <font class="details-changed"><c:out value="${personchange.newMiddleName}" /></font>
                                     </c:otherwise>
                                 </c:choose>
                             </td>

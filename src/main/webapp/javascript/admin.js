@@ -23,6 +23,8 @@
  */
 
 $(document).ready(function() {
+	roms.common.persistentTabs();
+	
     // list
     roms.common.datatables(
             $('#user-list'),
@@ -31,7 +33,7 @@ $(document).ready(function() {
                 "aoColumnDefs": [
                     {
                         'bSortable': false,
-                        'aTargets': [2]
+                        'aTargets': [3]
                     }
                 ]
             }
@@ -93,4 +95,46 @@ $(document).ready(function() {
         };
     }
 
+    $("#user-password-change").on("click", function(e) {
+        e.preventDefault();
+        $("#update-alerts").hide();
+        // clear the values
+        $("#user-password-change-modal-form input[name='password']").val("");
+        $("#user-password-change-modal-form input[name='passwordConfirm']").val("");
+
+        $('#user-password-change-modal').modal('show');
+    });
+    
+    $("#user-password-change-modal-form").validate({
+        rules: {
+        	password: {
+        		required: true,
+                minlength: 7
+            },
+            passwordConfirm: {
+            	required: true,
+                equalTo: "#password"
+            }
+        },
+        submitHandler: function(form) {
+            $.ajax({
+                url: $(form).attr("action"),
+                data: $(form).serialize(),
+                type: "POST",
+                error: function(jqXHR, textStatus) {
+                    alert("Failed to update your password. Status: " + textStatus);
+                },
+                success: function() {
+                    $('#user-password-change-modal').modal('hide');
+                    
+                    // make sure we hide all existing alerts before showing the password update notification
+                    $("#update-alerts .alert").hide();
+                    $("#password-update-alert").show();
+                    $("#update-alerts").show();
+                }
+            });
+        },
+        errorPlacement: roms.common.validatorErrorPlacement
+    });
+    
 });

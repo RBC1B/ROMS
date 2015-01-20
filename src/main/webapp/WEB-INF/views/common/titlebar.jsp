@@ -73,16 +73,7 @@
             <sec:authorize access="hasPermission('REPORT', 'READ')">
                 <li><a href="<c:url value="/reports/fixed" />">Reports</a></li>
             </sec:authorize>
-
-            <sec:authorize access="hasPermission('DATABASE', 'READ')">
-                <li class="dropdown"><a href="#" class="dropdown-toggle" id="dLabel" role="button"
-                    data-toggle="dropdown">System Administration<b class="caret"></b></a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                        <sec:authorize access="hasPermission('DATABASE', 'READ')">
-                            <li role="menuitem"><a href="<c:url value="/users" />">System Users</a></li>
-                        </sec:authorize>
-                    </ul></li>
-            </sec:authorize>
+            <li role="menuitem"><a href="<c:url value="/admin" />">Admin</a></li>
         </ul>
         <form class="navbar-form navbar-right">
             <a class="btn btn-danger" href="<c:url value="/j_spring_security_logout" />"><span

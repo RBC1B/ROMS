@@ -50,6 +50,14 @@ public class HibernateProjectDao implements ProjectDao {
         return criteria.list();
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Project> findAllCurrentProjects() {
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(Project.class);
+        criteria.add(Restrictions.isNull("completedDate"));
+        return criteria.list();
+    }
+
     @Override
     public Project findProject(Integer projectId) {
         return (Project) this.sessionFactory.getCurrentSession().get(Project.class, projectId);

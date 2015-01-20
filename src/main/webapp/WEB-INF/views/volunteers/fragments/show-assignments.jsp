@@ -2,6 +2,8 @@
 The volunteer department links.
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <div id="volunteer-with-assignments" <c:if test="${empty assignments}">style="display: none"</c:if>>
     <h3>Team roles</h3>
     <table class="table table-bordered table-condensed table-striped table-hover" id="volunteer-assignments">

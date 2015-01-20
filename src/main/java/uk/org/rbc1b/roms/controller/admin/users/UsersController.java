@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package uk.org.rbc1b.roms.controller.user;
+package uk.org.rbc1b.roms.controller.admin.users;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -57,11 +57,9 @@ import uk.org.rbc1b.roms.security.AccessLevel;
 
 /**
  * Read/write ROMS users.
- *
- * @author oliver.elder.esq
  */
 @Controller
-@RequestMapping("/users")
+@RequestMapping("/admin/users")
 public class UsersController {
     private static final ApplicationAccessComparator APPLICATION_ACCESS_COMPARATOR = new ApplicationAccessComparator();
     private static final String NONDEPARTMENT = "All";
@@ -94,7 +92,7 @@ public class UsersController {
             modelList.add(userModelFactory.generateUserModel(user));
         }
         model.addAttribute("users", modelList);
-        return "users/list";
+        return "admin/users/list";
     }
 
     /**
@@ -137,7 +135,7 @@ public class UsersController {
         model.addAttribute("user", userModelFactory.generateUserModel(user));
         List<ApplicationAccess> permissions = applicationAccessDao.findUserPermissions(personId);
         model.addAttribute("permissions", permissions);
-        return "users/show";
+        return "admin/users/show";
     }
 
     /**
@@ -176,7 +174,7 @@ public class UsersController {
         model.addAttribute("submitUri", UserModelFactory.generateUri(null));
         model.addAttribute("submitMethod", "POST");
 
-        return "users/edit";
+        return "admin/users/edit";
     }
 
     /**
@@ -244,7 +242,7 @@ public class UsersController {
         model.addAttribute("submitMethod", "PUT");
         model.addAttribute("user", userModelFactory.generateUserModel(user));
 
-        return "users/edit";
+        return "admin/users/edit";
     }
 
     /**

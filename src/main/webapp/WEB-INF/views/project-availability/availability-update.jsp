@@ -16,7 +16,7 @@
         <link rel="stylesheet" type="text/css" href="<c:url value='/css/roms.css' />" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>RBC London & Home Counties - Availability for Projects</title>
+        <title>RBC London &amp; Counties - Availability for Projects</title>
     </head>
     <body>
         <div id="working-sunday" value="${availabilityModel.workingSunday}"></div>
@@ -26,7 +26,7 @@
             <a class="navbar-brand" href="<c:url value="/" />"><img src="<c:url value='/images/logo-brand.png' />" alt="edifice" /></a>
         </nav>
         <div class="container-fluid">
-            <h3>RBC London & Home Counties - Availability for Projects (<c:out value="${availabilityModel.volunteer}" />)</h3>
+            <h3>RBC London &amp; Counties - Availability for Projects (<c:out value="${availabilityModel.volunteer}" />)</h3>
             <div class="row">
                 <div class="col-md-6">
                     <div class="row form-group">

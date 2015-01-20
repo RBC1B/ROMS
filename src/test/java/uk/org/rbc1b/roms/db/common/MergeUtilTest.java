@@ -37,7 +37,6 @@ import org.junit.Test;
  */
 public class MergeUtilTest {
     // CHECKSTYLE:OFF
-    @SuppressWarnings("unchecked")
     @Test
     public void testMergeSingleStrings() {
         final List<Pair<String, String>> outputs = new ArrayList<Pair<String, String>>();
@@ -53,12 +52,11 @@ public class MergeUtilTest {
         assertEquals(Arrays.asList(new ImmutablePair<String, String>("foo", "foo")), outputs);
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void testMergeLeftEmpty() {
         final List<Pair<String, String>> outputs = new ArrayList<Pair<String, String>>();
 
-        MergeUtil.merge(Collections.<String> emptyList(), Arrays.asList("foo"), String.CASE_INSENSITIVE_ORDER,
+        MergeUtil.merge(Collections.<String>emptyList(), Arrays.asList("foo"), String.CASE_INSENSITIVE_ORDER,
                 new MergeUtil.Callback<String, String>() {
                     @Override
                     public void output(String leftValue, String rightValue) {
@@ -69,12 +67,11 @@ public class MergeUtilTest {
         assertEquals(Arrays.asList(new ImmutablePair<String, String>(null, "foo")), outputs);
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void testMergeRightEmpty() {
         final List<Pair<String, String>> outputs = new ArrayList<Pair<String, String>>();
 
-        MergeUtil.merge(Arrays.asList("foo"), Collections.<String> emptyList(), String.CASE_INSENSITIVE_ORDER,
+        MergeUtil.merge(Arrays.asList("foo"), Collections.<String>emptyList(), String.CASE_INSENSITIVE_ORDER,
                 new MergeUtil.Callback<String, String>() {
                     @Override
                     public void output(String leftValue, String rightValue) {
@@ -85,7 +82,6 @@ public class MergeUtilTest {
         assertEquals(Arrays.asList(new ImmutablePair<String, String>("foo", null)), outputs);
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void testMergeDisjointSingleStrings() {
         final List<Pair<String, String>> outputs = new ArrayList<Pair<String, String>>();
@@ -102,7 +98,6 @@ public class MergeUtilTest {
                 "foo", null)), outputs);
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void testMergeOverlappingStrings() {
         final List<Pair<String, String>> outputs = new ArrayList<Pair<String, String>>();
@@ -119,7 +114,6 @@ public class MergeUtilTest {
                 "foo", "foo"), new ImmutablePair<String, String>(null, "quux")), outputs);
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void testMergeDuplicateStrings() {
         final List<Pair<String, String>> outputs = new ArrayList<Pair<String, String>>();
@@ -138,7 +132,6 @@ public class MergeUtilTest {
                 "quux")), outputs);
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void testMergeHeterogeneousOverlapping() {
         final List<Pair<String, Container>> outputs = new ArrayList<Pair<String, Container>>();

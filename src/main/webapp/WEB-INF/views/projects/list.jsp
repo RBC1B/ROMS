@@ -12,7 +12,7 @@
         <%@ include file="/WEB-INF/views/common/titlebar.jsp" %>
         <h1>Projects</h1>
         <hr />
-                <table class="table table-bordered table-condensed table-striped table-hover" id="project-list">
+        <table class="table table-bordered table-condensed table-striped table-hover" id="project-list">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -57,16 +57,19 @@
                 </c:forEach>
             </tbody>
         </table>
-        <sec:authorize access="hasPermission('PROJECT', 'ADD')">
-            <hr />
-            <a class="btn btn-edifice" href="<c:url value="${newUri}" />" />Create new project</a>
-        </sec:authorize>
-        <br />
-        <ol class="breadcrumb">
-            <li><a href="<c:url value="/" />">Edifice</a></li>
-            <li class="active">Projects</li>
-        </ol>
-        <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-        <script type="text/javascript" src="<c:url value='/javascript/projects.js' />" ></script>
-    </body>
+        <div class="row-fluid">
+		<sec:authorize access="hasPermission('PROJECT', 'ADD')">
+			<hr />
+			<a class="btn btn-edifice" href="<c:url value="${newUri}" />">Create new project</a>
+		</sec:authorize>
+        <a class="btn btn-edifice" href="<c:url value="${allProjectUri}" />">See all projects</a>
+</div>
+<br />
+<ol class="breadcrumb">
+    <li><a href="<c:url value="/" />">Edifice</a></li>
+    <li class="active">Projects</li>
+</ol>
+<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+<script type="text/javascript" src="<c:url value='/javascript/projects.js' />" ></script>
+</body>
 </html>

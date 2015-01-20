@@ -42,6 +42,14 @@ public interface ProjectDao {
     List<Project> findProjects();
 
     /**
+     * Looks up the list of all current, non-complete projects.
+     *
+     * @return list of projects
+     */
+    @Transactional(readOnly = true)
+    List<Project> findAllCurrentProjects();
+
+    /**
      * Look up the project details.
      *
      * @param projectId project id

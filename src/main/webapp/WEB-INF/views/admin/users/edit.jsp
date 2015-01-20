@@ -105,6 +105,6 @@
             </c:choose>
         </ol>
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-        <script type="text/javascript" src="<c:url value='/javascript/users.js' />" ></script>
+        <script type="text/javascript" src="<c:url value='/javascript/admin.js' />" ></script>
     </body>
 </html>

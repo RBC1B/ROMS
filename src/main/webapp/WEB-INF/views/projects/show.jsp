@@ -21,7 +21,7 @@
                 </li>
                 <li role="presentation">
                     <a href="#invitation" aria-controls="invitation" role="tab"
-                       data-toggle="tab">Invitation & Summary</a>
+                       data-toggle="tab">Invitation &amp; Summary</a>
                 </li>
                 <li role="presentation">
                     <a href="#attendance" aria-controls="attendance" role="tab"
@@ -50,7 +50,7 @@
                 </div>
             </div>
         </div>
-        <div id="project-permissions" attendance="${application.nonDepartmentLevelAccess}"/>
+        <div id="project-permissions" attendance="${application.nonDepartmentLevelAccess}" ></div>
         <div class="clearfix"></div>
         <br />
         <ol class="breadcrumb">
@@ -58,7 +58,7 @@
             <li><a href="<c:url value="/projects" />">Projects</a></li>
             <li>#${project.projectId}: <c:out value="${project.name}" /></li>
         </ol>
-        <div id="project-id" project-id="${project.projectId}" />
+        <div id="project-id" project-id="${project.projectId}" ></div>
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         <script type="text/javascript" src="<c:url value='/javascript/projects.js' />" ></script>
     </body>

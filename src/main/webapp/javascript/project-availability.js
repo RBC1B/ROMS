@@ -185,3 +185,4 @@ $(document).ready(function() {
         return (myDate.getDay() === 0);
     }
 });
+

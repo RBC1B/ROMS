@@ -40,6 +40,7 @@ public class HibernateProjectAvailabilityDao implements ProjectAvailabilityDao {
     @Autowired
     private SessionFactory sessionFactory;
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<ProjectAvailability> findUnnotifiedVolunteers() {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(ProjectAvailability.class);
@@ -52,6 +53,7 @@ public class HibernateProjectAvailabilityDao implements ProjectAvailabilityDao {
         this.sessionFactory.getCurrentSession().merge(projectAvailability);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<ProjectAvailability> findUnconfirmedVolunteers() {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(ProjectAvailability.class);
@@ -68,9 +70,11 @@ public class HibernateProjectAvailabilityDao implements ProjectAvailabilityDao {
     }
 
     @Override
-    public ProjectAvailability findVolunteerAvailabilityByWorkSession(Integer personId, ProjectDepartmentSession workSession) {
+    public ProjectAvailability findVolunteerAvailabilityByWorkSession(Integer personId,
+            ProjectDepartmentSession workSession) {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(ProjectAvailability.class);
-        criteria.add(Restrictions.eq("projectDepartmentSession.projectDepartmentSessionId", workSession.getProjectDepartmentSessionId()));
+        criteria.add(Restrictions.eq("projectDepartmentSession.projectDepartmentSessionId",
+                workSession.getProjectDepartmentSessionId()));
         criteria.add(Restrictions.eq("person.personId", personId));
         return (ProjectAvailability) criteria.uniqueResult();
     }
@@ -93,6 +97,7 @@ public class HibernateProjectAvailabilityDao implements ProjectAvailabilityDao {
         this.sessionFactory.getCurrentSession().save(projectAvailability);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<ProjectAvailability> findForDepartmentSession(Integer projectDepartmentSessionId) {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(ProjectAvailability.class);

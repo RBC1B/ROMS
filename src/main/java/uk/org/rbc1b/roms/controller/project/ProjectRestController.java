@@ -229,7 +229,7 @@ public class ProjectRestController {
      * list.
      *
      * @param projectId the project Id
-     * @param projectDate the date - a string
+     * @param projectDate the date - a string, if ALL, then gets all dates
      * @return response entity JSON
      * @throws ParseException if cannot convert to a valid date
      */
@@ -237,11 +237,16 @@ public class ProjectRestController {
     @PreAuthorize("hasPermission('PROJECT', 'READ')")
     public ResponseEntity<Object> getGateListByDate(@PathVariable Integer projectId, @PathVariable String projectDate)
             throws ParseException {
-        FastDateFormat format = FastDateFormat.getInstance("dd-MM-yyyy");
-        java.util.Date dateParser = format.parse(projectDate);
-        java.sql.Date sqlDate = new java.sql.Date(dateParser.getTime());
+        List<ProjectAttendance> attendances;
+        if (projectDate.equalsIgnoreCase("ALL")) {
+            attendances = projectAttendanceDao.findConfirmedVolunteersForProject(projectId);
+        } else {
+            FastDateFormat format = FastDateFormat.getInstance("dd-MM-yyyy");
+            java.util.Date dateParser = format.parse(projectDate);
+            java.sql.Date sqlDate = new java.sql.Date(dateParser.getTime());
 
-        List<ProjectAttendance> attendances = projectAttendanceDao.findConfirmedVolunteersForProjectByDate(projectId, sqlDate);
+            attendances = projectAttendanceDao.findConfirmedVolunteersForProjectByDate(projectId, sqlDate);
+        }
         List<ProjectGateListModel> models = projectGateListModelFactory.generateModels(attendances);
         return new ResponseEntity<Object>(models, HttpStatus.OK);
     }

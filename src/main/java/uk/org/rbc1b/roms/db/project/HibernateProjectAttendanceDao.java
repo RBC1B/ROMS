@@ -52,27 +52,37 @@ public class HibernateProjectAttendanceDao implements ProjectAttendanceDao {
         this.sessionFactory.getCurrentSession().merge(projectAttendance);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<ProjectAttendance> getConfirmedDates(ProjectAvailability projectAvailability) {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(ProjectAttendance.class);
-        criteria.add(Restrictions.eq("projectAvailability.projectAvailabilityId", projectAvailability.getProjectAvailabilityId()));
+        criteria.add(Restrictions.eq("projectAvailability.projectAvailabilityId",
+                projectAvailability.getProjectAvailabilityId()));
         criteria.add(Restrictions.eq("required", Boolean.TRUE));
         return criteria.list();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<ProjectAttendance> getDatesForVolunteer(ProjectAvailability projectAvailability) {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(ProjectAttendance.class);
-        criteria.add(Restrictions.eq("projectAvailability.projectAvailabilityId", projectAvailability.getProjectAvailabilityId()));
+        criteria.add(Restrictions.eq("projectAvailability.projectAvailabilityId",
+                projectAvailability.getProjectAvailabilityId()));
         return criteria.list();
     }
 
     @Override
     public ProjectAttendance getAvailableDate(ProjectAvailability projectAvailability, Date date) {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(ProjectAttendance.class);
-        criteria.add(Restrictions.eq("projectAvailability.projectAvailabilityId", projectAvailability.getProjectAvailabilityId()));
+        criteria.add(Restrictions.eq("projectAvailability.projectAvailabilityId",
+                projectAvailability.getProjectAvailabilityId()));
         criteria.add(Restrictions.eq("availableDate", date));
         return (ProjectAttendance) criteria.uniqueResult();
+    }
+
+    @Override
+    public List<ProjectAttendance> findConfirmedVolunteersForProject(Integer projectId) {
+        return findAllVolunteersForProject(projectId, Boolean.TRUE);
     }
 
     @Override
@@ -82,7 +92,8 @@ public class HibernateProjectAttendanceDao implements ProjectAttendanceDao {
 
         List<ProjectDepartmentSession> workSessions = projectDepartmentSessionDao.findAllProjectSessions(projectId);
         for (ProjectDepartmentSession workSession : workSessions) {
-            List<ProjectAvailability> sessionAvailabilities = projectAvailabilityDao.findForDepartmentSession(workSession.getProjectDepartmentSessionId());
+            List<ProjectAvailability> sessionAvailabilities = projectAvailabilityDao
+                    .findForDepartmentSession(workSession.getProjectDepartmentSessionId());
             if (!sessionAvailabilities.isEmpty()) {
                 projectAvailabilities.addAll(sessionAvailabilities);
             }
@@ -100,13 +111,19 @@ public class HibernateProjectAttendanceDao implements ProjectAttendanceDao {
     }
 
     @Override
+    public List<ProjectAttendance> findAllAvailableVolunteersForProject(Integer projectId) {
+        return findAllVolunteersForProject(projectId, Boolean.FALSE);
+    }
+
+    @Override
     public List<ProjectAttendance> findAllAvailableVolunteersForProjectByDate(Integer projectId, Date date) {
         List<ProjectAttendance> attendanceList = new ArrayList<>();
         List<ProjectAvailability> projectAvailabilities = new ArrayList<>();
 
         List<ProjectDepartmentSession> workSessions = projectDepartmentSessionDao.findAllProjectSessions(projectId);
         for (ProjectDepartmentSession workSession : workSessions) {
-            List<ProjectAvailability> sessionAvailabilities = projectAvailabilityDao.findForDepartmentSession(workSession.getProjectDepartmentSessionId());
+            List<ProjectAvailability> sessionAvailabilities = projectAvailabilityDao
+                    .findForDepartmentSession(workSession.getProjectDepartmentSessionId());
             if (!sessionAvailabilities.isEmpty()) {
                 projectAvailabilities.addAll(sessionAvailabilities);
             }
@@ -135,12 +152,40 @@ public class HibernateProjectAttendanceDao implements ProjectAttendanceDao {
 
     @Override
     public ProjectAttendance find(Integer projectAttendanceId) {
-        return (ProjectAttendance) this.sessionFactory.getCurrentSession()
-                .get(ProjectAttendance.class, projectAttendanceId);
+        return (ProjectAttendance) this.sessionFactory.getCurrentSession().get(ProjectAttendance.class,
+                projectAttendanceId);
     }
 
     @Override
     public void update(ProjectAttendance projectAttendance) {
         this.sessionFactory.getCurrentSession().merge(projectAttendance);
+    }
+
+    @SuppressWarnings("unchecked")
+    private List<ProjectAttendance> findAllVolunteersForProject(Integer projectId, Boolean confirmed) {
+        List<ProjectAttendance> attendanceList = new ArrayList<>();
+
+        List<ProjectAvailability> projectAvailabilities = new ArrayList<>();
+        List<ProjectDepartmentSession> workSessions = projectDepartmentSessionDao.findAllProjectSessions(projectId);
+        for (ProjectDepartmentSession workSession : workSessions) {
+            List<ProjectAvailability> sessionAvailabilities = projectAvailabilityDao
+                    .findForDepartmentSession(workSession.getProjectDepartmentSessionId());
+            if (!sessionAvailabilities.isEmpty()) {
+                projectAvailabilities.addAll(sessionAvailabilities);
+            }
+        }
+
+        for (ProjectAvailability availability : projectAvailabilities) {
+            Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(ProjectAttendance.class);
+            criteria.add(Restrictions.eq("projectAvailability.projectAvailabilityId",
+                    availability.getProjectAvailabilityId()));
+            criteria.add(Restrictions.eq("required", confirmed));
+            List<ProjectAttendance> attendances = criteria.list();
+            if (attendances != null && !attendances.isEmpty()) {
+                attendanceList.addAll(attendances);
+            }
+        }
+
+        return attendanceList;
     }
 }

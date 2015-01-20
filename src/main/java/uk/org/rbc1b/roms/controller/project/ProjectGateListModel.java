@@ -28,6 +28,7 @@ package uk.org.rbc1b.roms.controller.project;
  */
 public class ProjectGateListModel {
 
+    private String date;
     private Integer personId;
     private String forename;
     private String surname;
@@ -36,6 +37,22 @@ public class ProjectGateListModel {
     private String telephone;
     private String mobile;
     private String department;
+    private String accommodation;
+    private String transport;
+
+    /**
+     * @return the date
+     */
+    public String getDate() {
+        return date;
+    }
+
+    /**
+     * @param date the date to set
+     */
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     /**
      * @return the personId
@@ -147,5 +164,33 @@ public class ProjectGateListModel {
      */
     public void setDepartment(String department) {
         this.department = department;
+    }
+
+    /**
+     * @return the accommodation
+     */
+    public String getAccommodation() {
+        return accommodation;
+    }
+
+    /**
+     * @param accommodation the accommodation to set
+     */
+    public void setAccommodation(String accommodation) {
+        this.accommodation = accommodation;
+    }
+
+    /**
+     * @return the transport
+     */
+    public String getTransport() {
+        return transport;
+    }
+
+    /**
+     * @param transport the transport to set
+     */
+    public void setTransport(String transport) {
+        this.transport = transport;
     }
 }

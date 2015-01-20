@@ -116,7 +116,7 @@ public class VolunteerUpdateEmailGenerator {
     private String generateSecureUri(Volunteer volunteer) {
         List<String> path = new ArrayList<>();
         path.add(edificeProperty.getProperty(SERVER_URL));
-        path.add("volunteer-contact");
+        path.add("volunteer-update");
         path.add(Integer.toString(volunteer.getPersonId()));
         String dateTime = getCurrentDateTime();
         path.add(dateTime);
