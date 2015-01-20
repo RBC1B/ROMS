@@ -168,6 +168,7 @@ create table ProjectAttendance(
     UpdatedBy       bigint(20)  not null,
     primary key(ProjectAttendanceId),
     unique (ProjectAvailabilityId, AvailableDate),
+    foreign key (ProjectAvailabilityId) references ProjectAvailability(ProjectAvailabilityId) on delete cascade,
     foreign key (UpdatedBy) references Person(PersonId)
 )engine=InnoDB;
 

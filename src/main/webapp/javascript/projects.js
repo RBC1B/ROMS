@@ -296,7 +296,7 @@ $(document).ready(function() {
                             var projectworksessionId = cell.innerHTML;
                             cell = row.getElementsByTagName("td")[1];
                             var personId = cell.innerHTML;
-                            cell = row.getElementsByTagName("td")[4];
+                            cell = row.getElementsByTagName("td")[5];
                             processAvailabilityRequest(personId, projectworksessionId, cell.innerHTML);
                         };
                     };
@@ -306,14 +306,15 @@ $(document).ready(function() {
 
     function processAvailabilityRequest(personId, projectWorkSessionId, cell) {
         if (attendance !== null && attendance !== "READ") {
-            var newInvitedValue;
-            if (cell.indexOf("Invited") > -1)
-                newInvitedValue = false;
-            else
-                newInvitedValue = true;
-            sendAvailabilityRequest(personId, projectWorkSessionId, newInvitedValue)
+            var newInvitee;
+            if (cell.indexOf("Invited") > -1) {
+                newInvitee = false;
+            } else {
+                newInvitee = true;
+            }
+            sendAvailabilityRequest(personId, projectWorkSessionId, newInvitee)
                     .done(function() {
-                updateAvailabilityCell(personId, projectWorkSessionId, newInvitedValue);
+                updateAvailabilityCell(personId, projectWorkSessionId, newInvitee);
             })
                     .fail(function() {
                 alert("Could not update availability request for volunteer");
@@ -331,9 +332,9 @@ $(document).ready(function() {
         }
     }
 
-    function sendAvailabilityRequest(personId, departmentSessionId, invited) {
+    function sendAvailabilityRequest(personId, departmentSessionId, newInvitee) {
         var methodType = "DELETE";
-        if (invited)
+        if (newInvitee)
             methodType = "POST";
         return $.ajax({
             url: roms.common.relativePath + "/service/projects/sessions/" + departmentSessionId
@@ -527,7 +528,7 @@ $(document).ready(function() {
                     } else {
                         status = "Confirmed";
                     }
-                    var htmldata = "<div id='" + projectAttendanceId + "'projectAttendanceId='" + projectAttendanceId + "' />" + status;
+                    var htmldata = "<div id='project-attendance-id' data-project-attendance-id='" + projectAttendanceId + "' />" + status;
                     row$.append($('<td/>').html(htmldata));
                 }
                 $("#volunteer-confirmation").append(row$);
@@ -567,7 +568,7 @@ $(document).ready(function() {
         {
             var clickedCell = html.getElementsByTagName("div")[0];
             if (clickedCell !== null) {
-                var attendanceId = clickedCell.getAttribute("projectAttendanceId");
+                var attendanceId = clickedCell.getAttribute("data-project-attendance-id");
                 if (attendanceId !== null && attendanceId > 0)
                 {
                     sendConfirmationRequest(attendanceId, html)
@@ -582,16 +583,18 @@ $(document).ready(function() {
         }
     }
     function updateConfirmationCell(html) {
-        var attendanceId = html.getElementsByTagName("div")[0].getAttribute("projectAttendanceId");
-        var newHtml = "<div id='" + attendanceId + "'projectAttendanceId='" + attendanceId + "' />";
-        var cell = document.getElementById(attendanceId).parentNode;
+        var attendanceId = html.getElementsByTagName("div")[0].getAttribute("data-project-attendance-id");
+        var newHtml = "<div id='project-attendance-id' data-project-attendance-id='" + attendanceId + "' />";
+        //var cell = document.getElementById(attendanceId).parentNode;
         if (html.innerHTML.indexOf("Available") > -1)
         {
-            cell.innerHTML = newHtml + "Confirmed";
+            //cell.innerHTML = newHtml + "Confirmed";
+            html.innerHTML = newHtml + "Confirmed";
         }
         else if (html.innerHTML.indexOf("Confirmed") > -1)
         {
-            cell.innerHTML = newHtml + "Available";
+            //cell.innerHTML = newHtml + "Available";
+            html.innerHTML = newHtml + "Available";
         } else {
             alert("Could not understand...");
         }
@@ -664,7 +667,7 @@ $(document).ready(function() {
         event.preventDefault();
         removeGateListTable();
         addGateListTable();
-        var projectId = document.getElementById("project-id").getAttribute("project-id");
+        var projectId = $("#project-id").data("project-id");
         var selectedDate = document.getElementById("projectDate").value;
         if (selectedDate === "") {
             getGateListData(projectId, "ALL");
@@ -675,7 +678,7 @@ $(document).ready(function() {
     });
 
     $("#download-gate-list").on("click", function(event) {
-        var projectId = document.getElementById("project-id").getAttribute("project-id");
+        var projectId = $("#project-id").data("project-id");
         var selectedDate = document.getElementById("projectDate").value;
         if (selectedDate === "")
             selectedDate = "ALL";
@@ -684,9 +687,9 @@ $(document).ready(function() {
         link.href = url;
         link.click();
     });
-    
-    $("#download-summary-list").on("click", function(event){
-        var projectId = document.getElementById("project-id").getAttribute("project-id");
+
+    $("#download-summary-list").on("click", function(event) {
+        var projectId = $("#project-id").data("project-id");
         var url = roms.common.relativePath + "/projects/summary-list/" + projectId;
         var link = document.getElementById("download-summary-list");
         link.href = url;
