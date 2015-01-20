@@ -25,8 +25,10 @@ ${person.workPhone}
 A work phone has not been provided.
 </#if>
 
-If any of the details above are incorrect, then please use this link to make any necessary updates:
-<#-- httpsUrl -->
+If any of the details above are incorrect, then please use the Edifice link below to make any updates.
+When you click on the link, please click on the button "Update contact details". Edifice will then
+prompt you for your RBC ID number and your date of birth. Your RBC ID number is: ${person.personId}.
+Edifice URL: ${edificeHomeUrl}
 
 However, if the above details are correct, then please confirm this by using the link below:
 
@@ -77,7 +79,3 @@ We currently do not have any information about your skills.
 
 Kind Regards
 Volunteer Service Department
-
-NOTE TO COORIDINATOR
-
-As many change their email addresses frequently please check with the volunteer that they have received this email. If the volunteer is no longer in your congregation please notify us using the mail address given above.

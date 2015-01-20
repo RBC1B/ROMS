@@ -107,6 +107,7 @@ public class VolunteerContactDetailsEmailGenerator {
         List<VolunteerSkill> skills = volunteerDao.findSkills(volunteer.getPersonId());
         model.put("skills", volunteerModelFactory.generateVolunteerSkillsModel(skills));
 
+        model.put("edificeHomeUrl", SERVER_URL);
         model.put("confirmationUrl", generateConfirmationUrl(volunteer.getPersonId()));
 
         Email email = new Email();

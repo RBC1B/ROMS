@@ -331,7 +331,8 @@ public class VolunteerContactDetailsEmailGeneratorTest {
     }
 
     /**
-     * Should show the confirmation link.
+     * Should show the confirmation link with the hash digest based on the person
+     * id and the date time.
      *
      * @throws IOException if can't find template
      * @throws TemplateException if Freemarker's given up
