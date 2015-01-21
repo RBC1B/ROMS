@@ -37,10 +37,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.apache.commons.lang3.time.FastDateFormat;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -420,66 +416,33 @@ public class ProjectsController {
     }
 
     /**
-     * Creates the file for the project coordinator.
+     * Creates the summary file for requirements, etc.
      *
      * @param projectId the project id
      * @param response the http servlet response
      * @throws IOException when creating file
      */
-    @RequestMapping(value = "coordinator-list/{projectId}")
+    @RequestMapping(value = "summary-list/{projectId}")
     @PreAuthorize("hasPermission('PROJECT','READ')")
     public void downloadCoordList(@PathVariable Integer projectId, HttpServletResponse response)
             throws IOException {
-        String fileName = "coordinator-list-" + projectId + ".xlsx";
-        XSSFWorkbook workbook = createWorkbook(projectId);
+        String fileName = "summary-list-" + projectId + ".csv";
 
-        response.setContentType(MediaType.OOXML_SHEET.toString());
+        response.setContentType(MediaType.CSV_UTF_8.toString());
         response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+
         OutputStream output = response.getOutputStream();
+        CSVWriter writer = new CSVWriter(new OutputStreamWriter(output), '\u0009');
 
-        output.flush();
-        workbook.write(output);
-        workbook.close();
-        output.flush();
+        List<String[]> requirementList = getAttendeeRequirements(projectId);
+
+        writer.writeAll(requirementList);
+        writer.close();
+
     }
 
-    private XSSFWorkbook createWorkbook(Integer projectId) {
+    private List<String[]> getAttendeeRequirements(Integer projectId) {
         List<ProjectAttendance> attendances = projectAttendanceDao.findConfirmedVolunteersForProject(projectId);
-        List<ProjectAttendance> availabilities = projectAttendanceDao.findAllAvailableVolunteersForProject(projectId);
-        XSSFWorkbook workbook = new XSSFWorkbook();
-        Sheet attendance = workbook.createSheet("Attendace");
-        Sheet available = workbook.createSheet("Available");
-        Row row;
-
-        List<String[]> attendanceList = convertAttendanceToArray(attendances);
-
-        int rowId = 0;
-
-        for (String[] rowData : attendanceList) {
-            row = attendance.createRow(rowId++);
-            int cellId = 0;
-            for (String cellValue : rowData) {
-                Cell cell = row.createCell(cellId++);
-                cell.setCellValue(cellValue);
-            }
-        }
-
-        List<String[]> availableList = convertAttendanceToArray(availabilities);
-
-        rowId = 0;
-
-        for (String[] rowData : availableList) {
-            row = available.createRow(rowId++);
-            int cellId = 0;
-            for (String cellValue : rowData) {
-                Cell cell = row.createCell(cellId++);
-                cell.setCellValue(cellValue);
-            }
-        }
-        return workbook;
-    }
-
-    private List<String[]> convertAttendanceToArray(List<ProjectAttendance> attendances) {
         List<String[]> list = new ArrayList<>();
         String[] headers = new String[]{
             "RBC ID", "Surname", "Forename", "Congregation", "Email",
@@ -541,7 +504,7 @@ public class ProjectsController {
     }
 
     private List<String[]> convertModelArray(List<ProjectGateListModel> models) {
-        List<String[]> gateList = new ArrayList<String[]>();
+        List<String[]> gateList = new ArrayList<>();
         for (ProjectGateListModel model : models) {
             String[] rowData = new String[GATELISTCOLUMNSIZE];
             rowData[0] = model.getDate();

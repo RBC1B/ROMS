@@ -37,7 +37,7 @@ $(document).ready(function() {
         events: [
             {
                 start: startDate,
-                end: endDate,
+                end: calEndDate,
                 rendering: 'inverse-background'
             }
         ],

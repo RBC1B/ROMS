@@ -58,7 +58,7 @@
             <li><a href="<c:url value="/projects" />">Projects</a></li>
             <li>#${project.projectId}: <c:out value="${project.name}" /></li>
         </ol>
-        <div id="project-id" project-id="${project.projectId}" ></div>
+        <div id="project-id" data-project-id="${project.projectId}" ></div>
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
         <script type="text/javascript" src="<c:url value='/javascript/projects.js' />" ></script>
     </body>
