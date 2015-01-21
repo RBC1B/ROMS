@@ -48,8 +48,8 @@ import freemarker.template.TemplateException;
 @Component
 public class VolunteerUpdateEmailGenerator {
 
-    private static final String UPDATE_REQUEST_TEMPLATE = "volunteer-contact-update-request.ftl";
-    private static final String UPDATE_CONFIRMATION_TEMPLATE = "volunteer-contact-update-confirmation.ftl";
+    private static final String UPDATE_REQUEST_TEMPLATE = "volunteer-update-request.ftl";
+    private static final String UPDATE_CONFIRMATION_TEMPLATE = "volunteer-update-confirmation.ftl";
     private static final String SUBJECT = "RBC (London & Home Counties) Volunteer Information Update";
     private static final String SERVER_URL = "edifice.url";
     private static final String DATETIME_FORMAT = "yyyyMMddHHmm";

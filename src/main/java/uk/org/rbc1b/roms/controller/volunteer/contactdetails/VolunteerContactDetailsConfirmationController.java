@@ -25,12 +25,14 @@ package uk.org.rbc1b.roms.controller.volunteer.contactdetails;
 
 import java.util.EnumSet;
 import java.util.Set;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import uk.org.rbc1b.roms.controller.ResourceNotFoundException;
+import uk.org.rbc1b.roms.controller.common.DataConverterUtil;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao.VolunteerData;
@@ -68,6 +70,10 @@ public class VolunteerContactDetailsConfirmationController {
             throw new ResourceNotFoundException("No volunteer with id [" + volunteerId + "]");
         }
 
+        final DateTime dt = new DateTime();
+        volunteer.setContactDetailsLastConfirmed(DataConverterUtil.toSqlDate(dt));
+
+        volunteerDao.updateVolunteer(volunteer);
         return null;
     }
 }
