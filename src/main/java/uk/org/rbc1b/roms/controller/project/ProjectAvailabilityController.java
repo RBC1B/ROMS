@@ -290,9 +290,7 @@ public class ProjectAvailabilityController {
         model.setToDate(DATE_FORMATTER.format(session.getToDate()));
         model.setFromDate(DATE_FORMATTER.format(session.getFromDate()));
 
-        // We add extra date to include end date for FullCalendar as the end date
-        // is exclusive.
-        java.sql.Date endDate = new java.sql.Date(session.getToDate().getTime() + DAY);
+        java.sql.Date endDate = new java.sql.Date(session.getToDate().getTime());
         model.setEndDate(DATE_FORMATTER.format(endDate));
 
         Person person = personDao.findPerson(availability.getPerson().getPersonId());

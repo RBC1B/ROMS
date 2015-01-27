@@ -283,7 +283,7 @@ public class ProjectRestController {
         DateTime tmpdate;
         tmpdate = startDate;
         FastDateFormat formatter = FastDateFormat.getInstance("dd-MM-yyyy");
-        while (tmpdate.isBefore(endDate) || tmpdate.equals(endDate)) {
+        while (!tmpdate.isAfter(endDate)) {
             range.add(formatter.format(tmpdate.toDate()));
             tmpdate = tmpdate.plusDays(1);
         }
