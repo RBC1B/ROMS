@@ -72,7 +72,7 @@ $(document).ready(function() {
         }
         var dateKey = "[data-date='" + dateClicked.format() + "']";
         var colour = $(dateKey).css('background-color');
-        if (colour === "rgba(0, 0, 0, 0)" || colour == "rgb(255, 255, 255)") {
+        if (colour === "rgba(0, 0, 0, 0)" || colour == "rgb(255, 255, 255)" || colour === "transparent") {
             setAvailabilityDate(dateClicked)
                     .done(function() {
                 $(thisObject).css('background-color', 'rgb(255, 255, 0)');
