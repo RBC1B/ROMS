@@ -278,8 +278,8 @@ $(document).ready(function() {
                 }
                 $('#volunteer-availability').append(row$);
             }
-            roms.common.datatables($('#volunteer-availability'), {"iDisplayLength": 10});
             addAvailabilityTableRowEventHandler();
+            roms.common.datatables($('#volunteer-availability'), {"iDisplayLength": 10});
         }
     }
 
@@ -536,8 +536,8 @@ $(document).ready(function() {
             var tableData = document.getElementById("volunteer-confirmation");
             var wrapper = document.createElement("div");
             wrapper.appendChild(tableData.cloneNode(true));
-            roms.common.datatables($("#volunteer-confirmation"), {"iDisplayLength": 10});
             addConfirmationTableCellEventHandler();
+            roms.common.datatables($("#volunteer-confirmation"), {"iDisplayLength": 10});
         }
     }
 
