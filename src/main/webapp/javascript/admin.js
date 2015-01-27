@@ -23,8 +23,8 @@
  */
 
 $(document).ready(function() {
-	roms.common.persistentTabs();
-	
+    roms.common.persistentTabs();
+
     // list
     roms.common.datatables(
             $('#user-list'),
@@ -41,7 +41,7 @@ $(document).ready(function() {
 
     // edit
     $('#userForm').validate({
-        rules:{
+        rules: {
             userName: {
                 required: true,
                 validUserName: true,
@@ -65,16 +65,16 @@ $(document).ready(function() {
         },
         errorPlacement: roms.common.validatorErrorPlacement
     });
-    
-    jQuery.validator.addMethod("validUserName", function(value, element) { 
-        var re=/^[0-9A-Za-z]+$/;
-        return value.search(re) != -1; 
-      }, "User name can only contain letters and numbers");
-    
+
+    jQuery.validator.addMethod("validUserName", function(value, element) {
+        var re = /^[0-9A-Za-z]+$/;
+        return value.search(re) != -1;
+    }, "User name can only contain letters and numbers");
+
     function uniqueUserNameValidation($nameInput, $idInput) {
         return {
             // check for an exact match. Populate the user id
-            url: roms.common.relativePath + "/users/search",
+            url: roms.common.relativePath + "/admin/users/search",
             contentType: "application/json",
             dataType: "json",
             data: {
@@ -88,7 +88,7 @@ $(document).ready(function() {
                 if (data && data.length > 0 && data[0].userName.toLowerCase() == $nameInput.val().toLowerCase() &&
                         $idInput.val() != data[0].personId) {
                     return false;
-                } 
+                }
                 // no match
                 return true;
             }
@@ -104,15 +104,15 @@ $(document).ready(function() {
 
         $('#user-password-change-modal').modal('show');
     });
-    
+
     $("#user-password-change-modal-form").validate({
         rules: {
-        	password: {
-        		required: true,
+            password: {
+                required: true,
                 minlength: 7
             },
             passwordConfirm: {
-            	required: true,
+                required: true,
                 equalTo: "#password"
             }
         },
@@ -126,7 +126,7 @@ $(document).ready(function() {
                 },
                 success: function() {
                     $('#user-password-change-modal').modal('hide');
-                    
+
                     // make sure we hide all existing alerts before showing the password update notification
                     $("#update-alerts .alert").hide();
                     $("#password-update-alert").show();
@@ -136,5 +136,5 @@ $(document).ready(function() {
         },
         errorPlacement: roms.common.validatorErrorPlacement
     });
-    
+
 });
