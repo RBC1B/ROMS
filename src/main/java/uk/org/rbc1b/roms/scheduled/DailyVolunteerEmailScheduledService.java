@@ -33,6 +33,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import uk.org.rbc1b.roms.controller.common.DataConverterUtil;
 import uk.org.rbc1b.roms.controller.volunteer.contactdetails.VolunteerContactDetailsEmailGenerator;
@@ -43,6 +48,8 @@ import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerSearchCriteria;
 
 /**
+ * Daily Service which sends out emails to a set number of volunteers regarding
+ * their personal details. We intend to send an email once every six months.
  *
  * @author rahulsingh
  */
@@ -58,14 +65,22 @@ public class DailyVolunteerEmailScheduledService {
     private VolunteerContactDetailsEmailGenerator volunteerContactDetailsEmailGenerator;
     @Autowired
     private EmailDao emailDao;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     /**
      * Scheduled execution method for formatting the email and saving
      * into the database which will then be sent using {@code EmailScheduledService}.
      * This will be executed every day at noon.
      */
+    //@Scheduled(cron = "0 0/5 * * * ?") - for testing
     @Scheduled(cron = "0 0 12 * * ?")
     public void queueVolunteerInformationEmails() {
+        UserDetails system = userDetailsService.loadUserByUsername("System");
+        Authentication authentication = new UsernamePasswordAuthenticationToken(system, system.getUsername(),
+                system.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
         VolunteerSearchCriteria searchCriteria = new VolunteerSearchCriteria();
         searchCriteria.setMaxResults(findMaxVolunteersForEmail());
 
@@ -74,6 +89,7 @@ public class DailyVolunteerEmailScheduledService {
             try {
                 Email email = volunteerContactDetailsEmailGenerator.generateEmailForVolunteers(volunteer);
 
+                LOGGER.info("Volunteer: " + volunteer.getPersonId());
                 if (email != null) {
                     emailDao.save(email);
                 }

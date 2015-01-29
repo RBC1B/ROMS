@@ -24,32 +24,46 @@
 package uk.org.rbc1b.roms.controller.volunteer.contactdetails;
 
 import java.util.EnumSet;
+import java.util.Properties;
 import java.util.Set;
+import javax.annotation.Resource;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import uk.org.rbc1b.roms.controller.ResourceNotFoundException;
 import uk.org.rbc1b.roms.controller.common.DataConverterUtil;
+import uk.org.rbc1b.roms.controller.common.HashAndDateTimeValidator;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao.VolunteerData;
 
 /**
- *
+ * Controller for volunteer contact details confirmation.
  * @author rahulsingh
  */
 @Controller
 @RequestMapping("/volunteer-contact-details-confirmation")
 public class VolunteerContactDetailsConfirmationController {
 
+    private static final String SECURITY_SALT = "security.salt";
+    private static final String DATETIMEFORMAT = "yyyyMMddHHmm";
+    private static final long MAXTIME = 86400000;
     private static final Set<VolunteerData> VOLUNTEER_DATA = EnumSet.of(VolunteerData.SPOUSE,
             VolunteerData.EMERGENCY_CONTACT, VolunteerData.TRADES, VolunteerData.INTERVIEWER);
 
     @Autowired
+    private UserDetailsService userDetailsService;
+    @Autowired
     private VolunteerDao volunteerDao;
+    @Resource(name = "edificeProperty")
+    private Properties edificeProperty;
 
     /**
      * Show the volunteer contact details confirmed page when a volunteer
@@ -67,13 +81,28 @@ public class VolunteerContactDetailsConfirmationController {
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, VOLUNTEER_DATA);
 
         if (volunteer == null) {
-            throw new ResourceNotFoundException("No volunteer with id [" + volunteerId + "]");
+            return "volunteers/contact-details-confirmation/error";
         }
 
-        final DateTime dt = new DateTime();
-        volunteer.setContactDetailsLastConfirmed(DataConverterUtil.toSqlDate(dt));
+        HashAndDateTimeValidator hashDateTimeValidator = new HashAndDateTimeValidator();
+        hashDateTimeValidator.setDateTimeFormat(DATETIMEFORMAT);
+        hashDateTimeValidator.setMaxTime(MAXTIME);
+        hashDateTimeValidator.setSalt(edificeProperty.getProperty(SECURITY_SALT));
 
-        volunteerDao.updateVolunteer(volunteer);
-        return null;
+        String value = dateTime + ":" + volunteerId;
+        if (hashDateTimeValidator.checkWithinTime(dateTime) && hashDateTimeValidator.checkHash(value, hash)) {
+            final DateTime dt = new DateTime();
+            volunteer.setContactDetailsLastConfirmed(DataConverterUtil.toSqlDate(dt));
+
+            UserDetails system = userDetailsService.loadUserByUsername("System");
+            Authentication authentication = new UsernamePasswordAuthenticationToken(system, system.getUsername(),
+                system.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            volunteerDao.updateVolunteer(volunteer);
+            return "volunteers/contact-details-confirmation/view";
+        }
+
+        return "volunteers/contact-details-confirmation/error";
     }
 }

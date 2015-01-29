@@ -208,6 +208,8 @@ public class VolunteerModelFactory {
         model.setEditExperienceUri(generateUri(volunteer.getPersonId()) + "/experience");
         model.setEditQualificationUri(generateUri(volunteer.getPersonId()) + "/qualifications");
 
+        model.setContactDetailsLastConfirmed(volunteer.getContactDetailsLastConfirmed());
+
         return model;
     }
 

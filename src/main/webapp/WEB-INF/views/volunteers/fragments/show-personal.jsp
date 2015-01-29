@@ -73,6 +73,15 @@ The contents of the personal tab.
     (<a href="<c:url value='${volunteer.spouse.uri}' />" ><c:out value="${volunteer.spouse.displayName}" /></a>)
 </c:if>
 </dd>
+<dt>Confirmation of Details:</dt>
+<dd>
+<c:choose>
+    <c:when test="${!empty volunteer.contactDetailsLastConfirmed}">
+        <fmt:formatDate value="${volunteer.contactDetailsLastConfirmed}" pattern="dd MMM yyyy" />
+    </c:when>
+    <c:otherwise><i>Contact details not confirmed by ${volunteer.forename} ${volunteer.surname}</i></c:otherwise>
+</c:choose>
+</dd>
 </dl>
 <sec:authorize access="hasPermission('VOLUNTEER', 'EDIT')">
     <hr />

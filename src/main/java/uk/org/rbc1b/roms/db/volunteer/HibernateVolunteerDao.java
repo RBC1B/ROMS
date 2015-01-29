@@ -23,6 +23,7 @@
  */
 package uk.org.rbc1b.roms.db.volunteer;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import org.apache.commons.collections.CollectionUtils;
@@ -36,10 +37,11 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
-import org.joda.time.LocalDate;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Repository;
+import uk.org.rbc1b.roms.controller.common.DataConverterUtil;
 import uk.org.rbc1b.roms.controller.common.SortDirection;
 import uk.org.rbc1b.roms.db.volunteer.department.Assignment;
 import uk.org.rbc1b.roms.db.volunteer.interview.VolunteerInterviewSession;
@@ -377,22 +379,21 @@ public class HibernateVolunteerDao implements VolunteerDao {
         Session session = this.sessionFactory.getCurrentSession();
         Criteria criteria = createVolunteerSearchCriteria(searchCriteria, session);
 
-        LocalDate todayDate = new LocalDate();
-        LocalDate sixMonthsBehind = todayDate.minusMonths(6);
+        DateTime todayLocalDate = new DateTime();
+        DateTime sixMonthsBehindLocalDate = todayLocalDate.minusMonths(6);
 
-        criteria.add(Restrictions.disjunction()
-                .add(
-                        Restrictions.or(
-                                Restrictions.isNull("updateContactDetailsEmailLastSent"),
-                                Restrictions.not(Restrictions.between("updateContactDetailsEmailLastSent", todayDate, sixMonthsBehind))
-                        )
+        Date todayDate = DataConverterUtil.toSqlDate(todayLocalDate);
+        Date sixMonthsBehind = DataConverterUtil.toSqlDate(sixMonthsBehindLocalDate);
+
+        criteria.add(Restrictions.and(
+                Restrictions.or(
+                    Restrictions.isNull("updateContactDetailsEmailLastSent"),
+                    Restrictions.not(Restrictions.between("updateContactDetailsEmailLastSent", sixMonthsBehind, todayDate))
+                ), Restrictions.or(
+                    Restrictions.isNull("contactDetailsLastConfirmed"),
+                    Restrictions.not(Restrictions.between("contactDetailsLastConfirmed", sixMonthsBehind, todayDate))
                 )
-                .add(
-                        Restrictions.or(
-                                Restrictions.isNull("contactDetailsLastConfirmed"),
-                                Restrictions.not(Restrictions.between("contactDetailsLastConfirmed", todayDate, sixMonthsBehind))
-                        )
-                )
+            )
         );
 
         if (searchCriteria.getMaxResults() != null) {

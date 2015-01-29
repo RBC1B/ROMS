@@ -74,6 +74,7 @@ public class VolunteerModel extends PersonModel {
     private String editRbcStatusCodeUri;
     private String editExperienceUri;
     private String editQualificationUri;
+    private java.sql.Date contactDetailsLastConfirmed;
 
     /**
      * Determine if the volunteer is available on a given day of the week.
@@ -402,5 +403,13 @@ public class VolunteerModel extends PersonModel {
      */
     public void setEditQualificationUri(String editQualificationUri) {
         this.editQualificationUri = editQualificationUri;
+    }
+
+    public java.sql.Date getContactDetailsLastConfirmed() {
+        return contactDetailsLastConfirmed;
+    }
+
+    public void setContactDetailsLastConfirmed(java.sql.Date contactDetailsLastConfirmed) {
+        this.contactDetailsLastConfirmed = contactDetailsLastConfirmed;
     }
 }

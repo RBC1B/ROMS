@@ -56,7 +56,9 @@ import uk.org.rbc1b.roms.controller.volunteer.VolunteerQualificationModel;
 import uk.org.rbc1b.roms.controller.volunteer.VolunteerSkillModel;
 import uk.org.rbc1b.roms.db.Address;
 import uk.org.rbc1b.roms.db.Congregation;
+import uk.org.rbc1b.roms.db.CongregationDao;
 import uk.org.rbc1b.roms.db.Person;
+import uk.org.rbc1b.roms.db.PersonDao;
 import uk.org.rbc1b.roms.db.email.Email;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
@@ -88,6 +90,12 @@ public class VolunteerContactDetailsEmailGeneratorTest {
     private static final String MOCK_ADDRESS_COUNTY = "Middlesex";
     private static final String MOCK_ADDRESS_POSTCODE = "NW5 3RE";
 
+    private static final Integer MOCK_EMERGENCY_CONTACT_PERSON_ID = 7;
+    private static final String MOCK_EMERGENCY_CONTACT_FORENAME = "Rahul";
+    private static final String MOCK_EMERGENCY_CONTACT_SURNAME = "Singh";
+    private static final String MOCK_EMERGENCY_CONTACT_TELEPHONE = "0299 988 3444";
+    private static final String MOCK_EMERGENCY_CONTACT_MOBILE = "07777 111 111";
+
     private static final String MOCK_DEPARTMENT_NAME = "Sound";
     private static final String MOCK_ASSIGNMENT_ROLE = "Overseer";
     private static final String MOCK_ASSIGNMENT_TRADE_NUMBER = "1st Trade";
@@ -96,6 +104,7 @@ public class VolunteerContactDetailsEmailGeneratorTest {
 
     private static final String MOCK_SKILL_NAME = "Juggling";
 
+    private static final Integer MOCK_CONGREGATION_ID = 5;
     private static final String MOCK_CONGREGATION_NAME = "London, Hounslow";
 
     private static final String SERVER_URL = "edifice.url";
@@ -109,6 +118,10 @@ public class VolunteerContactDetailsEmailGeneratorTest {
     @Mock
     private VolunteerDao mockVolunteerDao;
     @Mock
+    private CongregationDao mockCongregationDao;
+    @Mock
+    private PersonDao mockPersonDao;
+    @Mock
     private AssignmentModelFactory mockAssignmentModelFactory;
     @Mock
     private VolunteerModelFactory mockVolunteerModelFactory;
@@ -116,6 +129,8 @@ public class VolunteerContactDetailsEmailGeneratorTest {
     private Volunteer mockVolunteerOne;
     @Mock
     private Person mockPerson;
+    @Mock
+    private Person mockEmergencyContact;
     @Mock
     private Address mockAddress;
     @Mock
@@ -165,7 +180,6 @@ public class VolunteerContactDetailsEmailGeneratorTest {
         when(mockVolunteerOne.getGender()).thenReturn(MOCK_VOLUNTEER_GENDER);
         when(mockVolunteerOne.getPersonId()).thenReturn(MOCK_PERSON_ID);
         when(mockVolunteerOne.getPerson()).thenReturn(mockPerson);
-        when(mockVolunteerOne.getEmergencyContact()).thenReturn(mockPerson);
 
         when(mockPerson.getForename()).thenReturn(MOCK_PERSON_FORENAME);
         when(mockPerson.getSurname()).thenReturn(MOCK_PERSON_SURNAME);
@@ -176,11 +190,22 @@ public class VolunteerContactDetailsEmailGeneratorTest {
         when(mockPerson.getAddress()).thenReturn(mockAddress);
         when(mockPerson.getCongregation()).thenReturn(mockCongregation);
 
+        when(mockVolunteerOne.getEmergencyContact()).thenReturn(mockEmergencyContact);
+        when(mockEmergencyContact.getPersonId()).thenReturn(MOCK_EMERGENCY_CONTACT_PERSON_ID);
+        when(mockPersonDao.findPerson(MOCK_EMERGENCY_CONTACT_PERSON_ID)).thenReturn(mockEmergencyContact);
+        when(mockEmergencyContact.getForename()).thenReturn(MOCK_EMERGENCY_CONTACT_FORENAME);
+        when(mockEmergencyContact.getSurname()).thenReturn(MOCK_EMERGENCY_CONTACT_SURNAME);
+        when(mockEmergencyContact.getAddress()).thenReturn(mockAddress);
+        when(mockEmergencyContact.getTelephone()).thenReturn(MOCK_EMERGENCY_CONTACT_TELEPHONE);
+        when(mockEmergencyContact.getMobile()).thenReturn(MOCK_EMERGENCY_CONTACT_MOBILE);
+
         when(mockAddress.getStreet()).thenReturn(MOCK_ADDRESS_STREET);
         when(mockAddress.getTown()).thenReturn(MOCK_ADDRESS_TOWN);
         when(mockAddress.getCounty()).thenReturn(MOCK_ADDRESS_COUNTY);
         when(mockAddress.getPostcode()).thenReturn(MOCK_ADDRESS_POSTCODE);
 
+        when(mockCongregation.getCongregationId()).thenReturn(MOCK_CONGREGATION_ID);
+        when(mockCongregationDao.findCongregation(MOCK_CONGREGATION_ID)).thenReturn(mockCongregation);
         when(mockCongregation.getName()).thenReturn(MOCK_CONGREGATION_NAME);
 
         when(mockVolunteerDao.findAssignments(MOCK_PERSON_ID)).thenReturn(volunteerAssignments);
@@ -222,6 +247,38 @@ public class VolunteerContactDetailsEmailGeneratorTest {
         assertThat(email.getText(), containsString(MOCK_ADDRESS_TOWN));
         assertThat(email.getText(), containsString(MOCK_ADDRESS_COUNTY));
         assertThat(email.getText(), containsString(MOCK_ADDRESS_POSTCODE));
+        assertThat(email.getText(), containsString(MOCK_CONGREGATION_NAME));
+    }
+
+    /**
+     * The email should show the emergency contact for a particular volunteer.
+     *
+     * @throws IOException if we can't find the template
+     * @throws TemplateException if Freemarker's given up
+     */
+    @Test
+    public void shouldShowVolunteerEmergencyContactDetails() throws IOException, TemplateException {
+        Email email = volunteerContactDetailsEmailGenerator.generateEmailForVolunteers(mockVolunteerOne);
+
+        assertThat(email.getText(), containsString(MOCK_EMERGENCY_CONTACT_FORENAME));
+        assertThat(email.getText(), containsString(MOCK_EMERGENCY_CONTACT_SURNAME));
+        assertThat(email.getText(), containsString(MOCK_EMERGENCY_CONTACT_TELEPHONE));
+        assertThat(email.getText(), containsString(MOCK_EMERGENCY_CONTACT_MOBILE));
+    }
+
+    /**
+     * When an emergency contacts address has not been provided, then the appropriate
+     * message should appear.
+     *
+     * @throws IOException if we can't find the template
+     * @throws TemplateException if Freemarker's given up
+     */
+    @Test
+    public void shouldShowBlankAddressMessageWhenEmergencyContactAddressIsNull() throws IOException, TemplateException {
+        when(mockEmergencyContact.getAddress()).thenReturn(null);
+        Email email = volunteerContactDetailsEmailGenerator.generateEmailForVolunteers(mockVolunteerOne);
+
+        assertThat(email.getText(), containsString("An address for your emergency contact has not been provided"));
 
     }
 
@@ -242,7 +299,7 @@ public class VolunteerContactDetailsEmailGeneratorTest {
 
     /**
      * The email should not render the volunteer's work phone if has not been provided.
-     * It should render the message: "A work phone has not been provided".
+     * It should render the message: "We do not have a record of your work phone.".
      *
      * @throws IOException if we can't find the template
      * @throws TemplateException if Freemarker has had enough
@@ -252,7 +309,7 @@ public class VolunteerContactDetailsEmailGeneratorTest {
         Email email = volunteerContactDetailsEmailGenerator.generateEmailForVolunteers(mockVolunteerOne);
 
         assertThat(email.getText(), not(containsString(MOCK_PERSON_WORKPHONE)));
-        assertThat(email.getText(), containsString("A work phone has not been provided"));
+        assertThat(email.getText(), containsString("We do not have a record of your work phone."));
     }
 
     /**

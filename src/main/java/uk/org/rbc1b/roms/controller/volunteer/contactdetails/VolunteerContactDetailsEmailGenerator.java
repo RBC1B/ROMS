@@ -42,7 +42,10 @@ import uk.org.rbc1b.roms.controller.volunteer.AssignmentModel;
 import uk.org.rbc1b.roms.controller.volunteer.AssignmentModelFactory;
 import uk.org.rbc1b.roms.controller.volunteer.VolunteerModelFactory;
 import uk.org.rbc1b.roms.db.Address;
+import uk.org.rbc1b.roms.db.Congregation;
+import uk.org.rbc1b.roms.db.CongregationDao;
 import uk.org.rbc1b.roms.db.Person;
+import uk.org.rbc1b.roms.db.PersonDao;
 import uk.org.rbc1b.roms.db.email.Email;
 import uk.org.rbc1b.roms.db.volunteer.Volunteer;
 import uk.org.rbc1b.roms.db.volunteer.VolunteerDao;
@@ -68,6 +71,12 @@ public class VolunteerContactDetailsEmailGenerator {
 
     @Autowired
     private VolunteerDao volunteerDao;
+
+    @Autowired
+    private CongregationDao congregationDao;
+
+    @Autowired
+    private PersonDao personDao;
 
     @Autowired
     private AssignmentModelFactory assignmentModelFactory;
@@ -96,7 +105,7 @@ public class VolunteerContactDetailsEmailGenerator {
         Map<String, Object> model = new HashMap<>();
         model.put("volunteer", volunteer);
         populatePersonModel(model, volunteer.getPerson());
-        model.put("emergencyContact", volunteer.getEmergencyContact());
+        populateEmergencyContact(model, volunteer);
 
         List<Assignment> assignments = volunteerDao.findAssignments(volunteer.getPersonId());
         populateAssignments(model, assignments);
@@ -107,7 +116,7 @@ public class VolunteerContactDetailsEmailGenerator {
         List<VolunteerSkill> skills = volunteerDao.findSkills(volunteer.getPersonId());
         model.put("skills", volunteerModelFactory.generateVolunteerSkillsModel(skills));
 
-        model.put("edificeHomeUrl", SERVER_URL);
+        model.put("edificeHomeUrl", edificeProperty.getProperty(SERVER_URL));
         model.put("confirmationUrl", generateConfirmationUrl(volunteer.getPersonId()));
 
         Email email = new Email();
@@ -133,6 +142,23 @@ public class VolunteerContactDetailsEmailGenerator {
         model.put("town", address.getTown());
         model.put("county", address.getCounty());
         model.put("postcode", address.getPostcode());
+
+        Congregation congregation = congregationDao.findCongregation(person.getCongregation().getCongregationId());
+        model.put("congregation", congregation.getName());
+    }
+
+    /**
+     * Populate the emergency contact person model which can be injected into the template.
+     *
+     * @param model model map
+     * @param volunteer volunteer
+     */
+    private void populateEmergencyContact(Map<String, Object> model, Volunteer volunteer) {
+        Person emergencyContact = null;
+        if (volunteer.getEmergencyContact() != null) {
+            emergencyContact  = personDao.findPerson(volunteer.getEmergencyContact().getPersonId());
+        }
+        model.put("emergencyContact", emergencyContact);
     }
 
     private void populateAssignments(Map<String, Object> model, List<Assignment> assignments) {

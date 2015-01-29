@@ -14,15 +14,24 @@ Email:
 ${person.email}
 
 Home Telephone:
+<#if person.telephone ??>
 ${person.telephone}
+<#else>
+We do not have a record of your home telephone.
+</#if>
 
 Mobile phone:
+<#if person.mobile ??>
 ${person.mobile}
+<#else>
+We do not have a record of your mobile phone.
+</#if>
 
-<#if person.workPhone??>Work phone:
+Work phone:
+<#if person.workPhone ??>
 ${person.workPhone}
 <#else>
-A work phone has not been provided.
+We do not have a record of your work phone.
 </#if>
 
 If any of the details above are incorrect, then please use the Edifice link below to make any updates.
@@ -38,18 +47,34 @@ We also have the following information about you on our records. If there are an
 information below, then please contact the Volunteer Services Department via your Department Overseer: 
 
 Congregation:
-${person.congregation.name}
+${congregation}
 
+<#if emergencyContact?? >
 Your Emergency Contact:
 ${emergencyContact.forename} ${emergencyContact.surname}
 Address:
+<#if emergencyContact.address?? >
 ${emergencyContact.address.street},
 ${emergencyContact.address.town},
 ${emergencyContact.address.county},
 ${emergencyContact.address.postcode}
+<#else>
+An address for your emergency contact has not been provided.
+</#if>
 Emergency Contact Phone numbers:
+<#if emergencyContact.telephone?? >
 ${emergencyContact.telephone}
+<#else>
+A telephone number for your emergency contact has not been provided.
+</#if>
+<#if emergencyContact.mobile?? >
 ${emergencyContact.mobile}
+<#else>
+A mobile number for your emergency contact has not been provided.
+</#if>
+<#else>
+You have not provided an emergency contact. Please inform the Volunteer Service Department as this important.
+</#if>
 
 <#-- assignments -->
 Your Departmental Assignments:
