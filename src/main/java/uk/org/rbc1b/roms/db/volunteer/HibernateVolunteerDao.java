@@ -117,14 +117,6 @@ public class HibernateVolunteerDao implements VolunteerDao {
         return ((Long) criteria.uniqueResult()).intValue();
     }
 
-    /**
-     * Create the Criteria by which we can search for volunteers depending on
-     * the search criteria provided in the first parameter.
-     *
-     * @param searchCriteria the volunteer search criteria
-     * @param session session
-     * @return Criteria instance
-     */
     private Criteria createVolunteerSearchCriteria(VolunteerSearchCriteria searchCriteria, Session session) {
 
         Criteria criteria = session.createCriteria(Volunteer.class);

@@ -166,6 +166,7 @@ public class ProjectRestController {
             throw new BadRequestException("No session found with session id" + sessionId);
         }
         AssignmentSearchCriteria assignmentSearchCriteria = new AssignmentSearchCriteria();
+        assignmentSearchCriteria.setMaxResults(null);
         assignmentSearchCriteria.setDepartmentId(workSession.getDepartment().getDepartmentId());
         List<Assignment> departmentVolunteers = departmentDao.findAssignments(assignmentSearchCriteria);
         return new ResponseEntity<Object>(volunteerForProjectModelFactory.generate(departmentVolunteers, workSession), HttpStatus.OK);
@@ -188,6 +189,7 @@ public class ProjectRestController {
         }
         AssignmentSearchCriteria assignmentSearchCriteria = new AssignmentSearchCriteria();
         assignmentSearchCriteria.setDepartmentId(session.getDepartment().getDepartmentId());
+        assignmentSearchCriteria.setMaxResults(null);
         List<Assignment> departmentVolunteers = departmentDao.findAssignments(assignmentSearchCriteria);
         List<VolunteerToConfirmModel> volunteersToConfirm =
                 volunteersToConfirmModelFactory
@@ -281,7 +283,7 @@ public class ProjectRestController {
         DateTime tmpdate;
         tmpdate = startDate;
         FastDateFormat formatter = FastDateFormat.getInstance("dd-MM-yyyy");
-        while (tmpdate.isBefore(endDate) || tmpdate.equals(endDate)) {
+        while (!tmpdate.isAfter(endDate)) {
             range.add(formatter.format(tmpdate.toDate()));
             tmpdate = tmpdate.plusDays(1);
         }

@@ -55,10 +55,12 @@ import freemarker.template.TemplateException;
 import org.apache.commons.lang3.time.FastDateFormat;
 
 /**
- * Generate the email to be send to the volunteer requesting they confirm when they are available.
+ * Generate the email to be send to the volunteer requesting they confirm when
+ * they are available.
  */
 @Component
 public class ProjectAvailabilityEmailGenerator {
+
     private static final String BASE_URI = "/project-availability";
     private static final String DATETIME_FORMAT = "yyyyMMddHHmm";
     private static final String SECURITY_SALT = "security.salt";
@@ -68,7 +70,6 @@ public class ProjectAvailabilityEmailGenerator {
     private static final String CONFIRMATION_SUBJECT = "Project Attendance Confirmation Dates";
     private static final String CONFIRMATION_TEMPLATE = "project-attendance-confirmation.ftl";
     private static final boolean HTML = true;
-
     @Autowired
     private KingdomHallDao kingdomHallDao;
     @Autowired
@@ -87,7 +88,9 @@ public class ProjectAvailabilityEmailGenerator {
     private Properties edificeProperty;
 
     /**
-     * Generate the email to be sent to the volunteer when asking for their availability.
+     * Generate the email to be sent to the volunteer when asking for their
+     * availability.
+     *
      * @param projectAvailability availability
      * @return email body text
      * @throws IOException on failure to process the freemarker template
@@ -100,12 +103,15 @@ public class ProjectAvailabilityEmailGenerator {
         Map<String, Object> model = new HashMap<>();
 
         Person person = personDao.findPerson(projectAvailability.getPerson().getPersonId());
+        if (person.getEmail() == null) {
+            return null;
+        }
         populatePersonToModel(model, person);
         model.put("httpsurl", generateSecureAvailabilityUrl(person, projectAvailability));
 
         ProjectDepartmentSession projectSession = projectDepartmentSessionDao
                 .findByProjectDepartmentSessionId(projectAvailability.getProjectDepartmentSession()
-                        .getProjectDepartmentSessionId());
+                .getProjectDepartmentSessionId());
 
         FastDateFormat dateFormat = FastDateFormat.getInstance("dd-MM-yyyy");
         model.put("fromDate", dateFormat.format(projectSession.getFromDate()));
@@ -125,7 +131,10 @@ public class ProjectAvailabilityEmailGenerator {
     }
 
     /**
-     * Generate the email used to tell the volunteer which of their dates they are invited to.
+     * Generate the email used to tell the volunteer which of their dates they
+     * are invited to. It assumes that the person has a valid email, otherwise
+     * they would not have been notified to begin with.
+     *
      * @param projectAvailability project availbility
      * @return email
      * @throws IOException on failure to process the freemarker template
@@ -155,7 +164,7 @@ public class ProjectAvailabilityEmailGenerator {
 
         ProjectDepartmentSession projectSession = projectDepartmentSessionDao
                 .findByProjectDepartmentSessionId(projectAvailability.getProjectDepartmentSession()
-                        .getProjectDepartmentSessionId());
+                .getProjectDepartmentSessionId());
         Department department = departmentDao.findDepartment(projectSession.getDepartment().getDepartmentId());
         model.put("department", department.getName());
         model.put("projectsession", projectSession.getProjectDepartmentSessionId());

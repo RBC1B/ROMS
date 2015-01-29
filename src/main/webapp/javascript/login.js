@@ -68,6 +68,10 @@ $(document).ready(function() {
                         $("#alert-update").html("<p><b>Error: </b>Could not connect to the server.</p>");
                         $("#alert-update").show();
                     },
+                    403: function(){
+                        $("#alert-update").html("<p><b>Error: </b>Your information does not match.</p>");
+                        $("#alert-update").show();
+                    },
                     404: function(){
                         $("#alert-update").html("<p><b>Error: </b>Your RBC ID number is incorrect.</p>");
                         $("#alert-update").show();

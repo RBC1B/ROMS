@@ -47,7 +47,6 @@ import freemarker.template.TemplateException;
  */
 @Component
 public class VolunteerUpdateEmailGenerator {
-
     private static final String UPDATE_REQUEST_TEMPLATE = "volunteer-update-request.ftl";
     private static final String UPDATE_CONFIRMATION_TEMPLATE = "volunteer-update-confirmation.ftl";
     private static final String SUBJECT = "RBC (London & Home Counties) Volunteer Information Update";
@@ -73,7 +72,7 @@ public class VolunteerUpdateEmailGenerator {
         String uri = generateSecureUri(volunteer);
 
         Configuration conf = emailFreemarkerConfigurer.getConfiguration();
-        Map<String, String> model = new HashMap<>();
+        Map<String, String> model = new HashMap<String, String>();
         model.put("forename", volunteer.getPerson().getForename());
         model.put("httpsurl", uri);
         String text = FreeMarkerTemplateUtils.processTemplateIntoString(conf.getTemplate(UPDATE_REQUEST_TEMPLATE),
@@ -95,7 +94,7 @@ public class VolunteerUpdateEmailGenerator {
      */
     public Email generateVolunteerUpdateConfirmationEmail(Volunteer volunteer) throws IOException, TemplateException {
         Configuration conf = emailFreemarkerConfigurer.getConfiguration();
-        Map<String, String> model = new HashMap<>();
+        Map<String, String> model = new HashMap<String, String>();
         model.put("forename", volunteer.getPerson().getForename());
         String text = FreeMarkerTemplateUtils.processTemplateIntoString(conf.getTemplate(UPDATE_CONFIRMATION_TEMPLATE),
                 model);
@@ -114,7 +113,7 @@ public class VolunteerUpdateEmailGenerator {
      * @return url string
      */
     private String generateSecureUri(Volunteer volunteer) {
-        List<String> path = new ArrayList<>();
+        List<String> path = new ArrayList<String>();
         path.add(edificeProperty.getProperty(SERVER_URL));
         path.add("volunteer-update");
         path.add(Integer.toString(volunteer.getPersonId()));

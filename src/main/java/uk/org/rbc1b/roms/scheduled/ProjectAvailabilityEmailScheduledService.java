@@ -50,6 +50,7 @@ import freemarker.template.TemplateException;
  */
 @Component
 public class ProjectAvailabilityEmailScheduledService {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(ProjectAvailabilityEmailScheduledService.class);
     @Autowired
     private ProjectAvailabilityEmailGenerator projectAvailabilityEmailGenerator;
@@ -82,12 +83,13 @@ public class ProjectAvailabilityEmailScheduledService {
             try {
                 Email email = projectAvailabilityEmailGenerator
                         .generateVolunteerAvailabilityRequestEmail(projectAvailability);
-                if (email != null) {
+                if (email == null) {
+                    LOGGER.error("Cannot send email to RBC ID:" + projectAvailability.getPerson().getPersonId());
+                } else {
                     emailDao.save(email);
+                    projectAvailability.setEmailSent(true);
+                    projectAvailabilityDao.update(projectAvailability);
                 }
-                // event if the email is not sent, we want to "unqueue" it from the unnotified volunteers list
-                projectAvailability.setEmailSent(true);
-                projectAvailabilityDao.update(projectAvailability);
             } catch (IOException | TemplateException e) {
                 LOGGER.error("Failed to send availability email:", e);
             }
@@ -95,7 +97,7 @@ public class ProjectAvailabilityEmailScheduledService {
     }
 
     /**
-     * Checks volunteers who have been need to sent the confirmed dates.
+     * Checks volunteers to whom confirmed dates can be sent by email.
      */
     @Scheduled(cron = "0 0/5 * * * ?")
     // @Scheduled(cron = "0 10,40 * * * ?")
@@ -112,16 +114,17 @@ public class ProjectAvailabilityEmailScheduledService {
             try {
                 Email email = projectAvailabilityEmailGenerator
                         .generateVolunteerAvailabilityConfirmationEmail(projectAvailability);
-                if (email != null) {
+                if (email == null) {
+                    LOGGER.error("Cannot send email to RBC ID:" + projectAvailability.getPerson().getPersonId());
+
+                } else {
                     emailDao.save(email);
+                    projectAvailability.setConfirmationEmail(true);
+                    projectAvailabilityDao.update(projectAvailability);
                 }
-                // event if the email is not sent, we want to "unqueue" it from the unnotified volunteers list
-                projectAvailability.setConfirmationEmail(true);
-                projectAvailabilityDao.update(projectAvailability);
             } catch (IOException | TemplateException e) {
                 LOGGER.error("Failed to send confirmation email:", e);
             }
         }
     }
-
 }

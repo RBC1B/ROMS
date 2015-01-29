@@ -34,8 +34,6 @@
         <property length="50" name="reliefAbroadComments" />
         <property column="HHCFormCode" length="15" name="hhcFormCode" />
         <property name="badgeIssueDate" />
-        <property name="contactDetailsLastConfirmed" />
-        <property name="updateContactDetailsEmailLastSent" />
 
         <set name="trades" inverse="true" cascade="all-delete-orphan" lazy="false">
             <key column="personId" />

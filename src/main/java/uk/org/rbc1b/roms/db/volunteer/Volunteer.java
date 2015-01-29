@@ -24,6 +24,7 @@
 package uk.org.rbc1b.roms.db.volunteer;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.Set;
 import org.hibernate.envers.Audited;
 import uk.org.rbc1b.roms.db.Person;
@@ -298,21 +299,22 @@ public class Volunteer implements Serializable {
         this.trades = trades;
     }
 
-    public java.sql.Date getContactDetailsLastConfirmed() {
+    public Date getContactDetailsLastConfirmed() {
         return contactDetailsLastConfirmed;
     }
 
-    public void setContactDetailsLastConfirmed(java.sql.Date contactDetailsLastConfirmed) {
+    public void setContactDetailsLastConfirmed(Date contactDetailsLastConfirmed) {
         this.contactDetailsLastConfirmed = contactDetailsLastConfirmed;
     }
 
-    public java.sql.Date getUpdateContactDetailsEmailLastSent() {
+    public Date getUpdateContactDetailsEmailLastSent() {
         return updateContactDetailsEmailLastSent;
     }
 
-    public void setUpdateContactDetailsEmailLastSent(java.sql.Date updateContactDetailsEmailLastSent) {
+    public void setUpdateContactDetailsEmailLastSent(Date updateContactDetailsEmailLastSent) {
         this.updateContactDetailsEmailLastSent = updateContactDetailsEmailLastSent;
     }
+
     @Override
     public String toString() {
         return "Volunteer #" + personId;
