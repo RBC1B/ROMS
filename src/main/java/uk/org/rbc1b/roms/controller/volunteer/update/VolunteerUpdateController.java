@@ -79,7 +79,7 @@ public class VolunteerUpdateController {
 
     /**
      * Accepts and checks requests for updating contact when the volunteer puts
-     * in his RVC ID and date of birth to trigger an email. There is no security
+     * in his RBC ID and date of birth to trigger an email. There is no security
      * checks around this as this is initial request by the volunteer.
      *
      * @param form the user form
@@ -193,6 +193,10 @@ public class VolunteerUpdateController {
         volunteer.getPerson().getAddress().setTown(form.getTown());
         volunteer.getPerson().getAddress().setCounty(form.getCounty());
         volunteer.getPerson().getAddress().setPostcode(form.getPostcode());
+
+        // update the volunteer's contact details last confirmed time-stamp
+        final DateTime dt = new DateTime();
+        volunteer.setContactDetailsLastConfirmed(DataConverterUtil.toSqlDate(dt));
 
         UserDetails system = userDetailsService.loadUserByUsername("System");
         Authentication authentication = new UsernamePasswordAuthenticationToken(system, system.getUsername(),
