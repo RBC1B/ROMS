@@ -56,8 +56,8 @@ import uk.org.rbc1b.roms.db.volunteer.VolunteerSearchCriteria;
 @Component
 public class DailyVolunteerEmailScheduledService {
     private static final Logger LOGGER = LoggerFactory.getLogger(DailyVolunteerEmailScheduledService.class);
-    private static final int NUMBER_OF_DAYS_IN_YEAR = 365;
-    private static final int NUMBER_OF_DAYS_IN_LEAP_YEAR = 366;
+    private static final int NUMBER_OF_DAYS_IN_HALF_YEAR = 365 / 2;
+    private static final int NUMBER_OF_DAYS_IN_LEAP_HALF_YEAR = 366 / 2;
 
     @Autowired
     private VolunteerDao volunteerDao;
@@ -111,17 +111,18 @@ public class DailyVolunteerEmailScheduledService {
      *
      * @return integer of max number of volunteers
      */
-    private int findMaxVolunteersForEmail() {
+    private Integer findMaxVolunteersForEmail() {
         VolunteerSearchCriteria searchCriteria = new VolunteerSearchCriteria();
+        searchCriteria.setMaxResults(null);
         int totalVolunteerCount = volunteerDao.findVolunteersCount(searchCriteria);
         final DateTime dateTime = new DateTime();
 
         if (dateTime.year().isLeap()) {
-            return new BigDecimal(totalVolunteerCount).divide(new BigDecimal(NUMBER_OF_DAYS_IN_LEAP_YEAR),
+            return new BigDecimal(totalVolunteerCount).divide(new BigDecimal(NUMBER_OF_DAYS_IN_LEAP_HALF_YEAR),
                 RoundingMode.UP).intValue();
         }
 
-        return new BigDecimal(totalVolunteerCount).divide(new BigDecimal(NUMBER_OF_DAYS_IN_YEAR),
+        return new BigDecimal(totalVolunteerCount).divide(new BigDecimal(NUMBER_OF_DAYS_IN_HALF_YEAR),
                 RoundingMode.UP).intValue();
     }
 }
