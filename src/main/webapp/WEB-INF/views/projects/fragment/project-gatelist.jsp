@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : project-gatelist - displays the list of volunteers attending
 --%>
 

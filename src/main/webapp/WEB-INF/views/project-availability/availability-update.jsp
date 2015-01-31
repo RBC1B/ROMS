@@ -71,7 +71,7 @@
                 <div class="col-md-6">
                     <div id='calendar-div'>
                         <div id='calendar'>
-                        </div>   
+                        </div>
                     </div>
                 </div>
             </div>

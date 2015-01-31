@@ -23,12 +23,9 @@
  */
 package uk.org.rbc1b.roms.controller.common;
 
-import java.util.Date;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
 import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
