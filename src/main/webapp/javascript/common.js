@@ -393,7 +393,7 @@ $(document).ready(function() {
     roms.common.validation.user = function($nameInput, $idInput) {
         return {
             // check for an exact match. Populate the user id
-            url: roms.common.relativePath + "/users/search",
+            url: roms.common.relativePath + "/admin/users/search",
             contentType: "application/json",
             dataType: "json",
             data: {

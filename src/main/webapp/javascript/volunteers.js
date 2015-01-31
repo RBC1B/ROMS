@@ -480,7 +480,7 @@ $(document).ready(function() {
 
     // edit
     $(".user").typeahead({
-        remote: roms.common.relativePath + '/users/search?name=%QUERY',
+        remote: roms.common.relativePath + '/admin/users/search?name=%QUERY',
         valueKey: 'userName'
     });
 
