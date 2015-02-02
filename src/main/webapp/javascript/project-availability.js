@@ -72,7 +72,7 @@ $(document).ready(function() {
         }
         var dateKey = "[data-date='" + dateClicked.format() + "']";
         var colour = $(dateKey).css('background-color');
-        if (colour === "rgba(0, 0, 0, 0)" || colour == "rgb(255, 255, 255)" || colour === "transparent") {
+        if (colour === "rgba(0, 0, 0, 0)" || colour == "rgb(255, 255, 255)" || colour === "rgb(252, 248, 227)" || colour === "transparent") {
             setAvailabilityDate(dateClicked)
                     .done(function() {
                 $(thisObject).css('background-color', 'rgb(255, 255, 0)');
@@ -85,7 +85,7 @@ $(document).ready(function() {
         } else if (colour === "rgb(0, 128, 0)") {
             alert("Your overseer has confirmed this date - please contact your overseer.");
         } else {
-            alert("Unknown status - please contact Edifice.Help@gmail.com");
+            alert("Unknown status - please contact Edifice.Help@gmail.com with the following code: " + colour);
         }
     }
 
