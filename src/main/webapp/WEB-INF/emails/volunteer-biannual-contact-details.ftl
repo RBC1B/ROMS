@@ -7,7 +7,9 @@ On our system, your contact details are as follows:
 Address:
 ${street},
 ${town},
+<#if county ??>
 ${county},
+</#if>
 ${postcode}
 
 Email:
@@ -56,7 +58,9 @@ Address:
 <#if emergencyContact.address?? >
 ${emergencyContact.address.street},
 ${emergencyContact.address.town},
+<#if emergencyContact.address.county ??>
 ${emergencyContact.address.county},
+</#if>
 ${emergencyContact.address.postcode}
 <#else>
 An address for your emergency contact has not been provided.

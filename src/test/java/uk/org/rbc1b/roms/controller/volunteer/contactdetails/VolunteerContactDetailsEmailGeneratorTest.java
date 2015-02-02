@@ -313,6 +313,20 @@ public class VolunteerContactDetailsEmailGeneratorTest {
     }
 
     /**
+     * The email template should not fail if a county has not been given in the generator.
+     *
+     * @throws IOException if template not found
+     * @throws TemplateException if Freemarker's given up
+     */
+    @Test
+    public void shouldNotFailIfCountyNotPresent() throws IOException, TemplateException {
+        when(mockAddress.getCounty()).thenReturn(null);
+
+        Email email = volunteerContactDetailsEmailGenerator.generateEmailForVolunteers(mockVolunteerOne);
+        assertThat(email.getText(), not(containsString(MOCK_ADDRESS_COUNTY)));
+    }
+
+    /**
      * Email should show volunteer assignment. We are only testing for one here.
      *
      * @throws IOException if template not found
