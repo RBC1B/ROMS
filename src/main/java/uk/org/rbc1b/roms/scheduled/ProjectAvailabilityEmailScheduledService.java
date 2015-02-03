@@ -67,8 +67,8 @@ public class ProjectAvailabilityEmailScheduledService {
      * Checks volunteers who have not been sent an email.
      */
     // For testing
-    @Scheduled(cron = "0 0/5 * * * ?")
-    // @Scheduled(cron = "0 15,45 * * * ?")
+    // @Scheduled(cron = "0 0/5 * * * ?")
+    @Scheduled(cron = "0 45 * * * ?")
     public void checkAvailability() {
         UserDetails system = userDetailsService.loadUserByUsername("System");
         Authentication authentication = new UsernamePasswordAuthenticationToken(system, system.getUsername(),
@@ -99,8 +99,8 @@ public class ProjectAvailabilityEmailScheduledService {
     /**
      * Checks volunteers to whom confirmed dates can be sent by email.
      */
-    @Scheduled(cron = "0 0/5 * * * ?")
-    // @Scheduled(cron = "0 10,40 * * * ?")
+    //@Scheduled(cron = "0 0/5 * * * ?")
+    @Scheduled(cron = "0 40 * * * ?")
     public void checkConfirmationDates() {
         UserDetails system = userDetailsService.loadUserByUsername("System");
         Authentication authentication = new UsernamePasswordAuthenticationToken(system, system.getUsername(),
