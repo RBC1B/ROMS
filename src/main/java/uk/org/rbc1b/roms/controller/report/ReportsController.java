@@ -58,15 +58,13 @@ import com.google.common.net.MediaType;
 public class ReportsController {
     @Autowired
     private ReportDao reportDao;
-
     @Autowired
     private DataSource dataSource;
 
     /**
      * Return the list of active reports.
      * @param model model
-     * @return view name
-     * id is found
+     * @return view name id is found
      */
     @RequestMapping(value = "fixed", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('REPORT', 'READ')")
@@ -114,7 +112,7 @@ public class ReportsController {
      * @param response servlet response to output the csv data to directly
      * @throws IOException on failure to write to output stream
      */
-    @RequestMapping(value = "fixed/{reportId}/csv", method = RequestMethod.GET, consumes = "text/csv", produces = "text/csv")
+    @RequestMapping(value = "fixed/{reportId}/csv", method = RequestMethod.GET)
     @PreAuthorize("hasPermission('REPORT', 'READ')")
     public void downloadCsvReport(@PathVariable Integer reportId, HttpServletResponse response) throws IOException {
 
@@ -202,8 +200,8 @@ public class ReportsController {
     }
 
     private static final class ReportResults {
+
         private List<String> columnNames;
         private List<List<String>> resultRows;
     }
-
 }
