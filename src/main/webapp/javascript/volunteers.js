@@ -469,6 +469,7 @@ $(document).ready(function() {
 	        			{ "name": "surname", "value": $("#volunteer-advanced-search-form input[name='surname']").val() },
 	        			{ "name": "congregationId", "value": $("#volunteer-advanced-search-form input[name='congregationId']").val() },
 	        			{ "name": "departmentId", "value": $("#volunteer-advanced-search-form input[name='departmentId']").val() },
+	        			{ "name": "skillId", "value": $("#volunteer-advanced-search-form input[name='skillId']").val() },
 	        			{ "name": "kingdomHallId", "value": $("#volunteer-advanced-search-form input[name='kingdomHallId']").val() },
 	        			{ "name": "location", "value": $("#volunteer-advanced-search-form input[name='location']").val() }
     	        	);
@@ -503,6 +504,15 @@ $(document).ready(function() {
         $("#volunteer-advanced-search-form input[name='departmentId']").val(null);
     });
     
+    $("#volunteer-advanced-search-form input[name='skillName']").typeahead({
+        remote: roms.common.relativePath + '/skills/search?name=%QUERY',
+        valueKey: 'name'
+    });
+    
+    $("#volunteer-advanced-search-form input[name='skillName']").change(function() {
+        $("#volunteer-advanced-search-form input[name='skillId']").val(null);
+    });
+    
     $("#volunteer-advanced-search-form").validate({
         rules: {
         	congregationName: {
@@ -514,6 +524,9 @@ $(document).ready(function() {
             },
             kingdomHallName: {
                 remote: roms.common.validation.kingdomHall($("#kingdomHallName"), $("#kingdomHallId"))
+            },
+            skillName: {
+                remote: roms.common.validation.skill($("#skillName"), $("#skillId"))
             }
         },
         submitHandler: function(form) {

@@ -437,6 +437,30 @@ $(document).ready(function() {
             }
         };
     }
+    
+    roms.common.validation.skill = function($nameInput, $idInput) {
+        return {
+            // check for an exact match. Populate the skill id
+            url: roms.common.relativePath + "/skills/search",
+            contentType: "application/json",
+            dataType: "json",
+            data: {
+                name: function() {
+                    return $nameInput.val();
+                }
+            },
+            dataFilter: function(rawData) {
+                var data = JSON.parse(rawData)
+                if (data && data.length > 0 && data[0].name == $nameInput.val()) {
+                    $idInput.val(data[0].skillId);
+                    return true;
+                }
+                // no match - clear the stored id
+                $idInput.val(null);
+                return false;
+            }
+        };
+    }
 });
 
 // validation configuration

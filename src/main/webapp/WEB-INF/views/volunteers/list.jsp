@@ -40,9 +40,14 @@
                                 <input type="hidden" name="congregationId" id="congregationId" />
                             </div>
                             <div class="form-group">
-                                <label for="department">Department</label>
+                                <label for="departmentName">Department</label>
                                 <input type="text" class="form-control" name="departmentName" id="departmentName" size="25" />
                                 <input type="hidden" name="departmentId" id="departmentId" />
+                            </div>
+                            <div class="form-group">
+                                <label for="skillName">Skill</label>
+                                <input type="text" class="form-control" name="skillName" id="skillName" size="25" />
+                                <input type="hidden" name="skillId" id="skillId" />
                             </div>
                             <div class="form-group">
                                 <label for="kingdomHallName">Kingdom Hall</label>
