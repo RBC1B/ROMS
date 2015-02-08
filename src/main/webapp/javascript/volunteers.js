@@ -462,6 +462,17 @@ $(document).ready(function() {
                 "bProcessing": true,
                 "bServerSide": true,
                 "sAjaxSource": roms.common.relativePath + '/volunteers',
+                "fnServerParams": function(aoData) {
+    	        	aoData.push(
+	        			{ "name": "id", "value": $("#volunteer-advanced-search-form input[name='volunteerId']").val() },
+	        			{ "name": "forename", "value": $("#volunteer-advanced-search-form input[name='forename']").val() },
+	        			{ "name": "surname", "value": $("#volunteer-advanced-search-form input[name='surname']").val() },
+	        			{ "name": "congregationId", "value": $("#volunteer-advanced-search-form input[name='congregationId']").val() },
+	        			{ "name": "departmentId", "value": $("#volunteer-advanced-search-form input[name='departmentId']").val() },
+	        			{ "name": "kingdomHallId", "value": $("#volunteer-advanced-search-form input[name='kingdomHallId']").val() },
+	        			{ "name": "location", "value": $("#volunteer-advanced-search-form input[name='location']").val() }
+    	        	);
+	            },
                 "aoColumns": [
                     {"sName": "ID", "mData": "id"},
                     {"sName": "forename", "mData": "forename"},
@@ -478,6 +489,49 @@ $(document).ready(function() {
             }
     );
 
+    // list advanced search
+    $("#volunteer-advanced-search-form input[name='volunteerId']").numeric({negative: false, decimal: false});
+
+    $("#volunteer-advanced-search-form input[name='departmentName']").typeahead({
+        remote: roms.common.relativePath + '/departments/search?name=%QUERY',
+        valueKey: 'name'
+    });
+    
+    // we always clear the department id on change.
+    // it will be re-calculated in validation
+    $("#volunteer-advanced-search-form input[name='departmentName']").change(function() {
+        $("#volunteer-advanced-search-form input[name='departmentId']").val(null);
+    });
+    
+    $("#volunteer-advanced-search-form").validate({
+        rules: {
+        	congregationName: {
+                remote: roms.common.validation.congregation($("#congregationName"), $("#congregationId"))
+            },
+        	departmentName: {
+                remote: roms.common.validation.department($("input[name='departmentName']"),
+                        $("input[name='departmentId']"))
+            },
+            kingdomHallName: {
+                remote: roms.common.validation.kingdomHall($("#kingdomHallName"), $("#kingdomHallId"))
+            }
+        },
+        submitHandler: function(form) {
+        	$('#volunteer-list').dataTable().fnDraw();
+        	return false;
+        },
+        errorPlacement: roms.common.validatorErrorPlacement
+    });
+    
+    /**
+     * If the advanced search is hidden, clear all the fields and refresh the search
+     */
+    $('#volunteer-advanced-search-collapse').on('hidden.bs.collapse', function () {
+    	$('#volunteer-advanced-search-collapse input').val("");
+    	$('#volunteer-list').dataTable().fnDraw();
+	});
+    
+    
     // edit
     $(".user").typeahead({
         remote: roms.common.relativePath + '/admin/users/search?name=%QUERY',

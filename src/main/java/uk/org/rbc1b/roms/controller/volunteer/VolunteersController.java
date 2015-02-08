@@ -180,7 +180,14 @@ public class VolunteersController {
             VolunteerAjaxDataTableRequestData requestData) {
         VolunteerSearchCriteria searchCriteria = new VolunteerSearchCriteria();
         requestData.populateSearchCriteria(searchCriteria);
+
         searchCriteria.setCongregationId(requestData.getCongregationId());
+        searchCriteria.setDepartmentId(requestData.getDepartmentId());
+        searchCriteria.setForename(requestData.getForename());
+        searchCriteria.setId(requestData.getId());
+        searchCriteria.setKingdomHallId(requestData.getKingdomHallId());
+        searchCriteria.setLocation(requestData.getLocation());
+        searchCriteria.setSurname(requestData.getSurname());
         searchCriteria.setSkillId(requestData.getSkillId());
         searchCriteria.setQualificationId(requestData.getQualificationId());
 

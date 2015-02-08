@@ -60,6 +60,7 @@
             <li class="active">Volunteer Interview Sessions</li>
         </ol>
         <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+        <script type="text/javascript" src="<c:url value='/javascript/thirdparty/jquery-numeric-1.3.1.js' />" ></script>
         <script type="text/javascript" src="<c:url value='/javascript/volunteers.js' />" ></script>
     </body>
 </html>

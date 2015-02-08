@@ -137,6 +137,7 @@
         <%@ include file="fragments/show-emergency-contact-edit-modal.jsp" %>
         <%@ include file="/WEB-INF/views/common/person-link-modal.jsp"%>
         <%@ include file="/WEB-INF/views/common/mustache-person-link-search-form.jsp"%>
+        <script type="text/javascript" src="<c:url value='/javascript/thirdparty/jquery-numeric-1.3.1.js' />" ></script>
         <script type="text/javascript" src="<c:url value='/javascript/volunteers.js' />" ></script>
     </body>
 </html>

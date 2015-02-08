@@ -27,13 +27,18 @@ import uk.org.rbc1b.roms.db.common.AbstractSearchCriteria;
 
 /**
  * Criteria used when searching for a person.
- * @author oliver.elder.esq
  */
 public class VolunteerSearchCriteria extends AbstractSearchCriteria {
+    private Integer id;
+    private String forename;
+    private String surname;
     private Integer congregationId;
-    private Integer skillId;
-    private Integer qualificationId;
+    private Integer departmentId;
     private Integer interviewSessionId;
+    private Integer kingdomHallId;
+    private String location;
+    private Integer qualificationId;
+    private Integer skillId;
 
     @Override
     public VolunteerSearchCriteria clone() {
@@ -45,6 +50,30 @@ public class VolunteerSearchCriteria extends AbstractSearchCriteria {
         }
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getForename() {
+        return forename;
+    }
+
+    public void setForename(String forename) {
+        this.forename = forename;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
     public Integer getCongregationId() {
         return congregationId;
     }
@@ -53,12 +82,36 @@ public class VolunteerSearchCriteria extends AbstractSearchCriteria {
         this.congregationId = congregationId;
     }
 
+    public Integer getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Integer departmentId) {
+        this.departmentId = departmentId;
+    }
+
     public Integer getInterviewSessionId() {
         return interviewSessionId;
     }
 
     public void setInterviewSessionId(Integer interviewSessionId) {
         this.interviewSessionId = interviewSessionId;
+    }
+
+    public Integer getKingdomHallId() {
+        return kingdomHallId;
+    }
+
+    public void setKingdomHallId(Integer kingdomHallId) {
+        this.kingdomHallId = kingdomHallId;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public Integer getQualificationId() {
@@ -76,4 +129,5 @@ public class VolunteerSearchCriteria extends AbstractSearchCriteria {
     public void setSkillId(Integer skillId) {
         this.skillId = skillId;
     }
+
 }

@@ -521,6 +521,17 @@ ul.list-inline {
 .btn-primary a {
     color:#ffffff;
 }
+/*****************************************************************************/
+/* Volunteer list                                                            */
+/*****************************************************************************/
+#volunteer-advanced-search {
+	margin: 10px 0px;
+}
+
+#volunteer-advanced-search button {
+	vertical-align: bottom;
+}
+
 
 /*****************************************************************************/
 /* Date Picker CSSing (not a Bootstrap standard)                             */

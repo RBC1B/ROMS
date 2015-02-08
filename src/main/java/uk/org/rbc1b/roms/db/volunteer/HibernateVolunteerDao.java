@@ -49,6 +49,7 @@ import uk.org.rbc1b.roms.db.volunteer.qualification.VolunteerQualification;
 import uk.org.rbc1b.roms.db.volunteer.skill.VolunteerSkill;
 import uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTrade;
 import uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTradeSearchCriteria;
+import com.google.common.collect.Lists;
 
 /**
  * @author rahulsingh
@@ -122,8 +123,12 @@ public class HibernateVolunteerDao implements VolunteerDao {
         Criteria criteria = session.createCriteria(Volunteer.class);
         criteria.createAlias("Person", "person");
 
-        if (searchCriteria.getCongregationId() != null) {
+        if (searchCriteria.getCongregationId() != null || searchCriteria.getKingdomHallId() != null) {
             criteria.createAlias("person.congregation", "congregation");
+
+            if (searchCriteria.getKingdomHallId() != null) {
+                criteria.createAlias("congregation.kingdomHall", "kingdomHall");
+            }
         } else if (searchCriteria.getSearch() != null || "congregation.name".equals(searchCriteria.getSortValue())) {
             criteria.createAlias("person.congregation", "congregation", JoinType.LEFT_OUTER_JOIN);
         }
@@ -137,9 +142,35 @@ public class HibernateVolunteerDao implements VolunteerDao {
                     Restrictions.like("congregation.name", searchValue)));
         }
 
+        // private String location;
+
+        if (searchCriteria.getId() != null) {
+            criteria.add(Restrictions.eq("personId", searchCriteria.getId()));
+        }
+
+        if (searchCriteria.getForename() != null) {
+            criteria.add(Restrictions.like("person.forename", "%" + searchCriteria.getForename() + "%"));
+        }
+
+        if (searchCriteria.getSurname() != null) {
+            criteria.add(Restrictions.like("person.surname", "%" + searchCriteria.getSurname() + "%"));
+        }
+
+        if (searchCriteria.getLocation() != null) {
+            String searchValue = "%" + searchCriteria.getLocation() + "%";
+
+            criteria.add(Restrictions.or(Restrictions.like("person.address.street", searchValue),
+                    Restrictions.like("person.address.town", searchValue),
+                    Restrictions.like("person.address.county", searchValue),
+                    Restrictions.like("person.address.postcode", searchValue)));
+        }
+
         if (searchCriteria.getCongregationId() != null) {
-            criteria.add(Restrictions.or(Restrictions.eq("person.congregation.congregationId",
-                    searchCriteria.getCongregationId())));
+            criteria.add(Restrictions.eq("person.congregation.congregationId", searchCriteria.getCongregationId()));
+        }
+
+        if (searchCriteria.getKingdomHallId() != null) {
+            criteria.add(Restrictions.eq("kingdomHall.kingdomHallId", searchCriteria.getKingdomHallId()));
         }
 
         if (searchCriteria.getSkillId() != null) {
@@ -158,6 +189,14 @@ public class HibernateVolunteerDao implements VolunteerDao {
             criteria.add(Property.forName("personId").in(qualificationCriteria));
         }
 
+        if (searchCriteria.getDepartmentId() != null) {
+            DetachedCriteria departmentCriteria = DetachedCriteria.forClass(Assignment.class);
+            departmentCriteria.add(Restrictions.eq("departmentId", searchCriteria.getDepartmentId()));
+            departmentCriteria.setProjection(Projections.property("person.personId"));
+
+            criteria.add(Property.forName("personId").in(departmentCriteria));
+        }
+
         if (searchCriteria.getInterviewSessionId() != null) {
             DetachedCriteria interviewCriteria = DetachedCriteria.forClass(VolunteerInterviewSession.class);
             interviewCriteria.add(Restrictions.eq("interviewSession.interviewSessionId",
@@ -166,8 +205,7 @@ public class HibernateVolunteerDao implements VolunteerDao {
 
             criteria.add(Property.forName("personId").in(interviewCriteria));
         }
-        criteria.add(Restrictions.not(Restrictions.eq("rbcStatusCode", "DN")));
-        criteria.add(Restrictions.not(Restrictions.eq("rbcStatusCode", "IA")));
+        criteria.add(Restrictions.not(Restrictions.in("rbcStatusCode", Lists.newArrayList("DN", "IA"))));
 
         return criteria;
     }
@@ -378,15 +416,10 @@ public class HibernateVolunteerDao implements VolunteerDao {
         Date sixMonthsBehind = DataConverterUtil.toSqlDate(sixMonthsBehindLocalDate);
 
         criteria.add(Restrictions.and(
-                Restrictions.or(
-                    Restrictions.isNull("updateContactDetailsEmailLastSent"),
-                    Restrictions.not(Restrictions.between("updateContactDetailsEmailLastSent", sixMonthsBehind, todayDate))
-                ), Restrictions.or(
-                    Restrictions.isNull("contactDetailsLastConfirmed"),
-                    Restrictions.not(Restrictions.between("contactDetailsLastConfirmed", sixMonthsBehind, todayDate))
-                )
-            )
-        );
+                Restrictions.or(Restrictions.isNull("updateContactDetailsEmailLastSent"), Restrictions.not(Restrictions
+                        .between("updateContactDetailsEmailLastSent", sixMonthsBehind, todayDate))), Restrictions.or(
+                        Restrictions.isNull("contactDetailsLastConfirmed"), Restrictions.not(Restrictions.between(
+                                "contactDetailsLastConfirmed", sixMonthsBehind, todayDate)))));
 
         if (searchCriteria.getMaxResults() != null) {
             criteria.setMaxResults(searchCriteria.getMaxResults());

@@ -30,8 +30,6 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * Shared component that defines the postal address of a person, hall or
  * project.
- *
- * @author oliver.elder.esq
  */
 public class Address {
 
