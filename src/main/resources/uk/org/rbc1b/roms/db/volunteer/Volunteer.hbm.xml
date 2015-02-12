@@ -36,6 +36,7 @@
         <property name="badgeIssueDate" />
         <property name="contactDetailsLastConfirmed" />
         <property name="updateContactDetailsEmailLastSent" />
+        <property name="submitNewLDCFormEmailSent" not-null="true" />
 
         <set name="trades" inverse="true" cascade="all-delete-orphan" lazy="false">
             <key column="personId" />

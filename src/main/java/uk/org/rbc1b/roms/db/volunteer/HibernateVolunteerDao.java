@@ -52,6 +52,8 @@ import uk.org.rbc1b.roms.db.volunteer.trade.VolunteerTradeSearchCriteria;
 import com.google.common.collect.Lists;
 
 /**
+ * Hibernate Volunteer Data Access Object for Volunteer data.
+ *
  * @author rahulsingh
  */
 @Repository
@@ -420,6 +422,33 @@ public class HibernateVolunteerDao implements VolunteerDao {
                         .between("updateContactDetailsEmailLastSent", sixMonthsBehind, todayDate))), Restrictions.or(
                         Restrictions.isNull("contactDetailsLastConfirmed"), Restrictions.not(Restrictions.between(
                                 "contactDetailsLastConfirmed", sixMonthsBehind, todayDate)))));
+
+        if (searchCriteria.getMaxResults() != null) {
+            criteria.setMaxResults(searchCriteria.getMaxResults());
+        }
+
+        criteria.addOrder(Order.asc("person.personId"));
+
+        return criteria.list();
+    }
+
+    @Override
+    public List<Volunteer> findVolunteersWhoNeedToSubmitLDCForm(VolunteerSearchCriteria searchCriteria) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Criteria criteria = createVolunteerSearchCriteria(searchCriteria, session);
+
+        criteria.add(Restrictions.eq("submitNewLDCFormEmailSent", false));
+
+        DateTime twoAndHalfYearsInPast = new DateTime();
+        twoAndHalfYearsInPast = twoAndHalfYearsInPast.minusYears(2);
+        twoAndHalfYearsInPast = twoAndHalfYearsInPast.minusMonths(6);
+
+        Date twoAndHalfYearsDate = DataConverterUtil.toSqlDate(twoAndHalfYearsInPast);
+
+        criteria.add(Restrictions.or(
+                Restrictions.isNull("formDate"),
+                Restrictions.le("formDate", twoAndHalfYearsDate)
+        ));
 
         if (searchCriteria.getMaxResults() != null) {
             criteria.setMaxResults(searchCriteria.getMaxResults());

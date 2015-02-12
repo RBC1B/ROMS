@@ -67,6 +67,7 @@ public class Volunteer implements Serializable {
     private Set<VolunteerTrade> trades;
     private java.sql.Date contactDetailsLastConfirmed;
     private java.sql.Date updateContactDetailsEmailLastSent;
+    private boolean submitNewLDCFormEmailSent;
 
     /**
      * Constructor. Instantiate the linked person.
@@ -313,6 +314,14 @@ public class Volunteer implements Serializable {
 
     public void setUpdateContactDetailsEmailLastSent(Date updateContactDetailsEmailLastSent) {
         this.updateContactDetailsEmailLastSent = updateContactDetailsEmailLastSent;
+    }
+
+    public boolean isSubmitNewLDCFormEmailSent() {
+        return submitNewLDCFormEmailSent;
+    }
+
+    public void setSubmitNewLDCFormEmailSent(boolean submitNewLDCFormEmailSent) {
+        this.submitNewLDCFormEmailSent = submitNewLDCFormEmailSent;
     }
 
     @Override

@@ -246,6 +246,17 @@ public interface VolunteerDao {
     List<Volunteer> findVolunteersWhoNeedBiannualEmail(VolunteerSearchCriteria searchCriteria);
 
     /**
+     * Find a list of volunteers who need to submit a new LDC form based on their
+     * form date. This applies to volunteer's whose form is older than 2 and 1/2
+     * years.
+     *
+     * @param searchCriteria the search criteria
+     * @return list of volunteers matching criteria
+     */
+    @Transactional(readOnly = true)
+    List<Volunteer> findVolunteersWhoNeedToSubmitLDCForm(VolunteerSearchCriteria searchCriteria);
+
+    /**
      * Additional data to pull in when generating the volunteer details.
      */
     public static enum VolunteerData {
