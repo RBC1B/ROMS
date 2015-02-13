@@ -5,7 +5,8 @@
         <id name="volunteerTradeId" >
             <generator class="identity"/>
         </id>
-        <many-to-one name="volunteer" column="PersonId" />
+        <many-to-one class="uk.org.rbc1b.roms.db.Person" column="PersonId" name="person"
+            not-null="true" />
         <property name="name" length="250" not-null="true" />
         <property name="experienceDescription" />
         <property name="experienceYears" />

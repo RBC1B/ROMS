@@ -511,7 +511,7 @@ public class VolunteersController {
             Set<VolunteerTrade> volunteerTrades = new HashSet<VolunteerTrade>();
             for (VolunteerTrade trade : form.getTrades()) {
                 if (StringUtils.isNotBlank(trade.getName())) {
-                    trade.setVolunteer(volunteer);
+                    trade.setPerson(volunteer.getPerson());
                     volunteerTrades.add(trade);
                 }
             }
@@ -1386,7 +1386,7 @@ public class VolunteersController {
         }
 
         VolunteerTrade trade = new VolunteerTrade();
-        trade.setVolunteer(volunteer);
+        trade.setPerson(volunteer.getPerson());
         trade.setName(form.getName());
         trade.setExperienceDescription(form.getExperienceDescription());
         trade.setExperienceYears(Integer.parseInt(form.getExperienceYears()));
@@ -1414,7 +1414,7 @@ public class VolunteersController {
         Volunteer volunteer = volunteerDao.findVolunteer(volunteerId, null);
         VolunteerTrade volunteerTrade = volunteerDao.findTrade(volunteerTradeId);
         if (volunteer == null || volunteerTrade == null
-                || volunteer.getPersonId() != volunteerTrade.getVolunteer().getPersonId()) {
+                || volunteer.getPersonId() != volunteerTrade.getPerson().getPersonId()) {
             throw new ResourceNotFoundException("No volunteer #" + volunteerId + " found");
         }
 

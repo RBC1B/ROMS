@@ -358,7 +358,7 @@ public class VolunteerModelFactory {
             model.setName(volunteerTrade.getName());
             model.setExperienceDescription(volunteerTrade.getExperienceDescription());
             model.setExperienceYears(volunteerTrade.getExperienceYears());
-            model.setUri(generateUri(volunteerTrade.getVolunteer().getPersonId()) + "/experience/"
+            model.setUri(generateUri(volunteerTrade.getPerson().getPersonId()) + "/experience/"
                     + volunteerTrade.getVolunteerTradeId());
             modelList.add(model);
         }

@@ -50,7 +50,7 @@ public class VolunteerTradeModelFactory {
         model.setExperienceDescription(volunteerTrade.getExperienceDescription());
         model.setExperienceYears(volunteerTrade.getExperienceYears());
         model.setName(volunteerTrade.getName());
-        model.setPerson(personModelFactory.generatePersonModel(personDao.findPerson(volunteerTrade.getVolunteer()
+        model.setPerson(personModelFactory.generatePersonModel(personDao.findPerson(volunteerTrade.getPerson()
                 .getPersonId())));
         return model;
     }

@@ -322,7 +322,7 @@ public class HibernateVolunteerDao implements VolunteerDao {
             // we may need to join into the values of the sort column
             if (searchCriteria.getSearch() == null) {
                 if (searchCriteria.getSortValue().startsWith("person")) {
-                    criteria.createAlias("person", "person", JoinType.LEFT_OUTER_JOIN);
+                    criteria.createAlias("person", "person");
                 }
 
                 if (searchCriteria.getSortValue().startsWith("person.congregation")) {
@@ -357,7 +357,7 @@ public class HibernateVolunteerDao implements VolunteerDao {
         Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(VolunteerTrade.class);
 
         if (searchCriteria.getSearch() != null) {
-            criteria.createAlias("person", "person", JoinType.LEFT_OUTER_JOIN);
+            criteria.createAlias("person", "person");
             criteria.createAlias("person.congregation", "congregation", JoinType.LEFT_OUTER_JOIN);
 
             String searchValue = "%" + searchCriteria.getSearch() + "%";
@@ -445,10 +445,7 @@ public class HibernateVolunteerDao implements VolunteerDao {
 
         Date twoAndHalfYearsDate = DataConverterUtil.toSqlDate(twoAndHalfYearsInPast);
 
-        criteria.add(Restrictions.or(
-                Restrictions.isNull("formDate"),
-                Restrictions.le("formDate", twoAndHalfYearsDate)
-        ));
+        criteria.add(Restrictions.or(Restrictions.isNull("formDate"), Restrictions.le("formDate", twoAndHalfYearsDate)));
 
         if (searchCriteria.getMaxResults() != null) {
             criteria.setMaxResults(searchCriteria.getMaxResults());
